@@ -125,82 +125,57 @@ echo "Processing directory: $DIR"
 #     echo "Warning: No survey markdown files found in $DIR/md_surveys, skipping taxonomy generation."
 # fi
 
-# Classify citation intents
-mkdir -p "$DIR/auto_intent_class_raw"
+# # Segment markdown papers
+# mkdir -p "$DIR/seg_papers"
 
-if [ -d "$DIR/md_papers" ] && [ -d "$DIR/yaml_refs" ]; then
-    echo "Classifying citation intents..."
+# if [ -d "$DIR/md_papers" ]; then
+#     input_files=()
+#     output_files=()
 
-    paper_count=0
-    for md_file in "$DIR/md_papers"/*.md; do
-        [ -f "$md_file" ] || continue
+#     for md_file in "$DIR/md_papers"/*.md; do
+#         [ -f "$md_file" ] || continue
+#         filename=$(basename "$md_file" .md)
+#         input_files+=("$md_file")
+#         output_files+=("$DIR/seg_papers/${filename}.yaml")
+#     done
 
-        filename=$(basename "$md_file" .md)
-        yaml_ref="$DIR/yaml_refs/${filename}.yaml"
+#     if [ ${#input_files[@]} -gt 0 ]; then
+#         echo "Segmenting ${#input_files[@]} markdown papers..."
+#         python -m data.raw.util.md2seg --inputs "${input_files[@]}" --outputs "${output_files[@]}"
+#         echo "Segmentation completed!"
+#     else
+#         echo "No markdown papers found to segment."
+#     fi
+# else
+#     echo "Warning: md_papers directory not found, skipping segmentation."
+# fi
 
-        # Check if corresponding yaml exists
-        if [ ! -f "$yaml_ref" ]; then
-            echo "  Warning: No yaml_ref found for $filename, skipping..."
-            continue
+# Locate references in segmented papers
+if [ -d "$DIR/seg_papers" ] && [ -d "$DIR/yaml_refs" ]; then
+    seg_files=()
+    ref_files=()
+
+    for seg_file in "$DIR/seg_papers"/*.yaml; do
+        [ -f "$seg_file" ] || continue
+        filename=$(basename "$seg_file" .yaml)
+        ref_file="$DIR/yaml_refs/${filename}.yaml"
+
+        if [ -f "$ref_file" ]; then
+            seg_files+=("$seg_file")
+            ref_files+=("$ref_file")
         fi
-
-        output_yaml="$DIR/auto_intent_class_raw/${filename}.yaml"
-
-        echo "  Processing: $filename"
-        python -m data.raw.util.classify_intent \
-            --md_paper_path "$md_file" \
-            --yaml_ref_path "$yaml_ref" \
-            --intent_taxo_path "data/raw/general_intent.md" \
-            --output_yaml_path "$output_yaml"
-
-        ((paper_count++))
     done
 
-    if [ $paper_count -gt 0 ]; then
-        echo "Intent classification completed for $paper_count papers!"
+    if [ ${#seg_files[@]} -gt 0 ]; then
+        echo "Locating references in ${#seg_files[@]} papers..."
+        python -m data.raw.util.locate_ref \
+            --seg_papers "${seg_files[@]}" \
+            --yaml_refs "${ref_files[@]}" \
+            --mode acm
+        echo "Reference location completed!"
     else
-        echo "No papers found to classify."
+        echo "No matching seg_papers and yaml_refs found."
     fi
 else
-    echo "Warning: md_papers or yaml_refs directory not found, skipping intent classification."
-fi
-
-# Classify citation topics
-mkdir -p "$DIR/auto_topic_class_raw"
-
-if [ -d "$DIR/md_papers" ] && [ -d "$DIR/yaml_refs" ] && [ -f "$DIR/domain_topic.md" ]; then
-    echo "Classifying citation topics..."
-
-    paper_count=0
-    for md_file in "$DIR/md_papers"/*.md; do
-        [ -f "$md_file" ] || continue
-
-        filename=$(basename "$md_file" .md)
-        yaml_ref="$DIR/yaml_refs/${filename}.yaml"
-
-        # Check if corresponding yaml exists
-        if [ ! -f "$yaml_ref" ]; then
-            echo "  Warning: No yaml_ref found for $filename, skipping..."
-            continue
-        fi
-
-        output_yaml="$DIR/auto_topic_class_raw/${filename}.yaml"
-
-        echo "  Processing: $filename"
-        python -m data.raw.util.classify_topic \
-            --md_paper_path "$md_file" \
-            --yaml_ref_path "$yaml_ref" \
-            --topic_taxo_path "$DIR/domain_topic.md" \
-            --output_yaml_path "$output_yaml"
-
-        ((paper_count++))
-    done
-
-    if [ $paper_count -gt 0 ]; then
-        echo "Topic classification completed for $paper_count papers!"
-    else
-        echo "No papers found to classify."
-    fi
-else
-    echo "Warning: md_papers, yaml_refs, or domain_topic.md not found, skipping topic classification."
+    echo "Warning: seg_papers or yaml_refs directory not found, skipping reference location."
 fi

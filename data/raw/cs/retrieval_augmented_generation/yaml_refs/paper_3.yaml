@@ -1,71 +1,146 @@
-citations:
-  - title: "Can Knowledge Graphs Reduce Hallucinations in LLMs? A Survey"
-    unique_context_marker: "[1]"
-  - title: "Mean Reciprocal Rank"
-    unique_context_marker: "[2]"
-  - title: "An Offline Metric for the Debiasedness of Click Models"
-    unique_context_marker: "[3]"
-  - title: "Wizard of Wikipedia: Knowledge-Powered Conversational Agents"
-    unique_context_marker: "[4]"
-  - title: "The Faiss library"
-    unique_context_marker: "[5]"
-  - title: "Efficient multiple-click models in web search"
-    unique_context_marker: "[6]"
-  - title: "Unsupervised Dense Information Retrieval with Contrastive Learning"
-    unique_context_marker: "[7]"
-  - title: "Distilling Knowledge from Reader to Retriever for Question Answering"
-    unique_context_marker: "[8]"
-  - title: "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering"
-    unique_context_marker: "[9]"
-  - title: "Ragas: Evaluation framework for your retrieval-augmented generation (RAG) pipelines"
-    unique_context_marker: "[10]"
-  - title: "IR evaluation methods for retrieving highly relevant documents"
-    unique_context_marker: "[11]"
-  - title: "Mistral 7B"
-    unique_context_marker: "[12]"
-  - title: "TriviaQA: A Large Scale Distantly Supervised Challenge Dataset for Reading Comprehension"
-    unique_context_marker: "[13]"
-  - title: "Dense Passage Retrieval for Open-Domain Question Answering"
-    unique_context_marker: "[14]"
-  - title: "Natural Questions: A Benchmark for Question Answering Research"
-    unique_context_marker: "[15]"
-  - title: "Retrieval-augmented generation for knowledge-intensive NLP tasks"
-    unique_context_marker: "[16]"
-  - title: "ROUGE: A Package for Automatic Evaluation of Summaries"
-    unique_context_marker: "[17]"
-  - title: "Pyserini: A Python Toolkit for Reproducible Information Retrieval Research with Sparse and Dense Representations"
-    unique_context_marker: "[18]"
-  - title: "Decoupled Weight Decay Regularization"
-    unique_context_marker: "[19]"
-  - title: "KILT: a Benchmark for Knowledge Intensive Language Tasks"
-    unique_context_marker: "[20]"
-  - title: "Exploring the limits of transfer learning with a unified text-to-text transformer"
-    unique_context_marker: "[21]"
-  - title: "Okapi at TREC-3"
-    unique_context_marker: "[22]"
-  - title: "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems"
-    unique_context_marker: "[23]"
-  - title: "A Symmetric Dual Encoding Dense Retrieval Framework for Knowledge-Intensive Visual Question Answering"
-    unique_context_marker: "[24]"
-  - title: "Optimization Methods for Personalizing Large Language Models through Retrieval Augmentation"
-    unique_context_marker: "[25]"
-  - title: "LaMP: When Large Language Models Meet Personalization"
-    unique_context_marker: "[26]"
-  - title: "Pre-Training Multi-Modal Dense Retrievers for Outside-Knowledge Visual Question Answering"
-    unique_context_marker: "[27]"
-  - title: "Corpus Annotation as a Scientific Task"
-    unique_context_marker: "[28]"
-  - title: "Retrieval Augmentation Reduces Hallucination in Conversation"
-    unique_context_marker: "[29]"
-  - title: "Large language models can accurately predict searcher preferences"
-    unique_context_marker: "[30]"
-  - title: "FEVER: a Large-scale Dataset for Fact Extraction and VERification"
-    unique_context_marker: "[31]"
-  - title: "Attention is All you Need"
-    unique_context_marker: "[32]"
-  - title: "HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering"
-    unique_context_marker: "[33]"
-  - title: "Stochastic RAG: End-to-End Retrieval-Augmented Generation through Expected Utility Maximization"
-    unique_context_marker: "[34]"
-  - title: "Retrieval-Enhanced Machine Learning"
-    unique_context_marker: "[35]"
+"citations":
+- "title": "Can Knowledge Graphs Reduce Hallucinations in LLMs? A Survey"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  - 4
+- "title": "Mean Reciprocal Rank"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 4
+- "title": "An Offline Metric for the Debiasedness of Click Models"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 1
+- "title": "Wizard of Wikipedia: Knowledge-Powered Conversational Agents"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 6
+- "title": "The Faiss library"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 6
+- "title": "Efficient multiple-click models in web search"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 1
+- "title": "Unsupervised Dense Information Retrieval with Contrastive Learning"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 6
+- "title": "Distilling Knowledge from Reader to Retriever for Question Answering"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 2
+- "title": "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 1
+  - 6
+  - 7
+- "title": "Ragas: Evaluation framework for your retrieval-augmented generation (RAG) pipelines"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 1
+- "title": "IR evaluation methods for retrieving highly relevant documents"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 4
+- "title": "Mistral 7B"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 6
+- "title": "TriviaQA: A Large Scale Distantly Supervised Challenge Dataset for Reading Comprehension"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 6
+- "title": "Dense Passage Retrieval for Open-Domain Question Answering"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 2
+  - 6
+- "title": "Natural Questions: A Benchmark for Question Answering Research"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 6
+- "title": "Retrieval-augmented generation for knowledge-intensive NLP tasks"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 1
+- "title": "ROUGE: A Package for Automatic Evaluation of Summaries"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 1
+- "title": "Pyserini: A Python Toolkit for Reproducible Information Retrieval Research with Sparse and Dense Representations"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 6
+- "title": "Decoupled Weight Decay Regularization"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 6
+- "title": "KILT: a Benchmark for Knowledge Intensive Language Tasks"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 1
+  - 6
+- "title": "Exploring the limits of transfer learning with a unified text-to-text transformer"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 6
+- "title": "Okapi at TREC-3"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 6
+- "title": "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 1
+- "title": "A Symmetric Dual Encoding Dense Retrieval Framework for Knowledge-Intensive Visual Question Answering"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 2
+- "title": "Optimization Methods for Personalizing Large Language Models through Retrieval Augmentation"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 1
+- "title": "LaMP: When Large Language Models Meet Personalization"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 1
+- "title": "Pre-Training Multi-Modal Dense Retrievers for Outside-Knowledge Visual Question Answering"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 2
+- "title": "Corpus Annotation as a Scientific Task"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 2
+- "title": "Retrieval Augmentation Reduces Hallucination in Conversation"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 1
+- "title": "Large language models can accurately predict searcher preferences"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 2
+- "title": "FEVER: a Large-scale Dataset for Fact Extraction and VERification"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 6
+- "title": "Attention is All you Need"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 3
+- "title": "HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 6
+- "title": "Stochastic RAG: End-to-End Retrieval-Augmented Generation through Expected Utility Maximization"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 1
+- "title": "Retrieval-Enhanced Machine Learning"
+  "unique_context_marker": "[35]"
+  "block_ids":
+  - 1

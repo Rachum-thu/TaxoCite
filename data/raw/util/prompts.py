@@ -120,3 +120,31 @@ User Input (REFERENCES SECTION OCR TEXT ONLY):
 {reference_text}
 </REFERENCES_OCR_TEXT>
 '''
+
+extract_title_abstract_prompt = """
+You are given the full Markdown of an academic paper.
+
+Task: return (1) the paper title and (2) the abstract.
+
+TITLE extraction rules (in priority order):
+1) If the Markdown begins with a single H1 heading (a line starting with "# "), use that as the title.
+2) Else, if there is a YAML front-matter field named "title", use it.
+3) Else, use the first non-empty line that looks like a title (short, not a heading like "Contents", not an author list, not a section header such as "Introduction").
+
+ABSTRACT extraction rules:
+A) If an explicit abstract exists, extract it VERBATIM, preserving line breaks as reasonable, without adding or removing content.
+   Consider the abstract explicit if it appears under:
+   - a heading like "Abstract", "ABSTRACT" (any level of Markdown heading), OR
+   - a bold label like "**Abstract**" followed by text.
+   The abstract content ends before the next top-level section heading (e.g., "Introduction", "1 Introduction", "Related Work", etc.) or before another heading of the same or higher level.
+B) If no explicit abstract exists, write a 2–3 sentence summary based only on the paper’s introduction and main contributions described in the Markdown.
+   Do NOT invent results, numbers, datasets, or claims not supported by the text.
+   Avoid citations/URLs and avoid phrases like "This paper proposes" repeated; be specific about (i) problem, (ii) method, (iii) main findings/claims (only if stated).
+
+Return only the fields required by the schema.
+
+Paper markdown:
+<<<BEGIN_PAPER>>>
+{md_content}
+<<<END_PAPER>>>
+"""

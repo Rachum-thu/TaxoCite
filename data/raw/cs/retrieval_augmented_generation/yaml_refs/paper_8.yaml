@@ -1,117 +1,250 @@
-citations:
-  - title: "Llama 3 Model Card"
-    unique_context_marker: "[1]"
-  - title: "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
-    unique_context_marker: "[2]"
-  - title: "Improving language models by retrieving from trillions of tokens"
-    unique_context_marker: "[3]"
-  - title: "When large language models meet personalization: Perspectives of challenges and opportunities"
-    unique_context_marker: "[4]"
-  - title: "Uncovering chatgpt’s capabilities in recommender systems"
-    unique_context_marker: "[5]"
-  - title: "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
-    unique_context_marker: "[6]"
-  - title: "A Survey on RAG Meeting LLMs: Towards Retrieval-Augmented Large Language Models"
-    unique_context_marker: "[7]"
-  - title: "Retrieval-augmented generation for large language models: A survey"
-    unique_context_marker: "[8]"
-  - title: "Retrieval augmented language model pre-training"
-    unique_context_marker: "[9]"
-  - title: "Lightgcn: Simplifying and powering graph convolution network for recommendation"
-    unique_context_marker: "[10]"
-  - title: "Neural collaborative filtering"
-    unique_context_marker: "[11]"
-  - title: "LoRA: Low-Rank Adaptation of Large Language Models"
-    unique_context_marker: "[12]"
-  - title: "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering"
-    unique_context_marker: "[13]"
-  - title: "Few-shot learning with retrieval augmented language models"
-    unique_context_marker: "[14]"
-  - title: "A survey on contrastive self-supervised learning"
-    unique_context_marker: "[15]"
-  - title: "Personalized soups: Personalized large language model alignment via post-hoc parameter merging"
-    unique_context_marker: "[16]"
-  - title: "Large language models struggle to learn long-tail knowledge"
-    unique_context_marker: "[17]"
-  - title: "Adam: A method for stochastic optimization"
-    unique_context_marker: "[18]"
-  - title: "Matrix factorization techniques for recommender systems"
-    unique_context_marker: "[19]"
-  - title: "Retrieval-augmented generation for knowledge-intensive nlp tasks"
-    unique_context_marker: "[20]"
-  - title: "Teach LLMs to Personalize–An Approach inspired by Writing Education"
-    unique_context_marker: "[21]"
-  - title: "Pre-trained language models for text generation: A survey"
-    unique_context_marker: "[22]"
-  - title: "Personalized language modeling from personalized human feedback"
-    unique_context_marker: "[23]"
-  - title: "Rouge: A package for automatic evaluation of summaries"
-    unique_context_marker: "[24]"
-  - title: "RA-DIT: Retrieval-Augmented Dual Instruction Tuning"
-    unique_context_marker: "[25]"
-  - title: "Roberta: A robustly optimized bert pretraining approach"
-    unique_context_marker: "[26]"
-  - title: "Pearl: Personalizing large language model writing assistants with generation-calibrated retrievers"
-    unique_context_marker: "[27]"
-  - title: "Representation learning with contrastive predictive coding"
-    unique_context_marker: "[28]"
-  - title: "Integrating summarization and retrieval for enhanced personalization via large language models"
-    unique_context_marker: "[29]"
-  - title: "Okapi at TREC-3"
-    unique_context_marker: "[30]"
-  - title: "Optimization methods for personalizing large language models through retrieval augmentation"
-    unique_context_marker: "[31]"
-  - title: "Lamp: When large language models meet personalization"
-    unique_context_marker: "[32]"
-  - title: "A survey of controllable learning: Methods and applications in information retrieval"
-    unique_context_marker: "[33]"
-  - title: "UniSAR: Modeling User Transition Behaviors between Search and Recommendation"
-    unique_context_marker: "[34]"
-  - title: "Unified Generative Search and Recommendation"
-    unique_context_marker: "[35]"
-  - title: "REPLUG: Retrieval-Augmented Black-Box Language Models"
-    unique_context_marker: "[36]"
-  - title: "Personalized Pieces: Efficient Personalized Large Language Models through Collaborative Efforts"
-    unique_context_marker: "[37]"
-  - title: "Democratizing Large Language Models via Personalized Parameter-Efficient Fine-tuning"
-    unique_context_marker: "[38]"
-  - title: "Think Before Recommend: Unleashing the Latent Reasoning Power for Sequential Recommendation"
-    unique_context_marker: "[39]"
-  - title: "Attention is all you need"
-    unique_context_marker: "[40]"
-  - title: "Neural graph collaborative filtering"
-    unique_context_marker: "[41]"
-  - title: "A survey on large language models for recommendation"
-    unique_context_marker: "[42]"
-  - title: "FedLoRA: When Personalized Federated Learning Meets Low-Rank Adaptation"
-    unique_context_marker: "[43]"
-  - title: "Fine-grained human feedback gives better rewards for language model training"
-    unique_context_marker: "[44]"
-  - title: "Clear: Contrastive learning for sentence representation"
-    unique_context_marker: "[45]"
-  - title: "C-Pack: Packaged Resources To Advance General Chinese Embedding"
-    unique_context_marker: "[46]"
-  - title: "Deep matrix factorization models for recommender systems"
-    unique_context_marker: "[47]"
-  - title: "Qwen2 technical report"
-    unique_context_marker: "[48]"
-  - title: "Modeling Domain and Feedback Transitions for Cross-Domain Sequential Recommendation"
-    unique_context_marker: "[49]"
-  - title: "QAGCF: Graph Collaborative Filtering for Q&A Recommendation"
-    unique_context_marker: "[50]"
-  - title: "Test-Time Alignment for Tracking User Interest Shifts in Sequential Recommendation"
-    unique_context_marker: "[51]"
-  - title: "SAQRec: Aligning Recommender Systems to User Satisfaction via Questionnaire Feedback"
-    unique_context_marker: "[52]"
-  - title: "Model-Agnostic Causal Embedding Learning for Counterfactually Group-Fair Recommendation"
-    unique_context_marker: "[53]"
-  - title: "Siren’s song in the AI ocean: a survey on hallucination in large language models"
-    unique_context_marker: "[54]"
-  - title: "Dense text retrieval based on pretrained language models: A survey"
-    unique_context_marker: "[55]"
-  - title: "A survey of large language models"
-    unique_context_marker: "[56]"
-  - title: "Large language models for information retrieval: A survey"
-    unique_context_marker: "[57]"
-  - title: "HYDRA: Model Factorization Framework for Black-Box LLM Personalization"
-    unique_context_marker: "[58]"
+"citations":
+- "title": "Llama 3 Model Card"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 10
+- "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 2
+- "title": "Improving language models by retrieving from trillions of tokens"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 2
+- "title": "When large language models meet personalization: Perspectives of challenges and opportunities"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 2
+- "title": "Uncovering chatgpt’s capabilities in recommender systems"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 2
+- "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 5
+- "title": "A Survey on RAG Meeting LLMs: Towards Retrieval-Augmented Large Language Models"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 2
+- "title": "Retrieval-augmented generation for large language models: A survey"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "Retrieval augmented language model pre-training"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 2
+- "title": "Lightgcn: Simplifying and powering graph convolution network for recommendation"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 2
+- "title": "Neural collaborative filtering"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "LoRA: Low-Rank Adaptation of Large Language Models"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 2
+- "title": "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 2
+- "title": "Few-shot learning with retrieval augmented language models"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 2
+- "title": "A survey on contrastive self-supervised learning"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 1
+  - 5
+- "title": "Personalized soups: Personalized large language model alignment via post-hoc parameter merging"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "Large language models struggle to learn long-tail knowledge"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 2
+- "title": "Adam: A method for stochastic optimization"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 10
+- "title": "Matrix factorization techniques for recommender systems"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 2
+- "title": "Retrieval-augmented generation for knowledge-intensive nlp tasks"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 2
+- "title": "Teach LLMs to Personalize–An Approach inspired by Writing Education"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 2
+- "title": "Pre-trained language models for text generation: A survey"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 2
+- "title": "Personalized language modeling from personalized human feedback"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "Rouge: A package for automatic evaluation of summaries"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 6
+  - 10
+- "title": "RA-DIT: Retrieval-Augmented Dual Instruction Tuning"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 1
+  - 2
+  - 6
+- "title": "Roberta: A robustly optimized bert pretraining approach"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 5
+- "title": "Pearl: Personalizing large language model writing assistants with generation-calibrated retrievers"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 2
+- "title": "Representation learning with contrastive predictive coding"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 5
+- "title": "Integrating summarization and retrieval for enhanced personalization via large language models"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "Okapi at TREC-3"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 10
+- "title": "Optimization methods for personalizing large language models through retrieval augmentation"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 1
+  - 2
+  - 10
+- "title": "Lamp: When large language models meet personalization"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 1
+  - 2
+  - 10
+- "title": "A survey of controllable learning: Methods and applications in information retrieval"
+  "unique_context_marker": "[33]"
+  "block_ids": []
+- "title": "UniSAR: Modeling User Transition Behaviors between Search and Recommendation"
+  "unique_context_marker": "[34]"
+  "block_ids": []
+- "title": "Unified Generative Search and Recommendation"
+  "unique_context_marker": "[35]"
+  "block_ids": []
+- "title": "REPLUG: Retrieval-Augmented Black-Box Language Models"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 1
+  - 2
+  - 6
+- "title": "Personalized Pieces: Efficient Personalized Large Language Models through Collaborative Efforts"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "Democratizing Large Language Models via Personalized Parameter-Efficient Fine-tuning"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "Think Before Recommend: Unleashing the Latent Reasoning Power for Sequential Recommendation"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 2
+- "title": "Attention is all you need"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 5
+- "title": "Neural graph collaborative filtering"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "A survey on large language models for recommendation"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 2
+- "title": "FedLoRA: When Personalized Federated Learning Meets Low-Rank Adaptation"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 2
+- "title": "Fine-grained human feedback gives better rewards for language model training"
+  "unique_context_marker": "[44]"
+  "block_ids":
+  - 2
+- "title": "Clear: Contrastive learning for sentence representation"
+  "unique_context_marker": "[45]"
+  "block_ids":
+  - 1
+  - 5
+- "title": "C-Pack: Packaged Resources To Advance General Chinese Embedding"
+  "unique_context_marker": "[46]"
+  "block_ids":
+  - 5
+  - 6
+  - 7
+  - 10
+- "title": "Deep matrix factorization models for recommender systems"
+  "unique_context_marker": "[47]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "Qwen2 technical report"
+  "unique_context_marker": "[48]"
+  "block_ids":
+  - 10
+- "title": "Modeling Domain and Feedback Transitions for Cross-Domain Sequential Recommendation"
+  "unique_context_marker": "[49]"
+  "block_ids": []
+- "title": "QAGCF: Graph Collaborative Filtering for Q&A Recommendation"
+  "unique_context_marker": "[50]"
+  "block_ids": []
+- "title": "Test-Time Alignment for Tracking User Interest Shifts in Sequential Recommendation"
+  "unique_context_marker": "[51]"
+  "block_ids": []
+- "title": "SAQRec: Aligning Recommender Systems to User Satisfaction via Questionnaire Feedback"
+  "unique_context_marker": "[52]"
+  "block_ids": []
+- "title": "Model-Agnostic Causal Embedding Learning for Counterfactually Group-Fair Recommendation"
+  "unique_context_marker": "[53]"
+  "block_ids": []
+- "title": "Siren’s song in the AI ocean: a survey on hallucination in large language models"
+  "unique_context_marker": "[54]"
+  "block_ids":
+  - 2
+- "title": "Dense text retrieval based on pretrained language models: A survey"
+  "unique_context_marker": "[55]"
+  "block_ids":
+  - 1
+- "title": "A survey of large language models"
+  "unique_context_marker": "[56]"
+  "block_ids":
+  - 1
+  - 2
+- "title": "Large language models for information retrieval: A survey"
+  "unique_context_marker": "[57]"
+  "block_ids":
+  - 2
+- "title": "HYDRA: Model Factorization Framework for Black-Box LLM Personalization"
+  "unique_context_marker": "[58]"
+  "block_ids":
+  - 1
+  - 2

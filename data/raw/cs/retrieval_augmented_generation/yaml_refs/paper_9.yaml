@@ -1,127 +1,279 @@
-citations:
-  - title: "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
-    unique_context_marker: "[1]"
-  - title: "Choppy: Cut Transformer for Ranked List Truncation"
-    unique_context_marker: "[2]"
-  - title: "The Role of Relevance in Fair Ranking"
-    unique_context_marker: "[3]"
-  - title: "EKILA: Synthetic Media Provenance and Attribution for Generative Art"
-    unique_context_marker: "[4]"
-  - title: "Equity of attention: Amortizing individual fairness in rankings"
-    unique_context_marker: "[5]"
-  - title: "Attributed question answering: Evaluation and modeling for attributed large language models"
-    unique_context_marker: "[6]"
-  - title: "A Stochastic Treatment of Learning to Rank Scoring Functions"
-    unique_context_marker: "[7]"
-  - title: "Fairness in machine learning: A survey"
-    unique_context_marker: "[8]"
-  - title: "Scaling Instruction-Finetuned Language Models"
-    unique_context_marker: "[9]"
-  - title: "The Power of Noise: Redefining Retrieval for RAG Systems"
-    unique_context_marker: "[10]"
-  - title: "Evaluating Stochastic Rankings with Expected Exposure"
-    unique_context_marker: "[11]"
-  - title: "Not Just Algorithms: Strategically Addressing Consumer Impacts in Information Retrieval"
-    unique_context_marker: "[12]"
-  - title: "Fairness in information access systems"
-    unique_context_marker: "[13]"
-  - title: "RAGAs: Automated Evaluation of Retrieval Augmented Generation"
-    unique_context_marker: "[14]"
-  - title: "From Distillation to Hard Negative Sampling: Making Sparse Neural IR Models More Effective"
-    unique_context_marker: "[15]"
-  - title: "RARR: Researching and Revising What Language Models Say, Using Language Models"
-    unique_context_marker: "[16]"
-  - title: "Enabling Large Language Models to Generate Text with Citations"
-    unique_context_marker: "[17]"
-  - title: "Bayesian inference for Plackett-Luce ranking models"
-    unique_context_marker: "[18]"
-  - title: "Statistical theory of extreme values and some practical applications: a series of lectures"
-    unique_context_marker: "[19]"
-  - title: "REALM: Retrieval-Augmented Language Model Pre-Training"
-    unique_context_marker: "[20]"
-  - title: "Never Lost in the Middle: Mastering Long-Context Question Answering with Position-Agnostic Decompositional Training"
-    unique_context_marker: "[21]"
-  - title: "Foundation Models and Fair Use"
-    unique_context_marker: "[22]"
-  - title: "Fidlight: Efficient and effective retrieval-augmented text generation"
-    unique_context_marker: "[23]"
-  - title: "TRUE: Re-evaluating Factual Consistency Evaluation"
-    unique_context_marker: "[24]"
-  - title: "Found in the middle: Calibrating Positional Attent ion Bias Improves Long Context Utilization"
-    unique_context_marker: "[25]"
-  - title: "Unsupervised Dense Information Retrieval with Contrastive Learning"
-    unique_context_marker: "[26]"
-  - title: "Atlas: Few-shot learning with retrieval augmented language models"
-    unique_context_marker: "[27]"
-  - title: "Fairness-Aware Exposure Allocation via Adaptive Reranking"
-    unique_context_marker: "[28]"
-  - title: "Item-side Fairness of Large Language Model-based Recommendation System"
-    unique_context_marker: "[29]"
-  - title: "NSF workshop on task-based information search systems"
-    unique_context_marker: "[30]"
-  - title: "Generalization through Memorization: Nearest Neighbor Language Models"
-    unique_context_marker: "[31]"
-  - title: "Retrieval-Enhanced Machine Learning: Synthesis and Opportunities"
-    unique_context_marker: "[32]"
-  - title: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
-    unique_context_marker: "[33]"
-  - title: "Lost in the middle: How language models use long contexts"
-    unique_context_marker: "[34]"
-  - title: "Roberta: A robustly optimized bert pretraining approach"
-    unique_context_marker: "[35]"
-  - title: "A Pathway Towards Responsible AI Generated Content"
-    unique_context_marker: "[36]"
-  - title: "The Concrete Distribution: A Continuous Relaxation of Discrete Random Variables"
-    unique_context_marker: "[37]"
-  - title: "Auditing Search Engines for Differential Satisfaction Across Demographics"
-    unique_context_marker: "[38]"
-  - title: "Rank-biased precision for measurement of retrieval effectiveness"
-    unique_context_marker: "[39]"
-  - title: "RAGs to Style: Personalizing LLMs with Style Embeddings"
-    unique_context_marker: "[40]"
-  - title: "Computationally efficient optimization of plackett-luce ranking models for relevance and fairness"
-    unique_context_marker: "[41]"
-  - title: "Learning-to-rank at the speed of sampling: Plackett-luce gradient estimation with minimal computational complexity"
-    unique_context_marker: "[42]"
-  - title: "The analysis of permutations"
-    unique_context_marker: "[43]"
-  - title: "Comparing fair ranking metrics"
-    unique_context_marker: "[44]"
-  - title: "Measuring Attribution in Natural Language Generation Models"
-    unique_context_marker: "[45]"
-  - title: "Okapi at TREC-3"
-    unique_context_marker: "[46]"
-  - title: "RAGChecker: A Fine-grained Framework for Diagnosing Retrieval-Augmented Generation"
-    unique_context_marker: "[47]"
-  - title: "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems"
-    unique_context_marker: "[48]"
-  - title: "Optimization Methods for Personalizing Large Language Models through Retrieval Augmentation"
-    unique_context_marker: "[49]"
-  - title: "LaMP: When Large Language Models Meet Personalization"
-    unique_context_marker: "[50]"
-  - title: "Evaluating retrieval quality in retrieval-augmented generation"
-    unique_context_marker: "[51]"
-  - title: "Quantifying the Impact of User Attention on Fair Group Representation in Ranked Lists"
-    unique_context_marker: "[52]"
-  - title: "The Notion of Relevance in Information Science: Everybody knows what relevance is. But, what is it really?"
-    unique_context_marker: "[53]"
-  - title: "FairRAG: Fair Human Generation via Fair Retrieval Augmentation"
-    unique_context_marker: "[54]"
-  - title: "Fairness of exposure in rankings"
-    unique_context_marker: "[55]"
-  - title: "Policy learning for fairness in ranking"
-    unique_context_marker: "[56]"
-  - title: "UL2: Unifying Language Learning Paradigms"
-    unique_context_marker: "[57]"
-  - title: "Measuring fairness in ranked outputs"
-    unique_context_marker: "[58]"
-  - title: "Stochastic RAG: End-to-End Retrieval-Augmented Generation through Expected Utility Maximization"
-    unique_context_marker: "[59]"
-  - title: "Retrieval-Enhanced Machine Learning"
-    unique_context_marker: "[60]"
-  - title: "Fa*IR: A fair top-k ranking algorithm"
-    unique_context_marker: "[61]"
-  - title: "Are Large Language Models Good at Utility Judgments?"
-    unique_context_marker: "[62]"
-  - title: "Forcing Diffuse Distributions out of Language Models"
-    unique_context_marker: "[63]"
+"citations":
+- "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  - 7
+  - 8
+- "title": "Choppy: Cut Transformer for Ranked List Truncation"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 1
+- "title": "The Role of Relevance in Fair Ranking"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 1
+  - 6
+- "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 1
+- "title": "Equity of attention: Amortizing individual fairness in rankings"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 1
+  - 4
+  - 7
+- "title": "Attributed question answering: Evaluation and modeling for attributed large language models"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 8
+- "title": "A Stochastic Treatment of Learning to Rank Scoring Functions"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 7
+- "title": "Fairness in machine learning: A survey"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 4
+- "title": "Scaling Instruction-Finetuned Language Models"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 9
+- "title": "The Power of Noise: Redefining Retrieval for RAG Systems"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 15
+- "title": "Evaluating Stochastic Rankings with Expected Exposure"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 1
+  - 4
+  - 5
+  - 7
+  - 8
+  - 11
+- "title": "Not Just Algorithms: Strategically Addressing Consumer Impacts in Information Retrieval"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 4
+- "title": "Fairness in information access systems"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 1
+  - 4
+- "title": "RAGAs: Automated Evaluation of Retrieval Augmented Generation"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 3
+- "title": "From Distillation to Hard Negative Sampling: Making Sparse Neural IR Models More Effective"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 9
+- "title": "RARR: Researching and Revising What Language Models Say, Using Language Models"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 3
+  - 8
+- "title": "Enabling Large Language Models to Generate Text with Citations"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 1
+  - 3
+  - 8
+- "title": "Bayesian inference for Plackett-Luce ranking models"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 7
+- "title": "Statistical theory of extreme values and some practical applications: a series of lectures"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 7
+- "title": "REALM: Retrieval-Augmented Language Model Pre-Training"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 3
+- "title": "Never Lost in the Middle: Mastering Long-Context Question Answering with Position-Agnostic Decompositional Training"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 8
+- "title": "Foundation Models and Fair Use"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 1
+- "title": "Fidlight: Efficient and effective retrieval-augmented text generation"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 1
+- "title": "TRUE: Re-evaluating Factual Consistency Evaluation"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 8
+- "title": "Found in the middle: Calibrating Positional Attent ion Bias Improves Long Context Utilization"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 8
+- "title": "Unsupervised Dense Information Retrieval with Contrastive Learning"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 9
+- "title": "Atlas: Few-shot learning with retrieval augmented language models"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 3
+- "title": "Fairness-Aware Exposure Allocation via Adaptive Reranking"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 4
+- "title": "Item-side Fairness of Large Language Model-based Recommendation System"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 4
+- "title": "NSF workshop on task-based information search systems"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 6
+- "title": "Generalization through Memorization: Nearest Neighbor Language Models"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 3
+- "title": "Retrieval-Enhanced Machine Learning: Synthesis and Opportunities"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 1
+  - 3
+  - 9
+- "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 1
+  - 3
+- "title": "Lost in the middle: How language models use long contexts"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 15
+  - 17
+- "title": "Roberta: A robustly optimized bert pretraining approach"
+  "unique_context_marker": "[35]"
+  "block_ids":
+  - 9
+- "title": "A Pathway Towards Responsible AI Generated Content"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 1
+- "title": "The Concrete Distribution: A Continuous Relaxation of Discrete Random Variables"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 7
+- "title": "Auditing Search Engines for Differential Satisfaction Across Demographics"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 4
+- "title": "Rank-biased precision for measurement of retrieval effectiveness"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 8
+- "title": "RAGs to Style: Personalizing LLMs with Style Embeddings"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 3
+- "title": "Computationally efficient optimization of plackett-luce ranking models for relevance and fairness"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 7
+- "title": "Learning-to-rank at the speed of sampling: Plackett-luce gradient estimation with minimal computational complexity"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 7
+- "title": "The analysis of permutations"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 7
+- "title": "Comparing fair ranking metrics"
+  "unique_context_marker": "[44]"
+  "block_ids":
+  - 4
+  - 8
+- "title": "Measuring Attribution in Natural Language Generation Models"
+  "unique_context_marker": "[45]"
+  "block_ids":
+  - 8
+- "title": "Okapi at TREC-3"
+  "unique_context_marker": "[46]"
+  "block_ids":
+  - 9
+- "title": "RAGChecker: A Fine-grained Framework for Diagnosing Retrieval-Augmented Generation"
+  "unique_context_marker": "[47]"
+  "block_ids":
+  - 3
+  - 15
+- "title": "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems"
+  "unique_context_marker": "[48]"
+  "block_ids":
+  - 3
+- "title": "Optimization Methods for Personalizing Large Language Models through Retrieval Augmentation"
+  "unique_context_marker": "[49]"
+  "block_ids":
+  - 3
+- "title": "LaMP: When Large Language Models Meet Personalization"
+  "unique_context_marker": "[50]"
+  "block_ids":
+  - 3
+  - 9
+- "title": "Evaluating retrieval quality in retrieval-augmented generation"
+  "unique_context_marker": "[51]"
+  "block_ids":
+  - 1
+  - 3
+  - 6
+- "title": "Quantifying the Impact of User Attention on Fair Group Representation in Ranked Lists"
+  "unique_context_marker": "[52]"
+  "block_ids":
+  - 4
+- "title": "The Notion of Relevance in Information Science: Everybody knows what relevance is. But, what is it really?"
+  "unique_context_marker": "[53]"
+  "block_ids":
+  - 1
+- "title": "FairRAG: Fair Human Generation via Fair Retrieval Augmentation"
+  "unique_context_marker": "[54]"
+  "block_ids":
+  - 3
+- "title": "Fairness of exposure in rankings"
+  "unique_context_marker": "[55]"
+  "block_ids":
+  - 4
+- "title": "Policy learning for fairness in ranking"
+  "unique_context_marker": "[56]"
+  "block_ids":
+  - 1
+  - 4
+  - 11
+- "title": "UL2: Unifying Language Learning Paradigms"
+  "unique_context_marker": "[57]"
+  "block_ids":
+  - 9
+- "title": "Measuring fairness in ranked outputs"
+  "unique_context_marker": "[58]"
+  "block_ids":
+  - 4
+- "title": "Stochastic RAG: End-to-End Retrieval-Augmented Generation through Expected Utility Maximization"
+  "unique_context_marker": "[59]"
+  "block_ids":
+  - 7
+- "title": "Retrieval-Enhanced Machine Learning"
+  "unique_context_marker": "[60]"
+  "block_ids":
+  - 3
+- "title": "Fa*IR: A fair top-k ranking algorithm"
+  "unique_context_marker": "[61]"
+  "block_ids":
+  - 4
+- "title": "Are Large Language Models Good at Utility Judgments?"
+  "unique_context_marker": "[62]"
+  "block_ids":
+  - 1
+  - 6
+- "title": "Forcing Diffuse Distributions out of Language Models"
+  "unique_context_marker": "[63]"
+  "block_ids":
+  - 18

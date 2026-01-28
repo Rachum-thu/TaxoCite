@@ -1,141 +1,325 @@
-citations:
-  - title: "Hugging Face"
-    unique_context_marker: "[1]"
-  - title: "OpenDDAL"
-    unique_context_marker: "[2]"
-  - title: "OWLAPI"
-    unique_context_marker: "[3]"
-  - title: "PyTorch"
-    unique_context_marker: "[4]"
-  - title: "An Industrial Evaluation of Unit Test Generation: Finding Real Faults in a Financial Application"
-    unique_context_marker: "[5]"
-  - title: "RESTful API Automated Test Case Generation with EvoMaster"
-    unique_context_marker: "[6]"
-  - title: "The Plastic Surgery Hypothesis"
-    unique_context_marker: "[7]"
-  - title: "ChatUniTest: A Framework for LLM-Based Test Generation"
-    unique_context_marker: "[8]"
-  - title: "A Survey on Unit Testing Practices and Problems"
-    unique_context_marker: "[9]"
-  - title: "How Does Execution Information Help with Information-Retrieval Based Bug Localization?"
-    unique_context_marker: "[10]"
-  - title: "TOGA: A Neural Method for Test Oracle Generation"
-    unique_context_marker: "[11]"
-  - title: "Test Case Prioritization: A Family of Empirical Studies"
-    unique_context_marker: "[12]"
-  - title: "Large Language Models for Software Engineering: Survey and Open Problems"
-    unique_context_marker: "[13]"
-  - title: "CodeBERT: A Pre-Trained Model for Programming and Natural Languages"
-    unique_context_marker: "[14]"
-  - title: "EvoSuite: Automatic Test Suite Generation for Object-Oriented Software"
-    unique_context_marker: "[15]"
-  - title: "VulRepair: A T5-based Automated Software Vulnerability Repair"
-    unique_context_marker: "[16]"
-  - title: "TestART: Improving LLM-based Unit Test via Co-evolution of Automated Generation and Repair Iteration"
-    unique_context_marker: "[17]"
-  - title: "UniXcoder: Unified Cross-Modal Pre-training for Code Representation"
-    unique_context_marker: "[18]"
-  - title: "GraphCodeBERT: Pre-training Code Representations with Data Flow"
-    unique_context_marker: "[19]"
-  - title: "Is ISSTA Research Relevant to Industry?"
-    unique_context_marker: "[20]"
-  - title: "An Empirical Study on Focal Methods in Deep-Learning-Based Approaches for Assertion Generation"
-    unique_context_marker: "[21]"
-  - title: "Neural-Based Test Oracle Generation: A Large-scale Evaluation and Lessons Learned"
-    unique_context_marker: "[22]"
-  - title: "Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs"
-    unique_context_marker: "[23]"
-  - title: "Dense Passage Retrieval for Open-Domain Question Answering"
-    unique_context_marker: "[24]"
-  - title: "CodaMosa: Escaping Coverage Plateaus in Test Generation with Pre-Trained Large Language Models"
-    unique_context_marker: "[25]"
-  - title: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
-    unique_context_marker: "[26]"
-  - title: "EDITSUM: A Retrieve-and-Edit Framework for Source Code Summarization"
-    unique_context_marker: "[27]"
-  - title: "Automating Code Review Activities by Large-Scale Pre-training"
-    unique_context_marker: "[28]"
-  - title: "Towards More Realistic Evaluation for Neural Test Oracle Generation"
-    unique_context_marker: "[29]"
-  - title: "Understanding Build Issue Resolution in Practice: Symptoms and Fix Patterns"
-    unique_context_marker: "[30]"
-  - title: "CodeXGLUE: A Machine Learning Benchmark Dataset for Code Understanding and Generation"
-    unique_context_marker: "[31]"
-  - title: "Using Transfer Learning for Code-Related Tasks"
-    unique_context_marker: "[32]"
-  - title: "Studying the Usage of Text-To-Text Transfer Transformer to Support Code-Related Tasks"
-    unique_context_marker: "[33]"
-  - title: "Retrieval-Based Prompt Selection for Code-Related Few-Shot Learning"
-    unique_context_marker: "[34]"
-  - title: "Randoop: Feedback-Directed Random Testing for Java"
-    unique_context_marker: "[35]"
-  - title: "LTM: Scalable and Black-Box Similarity-Based Test Suite Minimization Based on Language Models"
-    unique_context_marker: "[36]"
-  - title: "Retrieval Augmented Code Generation and Summarization"
-    unique_context_marker: "[37]"
-  - title: "Empirically Revisiting and Enhancing IR-Based Test-Case Prioritization"
-    unique_context_marker: "[38]"
-  - title: "The Economic Impacts of Inadequate Infrastructure for Software Testing"
-    unique_context_marker: "[39]"
-  - title: "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer"
-    unique_context_marker: "[40]"
-  - title: "Code Llama: Open Foundation Models for Code"
-    unique_context_marker: "[41]"
-  - title: "Code-Aware Prompting: A study of Coverage Guided Test Generation in Regression Setting using LLM"
-    unique_context_marker: "[42]"
-  - title: "An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation"
-    unique_context_marker: "[43]"
-  - title: "GitBug-Java: A Reproducible Benchmark of Recent Java Bugs"
-    unique_context_marker: "[44]"
-  - title: "Revisiting and Improving Retrieval-Augmented Deep Assertion Generation"
-    unique_context_marker: "[45]"
-  - title: "ChatGPT vs SBST: A Comparative Assessment of Unit Test Suite Generation"
-    unique_context_marker: "[46]"
-  - title: "DebugBench: Evaluating Debugging Capability of Large Language Models"
-    unique_context_marker: "[47]"
-  - title: "Generating Accurate Assert Statements for Unit Test Cases using Pretrained Transformers"
-    unique_context_marker: "[48]"
-  - title: "Using Pre-Trained Models To Boost Code Review Automation"
-    unique_context_marker: "[49]"
-  - title: "Software Testing With Large Language Models: Survey, Landscape, and Vision"
-    unique_context_marker: "[50]"
-  - title: "RAP-Gen: Retrieval-Augmented Patch Generation with Codet5 for Automatic Program Repair"
-    unique_context_marker: "[51]"
-  - title: "CodeT5: Identifier-Aware Unified Pre-Trained Encoder-Decoder Models for Code Understanding and Generation"
-    unique_context_marker: "[52]"
-  - title: "HITS: High-coverage LLM-based Unit Test Generation via Method Slicing"
-    unique_context_marker: "[53]"
-  - title: "A Systematic Literature Review on the Use of Deep Learning in Software Engineering Research"
-    unique_context_marker: "[54]"
-  - title: "On Learning Meaningful Assert Statements for Unit Test Cases"
-    unique_context_marker: "[55]"
-  - title: "Automated Program Repair in the Era of Large Pre-Trained Language Models"
-    unique_context_marker: "[56]"
-  - title: "On the Evaluation of Large Language Models in Unit Test Generation"
-    unique_context_marker: "[57]"
-  - title: "A Survey on Deep Learning for Software Engineering"
-    unique_context_marker: "[58]"
-  - title: "Automated Assertion Generation via Information Retrieval and Its Integration with Deep Learning"
-    unique_context_marker: "[59]"
-  - title: "CIRCLE: Continual Repair across Programming Languages"
-    unique_context_marker: "[60]"
-  - title: "Evaluating and Improving ChatGPT for Unit Test Generation"
-    unique_context_marker: "[61]"
-  - title: "A Survey of Learning-based Automated Program Repair"
-    unique_context_marker: "[62]"
-  - title: "A Systematic Literature Review on Large Language Models for Automated Program Repair"
-    unique_context_marker: "[63]"
-  - title: "A Survey on Large Language Models for Software Engineering"
-    unique_context_marker: "[64]"
-  - title: "Pre-Trained Model-Based Automated Software Vulnerability Repair: How Far Are We?"
-    unique_context_marker: "[65]"
-  - title: "Gamma: Revisiting Template-Based Automated Program Repair Via Mask Prediction"
-    unique_context_marker: "[66]"
-  - title: "Exploring Automated Assertion Generation via Large Language Models"
-    unique_context_marker: "[67]"
-  - title: "A Critical Review of Large Language Model on Software Engineering: An Example from ChatGPT and Automated Program Repair"
-    unique_context_marker: "[68]"
-  - title: "Out of Sight, Out of Mind: Better Automatic Vulnerability Repair by Broadening Input Ranges and Sources"
-    unique_context_marker: "[69]"
-  - title: "GrammarT5: Grammar-Integrated Pretrained Encoder-Decoder Neural Model for Code"
-    unique_context_marker: "[70]"
+"citations":
+- "title": "Hugging Face"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 16
+- "title": "OpenDDAL"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 21
+- "title": "OWLAPI"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 21
+- "title": "PyTorch"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 16
+- "title": "An Industrial Evaluation of Unit Test Generation: Finding Real Faults in a Financial Application"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 1
+- "title": "RESTful API Automated Test Case Generation with EvoMaster"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 1
+- "title": "The Plastic Surgery Hypothesis"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 1
+- "title": "ChatUniTest: A Framework for LLM-Based Test Generation"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 4
+- "title": "A Survey on Unit Testing Practices and Problems"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 1
+- "title": "How Does Execution Information Help with Information-Retrieval Based Bug Localization?"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 5
+- "title": "TOGA: A Neural Method for Test Oracle Generation"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 1
+  - 21
+- "title": "Test Case Prioritization: A Family of Empirical Studies"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 1
+- "title": "Large Language Models for Software Engineering: Survey and Open Problems"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 4
+- "title": "CodeBERT: A Pre-Trained Model for Programming and Natural Languages"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 4
+  - 9
+  - 20
+- "title": "EvoSuite: Automatic Test Suite Generation for Object-Oriented Software"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 1
+  - 21
+- "title": "VulRepair: A T5-based Automated Software Vulnerability Repair"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 4
+  - 9
+- "title": "TestART: Improving LLM-based Unit Test via Co-evolution of Automated Generation and Repair Iteration"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 4
+- "title": "UniXcoder: Unified Cross-Modal Pre-training for Code Representation"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 20
+- "title": "GraphCodeBERT: Pre-training Code Representations with Data Flow"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 20
+- "title": "Is ISSTA Research Relevant to Industry?"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 1
+- "title": "An Empirical Study on Focal Methods in Deep-Learning-Based Approaches for Assertion Generation"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 13
+  - 22
+- "title": "Neural-Based Test Oracle Generation: A Large-scale Evaluation and Lessons Learned"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 21
+- "title": "Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 21
+- "title": "Dense Passage Retrieval for Open-Domain Question Answering"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 8
+- "title": "CodaMosa: Escaping Coverage Plateaus in Test Generation with Pre-Trained Large Language Models"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 4
+- "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 5
+- "title": "EDITSUM: A Retrieve-and-Edit Framework for Source Code Summarization"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 5
+- "title": "Automating Code Review Activities by Large-Scale Pre-training"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 4
+- "title": "Towards More Realistic Evaluation for Neural Test Oracle Generation"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 1
+  - 21
+- "title": "Understanding Build Issue Resolution in Practice: Symptoms and Fix Patterns"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 22
+- "title": "CodeXGLUE: A Machine Learning Benchmark Dataset for Code Understanding and Generation"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 4
+  - 15
+  - 20
+  - 22
+- "title": "Using Transfer Learning for Code-Related Tasks"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 3
+- "title": "Studying the Usage of Text-To-Text Transfer Transformer to Support Code-Related Tasks"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 3
+- "title": "Retrieval-Based Prompt Selection for Code-Related Few-Shot Learning"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 1
+  - 3
+  - 5
+  - 21
+- "title": "Randoop: Feedback-Directed Random Testing for Java"
+  "unique_context_marker": "[35]"
+  "block_ids":
+  - 1
+- "title": "LTM: Scalable and Black-Box Similarity-Based Test Suite Minimization Based on Language Models"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 8
+- "title": "Retrieval Augmented Code Generation and Summarization"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 1
+  - 5
+- "title": "Empirically Revisiting and Enhancing IR-Based Test-Case Prioritization"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 5
+- "title": "The Economic Impacts of Inadequate Infrastructure for Software Testing"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 1
+- "title": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 3
+- "title": "Code Llama: Open Foundation Models for Code"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 8
+  - 21
+- "title": "Code-Aware Prompting: A study of Coverage Guided Test Generation in Regression Setting using LLM"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 4
+- "title": "An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 1
+- "title": "GitBug-Java: A Reproducible Benchmark of Recent Java Bugs"
+  "unique_context_marker": "[44]"
+  "block_ids":
+  - 14
+- "title": "Revisiting and Improving Retrieval-Augmented Deep Assertion Generation"
+  "unique_context_marker": "[45]"
+  "block_ids":
+  - 1
+  - 3
+  - 8
+  - 13
+  - 15
+  - 16
+  - 18
+  - 22
+- "title": "ChatGPT vs SBST: A Comparative Assessment of Unit Test Suite Generation"
+  "unique_context_marker": "[46]"
+  "block_ids":
+  - 4
+- "title": "DebugBench: Evaluating Debugging Capability of Large Language Models"
+  "unique_context_marker": "[47]"
+  "block_ids":
+  - 14
+- "title": "Generating Accurate Assert Statements for Unit Test Cases using Pretrained Transformers"
+  "unique_context_marker": "[48]"
+  "block_ids":
+  - 3
+- "title": "Using Pre-Trained Models To Boost Code Review Automation"
+  "unique_context_marker": "[49]"
+  "block_ids":
+  - 4
+  - 15
+- "title": "Software Testing With Large Language Models: Survey, Landscape, and Vision"
+  "unique_context_marker": "[50]"
+  "block_ids":
+  - 4
+  - 21
+- "title": "RAP-Gen: Retrieval-Augmented Patch Generation with Codet5 for Automatic Program Repair"
+  "unique_context_marker": "[51]"
+  "block_ids":
+  - 1
+  - 4
+  - 5
+  - 15
+- "title": "CodeT5: Identifier-Aware Unified Pre-Trained Encoder-Decoder Models for Code Understanding and Generation"
+  "unique_context_marker": "[52]"
+  "block_ids":
+  - 1
+  - 4
+  - 9
+  - 20
+- "title": "HITS: High-coverage LLM-based Unit Test Generation via Method Slicing"
+  "unique_context_marker": "[53]"
+  "block_ids":
+  - 4
+- "title": "A Systematic Literature Review on the Use of Deep Learning in Software Engineering Research"
+  "unique_context_marker": "[54]"
+  "block_ids":
+  - 3
+- "title": "On Learning Meaningful Assert Statements for Unit Test Cases"
+  "unique_context_marker": "[55]"
+  "block_ids":
+  - 1
+  - 3
+  - 10
+  - 13
+  - 15
+  - 22
+- "title": "Automated Program Repair in the Era of Large Pre-Trained Language Models"
+  "unique_context_marker": "[56]"
+  "block_ids":
+  - 4
+- "title": "On the Evaluation of Large Language Models in Unit Test Generation"
+  "unique_context_marker": "[57]"
+  "block_ids":
+  - 4
+- "title": "A Survey on Deep Learning for Software Engineering"
+  "unique_context_marker": "[58]"
+  "block_ids":
+  - 3
+- "title": "Automated Assertion Generation via Information Retrieval and Its Integration with Deep Learning"
+  "unique_context_marker": "[59]"
+  "block_ids":
+  - 1
+  - 3
+  - 8
+  - 13
+  - 15
+  - 16
+  - 18
+  - 22
+- "title": "CIRCLE: Continual Repair across Programming Languages"
+  "unique_context_marker": "[60]"
+  "block_ids":
+  - 4
+- "title": "Evaluating and Improving ChatGPT for Unit Test Generation"
+  "unique_context_marker": "[61]"
+  "block_ids":
+  - 4
+- "title": "A Survey of Learning-based Automated Program Repair"
+  "unique_context_marker": "[62]"
+  "block_ids":
+  - 3
+- "title": "A Systematic Literature Review on Large Language Models for Automated Program Repair"
+  "unique_context_marker": "[63]"
+  "block_ids":
+  - 4
+- "title": "A Survey on Large Language Models for Software Engineering"
+  "unique_context_marker": "[64]"
+  "block_ids":
+  - 4
+- "title": "Pre-Trained Model-Based Automated Software Vulnerability Repair: How Far Are We?"
+  "unique_context_marker": "[65]"
+  "block_ids":
+  - 4
+  - 9
+  - 15
+- "title": "Gamma: Revisiting Template-Based Automated Program Repair Via Mask Prediction"
+  "unique_context_marker": "[66]"
+  "block_ids":
+  - 4
+- "title": "Exploring Automated Assertion Generation via Large Language Models"
+  "unique_context_marker": "[67]"
+  "block_ids":
+  - 3
+- "title": "A Critical Review of Large Language Model on Software Engineering: An Example from ChatGPT and Automated Program Repair"
+  "unique_context_marker": "[68]"
+  "block_ids":
+  - 14
+- "title": "Out of Sight, Out of Mind: Better Automatic Vulnerability Repair by Broadening Input Ranges and Sources"
+  "unique_context_marker": "[69]"
+  "block_ids":
+  - 4
+- "title": "GrammarT5: Grammar-Integrated Pretrained Encoder-Decoder Neural Model for Code"
+  "unique_context_marker": "[70]"
+  "block_ids":
+  - 4
