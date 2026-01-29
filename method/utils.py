@@ -86,3 +86,48 @@ def mask_segmented_markdown(segmented_markdown, target_block_id):
             result.append(line)
 
     return '\n'.join(result)
+
+
+def extract_node_definition(taxonomy_text, node_name):
+    """Extract node definition from taxonomy markdown."""
+    lines = taxonomy_text.split('\n')
+    in_target_section = False
+    definition_lines = []
+    target_level = None
+
+    for line in lines:
+        if line.strip().startswith('#'):
+            current_title = line.lstrip('#').strip()
+            if current_title == node_name:
+                in_target_section = True
+                target_level = len(line) - len(line.lstrip('#'))
+                continue
+            elif in_target_section:
+                current_level = len(line) - len(line.lstrip('#'))
+                if current_level <= target_level:
+                    break
+
+        if in_target_section:
+            definition_lines.append(line)
+
+    return '\n'.join(definition_lines).strip()
+
+
+def fill_labels_by_marker(block_citations, marker, label, label_type):
+    """Fill label for a specific marker in block_citations."""
+    for bc in block_citations:
+        if bc["marker"] == marker:
+            bc["citation"][label_type][bc["idx"]] = label
+            break
+
+
+def build_block_to_citations(citations):
+    """Build mapping from block_id to citations."""
+    block_to_citations = {}
+    for citation in citations:
+        marker = citation.get("unique_context_marker", "")
+        for idx, block_id in enumerate(citation.get("block_ids", [])):
+            if block_id not in block_to_citations:
+                block_to_citations[block_id] = []
+            block_to_citations[block_id].append({"marker": marker, "citation": citation, "idx": idx})
+    return block_to_citations

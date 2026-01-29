@@ -205,3 +205,77 @@ Label format contract (critical):
 
 Return the critique and final topic label for each marker.
 """
+
+
+taxocite_reverse_intent_prompt = """You are given (1) the paper abstract, (2) the paper structure where ONLY the current block is visible, (3) a list of citation markers, and (4) a set of intent NODES with their definitions.
+
+Your task: REVERSE RETRIEVAL - determine which markers (if any) belong to each provided node.
+
+Inputs:
+- Abstract:
+{abstract}
+
+- Paper structure (current block shown; other blocks masked):
+{masked_markdown}
+
+- Available markers:
+{markers}
+
+- Nodes with definitions:
+{nodes_with_definitions}
+
+Task:
+For EACH provided node, determine:
+1) Which markers (if any) belong to this node based on the visible context? (notice that the intent may or may not have their related citations)
+2) Provide reasoning for the assignment.
+
+Important constraints:
+- Each marker can match AT MOST ONE node.
+- NOT ALL markers need to be assigned (IMPORTANT: some may not match any provided node).
+- A node can have ZERO or MULTIPLE markers.
+- Use evidence ONLY from the current block and abstract.
+
+Output for each node:
+- node: the exact node name (copy from the provided nodes)
+- reasoning: one sentence explaining why these specific markers belong to this node
+- markers: list of markers that belong to this node (can be empty list if no markers match)
+
+Return the assignments for ALL provided nodes.
+"""
+
+
+taxocite_reverse_topic_prompt = """You are given (1) the paper abstract, (2) the paper structure where ONLY the current block is visible, (3) a list of citation markers, and (4) a set of topic NODES with their definitions.
+
+Your task: REVERSE RETRIEVAL - determine which markers (if any) belong to each provided node.
+
+Inputs:
+- Abstract:
+{abstract}
+
+- Paper structure (current block shown; other blocks masked):
+{masked_markdown}
+
+- Available markers:
+{markers}
+
+- Nodes with definitions:
+{nodes_with_definitions}
+
+Task:
+For EACH provided node, determine:
+1) Which markers (if any) belong to this node based on the visible context? (notice that each topic may or may not have their relevant citations)
+2) Provide reasoning for the assignment.
+
+Important constraints:
+- Each marker can match AT MOST ONE node.
+- NOT ALL markers need to be assigned (IMPORTANT: some may not match any provided node).
+- A node can have ZERO or MULTIPLE markers.
+- Use evidence ONLY from the current block and abstract.
+
+Output for each node:
+- node: the exact node name (copy from the provided nodes)
+- reasoning: one sentence explaining why these specific markers belong to this node
+- markers: list of markers that belong to this node (can be empty list if no markers match)
+
+Return the assignments for ALL provided nodes.
+"""
