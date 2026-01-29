@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--seg_paper", required=True)
     parser.add_argument("--ref_list", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--model", default="gpt-5-mini-2025-08-07")
     args = parser.parse_args()
 
     # Read inputs
@@ -90,7 +91,7 @@ def main():
         block_ids_to_process.append(block_id)
 
     # Batch process with LLM
-    llm = ChatOpenAI(model="gpt-5-mini-2025-08-07", reasoning_effort="medium")
+    llm = ChatOpenAI(model=args.model, reasoning_effort="medium")
     structured_llm = llm.with_structured_output(CitationClassification)
 
     intent_outputs = structured_llm.batch(intent_prompts, config={"max_concurrency": 32})
