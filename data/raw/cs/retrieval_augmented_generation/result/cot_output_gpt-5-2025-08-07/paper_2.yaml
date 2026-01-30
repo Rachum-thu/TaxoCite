@@ -1,0 +1,506 @@
+"citations":
+- "title": "Gpt-4 technical report"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 6
+  - 8
+  - 9
+  "intent_labels":
+  - "Resource Utilization"
+  - "Other Intent"
+  - "Other Intent"
+  "topic_labels":
+  - "Parameter-Inaccessible Generators (Black-box)"
+  - "Independent Training"
+  - "Generation Quality"
+- "title": "Query Refinement Prompts for Closed-Book Long-Form Question Answering"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Problem Formulation"
+  "topic_labels":
+  - "Generation Quality"
+- "title": "A general language assistant as a laboratory for alignment"
+  "unique_context_marker": "[3]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Training a helpful and harmless assistant with reinforcement learning from human feedback"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 3
+  - 5
+  - 8
+  "intent_labels":
+  - "Problem Formulation"
+  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
+  "topic_labels":
+  - "Generation Quality"
+  - "Parameter-Accessible Generators (White-box)"
+  - "Trustworthiness and Robustness"
+- "title": "Benchmarking Foundation Models with Language-Model-as-an-Examiner"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Improving language models by retrieving from trillions of tokens"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  - "Prior Methods"
+  "topic_labels":
+  - "Retrieval Integration for Generation"
+  - "Intermediate-Layer Integration"
+- "title": "Language models are few-shot learners"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Training-free Methods"
+- "title": "FELM: Benchmarking Factuality Evaluation of Large Language Models"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "FacTool: Factuality Detection in Generative AI–A Tool Augmented Framework for Multi-Task and Multi-Domain Scenarios"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Deep reinforcement learning from human preferences"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 8
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Independent Training"
+  - "Evaluation Aspects and Tools"
+- "title": "GLM: General Language Model Pretraining with Autoregressive Blank Infilling"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Parameter-Accessible Generators (White-box)"
+- "title": "ELI5: Long Form Question Answering"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 2
+  - 6
+  - 11
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "NLP Applications"
+  - "Evaluation Aspects and Tools"
+  - "Evaluation Aspects and Tools"
+- "title": "GPTScore: Evaluate as You Desire"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Enabling Large Language Models to Generate Text with Citations"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Generation Quality"
+- "title": "How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Retrieval augmented language model pre-training"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  - "Prior Methods"
+  "topic_labels":
+  - "Retrieval Integration for Generation"
+  - "Joint Training"
+- "title": "RefChecker for Fine-grained Hallucination Detection"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Unsupervised dense information retrieval with contrastive learning"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "TIGERScore: Towards Building Explainable Metric for All Text Generation Tasks"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Triviaqa: A large scale distantly supervised challenge dataset for reading comprehension"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "NLP Applications"
+- "title": "Wice: Real-world entailment for claims in wikipedia"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 3
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+  - "Evaluation Aspects and Tools"
+- "title": "Dense passage retrieval for open-domain question answering"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "Large language models are zero-shot reasoners"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Training-free Methods"
+- "title": "Evaluating the factual consistency of abstractive text summarization"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Aquamuse: Automatically generating datasets for query-based multi-document summarization"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Problem Formulation"
+  "topic_labels":
+  - "Context Curation and Compression"
+- "title": "Natural questions: a benchmark for question answering research"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "NLP Applications"
+- "title": "Fast and Accurate Factual Inconsistency Detection Over Long Documents"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 3
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+  - "Evaluation Aspects and Tools"
+- "title": "Evaluating verifiability in generative search engines"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Generation Quality"
+- "title": "WebGLM: Towards An Efficient Web-Enhanced Question Answering System with Human Preferences"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 1
+  - 2
+  - 3
+  - 5
+  - 6
+  - 11
+  "intent_labels":
+  - "Research Gap"
+  - "Research Gap"
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Resource Utilization"
+  - "Result Comparison"
+  "topic_labels":
+  - "NLP Applications"
+  - "NLP Applications"
+  - "Retriever Type"
+  - "Input-Layer Integration"
+  - "Evaluation Aspects and Tools"
+  - "NLP Applications"
+- "title": "G-Eval: NLG Evaluation using Gpt-4 with Better Human Alignment"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Setting/Protocal Adoption"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Teaching language models to support answers with verified quotes"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Augmented language models: a survey"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Input-Layer Integration"
+- "title": "FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 3
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+  - "Evaluation Aspects and Tools"
+- "title": "WebGPT: Browser-assisted question-answering with human feedback"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 1
+  - 2
+  - 5
+  - 11
+  "intent_labels":
+  - "Research Gap"
+  - "Research Gap"
+  - "Prior Methods"
+  - "Result Comparison"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+  - "NLP Applications"
+  - "Input-Layer Integration"
+  - "NLP Applications"
+- "title": "GPT-4 technical report"
+  "unique_context_marker": "[35]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Training language models to follow instructions with human feedback"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 3
+  - 5
+  - 8
+  - 11
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+  - "Parameter-Accessible Generators (White-box)"
+  - "Independent Training"
+  - "Independent Training"
+- "title": "WebCPM: Interactive Web Search for Chinese Long-form Question Answering"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 2
+  - 3
+  - 5
+  - 6
+  - 11
+  "intent_labels":
+  - "Prior Methods"
+  - "Problem Formulation"
+  - "Prior Methods"
+  - "Resource Utilization"
+  - "Result Comparison"
+  "topic_labels":
+  - "NLP Applications"
+  - "Input-Layer Integration"
+  - "Input-Layer Integration"
+  - "Evaluation Aspects and Tools"
+  - "NLP Applications"
+- "title": "Squad: 100,000+ questions for machine comprehension of text"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "NLP Applications"
+- "title": "In-Context Retrieval-Augmented Language Models"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Parameter-Inaccessible Generators (Black-box)"
+- "title": "Is reinforcement learning (not) for natural language processing?: Benchmarks, baselines, and building blocks for natural language policy optimization"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 1
+  - 3
+  "intent_labels":
+  - "Research Gap"
+  - "Problem Formulation"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+  - "Training Strategies"
+- "title": "Coqa: A conversational question answering challenge"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "NLP Applications"
+- "title": "REPLUG: Retrieval-Augmented Black-Box Language Models"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Parameter-Inaccessible Generators (Black-box)"
+- "title": "Blenderbot 3: a deployed conversational agent that continually learns to responsibly engage"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "NLP Applications"
+- "title": "Process for adapting language models to society (palms) with values-targeted datasets"
+  "unique_context_marker": "[44]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Lamda: Language models for dialog applications"
+  "unique_context_marker": "[45]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "NLP Applications"
+- "title": "Llama 2: Open foundation and fine-tuned chat models"
+  "unique_context_marker": "[46]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Parameter-Accessible Generators (White-box)"
+- "title": "Evaluating open question answering evaluation"
+  "unique_context_marker": "[47]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Survey on factuality in large language models: Knowledge, retrieval and domain-specificity"
+  "unique_context_marker": "[48]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Problem Formulation"
+  "topic_labels":
+  - "Generation Quality"
+- "title": "Neural text generation with unlikelihood training"
+  "unique_context_marker": "[49]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Fine-Grained Human Feedback Gives Better Rewards for Language Model Training"
+  "unique_context_marker": "[50]"
+  "block_ids":
+  - 1
+  - 9
+  - 14
+  "intent_labels":
+  - "Research Gap"
+  - "Algorithm/Principle Adoption"
+  - "Background"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+  - "Independent Training"
+  - "Evaluation Aspects and Tools"
+- "title": "Face4RAG: Factual Consistency Evaluation for Retrieval Augmented Generation in Chinese"
+  "unique_context_marker": "[51]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Preference-grounded Token-level Guidance for Language Model Fine-tuning"
+  "unique_context_marker": "[52]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Independent Training"
+- "title": "AlignScore: Evaluating Factual Consistency with a Unified Alignment Function"
+  "unique_context_marker": "[53]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"

@@ -1,0 +1,854 @@
+title: 'Towards Fair RAG: On the Impact of Fair Ranking in Retrieval-Augmented Generation'
+blocks:
+- block_id: 0
+  content: Despite the central role of retrieval in retrieval-augmented generation (RAG) systems, much of the existing research
+    on RAG overlooks the well-established field of fair ranking and fails to account for the interests of all stakeholders
+    involved. In this paper, we conduct the first systematic evaluation of RAG systems that integrate fairness-aware rankings,
+    addressing both ranking fairness and attribution fairness, which ensures equitable exposure of the sources cited in the
+    generated content. Our evaluation focuses on measuring item-side fairness, specifically the fair exposure of relevant
+    items retrieved by RAG systems, and investigates how this fairness impacts both the effectiveness of the systems and the
+    attribution of sources in the generated output that users ultimately see. By experimenting with twelve RAG models across
+    seven distinct tasks, we show that incorporating fairness-aware retrieval often maintains or even enhances both ranking
+    quality and generation quality, countering the common belief that fairness compromises system performance. Additionally,
+    we demonstrate that fair retrieval practices lead to more balanced attribution in the final responses, ensuring that the
+    generator fairly cites the sources it relies on. Our findings underscore the importance of item-side fairness in retrieval
+    and generation, laying the foundation for responsible and equitable RAG systems and guiding future research in fair ranking
+    and attribution.
+  citations: []
+- block_id: 1
+  content: 'In recent years, the concept of fair ranking has emerged as a critical concern in modern information access systems
+    [13]. However, despite its significance, fair ranking has yet to be thoroughly examined in the context of retrieval-augmented
+    generation (RAG) [1, 33], a rapidly advancing trend in natural language processing (NLP) systems [32]. To understand why
+    this is important, consider the RAG system in Figure 1, where a user asks a question about running shoes. A classic retrieval
+    system might return several documents containing information from various running shoe companies. If the RAG system only
+    selects the top two documents, then information from the remaining two relevant companies will not be relayed to the predictive
+    model and will likely be omitted from its answer. The fair ranking literature refers to this situation as unfair because
+    some relevant companies (i.e., in documents at position 3 and 4) receive less or no exposure compared to equally relevant
+    company in the top position [13].
+
+
+    Understanding the effect of fair ranking in RAG is fundamental to ensuring responsible and equitable NLP systems. Since
+    retrieval results in RAG often underlie response attribution [17], unfair exposure of content to the RAG system can result
+    in incomplete evidence in responses (thus compromising recall of potentially relevant information for users) or downstream
+    representational harms (thus creating or reinforcing biases across the set of relevant entities). In situations where
+    content providers are compensated for contributions to inference, there can be financial implications for the unfairness
+    [4, 22, 36]. Indeed, the fair ranking literature indicates that these are precisely the harms that emerge when people
+    are searchers [13], much less RAG systems, where the searchers are machines. RAG complicates these challenges since it
+    often truncates rankings to much shorter lengths to fit the generator’s limited context size [2, 23, 32], making equal
+    exposure of relevant items even harder.
+
+
+    Moreover, the fact that machines are now the searchers necessitates a different notion of item-worthiness (how deserving
+    an item is to be included in a ranked list). Traditionally, ranking quality has been assessed based on relevance labels,
+    which are created according to how relevant an item is to the user’s query [53]. However, with RAG systems, where the
+    consumer is a language model, there is a growing shift towards evaluating ranking quality based on utility labels, which
+    are determined by the usefulness of an item in aiding the model’s task performance, rather than its relevance to the query
+    [51, 62].
+
+
+    This shift from relevance to utility in the concept of item-worthiness can significantly alter our understanding of the
+    relationship between fairness and ranking quality [3]—particularly the tradeoffs that are well-known in the fair ranking
+    literature [5, 11, 56]. Since previous fair ranking studies were conducted based on relevance judgments, they may need
+    to be reexamined in light of utility-based judgments within the context of RAG.
+
+
+    However, purely focusing on how often certain items appear in the top-k positions can neglect the fact that not all retrieved
+    items are necessarily attributed in the final generated response. If an item is retrieved but never actually influences
+    the RAG model’s output, one cannot fully gauge whether it truly received exposure from the standpoint of the final generation.
+    This reveals a subtle yet important gap: fair retrieval may not directly translate to fair consumption, especially when
+    some retrieved items might be overshadowed in the generation step. Measuring how exposure is ultimately distributed across
+    the attributed sources in the final response offers a more complete picture of exposure-based fairness in the context
+    of RAG systems.
+
+
+    Our research aims to bridge the gap between traditional fair ranking studies and the emerging changes posed by RAG systems,
+    ultimately enhancing our understanding of the interplay between fairness, ranking quality, and the effectiveness of RAG
+    systems. We do this by evaluating RAG systems with a fairness-aware retriever across seven different tasks, experimenting
+    with varying levels of retrieval fairness to observe changes in ranking quality and generation quality (utility), as well
+    as the fairness of attributed sources.
+
+
+    Our empirical results show that, in the context of machine users, there also exists an overall trend of fairness-quality
+    tradeoff with respect to both retrieval and generation quality. However, the magnitude of this tradeoff is not particularly
+    severe. In fact, we find that RAG models equipped with a fair ranker can often preserve a significant level of retrieval
+    and generation quality, and in some cases, even surpass the quality achieved by the traditional RAG setup with a deterministic
+    ranker that lacks fairness considerations. Moreover, while the fraction of retrieved sources that actually appear in the
+    final response may vary, equitable retrieval frequently leads to more equitable usage of those sources by the generator.
+    This surprising finding offers significant insight into the potential of RAG-based applications, suggesting that fair
+    treatment of individual content providers can be achieved without sacrificing much of the high-quality service delivered
+    to end-users. This challenges the conventional assumption of an inevitable tradeoff between fairness and quality, opening
+    new avenues for developing more equitable and effective RAG systems.'
+  citations:
+  - marker: '[1]'
+    intent_label: Domain Overview
+    topic_label: Retrieval Integration for Generation
+  - marker: '[2]'
+    intent_label: Importance of Problem
+    topic_label: Context Curation and Compression
+  - marker: '[3]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[4]'
+    intent_label: Importance of Problem
+    topic_label: Trustworthiness and Robustness
+  - marker: '[5]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[11]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[13]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[17]'
+    intent_label: Importance of Problem
+    topic_label: Trustworthiness and Robustness
+  - marker: '[22]'
+    intent_label: Importance of Problem
+    topic_label: Trustworthiness and Robustness
+  - marker: '[23]'
+    intent_label: Importance of Problem
+    topic_label: Context Curation and Compression
+  - marker: '[32]'
+    intent_label: Domain Overview
+    topic_label: Context Curation and Compression
+  - marker: '[33]'
+    intent_label: Domain Overview
+    topic_label: Retrieval Integration for Generation
+  - marker: '[36]'
+    intent_label: Importance of Problem
+    topic_label: Trustworthiness and Robustness
+  - marker: '[51]'
+    intent_label: Domain Overview
+    topic_label: Retrieval Quality
+  - marker: '[53]'
+    intent_label: Domain Overview
+    topic_label: Retrieval Quality
+  - marker: '[56]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[62]'
+    intent_label: Domain Overview
+    topic_label: Retrieval Quality
+- block_id: 2
+  content: ''
+  citations: []
+- block_id: 3
+  content: 'RAG, a specific type of retrieval-enhanced machine learning (REML) [32, 60], has been widely adopted in various
+    domains, including language modeling [31], question-answering [27], and personalization [40, 49, 50]. Studies on the evaluation
+    of RAG models have primarily focused on their effectiveness, including end-to-end performance [20, 27, 33] and the assessment
+    of individual components [14, 47, 48, 51], such as retrieval relevance and model faithfulness. Furthermore, recent efforts
+    have explored attribution mechanisms for ensuring the trustworthiness of RAG responses [16, 17], examining how thoroughly
+    models reference the source text and thus promoting a more faithful generation process.
+
+
+    However, little research has focused on evaluating fairness in retrieval-enhanced generation models, with the exception
+    of recent work [54], which improved demographic diversity in human image generation by conditioning a generative model
+    with externally retrieved images that help debias the generation process.'
+  citations:
+  - marker: '[14]'
+    intent_label: Prior Methods
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[16]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[17]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Generation Quality
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: NLP Applications
+  - marker: '[31]'
+    intent_label: Domain Overview
+    topic_label: NLP Applications
+  - marker: '[32]'
+    intent_label: Domain Overview
+    topic_label: Retrieval Integration for Generation
+  - marker: '[33]'
+    intent_label: Prior Methods
+    topic_label: Generation Quality
+  - marker: '[40]'
+    intent_label: Domain Overview
+    topic_label: Downstream Tasks
+  - marker: '[47]'
+    intent_label: Prior Methods
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[48]'
+    intent_label: Prior Methods
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[49]'
+    intent_label: Domain Overview
+    topic_label: Downstream Tasks
+  - marker: '[50]'
+    intent_label: Domain Overview
+    topic_label: Downstream Tasks
+  - marker: '[51]'
+    intent_label: Prior Methods
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[54]'
+    intent_label: Research Gap
+    topic_label: Trustworthiness and Robustness
+  - marker: '[60]'
+    intent_label: Domain Overview
+    topic_label: Retrieval Integration for Generation
+- block_id: 4
+  content: 'Fair ranking has been approached through various definitions based on normative concerns, primarily with distinctions
+    made according to the stakeholders we prioritize. These include consumer-side fairness [12, 38], which focuses on how
+    fairly a system delivers satisfaction to users; provider-side fairness [28, 52], which addresses how fairly item providers
+    receive monetary or reputational rewards; and item-side fairness [29], which examines how fairly items are treated in
+    terms of representation or exposure. The motivation of item-side fairness is closely linked to provider-side fairness,
+    as unfair treatment of items can lead to unfair compensation for providers. These fairness concerns can be further categorized
+    by the scope of stakeholders, encompassing individual fairness—ensuring similar treatment for similar individuals—and
+    group fairness—ensuring equitable outcomes across different groups [8, 13]. Previous studies have focused on developing
+    metrics to measure fairness [44] and optimizing fair retrievers within a single [52, 58, 61] or multiple rankings [5,
+    11, 55, 56]. In the context of provider- and item-side fairness, ensuring equal exposure of similar items across multiple
+    rankings has gained significant attention [13]. To achieve this, researchers have used stochastic rankers that return
+    a distribution of rankings, in contrast to deterministic rankers commonly found in areas like RAG, which produce a fixed
+    ranking. This approach ensures that, in expectation, similar items receive equal exposure across multiple user requests,
+    with the distributions typically based on the merit of the rankings, such as an item’s relevance [11, 56].
+
+
+    In this research, we employ a stochastic ranker in RAG to enhance individual item-side fairness, aiming to ensure equal
+    expected exposure for items that offer similar merits.'
+  citations:
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[8]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[12]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[13]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[28]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[29]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[38]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[44]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[52]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[55]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[56]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[58]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[61]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+- block_id: 5
+  content: 'In traditional RAG systems, a user input is used to query a retrieval system for recommended items from some corpus,
+    which are then used for generation. Given user input x, a query q generated by the query generation function phi_q(x),
+    and a corpus of documents C, a deterministic retriever R(q, C) returns a fixed ranked list L every time q is seen. Retrieval
+    is followed by a top k truncation which is passed to a prompt generation function phi_p(x, L_{1:k}) that returns a final
+    prompt x̄, which is subsequently passed to the language model G(x̄). Because deterministic retrievers allocate exposure
+    to the same item over repeated samples, RAG systems with deterministic retrievers present a challenge to ensuring equal
+    exposure of relevant items to the generator.
+
+
+    To address the issue of unfairness in the rankings passed to the generator, we can convert a deterministic retriever into
+    a stochastic retriever, which can, in expectation, provide fair rankings [11]. By sampling a ranking based on its quality
+    to users—in this case generators—the expected exposure of different relevant items becomes similar and, therefore, fairer.
+    Because decisions are stochastic, the fairness and quality of stochastic retrieval is evaluated based on a sample of rankings.
+    Likewise, since each sampled ranking is processed by a generator, we measure the expected generator effectiveness over
+    these sampled rankings. We also consider how fairly exposure is allocated among the items that end up being attributed
+    by the final output, acknowledging that some retrieved items may not be credited in the generated text. The complete evaluation
+    pipeline of a RAG system with a stochastic retriever is illustrated in Figure 2.
+
+
+    The following sections describe how we construct a test collection with utility labels (§3.1), how we stochastically sample
+    multiple rankings (§3.2), how we evaluate the fairness and ranking quality of the sampled rankings (§3.3.1), and how we
+    assess a RAG system’s performance over sampled rankings (§3.3.2). We then explain how we measure the expected number of
+    attributed items (§3.3.3) and evaluate the fairness of these attributed sources (§3.3.4).'
+  citations:
+  - marker: '[11]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Trustworthiness and Robustness
+- block_id: 6
+  content: 'Setting an appropriate proxy for measuring item-worthiness is crucial in the evaluation of fairness [3]. Drawing
+    on the insight that utility-based judgments are more suitable than relevance judgments in the context of RAG [51, 62],
+    we annotate item-level utility labels for all items in the corpus.
+
+
+    We define an item’s worthiness by the marginal gain in utility (utility-gain) it provides to a language model (specifically,
+    the generator in a RAG system) when used to solve a specific task as part of the augmentation process. To assess this
+    utility-gain, each item in the corpus is individually supplied to the generator along with an input question. The utility-gain
+    is then calculated as the difference between the utility of the augmented generator and that of a baseline language model
+    without any information about the item. Formally, let u_i denote the baseline string utility score from the vanilla language
+    model prompted only with the input question, and let u_j represent the utility score from the language model with a prompt
+    augmented by the j’th item d_j in the corpus. The item d_j is considered useful if the utility-gain delta_j = u_j − u_i
+    is positive, and not useful otherwise.
+
+
+    Therefore, the item-level utility labels are designed to be both task- and generator-dependent, as the utility of each
+    item varies depending on the task and the language model used. This labeling process also aligns with the principles of
+    task-based information retrieval, where, in the context of human searchers, document utility may vary on how the user
+    expects to use the document [30].'
+  citations:
+  - marker: '[3]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[30]'
+    intent_label: Domain Overview
+    topic_label: Retrieval Quality
+  - marker: '[51]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[62]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Evaluation Aspects and Tools
+- block_id: 7
+  content: 'Stochastic retrievers have been used for various purposes, such as optimization of retrieval models [7, 18, 41,
+    59], as well as ensuring equitable exposure of items [11, 41, 42]. Many of these studies use Plackett-Luce sampling [43]
+    to achieve the stochasticity of retrieval. We follow the line of research and formally define how we derive a fairness-aware
+    stochastic retriever through Plackett-Luce sampling. To enhance sampling efficiency, we adopt the methodology of Oosterhuis
+    [41], and for controllable randomization, we utilize the approach proposed by Diaz et al. [11].
+
+
+    Given n items in a corpus C, a vector of retrieval scores s ∈ R^n can be obtained from R(q, C), which can be used to generate
+    a ranked list L. We then min-max normalize retrieval scores to be in [0, 1] in order to construct a multinomial distribution
+    over items [5]. The probability of an item d being selected as the i’th item in a new ranking π through Plackett-Luce
+    sampling is given by
+
+
+    p(d | L_{1:i-1}) = exp(s̄_d) 1[d ∉ L_{1:i-1}] / Σ_{d'' ∈ C\L_{1:i-1}} exp(s̄_{d''} )
+
+
+    where L_{1:i-1} is the partial ranking up to position i−1, s̄ represents the normalized retrieval score vector, and s̄_d
+    is the normalized score of item d. Using this probability, we iteratively sample an item, set its probability to 0, renormalize
+    the distribution, and repeat the process. The probability of generating a complete ranking is then given by the product
+    of the placement probabilities for each item, i.e., p(π | q) = ∏_{i=1}^n p(π_i | π_{1:i-1}).
+
+
+    This repeated sampling and renormalization process can be efficiently managed using the Gumbel-Softmax trick [19, 37],
+    which enables the sampling of rankings to be performed at the speed of sorting [41]. To do so, for each sampling iteration,
+    we draw U_i ∼ Uniform(0, 1), followed by generating a Gumbel noise G_i = −log(−log(U_i)). The probability of each sampled
+    ranking is then obtained by sorting the items based on their perturbed scores s̃_{d_i} = s̄_{d_i} + G_i.
+
+
+    #### 3.2.1 Controlling the Level of Fairness
+
+    Adjusting the level of randomization directly controls the degree of item-fairness, aligning with our goal to observe
+    how varying levels of fairness in rankings affect the ranking and generation quality of a RAG model. To obtain the controllability,
+    we follow the work of Diaz et al. [11] and use a fairness control parameter alpha. We apply the scalar alpha to each value
+    in the normalized score vector s̄ by raising each value to the power of alpha. This process is done before the scores
+    are passed to the sampling policy. Therefore, the modified sampling distribution is thus defined as:
+
+
+    p(d | L_{1:i-1}) = exp(s̄_d^alpha) 1[d ∉ L_{1:i-1}] / Σ_{d'' ∈ C\L_{1:i-1}} exp(s̄_{d''}^alpha)
+
+
+    This implies that the sharpness of the sampling distribution is controlled by the alpha. A higher alpha amplifies the
+    probability of items with higher retrieval scores being sampled. Therefore, if multiple rankings are sampled by the stochastic
+    retriever with high alpha, it results in high disparity (i.e., item-side unfairness) of sampled rankings. At extreme,
+    with considerably high alpha, the procedure results in the identical rankings which is the behavior of a deterministic
+    ranker (i.e., maximum item-unfairness). On the other hand, a lower alpha reduces the disparity of sampled rankings, making
+    the exposure distribution fairer. At extreme, when alpha = 0, the sampling procedure becomes uniformly random and achieves
+    the lowest disparity (i.e., maximum item-fairness) in the sampled rankings.'
+  citations:
+  - marker: '[1]'
+    intent_label: Other Intent
+    topic_label: Retrieval
+  - marker: '[5]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Retrieval
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Independent Training
+  - marker: '[11]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Trustworthiness and Robustness
+  - marker: '[18]'
+    intent_label: Prior Methods
+    topic_label: Independent Training
+  - marker: '[19]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Retrieval
+  - marker: '[37]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Retrieval
+  - marker: '[41]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Trustworthiness and Robustness
+  - marker: '[42]'
+    intent_label: Prior Methods
+    topic_label: Trustworthiness and Robustness
+  - marker: '[43]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Retrieval
+  - marker: '[59]'
+    intent_label: Prior Methods
+    topic_label: Independent Training
+- block_id: 8
+  content: 'As mentioned in Section 3, because we are dealing with stochastic retrievers, we need to measure the expected
+    behavior of the system. Let S(s, N, k) be the stochastic sampler that samples a set of N rankings σ = {π}, given the deterministic
+    retrieval scores s, where each ranking π is truncated to the size of k. From each ranking, we can get an output ŷ_π =
+    G(phi_p(x, π)). With an arbitrary fairness metric μ_f(σ) and a ranking quality metric μ_r(σ) that takes a set of rankings
+    as an input, we can measure the degree of fairness and ranking quality of the sampled rankings. Similarly, an arbitrary
+    string utility metric μ_u(y, ŷ_π), such as ROUGE, can be used to assess an expected effectiveness of a RAG system by calculating
+    the average of the N metric scores.
+
+
+    In this paper, based on the empirical investigation done by Raj and Ekstrand [44], we use expected exposure disparity
+    (EE-D) and expected exposure relevance (EE-R) [11] as μ_f and μ_r, respectively (§3.3.1). For μ_u, we select the metric
+    depending on the task, and we get the expectation of the utility of a RAG model which we call an expected utility (EU)
+    (§3.3.2). Beyond these metrics, we also measure the expected rate of attributed items (EAR) in §3.3.3, capturing how many
+    retrieved items are ultimately used by the generator, and introduce the expected attributed exposure (EAE) in §3.3.4,
+    which evaluates fairness specifically among the items that are actually attributed in the final output.
+
+
+    #### 3.3.1 Expected Exposure in the Context of Machine Users
+
+    Expected Exposure (EE) [11] works by estimating the exposure of items across rankings (e.g., σ) created by a subject model,
+    and comparing them with an optimal set of rankings that always satisfy the item-fairness. To represent the attention over
+    n items in the corpus given by the consumer (generator in RAG), an n × 1 system exposure vector ε is created. This is
+    then compared with an n × 1 target exposure vector ε*, where it represents the exposure of items allocated by an oracle
+    retriever that always rank useful items above non-useful ones [11].
+
+
+    With the system and target exposure vector ε ∈ R^n and ε* ∈ R^n, we can get the difference between the two by the squared
+    l2 distance:
+
+
+    ||ε − ε*||_2^2 = ||ε||_2^2 − 2⟨ε, ε*⟩ + ||ε*||_2^2
+
+
+    This difference yields two metrics useful for fairness and ranking quality evaluation. ||ε||_2^2 can be a measure for
+    disparity of rankings (EE-D), and ⟨ε, ε*⟩ can be a measure of ranking quality (EE-R) by calculating the degree of alignment
+    of system exposure to the target exposure (i.e., how much of the exposure is on useful items). Therefore, the higher the
+    value of EE-D, the more unfair the set of rankings are, and the higher the value of EE-R, the closer the set of system
+    rankings are to the optimal set of rankings with respect to the ranking quality.
+
+
+    The exposure of an item is calculated by modeling users’ (e.g., generators in RAG) attention to each item in a ranking.
+    For example, one can assume that the user is affected by position bias and gives attention following an exponential decay
+    [39]. However, these browsing models were developed for human-users not for machine-users, so we need a different user
+    behavior model for generators in RAG. For the simplicity of the metric, and given recent efforts to reduce position bias
+    and promote more even attention in machine-user settings [21, 25], we assume that the machine user consumes all items
+    passed to the context with equal attention but pays zero attention to items placed after the k’th position due to top-k
+    truncation. This makes the user browsing model a step function parameterized by k. In this work, a relevance-independent
+    machine-user model (MU) is set to the step function that reflects the behavior of top-k truncation of RAG:
+
+
+    MU(i) = 1 if i ≤ k; 0 otherwise = 1[i ≤ k]
+
+
+    Given this machine user browsing model and a mapping from item index to its rank denoted as π̄_d, a system exposure for
+    each item d is calculated as
+
+
+    ε_d = Σ_{π ∈ S_n} p(π | q) MU(π̄_d)
+
+
+    and target exposures for a useful item d and a unuseful item d− are calculated as
+
+
+    ε*_d = (1/m) Σ_{i=1}^m MU(i) = 1 if m ≤ k; k/m otherwise
+
+
+    ε*_{d−} = (k − m)/(n − m) if m ≤ k; 0 otherwise
+
+
+    where m is the number of useful items in the corpus of size n.
+
+
+    #### 3.3.2 Expected Utility
+
+    Given the set of N sampled rankings σ, we individually augment the generator with each ranking π ∈ σ, resulting in N outputs
+    from the generator. The utility of these outputs is then measured using an arbitrary string utility metric μ_u. To determine
+    the anticipated utility of a RAG model with fair rankings—represented by the tuple of a stochastic ranking sampler S and
+    a generator G—we calculate the expected utility (EU) of the RAG system given an instance x.
+
+
+    EU(⟨S, G⟩ | x) = E_{π ∼ S} [ μ_u(y, ŷ_π) ] = Σ_{π ∈ S_n} p(π | q) μ_u(y, ŷ_π) ≈ (1/N) Σ_{π ∈ σ} μ_u(y, ŷ_π)
+
+
+    where ŷ_π is the prediction of a system given the ranking π, S_n is the symmetric group of a ranked list L from the deterministic
+    retriever R, and Σ_{π ∈ S_n} p(π | q) = 1.
+
+
+    #### 3.3.3 Expected Attribution Rate
+
+    We use a natural language inference (NLI) model for attribution, reflecting its effectiveness in measuring faithfulness.
+    Honovich et al. [24] find that NLI outperforms other metrics in a meta-evaluation, leading works such as automated citation
+    evaluation using NLI [17], which strongly correlates with human judgments. Building on the human evaluation framework
+    by Rashkin et al. [45], Gao et al. [16] introduced a new NLI-based metric to approximate human judgments, followed by
+    Bohnet et al. [6]. These studies collectively show that NLI-based methods capture attribution quality in a manner closely
+    aligned with human assessments, making them a reliable choice for our evaluation.
+
+
+    Given a ranking π ∈ σ of k items and a predicted output ŷ_π, we therefore measure item attribution rate (AR) using
+
+
+    μ_AR(π, ŷ_π) = (1/k) Σ_{d ∈ π} NLI(d, ŷ_π)
+
+
+    where NLI(d, ŷ_π) = 1 if item d entails the output ŷ_π, and 0 otherwise, by a natural language inference model.
+
+
+    Analogous to expected utility, we define expected attribution rate (EAR) of a RAG system as
+
+
+    EAR(⟨S, G⟩ | x) = E_{π ∼ S} [ μ_AR(π, ŷ_π) ] = Σ_{π ∈ S_n} p(π | q) μ_AR(π, ŷ_π) ≈ (1/N) Σ_{π ∈ σ} μ_AR(π, ŷ_π).
+
+
+    #### 3.3.4 Expected Attributed Exposure
+
+    While EE measures retrieval fairness and relevance, it does not capture whether the retrieved items actually appear in
+    the final generated output or how fairly exposure is allocated among those items once they surface after generation. To
+    address this gap, we define the attributed exposure vector ε_a ∈ R^n, where an attributed exposure for each item d is
+    calculated as
+
+
+    ε_{a,d} = Σ_{π ∈ S_n} p(π | q) NLI(d, ŷ_π).
+
+
+    Similar to EE, a disparity measure expected attributed exposure disparity (EAE-D) can be derived by measuring the squared
+    l2 distance of an attributed exposure vector, thus
+
+
+    EAE-D(⟨S, G⟩ | x) = ||ε_a||_2^2.
+
+
+    Hence, EAE-D measures how fairly exposure is allocated across the items that are explicitly used, addressing the shortcoming
+    of EE by directly linking exposure to items that influence the final output of a RAG system.
+
+
+    #### 3.3.5 Normalization of Metrics
+
+    Since EAR is an average over the percentage of entailed items for each sampled ranking, its values lie on a consistent
+    scale with [0, 1] range. However, the bounds of EE-D, EE-R, and EAE-D depend on the number of useful items in the corpus.
+    Consequently, we apply normalization on a per-query basis by min-max scaling each metric according to its theoretical
+    lower and upper bounds. We denote the normalized EE-D, EE-R, and EAE-D as EE-D, EE-R, and EAE-D respectively.
+
+
+    However, theoretically determining the bounds of the expected utility (EU) of a RAG model is challenging. To address this,
+    we normalized the EU by the model’s empirical upper bound, the maximum observed utility across all runs of the experiment
+    with the same generators. To approach the true upper bound, these runs include RAG models with an oracle retriever that
+    consistently ranks useful items (i.e., those with positive utility labels) above non-useful ones, stochastically returning
+    one of the m!(n−m)! different rankings, where m represents the number of useful items in the corpus. We denote the normalized
+    EU as EU, which can be interpreted as the distance to the optimal utility.'
+  citations:
+  - marker: '[1]'
+    intent_label: Other Intent
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[6]'
+    intent_label: Metrics Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[11]'
+    intent_label: Metrics Utilization
+    topic_label: Retrieval Quality
+  - marker: '[16]'
+    intent_label: Metrics Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[17]'
+    intent_label: Metrics Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Retrieval Quality
+  - marker: '[24]'
+    intent_label: Metrics Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: Retrieval Quality
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Retrieval Quality
+  - marker: '[44]'
+    intent_label: Metrics Utilization
+    topic_label: Retrieval Quality
+  - marker: '[45]'
+    intent_label: Metrics Utilization
+    topic_label: Evaluation Aspects and Tools
+- block_id: 9
+  content: 'We choose the LaMP benchmark [50] for our dataset. It assesses the personalization capability of language models
+    through retrieval-augmentation of users’ interaction history in a platform. LaMP includes various prediction tasks, such
+    as classification, regression, and generation, and is well-suited for tasks where multiple items can be relevant/useful,
+    unlike QA tasks with typically one or two provenance items. The retrieval items in LaMP have clear providers and consumers,
+    aligning with our goal to ensure fairness for individual item providers. For example, in LaMP-1, retrieval items are academic
+    papers, where exposure can increase citation counts for authors. In LaMP-4, retrieval items are news articles, where exposure
+    can lead to monetary compensation for journalists. Due to the absence of a test set, we constructed a test collection
+    as described in §3.1, using the first thousand entries of a user-based development set. Then, we discarded entries that
+    have only one useful item in the corpus, as it is unnecessary to concern item-fairness in that case. We release the test
+    collection along with dataset statistics.
+
+
+    We use BM25 (lexical retriever) [46], SPLADE (learned sparse retriever) [15], and Contriever (bi-encoder dense retriever)
+    [26] as deterministic retrievers providing retrieval scores to base the sampling on. These models represent commonly used
+    retrievers in the RAG literature [32]. We use a sampling size of N = 100 and a truncation size of k = 5.
+
+
+    For generation models, we use Flan-T5-Small, Flan-T5-Base, Flan-T5-XXL [9], and Flan-UL2 [57]. For decoding strategy,
+    beam size is set to 4, and no sampling strategy is used. This is to ensure that stochasticity is only introduced to the
+    retriever for controlled experiments. With the three base retrievers and four generators, we configure twelve different
+    RAG models and evaluate them on the seven LaMP tasks. Utility measurement of the generated strings follows the metrics
+    used in the LaMP paper. For NLI computations, a RoBERTa large model [35] fine-tuned on the natural language inference
+    task is used.
+
+
+    We repeat the experiments with four different fairness control parameters alpha = 1, 2, 4, 8, which allows us to assess
+    the utility of the RAG models with different levels of item-fairness. From Figure 3, we observe how effectively alpha,
+    described in Equation 2, controls the disparity of rankings. For example, when alpha is set to 4, we usually obtain a
+    set of sampled rankings with EE-D mostly in the range of [0.5, 0.8], and when alpha is set to 8, we often get a set of
+    sampled rankings with EE-D = 1.
+
+
+    We conducted paired (per-query) t-tests for EE-D across the different alpha values and found statistically significant
+    differences (p < 0.01) in all 84 experimental conditions (12 models × 7 tasks).'
+  citations:
+  - marker: '[9]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Parameter-Accessible Generators (White-box)
+  - marker: '[15]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Retriever Type
+  - marker: '[26]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Retriever Type
+  - marker: '[32]'
+    intent_label: Prior Methods
+    topic_label: Retriever Type
+  - marker: '[35]'
+    intent_label: Metrics Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[46]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Retriever Type
+  - marker: '[50]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[57]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Parameter-Accessible Generators (White-box)
+- block_id: 10
+  content: ''
+  citations: []
+- block_id: 11
+  content: 'By gathering all four repeated runs of the experiments with different alpha values, we can plot the trend of ranking
+    quality (EE-R) against item fairness (EE-D).
+
+
+    As shown in previous studies [11, 56], there is a well-known tradeoff between fairness and ranking quality for human users.
+    Similarly, we observe a general tradeoff for machine users. However, unlike past findings, this tradeoff is not always
+    strict. For instance, both SPLADE and Contriever maintain consistently high ranking quality while being considerably fairer,
+    and for BM25, ranking quality even improves as fairness increases, up to a certain point.
+
+
+    At the rightmost side of the lines, where EE-D = 1 (representing the performance of deterministic rankers), we observe
+    that these rankers do not always deliver the highest ranking quality. This suggests that commonly used deterministic rankers
+    in RAG systems may be suboptimal, and that ranking quality can be improved while ensuring item fairness. This becomes
+    even clearer when examining the impact of fair ranking on the downstream performance of a RAG system.
+
+
+    The leftmost side of the lines, where EE-D = 0, represents the performance of a uniformly random ranking policy. At this
+    point, the measured ranking quality should approximate the proportion of positively labeled items in the corpus, which
+    is 31% for LaMP task 4. This is notably higher than in non-RAG (human-user) settings, where the percentage of relevant
+    documents is typically much smaller, resulting in a EE-R value near 0 [11].
+
+
+    To quantify the tradeoff, we fit a linear line to the experiment results, where a steeper slope reflects a stronger tradeoff
+    between fairness and ranking quality (slope). We also quantify the performance of fair rankers, by calculating the area
+    under the disparity-ranking quality curve (AUC). We observe that retrievers that yield higher ranking quality have higher
+    tradeoff in terms of retrieval fairness.'
+  citations:
+  - marker: '[11]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[56]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+- block_id: 12
+  content: 'Before examining the relationship between fairness and RAG utility, we show an auxiliary result confirming a strong
+    correlation between utility-based ranking quality and the effectiveness of RAG models. This is unsurprising, as item-worthiness
+    judgments were based on the utility-gain provided by the generator. However, this correlation suggests that the tradeoff
+    observed in the disparity-ranking quality curve is likely to manifest similarly due to this strong relationship.
+
+
+    In fact, as observed from the disparity-utility curve, we see a global trend of a non-strict tradeoff (i.e., RAG models
+    maintain high generation quality while being considerably fair, and often even achieve higher quality).
+
+
+    However, a closer look at the local trend offers a significant insight: RAG systems with fair ranking can often achieve
+    higher system-effectiveness compared to models with deterministic rankers. We divided the fairness levels into five disparity
+    intervals based on the normalized EE-D. Improving fairness to the level of EE-D ∈ [0.8, 1.0), and even EE-D ∈ [0.6, 0.8),
+    can often enhance the expected utility of many RAG models across LaMP tasks. For example, having EE-D in the range of
+    [0.8, 1.0) outperforms the baseline for all models in LaMP-4 and for eight out of twelve models in LaMP-1.
+
+
+    Significance testing results provide additional nuance. The range EE-D ∈ [0.0, 0.2) shows a statistically significant
+    drop in utility compared to the baseline, indicating that pushing disparity to extremely low levels can indeed reduce
+    performance. Beyond this small-disparity range (EE-D ∈ [0.2, 1.0)), the differences in utility scores from the baseline
+    either remain statistically insignificant or—when significant—reflect improved utility. This suggests that models can
+    maintain a level of retrieval fairness close to the baseline’s utility performance without incurring a notable cost, and
+    may even achieve higher effectiveness in many cases.'
+  citations: []
+- block_id: 13
+  content: 'To address this, we analyze three primary relationships: (1) how retrieval fairness (EE-D) relates to the expected
+    attribution rate (EAR), (2) how ranking quality (EE-R) interacts with EAR, and (3) how retrieval fairness translates into
+    consumption fairness (EAE-D) in the final output.
+
+
+    We find that when retrieval becomes more fair (lower EE-D), the generator tends to attribute fewer items overall, suggesting
+    a tradeoff between distributing items equitably and actually getting them used in the final output.
+
+
+    The general shape of EE-D versus EAR aligns closely with the shape of EE-D versus EE-R. The generator is more likely to
+    use multiple items if they are useful in solving the task, reflecting the idea that high-quality rankings encourage higher
+    EAR.
+
+
+    Comparing EE-D (retrieval fairness) to EAE-D (consumption fairness) shows that a more equitable ranking generally produces
+    a more equitable distribution of attributed items in the final generation. However, the diagonal line y = x reveals subtle
+    differences between fairness at the ranking stage and fairness at the consumption stage. Data points falling below this
+    line imply that consumption is even fairer than the initial ranking might predict, while points above it suggest that
+    the generator’s selective usage of items has introduced new disparity. This pattern shifts depending on how relevant and
+    useful the retrieved items are, mirroring the earlier observation that the generator favors content that supports solving
+    the task. In cases where many items have only marginal utility, the generator’s emphasis on a few high-utility sources
+    can inadvertently raise disparity.'
+  citations: []
+- block_id: 14
+  content: ''
+  citations: []
+- block_id: 15
+  content: 'Although there is a general trend of a fairness-utility tradeoff, we observe that certain levels of fairness can
+    actually improve the utility of a baseline RAG model. Recent lines of research have uncovered relevant findings: (1) generators
+    are not robust to changes in the position of useful information [34]; (2) items with high retrieval scores often include
+    distracting content that can reduce the system-effectiveness [10, 47]; and (3) introducing some random documents can significantly
+    boost the utility of RAG [10].
+
+
+    Building on these existing results, we find that perturbing the initial ranking through stochastic sampling often can
+    impact the performance of certain inference decisions and lead to changes in the system’s expected end-performance. In
+    our experiments, we observe that the expected utility generally increases within the fairness interval of [0.8, 1.0).
+    This suggests that a fixed ranking from a deterministic ranker may be suboptimal for the generator, and that perturbing
+    the ranking, along with the repositioning of items, not only improves expected end-performance but also enhances the fairness
+    of the rankings.
+
+
+    Moreover, in fairness intervals where the system’s expected utility improves, it is possible that either fewer distracting
+    items were included in the ranking passed to the generator or useful, previously overlooked items (which may have been
+    considered random) were introduced due to the ranking perturbation. However, while higher utility paired with increased
+    item-fairness (even within fairness intervals as low as [0.4, 0.6)) may seem advantageous, practitioners should exercise
+    caution. This could result in compensating providers of items irrelevant to user requests, particularly in scenarios where
+    content providers are rewarded for contributing to inference outcomes.'
+  citations:
+  - marker: '[10]'
+    intent_label: Domain Overview
+    topic_label: Training-free Methods
+  - marker: '[34]'
+    intent_label: Domain Overview
+    topic_label: Trustworthiness and Robustness
+  - marker: '[47]'
+    intent_label: Domain Overview
+    topic_label: Context Curation and Compression
+- block_id: 16
+  content: 'RAG practitioners should consider both the expected utility (EU) of the generated text and the expected attributed
+    exposure disparity (EAE-D) to ensure a balance between utility and fairness in the system’s output. Achieving this balance
+    requires careful adjustment of retrieval fairness to find an interval where the generated content remains both useful
+    and fair in its exposure of sources. One important metric to monitor in this process is the attribution rate, which reflects
+    the proportion of retrieved items that are actually cited or used in the final output.
+
+
+    Monitoring expected attribution rate (EAR) provides valuable insights for understanding how fairness manifests in the
+    final output, offering an essential complement to EAE-D. For example, even if a ranking appears fair at the retrieval
+    stage, a low attribution rate indicates that the generator ultimately utilizes only a small subset of the retrieved items,
+    which can amplify disparities among the attributed sources. In such cases, fairness concerns at the generation stage may
+    outweigh those at the retrieval stage. Conversely, when the generator attributes a larger portion of the retrieved set,
+    disparities among the attributed sources may become less pronounced, as the system distributes attention more evenly across
+    a broader set of items.
+
+
+    By comparing expected attribution rate with consumption fairness, practitioners can better disentangle the root causes
+    of imbalances in the final output. Specifically, they can determine whether disparities stem from the retrieval stage,
+    such as an inherently skewed ranking, or from the generator’s behavior in selectively focusing on only a few documents.
+    This comparison can help diagnose fairness issues more effectively, enabling practitioners to refine both retrieval and
+    generation components of a RAG system to achieve more equitable outcomes in the generated content.'
+  citations: []
+- block_id: 17
+  content: 'Ensuring consumption fairness while maintaining high utility of the generated text is a fundamental objective
+    in building a fair RAG system. To achieve this, we measure the exposure of the final attributed items, as these are the
+    items that human users will actually encounter in the system’s output. This approach aligns with the real-world operation
+    of RAG systems, particularly in applications like conversational QA or domain-specific assistants for general information
+    or shopping, where the generated text is accompanied by explicitly cited documents or attributed items. In such cases,
+    measuring the fair exposure of the attributed items is critical, as consumption fairness can have a more direct impact
+    on users compared to retrieval fairness, given that human users only consume what is explicitly surfaced by the system.
+
+
+    A key factor in accurately evaluating exposure-based retrieval fairness is the development of sophisticated machine-user
+    browsing models. The work of Liu et al. [34] provides valuable insights for designing such advanced browsing models. In
+    our experiments, we employed encoder-decoder models with a short retrieval context to get close to the assumption that
+    equal attention is given to all top-k retrieved items [34]. However, as the use of long-context becomes prevalent, accurately
+    measuring exposure-based retrieval fairness becomes more challenging due to the generator’s tendency to allocate unequal
+    attention to different items.
+
+
+    Despite these challenges, it is important to highlight that measuring consumption fairness is not dependent on machine-user
+    browsing models. Unlike retrieval fairness, consumption fairness can be measured effectively in long-context models, regardless
+    of how attentions are distributed across items by the generators. Therefore, focusing on consumption fairness ensures
+    that the evaluation remains robust, even in scenarios where exposure patterns vary significantly across different models.'
+  citations:
+  - marker: '[34]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Evaluation Aspects and Tools
+- block_id: 18
+  content: In line with the recent call for evaluating various valid output strings [63], we recognize the need for a similar
+    approach to better measure system utility across different rankings given. Recall that our experiments were designed to
+    provide the generator with different rankings for the same query, leading to varied outputs. This approach is motivated
+    by the idea that items not appearing in the top positions of deterministic rankings may still hold value and should be
+    fairly considered by the system. In this context, the diverse outputs generated from different rankings may still be valid.
+    However, we currently rely on a single target output string for comparison with predictions. Future work could focus on
+    calculating the utility of diffuse predictions, enabling a more nuanced evaluation.
+  citations:
+  - marker: '[63]'
+    intent_label: Research Gap
+    topic_label: Generation Quality
+- block_id: 19
+  content: 'We acknowledge that the evaluation cost of fair RAG systems can be high due to repeated sampling and inference
+    steps. However, in production, only a single ranking is sampled, minimizing the impact on system latency. Also, a limitation
+    in our utility labeling is that it considers single items, while multiple items may yield contrasting utility gains. Despite
+    this, the strong correlation between ranking quality and system effectiveness suggests this approach reasonably approximates
+    item-worthiness for evaluating the impact of fair ranking on RAG systems.
+
+
+    Another limitation lies in the ability to capture the exposure of items beyond those retrieved by the system. Since it
+    is difficult to verify attribution across the entire corpus, our method focuses on measuring the exposure fairness of
+    the attributed sources (e.g., those explicitly cited in the generated output). While this approach does not account for
+    the broader set of potential exposures, it is useful for common RAG applications where the attributed sources are directly
+    displayed to users. In such cases, ensuring fairness among these sources is critical, as they are likely to be the primary
+    content users engage with.'
+  citations: []
+- block_id: 20
+  content: 'This study highlights the impact of fair rankings not only on the ranking and generation quality of RAG systems
+    but also on the equitable attribution of sources in the final output. Through extensive analysis, we demonstrate that
+    fairer RAG models can maintain—and in some cases even surpass—the generation quality of traditional approaches, challenging
+    the assumption of an inherent tradeoff between fairness and effectiveness. Our findings emphasize the importance of fair
+    attribution, showing how improvements at the retrieval stage translate into more equitable exposure of the sources that
+    appear in the generated text. By addressing disparities in both retrieval and attribution, we provide valuable insights
+    for developing responsible and equitable RAG systems.
+
+
+    In future work, we hope to extend this framework to consider graded or missing judgments and exploring the different notions
+    of fairness in RAG systems, ultimately advancing the field of trustworthy RAG systems research.'
+  citations: []
