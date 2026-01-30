@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Automatic annotation pipeline using CoT and TaxoCite
-# Usage: auto_annotate.sh <directory_path> --model <model_name>
+# Usage: auto_annotate.sh <directory_path> [--model <model_name>]
+# Default model: gpt-5-2025-08-07
 
 # Parse arguments
 DIR=""
-MODEL=""
+MODEL="gpt-5-2025-08-07"  # Default model
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -23,9 +24,11 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Check if required arguments are provided
-if [ -z "$DIR" ] || [ -z "$MODEL" ]; then
-    echo "Usage: $0 <directory_path> --model <model_name>"
+if [ -z "$DIR" ]; then
+    echo "Usage: $0 <directory_path> [--model <model_name>]"
+    echo "Example: $0 data/raw/cs/retrieval_augmented_generation"
     echo "Example: $0 data/raw/cs/retrieval_augmented_generation --model gpt-4o-mini-2025-07-18"
+    echo "Default model: gpt-5-2025-08-07"
     exit 1
 fi
 
