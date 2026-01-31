@@ -1,0 +1,1272 @@
+Physics-Guided Learning of Meteorological Dynamics
+for Weather Downscaling and Forecasting
+Yingtao Luo∗
+Carnegie Mellon University
+Pittsburgh, USA
+yingtaol@andrew.cmu.edu
+Shikai Fang∗
+Microsoft Research Asia
+Beijing, China
+fangshikai@microsoft.com
+Binqing Wu∗
+Zhejiang University
+Hangzhou, China
+binqingwu@cs.zju.edu.cn
+Qingsong Wen†
+Squirrel Ai Learning
+Bellevue, USA
+qingsongedu@gmail.com
+Liang Sun‡
+DAMO Academy, Alibaba Group
+Bellevue, USA
+liang.sun@alibaba-inc.com
+Abstract
+Weather forecasting is essential but remains computationally in-
+tensive and physically incomplete in traditional numerical weather
+prediction (NWP) methods. Deep learning (DL) models offer effi-
+ciency and accuracy but often ignore physical laws, limiting inter-
+pretability and generalization. We propose PhyDL-NWP, a physics-
+guided deep learning framework that integrates physical equations
+with latent force parameterization into data-driven models. It pre-
+dicts weather variables from arbitrary spatiotemporal coordinates,
+computes physical terms via automatic differentiation, and uses a
+physics-informed loss to align predictions with governing dynam-
+ics. PhyDL-NWP enables resolution-free downscaling by modeling
+weather as a continuous function and fine-tunes pre-trained mod-
+els with minimal overhead, achieving up to 170× faster inference
+with only 55K parameters. Experiments show that PhyDL-NWP
+improves both forecasting performance and physical consistency.
+CCS Concepts
+•Applied computing → Physical sciences and engineering ; •
+Computing methodologies → Machine learning.
+Keywords
+Physics; Learning; Weather; Prediction; Parameterization
+ACM Reference Format:
+Yingtao Luo, Shikai Fang, Binqing Wu, Qingsong Wen, and Liang Sun.
+2025. Physics-Guided Learning of Meteorological Dynamics for Weather
+Downscaling and Forecasting. In Proceedings of the 31st ACM SIGKDD
+Conference on Knowledge Discovery and Data Mining V.2 (KDD ’25), Au-
+gust 3–7, 2025, Toronto, ON, Canada. ACM, New York, NY, USA, 11 pages.
+https://doi.org/10.1145/3711896.3737081
+∗Work done during summer internship at Alibaba Group.
+†Work done at Alibaba Group, and now affiliated with Squirrel Ai Learning, USA.
+‡To whom correspondence should be addressed.
+This work is licensed under a Creative Commons Attribution 4.0 International License.
+KDD ’25, August 3–7, 2025, Toronto, ON, Canada.
+© 2025 Copyright held by the owner/author(s).
+ACM ISBN 979-8-4007-1454-2/2025/08
+https://doi.org/10.1145/3711896.3737081
+1 Introduction
+Weather prediction remains one of modern science’s most complex
+and vital challenges, with the nonlinear interactions between vari-
+ous meteorological variables, the vast spatial and temporal scales
+involved, and the chaotic nature of weather systems. The first-
+principle approach to weather prediction, i.e., numerical weather
+prediction (NWP), relies on mathematical models of atmospheric
+and oceanic phenomena. NWP is often computationally intensive
+at high resolution, and many unresolved physical processes such as
+precipitation and radiation need to be represented by parameteriza-
+tion. Therefore, there has been a growing interest in using machine
+learning (ML) models for weather prediction. Deep learning models,
+trained by nearly 40 years of European Center for Medium-Range
+Weather Forecasts (ECMWF) reanalysis v5 (ERA5) data [8], have
+demonstrated remarkable ability to capture complex nonlinear rela-
+tionships for tasks such as weather forecasting [28, 39] and down-
+scaling [35]. However, despite the recent success of ML techniques,
+the application of deep learning to weather prediction is not with-
+out challenges. Existing ML models do not incorporate established
+physical laws (e.g., fluid dynamics, thermodynamics) to ensure that
+the derived variables are consistent with these laws.
+Physics-Informed Neural Networks (PINN) [ 30] have gained
+prominence as alternatives to traditional numerical simulations,
+offering innovative approaches to weather prediction. However,
+weather prediction is inherently complex, involving numerous fac-
+tors and processes that are influenced by local variations, boundary
+condition changes, small-scale phenomena like microclimates, and
+external forces. Many of these critical factors, which significantly
+affect first-principle equations, are often missing from existing
+datasets due to challenges in measurement and quantification. For
+instance, the PDE governing temperature evolution (see Table 6) in-
+cludes thermal diffusivity, which is not available in typical weather
+datasets such as ERA5 and must instead be estimated through tur-
+bulence parameterizations. Other unavailable terms include vertical
+velocity, friction, etc. This poses a challenge to constructing com-
+plete and accurate physical models, thereby limiting the fidelity of
+physics-informed learning approaches in real-world settings.
+In light of this challenge, we propose a novel framework,PhyDL-
+NWP. This proposed paradigm first trains a neural network to
+predict weather conditions based on spatio-temporal coordinates,
+arXiv:2505.14555v2  [cs.LG]  23 May 2025
+KDD ’25, August 3–7, 2025, Toronto, ON, Canada. Yingtao Luo, Shikai Fang, Binqing Wu, Qingsong Wen, and Liang Sun
+then leverages automatic differentiation for calculating partial dif-
+ferential equation (PDE) terms. Based on this, we construct a library
+of physics terms derived from first-principle equations that can
+be represented using available dataset variables. To address unre-
+solved processes and missing variables, we adopt a parametrization
+strategy, introducing a latent force model as a parametrization term
+to capture the effects of physical forces not explicitly represented
+in the constructed PDEs.
+This design enables PhyDL-NWP to generate super-resolution
+weather data at arbitrary granularity, while simultaneously pro-
+viding interpretable physical insights. Based on the constructed
+governing equations that represent the physical principles, we
+constrain and guide the optimization of deep learning models, en-
+hancing model performance across datasets with varying climates
+and sources. In extensive experiments across 17 baselines and four
+datasets, we demonstrate that the learned parameterized PDEs align
+closely with the desired physical equations. The physics-guided
+models consistently outperform their vanilla counterparts.
+In short, our contributions are summarized as follows:
+• We propose a novel physics-guided learning framework
+PhyDL-NWP that completes weather equations using latent
+force parameterization to inform deep learning models of
+the underlying physical mechanism of meteorology.
+• PhyDL-NWP directly provides a novel way to model weather
+data in an online learning manner with unlimited granularity.
+Weather downscaling can be done by simply feeding any
+continuous coordinates to the model, without the need for
+coarse-granular data as input during inference.
+• PhyDL-NWP provides an effective paradigm for weather
+forecasting by forcing the prediction to align with the pa-
+rameterized weather equations via a physics-guided loss.
+• PhyDL-NWP is extremely efficient and can be directly used
+to fine-tune any pre-trained weather forecasting model. It
+can be up to 170 times faster in inference than a standalone
+model, with only up to 55 thousand parameters.
+• The state-of-the-art performance of PhyDL-NWP is eval-
+uated using both reanalysis and real-world observational
+datasets, spanning global and local scales.PhyDL-NWP shows
+consistency with the underlying physics in a variety of
+weather variables.
+2 Related Work
+In the area of weather prediction, Numerical Weather Prediction
+(NWP) [1, 21] is the current mainstream method. It uses mathemati-
+cal models of the atmosphere and oceans, such as partial differential
+equations (PDE), to predict future weather based on current weather
+conditions. Some notable NWP models include European Centre
+for Medium-Range Weather Forecasts (ECMWF)1, Global Forecast
+System (GFS)2, etc. NWP can forecast weather in the medium range
+but usually involves extensive computation. For example, ECMWF
+operates one of the largest supercomputer complexes in Europe.
+Recently, deep learning has emerged as another promising solu-
+tion to weather forecasting [9, 29] and downscaling [26, 35] tasks.
+1https://www.ecmwf.int/
+2https://www.ncei.noaa.gov/products/weather-climate-models/global-forecast
+These deep learning models [7, 37] rely on different neural architec-
+tures such as LSTM [15], CNN [38], GNN [19] and Transformer [39]
+to capture the evolving dynamics and correlation across space and
+time. Many large models have emerged in recent years. For example,
+ClimaX [24], GraphCastNet [14], ClimateLearn [25], FengWu [3],
+Pangu-Weather [2] all use backbones such as the Vision Trans-
+former (ViT), UNet and autoencoders, for training a large model
+for weather forecasting. WeatherBench [31] benchmarks the use
+of pre-training techniques for weather forecasting. In addition,
+FourcastNet [28] leverages the adaptive Fourier neural operator
+(AFNO) [5, 16] to treat weather as a latent PDE system. In recent
+years, a few studies such as NeuralGCM [13] and WeatherGFT [41]
+have started to explore the integration of underlying physical mech-
+anisms [36] in weather prediction. However, there are still no ex-
+plicit efforts to use parameterization to ensure the completeness of
+the primitive equations based on the data.
+In addition, spatio-temporal modeling based on deep learning [18]
+has thrived in recent years. Many previous works also approach the
+weather prediction task from the perspective of spatio-temporal
+modeling [6]. Dynamical systems modeling involves the formu-
+lation of systems whose states evolve over time. Given the gov-
+erning equations, physics-informed approaches [ 12, 30] use the
+physics mechanism to enhance the dynamical systems. In the ab-
+sence of governing equations, the identification of physical equa-
+tions [4, 22, 23] is proposed to provide insights with respect to the
+laws of physics.
+3 Methodology
+3.1 Problem Definition
+We study a spatiotemporal weather dataset, denoted as
+u = [𝑢1 (𝑥, 𝑦, 𝑡), . . . , 𝑢ℎ (𝑥, 𝑦, 𝑡)] . (1)
+Using the physics expression, this dataset comprises ℎ distinct
+weather variable fields (such as temperature and pressure), each re-
+lated to specific input coordinates (𝑥, 𝑦, 𝑡). Here, 𝑥 ∈ [ 1, . . . , 𝑛] and
+𝑦 ∈ [ 1, . . . , 𝑚] represent spatial coordinates, while 𝑡 ∈ [ 1, . . . , 𝑇]
+corresponds to the temporal dimension.
+This dataset can be alternatively expressed as a sequence of
+spatial “images”X = [𝑋1, . . . , 𝑋𝑇 ], with each “image”𝑋𝑖 being a
+tensor in R𝑛×𝑚×ℎ, encapsulating the spatial and weather-factor
+dimensions at each time point.
+We focus on two primary tasks based on this dataset:
+• Weather Downscaling: The goal is to generate super-resolution
+weather “images”Y = [𝑌1, . . . , 𝑌𝑇 ] from X, where each 𝑌𝑖
+is a tensor in R𝑛′ ×𝑚′ ×ℎ. The challenge is to derive this de-
+tailed data from the original, coarser dataset X, with the
+dimensions 𝑛′ > 𝑛 and 𝑚′ > 𝑚.
+• Weather Forecasting: This task aims to find a model 𝑔 to
+predict future weather conditions for a duration of 𝑟 hours,
+represented as [X]𝑖+𝑟
+𝑖+1 = [𝑋𝑖+1, . . . , 𝑋𝑖+𝑟 ]. These predictions
+are based on observed data from the preceding 𝑠 + 1 hours,
+[X]𝑖
+𝑖 −𝑠 = [𝑋𝑖 −𝑠, . . . , 𝑋𝑖 ], for each time instance 𝑖. That is,
+𝑔( [X]𝑖
+𝑖 −𝑠 ) = [X]𝑖+𝑟
+𝑖+1.
+Physics-Guided Learning of Meteorological Dynamics
+for Weather Downscaling and Forecasting KDD ’25, August 3–7, 2025, Toronto, ON, Canada.
+𝑓1 = ො𝑢
+𝑓2 = ො𝑣
+𝑓3 = ෝ𝑤
+𝑡
+𝑥
+𝑦
+Layer 1 Layer 𝐿…
+u = {𝑢, 𝑣, 𝑤}
+1
+𝜕𝑡
+𝜕𝑥
+𝜕𝑦
+𝜕𝑡
+𝜕𝑥
+𝜕𝑦
+1
+𝛷
+𝜕u
+𝜕𝑡
+𝜕u
+𝜕𝑥
+𝜕2u
+𝜕𝑥𝑦
+1…
+𝛷𝑇 =
+1
+𝑢
+𝑣
+𝑤
+𝑢𝑥
+𝑣𝑥
+𝑤𝑥
+𝑢𝑦
+⋮ 𝑝×1
+𝛯 =
+𝜉1
+𝑢 𝜉1
+𝑣 𝜉1
+𝑤
+𝜉2
+𝑢
+⋮
+𝜉𝑠−1
+𝑢
+𝜉𝑠𝑢
+𝜉2
+𝑣
+⋮
+𝜉𝑠−1
+𝑣
+𝜉𝑠𝑣
+𝜉2
+𝑤
+⋮
+𝜉𝑠−1
+𝑤
+𝜉𝑠𝑤
+𝑠×3
+u𝑡 = {𝑢𝑡, 𝑣𝑡, 𝑤𝑡}
+Note: 𝛯 is sparse
+where
+ℛ: 𝜕u
+𝜕𝑡 − ΦΞ − 𝑄 → 0
+𝑢𝑡 𝑣𝑡 𝑤𝑡
+ሶU(𝜃)
+=
+𝜙1𝜙2𝜙3 𝜙𝑠…
+…
+Φ(𝜃) Ξ
+Sparse
+𝜉𝑢 𝜉𝑣 𝜉𝑤
+Candidate
+Function
+Selection
+AutoDiff PDE Construction
+𝑓(𝜃)
+derivatives
+(PyTorch)
+𝑓(𝑥, 𝑦, 𝑡; 𝜃)
+𝜕u
+𝜕𝑦
+DNN solving Governing Equations Construction of Governing Equations with Latent Force
++
+𝑄(𝜋)
+𝑄𝑢𝑄𝑣𝑄𝑤
+Figure 1: Schematic diagram of PhyDL-NWP for downscaling. First, given a continuous input coordinate (𝑥, 𝑦, 𝑡), the surrogate
+model 𝑓𝜃 approximates the weather data. Then, based on PyTorch’s auto-differentiation and the existing meteorology theory,
+we calculate the derivatives for the construction of physical mechanisms driven by PDE. Last, based on linear regression, we
+learn the PDE that fits the weather data well to provide physical guidance.
+3.2 Meteorology Dynamics Representation
+In this section, we aim to learn the physical mechanism represented
+by PDE with parameterization to fit the weather data. A typical
+partial differential equation (PDE) with parametrization terms has
+the following form:
+𝜕u
+𝜕𝑡 = 𝑄𝜋 (𝑥, 𝑦, 𝑡) + Φ(u)Ξ = 𝑄𝜋 (𝑥, 𝑦, 𝑡) +
+𝑝∑︁
+𝑖=1
+𝜙 (u)𝑖𝜉𝑖, (2)
+where 𝑝 denotes the number of PDE terms in the equation, each
+𝜙 (u)𝑖 ∈ [ 1, u, 𝜕u
+𝜕𝑥 , 𝜕u
+𝜕𝑦 , 𝜕2u
+𝜕𝑥 2 , ..., u 𝜕u
+𝜕𝑥 , ...] denotes a PDE term in the
+equation (see examples in Sec. 4.3), with the set of 𝜉𝑖 as the coef-
+ficients. 𝑄𝜋 (𝑥, 𝑦, 𝑡) denotes the latent force modeled by a neural
+network that cannot be represented by Φ(u) explicitly, as a sup-
+plement to missing variables unavailable in the weather dataset,
+such as friction. Examples of Eq. 2 can be seen in Table 6, where
+a physical equation is composed of both explicit PDE terms and
+latent force parameterization.
+3.3 Continuous Weather Downscaling
+We develop a surrogate weather variable model ˆu = 𝑓𝜃 (𝑥, 𝑦, 𝑡),
+which takes the spatio-temporal coordinates as input and predicts
+the ℎ weather variables. The schematic diagram of the proposed
+surrogate model is shown in Fig. 1. Both 𝑓𝜃 and 𝑄𝜋 (𝑥, 𝑦, 𝑡) are de-
+signed as feedforward neural networks that are commonly used
+in the PINN literature [12, 30]. The joint optimization of 𝑓𝜃 (𝑥, 𝑦, 𝑡),
+𝜙 ( ˆu)𝑖, and 𝑄𝜋 (𝑥, 𝑦, 𝑡) allows the model to simultaneously learn to
+predict weather variables and approximate the underlying physical
+dynamics. Once 𝑓𝜃 achieves sufficient accuracy, its gradients via au-
+tomatic differentiation enable the accurate calculation of PDE terms.
+These inferred terms, together with 𝑄𝜋 , in turn guide the training
+of 𝑓𝜃 , ensuring physical consistency in the learned mapping.
+This framework supports continuous weather downscaling in
+an online learning manner: once trained, 𝑓𝜃 can be queried with
+any new coordinate (𝑥, 𝑦, 𝑡) for real-time prediction. Unlike tra-
+ditional downscaling methods that rely on discrete pairs of low-
+and high-resolution training data, PhyDL-NWP treats weather data
+as a continuous function over space-time. This enables arbitrary-
+resolution inference without requiring coarse-resolution inputs or
+pre-defined grid structures. Downscaling is performed simply by
+evaluating 𝑌 = 𝑓𝜃 (𝑥 ′, 𝑦′, 𝑡) at any desired fine-grained coordinates
+in real time, as described in Fig. 1, where 𝑥 ′ ∈ R𝑛′
+, 𝑦′ ∈ R𝑚′
+can
+be any interpolation within the observed spatial domain, enabling
+super-resolution modeling with minimal inference cost.
+The overall loss function LD for weather downscaling is:
+LD (𝜃, Ξ, 𝜋) = Ldata (𝜃 ) + 𝛼 Lphy (𝜃, Ξ, 𝜋), (3)
+where
+Ldata = 1
+nmT
+∑︁
+𝑥,𝑦,𝑡
+∥𝑓𝜃 − u∥2
+2 , (4)
+Lphy = 1
+n′m′T′
+∑︁
+𝑥 ′,𝑦 ′,𝑡 ′
+
+𝜕𝑓𝜃
+𝜕𝑡 − Φ(𝑓𝜃 )Ξ − 𝑄𝜋
+
+2
+2
+. (5)
+Here, data loss measures how well 𝑓𝜃 approximates 𝑢 well on the
+weather data, and physical loss measures how well the learned
+equation fits the weather data. The two regularization losses prevent
+the overfitting of explicit PDE terms 𝑓𝜃 and the latent force 𝑄𝜋 .
+3.4 Physics-Guided Fine-Tuning for Pre-Trained
+Weather Forecasting Models
+In theory, 𝑓𝜃 (𝑥, 𝑦, 𝑡) can also take in future data coordinates and
+produce the extrapolation directly. However, as 𝑓𝜃 (𝑥, 𝑦, 𝑡) is only
+trained on historical weather data, while anywhere outside the
+bounds of where the model was trained is completely unknown.
+Empirically, we find that 𝑓𝜃 alone does not exhibit strong extrap-
+olation or forecasting performance. To improve the extrapolation
+ability, instead of using 𝑓𝜃 directly, we propose to take advantage
+of the learned physical mechanism represented by Ξ and 𝑄𝜋 to
+improve another forecasting model 𝑔𝜔, which takes historical spa-
+tiotemporal data and predicts the future.
+Moreover, once 𝑓𝜃 is trained, it can generate weather variables
+at arbitrary spatiotemporal coordinates (𝑥 ′, 𝑦′, 𝑡), enabling flexible
+control over the resolution of historical data used to train or fine-
+tune 𝑔𝜔. This allows seamless integration with any pre-trained
+forecasting model by aligning spatiotemporal granularity as needed.
+The overall framework of weather forecasting is depicted in
+Fig. 2. To calculate differential terms efficiently, we propose to use
+finite difference (FD) approximations on super-resolution data from
+weather downscaling, which is extremely fast, instead of training a
+KDD ’25, August 3–7, 2025, Toronto, ON, Canada. Yingtao Luo, Shikai Fang, Binqing Wu, Qingsong Wen, and Liang Sun
+Layer 1 Layer 𝐿…
+1
+𝜕𝑡
+𝜕𝑥
+𝜕𝑦
+𝜕𝑡
+𝜕𝑥
+𝜕𝑦
+1
+𝛷
+𝜕u
+𝜕𝑡
+𝜕u
+𝜕𝑥
+𝜕2u
+𝜕𝑥𝑦
+1…
+ℛ: 𝜕u
+𝜕𝑡 − ΦΞ − 𝑄 → 0
+𝑢𝑡 𝑣𝑡 𝑤𝑡
+ሶU(𝜔)
+=
+𝜙1𝜙2𝜙3 𝜙𝑠…
+…
+Φ(𝜔) Ξ
+Sparse
+𝜉𝑢 𝜉𝑣 𝜉𝑤
+AutoDiff PDE Regularization
+𝑔𝜔
+derivatives
+(PyTorch)
+𝜕u
+𝜕𝑦
+Forecasting Model with Parameters 𝝎 Physical Equation as a Regularization to Training Objective
+𝒔 + 𝟏 hours
+historical data
+𝒓 hours
+prediction data
+𝕐 𝑖−𝑠
+𝑖
+𝕐 𝑖+1
+𝑖+𝑟 = 𝑔𝜔( 𝕐 𝑖−𝑠
+𝑖 )
++
+Model Scale Adaptor
+𝑡
+𝑥′
+𝑦′
+𝑓(𝜃)
+𝐬𝐚𝐦𝐩𝐥𝐞𝐝
+coordinates 𝐩𝐫𝐞𝐭𝐫𝐚𝐢𝐧𝐞𝐝 
+𝐬𝐮𝐫𝐫𝐨𝐠𝐚𝐭𝐞 𝐦𝐨𝐝𝐞𝐥 𝐦𝐨𝐝𝐞𝐥 𝐭𝐨 𝐭𝐫𝐚𝐢𝐧
+Figure 2: Schematic diagram of PhyDL-NWP for forecasting. We first use pre-trained surrogate model for weather downscaling
+to perform data augmentation, which is a necessity for aligning weather data resolution in the forecasting model. Then, we
+take the augmented historical data and use a pre-trained state-of-the-art forecasting model to predict future data. Based on the
+spatio-temporal coordinates of the predicted data, we add a physics loss to recover the previously learned PDE.
+surrogate model for every time frame 𝑖. The overall loss function
+LF for weather forecasting is:
+LF (𝜔) = Ldata (𝜔) + 𝛽Lphy (𝜔), (6)
+where
+Ldata (𝜔) = 1
+nmr ·𝑞
+𝑇 −𝑟∑︁
+𝑖=𝑠+1
+𝑔𝜔 ( [Y]𝑖
+𝑖 −𝑠 ) − [ Y]𝑖+𝑟
+𝑖+1
+2
+2 , (7)
+Lphy (𝜔) = 1
+nmr ·𝑞
+𝑇 −𝑟∑︁
+𝑖=𝑠+1
+
+𝜕𝑔𝜔 ( [Y]𝑖
+𝑖 −𝑠 )
+𝜕𝑡 − 𝑝
+
+2
+2
+, (8)
+with 𝑞 = T-r-s-1, 𝑝 = Φ(𝑔𝜔 ( [Y]𝑖
+𝑖 −𝑠 ))Ξ+𝑄𝜋 . Note that𝜃, Ξ, and 𝜋
+are already learned during the downscaling beforehand. 𝛼, 𝛽, 𝜎1, 𝜎2
+are all hyperparameters to balance the different loss terms. As long
+as the downscaling model 𝑓𝜃 is accurate, the recovered physics
+offers a globally consistent constraint that enhances the generaliza-
+tion of 𝑔𝜔 without adding substantial model complexity. The size
+of the parameters as well as the inference speed of the different
+models are summarized in Table 1. The number of parameters of
+PhyDL-NWP is much smaller than other models, thus it is much
+faster to perform forward/backward propagation on 𝑓𝜃 and 𝑔𝜔.
+4 Experiments
+We conduct both the forecasting and downscaling performance
+comparisons. All experiments were carried out on four NVIDIA
+A100 graphical cards. Only the performances on the test sets at
+the optimal performance on the validation sets are reported. The
+maximum training epochs are 50. Every result is the average of
+three independent trainings under different random seeds. We se-
+lect a few representative weather variables and the average of all
+in the tables for visualization. The average of all variables reflects
+the overall performance. We use two commonly used metrics [2]
+for evaluation: Root Mean Square Error (RMSE) and Anomaly Cor-
+relation Coefficient (ACC). For both downscaling and forecasting,
+we split by 8:1:1 for train/validation/test datasets in chronological
+order. Code to implement PhyDL-NWP is available in GitHub3.
+3https://github.com/yingtaoluo/PhyDL-NWP
+4.1 Downscaling Performance Comparison
+We evaluate the effectiveness of PhyDL-NWP and other baseline
+models for weather downscaling on a real-world dataset Huadong,
+which is derived from the European Centre for Medium-Range
+Weather Forecasts (ECMWF) operational forecast (HRES) and re-
+analysis (ERA5) archive. It comprises a grid of 64 × 44 cells, with
+each cell having a grid size of 0.25 degrees in both latitude and
+longitude. More data details can be found in Appendix A.1. Since
+most previous studies on weather downscaling can only handle the
+downscaling of the two spatial dimensions, for the sake of compari-
+son, we also only report the performance ofPhyDL-NWP on spatial
+downscaling in Table 2. We perform 2x and 4x downscaling tasks
+with 0.5 and 1 degrees resolutions, respectively. To facilitate this,
+the 0.25-degree HRES data undergoes linear interpolation to gener-
+ate the requisite 0.5-degree and 1-degree input data. We compare
+our model against the Bicubic interpolation, FSRCNN [ 27], Res-
+DeepD [32], EDSR [10], RCAN [43], YNet [20], DeepSD [35], and
+GINE [26]. For the deep learning baselines, channel-wise normal-
+ization is performed for efficiency. Unlike prior methods that rely
+on fine-granular labels for supervision, PhyDL-NWP learns from
+coarse-granular inputs alone by aligning with physical principles,
+enabling it to perform super-resolution without labeled training
+outputs. Details about baselines can be found in Appendix A.2.4.
+From Table 2, we can conclude that PhyDL-NWP provides a
+significant improvement up to 20.1% to 24.6% on average over RMSE
+against the baseline models. Well-recognized deep learning models
+like FSRCNN and YNet achieve much worse results, which could
+be because most models only consider the downscaling of spatial
+dimensions, neglecting the patterns in the temporal dimension.
+Moreover, weather data is multivariable, and the spatio-temporal
+dependencies are complex, making it difficult to recover the ground-
+truth information without global modeling. Furthermore, we find
+that the RMSE for 2x and 4x resolutions is close. SincePhyDL-NWP
+can provide infinite resolution results given continuous coordinates,
+we believe that it will be accurate for higher resolution downscaling,
+based on this evidence. Moreover, PhyDL-NWP can easily perform
+downscaling in the temporal dimension. We only experiment on
+spatial dimension to align with existing models.
+Physics-Guided Learning of Meteorological Dynamics
+for Weather Downscaling and Forecasting KDD ’25, August 3–7, 2025, Toronto, ON, Canada.
+Table 1: Comparison of the number of model parameters and running speed for weather forecasting on WeatherBench dataset.
+PhyDL-NWP is a light-weighted and efficient plug-and-play module, while others are standalone models. PhyDL-NWP is about
+55∼170 times faster and 10 ∼3600 times lighter than a standalone model.
+Model/Module PhyDL-NWP BiLSTM Hybrid-CBA ConvLSTM AFNO MTGNN MegaCRN ClimaX FourcastNet GraphCast
+Number of parameters 55K 171M 198M 678K 520K 1.6M 580K 107M 73M 36M
+Time cost per epoch 7.8s 11.9min 15.6min 7.1min 9.4min 9.9min 8.5min 22.2min 16.5min 13.6min
+Table 2: The RMSE comparison of weather downscaling for Huadong dataset. Bold fonts mark the best performances, and
+underlines mark the second-best performances. The Improv shows the percentage of improvement over the base model, which
+is statistically significant as measured by t-test with p-value < 0.01.
+Model 100m Wind (U) 10m Wind (U) Temperature Surface Pressure Average
+2x 4x 2x 4x 2x 4x 2x 4x 2x 4x
+Bicubic 1.687 1.765 1.215 1.272 1.714 1.848 0.818 1.220 1.515 1.654
+EDSR 1.145 1.176 1.020 1.113 1.217 1.275 0.460 0.552 1.068 1.156
+ResDeepD 1.092 1.111 1.003 1.079 1.182 1.204 0.301 0.317 1.010 1.043
+RCAN 1.169 1.199 0.808 1.038 1.219 1.259 0.572 0.609 1.092 1.144
+FSRCNN 1.197 1.202 1.090 1.126 1.198 1.233 0.430 0.560 1.093 1.149
+YNet 1.116 1.125 0.947 1.103 1.192 1.226 0.467 0.575 1.062 1.125
+DeepSD 1.205 1.216 1.020 1.117 1.218 1.265 0.454 0.591 1.087 1.149
+GINE 1.126 1.285 0.875 1.069 1.166 1.235 0.350 0.363 1.036 1.101
+PhyDL-NWP 0.973 0.970 0.696 0.693 0.905 0.904 0.211 0.216 0.794 0.789
+Improv 10.9% 12.7% 13.9% 33.2% 22.4% 24.9% 29.9% 31.9% 20.1% 24.6%
+Table 3: Model comparison of seven-day weather forecasting for real-measurement Ningbo dataset. The Improv shows the
+percentage of improvement over the base model, which is statistically significant as measured by t-test with p-value < 0.01.
+Model 100m Wind 10m Wind Humidity Temperature Average
+RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑
+NWP 0.892 0.606 0.875 0.581 0.932 0.699 0.422 0.910 0.868 0.587
+PINN 0.622 0.520 0.605 0.489 0.835 0.443 0.657 0.727 0.652 0.427
+PINO 0.640 0.504 0.602 0.516 0.609 0.538 0.477 0.838 0.626 0.452
+Bi-LSTM-T 0.666 0.588 0.704 0.562 0.576 0.597 0.472 0.876 0.601 0.443
+Bi-LSTM-T+ 0.635 0.649 0.664 0.621 0.550 0.672 0.442 0.903 0.571 0.485
+Improv 4.65% 10.4% 5.68% 10.5% 4.51% 12.6% 6.36% 3.08% 5.00% 9.48%
+Hybrid-CBA 0.674 0.568 0.717 0.550 0.590 0.595 0.460 0.865 0.617 0.431
+Hybrid-CBA+ 0.641 0.637 0.680 0.609 0.572 0.657 0.411 0.906 0.586 0.474
+Improv 4.90% 12.1% 5.16% 10.7% 3.05% 10.4% 10.7% 4.74% 5.02% 9.98%
+ConvLSTM 0.701 0.524 0.732 0.535 0.572 0.602 0.489 0.858 0.636 0.418
+ConvLSTM+ 0.658 0.587 0.699 0.607 0.550 0.671 0.454 0.891 0.596 0.463
+Improv 6.13% 12.0% 4.51% 13.5% 3.85% 11.5% 7.16% 3.85% 5.97% 10.8%
+AFNO 0.659 0.592 0.710 0.546 0.528 0.584 0.429 0.894 0.599 0.465
+AFNO+ 0.625 0.648 0.669 0.630 0.500 0.695 0.397 0.929 0.556 0.530
+Improv 5.16% 9.46% 5.78% 15.4% 5.30% 19.0% 7.46% 3.91% 7.18% 14.0%
+MTGNN 0.685 0.566 0.720 0.538 0.521 0.589 0.434 0.887 0.597 0.457
+MTGNN+ 0.657 0.629 0.672 0.613 0.489 0.679 0.388 0.918 0.555 0.514
+Improv 4.09% 11.1% 6.67% 13.9% 6.14% 15.3% 10.6% 3.49% 7.04% 12.5%
+MegaCRN 0.698 0.520 0.734 0.535 0.544 0.595 0.492 0.866 0.621 0.426
+MegaCRN+ 0.667 0.591 0.684 0.600 0.521 0.666 0.458 0.907 0.590 0.477
+Improv 4.44% 13.7% 6.81% 12.1% 4.23% 11.9% 6.91% 4.73% 5.00% 12.0%
+4.2 Forecasting Performance Comparison
+We evaluate the effectiveness of PhyDL-NWP for weather fore-
+casting on two real-world reanalysis datasets derived from ERA54:
+Ningxia and WeatherBench5. In addition to reanalysis data, we also
+4https://www.ecmwf.int/en/forecasts/datasets
+5https://mediatum.ub.tum.de/1524895
+test on a more accurate real-world measurement (observational)
+dataset Ningbo, where meteorological factors are directly collected
+from the Ningbo Meteorological Bureau6. Ningbo and Ningxia cover
+two different terrains and climate types in 0.25 degrees resolution,
+while WeatherBench covers the global weather in 5.625 degrees
+6http://zj.cma.gov.cn/dsqx/nbsqxj/
+KDD ’25, August 3–7, 2025, Toronto, ON, Canada. Yingtao Luo, Shikai Fang, Binqing Wu, Qingsong Wen, and Liang Sun
+24 72 120 168
+Forecasting hours
+0.1
+0.4
+0.7RMSE
+Bi-LSTM-T
+24 72 120 168
+Forecasting hours
+0.1
+0.4
+0.7RMSE
+Hybrid-CBA
+24 72 120 168
+Forecasting hours
+0.1
+0.4
+0.7RMSE
+AFNO
+24 72 120 168
+Forecasting hours
+0.1
+0.4
+0.7RMSE
+MTGNN
+24 72 120 168
+Forecasting hours
+0.1
+0.4
+0.7RMSE
+MegaCRN
+24 72 120 168
+Forecasting hours
+0.4
+0.6
+0.8ACC
+Bi-LSTM-T
+24 72 120 168
+Forecasting hours
+0.4
+0.6
+0.8ACC
+Hybrid-CBA
+24 72 120 168
+Forecasting hours
+0.4
+0.6
+0.8ACC
+AFNO
+24 72 120 168
+Forecasting hours
+0.4
+0.6
+0.8ACC
+MTGNN
+24 72 120 168
+Forecasting hours
+0.4
+0.6
+0.8ACC
+MegaCRN
+Model Model + Physics Guided
+Figure 3: Model comparison in Ningxia dataset before and after physics guidance for a variety of forecasting ranges on the
+average of all weather variables.
+resolution. On each grid in both datasets, we select the most impor-
+tant observational weather information for evaluation. See more
+details in Appendix A.1. We perform multiple experiments based
+on the length of future prediction, ranging from one hour to seven
+days. Due to the GPU memory limitation, we use the eight weather
+variables of only ten hours in the past to predict all eight weather
+variables in the future.
+There are five kinds of baseline models in comparison, including:
+(1) Physics-based models: NWP, PINN [30], PINO [17]; (2) Meteoro-
+logical models: Bi-LSTM-T [42], Hybrid-CBA [7]; (3) Vision models:
+ConvLSTM [33], FourcastNet [28] based on AFNO [5], ClimaX [24];
+(4) Spatio-temporal graph models: MTGNN [40], MegaCRN [11],
+GraphCast [14]. Some baseline models are slightly modified to
+adapt to the multi-step prediction setting and/or specific modeling
+resolution, with details described in the Appendix A.2.4. Besides
+deep learning models, we also compare these models with the Nu-
+merical Weather Prediction (NWP) results provided by ECMWF
+IFS and the Physical-Informed Neural Network (PINN) [30] based
+on the PDEs learned by PhyDL-NWP. We denote the baseline mod-
+els as BaseModels and incorporate them with PhyDL-NWP as
+BaseModels+.
+4.2.1 Regional Weather Forecasting. In particular, the result of re-
+gional forecasting details with seven days are reported in Table 3
+in the main manuscript and Table 5 in the appendix, as it repre-
+sents the model’s capability of long-term medium-range regional
+weather prediction. The vanilla PINN does not seem to be effective,
+while the improvement provided by PhyDL-NWP is consistently
+significant. For Ningbo dataset, the overall improvement on the av-
+erage of all weather variables is up to 7.18% over RMSE and 14.0%
+over ACC; for Ningxia dataset, the overall improvement on that is
+up to 5.48% over RMSE and 18.8% over ACC. All the results are
+statistically significant. Furthermore, we find that NWP is good
+in ACC, while being the worst in RMSE. Deep learning models, on
+the other hand, greatly outperform NWP in RMSE, showing great
+advantage in modeling capacity.
+To understand the holistic properties of PhyDL-NWP, we con-
+duct detailed analyses on the Ningxia dataset. First, the comparison
+of different models for different forecasting ranges is visualized in
+Fig. 3. BaseModels+ excels BaseModels and NWP at all time steps.
+As the forecasting range increases, the deep learning performance
+decreases quickly. The improvement provided byPhyDL-NWP, how-
+ever, is increasing in the forecasting range, which highlights its
+unique advantages of guiding models for long-term forecasting.
+In addition, based on AFNO from FourcastNet, we visualize its
+forecasting comparison at the 10-th time frame in Fig. 4. PhyDL-
+NWP clearly improves the performance of the existing deep model,
+making the forecasting results closer to the ground truth. Specifi-
+cally, “Total precipitation” is not a typical physical quantity and is
+hard to predict due to lack of effective physical equation. While the
+vanilla AFNO is a total disaster, AFNO+ provides information about
+which local areas receive concentrated rainfall. This effectively
+demonstrated the success of our implemented parameterization
+strategy with the latent force model.
+4.2.2 Global Weather Forecasting. Besides regional weather fore-
+casting, we also test PhyDL-NWP on the global weather forecasting
+task, which is the benchmark for a lot of recent works. The results
+with WeatherBench dataset for global weather forecasting are re-
+ported in Table 4. In comparison, PhyDL-NWP shows a lot more
+improvements over baseline models in the coarser-granular Weath-
+erBench dataset, with statistically significant improvement
+over RMSE. It is also worth noting that, even for the state-of-the-
+art GraphCast model, there is still an improvement. Moreover, as re-
+ported in Table 1, PhyDL-NWP module is extremely light-weighted
+and efficient, with a time cost that is 55∼170 times faster than
+the base forecasting models. The integration of physics and deep
+learning is clearly demonstrated in this study.
+4.3 Meteorology Dynamics Interpretation
+To understand how PhyDL-NWP is grounded on laws of physics,
+we compare the learned dynamics by PhyDL-NWP from Huadong
+dataset with the basic equations of NWP [34]. These equations orig-
+inate from conservation of mass, energy, and momentum. PhyDL-
+NWP will explicitly use the terms that appear in the first-principle
+equations and can be represented based on the dataset, while model-
+ing the rest of the dynamics using latent force parameterization. As
+shown in Table 6, our latent parameterization strategy is proposed
+considering that many terms cannot be modeled explicitly, due to
+missing records in the data or difficulty to measure.
+Physics-Guided Learning of Meteorological Dynamics
+for Weather Downscaling and Forecasting KDD ’25, August 3–7, 2025, Toronto, ON, Canada.
+Table 4: Model comparison of global weather forecasting up to two days for the WeatherBench dataset. All the reported results
+are averaged after three runs. BaseModel+ denotes the original model with PhyDL-NWP module.
+Variable Hours ClimaX ClimaX+ FourcastNet FourcastNet+ GraphCast GraphCast+
+RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑
+t2m
+6 1.46 0.92 1.13 0.98 1.27 0.99 1.01 0.99 0.40 0.99 0.39 0.99
+12 1.58 0.91 1.25 0.96 1.48 0.98 1.12 0.99 0.47 0.99 0.46 0.99
+18 1.75 0.90 1.42 0.95 1.63 0.98 1.27 0.99 0.52 0.99 0.50 0.99
+24 1.90 0.88 1.58 0.94 1.69 0.96 1.40 0.98 0.59 0.99 0.56 0.99
+48 2.80 0.84 2.34 0.92 2.26 0.94 1.90 0.97 0.74 0.98 0.72 0.99
+t
+6 1.32 0.95 1.02 0.98 1.15 0.99 0.99 0.99 0.39 0.99 0.39 0.99
+12 1.66 0.94 1.28 0.98 1.36 0.99 1.17 0.99 0.46 0.99 0.45 0.99
+18 1.87 0.92 1.48 0.97 1.53 0.99 1.35 0.99 0.53 0.99 0.51 0.99
+24 2.16 0.91 1.66 0.96 1.66 0.98 1.52 0.99 0.59 0.99 0.57 0.99
+48 2.94 0.86 2.11 0.95 1.94 0.97 1.70 0.99 0.80 0.99 0.77 0.99
+z
+6 207.6 0.93 128.5 0.97 142.3 0.96 100.8 0.99 44.1 0.99 44.0 0.99
+12 222.3 0.90 159.9 0.96 217.2 0.89 126.6 0.99 47.6 0.99 47.2 0.99
+18 268.7 0.87 197.6 0.95 255.0 0.74 166.2 0.98 50.6 0.99 49.5 0.99
+24 305.5 0.84 224.1 0.94 304.2 0.71 203.2 0.97 78.4 0.98 75.7 0.99
+48 497.2 0.77 292.4 0.92 477.6 0.62 278.0 0.95 118.6 0.98 112.5 0.98
+u10
+6 1.56 0.90 1.28 0.94 1.39 0.93 1.12 0.95 0.50 0.98 0.50 0.98
+12 1.98 0.89 1.73 0.94 1.88 0.92 1.69 0.94 0.53 0.98 0.53 0.98
+18 2.20 0.89 1.94 0.93 2.10 0.90 1.88 0.93 0.57 0.98 0.56 0.98
+24 2.46 0.85 2.15 0.92 2.36 0.89 2.09 0.92 0.75 0.97 0.73 0.98
+48 2.91 0.78 2.46 0.88 2.79 0.88 2.36 0.90 1.24 0.96 1.16 0.97
+v10
+6 1.78 0.88 1.37 0.94 1.55 0.94 1.22 0.94 0.52 0.98 0.52 0.98
+12 1.99 0.86 1.52 0.93 1.81 0.90 1.39 0.93 0.55 0.98 0.55 0.98
+18 2.35 0.85 1.74 0.92 2.11 0.88 1.63 0.92 0.58 0.98 0.57 0.98
+24 2.66 0.83 2.08 0.90 2.40 0.85 1.96 0.91 0.79 0.97 0.76 0.98
+48 3.74 0.70 2.49 0.87 3.06 0.80 2.25 0.89 1.36 0.96 1.24 0.97
+Table 5: Model comparison of seven-day medium-range weather forecasting for Ningxia dataset.
+Model 100m Wind(U) 10m Wind(U) Temperature Surface pressure Average
+RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑ RMSE↓ ACC↑
+NWP 0.968 0.521 0.933 0.514 0.319 0.844 0.325 0.961 0.901 0.526
+PINN 0.697 0.470 0.681 0.437 0.635 0.654 0.494 0.904 0.666 0.387
+Bi-LSTM-T 0.822 0.502 0.804 0.485 0.583 0.525 0.160 0.961 0.638 0.411
+Bi-LSTM-T+ 0.798 0.545 0.777 0.520 0.560 0.584 0.156 0.965 0.616 0.445
+Improv 2.92% 8.57% 3.36% 7.22% 4.28% 11.2% 2.50% 0.42% 3.45% 8.27%
+Hybrid-CBA 0.842 0.456 0.819 0.445 0.652 0.430 0.150 0.964 0.657 0.338
+Hybrid-CBA+ 0.801 0.536 0.790 0.509 0.563 0.589 0.149 0.966 0.621 0.416
+Improv 4.87% 17.5% 3.54% 14.4% 13.7% 37.0% 0.67% 0.21% 5.48% 18.8%
+ConvLSTM 0.865 0.429 0.848 0.408 0.592 0.499 0.175 0.959 0.656 0.364
+ConvLSTM+ 0.826 0.477 0.814 0.472 0.520 0.619 0.170 0.955 0.622 0.419
+Improv 4.51% 11.2% 4.01% 15.7% 12.2% 24.0% 2.86% -0.42% 5.18% 15.1%
+AFNO 0.856 0.436 0.838 0.421 0.501 0.571 0.153 0.962 0.619 0.395
+AFNO+ 0.823 0.505 0.808 0.498 0.466 0.693 0.153 0.956 0.596 0.456
+Improv 3.86% 15.8% 3.58% 18.3% 6.99% 17.9% 0.00% -0.31% 3.72% 15.4%
+MTGNN 0.835 0.484 0.820 0.465 0.502 0.526 0.162 0.958 0.617 0.395
+MTGNN+ 0.810 0.525 0.792 0.521 0.469 0.677 0.160 0.959 0.595 0.455
+Improv 2.99% 8.47% 3.41% 12.0% 6.57% 28.7% 1.96% 0.10% 3.57% 15.2%
+MegaCRN 0.840 0.455 0.824 0.432 0.646 0.487 0.188 0.958 0.661 0.370
+MegaCRN+ 0.809 0.510 0.793 0.485 0.598 0.600 0.183 0.954 0.629 0.432
+Improv 4.64% 12.1% 3.76% 12.3% 7.43% 23.2% 2.66% -0.42% 4.84% 16.8%
+For the modeling of temperature, the basic equation originates
+from the 3D convection-diffusion equation for heat transfer. Tem-
+perature 𝑇 is influenced by advection (movement of heat due to
+fluid flow, represented by the velocity components𝑈 , 𝑉 and a ver-
+tical component 𝑊 along height 𝑧), diffusion (spread of heat due to
+thermal diffusivity 𝑘), and a heat source 𝐻. In addition, 𝑡 denotes
+time, 𝑥 and 𝑦 denote space, 𝑈10 represents the wind components at
+the heights of 10m. An example of meteorology dynamics of tem-
+perature (t) of WeatherBench dataset in the year of 2018 is shown
+in Fig. 5. We found that 𝑄 and ΦΞ substitute each other well and
+the combination generally matches 𝜕𝑇
+𝜕𝑡 .
+KDD ’25, August 3–7, 2025, Toronto, ON, Canada. Yingtao Luo, Shikai Fang, Binqing Wu, Qingsong Wen, and Liang Sun
+Ground 
+Truth
+AFNO+
+AFNO
+100m wind speed
+U component
+100m wind speed
+V component
+10m wind speed
+U component
+10m wind speed
+V component 2m temperature Mean sea
+level pressure
+Surface
+pressure
+Total
+precipitation
+Figure 4: Example of comparison of 7-day weather forecast results in Ningxia dataset. AFNO+ are closer to the ground truth.
+Table 6: Comparison of learned dynamics against ground
+truth in literature. Orange color marks terms unavailable
+from the data, which are represented by latent force 𝑄.
+Temperature Learned vs. True PDE
+Learned 𝜕𝑇
+𝜕𝑡 = −𝑈10 𝜕𝑇
+𝜕𝑥 −𝑉10 𝜕𝑇
+𝜕𝑦 + 𝑄
+Ground Truth 𝜕𝑇
+𝜕𝑡 = −𝑈 𝜕𝑇
+𝜕𝑥 −𝑉 𝜕𝑇
+𝜕𝑦 −𝑊 𝜕𝑇
+𝜕𝑧 + 𝑘 𝜕2𝑇
+𝜕𝑧2 + 𝐻
+Wind Velocity Learned vs. True PDE
+Learned 𝜕𝑈10
+𝜕𝑡 = −𝑈10 𝜕𝑈10
+𝜕𝑥 −𝑉10 𝜕𝑈10
+𝜕𝑦 + 𝑄
+Ground Truth 𝜕𝑈
+𝜕𝑡 = −𝑈 𝜕𝑈
+𝜕𝑥 −𝑉 𝜕𝑈
+𝜕𝑦 −𝑊 𝜕𝑈
+𝜕𝑧 − 1
+𝜌
+𝜕𝑝
+𝜕𝑥 + 𝜈Δu + 𝐹𝑓𝑥
+Surface Pressure Learned vs. True PDE
+Learned 𝜕2𝑝
+𝜕𝑡2 = 𝜕2𝑝
+𝜕𝑥2 + 𝜕2𝑝
+𝜕𝑦2 + 𝑄
+Ground Truth 𝜕2𝑝
+𝜕𝑡2 = 𝜕2𝑝
+𝜕𝑥2 + 𝜕2𝑝
+𝜕𝑦2 + 𝜕2𝑝
+𝜕𝑧2
+Humidity Learned vs. True PDE
+Learned 𝜕𝑞
+𝜕𝑡 = −𝑈 𝜕𝑞
+𝜕𝑥 −𝑉 𝜕𝑞
+𝜕𝑦 + 𝜕2𝑞
+𝜕𝑥2 + 𝜕2𝑞
+𝜕𝑦2 + 𝑄
+Ground Truth 𝜕𝑞
+𝜕𝑡 = −𝑈 𝜕𝑞
+𝜕𝑥 −𝑉 𝜕𝑞
+𝜕𝑦 −𝑊 𝜕𝑞
+𝜕𝑧 + 𝑘∇2𝑞 + 𝑆𝑞
+For wind velocity, the compared basic equation originates from
+the 3D Navier-Stokes equations. The velocity is influenced by con-
+vective acceleration, the gradient of pressure 𝑝 with fluid density
+𝜌, the diffusion of momentum due to viscosity 𝜈 for velocity of
+all directions u, and external force 𝐹𝑓𝑥 along the 𝑥 direction (such
+as friction). It is obvious that the WeatherBench dataset does not
+provide all the necessary variables to complete the equation. Our
+latent force model will address this problem well. Similarly, for
+surface pressure, the learned equation aligns with the 3D wave
+equation while the missing vertical component is for the latent
+force 𝑄 to capture. For humidity, the equation originates from the
+conservation of mass, and combines the advection, diffusion and
+source terms, where 𝑞 is the humidity, and 𝑆𝑞 is the source term
+for humidity (e.g., evaporation, condensation). We approximate
+precipitation using a parameterized PDE for humidity as a tractable
+surrogate that captures its dominant drivers.
+Figure 5: The latent force and PDE for the temperature vari-
+ation in WeatherBench dataset.
+5 Conclusion
+We introduce PhyDL-NWP, a light-weighted physics-guided deep
+learning framework for weather downscaling and forecasting. By in-
+corporating parameterized physical dynamics through latent force
+modeling, PhyDL-NWP enables continuous, resolution-free pre-
+dictions while ensuring consistency with governing equations. It
+can augment and fine-tune existing forecasting models with mini-
+mal overhead, significantly improving both accuracy and physical
+plausibility. Extensive experiments across diverse datasets demon-
+strate its effectiveness, scalability, and interpretability, positioning
+PhyDL-NWP as a practical and generalizable module for modern
+meteorological modeling.
+Physics-Guided Learning of Meteorological Dynamics
+for Weather Downscaling and Forecasting KDD ’25, August 3–7, 2025, Toronto, ON, Canada.
+References
+[1] Peter Bauer, Alan Thorpe, and Gilbert Brunet. 2015. The quiet revolution of
+numerical weather prediction. Nature 525, 7567 (2015), 47–55.
+[2] Kaifeng Bi, Lingxi Xie, Hengheng Zhang, Xin Chen, Xiaotao Gu, and Qi Tian. 2023.
+Accurate medium-range global weather forecasting with 3D neural networks.
+Nature (2023), 1–6.
+[3] Kang Chen, Tao Han, Junchao Gong, Lei Bai, Fenghua Ling, Jing-Jia Luo, Xi Chen,
+Leiming Ma, Tianning Zhang, Rui Su, et al. 2023. FengWu: Pushing the Skillful
+Global Medium-range Weather Forecast beyond 10 Days Lead. arXiv preprint
+arXiv:2304.02948 (2023).
+[4] Yuntian Chen, Yingtao Luo, Qiang Liu, Hao Xu, and Dongxiao Zhang. 2022. Sym-
+bolic genetic algorithm for discovering open-form partial differential equations
+(SGA-PDE). Physical Review Research 4, 2 (2022), 023174.
+[5] John Guibas, Morteza Mardani, Zongyi Li, Andrew Tao, Anima Anandkumar,
+and Bryan Catanzaro. 2021. Adaptive fourier neural operators: Efficient token
+mixers for transformers. arXiv preprint arXiv:2111.13587 (2021).
+[6] Jindong Han, Hao Liu, Hengshu Zhu, Hui Xiong, and Dejing Dou. 2021. Joint
+air quality and weather prediction based on multi-adversarial spatiotemporal
+networks. In Proceedings of the AAAI Conference on Artificial Intelligence , Vol. 35.
+4081–4089.
+[7] Yan Han, Lihua Mi, Lian Shen, CS Cai, Yuchen Liu, Kai Li, and Guoji Xu. 2022. A
+short-term wind speed prediction method utilizing novel hybrid deep learning
+algorithms to correct numerical weather forecasting. Applied Energy 312 (2022),
+118777.
+[8] Hans Hersbach, Bill Bell, Paul Berrisford, Shoji Hirahara, András Horányi, Joaquín
+Muñoz-Sabater, Julien Nicolas, Carole Peubey, Raluca Radu, Dinand Schepers,
+et al. 2020. The ERA5 global reanalysis. Quarterly Journal of the Royal Meteoro-
+logical Society 146, 730 (2020), 1999–2049.
+[9] Shuai Hu, Yue Xiang, Da Huo, Shafqat Jawad, and Junyong Liu. 2021. An improved
+deep belief network based hybrid forecasting method for wind power. Energy
+224 (2021), 120185.
+[10] Hao Jiang and Li Chen. 2022. An Efficient Content-aware Downsampling-based
+Video Compression Framework. In 2022 IEEE International Conference on Visual
+Communications and Image Processing (VCIP) . IEEE, 1–5.
+[11] Renhe Jiang, Zhaonan Wang, Jiawei Yong, Puneet Jeph, Quanjun Chen, Ya-
+sumasa Kobayashi, Xuan Song, Shintaro Fukushima, and Toyotaro Suzumura.
+2023. Spatio-temporal meta-graph learning for traffic forecasting. In Proceedings
+of the AAAI Conference on Artificial Intelligence , Vol. 37. 8078–8086.
+[12] George Em Karniadakis, Ioannis G Kevrekidis, Lu Lu, Paris Perdikaris, Sifan
+Wang, and Liu Yang. 2021. Physics-informed machine learning. Nature Reviews
+Physics 3, 6 (2021), 422–440.
+[13] Dmitrii Kochkov, Janni Yuval, Ian Langmore, Peter Norgaard, Jamie Smith, Griffin
+Mooers, Milan Klöwer, James Lottes, Stephan Rasp, Peter Düben, et al . 2024.
+Neural general circulation models for weather and climate. Nature (2024), 1–7.
+[14] Remi Lam, Alvaro Sanchez-Gonzalez, Matthew Willson, Peter Wirnsberger, Meire
+Fortunato, Alexander Pritzel, Suman Ravuri, Timo Ewalds, Ferran Alet, Zach
+Eaton-Rosen, et al . 2022. GraphCast: Learning skillful medium-range global
+weather forecasting. arXiv preprint arXiv:2212.12794 (2022).
+[15] Yu Li, Fei Tang, Xin Gao, Tongyan Zhang, Junfeng Qi, Jiarui Xie, Xinang Li,
+and Yuhan Guo. 2022. Numerical weather prediction correction strategy for
+short-term wind power forecasting based on bidirectional gated recurrent unit
+and XGBoost. Frontiers in Energy Research 9 (2022), 836144.
+[16] Zongyi Li, Nikola Kovachki, Kamyar Azizzadenesheli, Burigede Liu, Kaushik
+Bhattacharya, Andrew Stuart, and Anima Anandkumar. 2020. Fourier neural oper-
+ator for parametric partial differential equations. arXiv preprint arXiv:2010.08895
+(2020).
+[17] Zongyi Li, Hongkai Zheng, Nikola Kovachki, David Jin, Haoxuan Chen, Burigede
+Liu, Kamyar Azizzadenesheli, and Anima Anandkumar. 2024. Physics-informed
+neural operator for learning partial differential equations. ACM/JMS Journal of
+Data Science 1, 3 (2024), 1–27.
+[18] Yuxuan Liang, Haomin Wen, Yutong Xia, Ming Jin, Bin Yang, Flora Salim, Qing-
+song Wen, Shirui Pan, and Gao Cong. 2025. Foundation Models for Spatio-
+Temporal Data Science: A Tutorial and Survey. arXiv preprint arXiv:2503.13502
+(2025).
+[19] Haitao Lin, Zhangyang Gao, Yongjie Xu, Lirong Wu, Ling Li, and Stan Z Li. 2022.
+Conditional local convolution for spatio-temporal meteorological forecasting. In
+Proceedings of the AAAI Conference on Artificial Intelligence , Vol. 36. 7470–7478.
+[20] Yumin Liu, Auroop R Ganguly, and Jennifer Dy. 2020. Climate downscaling
+using YNet: A deep convolutional network with skip connections and fusion.
+In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge
+Discovery & Data Mining . 3145–3153.
+[21] Andrew C Lorenc. 1986. Analysis methods for numerical weather prediction.
+Quarterly Journal of the Royal Meteorological Society 112, 474 (1986), 1177–1194.
+[22] Yingtao Luo, Qiang Liu, Yuntian Chen, Wenbo Hu, Tian Tian, and Jun Zhu. 2023.
+Physics-guided discovery of highly nonlinear parametric partial differential
+equations. In Proceedings of the 29th ACM SIGKDD Conference on Knowledge
+Discovery and Data Mining . 1595–1607.
+[23] Yingtao Luo, Chang Xu, Yang Liu, Weiqing Liu, Shun Zheng, and Jiang Bian.
+2022. Learning differential operators for interpretable time series modeling. In
+Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and
+Data Mining. 1192–1201.
+[24] Tung Nguyen, Johannes Brandstetter, Ashish Kapoor, Jayesh K Gupta, and Aditya
+Grover. 2023. ClimaX: A foundation model for weather and climate.arXiv preprint
+arXiv:2301.10343 (2023).
+[25] Tung Nguyen, Jason Jewik, Hritik Bansal, Prakhar Sharma, and Aditya Grover.
+2023. ClimateLearn: Benchmarking Machine Learning for Weather and Climate
+Modeling. arXiv preprint arXiv:2307.01909 (2023).
+[26] Sungwon Park, Karandeep Singh, Arjun Nellikkattil, Elke Zeller, Tung Duong Mai,
+and Meeyoung Cha. 2022. Downscaling earth system models with deep learning.
+In Proceedings of the 28th ACM SIGKDD conference on knowledge discovery and
+data mining. 3733–3742.
+[27] Linsey S Passarella, Salil Mahajan, Anikesh Pal, and Matthew R Norman. 2022.
+Reconstructing high resolution ESM data through a novel fast super resolution
+convolutional neural network (FSRCNN). Geophysical Research Letters 49, 4
+(2022), e2021GL097571.
+[28] Jaideep Pathak, Shashank Subramanian, Peter Harrington, Sanjeev Raja, Ashesh
+Chattopadhyay, Morteza Mardani, Thorsten Kurth, David Hall, Zongyi Li,
+Kamyar Azizzadenesheli, et al . 2022. Fourcastnet: A global data-driven high-
+resolution weather model using adaptive fourier neural operators. arXiv preprint
+arXiv:2202.11214 (2022).
+[29] Ilan Price, Alvaro Sanchez-Gonzalez, Ferran Alet, Tom R Andersson, Andrew
+El-Kadi, Dominic Masters, Timo Ewalds, Jacklynn Stott, Shakir Mohamed, Peter
+Battaglia, et al. 2023. Gencast: Diffusion-based ensemble forecasting for medium-
+range weather. arXiv preprint arXiv:2312.15796 (2023).
+[30] Maziar Raissi, Paris Perdikaris, and George E Karniadakis. 2019. Physics-informed
+neural networks: A deep learning framework for solving forward and inverse
+problems involving nonlinear partial differential equations. J. Comput. Phys. 378
+(2019), 686–707.
+[31] Stephan Rasp, Peter D Dueben, Sebastian Scher, Jonathan A Weyn, Soukayna
+Mouatadid, and Nils Thuerey. 2020. WeatherBench: a benchmark data set for
+data-driven weather forecasting. Journal of Advances in Modeling Earth Systems
+12, 11 (2020), e2020MS002203.
+[32] Sumanta Chandra Mishra Sharma and Adway Mitra. 2022. ResDeepD: A residual
+super-resolution network for deep downscaling of daily precipitation over India.
+Environmental Data Science 1 (2022), e19.
+[33] Xingjian Shi, Zhourong Chen, Hao Wang, Dit-Yan Yeung, Wai-Kin Wong, and
+Wang-chun Woo. 2015. Convolutional LSTM network: A machine learning
+approach for precipitation nowcasting. Advances in neural information processing
+systems 28 (2015).
+[34] Roland B Stull. 1988. An introduction to boundary layer meteorology . Vol. 13.
+Springer Science & Business Media.
+[35] Thomas Vandal, Evan Kodra, Sangram Ganguly, Andrew Michaelis, Ramakrishna
+Nemani, and Auroop R Ganguly. 2017. Deepsd: Generating high resolution
+climate change projections through single image super-resolution. InProceedings
+of the 23rd acm sigkdd international conference on knowledge discovery and data
+mining. 1663–1672.
+[36] Yogesh Verma, Markus Heinonen, and Vikas Garg. 2023. ClimODE: Climate
+and Weather Forecasting with Physics-informed Neural ODEs. In The Twelfth
+International Conference on Learning Representations .
+[37] Bin Wang, Jie Lu, Zheng Yan, Huaishao Luo, Tianrui Li, Yu Zheng, and Guangquan
+Zhang. 2019. Deep uncertainty quantification: A machine learning approach
+for weather forecasting. In Proceedings of the 25th ACM SIGKDD International
+Conference on Knowledge Discovery & Data Mining . 2087–2095.
+[38] Jonathan A Weyn, Dale R Durran, and Rich Caruana. 2020. Improving data-
+driven global weather prediction using deep convolutional neural networks on
+a cubed sphere. Journal of Advances in Modeling Earth Systems 12, 9 (2020),
+e2020MS002109.
+[39] Haixu Wu, Hang Zhou, Mingsheng Long, and Jianmin Wang. 2023. Interpretable
+weather forecasting for worldwide stations with a unified deep model. Nature
+Machine Intelligence (2023), 1–10.
+[40] Zonghan Wu, Shirui Pan, Guodong Long, Jing Jiang, Xiaojun Chang, and Chengqi
+Zhang. 2020. Connecting the dots: Multivariate time series forecasting with graph
+neural networks. In Proceedings of the 26th ACM SIGKDD international conference
+on knowledge discovery & data mining . 753–763.
+[41] Wanghan Xu, Fenghua Ling, Wenlong Zhang, Tao Han, Hao Chen, Wanli Ouyang,
+and Lei Bai. 2024. Generalizing Weather Forecast to Fine-grained Temporal Scales
+via Physics-AI Hybrid Modeling. arXiv preprint arXiv:2405.13796 (2024).
+[42] Xiaoying Yang, Shuai Yang, Mou Leong Tan, Hengyang Pan, Hongliang Zhang,
+Guoqing Wang, Ruimin He, and Zimeng Wang. 2022. Correcting the bias of daily
+satellite precipitation estimates in tropical regions using deep neural network.
+Journal of Hydrology 608 (2022), 127656.
+[43] Tingzhao Yu, Qiuming Kuang, Jiangping Zheng, and Junnan Hu. 2021. Deep
+precipitation downscaling. IEEE Geoscience and Remote Sensing Letters 19 (2021),
+1–5.
+KDD ’25, August 3–7, 2025, Toronto, ON, Canada. Yingtao Luo, Shikai Fang, Binqing Wu, Qingsong Wen, and Liang Sun
+A Appendix
+A.1 Dataset Description
+Algorithm 1 Physics-Guided Learning of Numerical Weather Pre-
+diction (PhyDL-NWP).
+Require Weather data u = [𝑢1 (𝑥, 𝑦, 𝑡), . . . , 𝑢ℎ (𝑥, 𝑦, 𝑡)] with ℎ
+variables, where 𝑥 ∈ R𝑛, 𝑦 ∈ R𝑚, 𝑡 ∈ R𝑇 . Alternatively,𝑇 = 𝑠 + 1
+and 𝑢 = [X]𝑖
+𝑖 −𝑠 ∈ R𝑛×𝑚×ℎ× (𝑠+1).
+Require Candidate terms Φ(𝑢) = {𝜙1 (𝑢), . . . , 𝜙𝑝 (𝑢)} and cor-
+responding coefficients Ξ = {𝜉1, . . . , 𝜉𝑝 }; the latent force model
+𝑄𝜋 (𝑥, 𝑦, 𝑡) parameterized by 𝜋; the dynamics model 𝑓𝜃 (𝑥, 𝑦, 𝑡)
+parameterized by 𝜃; pretrained weather forecasting model 𝑔𝜔
+parameterized by 𝜔.
+while not convergence do
+Optimize 𝜃, Ξ and 𝜋 following Eqs. (1-5);
+end while
+Generate super-resolution weather data by downscaling using
+Y = 𝑓𝜃 (𝑥 ′, 𝑦′, 𝑡), where 𝑥 ′ ∈ R𝑛′
+, 𝑦′ ∈ R𝑚′
+are the coordinates
+of the super-resolution data with 𝑛′ > 𝑛, 𝑚′ > 𝑚, which are
+interpolations within the boundary of where the coordinates of
+𝑢 are located;
+while not convergence do
+Replace [X]𝑖
+𝑖 −𝑠 by the augmented downscale data Y and opti-
+mize 𝜔 following Eqs. (6-8);
+end while
+Return The well-trained weather forecasting model 𝑔𝜔.
+For weather downscaling, the Huadong dataset consists of HRES
+and ERAs datasets. HRES represents a 10-day atmospheric model
+forecast, while ERA5 serves as a global atmospheric reanalysis, in-
+corporating climate and weather observations. For regional down-
+scaling, we construct a real-world dataset called "Huadong", cover-
+ing the east China land and sea areas. In this dataset, HRES data is
+employed as the predictive data, while ERA5 reanalysis data serves
+as the ground truth.
+Huadong dataset: The Huadong dataset encompasses a latitude
+range from 26.8◦ 𝑁 to 42.9◦ 𝑁 and a longitude range from112.6◦ 𝐸 to
+123.7◦ 𝐸. It comprises a grid of 64 × 44 cells, with each cell having a
+grid size of 0.25 degrees in both latitude and longitude. Notably, the
+Huadong dataset also incorporates Digital Elevation Model (DEM)
+data to represent terrain information. Since the terrain information
+usually refers to the boundary layers in the meteorology model
+instead of an individual weather factor in the PDE, for simplicity,
+we do not use this information in the paper. The HRES and ERA5
+data cover the period from January 3, 2020, to April 1, 2022. The
+scores of the average of variables reported in Table 2 are computed
+based on all eight factors. Due to space limits, we only report the
+specific scores for four factors.
+For weather forecasting, both Ningbo and Ningxia datasets con-
+sist of two main components: geographic data and meteorological
+data. The geographic data includes latitude, longitude, and DEM
+(Digital Elevation Model) information. The DEM information is
+commonly used in geographic information systems to represent
+the terrain of the area. On the other hand, the meteorological data
+in these datasets consist of various weather factors. These factors
+typically include wind speed, temperature, and pressure. These
+data provide information about the atmospheric conditions at dif-
+ferent locations within the study area. To organize and represent
+the data, a grid format is used. In this format, the study area is
+divided into grids, and each grid cell represents a specific location.
+Within each grid cell, both the geographic and meteorological data
+for that location are stored.
+Ningbo dataset: The Ningbo dataset represents a coastal area
+spanning from latitude 28.85◦N to 30.56◦N and longitude 120.91◦E
+to 122.29◦E. It is divided into a grid system comprising 58 grids
+in the latitude direction and 47 in the longitude direction. Each
+grid has a size of 0.03 degrees in both latitude and longitude. The
+DEM data are collected from ETOPO17. The meteorological data
+are collected from Ningbo Meteorological Bureau 8, including 10
+weather factors from 1/Jan/2021 to 1/Apr/2021 with 1-hour sample
+rate. Therefore, this dataset is real measurement data, rather than a
+typical reanalysis dataset.
+Ningxia dataset: The Ningxia dataset represents a mountainous
+area spanning from latitude 34.5◦N to 42◦N and longitude 106◦E
+to 116◦E. There are 30 ×40 grids with a grid size of 0.25 degrees
+in both latitude and longitude. The DEM data are collected from
+ETOPO1. The meteorological data are collected from ECMWF’s
+ERA59, including 8 weather factors from 1/Jan/2021 to 1/Dec/2021
+with 1-hour sample rate. For variable temperature, the atmosphere
+level is 500.
+WeatherBench dataset: The WeatherBench dataset10 repre-
+sents a global weather dataset. We select the version with 5.625
+degrees resolution, sampling rate of 6 hours, from 2008 to 2018,
+with five weather factors. This dataset originates from ECMWF’s
+ERA5 as well. For variable 𝑧 (geopotential), the atmosphere level is
+500. For variable 𝑡 (temperature), the atmosphere level is 850.
+In the forecasting experiments, we divide each dataset into train,
+validation, and test sets using an 8:1:1 ratio in chronological order.
+The scores of the average of variables reported in Table 5 are com-
+puted based on all eight factors. Due to space limits, we only report
+the specific scores for four factors.
+A.2 Experimental details
+We choose the learning rate at 1e-4, batch size of PhyDL-NWP at
+10000, and hidden dimension at 100. We perform grid search in
+[1e-5, 1e-4, 1e-3, 1e-2, 0.1, 1, 10] for the following hyperparameters
+and select them as: 𝛼 at 10, 𝛽 at 1e-2.
+The neural network used for 𝑓𝜃 and 𝑄𝜋 both consists of 8 hidden
+layers, where each layer has 100 neurons. MLP is the most com-
+monly used model architecture in the literature of PINN, which
+leverages the universal function approximation capabilities to model
+complex mappings from inputs like (x, y, t) to outputs such as
+weather variables. This allows inference at any arbitrary resolution
+because the model outputs values at any real-valued coordinate,
+not restricted to the training grid.
+We employ both automatic differentiation and finite difference
+(FD) methods in this paper. Specifically, once the neural network𝑓𝜃
+accurately approximates the weather data, we leverage PyTorch’s
+7ETOPO1
+8Ningbo Meteorological Bureau
+9ECMWF’s ERA5
+10https://mediatum.ub.tum.de/1524895
+Physics-Guided Learning of Meteorological Dynamics
+for Weather Downscaling and Forecasting KDD ’25, August 3–7, 2025, Toronto, ON, Canada.
+automatic differentiation to compute derivatives. PyTorch con-
+structs a dynamic computational graph during forward operations,
+where each tensor records its computation history. When comput-
+ing the output 𝑦 = 𝑓𝜃 (𝑡), invoking y.backward() enables access to
+the derivative with respect to 𝑡 via t.grad.
+The finite difference (FD) method, on the other hand, is much
+simpler, but also much quicker. It approximates derivatives using
+discrete points. For the first derivative of a function 𝑢 (𝑡), there are:
+A.2.1 Forward Difference.
+𝑑𝑢
+𝑑𝑡 ≈ 𝑢 (𝑡 + Δ𝑡) − 𝑢 (𝑡)
+Δ𝑡 + O (Δ𝑡)
+A.2.2 Backward Difference.
+𝑑𝑢
+𝑑𝑡 ≈ 𝑢 (𝑡) − 𝑢 (𝑡 − Δ𝑡)
+Δ𝑡 + O (Δ𝑡)
+A.2.3 Central Difference.
+𝑑𝑢
+𝑑𝑡 ≈ 𝑢 (𝑡 + Δ𝑡) − 𝑢 (𝑡 − Δ𝑡)
+2Δ𝑡 + O (Δ𝑡 2)
+We adopt the finite difference (FD) method to compute deriva-
+tives in the weather forecasting model 𝑔𝜔 (Eq. 8), as automatic
+differentiation is not applicable— 𝑔𝜔 does not explicitly take time 𝑡
+as an input, unlike 𝑓𝜃 (𝑥, 𝑦, 𝑡). Another advantage is that first-order
+finite difference (FD) is much faster than automatic differentiation
+(auto-diff) because FD only requires basic arithmetic on neighbor-
+ing grid points. Auto-diff has to traverse the computation graph
+and involves memory-heavy backward passes, especially for deep
+networks or large spatiotemporal inputs.
+A.2.4 Forecasting baselines.
+• PINN [30]: a physics-informed feedforward neural network
+that incorporates known physical laws (e.g., PDEs) as soft
+constraints during training to improve generalization and
+physical consistency.
+• Bi-LSTM-T [42]: a deep learning (DL) model that uses Bi-
+LSTM for weather prediction.
+• Hybrid-CBA [7]: a hybrid DL model that combines CNN,
+LSTM, and attention models for weather forecasting and
+correction.
+• ConvLSTM [33]: a hybrid DL model that extends LSTM with
+convolutional gates.
+• PINO [17]: a physics-informed neural operator that learns
+solution operators for PDEs directly, enabling efficient infer-
+ence and better scalability than traditional PINNs.
+• AFNO [5, 28]: a DL model that adapts Fourier neural operator
+for spatio-temporal modeling.
+• MTGNN [40]: a DL model that learns multivariate time series
+with graph neural networks.
+• MegaCRN [11]: a deep learning model that learns heteroge-
+neous spatial relationships with adaptive graphs.
+• ClimaX [24]: a transformer-based deep learning foundation
+model for weather forecasting.
+• FourcastNet [28]: a foundation model for global weather
+forecasting based on Adaptive Fourier Neural Operators.
+• GraphCast [14]: a foundation model for global weather pre-
+diction based on encoder-decoder with message passing.
+Since most forecasting baselines are designed for single-step fu-
+ture prediction by default, we modify their neural architecture by
+multiplying the output dimension of the second-last layer (usually
+at the end of an LSTM or Conv block, before passing through the
+feed-forward network at the end) by the number of prediction steps.
+Since different baselines may operate on different resolutions of
+data, we will use interpolation to map to the desired resolution.
+A.2.5 Downscaling baselines.
+• Bicubic interpolation: a two-dimensional interpolation tech-
+nique that uses the values and gradients of the function at
+surrounding grid points to obtain a smooth and continuous
+interpolated result.
+• FSRCNN [ 27]: a widely recognized method in computer
+vision, leveraged for both downscaling and single-image
+super-resolution, which conducts feature mapping using
+multi-layer CNNs and executes upsampling via deconvolu-
+tion layers.
+• ResDeepD [32]: a deep model that begins with an upsampling
+of the input to increase dimensions before proceeding to
+feature mapping via ResNet.
+• EDSR [10]: a deep model that first conducts feature mapping
+using ResNet and then performs upsampling.
+• RCAN [43]: a deep model based on ResNet that incorporates
+a global pooling layer for channel attention.
+• YNet [20]: a novel deep convolutional neural network (CNN)
+with skip connections and fusion capabilities to perform
+downscaling for climate variables.
+• DeepSD [35]: a generalized stacked super resolution convo-
+lutional neural network (SRCNN) framework for statistical
+downscaling of climate variables.
+• GINE [26]: a computer vision-based technique using topography-
+driven spatial and local-level information for downscaling
+climate simulation.
