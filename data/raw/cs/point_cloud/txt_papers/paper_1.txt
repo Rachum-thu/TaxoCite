@@ -1,0 +1,893 @@
+Banana: Banach Fixed-Point Network for Pointcloud
+Segmentation with Inter-Part Equivariance
+Congyue Deng1∗ Jiahui Lei2∗ Bokui Shen1 Kostas Daniilidis2 Leonidas Guibas1
+1 Stanford University 2 University of Pennsylvania
+{congyue, willshen, guibas}@cs.stanford.edu, {leijh, kostas}@cis.upenn.edu
+Abstract
+Equivariance has gained strong interest as a desirable network property that in-
+herently ensures robust generalization. However, when dealing with complex
+systems such as articulated objects or multi-object scenes, effectively capturing
+inter-part transformations poses a challenge, as it becomes entangled with the over-
+all structure and local transformations. The interdependence of part assignment and
+per-part group action necessitates a novel equivariance formulation that allows for
+their co-evolution. In this paper, we present Banana, a Banach fixed-point network
+for pointcloud segmentation with inter-part equivariance by construction. Our key
+insight is to iteratively solve a fixed-point problem, where point-part assignment
+labels and per-part SE(3)-equivariance co-evolve simultaneously. We provide
+theoretical derivations of both per-step equivariance and global convergence, which
+induces an equivariant final convergent state. Our formulation naturally provides
+a strict definition of inter-part equivariance that generalizes to unseen inter-part
+configurations. Through experiments conducted on both articulated objects and
+multi-object scans, we demonstrate the efficacy of our approach in achieving
+strong generalization under inter-part transformations, even when confronted with
+substantial changes in pointcloud geometry and topology.
+1 Introduction
+From articulated objects to multi-object scenes, multi-body systems, i.e. shapes composed of multiple
+parts where each part can be moved separately, are prevalent in various daily-life scenarios. However,
+modeling such systems presents considerable challenges compared to rigid objects, primarily due
+to the infinite shape variations resulting from inter-part pose transformations with exponentially
+growing complexities. Successfully modeling these shapes demands generalization across potential
+inter-part configurations. While standard data augmentation techniques can potentially alleviate
+such problems, exhaustive augmentation can be highly expensive especially given the complexity
+of such systems compared to rigid objects. Meanwhile, recent rigid-shape analysis techniques have
+made significant progress in building generalization through the important concept of equivariance
+[38, 14, 78, 2, 80, 70, 19, 11, 15, 3, 35, 41, 54]. Equivariance dictates that when a transformation
+is applied to the input data, the network’s output should undergo a corresponding transformation.
+For example, if a point cloud is rotated by 90 degrees, the segmentation masks should also rotate
+accordingly. However, to the best of our knowledge, no existing work has managed to extend the
+formulation of equivariance to inter-part configurations.
+In this paper, we address the challenge of achieving inter-part equivariance in the context of part
+segmentation, a fundamental task in point cloud analysis, which is also the key to generalizing
+equivaraince from single object to multi-body system. Extending equivariance to multi-body systems
+*Equal contribution.
+Preprint. Under review.
+arXiv:2305.16314v2  [cs.CV]  26 May 2023
+Figure 1: "Chicken or the egg" problem with inter-part equivariance. Left: Rigid SE(3)-
+equivariance. If a rigid transformation is applied to the input pointcloud, the output segmentation
+transforms accordingly. Right: Inter-part equivariance. Analogously, we want the network input and
+output to be coherent under per-part transformations. But such a definition of equivariance requires
+part segmentations, which is also exactly the desired network output, resulting in a "chicken or the
+egg" problem.
+presents notable challenges in both formulation and realization. When dealing with a shape that
+allows for inter-part motions, the model must exhibit equivariance to both global and local state
+changes, which can only be defined by combining part assignment and per-part transformations.
+For example, to model an oven’s inter-part states, we first need to differentiate between the parts
+corresponding to the door and the body and then define the movement of each individual part. An
+intriguing "chicken or the egg" problem arises when attempting to build inter-part equivariance
+without access to a provided segmentation, where segmentation is necessary to define equivariance,
+but segmentation itself is the desired output that we aim to produce.
+Our key insight to tackle this seeming dilemma is to model inter-part equivariance as a sequential
+fixed-point problem by co-evolving part segmentation labels and per-partSE(3)-equivariance. We
+provide theoretical derivations for both the per-step behavior and global convergence behavior, which
+are crucial aspects of a fixed-point problem. We show that our formulation establishes per-step
+equivariance through network construction, which then induces an overall inter-part equivariance
+upon convergence. Thus, by having equivariant per-step progression and global convergence, our
+formulation naturally gives rise to a strict definition of inter-part equivariance through iterative
+inference that generalizes to unseen part configurations. We further bring our formulation to concrete
+model designs by proposing a novel part-aware equivariant network with a weighted message-passing
+paradigm. With localized network operators and per-part SE(3)-equivaraint features, the network is
+able to guarantee per-step inter-part equivariance as well as facilitate stable convergence during the
+iterative inference. We test our framework on articulated objects to generalize from static rest states
+to novel articulates and multi-object scenes to generalize from clean synthetic scenes to cluttered real
+scans. Our model shows strong generalization in both scenarios even under significant changes in
+pointcloud geometry or topology.
+To summarize, our key contributions are
+• To the best of our knowledge, we are the first to provide a strict definition of inter-part
+equivariance for pointcloud segmentation and introduce a learning framework with such
+equivariance by construction.
+• We propose a fixed-point framework with one-step training and iterative inference and show
+that the per-step equivariance induces an overall equivariance upon convergence.
+• We design a part-aware equivariant message-passing network with stable convergence.
+• Experiments show our strong generalization under inter-part configuration changes even
+when they cause subsequent changes in pointcloud geometry or topology.
+2 Related Work
+Equivariant pointcloud networks. Existing works in equivariant 3D learning mainly focus on
+rigid SE(3) transformations. As a well-studied problem, it has developed comprehensive theories
+2
+Figure 2: Single-state training and novel-state iterative inference. Left: Training with ground-
+truth segmentation as both network input and output. Right: Equivariant Banach iterations. At each
+step k, the network is equivariant to its current segmentation input y(k) by construction. At the end
+of the iterations, it converges to its fixed point with an induced overall equivariance.
+[38, 14, 78, 2, 80] and abundant network designs [ 70, 19, 11, 15, 3, 35, 41, 54], which benefit a
+variety of 3D vision and robotics tasks ranging from pose estimation [ 43, 45, 53, 60, 88], shape
+reconstruction [11, 10], to object interaction and manipulation [18, 26, 59, 62, 79, 81]. A few recent
+works have extended SE(3) equivariance to part level [85, 40, 49]. [85] employs a local equivariant
+feature extractor for object bounding box prediction, showing robustness under object-level and
+scene-level pose changes. [ 40] learns an SE(3)-equivaraint object prior and applies it to object
+detection and segmentation in scenes with robustness to scene configuration changes. [ 49] learns
+part-level equivariance and pose canonicalization from a collection of articulated objects with a
+two-stage coarse-to-fine network. However, all these works are purely heuristics-based, and none has
+provided a strict definition of inter-part equivariance.
+Multi-body systems. From small-scale articulated objects to large-scale multi-object scenes, there is
+a wide range of 3D observations that involve multiple movable parts or objects, exhibiting various
+configurations and temporal variations. This has sparked a rich variety of works dedicated to
+addressing the challenges in multi-body systems, studying their part correspondences [ 55, 48, 8,
+47, 42], segmentations [ 84, 75, 66, 30, 29, 69, 7, 12], reconstructions [ 33, 36, 31, 52, 39], or
+rearrangements [77, 67], to name just a few. However, as we know the system is acted via products
+of group actions; a more structured network that exploits such motion prior by construction is desired.
+Only a few works have studied this problem. [85] exploits global and local gauge equivariance in
+3D object detection via bottom-up point grouping but without a systematical study of inter-object
+transformations. [ 40] further exploits equivariance of object compositions in scene segmentation,
+but as an EM-based approach, it requires exhaustive and inefficient enumerations and no global
+convergence is guaranteed. In contrast, our approach offers a theoretically sound framework that
+achieves multi-body equivariance by construction, which enables robust analysis for various tasks
+and provides a more structured and reliable solution compared to existing methods.
+Iterative inference. From recurrent neural networks [22, 28] to flow [16, 58, 17, 37, 82] or diffusion-
+based generative models [64, 65, 27, 63, 50, 87], iterative inference has played many diverse yet
+essential roles in the development of computer vision. Though naturally adapted to sequential or
+temporal data, iterative inference can also be applied to static learning problems such as image
+analysis [21, 20, 72, 25] and pointcloud segmentation [ 83, 46]. Recent studies also show that
+iterative inference presents stronger generalizability than one-step forward predictions [61, 6], with
+explanations of their relations to the "working memory" of human minds [ 4, 5] or human visual
+systems [44, 34]. In our work, we employ iterative inference on static pointclouds to co-evolve two
+intertwined attributes: part segmentation and inter-part equivaraince, in order to address a seemingly
+contradictory situation.
+3 Inter-Part Equivariance
+We start by defining inter-part equivariance on pointclouds with given part segmentations (Sec.
+3.1). Then, we will introduce how to extend this definition to unsegmented pointclouds using a
+fixed-point framework (Sec. 3.2) with one-step training and iterative inference. The iterations have
+per-step equivariance by network construction, which is shown to induce an overall equivariance
+3
+upon convergence (Sec 3.3). Finally, we will also explain how to eliminate part orders for instance
+segmentation (Sec 3.4).
+3.1 Multi-Body Systems
+Let X ∈ RN ×3 be a pointcloud with P parts. Segmentations on X are represented as point-part
+assignment matrices y ∈ [0, 1]N ×P which sum up to 1 along the P dimension. As the action of
+SE(3)P on X and its resulting equivariance is subject to the part decompositions, we define the action
+of SE(3)P on (pointcloud, segmentation) pairs(X, y). When y is a binary mask, the P parts of X are
+P disjoint sub-pointclouds and each SE(3) component of SE(3)P acts on one part separately. More
+concretely, for any transformation A = (T1, · · · , TP ) ∈ SE(3)P , we define A(X, y) := (X′, y)
+where the n-th point xn is transformed to x′
+n by
+x′
+n :=
+PX
+p=1
+ynp(xnRp + tp). (1)
+where Rp and tp are the rotation and translation components of Tp ∈ SE(3). For soft segmentation
+masks, we view each point as probabilistically assigned to one of the P parts.
+Equivariance. Similar to SE(3)-equivariance on rigid shapes f(TX) = Tf(X), ∀T ∈ SE(3), we
+define the inter-part equivariance on(X, y) pairs by saying that a function f is SE(3)P -equivariant
+if ∀A ∈ SE(3)P ,
+f(A(X, y)) = Af(X, y). (2)
+Note that if the function outputs f(X, y) are no longer (pointcloud, segmentation) pairs, the SE(3)P -
+action on its outputs needs to be specified. A special case is when SE(3)P acts trivially on f(X, y)
+by f(A(X, y)) = f(X, y), which defines the common-sense “invariance”. For a pointcloud segmen-
+tation network with per-point part-label outputs y ∈ [0, 1]N ×P , we desire it to be SE(3)P -invariant
+under the above definitions, that is f(A(X, y)) ≡ y, ∀A ∈ SE(3)P .
+3.2 Banach Fixed-Point Iterations
+“Chicken or the egg”. The "chicken or the egg" nature of segmentation with inter-part equivariance
+immediately emerges from the above definition: to enforceSE(3)P -equivariance for a neural network
+f(·; Θ), the part segmentation y is required as input, which is also exactly the desired output of the
+network (Fig. 1). That this,
+f(X, y; Θ) = y. (3)
+To resolve this dilemmatic problem, we approach Eq. 3 as a fixed-point equation on function
+f(·, y; Θ) w.r .t.y. And instead of using single-step forward predictions, we solve it with Banach
+fixed-point iterations (Fig. 2).
+Training. At training time, we aim to optimize the network weights Θ such that the labeled point
+clouds (Xi, yi), i ∈ I from the dataset become fixed points of the function f(·, Θ):
+Θ∗ = arg min
+Θ
+1
+|I|
+X
+i∈I
+∥f(Xi, yi; Θ) − yi∥. (4)
+However, there exists a trivial solution which is the identity functionf(·, y; Θ) ≡ y, meaning that any
+arbitrary segmentation can satisfy the objective for any pointclouds. Thus, to avoid such degenerated
+cases, we have to limit the network expressivity. More specifically, we limit the Lipschitz constantL
+of the network w.r .t.y which is defined by
+∥f(X, y1; Θ) − f(X, y2; Θ)∥ ≤ L∥y1 − y2∥, ∀X, ∀y1, y2. (5)
+If f degenerates to the identical mapping, its Lipschitz L = 1, which violates the above constraint.
+When L < 1, f is a contractive function and has a unique fixed point based on the Banach fixed-point
+theorem. Our training objective is to align this fixed point with the ground-truth segmentation.
+Iterative inference. At inference time, given an input pointcloud X0, the learnable parameters Θ∗
+fixed in f and we look for a segmentation y that satisfies
+fX0,Θ∗(y) := f(X0, y; Θ∗) = y. (6)
+4
+We solve this equation with Banach fixed-point iterations [1]
+y∗ = lim
+k→∞
+y(k) = lim
+k→∞
+f(k)
+X0,Θ∗(y(0)) (7)
+where y(0) is a random initialization of the segmentation on X0. For a contractive function f, the
+uniqueness of y∗ induces a well-defined mapping from pointclouds to segmentations f ∗
+Θ : X0 → y∗.
+3.3 Equivariance
+For an input pairs (X, y) with known segmentation y, we employ an SE(3)-equivariant backbone
+[15] on each individual part and construct an SE(3)P -equivariant network, which will be further
+explained in Section 4. This guarantees the inter-part equivariance at training time and at each
+timestep during inference, but most importantly we desire the overall SE(3)P -equivariance at the
+convergence point of the Banach iteration. Here we prove two properties:
+Self-coherence of convergent state. At each inference timestep k, we have SE(3)P -equivariance
+subject to y(k), that is, ∀A ∈ SE(3)P ,
+f(A(X0, y(k)); Θ) = f(X0, y(k); Θ), ∀k ∈ N, (8)
+Because of the continuity of f and the compactness of [0, 1]N ×P , we can take limits w.r .t.k on both
+sides, which gives
+f(A(X0, y∗); Θ) = f(X0, y∗; Θ) = f ∗
+Θ(X0). (9)
+This shows the self-coherence of the convergent point between f ∗
+Θ and y∗.
+Generalization to novel inter-part states. Suppose the network has seen (X, ygt) in the training
+set and learned fΘ(X, ygt; Θ∗) = ygt with the loss function in Eq. 4 minimized to zero. Now apply
+an inter-part transformation A ∈ SE(3)P and test the network on (X′, ygt) := A(X, ygt). We
+would like to show f ∗
+Θ(X′) = f ∗
+Θ(X) = ygt. First of all, we know that ygt itself is a fixed point of
+f(X′, ·; Θ), which is due to the equivariance w.r .t.ygt at training time:
+f(X′, ygt; Θ) = f(A(X, ygt); Θ) = f(X, ygt; Θ). (10)
+Now if f is a contractive function on y, we have the uniqueness of Banach fixed-points and thus
+ygt is the only fixed point for f(X′, ·; Θ), implying that the iterations in Eq. 7 must converge to ygt.
+Equivariance of the per-step iteration and the final convergent state are illustrated in Fig. 2 right.
+In less ideal cases when the training loss is not zero but a small error ε, we view it as the distance
+∥y(1) − y(0)∥ between the ground-truth y(0) = ygt and the one-step iteration output y(1). The
+distance between the actual fixed-point y∗ and the ground-truth ygt is then bounded by
+∥y∗ − ygt∥ =
+∞X
+k=0
+∥y(k+1) − y(k)∥ ≤
+∞X
+k=0
+Lk∥y(1) − y(0)∥ = 1
+1 − L ε (11)
+where L is the Lipschitz constant of the network.
+3.4 Part Permutations
+A pointcloud segmentation represented by y ∈ [0, 1]N ×P inherently carries an order between the
+P parts, which is the assumption in semantic segmentation problems. But in various real-world
+scenarios, it is common to encounter situations where multiple disjoint parts are associated with the
+same semantic label, without any clear or coherent part orderings. In order to tackle this challenge, we
+also extend our method to encompass the instance segmentation problem without part orderings. For
+simplicity, here we assume that all parts can be permuted together by SP . In practice, permutations
+only occur among the parts within each semantic label, for which we can easily substitute the SP
+below with its subgroup and the conclusion still holds. We define an equivalence relation on[0, 1]N ×P
+by
+y1 ∼ y2 ⇐ ⇒ ∃σ ∈ SP , s.t. y1σ = y2, (12)
+which gives us a quotient space [0, 1]N ×P /SP and each equivalent class ˆy in this quotient space
+represents an instance segmentation without part ordering. We can define a metric on ˆy by
+d (ˆy1, ˆy2) := min
+σ∈SP
+∥y1σ − y2∥, (13)
+which makes
+ 
+[0, 1]N ×P /SP , d
+
+a complete metric space, on which the Banach fixed-point theorem
+holds and so are the iterations and convergence properties. Proofs for the well-definedness of d and
+the completeness of the quotient space are shown in the supplementary material.
+5
+Figure 3: Part-aware equivariant network. Left: Segmentation-weighted message passing. Right:
+Overall architecture for segmentation label update. Color gradients on the tensors indicate the usage
+of segmentation labels,
+4 Part-Aware Equivariant Network
+In this section, we present our part-aware equivariant network for segmentation label updates (Fig.3).
+We utilize a SE(3)-equivariant framework called Vector Neurons (VN) [ 15] as the backbone to
+encode per-point features V ∈ RN ×C×3, ensuring equivariance within each part. Subsequently,
+these features are transformed into invariant representations, eliminating relative poses to facilitate
+inter-part information propagation and global aggregations.
+Segmentation-weighted message passing. Key to our part-aware equivariant network is a message-
+passing module weighted by the input segmentation y (Fig. 3 left). Intuitively, given a point
+xn ∈ X with latent feature Vn, for its neighborhood points xm ∈ N , we only allow information
+propagation between xn and xm if they belong to the same part. When the part segmentation
+y is a soft mask, we compute the probability pnm of xn and xm belonging to the same part by
+pnm = ynyt
+m, yn, ym ∈ [0, 1]1×P and weight the local message passing with
+V′
+n =
+X
+m∈N
+pmn φ(Vm − Vn, Vn)
+ X
+m∈N
+pmn. (14)
+Proof of inter-part equivariance for this module can be found in the supplementary material.
+Network architecture. Fig. 3 right shows the overall network architecture for segmentation label
+updates. Given an input pair (X, y), we first extract a per-point SE(3)-equivariant local feature
+V ∈ RN ×C×3 within each part masked by y. V is then passed through a sequence of weighted
+convolutions with the massage passing defined in Eq. 14. To enable efficient inter-part information
+exchange, after each message-passing layer, we compute a global invariant feature through a per-point
+VN-invariant layer, followed by a global pooling and a concatenation between per-point and global
+features. After the point convolutions, the per-point equivariant featuresVn are converted to invariant
+features Sn with inter-part poses canceled. We then apply a global pooling on Sn to obtain a global
+shape code, which is decomposed into P part codes Q1, · · · , QP as in [13]. Finally, we compute a
+point-part assignment score for all (Sn, Qp) pairs (resulting in an N × P tensor) and apply a softmax
+activation along its P dimension to obtain the updated segmentation y′. For instance segmentation
+without part permutations (Sec. 3.4), we modify the computation of the part feature Q by replacing
+the global feature decomposition with point feature grouping based on y.
+For pointcloud networks with set-invariance across all points, directly restricting the upper bound of
+the network Lipschitz using weight truncations [71, 23, 86] will greatly harm network expressivity as
+it limits the output range on each point. On the other hand, the space of all possible segmentations
+[0, 1]N ×P has extremely high dimensionality, making the computation of Lipschitz regularization
+losses [68] rather inefficient. Therefore, we do not explicitly constrain the Lipschitz constant of our
+network. Nevertheless, we confine all operations involving y to local neighborhoods per point, as
+shown in Eq. 14. This practical approach generally ensures a small Lipschitz constant for the network
+in most scenarios. The stability of fixed-point convergence will be studied in Sec. 5.3.
+6
+Setting Unseen states Unseen states + unseen instances
+Category Washing
+machine Oven Eye-
+glasses
+Refrige-
+rator
+Washing
+machine Oven Eye-
+glasses
+Refrige-
+rator
+PointNet [56]46.18± 3.84 44.08± 8.97 38.96±18.41 38.37±12,32 46.15± 3.18 45.29± 9.54 39.21±17.14 39.00±12.13
+DGCNN [74]46.78± 4.37 44.30±10.84 33.35±20.96 39.70±14.05 46.60± 4.03 46.69±12.76 34.96±22.14 40.13±13.81
+VNN [15] 47.35± 1.93 53.64±13.27 57.08±15.52 52.36±11.39 47.09± 1.84 51.01±11.09 62.98±11.09 48.49±11.58
+Ours 82.32±15.08 81.91±10.81 77.78±14.45 77.26± 7.79 84.99±11.76 82.84± 8.13 78.65±10.36 73.93±14.08
+Table 1: Shape2Motion results. Numbers are segmentation IoU multiplied by 100.
+Figure 4: Banach iterations on Shape2Motion. The network is trained on rest-state objects (left)
+and tested on novel articulation states.
+5 Experiments
+5.1 Articulated-object part segmentation
+We begin by evaluating our method on articulated-object part segmentation using on four categories of
+the Shape2Motion dataset [73]: washing machine, oven, eyeglasses, and refrigerator. To demonstrate
+the generalizability of our approach, we train our model on objects in a single rest state, such as ovens
+with closed doors (as depicted in Fig. 5, left). This training setup aligns with many synthetic datasets
+featuring static shapes [9, 51]. Subsequently, we assess the performance of our model on articulated
+states, where global and inter-part pose transformations are applied, replicating real-world scenarios.
+We evaluate our model on both unseen articulation states of the training instances (Tab. 1, left) and
+on unseen instances (Tab. 1, right). In both cases, the joint angles are uniformly sampled from the
+motion range for each category. We compare our network to the most widely adopted object-level
+part segmentation networks PointNet [56] and DGCNN [74] without equivariance, plus VNN [15]
+with global SE(3)-equivariance. All IoUs are computed for semantic parts. In the case of eyeglasses
+and refrigerators, which have two parts sharing the same semantic label, we train our network with
+three motion part inputs but output two semantic part labels. This is feasible because our weighted
+message passing (Eq. 14) is agnostic to the number of parts.
+Fig. 4 demonstrates our iterative inference process on novel states after training on the rest states.
+Fig. 5 shows our segmentation predictions on the four categories. The inter-part pose transformations
+can cause significant changes in pointcloud geometry and topology, yet our method can robustly
+generalize to the unseen articulations with inter-part equivariance.
+5.2 Multi-Object Scans
+We also test our instance segmentation framework (without part orders) on multi-object scans.
+Segmentation transfer on DynLab. DynLab [29] is a collection of scanned laboratory scenes, each
+with 2-3 rigidly moving solid objects captured under 8 different configurations with object positions
+randomly changed. We overfit our model to the first configuration of each scene and apply it to the 7
+novel configurations, transfering the segmentation from the first scan to the others via inter-object
+equivariance.
+We compare our method to a variety of multi-body segmentations methods, including motion-based
+co-segmentation methods (DeepPart [ 84], NPP [ 24], MultiBodySync [ 29]), direct segmentation
+prediction models (PointNet++ [57], MeteorNet [48]), geometry-based point grouping (Ward-linkage
+7
+Figure 5: Shape2Motion part segmentation results. Global poses are aligned here for visualization
+but we do not assume it in our inference.
+Method Seg. IoU
+PointNet++ [57] 39.4± 7.1
+MeteorNet [48] 71.8± 9.7
+DeepPart [84] 66.3± 17.2
+NPP [24] 71.6± 7.7
+Ward-linkage [76] 88.6± 5.8
+PointGroup [32] 72.4± 12.5
+MultiBodySync [29] 94.0± 3.1
+Ours 95.5± 4.6
+Table 2: DynLab segmentation.
+Numbers are segmentation IoU
+multiplied by 100.
+ Figure 6: Chair scan segmentation.
+[76]), and pre-trained indoor instance segmentation modules (PointGroup [32]). The baseline setups
+follow [29]. Tab. 2 shows the segmentation IoUs. One thing to note is that motion-based co-
+segmentation can also be viewed as learning inter-object equivariance via Siamese training, yet they
+cannot reach the performance of equivariance by construction.
+Synthetic to real chair scans. We train our model using a synthetic dataset constructed from clean
+ShapeNet chair models [9] with all instances lined up and facing the same direction (Fig. 6 left). We
+then test our model on the real chair scans from [40] with diverse scene configurations (Fig. 6 right).
+The configurations range from easy to hard, including: Z (all chairs standing on the floor), SO(3)
+(chairs laid down), and Pile (chairs piled into clutters). Remarkably, our model with inter-object
+equivariance demonstrates successful generalization across all these scenarios, even in the most
+challenging Pile setting with cluttered objects.
+5.3 Ablation Studies
+We show the importance of our locally confined message passing and SE(3)-features (Eq. 14) to
+the convergence of test-time iterations. As opposed to extracting part-level equivariant features, one
+can also apply pose canonicalizations to each part individually and employ non-equivariant learning
+methods in the canonical space. For SE(3)-transformations with a translation component in R3 and a
+rotation component in SO(3), the former can be canonicalized by subtracting the part centers and the
+latter by per-part PCA. Thus we compare our full model with two ablated versions with part-level
+equivariance replaced by canonicalization: PCA, where we canonicalize both the part translations
+and rotations and simply employ a non-equivariant DGCNN [74] for the weighted message passing;
+8
+Method Equiv. Pose cano. Seg. IoU
+PCA – rot.+trans. 31.22 ± 7.65
+VNN SO(3) trans. 27.86± 13.07
+Ours SE(3) – 82.84 ± 8.13
+Table 3: Ablations of per-part network equiv-
+ariant operators replaced by pose canonical-
+ization. Numbers are segmentation IoU multi-
+plied by 100.
+Figure 7: Model performances with initializa-
+tions of different noise levels.
+VNN, where we only canonicalize the part translations but preserve the SO(3)-equivariant structures
+in the network.
+Tab. 3 shows the segmentation IoUs of the full model and the ablated versions on the Shape2Motion
+oven category. espite canonicalizations being agnostic to per-partSE(3) transformations, they rely on
+absolute poses and positions, which breaks the locality of network operations, resulting in a significant
+increase in the Lipschitz constant of the network. Consequently, when any local equivariant operator
+is replaced by canonicalization, the network performance experiences a drastic drop.
+To further examine the convergence ranges, we test the three models under differenty(0) initializations
+by adding random noises ξ ∼ U (0, 1) to ygt according to y(0) = (1 − α)ygt + αξ, α ∈ [0, 1]. Fig. 7
+shows the performance changes of the three models with gradually increased noise levels on y(0).
+The PCA rotation canonicalization has a theoretically unbounded Lipschitz constant, making the
+network unable to converge stably even within a small neighborhood of ygt. The SO(3)-equivariant
+VNN with translation canonicalization perfectly overfits to the ground-truth fixed point but exhibits a
+rapid decline in performance as the initial y(0) deviates from ygt. In contrast, our SE(3)-equivariant
+network demonstrates stable performance across different noise levels.
+6 Conclusions
+In this work, we propose Banana, which provides both theoretical insights and experimental analysis
+of inter-part equivariance. While equivariance is typically examined from an algebraic perspective,
+we approach it from an analysis standpoint and obtain a strict formulation of inter-part equivariance
+at the convergent point of an iteration sequence. Based on our theoretical formulation, we propose
+a novel framework that co-evolves segmentation labels and per-partSE(3)-equivariance, showing
+strong generalization under both global and per-part transformations even when these transformations
+result in subsequent changes to the pointcloud geometry or topology. Experimentally, we show
+that our model can generalize from rest-state articulated objects to unseen articulations, and from
+synthetic toy multi-object scenes to real scans with diverse object configurations.
+Limitations and future work. While our local segmentation-weighted message passing reduces
+the Lipschitz constant of the network, practically providing stability during test-time iterations, it is
+important to note that it is not explicitly bounded or regularized. Lipschitz bounds and regularizations
+for set-invariant networks without compromising network expressivity would be an interesting and
+important problem for future study. In addition, we study the full SE(3)P action on multi-body
+systems, but in many real-world scenarios, different parts or objects may not move independently due
+to physical constraints. Limiting the SE(3)P -action to its subset of physically plausible motions can
+potentially increase our feature-embedding conciseness and learning efficiency.
+Broader Impacts. Our study focuses on the general 3D geometry and its equivariance properties.
+Specifically, we investigate everyday appliances in common scenes, for which we do not anticipate
+any direct negative social impact. However, we acknowledge that our work could potentially be
+misused for harmful purposes. On the other hand, our research also has potential applications in areas
+that can benefit society, such as parsing proteins in medical science and building home robots for
+senior care.
+9
+Acknowledgments and Disclosure of Funding
+We gratefully acknowledge the following grants: a TRI University 2.0 grant, a Vannevar Bush
+Faculty Fellowship, and a gift from the Adobe Corporation awarded to Stanford University; and NSF
+FRR 2220868, NSF IIS-RI 2212433, NSF TRIPODS 1934960, NSF CPS 2038873 awarded to the
+University of Pennsylvania.
+S.7 Proof for Part Permutations (Sec 3.4)
+In this section, we show that [0, 1]N ×P /SP is a Banach space with metric
+d (ˆy1, ˆy2) := min
+σ∈SP
+∥y1σ − y2∥.
+S.7.1 Well-Definednes of d
+As d is defined on equivalent classes, we need to show the well-definedness of d in that d is
+independent of the choice of representatives. Suppose y1 = y′
+1, y2 = y′
+2, then by the definition of
+equivalent classes, ∃σ1, σ2 ∈ SP , s.t. y1σ1 = y′
+1, y2σ2 = y′
+2. On one side,
+d(ˆy1, ˆy2) = min
+σ∈SP
+∥y1σ − y2∥ ≤ ∥ y1σ1σ−1
+2 − y2∥
+= ∥y1σ1 − y2σ2∥ = d(ˆy′
+1, ˆy′
+2).
+Similarly, we also have d(ˆy′
+1, ˆy′
+2) ≤ d(ˆy1, ˆy2), and thus d(ˆy1, ˆy2) = d(ˆy′
+1, ˆy′
+2).
+S.7.2 d as a Metric
+To show that d is a metric, we need to show its positivity, symmetry, and triangle inequality.
+Positivity. Suppose ˆy1 ̸= ˆy2. Then ∀σ ∈ SP , y1σ ̸= y2. This implies
+d(ˆy1, ˆy2) = min
+σ∈SP
+∥y1σ − y2∥ > 0
+as SP is a finite set and taking minimum over it strictly preserves inequality. Similarly, we can show
+that d(ˆy, ˆy) ≥ 0. Together with
+d(ˆy, ˆy) = min
+σ∈SP
+∥yσ − y∥ ≤ ∥ y1 − y∥ = ∥y − y∥ = 0,
+we get d(ˆy, ˆy) = 0.
+Symmetry. For any ˆy1, ˆy2, we have
+d(ˆy1, ˆy2) = min
+σ∈SP
+∥y1σ − y2∥
+= min
+σ∈SP
+∥y1σσ −1 − y2σ−1∥
+= min
+σ∈SP
+∥y1 − y2σ−1∥
+= min
+σ∈SP
+∥y2σ−1 − y1∥
+= min
+σ′∈SP
+∥y2σ′ − y1∥ = d(ˆy2, ˆy1).
+Here we use the symmetry of the standard Euclidean norm ∥ · ∥, the l2-distance perseverance of
+permutation matrices, and the fact that σ ∈ SP ⇐ ⇒ σ−1 ∈ SP due to the group structure of SP .
+10
+Triangle inequality.
+d(ˆy1, ˆy3) = min
+σ∈SP
+∥y1σ − y3∥ = min
+σ∈SP
+∥y1σ − y2σ′ + y2σ′ − y3∥, ∀σ′ ∈ SP
+= min
+σ′∈SP
+min
+σ∈SP
+∥y1σ − y2σ′ + y2σ′ − y3∥
+≤ min
+σ′,σ∈SP
+∥y1σ − y2σ′∥ + ∥y2σ′ − y3∥
+= min
+σ′,σ∈SP
+∥y1σσ ′−1 − y2σ′σ′−1∥ + ∥y2σ′ − y3∥
+= min
+σ′,σ′′∈SP
+∥y1σ′′ − y2∥ + ∥y2σ′ − y3∥
+= min
+σ′′∈SP
+∥y1σ′′ − y2∥ + min
+σ′′∈SP
+∥y2σ′ − y3∥
+= d(ˆy1, ˆy2) + d(ˆy2, ˆy3).
+S.7.3 Completeness of
+ 
+[0, 1]N ×P /SP , d
+
+To show the completeness of this space, we need to show that every Cauchy sequence con-
+verges to a point in this space. Suppose {ˆyi : i ∈ N} is a Cauchy sequence satisfying
+∀ε > 0, ∃N > 0, s.t. ∀i, j > M, d (ˆyi, ˆyj) < ε. Let {yi : i ∈ N} be a sequence of arbitrarily se-
+lected representatives from each ˆyi, it is a bounded sequence in[0, 1]N ×P , and thus have a convergent
+subsequence {yik : k ∈ N} with limit limk→∞ yik = y∗ ∈ [0, 1]N ×P by the Bolzano–Weierstrass
+theorem.
+We would like to show thatˆy∗ ∈ [0, 1]N ×P /SP is the limit point of{ˆyi} using proof by contradiction.
+Suppose it is not, then ∃ε0 > 0, s.t. ∀M > 0, ∃j0 > M, s.t. d(ˆyj0 , ˆy∗) ≥ ε0. By the convergence of
+{yik }, ∃M1, s.t. ∀ik ≥ k > M 1, ∥yik − y∗∥ < ε0/3. On the other hand, because {ˆyi} is Cauchy,
+∃M2, s.t. , ∀i, j > M 2, d(ˆyi, ˆyj) < ε 0/3. Now let M = max(M1, M2), then for ik, j0 > M , we
+have
+ε0 ≤ d(ˆyj0 , ˆy∗) ≤ d(ˆyj0 , ˆyik) + d(ˆyik , ˆy∗) < ε0/3 + ∥yik − y∗∥ < ε/3 + ε/3.
+A contradiction!
+S.8 Proof for Network Equivariance (Sec. 4)
+Suppose y is binary, when xn, xm belong to different parts ( p(m) ̸= p(n)),P
+p∈P ynpymp = 0.
+The weighted message passing can be written as
+V′
+n =
+X
+m∈N
+ynyt
+m φ(Vm − Vn, Vn)
+ X
+m∈N
+ynyt
+m
+=
+X
+m∈N
+X
+p∈P
+ynpymp φ(Vm − Vn, Vn)
+ X
+m∈N
+ynyt
+m
+=
+X
+p(m)=p(n)
+φ(Vm − Vn, Vn)
+ X
+m∈N
+ynyt
+m.
+Now apply a transformation A = ( T1, · · · , TP ) ∈ SE(3)P to the input per-point features V, it
+transforms Vn, Vm into
+Vn 7→
+PX
+p=1
+ynp(VnRp + tp), Vm 7→
+PX
+p=1
+ymp(VmRp + tp).
+11
+When p(m) = p(n),PP
+p=1(ymp − ynp) = 0, and the right-hand side of the above equation then
+turns into
+X
+p(m)=p(n)
+φ
+ PX
+p=1
+ymp(VmRp + tp) −
+PX
+p=1
+ynp(VnRp + tp),
+PX
+p=1
+ynp(VnRp + tp)
+ X
+m∈N
+ynyt
+m
+=
+X
+p(m)=p(n)
+φ
+ PX
+p=1
+ynp((Vm − Vn)Rp + tp) +
+PX
+p=1
+(ymp − ynp)(VmRp + tp),
+PX
+p=1
+ynp(VnRp + tp)
+ X
+m∈N
+ynyt
+m
+=
+X
+p(m)=p(n)
+φ
+ PX
+p=1
+ynp((Vm − Vn)Rp + tp),
+PX
+p=1
+ynp(VnRp + tp)
+ X
+m∈N
+ynyt
+m
+=
+X
+p(m)=p(n)
+φ
+
+((Vm − Vn)Rp(n) + tp(n)), (VnRp(n) + tp(n))
+ X
+m∈N
+ynyt
+m.
+By the part-wise equivariance of φ, this is equal to V′
+nRp(n) + tp(n).
+S.9 Network and Training Details
+In our network, we use 2 weighted message-passing layers to extract the per-point SE(3)-equivariant
+features, followed by 4 weighted message-passing layers with global invariant feature concatenation.
+Output features are passed through a 3-layer MLP to obtain the final segmentation labels. All network
+layers have latent dimension 128. For the neighborhood search in our message-passing layers, we use
+a ball query with radius r = 0.3 with maximum k = 40 points. We use an Adam optimizer with an
+initial learning rate of 0.001. All networks are trained on one single NVIDIA Titan RTX 24GB GPU.
+References
+[1] Praveen Agarwal, Mohamed Jleli, Bessem Samet, Praveen Agarwal, Mohamed Jleli, and Bessem Samet.
+Banach contraction principle and applications. Fixed Point Theory in Metric Spaces: Recent Advances and
+Applications, pages 1–23, 2018.
+[2] Jimmy Aronsson. Homogeneous vector bundles and g-equivariant convolutional neural networks.Sampling
+Theory, Signal Processing, and Data Analysis , 20(2):10, 2022.
+[3] Serge Assaad, Carlton Downey, Rami Al-Rfou, Nigamaa Nayakanti, and Ben Sapp. Vn-transformer:
+Rotation-equivariant attention for vector neurons. arXiv preprint arXiv:2206.04176, 2022.
+[4] Alan Baddeley. Working memory. Science, 255(5044):556–559, 1992.
+[5] Alan Baddeley. Working memory: Theories, models, and controversies. Annual review of psychology,
+63:1–29, 2012.
+[6] Arpit Bansal, Avi Schwarzschild, Eitan Borgnia, Zeyad Emam, Furong Huang, Micah Goldblum, and
+Tom Goldstein. End-to-end algorithm synthesis with recurrent networks: Logical extrapolation without
+overthinking. arXiv preprint arXiv:2202.05826, 2022.
+[7] Stefan Andreas Baur, David Josef Emmerichs, Frank Moosmann, Peter Pinggera, Björn Ommer, and
+Andreas Geiger. Slim: Self-supervised lidar scene flow and motion segmentation. In Proceedings of the
+IEEE/CVF International Conference on Computer Vision , pages 13126–13136, 2021.
+[8] Aseem Behl, Despoina Paschalidou, Simon Donné, and Andreas Geiger. Pointflownet: Learning represen-
+tations for 3d scene flow estimation from point clouds. arXiv preprint arXiv:1806.02170, 2, 2018.
+[9] Angel X Chang, Thomas Funkhouser, Leonidas Guibas, Pat Hanrahan, Qixing Huang, Zimo Li, Silvio
+Savarese, Manolis Savva, Shuran Song, Hao Su, et al. Shapenet: An information-rich 3d model repository.
+arXiv preprint arXiv:1512.03012, 2015.
+12
+[10] Evangelos Chatzipantazis, Stefanos Pertigkiozoglou, Edgar Dobriban, and Kostas Daniilidis. Se (3)-
+equivariant attention networks for shape reconstruction in function space.arXiv preprint arXiv:2204.02394,
+2022.
+[11] Haiwei Chen, Shichen Liu, Weikai Chen, Hao Li, and Randall Hill. Equivariant point network for 3d point
+cloud analysis. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition ,
+pages 14514–14523, 2021.
+[12] Yujin Chen, Matthias Nießner, and Angela Dai. 4dcontrast: Contrastive learning with dynamic correspon-
+dences for 3d scene understanding. In Computer Vision–ECCV 2022: 17th European Conference, Tel Aviv,
+Israel, October 23–27, 2022, Proceedings, Part XXXII , pages 543–560. Springer, 2022.
+[13] Zhiqin Chen, Kangxue Yin, Matthew Fisher, Siddhartha Chaudhuri, and Hao Zhang. Bae-net: Branched
+autoencoder for shape co-segmentation. In Proceedings of the IEEE/CVF International Conference on
+Computer Vision, pages 8490–8499, 2019.
+[14] Taco S Cohen, Mario Geiger, and Maurice Weiler. A general theory of equivariant cnns on homogeneous
+spaces. Advances in neural information processing systems , 32, 2019.
+[15] Congyue Deng, Or Litany, Yueqi Duan, Adrien Poulenard, Andrea Tagliasacchi, and Leonidas J Guibas.
+Vector neurons: A general framework for so (3)-equivariant networks. In Proceedings of the IEEE/CVF
+International Conference on Computer Vision, pages 12200–12209, 2021.
+[16] Laurent Dinh, David Krueger, and Yoshua Bengio. Nice: Non-linear independent components estimation.
+arXiv preprint arXiv:1410.8516, 2014.
+[17] Laurent Dinh, Jascha Sohl-Dickstein, and Samy Bengio. Density estimation using real nvp. arXiv preprint
+arXiv:1605.08803, 2016.
+[18] Jiahui Fu, Yilun Du, Kurran Singh, Joshua B Tenenbaum, and John J Leonard. Robust change detection
+based on neural descriptor fields. In 2022 IEEE/RSJ International Conference on Intelligent Robots and
+Systems (IROS), pages 2817–2824. IEEE, 2022.
+[19] Fabian Fuchs, Daniel Worrall, V olker Fischer, and Max Welling. Se (3)-transformers: 3d roto-translation
+equivariant attention networks. Advances in Neural Information Processing Systems , 33:1970–1981, 2020.
+[20] Ross Girshick. Fast r-cnn. In Proceedings of the IEEE international conference on computer vision , pages
+1440–1448, 2015.
+[21] Ross Girshick, Jeff Donahue, Trevor Darrell, and Jitendra Malik. Rich feature hierarchies for accurate
+object detection and semantic segmentation. In Proceedings of the IEEE conference on computer vision
+and pattern recognition, pages 580–587, 2014.
+[22] Christoph Goller and Andreas Kuchler. Learning task-dependent distributed representations by backprop-
+agation through structure. In Proceedings of International Conference on Neural Networks (ICNN’96),
+volume 1, pages 347–352. IEEE, 1996.
+[23] Henry Gouk, Eibe Frank, Bernhard Pfahringer, and Michael J Cree. Regularisation of neural networks by
+enforcing lipschitz continuity. Machine Learning, 110:393–416, 2021.
+[24] David S Hayden, Jason Pacheco, and John W Fisher. Nonparametric object and parts modeling with lie
+group dynamics. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pages 7426–7435, 2020.
+[25] Kaiming He, Georgia Gkioxari, Piotr Dollár, and Ross Girshick. Mask r-cnn. In Proceedings of the IEEE
+international conference on computer vision , pages 2961–2969, 2017.
+[26] Carolina Higuera, Siyuan Dong, Byron Boots, and Mustafa Mukadam. Neural contact fields: Tracking
+extrinsic contact with tactile sensing. arXiv preprint arXiv:2210.09297, 2022.
+[27] Jonathan Ho, Ajay Jain, and Pieter Abbeel. Denoising diffusion probabilistic models. Advances in Neural
+Information Processing Systems, 33:6840–6851, 2020.
+[28] Sepp Hochreiter and Jürgen Schmidhuber. Long short-term memory. Neural computation, 9(8):1735–1780,
+1997.
+[29] Jiahui Huang, He Wang, Tolga Birdal, Minhyuk Sung, Federica Arrigoni, Shi-Min Hu, and Leonidas J
+Guibas. Multibodysync: Multi-body segmentation and motion estimation via 3d scan synchronization. In
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 7108–7118,
+2021.
+13
+[30] Shengyu Huang, Zan Gojcic, Jiahui Huang, Andreas Wieser, and Konrad Schindler. Dynamic 3d scene
+analysis by point cloud accumulation. In Computer Vision–ECCV 2022: 17th European Conference, Tel
+Aviv, Israel, October 23–27, 2022, Proceedings, Part XXXVIII, pages 674–690. Springer, 2022.
+[31] Ajinkya Jain, Rudolf Lioutikov, Caleb Chuck, and Scott Niekum. Screwnet: Category-independent articu-
+lation model estimation from depth images using screw theory. In 2021 IEEE International Conference on
+Robotics and Automation (ICRA) , pages 13670–13677. IEEE, 2021.
+[32] Li Jiang, Hengshuang Zhao, Shaoshuai Shi, Shu Liu, Chi-Wing Fu, and Jiaya Jia. Pointgroup: Dual-set
+point grouping for 3d instance segmentation. In Proceedings of the IEEE/CVF conference on computer
+vision and Pattern recognition, pages 4867–4876, 2020.
+[33] Zhenyu Jiang, Cheng-Chun Hsu, and Yuke Zhu. Ditto: Building digital twins of articulated objects from
+interaction. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ,
+pages 5616–5626, 2022.
+[34] Kohitij Kar, Jonas Kubilius, Kailyn Schmidt, Elias B Issa, and James J DiCarlo. Evidence that recurrent cir-
+cuits are critical to the ventral stream’s execution of core object recognition behavior.Nature neuroscience,
+22(6):974–983, 2019.
+[35] Oren Katzir, Dani Lischinski, and Daniel Cohen-Or. Shape-pose disentanglement using se (3)-equivariant
+vector neurons. In Computer Vision–ECCV 2022: 17th European Conference, Tel Aviv, Israel, October
+23–27, 2022, Proceedings, Part III, pages 468–484. Springer, 2022.
+[36] Yuki Kawana, Yusuke Mukuta, and Tatsuya Harada. Unsupervised pose-aware part decomposition for 3d
+articulated objects. arXiv preprint arXiv:2110.04411, 2021.
+[37] Durk P Kingma and Prafulla Dhariwal. Glow: Generative flow with invertible 1x1 convolutions. Advances
+in neural information processing systems , 31, 2018.
+[38] Risi Kondor and Shubhendu Trivedi. On the generalization of equivariance and convolution in neural
+networks to the action of compact groups. In International Conference on Machine Learning , pages
+2747–2755. PMLR, 2018.
+[39] Jiahui Lei and Kostas Daniilidis. Cadex: Learning canonical deformation coordinate space for dynamic
+surface representation via neural homeomorphism. In Proceedings of the IEEE/CVF Conference on
+Computer Vision and Pattern Recognition, 2022.
+[40] Jiahui Lei, Congyue Deng, Karl Schmeckpeper, Leonidas Guibas, and Kostas Daniilidis. Efem: Equivariant
+neural field expectation maximization for 3d object segmentation without scene supervision.arXiv preprint
+arXiv:2303.15440, 2023.
+[41] Jiahan Li, Shitong Luo, Congyue Deng, Chaoran Cheng, Jiaqi Guan, Leonidas Guibas, Jian Peng, and
+Jianzhu Ma. Directed weight neural networks for protein structure representation learning. arXiv preprint
+arXiv:2201.13299, 2022.
+[42] Ruibo Li, Guosheng Lin, and Lihua Xie. Self-point-flow: Self-supervised scene flow estimation from point
+clouds with optimal transport and random walk. In Proceedings of the IEEE/CVF conference on computer
+vision and pattern recognition, pages 15577–15586, 2021.
+[43] Xiaolong Li, Yijia Weng, Li Yi, Leonidas J Guibas, A Abbott, Shuran Song, and He Wang. Leveraging se
+(3) equivariance for self-supervised category-level object pose estimation from point clouds. Advances in
+Neural Information Processing Systems, 34:15370–15381, 2021.
+[44] Qianli Liao and Tomaso Poggio. Bridging the gaps between residual learning, recurrent neural networks
+and visual cortex. arXiv preprint arXiv:1604.03640, 2016.
+[45] Cheng-Wei Lin, Tung-I Chen, Hsin-Ying Lee, Wen-Chin Chen, and Winston H Hsu. Coarse-to-fine point
+cloud registration with se (3)-equivariant representations. arXiv preprint arXiv:2210.02045, 2022.
+[46] Fangyu Liu, Shuaipeng Li, Liqiang Zhang, Chenghu Zhou, Rongtian Ye, Yuebin Wang, and Jiwen Lu.
+3dcnn-dqn-rnn: A deep reinforcement learning framework for semantic parsing of large-scale 3d point
+clouds. In Proceedings of the IEEE international conference on computer vision , pages 5678–5687, 2017.
+[47] Xingyu Liu, Charles R Qi, and Leonidas J Guibas. Flownet3d: Learning scene flow in 3d point clouds. In
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 529–537,
+2019.
+14
+[48] Xingyu Liu, Mengyuan Yan, and Jeannette Bohg. Meteornet: Deep learning on dynamic 3d point
+cloud sequences. In Proceedings of the IEEE/CVF International Conference on Computer Vision , pages
+9246–9255, 2019.
+[49] Xueyi Liu, Ji Zhang, Ruizhen Hu, Haibin Huang, He Wang, and Li Yi. Self-supervised category-level
+articulated object pose estimation with part-level se (3) equivariance. arXiv preprint arXiv:2302.14268,
+2023.
+[50] Shitong Luo and Wei Hu. Diffusion probabilistic models for 3d point cloud generation. In Proceedings of
+the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 2837–2845, 2021.
+[51] Kaichun Mo, Shilin Zhu, Angel X Chang, Li Yi, Subarna Tripathi, Leonidas J Guibas, and Hao Su.
+Partnet: A large-scale benchmark for fine-grained and hierarchical part-level 3d object understanding. In
+Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , pages 909–918,
+2019.
+[52] Jiteng Mu, Weichao Qiu, Adam Kortylewski, Alan Yuille, Nuno Vasconcelos, and Xiaolong Wang. A-sdf:
+Learning disentangled signed distance functions for articulated shape representation. In Proceedings of the
+IEEE/CVF International Conference on Computer Vision , pages 13001–13011, 2021.
+[53] Haoran Pan, Jun Zhou, Yuanpeng Liu, Xuequan Lu, Weiming Wang, Xuefeng Yan, and Mingqiang Wei.
+So (3)-pose: So (3)-equivariance learning for 6d object pose estimation. arXiv preprint arXiv:2208.08338,
+2022.
+[54] Adrien Poulenard and Leonidas J Guibas. A functional approach to rotation equivariant non-linearities
+for tensor field networks. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, pages 13174–13183, 2021.
+[55] Gilles Puy, Alexandre Boulch, and Renaud Marlet. Flot: Scene flow on point clouds guided by optimal
+transport. In Computer Vision–ECCV 2020: 16th European Conference, Glasgow, UK, August 23–28,
+2020, Proceedings, Part XXVIII, pages 527–544. Springer, 2020.
+[56] Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: Deep learning on point sets for 3d
+classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern
+recognition, pages 652–660, 2017.
+[57] Charles Ruizhongtai Qi, Li Yi, Hao Su, and Leonidas J Guibas. Pointnet++: Deep hierarchical feature
+learning on point sets in a metric space. Advances in neural information processing systems , 30, 2017.
+[58] Danilo Rezende and Shakir Mohamed. Variational inference with normalizing flows. In International
+conference on machine learning, pages 1530–1538. PMLR, 2015.
+[59] Hyunwoo Ryu, Jeong-Hoon Lee, Hong-in Lee, and Jongeun Choi. Equivariant descriptor fields: Se
+(3)-equivariant energy-based models for end-to-end visual robotic manipulation learning. arXiv preprint
+arXiv:2206.08321, 2022.
+[60] Rahul Sajnani, Adrien Poulenard, Jivitesh Jain, Radhika Dua, Leonidas J Guibas, and Srinath Sridhar.
+Condor: Self-supervised canonicalization of 3d pose for partial shapes. In Proceedings of the IEEE/CVF
+Conference on Computer Vision and Pattern Recognition, pages 16969–16979, 2022.
+[61] Avi Schwarzschild, Eitan Borgnia, Arjun Gupta, Furong Huang, Uzi Vishkin, Micah Goldblum, and Tom
+Goldstein. Can you learn an algorithm? generalizing from easy to hard problems with recurrent networks.
+Advances in Neural Information Processing Systems , 34:6695–6706, 2021.
+[62] Anthony Simeonov, Yilun Du, Andrea Tagliasacchi, Joshua B Tenenbaum, Alberto Rodriguez, Pulkit
+Agrawal, and Vincent Sitzmann. Neural descriptor fields: Se (3)-equivariant object representations for
+manipulation. In 2022 International Conference on Robotics and Automation (ICRA) , pages 6394–6400.
+IEEE, 2022.
+[63] Jiaming Song, Chenlin Meng, and Stefano Ermon. Denoising diffusion implicit models. arXiv preprint
+arXiv:2010.02502, 2020.
+[64] Yang Song and Stefano Ermon. Generative modeling by estimating gradients of the data distribution.
+Advances in neural information processing systems , 32, 2019.
+[65] Yang Song, Jascha Sohl-Dickstein, Diederik P Kingma, Abhishek Kumar, Stefano Ermon, and Ben
+Poole. Score-based generative modeling through stochastic differential equations. arXiv preprint
+arXiv:2011.13456, 2020.
+15
+[66] Ziyang Song and Bo Yang. Ogc: Unsupervised 3d object segmentation from rigid dynamics of point
+clouds. arXiv preprint arXiv:2210.04458, 2022.
+[67] Jiapeng Tang, Yinyu Nie, Lev Markhasin, Angela Dai, Justus Thies, and Matthias Nießner. Diffuscene:
+Scene graph denoising diffusion probabilistic model for generative indoor scene synthesis. arXiv preprint
+arXiv:2303.14207, 2023.
+[68] Dávid Terjék. Adversarial lipschitz regularization. arXiv preprint arXiv:1907.05681, 2019.
+[69] Hugues Thomas, Ben Agro, Mona Gridseth, Jian Zhang, and Timothy D Barfoot. Self-supervised learning
+of lidar segmentation for autonomous indoor navigation. In 2021 IEEE International Conference on
+Robotics and Automation (ICRA) , pages 14047–14053. IEEE, 2021.
+[70] Nathaniel Thomas, Tess Smidt, Steven Kearnes, Lusann Yang, Li Li, Kai Kohlhoff, and Patrick Riley.
+Tensor field networks: Rotation-and translation-equivariant neural networks for 3d point clouds. arXiv
+preprint arXiv:1802.08219, 2018.
+[71] Aladin Virmaux and Kevin Scaman. Lipschitz regularity of deep neural networks: analysis and efficient
+estimation. Advances in Neural Information Processing Systems , 31, 2018.
+[72] Jiang Wang, Yi Yang, Junhua Mao, Zhiheng Huang, Chang Huang, and Wei Xu. Cnn-rnn: A unified
+framework for multi-label image classification. In Proceedings of the IEEE conference on computer vision
+and pattern recognition, pages 2285–2294, 2016.
+[73] Xiaogang Wang, Bin Zhou, Yahao Shi, Xiaowu Chen, Qinping Zhao, and Kai Xu. Shape2motion: Joint
+analysis of motion parts and attributes from 3d shapes. In Proceedings of the IEEE/CVF Conference on
+Computer Vision and Pattern Recognition, pages 8876–8884, 2019.
+[74] Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon.
+Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.
+[75] Yuqi Wang, Yuntao Chen, and ZHAO-XIANG ZHANG. 4d unsupervised object discovery.Advances in
+Neural Information Processing Systems, 35:35563–35575, 2022.
+[76] Joe H Ward Jr. Hierarchical grouping to optimize an objective function. Journal of the American statistical
+association, 58(301):236–244, 1963.
+[77] Qiuhong Anna Wei, Sijie Ding, Jeong Joon Park, Rahul Sajnani, Adrien Poulenard, Srinath Sridhar, and
+Leonidas Guibas. Lego-net: Learning regular rearrangements of objects in rooms. arXiv e-prints, pages
+arXiv–2301, 2023.
+[78] Maurice Weiler, Patrick Forré, Erik Verlinde, and Max Welling. Coordinate independent convolu-
+tional networks–isometry and gauge equivariant convolutions on riemannian manifolds. arXiv preprint
+arXiv:2106.06020, 2021.
+[79] Thomas Weng, David Held, Franziska Meier, and Mustafa Mukadam. Neural grasp distance fields for
+robot manipulation. arXiv preprint arXiv:2211.02647, 2022.
+[80] Yinshuang Xu, Jiahui Lei, Edgar Dobriban, and Kostas Daniilidis. Unified fourier-based kernel and
+nonlinearity design for equivariant networks on homogeneous spaces. In International Conference on
+Machine Learning, pages 24596–24614. PMLR, 2022.
+[81] Zhengrong Xue, Zhecheng Yuan, Jiashun Wang, Xueqian Wang, Yang Gao, and Huazhe Xu. Useek: Unsu-
+pervised se (3)-equivariant 3d keypoints for generalizable manipulation. arXiv preprint arXiv:2209.13864,
+2022.
+[82] Guandao Yang, Xun Huang, Zekun Hao, Ming-Yu Liu, Serge Belongie, and Bharath Hariharan. Pointflow:
+3d point cloud generation with continuous normalizing flows. InProceedings of the IEEE/CVF international
+conference on computer vision, pages 4541–4550, 2019.
+[83] Xiaoqing Ye, Jiamao Li, Hexiao Huang, Liang Du, and Xiaolin Zhang. 3d recurrent neural networks with
+context fusion for point cloud semantic segmentation. In Proceedings of the European conference on
+computer vision (ECCV), pages 403–417, 2018.
+[84] Li Yi, Haibin Huang, Difan Liu, Evangelos Kalogerakis, Hao Su, and Leonidas Guibas. Deep part induction
+from articulated object pairs. arXiv preprint arXiv:1809.07417, 2018.
+[85] Hong-Xing Yu, Jiajun Wu, and Li Yi. Rotationally equivariant 3d object detection. In Proceedings of the
+IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 1456–1464, 2022.
+16
+[86] Bohang Zhang, Du Jiang, Di He, and Liwei Wang. Rethinking lipschitz neural networks and certified
+robustness: A boolean function perspective. In Advances in Neural Information Processing Systems , 2022.
+[87] Linqi Zhou, Yilun Du, and Jiajun Wu. 3d shape generation and completion through point-voxel diffusion.
+In Proceedings of the IEEE/CVF International Conference on Computer Vision , pages 5826–5835, 2021.
+[88] Minghan Zhu, Maani Ghaffari, and Huei Peng. Correspondence-free point cloud registration with so
+(3)-equivariant implicit shape representations. In Conference on Robot Learning, pages 1412–1422. PMLR,
+2022.
+17

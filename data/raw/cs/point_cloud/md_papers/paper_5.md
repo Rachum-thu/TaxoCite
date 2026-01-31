@@ -1,0 +1,462 @@
+# Hyperbolic Image-and-Pointcloud Contrastive Learning for 3D Classification
+
+Abstract— 3D contrastive representation learning has ex-
+hibited remarkable efficacy across various downstream tasks.
+However, existing contrastive learning paradigms based on
+cosine similarity fail to deeply explore the potential intra-modal
+hierarchical and cross-modal semantic correlations about multi-
+modal data in Euclidean space. In response, we seek solutions
+in hyperbolic space and propose a hyperbolic image-and-
+pointcloud contrastive learning method (HyperIPC). For the
+intra-modal branch, we rely on the intrinsic geometric structure
+to explore the hyperbolic embedding representation of point
+cloud to capture invariant features. For the cross-modal branch,
+we leverage images to guide the point cloud in establishing
+strong semantic hierarchical correlations. Empirical experi-
+ments underscore the outstanding classification performance
+of HyperIPC. Notably, HyperIPC enhances object classification
+results by 2.8% and few-shot classification outcomes by 5.9% on
+ScanObjectNN compared to the baseline. Furthermore, ablation
+studies and confirmatory testing validate the rationality of
+HyperIPC’s parameter settings and the effectiveness of its
+submodules.
+
+## I. INTRODUCTION
+
+With the popularity of Foundation Model, self-supervised
+representation learning has achieved great success in the
+fields of natural language processing (NLP) [1],[2], computer
+vision [3], video signals [4], and multi-modality [5],[6].
+These methods use extreme amounts of data in the pre-
+training stage to obtain powerful representations for down-
+stream tasks. In the 3D vision field, data collection and
+annotation are time-consuming and labor-intensive compared
+to 2D vision and NLP. Considering the issues of data
+scarcity and imbalance, it is challenging to obtain high-
+quality representations using self-supervised representation
+learning methods with limited data.
+
+Various 3D self-supervised representation learning meth-
+ods have been developed. Contrastive learning encourages
+the representations of the same category to be closer and
+the representations of different categories to be farther apart
+[7],[8]. Recently, many contrastive learning methods [9],[10]
+have been proposed to deal with point cloud through various
+strategies for constructing positive-negative sample pairs.
+It is well known that an image conveys various semantic
+information. Even for the same category of objects, humans
+can reason about their relative details and organize these con-
+cepts into a meaningful visual semantic hierarchy. As shown
+in Fig. 1, for the category of “Airplane”, the point cloud
+located at a higher level has a more abstract description.
+
+Unfortunately, current 3D self-supervised representation
+learning methods embed the point cloud in the Euclidean
+space using the same distance metric, which cannot capture
+the semantic hierarchy of the data. This may cause potential
+issues, as illustrated in Fig. 1, the specific concept (“Bi-
+plane”) is closer to other specific concepts (“Spiral airliners”)
+rather than the generic concept (“Airplane”). As a space
+with a constant negative curvature, the volume of hyperbolic
+space grows exponentially concerning the radius. Thus, the
+hyperbolic space can embed tree-like graphs with minimal
+distortion. To mine the latent semantic hierarchy in the point
+cloud, this property of hyperbolic space motivates us to
+embed point cloud representations into hyperbolic space.
+
+In this work, we propose a simple and effective Hy-
+perbolic Image-and-Pointcloud Contrastive Learning (Hyper-
+IPC) model. By projecting latent vectors to the hyperbolic
+space, we can efficiently extract the intrinsic semantic hier-
+archy of unlabeled data. We first map point cloud features
+from Euclidean space to the hyperbolic space and use the
+distance defined in the hyperbolic space for contrastive
+learning. Then, we compute their parent node in hyperbolic
+space, which is closer to the origin and can be regarded as
+a more abstract representation of the two different views.
+To leverage the semantic hierarchy information inherent in
+images, we employ a pre-trained image encoder to extract
+2D information from rendered images, then map vectors
+to hyperbolic space for contrastive learning with the parent
+nodes. Moreover, to ensure the comprehensive exploitation
+of hyperbolic space, we optimize the nodes in Poincaré disk
+according to their level information.
+
+The main contributions of our approach can be summa-
+rized as follows:
+- We propose HyperIPC, a simple and effective hyper-
+bolic contrastive learning framework for self-supervised
+3D point cloud pre-training incluing the intra-modal and
+cross-modal hyperbolic contrastive learning.
+- We introduce the 2D VIT pre-trained by CLIP, which
+leverages the 2D knowledge to guide the point cloud to
+construct hierarchy in hyperbolic space.
+- HyperIPC achieves state-of-the-art performance for con-
+trastive learning on various downstream tasks, which
+indicates contrastive learning with hyperbolic distance
+outperforms the contrastive learning methods in the
+Euclidean space.
+
+## II. RELATED WORK
+
+### A. Contrastive Learning in Point Cloud
+
+Contrastive learning leverages optimized contrastive loss
+to encourage augmentation of the same input to produce
+more comparable representations. In 3D vision, there are
+predominantly two categories of contrastive learning meth-
+ods: object-level and scene-level. The former captures the
+global representation of the point cloud by treating the whole
+point cloud as an object [11],[12]. For example, Du et
+al.[13] use self-similar patches within a single point cloud
+to facilitate semantic understanding. The latter focuses more
+on the interaction between point cloud and its scene [9],[14].
+In contrast to previous 3D contrastive learning methods,
+our HyperIPC extends the contrastive loss to the hyperbolic
+space.
+
+### B. Hyperbolic Embedding
+
+With the development of deep learning, Euclidean space
+has become the standard manifold [15]. At the same time,
+hyperbolic space has been successfully applied to NLP [16]
+due to the inherently hierarchical nature of language. HCNN
+[17] further extend deep neural network modules in the
+hyperbolic space. As a result, hyperbolic space has achieved
+success in image representation [18],[19]. EDGCNet [20]
+proposes a dynamic hyperbric graph convolution module for
+3D point cloud segmentation. Chen et al.[21] propose a self-
+supervised learning method based on hyperbolic homotopy
+embedding to explore the nonlinear relationship of behavior
+trajectories. HIE [22] leverages the distance between data
+nodes and the origin node in hyperbolic space, deriving
+hierarchical information to optimize the existing hyperbolic
+models. In the 3D vision, HyCoRe [23] captures 3D part-
+whole hierarchy in supervised learning. In this paper, our
+HyperIPC aims to capture the semantic hierarchy among 3D
+objects in self-supervised representation learning.
+
+## III. METHOD
+
+The schematic overview of the proposed method is de-
+picted in Fig. 2. In this section, we first introduce how
+to obtain the hierarchical structure in the hyperbolic space.
+Then, we will discuss our overall framework diagram and
+describe the loss functions.
+
+### A. Hyperbolic Geometric Embedding
+
+We introduce hyperbolic space as the latent space to
+extract the latent semantic hierarchical information of the
+point cloud. In contrast to the Euclidean space with zero
+curvature, the n-dimensional hyperbolic space H n is a
+Riemannian manifold with constant negative curvature. The
+Poincaré, Lorentz, and Klein models are commonly used,
+equivalent representations of hyperbolic space, which can
+be interconverted and are suitable for different tasks [24].
+We use the Poincaré disk model (Dn_c, gD) because it can
+maintain numerical stability in the gradient-based learning
+process. The manifold Dn_c = { x ∈ Rn : c∥x∥2 < 1, c ≥ 0 }
+is equipped with a Riemannian metric gD = λx_c gE, where
+gE is the metric tensor, λx_c = 2 / (1−c∥x∥2) is the conformal
+factor depending on the curvature c and the position of the
+calculated point x in the Poincaré disk. The metric of the
+points closer to the edge of the disk is scaled more by the
+conformal factor.
+
+Conventional data operations are not applicable to the
+hyperbolic space, so we need to expand the operations in
+the hyperbolic space. Let ∥.∥ be the Euclidean norm and
+⟨., .⟩ represent the Minkowski inner product. Given a pair of
+x, y ∈ Dn_c, the addition operation is defined as:
+x ⊕c y = (1 + 2c⟨x, y⟩ + c∥y∥2) x + (1 − c∥x∥2) y / (1 + 2c⟨x, y⟩ + c2∥x∥2∥y∥2). (1)
+
+The distance between x, y ∈ Dn_c in the hyperbolic space
+is defined as:
+Dhyp (x, y) = 2√c arctanh (√c ∥−x ⊕c y∥), (2)
+
+in the above formulas, when the curvature c approaches zero,
+the formulas for addition and distance become identical to
+those in the traditional Euclidean space.
+
+In the hyperbolic space, the geodesic is a generalization of
+the shortest path between two points or planes. As the cur-
+vature decreases, the distance between two points increases,
+and the geodesic is closer to the boundary [25]. The midpoint
+of the geodesic between two points in hyperbolic space tends
+to be closer to the origin, resembling the concept of the tree
+[15],[26]. This midpoint can be considered a more abstract
+parent node. This unique feature in the hyperbolic space can
+be reflected in Fig. 2. The point closer to the edge represents
+more specific categories, while closer to the origin represents
+more inductive instances. Given n hyperbolic node vectors
+(z1, · · · , zn), the midpoint is computed in gyrovector space,
+which is given by:
+zmid = 1/2 ⊕c [ (∑_{i=1}^n λ_{x}_c zi) / (∑_{i=1}^n (λ_{x}_c − 1)) ]. (3)
+
+To map the embeddings to the hyperbolic space, we need
+to define a mapping relation from the Euclidean space to
+the Poincaré disk called the exponential map. The hyperbolic
+manifold Dn_c at x has first order linear approximation tangent
+space TxDn_c ∼= Rn, where TxDn_c = { v ∈ Rd : ⟨v, x⟩ = 0 }.
+The exponential map is defined as:
+expc_x(v) = x ⊕c [ tanh(√c λc_x ∥v∥ / 2) v / (√c∥v∥) ]. (4)
+
+### B. Model Architecture
+
+Due to the advantages of the hyperbolic space, our
+model consists of two branches: Intra-Modal Hyperbolic
+Contrastive Learning (IMHCL) and Cross-Modal Hyperbolic
+Contrastive Learning (CMHCL). These two branches obtain
+the semantic hierarchical structure of the point cloud from
+intra-modal and cross-modal perspectives in the hyperbolic
+space. Given the sample data D = {(Pi, Ii)}_{i=1}^{|D|}, where Pi
+denotes the 3D point cloud and Ii denotes the corresponding
+2D image rendered from a random viewpoint. To enhance
+the discriminative ability of the point cloud encoder, we
+first apply IMHCL. Specifically, for a given point cloud
+sample Pi, we apply random sampling transformations such
+as rotation, scaling, and translation to form two augmented
+point cloud Pt1 and Pt2. We use a shared-weight point
+cloud encoder to extract global features Xt1 and Xt2. Instead
+of regularizing the output in the Euclidean space, we use
+the exponential map Eq.(4) to map the features from the
+Euclidean space to the hyperbolic space to obtain zhyp1
+and zhyp2. Contrastive learning methods in Euclidean space
+define distance using squared Euclidean distance or cosine
+similarity. In hyperbolic space, we use Eq.(2) to define the
+distance for contrastive learning.
+
+To prevent confusion, we first ignore the domain identifier
+zhyp1 and zhyp2. Given a positive sample pair (i, j) and
+its representation (zi, zj) in hyperbolic space, we define the
+hyperbolic contrastive learning loss function as:
+l(zi, zj) = − log exp (−Dhyp (zi, zj) /τ ) / (∑_{k=1,k̸=i}^N exp (−Dhyp (zi, zk) /τ ) ), (5)
+
+where Dhyp is the distance calculated by hyperbolic space, τ
+is the temperature coefficient, and N represents the number
+of samples in a batch. The loss is calculated by all the
+positive samples (i, j) and (j, i).
+
+L(zi, zj) = 1/(2N) ∑_{i=1}^N [l(zi, zj) + l(zj, zi)]. (6)
+
+After obtaining embeddings of the same sample in hy-
+perbolic space, the mean of the two embeddings zmid
+is calculated using Eq.(3). This mean point locate at the
+midpoint of the geodesic line between zhyp1 and zhyp2 is
+closer to the origin. This property is crucial for constructing
+a semantic hierarchy in hyperbolic space, similar to a tree
+structure where the mean of two leaf nodes represents a more
+general parent node rather than another leaf node.
+
+Ermolov et al.[19] demonstrated that images have hier-
+archical information in hyperbolic space. We introduce the
+auxiliary CMHCL to guide the point cloud to establish a
+semantic hierarchy in hyperbolic space. During the model
+initialization process, the embeddings obtained by the image
+encoder are inaccurate. To prevent inaccurate 2D features
+guiding point cloud from being incorrectly embedded in hy-
+perbolic space, the 2D pre-trained model is used to initialize
+the image encoder. We first use the visual encoder to obtain
+the embedding Yi for the 2D image Ii of point cloud Pi.
+Then, we apply the exponential map to project this Euclidean
+latent code Yi into hyperbolic space to obtain zimg. The goal
+of CMHCL is to maximize the similarity of zmid to corre-
+sponding zimg. In summary, CMHCL captures the image-
+pointcloud hierarchy to improve model discrimination.
+
+### C. Hyperbolic Embedding Optimization
+
+Since the hyperbolic space grows exponentially, the re-
+gions far from the origin are more spacious. The Leaf nodes
+in the tree structure occupy the majority and are as far
+from the origin as possible. Therefore, we hope that the
+point cloud embedding root node is optimized to the highest
+level, and the overall point cloud embedding should fully
+use the hyperbolic space’s expansibility to disperse as much
+as possible. To solve the above problem, the first step is to
+identify the root node of the data, align it with the origin of
+the hyperbolic space, and then optimize the node according
+to their level information.
+
+We first define the hyperbolic embedding center as the
+root node zc by Eq.(3). This node comes from the hyperbolic
+embedding and can be regarded as a super node connecting
+all subtrees. Then, we employ the root alignment strategy as
+defined:
+z = zmid ⊕c (−zc). (7)
+
+To efficiently access level information and guide hierar-
+chical learning. We align the hyperbolic embedding center
+with the origin of the hyperbolic space, it reflects the relative
+distance between the leaf node and the root node, indicating
+its hierarchical level.
+
+zhdo = 1/|N| ∑_{i∈N} wiDhyp (zi, o), (8)
+
+in Eq.(8), wi indicates the node level in hyperbolic space
+which is computed by σ(Dhyp (zi, o)), the σ is sigmoid
+function. The loss function is:
+Ldho = σ (−zhdo). (9)
+
+By optimizing the loss function, the high-level nodes close
+to the origin are assigned lower weights to prevent them
+from being pushed away. The low-level nodes far from the
+origin are assigned larger weights to help them reach correct
+positions in hyperbolic space.
+
+### D. Overall Objective
+
+The overall loss function of the model consists of three
+parts: intra-modal hyperbolic contrastive loss, cross-modal
+hyperbolic contrastive loss, and hyperbolic embedding opti-
+mization loss, as follows:
+
+L = L(zhyp1, zhyp2) + L(zmid, zimg) + λLdho, (10)
+
+where λ is a hyperparameter.
+
+## IV. EXPERIMENTS
+
+### A. Pre-training
+
+Dataset. Our model is pretrained on ShapeNet[27], with
+over 50,000 CAD models in 55 categories. For given point
+cloud, a 2D image is randomly selected from the rendered
+images, captured from various viewpoint[28]. Each point
+cloud consists of 2,048 points with only x, y, z coordinate,
+and the corresponding rendered image is resized to 224 ×
+224 pixels. Augmentation operations such as rotation and
+cropping are applied to increase the diversity of rendered
+images from random viewpoints.
+
+Implementation Details. For a fair comparison with
+previous work, we apply DGCNN [29] as point cloud
+feature extractor, which exploits local geometric structures
+by constructing a local neighborhood graph and applying
+convolution-like operations on the edges connecting neigh-
+boring pairs of points. As for the image encoder, we utilize
+VIT-S [30] that divides an image into patches, embeds them,
+and processes these embeddings through transformer layers
+to capture global image features. In addition, we use a two-
+layer MLP (384-128) as the projection head, and finally
+produce 128-dimensional feature projected in the hyperbolic
+space. The contrastive learning utilizes a curvature parameter
+c = 0.1, temperature τ = 0.2 and the hyperbolic embedding
+optimization incorporates λ = 0.01.
+
+For the image encoder, we use the AdamW optimizer [31]
+with a learning rate value of 3 × 10−5, a weight decay value
+of 0.01. We use the AdamW optimizer [31] for the image
+encoder, with a learning rate of 1 × 10−3 and a weight decay
+of 1 × 10−4. All experiments are conducted on a single
+NVIDIA 3090Ti GPU with 100 epochs. After pretraining,
+we discard the image encoder and two projection heads. All
+downstream tasks are performed on the point cloud encoder.
+
+### B. Downstream Tasks
+
+We evaluate the transferability of HyperIPC on two widely
+used downstream tasks in point cloud representation learn-
+ing: (i) 3D object classification (synthetic and real-world),
+(ii) Few-shot object classification (synthetic and real-world)
+
+3D Object Classfication. We demonstrate the generaliz-
+ability of our approach in learning 3D shape representation
+from synthetic and real-world data through classification
+experiments on ModelNet40 [40] and ScanObjectNN [40].
+ModelNet40 obtains point cloud by sampling 3D CAD
+models, and it contains 12,331 objects (9,843 for training and
+2,468 for testing) from 40 categories. ScanObjectNN is more
+realistic and challenging for 3D point cloud classification,
+consisting of occluded objects from real-world indoor scans.
+It includes 2,880 objects (2,304 for training and 576 for
+testing) from 15 categories.
+
+We follow the standard protocols of STRL [36] and
+Crosspoint [38] to test the accuracy of our network model
+in object classification. We freeze the point cloud encoder
+and fit the Support Vector Machine (SVM) classifier on the
+split of the training dataset. We randomly sample 1,024
+points from each object for training and testing, with a
+batch size of 128 on the DGCNN backbone. HyperIPC outperforms the previous state-of-
+the-art self-supervised methods in contrastive learning. More
+notably, we achieve 0.6 % and 2.8 % improvement over the
+baseline on the ModelNet40 and ScanObectNN. It can be
+observed that the underlying structure of real data tends to
+be hierarchical compared to synthetic datasets, hence leading
+to relatively more conspicuous results.
+
+Few-shot Object Classification. We conduct Few-
+Shot Learning (FSL) experiments on the ModelNet40 and
+ScanObjectNN, using randomly selected n classes from the
+dataset and m samples from each class, with limited training
+data that can test the model’s generalization ability. We
+perform ten FSL tasks and reported the mean and stan-
+dard deviation for a fair comparison with previous methods
+[42],[37]. HyperIPC outperforms the previous work in
+few-shot classification tasks. These results demonstrate that
+HyperIPC can learn more discriminative latent representation
+with limited data, which can alleviate the overfitting issue
+and acquire semantic information of unknown data.
+
+### C. Ablations and Analysis
+
+In this section, we report the results of the ablation
+experiments. We use DGCNN as the point cloud feature
+extractor in all the classification experiments, with Linear
+SVM on ScanObjectNN.
+
+Impact of joint learning objective.
+We hypothesize that joint learning objectives in hyperbolic
+space exhibit a more discernible capacity than separate
+learning objectives. IMHCL encourages the model to ac-
+quire the invariance of the point cloud, making the distance
+between the point cloud of the same category close in
+hyperbolic space. CMHCL provides the point cloud encoder
+with semantic information from the visual domain, helping
+to establish a hierarchical structure in hyperbolic space.
+The joint learning in hyperbolic space can produce better
+results as shown in Fig.5. To verify the CMHCL captures
+the semantic hierarchy, we compare the proposed objective
+Eq.(10) to the objective that replaces zmid with zhyp1 in
+Eq.(10). It can be observed that the representations not only
+capture the semantic level of the data but also incorporate the
+information of the 2D images. Compared with single hyperbolic contrastive learning method, the joint
+hyperbolic contrastive learning approach clusters samples
+according to their labels more effectively. Each category is
+also closer to the boundary of the Poincaré disk, indicating
+that the encoder has successfully separated the classes.
+
+Curvatures.
+The model is robust when the curvature is
+small, while larger values cause the model to degrade. It is
+worth noting that when the curvature is small and gradually
+approaches zero, the radius of the hyperbolic space becomes
+infinite and tends to the Euclidean space, which provides
+better stability.
+
+Image Encoder.
+In Crosspoint [38], initializing the image encoder with a
+normal distribution leads to inaccurate image embedding,
+resulting in an unsatisfactory hierarchical structure of the
+point cloud in hyperbolic space. We introduce the CLIP [45]
+pre-trained model as the image encoder, which can utilize
+the information implied by the images. CLIP [45] employs
+a two-tower network that aligns global representation of
+languages and images using extensive data. Updating the parameters of the image encoder
+during training allows for accurate semantic hierarchical
+information to be captured in hyperbolic space.
+
+## V. CONCLUSION
+
+In this paper, we propose a simple yet effective method
+to capture the point cloud semantic hierarchy in hyperbolic
+space. After learning the semantic hierarchy from images,
+our model can continuously edit the semantic hierarchical
+features of the point cloud, achieving better results and
+more discriminating models. Experiments demonstrate that
+our model outperforms methods that use Euclidean represen-
+tations. In future work, we will explore combining hyperbolic
+space with generative models and addressing segmentation
+tasks within hyperbolic space.

@@ -1,0 +1,676 @@
+title: 'PointCloud-Text Matching: Benchmark Dataset and Baseline'
+blocks:
+- block_id: 0
+  content: 'In this paper, we present and study a new instance-level retrieval task: PointCloud-Text Matching (PTM), which
+    aims to identify the exact cross-modal instance that matches a given point-cloud query or text query. PTM has potential
+    applications in various scenarios, such as indoor/urban-canyon localization and scene retrieval. However, there is a lack
+    of suitable and targeted datasets for PTM in practice. To address this issue, we present a new PTM benchmark dataset,
+    namely SceneDepict-3D2T. We observe that the data poses significant challenges due to its inherent characteristics, such
+    as the sparsity, noise, or disorder of point clouds and the ambiguity, vagueness, or incompleteness of texts, which render
+    existing cross-modal matching methods ineffective for PTM. To overcome these challenges, we propose a PTM baseline, named
+    Robust PointCloud-Text Matching method (RoMa). RoMa consists of two key modules: a Dual Attention Perception module (DAP)
+    and a Robust Negative Contrastive Learning module (RNCL). Specifically, DAP leverages token-level and feature-level attention
+    mechanisms to adaptively focus on useful local and global features, and aggregate them into common representations, thereby
+    reducing the adverse impact of noise and ambiguity. To handle noisy correspondence, RNCL enhances robustness against mismatching
+    by dividing negative pairs into clean and noisy subsets and assigning them forward and reverse optimization directions,
+    respectively. We conduct extensive experiments on our benchmarks and demonstrate the superiority of our RoMa.
+
+
+    Index Terms —PointCloud-Text Matching, Noisy correspondence, Benchmark dataset.'
+  citations: []
+- block_id: 1
+  content: 'Point clouds are a popular representation of the 3D geometry of a scene, with significant applications in computer
+    vision, robotics, and augmented reality, such as autonomous driving [1], [2], object detection [3], and localization [4].
+    However, as the volume of point-cloud data continues to grow rapidly, it is urgent to have techniques that enable users
+    to effectively and accurately find the exact matching instance/scene from large-scale point-cloud scans, especially using
+    natural language queries, named PointCloud-Text Matching (PTM). The instance-level alignment is challenging and realistic
+    as it reflects the need for precise and relevant information to build alignment between point clouds and texts in real-world
+    applications, which has potential applications in indoor/urban-canyon localization, scene retrieval, and more.
+
+
+    Existing methods, however, struggle and lack pertinence to tackle PTM. On one hand, existing PointCloud-Text Retrieval
+    (PTR) methods [5], [6] only focus on establishing category-level correspondence between 3D point-cloud shapes and short
+    annotation texts. In contrast, PTM requires exploiting the mutual information of cross-modal pairs, and achieves instance-level
+    alignment between point-cloud scenes and detailed descriptions. This indicates that PTM demands the ability to capture
+    local features and instance discrimination, rendering the existing methods inapplicable. On the other hand, existing cross-modal
+    matching works that can build instance-level cross-modal correspondence are only primarily oriented to text and 2D image
+    modalities. According to the granularity of the established correspondence, these cross-modal matching works could be
+    divided into two groups: coarse-grained and fine-grained matching methods. The former [7]–[9] use global features to represent
+    the whole image and the whole text, while the latter [10]–[12] use local features to capture the fine-grained details
+    of regions and words. Although these methods have achieved promising performance for image-text matching task, most of
+    them ignore the specific properties and challenges in PTM.
+
+
+    To the best of our knowledge, the insufficient information provided by existing datasets makes them unsuitable for PTM.
+    To be specific, descriptions in most datasets (e.g., ScanRefer [13], Nr3d [14]) primarily focus on portraying a single
+    object for visual grounding and captioning, and a few other (e.g., LLM-3D-Scene [15]) describing several objects in isolation
+    within the corresponding scenes. These limited descriptions match precisely with the corresponding wide-field point clouds,
+    as demonstrated by the dismal matching performance in existing datasets. Therefore, we constitute a new benchmark dataset
+    for PTM, namely SceneDepict-3D2T. The dataset contains comprehensive descriptions covering entire 3D point-cloud scenes,
+    so they evaluate baselines more reliably and reasonably for PTM. We also provide a comprehensive evaluation protocol and
+    several benchmark results for PTM on the datasets. From the results, we observe that point cloud-text data are more challenging
+    than the common image-text data due to the sparsity, noise, or disorder of point clouds [16]. More specifically, these
+    properties make it difficult to capture and integrate local and global semantic features from both point clouds and texts
+    and may also lead to mismatched cross-modal pairs, i.e., noisy correspondence [17], [18], thus degrading the retrieval
+    performance.
+
+
+    To tackle the aforementioned challenges, we propose a PTM baseline, named Robust PointCloud-Text Matching method (RoMa),
+    to learn from point clouds and texts. RoMa consists of two modules: a Dual Attention Perception module (DAP) and a Robust
+    Negative Contrastive Learning module (RNCL). DAP is proposed to adaptively capture and integrate the local and global
+    informative features to alleviate the impact of noise and ambiguity in the data. More specifically, DAP conducts token-level
+    and feature-level attention to adaptively weigh the patches and words to multi-grainly aggregate the local and global
+    discriminative features into common representations, thus embracing a comprehensive perception. In addition, our RNCL
+    is presented to adaptively divide the negative pairs into clean and noisy subsets based on the similarity within pairs,
+    and then assign them with forward and reverse optimization directions respectively. Different from traditional contrastive
+    learning, our RNCL only leverages negative pairs rather than positive pairs to train the model since negatives are much
+    less error-prone than positive pairs, leading to robustness against noisy correspondence. In brief, our RNCL could utilize
+    and focus on more reliable pairs to enhance the robustness.
+
+
+    In summary, our main contributions are as follows:
+
+    - We investigate a new instance-level cross-modal retrieval task, namely PointCloud-Text Matching (PTM), and propose a
+    PTM benchmark dataset SceneDepict-3D2T and a robust baseline RoMa to learn from challenging multimodal data for PTM.
+
+    - We present a novel Dual Attention Perception module (DAP) that adaptively extracts and integrates the local and global
+    features into common representations by using token-level and feature-level attention, thereby achieving a comprehensive
+    perception of semantic features.
+
+    - To handle noisy correspondence, we devise a Robust Negative Contrastive Learning module (RNCL) that adaptively identifies
+    clean and noisy negative pairs, and assigns them correct optimization directions accordingly, thus preventing the model
+    from overfitting noise.
+
+    - We conduct extensive comparison experiments on four pointcloud-text datasets. Our RoMa remarkably outperforms the existing
+    methods without bells and whistles, demonstrating its superiority over existing methods.'
+  citations:
+  - marker: '[1]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[2]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[3]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[4]'
+    intent_label: Domain Overview
+    topic_label: Point Cloud Registration
+  - marker: '[5]'
+    intent_label: Research Gap
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[6]'
+    intent_label: Research Gap
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[9]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[10]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[13]'
+    intent_label: Research Gap
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[14]'
+    intent_label: Research Gap
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[15]'
+    intent_label: Research Gap
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[16]'
+    intent_label: Importance of Problem
+    topic_label: Raw point-based representations
+  - marker: '[17]'
+    intent_label: Importance of Problem
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[18]'
+    intent_label: Importance of Problem
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 2
+  content: ''
+  citations: []
+- block_id: 3
+  content: 'Cross-modal retrieval aims to search the relevant results across different modalities for a given query, e.g.,
+    image-text matching [8], [11], 2D-3D retrieval [22], [23], and visible-infrared re-identification [24], etc. Most of these
+    works learn a joint common embedding space by applying cross-modal constraints [25], [26], which aims to pull relevant
+    cross-modal samples close while pushing the irrelevant ones apart. These methods could roughly be classified into two
+    groups:
+
+    1) Coarse-grained retrieval [7], [8], [21], [27], [28] typically learns shared subspaces to build connections between
+    global-level representations, which align images and texts in a direct manner. 2) Fine-grained retrieval [11], [20], [29]
+    aims to model cross-modal associations between local feature representations, e.g., the visual-semantic associations between
+    word tokens and image regions. Unlike them, in this paper, we delve into a less-touched and more challenging cross-modal
+    scenario, i.e., Pointcloud-Text Matching (PTM), which argues for building cross-modal associations between 3D space and
+    textual space.'
+  citations:
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[22]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[23]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[24]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[28]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[29]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 4
+  content: In contrast to image and language comprehension, 3D vision and language comprehension represent a relatively nascent
+    frontier in research. Most existing works focus on using language to confine individual objects, e.g., distinguishing
+    objects according to phrases [30] or detecting individual objects [31]. With the introduction of the ScanNet [32], ScanRefer
+    [13], and Nr3d [14] datasets, more works have expanded their focus to encompass the 3D scenes. Some existing works [33],
+    [34] have tried to locate objects within scenes based on linguistic descriptions, completing the task of 3D visual grounding.
+    Recently, with the introduction of Scan2Cap [35], some efforts [36] focus on providing descriptions for objects about
+    their placement. This is also known as 3D dense captioning. Recently, a few preliminary solutions [5], [6] for pointcloud-text
+    retrieval have begun to emerge, which only establish common discrimination for coarse category-level alignment between
+    point-cloud shapes and brief category label texts. However, these category-level methods could not be migrated to PTM.
+    There are still scarce methods focusing on instance-level alignment and matching between wide-field point clouds and natural
+    language texts, which requires excavating more detailed and discriminative connections within cross-modal pairs.
+  citations:
+  - marker: '[5]'
+    intent_label: Research Gap
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[6]'
+    intent_label: Research Gap
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[13]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[14]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[30]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[31]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[32]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[33]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[34]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[35]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[36]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 5
+  content: 'In this paper, we introduce a novel 3D vision and language task, namely PointCloud-Text Matching (PTM). The input
+    cross-modal data of the task involves the 3D point clouds and free-form description texts. The goal of PTM is to support
+    bi-directional retrieval between point clouds and corresponding texts, achieving instance-level cross-modal alignment.
+
+
+    However, the task presents notable discrepancies and task-specific challenges, which can be summarized as follows:
+
+    - Perceiving local and global semantic features is hard. Since sensor sampling characteristics and biases, point clouds
+    are commonly presented as a collection of sparse, noisy, and unordered points. Compared to 2D images, point clouds encapsulate
+    a wealth of additional objects and spatial properties, which results in more incomplete and ambiguous description texts.
+    Such complexity makes it harder for existing models to accurately perceive local and global semantic features from both
+    modalities.
+
+    - Noisy correspondence. Imperfect annotations are ubiquitous, even well-labeled datasets containing latent noisy labels,
+    as shown by the existence of over 100,000 label issues in the ImageNet [37] and 3%-20% annotation errors in the Conceptual
+    Captions [38]. However, due to the limitations of human perception and description of 3D space, annotation workers are
+    unintentionally inclined to use vague expressions (such as ‘near’, ‘close to’, etc.) to describe the details of the point
+    clouds incorrectly, introducing more correspondence annotation (i.e., noisy correspondence). Such noise would lead to
+    insufficient learning or noise overfitting for existing models.'
+  citations:
+  - marker: '[37]'
+    intent_label: Importance of Problem
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[38]'
+    intent_label: Importance of Problem
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 6
+  content: 'To the best of our knowledge, existing multi-modal datasets of point clouds and texts cannot apply directly to
+    PointCloud-Text Matching (PTM). On the one hand, the descriptions in most of these datasets (e.g., ScanRefer [13], Nr3d
+    [14], and ScanQA [39]) are confined to single objects of the entire point-cloud scenes. They only have average lengths
+    of fewer than 15 words and each description encompasses fewer than 2 objects. However, one scene typically contains 10-30
+    objects [32], with many similar objects present across different scenes. This indicates that these short and inadequately
+    informative descriptions are prone to be ambiguous, lacking the discrimination to meet the requirements of PTM. On the
+    other hand, although several scene description datasets [15] for scene understanding with the Large Language Model (LLM)
+    have been recently proposed, they exhibit limited data volume and lack inter-object relationships necessary for a comprehensive
+    description for each specific scene. These limitations hinder their application in PTM. We conduct PTM experiments on
+    these existing datasets, and the matching results show that the average performance of the latest cross-modal matching
+    methods in terms of Recall at 1 is less than 10%, confirming the above view.
+
+
+    To establish a reasonable evaluation of PTM with practical significance, we construct a diverse, detailed, and discriminative
+    benchmark dataset with scene-level descriptions for comprehensive point-cloud scene understanding, namely SceneDepict-3D2T.
+    In SceneDepict-3D2T, the point-cloud data is all based on the ScanNet [32] dataset, and the text data is derived from
+    the ScanRefer [13], Nr3d [14], and ScanQA [39] description sets associated with ScanNet. In the following sections, we
+    will elaborate on the collection and statistics of our proposed datasets.'
+  citations:
+  - marker: '[13]'
+    intent_label: Resource Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[14]'
+    intent_label: Resource Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[15]'
+    intent_label: Research Gap
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[32]'
+    intent_label: Resource Utilization
+    topic_label: Raw point-based representations
+  - marker: '[39]'
+    intent_label: Resource Utilization
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 7
+  content: 'We deploy a prompt-driven LLM paradigm to generate scene-level descriptions of point-cloud scene scans in ScanNet,
+    leveraging three existing object-level description datasets (i.e., ScanRefer, Nr3d, and ScanQA). The description generation
+    pipeline is divided into three stages.
+
+
+    1) Scene Analysis Stage: We first divide each scene scan into multiple neighborhoods and identify discriminative objects
+    based on their color, size, and more. We then randomly select n descriptions of n spatially related objects from different
+    neighborhoods, creating object-level description collection. This stage arbitrarily introduces different object characteristics
+    that guide the generated descriptions to encapsulate varied information and scene discrimination of point clouds.
+
+
+    2) Data Generation Stage: In this stage, we randomly select one of the three object-level datasets and input the corresponding
+    object-level description collection into the LLM using the tailored prompts to generate scene-level descriptions. The
+    designed prompts align with the various linguistic characteristics of different datasets, ensuring the language style
+    diversity and applicability of PTM across various scenarios. Specifically, for ScanRefer, the generated descriptions are
+    objective and exhaustive, being suitable for scenarios with precise matching of the object placement throughout the scans.
+    For Nr3d, the descriptions are concise and informative, being applicable for scenarios with matching of partial arrangement
+    of objects within scans. For ScanQA, the descriptions detail object characteristics and relationships, which are suitable
+    for scenarios with matching of key features of scans.
+
+
+    3) Verification Stage: In this final stage, we manually assess each generated description for discriminative accuracy,
+    grammatical correctness, and coherence, completing the scene-level description construction.
+
+
+    Repeating the above process ten times, we generate ten unique scene-level descriptions for each point cloud. By following
+    this process for all point clouds, we create the SceneDepict-3D2T dataset.'
+  citations: []
+- block_id: 8
+  content: 'To provide a comprehensive overview of the proposed SceneDepict-3D2T dataset, we present data distribution statistics
+    and compare it with those of existing datasets. The corpus adopted for description generating is evenly sourced from the
+    datasets with distinct linguistic styles, showcasing the comprehensiveness of the constructed descriptions. Additionally,
+    our SceneDepict-3D2T offers a wealth of grammatical scene-level descriptions suitable for PTM training and validation.
+    On average, each description in SceneDepict-3D2T covers 10.7 objects and 8.8 object categories, which is over 5 times
+    more than the object-level datasets (i.e., ScanRefer, Nr3d, and ScanQA). Furthermore, each description encompasses 6.6
+    inter-object interactions, which is 6.6 times higher than in the scene description dataset 3D-LLM-Scene. This demonstrates
+    the sufficient scene coverage and discrimination of the descriptions in SceneDepict-3D2T. In addition, the descriptions
+    in SceneDepict-3D2T are rich in color (85.8%), material (38.7%), shape terms (56.1%), and spatial information (99.0%),
+    ensuring their informational depth. Consequently, benefiting from the discriminative and detailed descriptions in SceneDepict-3D2T,
+    baselines can achieve 100% to 400% improvement in PTM performance compared to existing datasets, underscoring its practical
+    significance for PTM.
+
+
+    Despite meticulous verification efforts to improve the grammatical accuracy and syntactic coherence of the datasets, it
+    is unavoidable to introduce a considerable portion of noisy correspondence because of the inherent nature of unordered
+    point-cloud scenes and vague free-form descriptions. To assess this, we randomly selected 100 descriptions from SceneDepict-3D2T
+    and manually checked for vague expressions that might lead to noisy correspondence. Eventually, 13 descriptions were flagged
+    for potential issues. Thus, noisy correspondence remains an unavoidable challenge in PTM, which could result in noise
+    overfitting, leading to performance degradation.'
+  citations: []
+- block_id: 9
+  content: ''
+  citations: []
+- block_id: 10
+  content: 'We first define the notations for a lucid presentation. Given a PTM dataset D = {P, T}, where P = {X^p_i}_{i=1}^{N_p}
+    and T = {X^t_j}_{j=1}^{N_t} are the point-cloud and text sets respectively, N_p and N_t are the size of P and T, X^p_i
+    is the i-th point-cloud sample and X^t_j is the j-th text sample. There is pairwise correspondence between P and T, so
+    D can also be written as D = {(X^p_i, X^t_j), y_{i,j}}_{i=1,j=1}^{N_p,N_t}, y_{i,j} ∈ {0, 1} indicates whether X^p_i and
+    X^t_j are matched (i.e., positive pair, y_{i,j} = 1) or unmatched (i.e., negative pair, y_{i,j} = 0). However, in practice,
+    the unmatched pairs (y_{i,j} = 0) may be mislabeled as matched ones (y_{i,j} = 1), a.k.a noisy correspondence.
+
+
+    In the data encoding stage, we first employ modality-specific backbones (i.e., f_p and f_t) to extract token-wise features
+    for the patches of point clouds and words of descriptions, i.e., Z^p_i = f_p(X^p_i) ∈ R^{p_n×d_c} and Z^t_j = f_t(X^t_j)
+    ∈ R^{t_n×d_c}, respectively. Z^p_i and Z^t_j are the token-wise feature sets of i-th point cloud and j-th text, p_n and
+    t_n are the number of tokens for each sample and d_c is the dimensionality of the feature space.
+
+
+    In addition, to preserve spatial interactions across patches within point clouds, inspired by the sequence position representation
+    [40], we attempt to encapsulate the 2D position information of patches into a position embedding. The embedding is then
+    used for following comprehensive token-level attention calculation, as detailed below:
+
+    Ei = {f(E^x_{i,1}, E^y_{i,1}), · · · , f(E^x_{i,pn}, E^y_{i,pn})},
+
+    where E_i ∈ R^{p_n×d_c} is the patch position embedding of the i-th point-cloud sample, f denotes the fusion method (e.g.,
+    summation, concatenation, etc.) for combining the patch position embeddings, and E^x_{i,j} and E^y_{i,j} are the patch
+    position embeddings calculated from the horizontal and vertical coordinates of patch centroids in j-th patch of i-th point-cloud
+    sample. These embeddings are computed as follows:
+
+    E^x_{i,j,ϵ} = sin( h_{i,j} · p_n / 10000^{ϵ/d_c} ), E^x_{i,j,ω} = cos( h_{i,j} · p_n / 10000^{ω-1/d_c} ),
+
+    E^y_{i,j,ϵ} = sin( v_{i,j} · p_n / 10000^{ϵ/d_c} ), E^y_{i,j,ω} = cos( v_{i,j} · p_n / 10000^{ω-1/d_c} ),
+
+    where h_{i,j} and v_{i,j} are the normalized horizontal and vertical coordinates of the corresponding patch centroids,
+    and ϵ and ω refer to the even and odd dimensionality indices of E^x_{i,j} and E^y_{i,j}, respectively.
+
+
+    To tackle the task-specific challenges mentioned earlier, a robust PTM method (RoMa) is proposed to learn cross-modal
+    associations from point clouds and texts. The proposed method involves two modules: 1) Dual Attention Perception (DAP)
+    is used to comprehensively perceive semantic features with dual attention at the dataset level, and 2) Robust Negative
+    Contrastive Learning (RNCL) is exploited to handle noisy correspondence.'
+  citations:
+  - marker: '[40]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Transformer-based attention models
+- block_id: 11
+  content: 'To tackle the challenge of capturing and integrating both local and global semantic features from point clouds
+    and texts in PTM, we propose a novel dual attention mechanism. More specifically, similar to the definition in Self-Attention
+    mechanism (SA) [40], we calculate the Queries Q^p_i ∈ R^{p_n×d_c}, Q^t_i ∈ R^{t_n×d_c}, along with the Values V^p_i ∈
+    R^{p_n×d_c}, V^t_j ∈ R^{t_n×d_c} of two modalities from the i-th point-cloud and j-th text features Z^p_i and Z^t_j, using
+    the fully connected layers g_p and g_t, respectively. However, unlike SA, our dual attention mechanism constructs learnable
+    token-level and feature-level Generic-Keys, which are shared across all samples in the dataset. Benefit from this, the
+    Generic-Keys could learn to model general patterns of tokens and features throughout the entire dataset. By integrating
+    these Generic-Keys with the sample-specific Queries, our method achieves more comprehensive attention than SA, capturing
+    interactions beyond token-wise relationships within individual samples.
+
+
+    To be more specific, to facilitate the adaptive exploration of local semantic features, we first construct token-level
+    Generic-Keys \bar{K}^p ∈ R^{d_c} and \bar{K}^t ∈ R^{d_c} upon the feature matrices of point-cloud and text modalities.
+    We use them to model the common patterns of informative tokens (i.e., patches and words) within each modality. Similar
+    to SA, we obtain token-level attention by measuring the token-wise similarity between Queries and token-level Generic-Keys,
+    empowering the model to selectively focus on local key semantic units similar to the common patterns in the two modalities
+    (e.g., foreground patches in the point clouds and keywords in the texts), which are written as:
+
+    \bar{a}^p_i = φ((Q^p_i + E_i) \bar{K}^{p⊤}), \bar{a}^t_i = φ(Q^t_i \bar{K}^{t⊤}),
+
+    where \bar{a}^p_i ∈ R^{p_n} and \bar{a}^t_i ∈ R^{t_n} are the token-level attention vectors, φ is the Softmax operation
+    along the token dimension (i.e., row-wise operation on the feature matrices). It is worth noting that we add patch position
+    embedding in point-cloud modality to preserve the spatial interactions among patches. Based on this, we obtain the token-level
+    attention \bar{A}^p_i ∈ R^{p_n×d_c} and \bar{A}^t_i ∈ R^{t_n×d_c} by stacking these attention vectors in the feature dimension.
+
+
+    In addition, we propose feature-level attention to capture feature semantics and enhanced cross-modal representations.
+    Similar to token-level modeling, we introduce learnable feature-level Generic-Keys \hat{K}^p ∈ R^{d_c×d_c} and \hat{K}^t
+    ∈ R^{d_c×d_c} for two modalities, which aims to model the interaction patterns among d_c features. We construct feature-level
+    attention by combining Queries and feature-level Generic-Keys to grasp global discriminative features from the dimensional
+    interrelationships in the feature space, such as distinctive object color, position, orientation, spatial relationships,
+    etc., which is written as:
+
+    \hat{A}^p_i = φ(Q^p_i \hat{K}^{p⊤}), \hat{A}^t_i = φ(Q^t_i \hat{K}^{t⊤}),
+
+    where \hat{A}^p_i ∈ R^{p_n×d_c} and \hat{A}^t_i ∈ R^{t_n×d_c} are the feature-level attention.
+
+
+    Next, we aggregate the token-level and feature-level attention into dual attention, which can be written as:
+
+    A^p_i = \bar{A}^p_i ⊙ \hat{A}^p_i, A^t_i = \bar{A}^t_i ⊙ \hat{A}^t_i,
+
+    where A^p_i and A^t_i are dual attention in point-cloud and text modalities, and ⊙ is the Hadamard product operator.
+
+
+    Subsequently, we impose dual attention upon the Values, aggregating them for integrated representations into common space,
+    which are written as:
+
+    p_i = Norm( (1/p_n) Σ_{j=1}^{p_n} (A^p_{i,j} ⊙ V^p_{i,j}) ),
+
+    t_i = Norm( (1/t_n) Σ_{j=1}^{t_n} (A^t_{i,j} ⊙ V^t_{i,j}) ),
+
+    where A^p_{i,j} and A^t_{i,j} are the j-th row of dual attention A^p_i and A^t_i, V^p_{i,j} and V^t_{i,j} are the j-th
+    row of the Values V^p_i and V^t_i, and Norm(·) is the l2-normalization function. The common representations p_i ∈ R^{d_c}
+    and t_i ∈ R^{d_c} integrate local useful semantics and global discriminative semantics, promoting comprehensive feature
+    perception in unordered point clouds and ambiguous texts.'
+  citations:
+  - marker: '[40]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Transformer-based attention models
+- block_id: 12
+  content: 'Inspired by [41], we leverage the complementary contrastive learning paradigm to learn with more reliable negative
+    pairs instead of positive pairs, thereby mitigating the negative impact of mismatched pairs and achieving robust PTM against
+    noisy correspondence. The loss for the cross-modal complementary learning paradigm is shown below:
+
+    L'' = L''_{p→t} + L''_{t→p},
+
+    where
+
+    L''_{p→t} = −(1/K) Σ_{i,j} (1 − y_{i,j}) log (1 − S^{p→t}_{i,j}),
+
+    L''_{t→p} = −(1/K) Σ_{i,j} (1 − y_{i,j}) log (1 − S^{t→p}_{i,j}),
+
+    and
+
+    S^{p→t}_{i,j} = exp( p_i^⊤ t_j / τ ) / Σ_k exp( p_i^⊤ t_k / τ ), S^{t→p}_{i,j} = exp( t_i^⊤ p_j / τ ) / Σ_k exp( t_i^⊤
+    p_k / τ ),
+
+    where L''_{p→t} / L''_{t→p} is the point-cloud-to-text/text-to-point-cloud complementary learning loss term, S^{p→t}_{i,j}
+    / S^{t→p}_{i,j} is the similarity between the i-th point-cloud/text sample and the j-th text/point-cloud sample, K is
+    the batch size, τ is the temperature parameter, and 1 − y_{i,j} is the flag, making the loss only apply to negative pairs.
+    Minimizing Eq. (9) could reduce the similarity between the samples within negative pairs, introducing common discrimination
+    without relying on positive pairs, which are more prone to containing some erroneous information. Because of this, the
+    model could alleviate the impact of noisy correspondence.
+
+
+    However, due to the similarity in object categories within the point-cloud scenes and limited differences across some
+    parts of scenes in PTM, samples within some negative pairs unavoidably exhibit certain degrees of semantic similarity.
+    Blindly and monotonously amplifying the gap between two samples within negative pairs would lead to error accumulation,
+    thus impacting the formation of robust discrimination. To address this issue, we propose the Robust Negative Contrastive
+    loss, which could prevent the model from fitting these unreliable negative pairs or even revise the wrong optimization
+    direction. This novel loss is non-monotonic and has a parameter-controlled inflection point. It assesses the reliability
+    of negative pairs based on the similarity of the paired samples, dynamically and implicitly divides negative pairs into
+    clean and noisy subsets based on their reliability by considering the inflection point as a threshold, and assigns clean
+    subsets with forward optimization direction but provides noisy subsets with reverse optimization direction, which could
+    be formulated as:
+
+    L = L_{p→t} + L_{t→p},
+
+    where
+
+    L_{p→t} = −(1/K) Σ_{i,j} (1 − y_{i,j}) (1 − S^{p→t}_{i,j})^{1/α} log (1 − S^{p→t}_{i,j}),
+
+    L_{t→p} = −(1/K) Σ_{i,j} (1 − y_{i,j}) (1 − S^{t→p}_{i,j})^{1/α} log (1 − S^{t→p}_{i,j}).
+
+    Note that L_{p→t} and L_{t→p} are the point-cloud-to-text and text-to-point-cloud loss terms of our Robust Negative Contrastive
+    loss respectively, and α is the parameter that controls the inflection point. Take L_{p→t} for example, its gradient calculation
+    formula can be written as ∂L_{p→t}/∂S^{p→t}_{i,j} = −(1/α)(1 − S^{p→t}_{i,j})^{(1−α)/α} [log(1 − S^{p→t}_{i,j}) + α].
+    Consequently, we can infer that when S^{p→t}_{i,j} = 1 − e^{1−α}, the loss has an inflection point. As optimization progresses,
+    clean negative pairs with low similarity (i.e., S^{p→t}_{i,j} < 1 − e^{1−α}) are still separated, while pairs with high
+    similarity (i.e., S^{p→t}_{i,j} > 1 − e^{1−α}) are identified and brought closer, helping our RNCL filter out unreliable
+    negative pairs adaptively. Compared to the existing loss [44], [45], our loss identifies and handles negative pairs, adaptively
+    driving the reliable negative pairs apart in the common space, enhancing robustness against noisy correspondence in PTM.'
+  citations:
+  - marker: '[41]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[44]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[45]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 13
+  content: ''
+  citations: []
+- block_id: 14
+  content: 'In this work, our RoMa is implemented in PyTorch and carried out on one GeForce RTX 3090 GPU. In the experiments,
+    we adopt the ScanNet [32] point-cloud set along with four description sets (i.e., SceneDepict-3D2T, ScanRefer [13], Nr3d
+    [14], and 3D-LLM-Scene [15]), obtaining corresponding four multi-modal datasets for PTM evaluation. Due to the space restriction,
+    the details of implementation and introduction to the adopted datasets could be found in the Appendix.
+
+
+    In the experiments, we compared our RoMa with 14 state-of-the-art cross-modal matching methods, including VSE, VSE++ [7],
+    VSE∞ [8], SGR [11], NCR-SGR [17], SAF [11], RCL-SAF [41], MV-VSE [42], NAAF [12], DIVE [19], CHAN [20], ESA [43], HREM
+    [21], and CRCL [9]. In the implementations and evaluations of all the methods, we adhere to the following settings. For
+    point-cloud data processing, we adopt the widely used DGCNN [46] to obtain patch-level features. For text data processing,
+    without loss of generality, we follow the text processing strategy used in cross-modal matching [8], [43] and employ both
+    Bi-GRU [47] and BERT [48] to acquire word-level features, respectively. We follow [17], [29] to compute Recall at K (R@K)
+    as the measurement of performance. In the experiments on SceneDepict-3D2T, we report R@1, R@5, R@10, and their sum to
+    evaluate the performance of the methods. Due to the text discrimination limitations of other existing datasets (i.e.,
+    ScanRefer, Nr3d, and LLM-3D-Scene), we report R@5, R@30, and their sum to evaluate the methods more reasonably.'
+  citations:
+  - marker: '[7]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[8]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[9]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[11]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[12]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[13]'
+    intent_label: Benchmark Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[14]'
+    intent_label: Benchmark Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[15]'
+    intent_label: Benchmark Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[17]'
+    intent_label: Metrics Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[19]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[20]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[21]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[29]'
+    intent_label: Metrics Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[32]'
+    intent_label: Benchmark Utilization
+    topic_label: Raw point-based representations
+  - marker: '[41]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[42]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[43]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[46]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Graph-based neural models
+  - marker: '[47]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Sequential RNN-based models
+  - marker: '[48]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Transformer-based attention models
+- block_id: 15
+  content: 'We conduct extensive PTM experiments on four datasets to evaluate the performance of our RoMa and the baselines.
+    The experimental results yield the following observations: 1) General cross-modal matching methods exhibit inadequate
+    performance. This substantiates the presence of distinct and more formidable challenges in PTM, indicating the difficulty
+    of effectively applying these methods in PTM. 2) Some fine-grained methods (e.g., SGR and SAF) suffered from severe performance
+    issues in PTM. By combining these methods with robust modules, such as NCR-SGR and RCL-SAF, the performance could be remarkably
+    improved. These results indicate that there is a large amount of noisy correspondence in PTM, which leads to the performance
+    degradation of the non-robust methods. 3) Our RoMa achieves remarkably better results than the existing cross-modal matching
+    methods (e.g., CRCL, HREM, etc.), demonstrating its superior effectiveness by conquering the two challenges in PTM. 4)
+    In existing datasets, the relevant results matched by most methods rank only outside the top 5, proving the scene-specific
+    discrimination of these datasets is limited. 5) The performance on SceneDepict-3D2T is relatively low, compared to the
+    existing Image-Text datasets, where the state-of-the-art performance usually exceeds 80 [21], [43], in terms of R@1. This
+    indicates that the PTM task still faces difficulties in handling unordered point clouds, vague texts, and noisy correspondence,
+    and calls for more advanced solutions.'
+  citations:
+  - marker: '[21]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[43]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 16
+  content: 'In this section, we conduct an ablation study to investigate the contribution of each proposed component to PTM.
+    Firstly, we replace the DAP module with the GPO [7] and ESA [43] feature extraction modules, and the Robust Negative Contrastive
+    loss (i.e., L) adopted by RNCL with the vanilla loss adopted by complementary contrastive learning paradigm (i.e., L′)
+    [41] and Contrastive loss (i.e., L_c). In addition, we alternately replace patch position embedding E, token-level attention
+    \bar{A}, and feature-level attention \hat{A} to fairly verify their effectiveness under the premise of eliminating the
+    influence of the number of learnable parameters. All the comparisons are conducted on SceneDepict-3D2T with the same experimental
+    settings. From the comparisons, we draw the following observations: 1) RoMa without any component will drop matching performance,
+    which indicates that each component contributes to our method. 2) The performances of adopting L are superior to L_c that
+    is widely applied in well-annotated scenarios and L′. This proves the presence of a considerable amount of noisy correspondence
+    in PTM and the L adopted by RNCL contributes to the enhanced robustness of our RoMa. 3) DAP without any one of attention
+    and positional embedding will decrease matching performance, demonstrating that each component in DAP contributes to the
+    comprehensive perception of features.'
+  citations:
+  - marker: '[7]'
+    intent_label: Result Comparison
+    topic_label: Transformer-based attention models
+  - marker: '[41]'
+    intent_label: Result Comparison
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[43]'
+    intent_label: Result Comparison
+    topic_label: Transformer-based attention models
+- block_id: 17
+  content: To investigate the sensitivity of our RoMa to various parameters, we analyze PTM performance against different
+    hyper-parameters (i.e., α, and τ) on SceneDepict-3D2T. The results indicate that our method achieves superior matching
+    performance across a range of α and τ values. Notably, when α is set too low, the threshold for distinguishing between
+    clean and noisy negative pairs becomes excessively small. This leads to a significant number of negative pairs being misclassified
+    as noise and subjected to reverse optimization, resulting in remarkable performance degradation. Conversely, if α is too
+    high, the RNCL struggles to differentiate potential noisy negative pairs, causing error accumulation and degraded performance.
+  citations: []
+- block_id: 18
+  content: 'To provide a comprehensive insight into the effectiveness exhibited by our RoMa, we conduct visualization experiments
+    in PTM. We illustrate a small handful of matching results and token-level attention visualization throughout the point
+    clouds and texts on SceneDepict-3D2T dataset. From the results, we draw the following observations: 1) Our RoMa can achieve
+    correct retrieved results in PTM. Even the mismatched pair still exhibits a strong cross-modal semantic correlation. This
+    is attributed to our DAP, which actually focuses on useful and discriminative patches and words. 2) Throughout the whole
+    learning process, it is evident that non-robust baselines (i.e., VSE∞ and HREM) involve performance degradation in the
+    later training stage, impacted by the noisy correspondence. In contrast, our RoMa mitigates the negative impact comprehensively,
+    achieving superior and robust performance.'
+  citations: []
+- block_id: 19
+  content: 'In this paper, we introduce a novel yet challenging task, named PointCloud-Text Matching (PTM). To facilitate
+    the research on this promising task, we construct a benchmark dataset, namely SceneDepict-3D2T. We also propose a robust
+    baseline, named Robust PointCloud-Text Matching method (RoMa), which consists of two novel modules: Dual Attention Perception
+    module (DAP) and Robust Negative Contrastive Learning module (RNCL). Specifically, DAP leverages dual attention mechanisms
+    to capture local and global features of point clouds and texts. In addition, RNCL is employed to handle noisy correspondence
+    by distinguishing and endowing clean and noisy negative pairs with correct optimization directions. We conducted extensive
+    experiments compared to 14 state-of-the-art methods on four datasets, demonstrating the superiority of our RoMa in the
+    challenging PTM task.'
+  citations: []

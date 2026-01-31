@@ -1,0 +1,737 @@
+arXiv:2308.00187v1  [cs.RO]  31 Jul 2023
+Detecting the Anomalies in LiDAR Pointcloud
+Chiyu Zhang, Ji Han, Y ao Zou, Kexin Dong, Y ujia Li, Junchun Di ng, Xiaoling Han
+{firstname.lastname}@tusimple.ai
+TuSimple
+San Diego, CA, 92122
+Abstract—LiDAR sensors play an important role in the per-
+ception stack of modern autonomous driving systems. Advers e
+weather conditions such as rain, fog and dust, as well as some
+(occasional) LiDAR hardware fault may cause the LiDAR to
+produce pointcloud with abnormal patterns such as scattere d
+noise points and uncommon intensity values. In this paper ,
+we propose a novel approach to detect whether a LiDAR is
+generating anomalous pointcloud by analyzing the pointclo ud
+characteristics. Speciﬁcally, we develop a pointcloud qua lity met-
+ric based on the LiDAR points’ spatial and intensity distrib ution
+to characterize the noise level of the pointcloud, which rel ies on
+pure mathematical analysis and does not require any labelin g or
+training as learning-based methods do. Therefore, the meth od is
+scalable and can be quickly deployed either online to improv e
+the autonomy safety by monitoring anomalies in the LiDAR dat a
+or ofﬂine to perform in-depth study of the LiDAR behavior ove r
+large amount of data. The proposed approach is studied with
+extensive real public road data collected by LiDARs with dif ferent
+scanning mechanisms and laser spectrums, and is proven to be
+able to effectively handle various known and unknown source s
+of pointcloud anomaly.
+Index Terms—LiDAR, autonomous driving, assisted driving
+I. I NTRODUCTION
+LiDAR (Light Detection and Ranging) sensors have caught
+growing attention of the automotive and autonomous driving
+industry thanks to their capability of continuously genera t-
+ing high-deﬁnition and accurately-ranged image (pointclo ud)
+of the surroundings, regardless of the ambient illuminance
+conditions [1], [2]. As is pointed out in [2], one particular
+challenge of using LiDARs for perception in autonomous
+driving is the performance degradation in adverse weather
+conditions such as rain, fog, dust, etc., where the LiDAR’s
+laser signal may be scattered and/or attenuated, leading to
+reduced laser power and signal-noise ratio (SNR) and thus
+may cause the pointcloud to contain random noise points
+and lower intensity readings [3]. Not only the adverse en-
+vironmental conditions can cause the issues above, sometim es
+defected LiDAR hardware components or unknown random
+factors may also lead to anomalous pointcloud output. For
+example, a LiDAR with defected electromagnetic shielding
+may output extremely noisy pointcloud when strong signal
+interference sources such as cellular towers are nearby. Th e
+goal of this paper is to propose a method to characterize
+the aforementioned LiDAR pointcloud anomalies, which can
+beneﬁt the autonomous driving system (ADS) safety as well
+as the ADS development cycle. In terms of increasing the
+level of automation and the ADS safety, a higher level ADS
+(level 3+) needs to detect whether the system is within its
+operation domain and behave correspondingly, according to
+the Society of Automotive Engineers (SAE) [4]. The ADS
+operation domain is typically bounded by environmental con -
+ditions and system component health, and it is essential tha t
+the ADS sensors such as LiDARs are able to determine
+their status and data quality. As for the application in the
+ADS development, the data frames with anomalous LiDAR
+pointcloud are typically associated with edge cases and lon g-
+tail scenarios, which require extra attention yet have rela tively
+low rate of occurrence in the vast amount of data generated
+by the autonomous driving ﬂeet. Having those cases picked
+out effectively and efﬁciently helps to save the time and eff ort
+required for ADS development.
+While researches on general LiDAR pointcloud anomalies
+are limited, the topic of LiDAR performance under adverse
+weather conditions have been studied extensively [5]–[12] .
+Many of the studies focus on the performance degradation
+of the LiDAR in rain/fog and have developed various quan-
+tiﬁcation methods for aspects such as signal attenuation, v isi-
+bility range, point density and target reﬂectance. Some rec ent
+studies develop statistical-based learning methods to cla ssify
+whether a LiDAR is working in adverse weather based on
+performance degradation metrics [13], [14]. These methods are
+typically veriﬁed through simulation or testing in control led
+environment which may not well resemble the realistic road
+conditions. For example, many controlled environments to
+emulate rains such as the one presented in [13] consists of
+several static test targets (vehicles, pedestrians, etc.) . Such
+environment cannot produce water splashes generated from
+rolling wheels of other vehicles on the road, which is typica lly
+seen and picked up by the LiDARs in realistic operations. In
+addition, it should be noted that many of the commonly studie d
+LiDAR performance degradation aspects do not always lead
+to safety-critical component or system failure. For exampl e,
+a LiDAR typically have a reduced visibility range in rain
+which only reduces the perception system’s capability and
+does not necessarily disable all the perception functions; on
+the other hand, even if the LiDAR is operating with its full
+capability in a sunny day, it may generate a large amount of
+false positive points due to hardware failure which is likel y
+to be recognized as objects by the perception system and
+cause the vehicle to perform a hard-brake. In [15] the author s
+developed a deep-learning based approach to classify and
+detect LiDAR pointcloud anomalies. However, there are two
+major drawbacks to apply the deep-learning based approache s
+in practical R&D and implementation. First, it requires a la rge
+amount of annotated LiDAR data frames to train the software,
+moreover, the data collection, annotation and training pip eline
+must be repeated for different LiDAR properties, such as
+spinning vs solid state, 905nm vs 1550nm, or even a change
+to the mounting locations, thus lengthens the R&D cycle; and
+second, the real-time computational cost is high and may not
+be desirable given the limited onboard computational cost.
+In this paper, we propose a novel quality metric to quan-
+titatively characterize the general noise-related anomal ies in
+LiDAR pointcloud. To capture the spatially-scattered natu re
+of LiDAR noise points, we adopt the idea of spatial autocor-
+relation [16], which is widely used in statistical studies, to
+quantify how ‘dispersed’ the points are in a frame of LiDAR
+pointcloud. A factor related to the intensity of the pointcl oud
+is also included in the quality metric to better separate the
+cases where the LiDAR is in heavy rain or dense fog. The
+main contribution of the paper is twofold:
+• First, we developed a general quality metric that is able
+to capture noise-related anomalies in LiDAR pointcloud
+regardless of the cause of the anomaly. It is particularly
+useful in identifying new pointcloud issues with unknown
+causes or very little prior experience during both early-
+stage system validation or large-scaled operation.
+• Second, the proposed approach does not require a priori
+data collection, labeling and training and thus can reduce
+the time and resource consumption for practical imple-
+mentation.
+The proposed quality metric is veriﬁed with over 10,000 mile s
+of public road data collected by LiDARs with various laser
+spectrums, scanning mechanisms and mounting locations. Th e
+results show that the proposed method is able to identify the
+pointcloud affected not only by adverse weather conditions ,
+but also by uncommon noise sources such as signal interfer-
+ence, road dust, etc.
+The rest of the paper is organized as follows. We ﬁrst
+present the formulation and implementation of the proposed
+LiDAR pointcloud quality metric in Section II. Section III
+demonstrates the veriﬁcation of the proposed method, follo wed
+by conclusions in Section IV.
+II. P OINTCLOUD QUALITY METRIC
+In this section, we ﬁrst showcase some typical scenarios
+and characteristics of anomalous LiDAR pointcloud, based
+on which we formulate the pointcloud quality metric. An
+implementation method utilizing LiDAR image grid and GPU
+(graphic processing unit) acceleration is also presented.
+A. Anomalous LiDAR Pointcloud
+LiDAR pointcloud impacted by adverse weathers or hard-
+ware component failures may produce anomalous pointcloud
+with the following typical characteristics:
+• Randomly and sparsely distributed detections in the 3-
+dimensional physical space. Signal interference and hard-
+ware failure typically affect the LiDAR’s signal pro-
+cessing module and generate random and sparse false
+positives. In adverse weather conditions, this is mainly
+caused by reﬂection from water droplets, reﬂection from
+scattered laser signals through water/dust, and reduced
+pointcloud density due to signal attenuation.
+• Abnormal intensity values. Particularly in rainy and foggy
+weathers, the intensity values are lower than normal due
+to signal attenuation. Signal interference and hardware
+failure may lead to either low or excessively high inten-
+sity values.
+A few examples of typical anomalous LiDAR pointcloud we
+collected during public road testing are shown in Figure 1.
+All the pointcloud in the ﬁgures are colored by the intensity
+values. Points colored blue indicate low intensity values a nd
+those colored red represent high intensity values. Figure 1 (a)
+demonstrates one case of LiDAR pointcloud in rain where
+numerous noise points can be observed at a close range of
+the LiDAR’s ﬁeld of view (FOV). Figure 1(b) shows another
+case of LiDAR pointcloud in rain. In this case, both the
+number of points and the intensity values are signiﬁcantly
+reduced due to laser signal getting absorbed by the heavy
+rain. The pointcloud in Figure 1(c) sees much higher intensi ty
+values as well as noise points all over the FOV due to an
+internal component failure inside the LiDAR. The LiDAR
+whose pointcloud is shown Figure 1(d) does not have proper
+electromagnetic shielding and suffers signal interferenc e when
+passing a cellular signal tower.
+(a) rain example 1
+ (b) rain example 2
+(c) hardware failure example
+ (d) interference example
+Fig. 1. Examples of Anomalous LiDAR Pointcloud
+B. Pointcloud quality metric F ormulation
+The proposed pointcloud quality metric consists of two
+factors to address the two major characteristics of anomalo us
+LiDAR pointcloud shown above. The ﬁrst factor is a spatial
+measure to quantify how dispersed the LiDAR points are
+distributed in the 3-dimensional physical space. The secon d
+factor is an intensity measure to capture the abnormal inten sity
+pattern in the LiDAR pointcloud, particularly the lower-th an-
+normal intensity values in adverse weather conditions such as
+rain and fog.
+1) Spatial Measure: We employ the concept of spatial
+autocorrelation [16] as a measure of the LiDAR points’ level of
+spatial dispersion. In statistics, spatial autocorrelati on is used
+to describe the overall spatial clustering of a group of data
+by calculating each data point’s correlation with other nea rby
+data points. A low spatial autocorrelation means that the
+group of data is dispersed, while a high spatial autocorrela tion
+means that the data group is clustered. The underlying idea
+of using spatial autocorrelation to characterize the LiDAR
+pointcloud’s spatial dispersion/clustering is that if a se gment
+of LiDAR pointcloud data is generated by lasers detecting
+an actual object, the distance values in the data segment
+tend to be clustered since common road objects such as cars
+and pedestrians typically have large and continuous reﬂect ion
+surfaces. On the other hand, if a LiDAR data segment contains
+an excessive number of noise points, the distance values in t he
+data segment are more likely dispersed. An illustration of t he
+idea is shown in Figure 2. The example captures the LiDAR
+pointcloud of a vehicle driving on wet road surfaces with wat er
+splash generated at the rear of the vehicle. The LiDAR points
+from the vehicle (marked red) are well clustered, while the
+water splash points behind the vehicle (marked green) are
+dispersed.
+Fig. 2. Illustration of Clustered and Dispersed LiDAR Point cloud
+The spatial autocorrelation of a set of LiDAR points is
+deﬁned as follows. Given a set of LiDAR points:
+P = {pi = (ri, θi, φi, γi)|i = 1, 2, ...N} (1)
+where ri, θ i, φ i and γi represents the distance, azimuth,
+elevation and intensity of the i-th LiDAR point, respective ly.
+Then, the spatial autocorrelation of the distance values is
+deﬁned as:
+I =
+
+
+
+
+
+N
+W
+∑N
+i=1
+∑N
+j=1 wij(ri − r)(rj − r)
+∑N
+i=1(ri − r)2
+N > 1
+− 1 N = 1
+(2)
+r = 1
+N
+∑N
+i=1 ri is the average distance of all distance values
+in the set of points. wij is a pre-deﬁned weight value. For
+instance, one may consider the correlation of one data point
+to all other data points in the set with identical weights by
+deﬁning wij as:
+wij =
+{
+1 i ̸= j
+0 i = j (3)
+Alternatively, wij can also be deﬁned based on the inverse
+angular distance between points i and j so that the correlation
+between closer points have higher weight:
+wij =
+{
+||(θi, φi), (θj, φj )||−2 i ̸= j
+0 i = j (4)
+W = ∑N
+i=1
+∑N
+j=1 wij is the sum of all weights. The spatial
+autocorrelation is valued between [− 1, 1], where a value of
+-1 indicates that the set of points are extremely dispersed i n
+the 3-dimensional physical space and a value of 1 means that
+the points are well clustered. It should be noted that by the
+deﬁnition above, a set with one isolated point, i.e., N = 1, is
+considered as dispersed and has a spatial autocorrelation v alue
+of -1. We believe that (2) is a reasonable deﬁnition for isola ted
+points since an isolated point is most likely to be treated as a
+noise point in perception algorithms.
+The main difference between the autocorrelation and statis -
+tical variance is that the statistical variance only consid ers the
+absolute difference between each individual points to the a v-
+erage, thus, it depicts how the data is distributed in the sam ple
+space. The spatial autocorrelation, on the other hand, cons iders
+the relation between each individual points to other points . Sets
+of data points that have the same statistical variance may no t
+necessarily have the same spatial autocorrelation. As show n by
+the two pointcloud examples in Figure 3, where both sets of
+points shall have the same range variance. However, the spat ial
+autocorrelation of the pointcloud in case ii is negative whi le
+that in case i is positive, indicating that the pointcloud in case
+ii is more dispersed. In practice, multiple vehicles/objec ts in
+the LiDAR ﬁeld of view can typically generate a pointcloud
+distribution similar to case i, and noise/false positives m ay
+result in a pointcloud distribution which resembles that in
+case ii. Furthermore, consider the extreme case where only
+one isolated LiDAR point is present. By deﬁnition, the singl e-
+point set has a minimum variance of 0. On the other hand,
+it has the lowest spacial autocorrelation score following t he
+deﬁnition (2), which aligns with our intention to character ize
+isolated points as noise points. Therefore, spatial autoco rrela-
+tion is a more suitable measure for our application than the
+statistical variance.
+(a) case i
+ (b) case ii
+Fig. 3. Examples of Pointcloud Distribution
+2) Intensity Measure: LiDARs with speciﬁc laser wave-
+lengths may generate clustered instead of scattered noise
+points in heavy rain of dense fog. Figure 4 shows an example
+of such type of noise points. The pointcloud in the ﬁgure is
+captured when the LiDAR encounters heavy rain on the road.
+In the lower right of the ﬁgure there is a sizable cluster of
+noise points likely generated from reﬂections of rain dropl ets,
+which could be recognized as an object to be avoided by the
+perception algorithms.
+Since this particular type of LiDAR noise is typically
+clustered, it can be hard to characterize using spatial auto corre-
+Fig. 4. Exemplary LiDAR Noise in Heavy Rain
+lation alone, as will be shown in the test results in Section I II.
+However, we have observed that this noise type only occurs
+when there is a dense layer of laser-absorbing/deﬂecting ma tter
+such as heavy rain, dense fog or intense smog, etc., and
+the points almost always have extremely low intensity value s
+since they are generated from partial reﬂection of the laser
+pulse passing through the matter. Therefore, in addition to
+the spatial autocorrelation, we also take low intensity val ues
+into consideration by adding an intensity weight multiplie r
+to the spatial autocorrelation. The intensity weight multi plier
+can be formulated from any intensity statistical measures s uch
+as mean, standard deviation, or any other metrics that can
+distinguish the abnormally low intensity values. In this pa per,
+we present one formulation of the intensity multiplier base d
+on the average intensity.
+Let γref be a reference intensity value which indicates
+a nominal LiDAR intensity during normal operation (clear
+weather, no hardware issues). The reference is a user-deﬁne d
+value which is typically associated to speciﬁc LiDAR models
+from different manufacturers. The reference value can be
+obtained through statistical analysis of LiDAR data, since the
+LiDAR intensity during normal operation is typically consi s-
+tent with small ﬂuctuations. Let ¯γ be the average intensity of
+the set of LiDAR point P. The intensity weight multiplier Kγ
+is formulated as below:
+Kγ = exp(k · max(0, γref − ¯γ)
+γref
+) (5)
+where k is a constant scale factor. By deﬁnition, a low
+average intensity leads to a high weight multiplier. The mul ti-
+plier value is deﬁned as 1 for high average intensities. Whil e
+some LiDAR hardware failures may lead to a high average
+intensity in some cases, as shown in Figure 1(c), most of the
+high average intensity cases are the result of retro-reﬂect ive
+targets, e.g., road signs, occurring at a close range and occ upies
+most of the LiDAR pointcloud. Figure 5 shows an example of
+the average intensity of the pointcloud from one test LiDAR
+passing a road sign. The average intensity ramps up as the
+road sign gets closer to the vehicle and producing more point s.
+Once the road sign gets out of the LiDAR’s FOV , the average
+intensity quickly drops back to its nominal value.
+These cases with high average intensities are irrelevant
+to the LiDAR data quality yet are very commonly seen as
+vehicles can pass road signs from time to time. Therefore,
+we intentionally disregard the high average intensity in th e
+deﬁnition of the multiplier. Overall, the LiDAR data qualit y
+Fig. 5. Average Intensity of LiDAR Passing Road Sign
+metric is formulated as the multiplication of the intensity
+weight multiplier and the spatial autocorrelation Kγ ·I.
+C. Implementation
+1) LiDAR Image Grid: It makes practical sense to calculate
+the spatial autocorrelation of the LiDAR points in a small
+local area instead of calculating for all LiDAR points acros s
+the entire FOV all at once, since typical objects and other
+physical features do not occupy the entire LiDAR FOV and
+the LiDAR points are bound to be scattered when looking
+from a global FOV perspective. Furthermore, calculating in a
+small local area reduces the computational cost as the spati al
+autocorrelation is of O(N 2) with N being the size of the
+pointcloud under consideration. Therefore, in implementa tion,
+we ﬁrst create a LiDAR image grid and calculate the spatial
+autocorrelation grid by grid.
+Fig. 6. Example of LiDAR Image Grid
+For each LiDAR data frame, we project all the LiDAR
+points onto an azimuth-elevation image, with each point
+containing its range and intensity information. The image i s
+then divided into grids in both azimuth and elevation direc-
+tions. An example of such image grid is shown In Figure 6.
+Then, for each grid cell, we calculate the weighted spatial
+autocorrelation of all the distance values of the points in t hat
+cell following the deﬁnition (2) and (5). The overall qualit y
+metric score of the LiDAR data frame is then the sum of the
+weighted spatial autocorrelation over all grid cells avera ged
+by the number of grid cells:
+s = 1
+V H
+V∑
+i
+H∑
+j
+Kγ,ij ·Iij (6)
+where i and j denotes the indices of the grid cells, and the
+V and H denotes the number of grid cells in the elevation and
+azimuth directions, respectively.
+2) GPU Acceleration: By deﬁnition, the time complexity
+to calculate the spatial autocorrelation is of O(N 2), where
+N is the number of point a LiDAR produces in one frame.
+Therefore, the time cost of calculating the weighted spatia l
+autocorrelation can be too high to meet the real-time con-
+straint since modern automotive LiDARs can generate up to
+100,000 points in a single frame. Applying the implementati on
+based on the LiDAR pointcloud image grid shown above, the
+computation can be done in parallel for each grid cell since
+the spatial autocorrelation of each grid cell is independen t to
+other grid cells. As GPUs become a more and more viable
+resource on automotives [17], in this section, we propose a
+GPU-accelerated parallel computation implementation of t he
+weighted spatial autocorrelation.
+Fig. 7. Computation of Spatial Autocorrelation
+Figure 7 demonstrates the GPU-accelerated parallel compu-
+tation structure. For each LiDAR data frame, the pointcloud is
+ﬁrst reorganized as an m × n 2-D array before sending to the
+GPU, where m and n are pre-deﬁned parameters based on the
+LiDAR’s FOV and resolution. Note that a LiDAR frame does
+not necessarily have detection at all entries, and the entri es
+without valid detection are set to have a range of 0 which
+will be excluded from the spatial autocorrelation calculat ion.
+Given the size of the grid V and H as previously deﬁned,
+the GPU launches V × H threads in parallel, and each thread
+computes the weighted spatial autocorrelation of the LiDAR
+points within the corresponding grid cell. After all thread s
+ﬁnish the computation, the results are sent back to the CPU
+for the ﬁnal calculation.
+III. R ESULTS
+We collect test data with two different LiDAR models which
+have different spepciﬁcations in almost all aspects from th e
+scanning mechanism to the laser spectrum. Table I lists some
+of the key parameters of the two LiDAR models. Both LiDARs
+calculate the distance measurement on a time-of-ﬂight (TOF )
+basis.
+Several Navistar International LT625 trucks equipped with
+both LiDAR models is used for data collection on public
+road. All LiDARs are mounted in an exposed manner, i.e., no
+windshield or other secondary fascia in front of the LiDAR.
+Each truck is also equipped with multiple cameras oriented
+to various directions. The cameras are synchronized with th e
+TABLE I
+PARAMETERS OF TEST LIDAR S
+Wavelength FOV (H ×V) Mounting Orientation
+LiDAR 1 905nm 360◦ × 40◦ Surrounding
+LiDAR 2 1550nm 120◦ × 25◦ Forward-looking
+LiDARs and the camera images are recorded in addition to
+the LiDAR data as reference. We have accumulated a total
+of over 230 unit-hours and 10,000 unit-miles of road data
+with a combination of conditions covering different aspect s,
+including various time of day such as daytime, nighttime,
+dusk and dawn, various weather conditions such as clear day,
+rainy and foggy, and various surroundings such as highway,
+local road, test track and parking lot. Both LiDARs output
+pointcloud at a 10Hz rate, leading to a total amount of over
+828k frames of pointcloud data. We calculate the pointcloud
+quality metric once every second, i.e., once every 10 frames
+of data. Since the scenarios that produces noise or anomalou s
+LiDAR pointcloud, such as rains and fogs, can typically last
+for some time in a continuous manner, we are still able to
+capture the anomalous LiDAR pointcloud without losing much
+information while reducing the effort to go through the test
+dataset. A summary of the dataset is given in Table II.
+TABLE II
+PORTFOLIO OF TEST DATA (% OF HOURS )
+Time of Day Weather Conditions Surroundings
+Daytime 88.25% Clear 93.10% Highway 73.40%
+Nighttime 11.52% Rainy 6.07% Local Road 8.51%
+Dusk/Dawn 0.23% Foggy 0.83% Track/Lot 18.09%
+For the rest of this section, we select a few typical scenario s
+and analyze in detail to showcase the performance of the
+proposed method, as well as providing an overview of the
+method’s performance over the entire test data set.
+A. Scenario I: Electromagnetic Interference (EMI)
+In this scenario, one unit of LiDAR 2 with defected EMI
+shielding passes through a cellular signal tower, generati ng a
+large amount of low-intensity noise points. As shown in Fig-
+ure 8, the noise points are randomly and sparsely distribute d
+over the LiDAR FOV and in general have low intensity values
+(marked gray together with some points from the road surface ).
+Fig. 8. LiDAR Pointcloud with EMI
+Figure 9(a) shows the proposed LiDAR pointcloud quality
+metric over time. To demonstrate how the spatial autocorre-
+lation and the intensity weight multiplier contribute to th e
+overall metric respectively, the orange curve shows the spa tial
+autocorrelation over time without the multipilication of t he
+intensity weight, and the blue curve shows the overall quali ty
+metric score. Both curves show signiﬁcant drops for about
+10s which corresponds to the duration of the EMI effect. In
+this scenario, the spatial autocorrelation can clearly cap ture
+the false positives, and the intensity weight magniﬁes the
+gap between the normal and low-quality data frames since
+the noise points are mostly low-intensity. It should be note d
+that even for normal data frames, the intensity weight scale s
+the spatial autocorrelation since there are always points w ith
+intensity values below the reference intensity.
+(a) metric score
+ (b) range variance
+Fig. 9. Pointcloud Quality Score of Scenario I Over Time
+As comparison, Figure 9(b) shows the averaged range
+variance of all the grid cells over the same data segment. Whi le
+the EMI affected pointcloud does lead to a peak in the range
+variance, there are other peaks when the pointcloud is norma l,
+and the peak at the EMI effect is not signiﬁcant enough to
+distinguish the pointcloud frame. Therefore, the range var iance
+is not a suitable detector for anomalous pointcloud frames.
+In Figure 10 we showcase two frames of the LiDAR image
+grid during the scenario, where Figure 10(a) captures an
+instance without any EMI effect and Figure 10(b) is one
+exemplary image grid when the EMI effect is in place, re-
+spectively. The grid cells with red edges have low unweighte d
+spatial autocorrelation values. As can be seen in Figure 10( a),
+individual grid cells may have low spatial autocorrelation
+values occasionally especially at the edge of FOV or when
+objects with small reﬂection surfaces, such as poles and
+vegetation, appear in the pointcloud. However, they do not
+lead to a low total quality metric score since the amount of
+such type of grid cell is generally small. On the other hand,
+anomalies and noise points generates numerous grid cells wi th
+low spatial autocorrelation values, as shown in Figure 10(b ).
+As a result, the overall quality metric of the data frame is lo w.
+(a) without EMI
+ (b) with EMI
+Fig. 10. Two Frames of LiDAR Image Grid during Scenario I
+B. Scenario II: Rain
+In this scenario, we investigate a trip segment where both
+LiDAR models are exposed in heavy rain. Figure 11(a) and
+Figure 11(b) show the pointcloud of LiDAR 1 and 2 in the
+rain scenario, respectively. A reference camera image is sh own
+in Figure 11(c). As demonstrated in the ﬁgures, LiDARs with
+905nm laser wavelength are more likely to see scattered nois e
+points from rain droplets and water splashes; LiDARs with
+1550nm laser wavelength generates pointcloud where both th e
+point density and intensity are signiﬁcantly reduced due to
+signal absorption, as well as clustered noise points at clos e
+ranges.
+(a) LiDAR 1
+ (b) LiDAR 2
+ (c) reference camera
+Fig. 11. Pointcloud and Image in Scenario II
+Figure 12(a) gives both the quality metric score and the
+unweighted spatial autocorrelation from LiDAR 1 during the
+test. Due to the scattered pattern of the noise seen by the
+905nm LiDAR, even the unweighted spatial autocorrelation
+can distinguish the rain scenario well since the scattered
+noise tends to generate low spatial autocorrelation scores . And
+since 905nm LiDARs’ laser signal also gets attenuated in
+rain and leading to lower-than-normal intensities, includ ing
+the intensity weight multiplier may increase the gap betwee n
+‘normal’ pointcloud frames and anomalous pointcloud frame s.
+Figure 12(b) shows the quality metric score and the un-
+weighted spatial autocorrelation from LiDAR 2. It can be
+seen that the unweighted spatial autocorrelation in genera l
+cannot differentiate the pointcloud frames affected by rai n,
+since the points, including noise points, can be well cluste red.
+The intensity weight multiplier in this case effectively he lps
+to characterize the rain data.
+(a) LiDAR 1
+ (b) LiDAR 2
+Fig. 12. Pointcloud Quality Score of Scenario II Over Time
+C. T est Result Overview
+For the LiDAR data frames with low quality metric score
+outputs, we deﬁne a true positive result when there are notab le
+noise/anomalous points in the pointcloud, and a false posit ive
+result when no notable noise/anomalous points are found. In
+this section, we pick the true and false positive cases by ﬁnd ing
+pointcloud frames whose quality metric score is less than -0 .4.
+It should be noted that the quality metric score threshold is
+merely a bar to ﬁlter out the frames of interest from the large
+amount of test data, and is not meant to be a threshold for
+real application.
+(a) true positive causes
+ (b) false positive causes
+Fig. 13. Distribution of Low Score Causes
+Figure 13(a) and 13(b) show the breakdown of causes that
+lead to true positive and false positive results, respectiv ely.
+Among over 82.8k frames of LiDAR pointcloud checked, the
+amount of frames labeled as true positive is about 16k, which
+are mainly caused by rain, fog and dust. There are some
+true positive cases where the noise/anomaly source cannot b e
+identiﬁed from the reference camera (unknown noise), which
+we believe are likely caused by sunlight interference or oth er
+reasons. On the other hand, there are about 250 frames in the
+test dataset labeled as false positive. Typical objects/sc enarios
+that result in false positive pointcloud frames include clo se
+vehicles passing by the ego vehicle in adjacent lanes, power
+lines, and vegetation, which contribute over 95% of the fals e
+positive cases.
+(a) close vehicle
+ (b) power line
+ (c) vegetation
+Fig. 14. Pointcloud of Objects Causing False Positives
+Figure 14 provides examples of pointcloud of close vehicles ,
+power lines and vegetation. Close vehicles are typically on ly
+partially detected by the LiDAR due to the LiDAR’s limited
+FOV . The pointcloud from the partially detected vehicle can
+be random and scarce, depending on which and how much
+portion of the vehicle is within the FOV . In addition, the
+LiDAR ranging precision of close vehicles is often degraded
+due to the multi-reﬂection between the target and ego vehicl e
+bodies, leaving scattered points over the space. The point
+intensities from close vehicles can also get low due to laser s
+hitting the smooth vehicle surfaces at large angles of incid ence.
+All the reasons above make the points from close vehicles
+similar to noise/anomalous points based on our quality metr ic
+deﬁnition. The power lines and vegetation have small area of
+reﬂectance and therefore is in general only partially detec ted
+with low signal power reﬂected to the LiDAR’s laser detector .
+Therefore, points from power lines are sparsely distribute d as
+well as having low intensity values, which are close to the
+characteristics of noise and anomalous points.
+Fig. 15. Cumulative Distribution of True/False Positive Ca se Scores
+Figure 15 shows the cumulative distribution of the quality
+metric scores of all true positive and false positive data fr ames.
+While there are overlaps between the scores of all true posit ive
+and those of all false positive data frames, it is clear that
+the true positive cases in general have lower scores than the
+false positive cases. In our test dataset, over 75% of the fal se
+positive cases have a quality metric score higher than -0.5,
+while the percentage of the true positive cases that have a
+score higher than -0.5 is about 25%. Furthermore, while the
+scores of the true positive cases are distributed in a wide ra nge,
+it should be noted that the value of the score is related to the
+severity of the noise/anomaly caused by the source of noise
+such as rain, fog, dust, etc.
+(a) rain, score=-0.4
+ (b) rain, score=-0.8
+ (c) rain, score=-1.4
+(d) fog, score=-0.4
+ (e) fog, score=-0.9
+ (f) fog, score=-2.4
+Fig. 16. Pointcloud of True Positive Cases with Different Qu ality Scores
+Figure 16 demonstrates the pointcloud of various rain and
+fog scenarios and their corresponding quality metric score . The
+noise points generated from rain and fog are manually marked
+as gray. Sometimes the pointcloud recorded when rain or fog
+is in presence can have a quality metric score as high as -
+0.4, however, they typically correspond to light rain or fog
+scenarios and the amount of noise points is relatively small .
+The pointcloud having a large amount of noise points and
+a quality metric score going as low as -1.0 or even lower
+is typically associated with heavy rain or dense fog which
+may harm the driving safety. Therefore, for actual applicat ion
+of the proposed method, one may choose a score threshold
+which best suits their use cases. For instance, to apply the
+proposed method to determine whether the vehicle is in an
+adverse scenario which may be outside the ADS operation
+domain, one may use a lower detection threshold so that the
+ADS is not constantly disturbed by false positive detection s
+while the most severe rains and fogs are captured. On the
+other hand, for applications aiming to study the characteri stics
+of noisy and anomalous LiDAR pointcloud, one may choose
+a high threshold that keeps as many true positive cases as
+possible and tolerate the increased amount of false positiv es.
+Fig. 17. True/False Positive Case Filtering with Different Score Cut-off
+Figure 17 uses our test dataset as an example to illustrate
+the effect of different thresholds. The two curves in the
+ﬁgure show the proportion of true positive cases kept and
+false positive cases ﬁltered under various score threshold s,
+respectively. With a threshold set to -1.0, one can keep more
+than 15% of most severe scenarios while eliminating over 99%
+of false positive cases. On the other hand, a threshold of -0. 5
+can keep over 70% of the true positive cases as well as about
+25% of the false positive cases.
+IV. C ONCLUSION
+In this paper, we present a novel approach to characterize
+the noise and anomalies in the LiDAR pointcloud, which is
+typically caused by adverse environment conditions such as
+rain, fog, dust, or LiDAR internal component failures. To
+capture the anomalous pointcloud frames, we developed a
+quality metric score based only on the LiDAR pointcloud
+characteristics, i.e., the spatial distribution of the poi nts and the
+intensity values, which does not require any data annotatio n
+or training. We veriﬁed the method with numerous test data
+collected from public road with various LiDAR physical
+modalities, and the result proves that the proposed quality
+metric score can effectively capture the anomalous LiDAR
+pointcloud caused by different reasons. There is a wide rang e
+of potential applications of the work in this paper, such as
+monitoring the operation condition of an autonomous drivin g
+system in real time, or efﬁciently selecting the data collec ted
+in rain/fog from enormous amount of test data for further
+analysis.
+REFERENCES
+[1] S. Royo and M. Ballesta-Garcia, “An overview of lidar ima ging systems
+for autonomous vehicles,” Applied sciences, vol. 9, no. 19, p. 4093, 2019.
+[2] Y . Li and J. Ibanez-Guzman, “Lidar for autonomous drivin g: The
+principles, challenges, and trends for automotive lidar an d perception
+systems,” IEEE Signal Processing Magazine , vol. 37, no. 4, pp. 50–61,
+2020.
+[3] M. Bijelic, T. Gruber, and W. Ritter, “A benchmark for lid ar sensors
+in fog: Is detection breaking down?” in 2018 IEEE Intelligent V ehicles
+Symposium (IV) . IEEE, 2018, pp. 760–767.
+[4] S. International, “Taxonomy and deﬁnitions for terms re lated to driving
+automation systems for on-road motor vehicles,” 2021.
+[5] M. Al Naboulsi, H. Sizun, and F. d. r. de Fornel, “Fog atten uation
+prediction for optical and infrared waves,” Optical Engineering, vol. 43,
+no. 2, pp. 319–329, 2004.
+[6] J. Ryde and N. Hillier, “Performance of laser and radar ra nging devices
+in adverse environmental conditions,” Journal of Field Robotics , vol. 26,
+no. 9, pp. 712–727, 2009.
+[7] R. H. Rasshofer, M. Spies, and H. Spies, “Inﬂuences of wea ther
+phenomena on automotive laser radar systems,” Advances in radio
+science, vol. 9, pp. 49–60, 2011.
+[8] S. Hasirlioglu, A. Kamann, I. Doric, and T. Brandmeier, “ Test method-
+ology for rain inﬂuence on automotive surround sensors,” in 2016 IEEE
+19th International Conference on Intelligent Transportat ion Systems
+(ITSC). IEEE, 2016, pp. 2242–2247.
+[9] A. Filgueira, H. Gonz´ alez-Jorge, S. Lag¨ uela, L. D´ ıaz -Vilari˜ no, and
+P . Arias, “Quantifying the inﬂuence of rain in lidar perform ance,”
+Measurement, vol. 95, pp. 143–148, 2017.
+[10] M. Kutila, P . Pyyk¨ onen, H. Holzh¨ uter, M. Colomb, and P . Duthon,
+“Automotive lidar performance veriﬁcation in fog and rain, ” in 2018 21st
+International Conference on Intelligent Transportation S ystems (ITSC) .
+IEEE, 2018, pp. 1695–1701.
+[11] C. Goodin, D. Carruth, M. Doude, and C. Hudson, “Predict ing the
+inﬂuence of rain on lidar in adas,” Electronics, vol. 8, no. 1, p. 89,
+2019.
+[12] K. Montalban, C. Reymann, D. Atchuthan, P .-E. Dupouy, N . Riviere,
+and S. Lacroix, “A quantitative analysis of point clouds fro m automotive
+lidars exposed to artiﬁcial rain and fog,” Atmosphere, vol. 12, no. 6, p.
+738, 2021.
+[13] R. Heinzler, P . Schindler, J. Seekircher, W. Ritter, an d W. Stork,
+“Weather inﬂuence and classiﬁcation with automotive lidar sensors,”
+in 2019 IEEE intelligent vehicles symposium (IV) . IEEE, 2019, pp.
+1527–1534.
+[14] C. Zhang, Z. Huang, M. H. Ang, and D. Rus, “Lidar degradat ion
+quantiﬁcation for autonomous driving in rain,” in 2021 IEEE/RSJ
+International Conference on Intelligent Robots and System s (IROS) .
+IEEE, 2021, pp. 3458–3464.
+[15] L. Ruff, R. A. V andermeulen, N. G¨ ornitz, A. Binder, E. M ¨ uller, K.-R.
+M¨ uller, and M. Kloft, “Deep semi-supervised anomaly detection,” arXiv
+preprint arXiv:1906.02694, 2019.
+[16] P . A. Moran, “Notes on continuous stochastic phenomena ,” Biometrika,
+vol. 37, no. 1/2, pp. 17–23, 1950.
+[17] M. A. Ditty, G. Hicok, J. Sweedler, C. Farabet, M. A. Y ous uf, T.-Y .
+Chan, R. Ganapathi, A. Srinivasan, M. R. Truog, G. Karl et al., “Systems
+and methods for safe and reliable autonomous vehicles,” 202 3, uS Patent
+11,644,834.

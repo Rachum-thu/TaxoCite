@@ -1,0 +1,1333 @@
+arXiv:2506.13897v3  [cs.CV]  25 Jun 2025
+DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text
+Embeddings for Advanced Point Cloud Human Activity Understanding
+Thomas Kreutz1 Max M¨uhlh¨auser1 Alejandro Sanchez Guinea2
+1 Telekooperation Lab, Technical University Darmstadt
+2 NTT DATA, Luxembourg
+{kreutz@tk, max@informatik }.tu-darmstadt.de, alejandro.guinea@global.ntt
+Abstract
+Despite LiDAR (Light Detection and Ranging) being an ef-
+fective privacy-preserving alternative to RGB cameras to
+perceive human activities, it remains largely underexplored
+in the context of multi-modal contrastive pre-training for
+human activity understanding (e.g., human activity recogni-
+tion (HAR), retrieval, or person re-identification (RE-ID)).
+To close this gap, our work explores learning the correspon-
+dence between LiDAR point clouds, human skeleton poses,
+IMU data, and text in a joint embedding space. More specif-
+ically, we present DeSPITE, a Deep Skeleton-Pointcloud-
+IMU-Text Embedding model, which effectively learns a
+joint embedding space across these four modalities. At
+the heart of our empirical exploration, we have combined
+the existing LIPD and Babel datasets, which enabled us to
+synchronize data of all four modalities, allowing us to ex-
+plore the learning of a new joint embedding space. Our ex-
+periments demonstrate novel human activity understanding
+tasks for point cloud sequences enabled through DeSPITE,
+including Skeleton↔Pointcloud↔IMU matching, retrieval,
+and temporal moment retrieval. Furthermore, we show
+that DeSPITE is an effective pre-training strategy for point
+cloud HAR through experiments in MSR-Action3D and HM-
+PEAR.
+1. Introduction
+A key challenge in multi-modal human activity under-
+standing tasks, such as human activity recognition (HAR),
+human pose estimation (HPE), retrieval, or person re-
+identification (RE-ID) “in the wild” is obtaining paired sen-
+sor data for each individual in a multi-person scene (e.g.,
+IMU with human poses, point clouds, or RGB videos).
+Prior work has studied RGB-IMU matching for identity-
+aware tracking/RE-ID [4, 20], RGB-IMU matching for
+video retrieval [39], and IMU-Skeleton Pose matching [57]
+to correct IMU drift in multi-modal HPE. However, existing
+methods primarily focus on RGB-centric modalities, limit-
+ing applicability to privacy-sensitive scenarios like health-
+care and surveillance, where RGB cameras may not be able
+to be deployed.
+To address privacy concerns, silhouette masks [37, 38]
+or skeletons [1] have been proposed to anonymize de-
+tected individuals from RGB video. While effective, these
+anonymization techniques still come with the limitation that
+they require post-processing and short-term storage of the
+raw RGB data. In contrast, LiDAR is a privacy-preserving
+alternative, with proven capabilities for multi-modal HAR
+(e.g., [29, 61]) and HPE (e.g., [24, 48]). However, match-
+ing skeleton or IMU signals to LiDAR-based point cloud
+sequences is underexplored.
+Beyond matching, recent advances in multi-modal con-
+trastive learning, such as ImageBind [15], IMU2CLIP [39],
+BabelTower [8], MotionCLIP [54], or LA VIMO [63] have
+demonstrated the power and benefits of cross-modal align-
+ment for human activity understanding. These models learn
+a shared embedding space, enabling cross-modality match-
+ing, retrieval, and effective neural network pre-training for
+downstream tasks. Despite their success, they all use RGB
+data as a main visual modality to bind the learned represen-
+tations. Extending this line of research, our paper asks the
+important research question What happens if we only de-
+pend on LiDAR in multi-modal contrastive learning as the
+main visual modality?, which has not been studied before.
+We present DeSPITE, a Deep Skeleton-Pointcloud-
+IMU-Text Embedding model, which is illustrated
+in Figure 1. Inspired by CLIP [46], Image-
+Bind [15], and IMU2CLIP [39], DeSPITE learns
+a shared embedding space with a contrastive loss
+based on InfoNCE [41] between paired sequences of
+point cloud ↔skeleton↔IMU↔text data. Unlike prior
+works leveraging frozen text or RGB data embeddings
+as a binding modality (e.g., IMU2CLIP [39], Motion-
+CLIP [54], LA VIMO [63]), our primary goal is not to
+demonstrate modality alignment to text. Instead, we
+present novel applications for point cloud-based human
+1
+0.1 0.1 0.8
+Performing
+<human activity>.
+TextIMU
+DeSPITE
+t
+(d) X-to-X Retrieval
+Skeleton LiDAR Point Cloud
+(a) Re-ID / matching
+(b) Temporal Moment Retrieval (c) HAR pre-training
+<human activity>. <human activity>.
+Figure 1. DeSPITE links different data modalities that represent human activities and, therefore, have a natural correspondence into a joint
+embedding space. As a result, DeSPITE enables tasks that depend on this correspondence that were not possible before.
+activity sequences that were not possible before, enabled
+by unifying these modalities into a joint embedding space.
+Furthermore, while our primary focus is on enabling novel
+cross-modal retrieval and matching tasks, we find that
+DeSPITE also serves as an effective pre-training method
+for HAR, demonstrating improvements over uni-modal
+baselines. Finally, to understand the contribution of each
+modality to the joint embedding space, we train several
+DeSPITE variants (DeSPIE, DeSPE, etc.), evaluating their
+individual impact on cross-modal matching, retrieval, and
+HAR performance.
+As described in Figure 1, after successful alignment
+in a shared embedding space, DeSPITE and its variants
+(e.g., DeSPIE) allow novel and very useful applications
+between point cloud, IMU, and skeleton data: (a) Person
+Re-ID by matching a snippet of, e.g., IMU data to the
+correct point cloud snippet, or a skeleton snippet to point
+cloud sequences, (b) Temporal moment retrieval/search in
+a video with skeletons, IMU, or a point cloud as query,
+(c) pre-training modality specific encoders for human activ-
+ity recognition, and (d) retrieval of each modality through
+each modality from a large motion database.
+To train and evaluate DeSPITE, we construct LIPD-
+Babel, a dataset aligning point clouds, IMU, skeletons, and
+text by integrating the LIPD dataset [48] with the text an-
+notations from Babel [45]. LIPD-Babel enables two key
+evaluations: (1) LIPD-Babel-v1 for cross-modal matching
+and retrieval, demonstrating DeSPITE and DeSPIE’s abil-
+ity to align point clouds, skeletons, and IMU signals, and
+(2) LIPD-Babel-v2 for contrastive pre-training, where De-
+SPITE and DeSPIE improve single-modality HAR, surpass-
+ing SOTA on HMPEAR [29] and MSR-Action3D [27].
+Our contributions are as follows. (i) DeSPITE: A Deep
+Skeleton-Pointcloud-IMU-Text Embedding model that en-
+ables cross-modal matching and retrieval tasks between
+point clouds, IMU, and skeletons, unlocking applications
+that were previously impossible, and we will release the
+resulting pre-trained encoders, code, and data for future
+research. (ii) We show that DeSPITE is an effective
+contrastive pre-training strategy for single-modality HAR,
+demonstrating new state-of-the-art performance. (iii) LIPD-
+Babel, a new dataset for privacy-preserving multi-modal
+learning, with versions LIPD-Babel-v1 tailored for match-
+ing, retrieval tasks, and LIPD-Babel-v2 tailored for HAR.
+2. Related Work
+2.1. Multi-Modal Contrastive Learning for Human
+Activity Understanding
+Recent works have explored unified embedding spaces
+across sensor modalities. ImageBind [15] binds six modali-
+ties using image-text pairs, while IMU2CLIP [39] and Mo-
+tionCLIP [54] align IMU and skeleton data with CLIP’s
+image-text space. LA VIMO [63] improves skeleton-video-
+text retrieval, and BabelTower [8] incrementally aligns six
+sensing modalities, reducing reliance on RGB. Unlike these
+works, we focus exclusively on privacy-preserving modali-
+ties, introducing LiDAR into a joint embedding space with
+IMU and skeletons. This enables novel retrieval tasks
+(LiDAR↔IMU, LiDAR↔Skeleton) and serves as an effec-
+tive pre-training strategy for point cloud-based HAR.
+2.2. Pre-Training for Point Cloud Human Activity
+Recognition
+While countless general purpose embedding models and
+foundation models have emerged in the last years for RGB
+images/videos, natural language, or audio (e.g, Image-
+Bind [15], DinoV2 [42], SAM2 [47], CLIP [46], BERT [9]),
+pre-trained general-purpose models for (LiDAR) point
+cloud HAR do not exist yet due to a lack of the same
+amount of data. To this day, pre-training mainly happens
+through self-supervision on a small number of datasets or
+the same dataset before fine-tuning for point cloud HAR.
+Self-supervision includes temporal order prediction from
+2
+shuffling in [53, 58], contrastive learning on masked se-
+quences [18, 52], temporal structure prediction [51], or
+knowledge distillation [64]. All these methods have been
+shown to improve the performance after fine-tuning for
+HAR compared to training from scratch. Different from
+these works, we show that multi-modal contrastive learning
+between point clouds and other closely related modalities
+(i.e., skeleton pose and IMU data) leads to improved HAR
+performance after fine-tuning, showing new possibilities for
+future research in point cloud HAR.
+2.3. Cross-Modal Matching and Retrieval between
+Modalities
+Cross-modal matching assigns a data point from one modal-
+ity to its correct counterpart in another. Key applications in-
+clude audio-visual association [17, 23], IMU-based match-
+ing to human pose, RGB, or silhouette masks [37, 39, 57],
+or text-to-motion retrieval [44, 63]. Person Re-ID via IMU
+signals has been explored in RGB videos [4, 28], silhou-
+ette masks [37, 38], and skeletons [1, 57]. Retrieval tasks
+also exist between skeletons and text [44], skeletons and
+RGB [63], and IMU and RGB [39], with prior works ex-
+ploring temporal moment retrieval and database retrieval.
+However, LiDAR-based cross-modal retrieval remains
+largely unexplored. Our work extends these approaches by
+aligning LiDAR, IMU, and skeleton data, enabling novel re-
+trieval tasks such as LiDAR↔Skeleton and LiDAR↔IMU.
+We further extend IMU interpretability via RGB video re-
+trieval [39] to point cloud and skeleton retrieval, unlocking
+a new effective way to interpret IMU signals.
+2.4. Datasets for LiDAR Point Cloud Human Activ-
+ity Recognition
+Early point cloud HAR datasets, like MSR-Action3D [27]
+and NTU-RGB+D [30, 50] are derived from depth maps and
+have been foundational in advancing state-of-the-art meth-
+ods in the field. Datasets with real LiDAR point clouds
+of human activities are rare. One of the only datasets for
+human activity recognition are HuCenLife [61], and the re-
+cent HMPEAR [29] and MM-Fi [62] datasets. Motivated by
+multi-modal LiDAR and IMU-based HPE, several datasets
+have been proposed recently, such as LidarCap [24] and
+LIPD [48]. In particular, LIPD is a large-scale dataset with
+human motions of LiDAR point clouds, human skeletons,
+and IMU data, but without activity annotations. It is a mix
+of synthetic and real data, where a big part comes from
+AMASS [36], a large-scale human motion capture dataset.
+On top of AMASS, Babel [45] and HumanML3D [16]
+added natural language annotations. For our study, we com-
+bine LIPD with its corresponding subset in AMASS to a
+new dataset, LIPD-Babel, which enriches LIPD through
+partial human activity annotations. This leads to a large
+pre-training data resource between human skeletons, IMU,
+LiDAR point clouds, and text, which we can leverage to
+explore contrastive learning between these modalities.
+3. Method
+3.1. Problem Statement
+The goal of this work is to learn a joint embedding
+space that aligns human motion observed through differ-
+ent privacy-preserving modalities. More specifically, we
+present DeSPITE, a Deep Skeleton-Pointcloud-IMU-Text
+Embedding model, which effectively learns a joint embed-
+ding space across these four respective modalities through
+a contrastive loss based on InfoNCE [41].
+We train several versions of DeSPITE, where we vary
+the number of modalities (DeSIE, DeSPE, DePIE, DePITE,
+...). When all modalities are used, the text embeddings of
+CLIP serve as a binding modality, which has been shown
+to be effective in several recent related works for modalities
+that capture human motion, such as IMU data and human
+skeletons [1, 15, 35, 39, 54, 63].
+We want to emphasize that the primary goal of DeSPITE
+is not to show that we can bind skeleton, point cloud, or
+IMU data to CLIP text embeddings (this has been demon-
+strated before with, e.g., ImageBind [15], IMU2CLIP [39],
+MotionCLIP [54], or BabelTower [8]). Instead, our main
+goal is to present several novel unexplored applications for
+human activity point cloud sequences that emerge when we
+unify these modalities into a joint embedding space.
+3.2. Learning Deep Skeleton-Pointcloud-IMU-Text
+Embeddings (DeSPITE)
+Human motions represented through LiDAR point clouds,
+IMU time series, and human pose skeleton data have an in-
+herent correspondence. We leverage this property to learn
+a joint embedding space where similar sequences of human
+motions are close and different sequences are far apart.
+Given a point cloud sequence Xpc := {pc1, . . . , pcT },
+with pci ∈ RN ×3, an IMU sequence Ximu :=
+{imu1, . . . , imuT }, with imui ∈ RC, and a human pose
+sequence Xpose := {pose1, . . . , poseT }, with posei ∈
+R24×3 representing 3D positions of 24 skeletal joints, we
+aim to train neural networks to encode Xpc, Ximu, and
+Xpose into a shared embedding space. We denote these neu-
+ral networks as encoders
+fpc : RT ×N ×3 → Re,
+fimu : RT ×C → Re,
+fpose : RT ×24×3 → Re
+which map the input sequences to embed-
+dings zpc = fpc(Xpc), zimu = fimu(Ximu), and
+zpose = fpose(Xpose), where zpc, zimu, zpose ∈ Re.
+Furthermore, we work with the setting where a natural lan-
+guage description Xtext is not provided for each respective
+3
+(Xpc, Xpose, Ximu) triple. For this reason, the loss for text
+descriptions is only computed on the subset of the elements
+in each batch where we have a corresponding quadruple
+(Xpc, Xpose, Ximu, Xtext, tm), where tm ∈ B represents
+a boolean mask if there exists a text description Xtext. In
+this way, we can effectively ignore the respective elements
+in the batch B that do not have text descriptions when
+computing our alignment loss.
+Following previous works like CLIP [46], Image-
+Bind [15], MotionCLIP [54], and IMU2CLIP [39],
+we optimize our encoders using a contrastive objective
+based on InfoNCE [41]. For a batch of B paired
+samples, we obtain a boolean mask and embeddings
+(zi
+pc, zi
+imu, zi
+pose, zi
+text, tmi)
+B
+i=1, where zi
+text is obtained
+from a frozen CLIP text encoder. For batch elementsi with-
+out text pairings, we set tmi to 0 and use a dummy em-
+bedding, tmi is set to 1 otherwise. The similarity between
+embeddings is defined using the cosine similarity:
+sim(za, zb) = za · zb
+∥za∥∥zb∥ , (1)
+where za, zb ∈ {zpc, zimu, zpose, ztext}. The contrastive
+loss for each pair (i, j) in the batch is defined as follows:
+Li
+a→b = − log exp(sim(zi
+a, zi
+b)/τ )PB
+j=1 exp(sim(zia, zj
+b )/τ )
+(2)
+where a, b ∈ { pc, imu, pose, text} and τ > 0 is a
+(learnable) temperature hyperparameter. Symmetrically, we
+compute the loss in both directions by swapping the roles of
+the modalities, i.e., Li
+a→b and Li
+b→a, which leads to:
+Li
+a,b = 1
+2 (Li
+a→b + Li
+b→a) (3)
+As our main goal is to align zpc, zimu, zpose, we employ
+two different losses. First, we bind the subset of paired
+zpc, zimu, zpose with the respective text embeddings xtext:
+Li
+text =
+BX
+i=1
+tmi X
+a∈M
+Li
+a,text (4)
+where tmi serves as a mask to ignore the ele-
+ments in the batch without text pairings for this
+loss. Second, each individual sensing modality pair
+M ∗ := {(pc, imu), (pc, pose), (imu, pose)} is optimized
+to be close to each other:
+Li
+M =
+BX
+i=1
+X
+(a,b)∈M ∗
+Li
+a,b (5)
+In both Ltext and LM , we do not weight each modality
+individually. Finally, we combine both losses to enforce
+aligning embeddings from the corresponding point cloud,
+IMU, and pose sequences while constraining them to take
+small steps toward the text embedding space of CLIP. With
+M := {pc, imu, skeleton} being the set of modalities to
+align and M ∗ their respective desired pairings, we optimize
+the following final loss function for each batch:
+Li
+total = αLtext + βLM (6)
+where α = 0.5, β = 0.5 equally weight both loss terms.
+In our experiments, we train models of all possi-
+ble modality combinations, which requires an accord-
+ing change to the modality set M and the respective
+pairings M ∗ (e.g., training only DeSPE, then M :=
+{skeleton, pointcloud}). Finally, when training a model
+like DeSPE without text pairings, the overall loss simplifies
+to Equation 5, so that Li
+total = LM .
+4. Experiments
+We evaluate the effectiveness of DeSPITE and its variants
+on the following tasks: Modality matching, temporal mo-
+ment retrieval using a different modality as a query, pre-
+training for point cloud human activity recognition, and sev-
+eral qualitative evaluations.
+4.1. Datasets
+We train our method on a merged version of LIPD [48]
+and Babel [45] (denoted as Babel+LIPD), where we map
+the text annotations from Babel to the AMASS [36] sub-
+sets present in LIPD. In this way, we are able to construct a
+large-scale dataset of real and synthetic LiDAR point cloud,
+IMU, and skeleton data with text annotations. To be more
+specific, we construct two versions of LIPD-Babel. First
+LIPD-Babel-v1, where we use the official train-test split
+of LIPD1, including DIP [21] and TotalCapture (TC) [55].
+Second LIPD-Babel-v2, where we use the train-val split of
+Babel for the AMASS subsets, and add all the remaining
+data of LIPD to the training set. As LIPD is provided in 10
+FPS, we downsample the Babel annotations to 10 FPS. Af-
+ter preprocessing the whole dataset with sliding windows of
+length 24, we obtain 502,958 / 85,551 training/testing win-
+dows for LIPD-Babel-v1, from which 85,551 training win-
+dows have text annotations, and 403,430 / 58,802 train/test
+windows for LIPD-Babel-v2, with 135,699 text training
+windows and 58,802 test annotations.
+Regarding downstream task performance for HAR,
+we evaluate our approach on HMPEAR [29], MSR-
+Action3D [27], and our Babel-LIPD-v2 train/test split that
+only includes Babel sequences. Both HMPEAR and MSR-
+Action3D include domain shifts, where HMPEAR uses a
+different kind of LiDAR sensor, and MSR-Action3D has
+very dense point clouds derived from depth maps.
+1We exclude LidarCap [24] since the data is not available in the official
+LIPD data repository. More details about LIPD-Babel in Appendix 6.
+4
+4.2. Experimental Design and Metrics
+We use the following tasks to evaluate the performance of
+DeSPITE (and its variants) and enable future research to
+compare against our baselines. Throughout all models in
+our experiments, all hyperparameters are kept the same.
+Task 1. Matching between Modalities
+In multi-person scenes, matching IMU data to detected in-
+dividuals in point cloud sequences is a challenging up-
+stream task, which has not been explored before. This
+task can be generalized to an any-to-any modality match-
+ing problem, which we even further evaluate with this
+task. We evaluate all modality combinations IMU ↔PC,
+IMU↔Skeleton, and PC ↔Skeleton. For each test set
+(LIPD-Test, TC, DIP), we generate 1000 artificial multi-
+person scenes (following designs in prior works [37, 40]).
+This is achieved by randomly sampling n sequences from
+the test set first and then sampling a respective subse-
+quence, leading to n artificial subjects carrying out an ac-
+tivity simultaneously. The number of subjects per scene
+varies n ∈ (2, 4, 8, 12, 16, 20, 24, 28, 32), simulating dif-
+ferent real-world scenarios. Given n subjects, we report
+matching accuracy through argmax on the cosine similar-
+ities per row between all candidates.
+Task 2. Temporal Moment Retrieval between Modalities
+Given a short snippet in one modality, the goal is to retrieve
+the corresponding temporal moment in the sequence ob-
+served with another modality. This task has been explored
+for, e.g., IMU-RGB [39] and skeleton-text [44], but not yet
+for LiDAR point clouds, IMU, and skeletons. We evaluate
+this on the three held-out test sets of LIPD (LIPD-Test, TC,
+DIP) using Recall@k (k = 1 , 10, 20, 50) shots across all
+modality combinations. Performance is measured by com-
+puting the cosine similarity scores for all possible query-
+target pairs in all individual test set sequences and returning
+the top-k similar frame indices. For each query, we com-
+pute the difference between all top-k returned time points
+against the ground truth. A retrieval is considered to be cor-
+rect if it is within 10 frames (∼ 1.5sec) of the ground truth.
+As the final score, the mean over all recall@k scores of all
+sequences for a dataset is reported.
+Task 3. Pre-Training for Human Activity Recognition
+We evaluate cross-modal pre-training for point clouds,
+IMUs, and skeletons via linear/non-linear probing and fine-
+tuning. HAR pre-training/testing is done on LIPD-Babel-
+v2, with additional point cloud testing on HMEPAR and
+MSR-Action3D. Results follow standard metrics: clip seg-
+ment accuracy for MSR-Action3D, segment accuracy for
+HMEPAR and LIPD-Babel-v2 (excluding transition labels).
+We do not evaluate with additional skeleton/IMU datasets,
+since transfer learning is strongly limited by serious dataset-
+specific variations in joints and different IMU channel
+counts for these modalities.
+Task 4. Retrieval between Modalities from Database
+We qualitatively evaluate retrieval from a “large database”
+between Point Cloud ↔IMU, IMU ↔Skeleton, and Point
+Cloud↔Skeleton. This enables motion analysis across rep-
+resentations, aiding interpretability (e.g., skeletons or point
+clouds simplify IMU visualization).
+4.3. Implementation Details
+For point clouds, we use the PST-Transformer [13] with
+a SimCLR-based projection head [6]. IMU is encoded
+with a 2-layer LSTM [19], skeletons with the ACTOR en-
+coder [43], and text with a frozen CLIP text encoder [46].
+All models are pre-trained for 145 epochs with 512-d em-
+beddings, Adam optimizer [22], lr=1e-4, batch size 1024.
+We subsample 256-points using farthest point downsam-
+pling (FPD) on each frame and use 24-frame windows as
+input to all models. Augmentations (random translation,
+scaling, Gaussian noise) are employed during training to
+prevent overfitting. For a fair comparison, we only use
+the weights from epoch 145 across all models. HAR fine-
+tuning roughly follows [13], with batch size 24, 35 epochs
+(SGD [49], warmup to lr=0.01, 0.1 decay at epochs 20, 30).
+In HMPEAR, we subsample 1024 points using FPD and use
+24-frame windows. In MSR-Action3D, we follow the stan-
+dard 2048-point, 24-frame window setting.
+4.4. Results: Multi-Person LiDAR-IMU Matching
+Figure 2 shows our results for matching between IMU↔PC,
+IMU↔Skeleton, and PC ↔Skeleton across all trained
+model variants (all specific numbers in Appendix 7). The
+subjects are varied on the x-axis, and matching accuracy is
+reported on the y-axis. Each row corresponds to the respec-
+tive test set (TC, DIP, LIPD). First, our experiments reveal
+that models trained with text (i.e., DeSPITE, DePITE, De-
+SITE, DeSPTE) in almost all scenarios perform worse than
+models trained solely on the modalities alone (i.e., DeSPE,
+DePIE, DeSIE, DESPIE), showing that this task does not
+benefit from text embeddings. Second, we find that match-
+ing between IMU, point clouds, and skeletons can be effec-
+tively learned, showing up to perfect matching scores for a
+smaller number of subjects. In comparison, a larger number
+of subjects, as expected, becomes more challenging.
+4.5. Results: Temporal Moment Retrieval
+Figure 3 shows our results for temporal moment re-
+trieval between IMU ↔Pointcloud, IMU ↔Skeleton, and
+Pointcloud↔Skeleton across all trained model variants (all
+specific numbers in Appendix 7). The k retrieval shots are
+varied on the x-axis, and the respective recall@k is reported
+on the y-axis. Each row shows the results for each respec-
+tive test set (TC, DIP, LIPD). First, we observe the same
+5
+Figure 2. Matching performance between all modality pairs
+IMU↔Pointcloud, IMU ↔Skeleton, Pointcloud ↔Skeleton, re-
+porting mean accuracy for n ∈ (2, 4, 8, 12, 16, 20, 24, 28, 32)
+subjects across 1000 artificial scenes.
+result for temporal moment retrieval as for matching in Fig-
+ure 2: All models trained with text perform worse than
+models trained solely on the modalities alone. Second, our
+evaluation demonstrates that temporal moment retrieval can
+be solved the best between IMU ↔Skeleton, where DeSIE
+demonstrates that training between both modalities alone
+is very effective. The runner-up is Pointcloud ↔Skeleton
+where DeSPIE and DeSPE achieve almost identical perfor-
+mance. Finally, our experiments reveal that the most chal-
+lenging problem is IMU ↔Point cloud matching, allowing
+future work to propose more effective solutions.
+4.6. Results: 3D Point Cloud Human Activity
+Recognition
+The pre-trained embeddings of all versions of DeSPITE can
+be fine-tuned for HAR. We compare our approach against
+the recent state-of-the-art on MSR-Action3D, HMPEAR,
+and perform ablations on the LIPD-Babel-v2 split.
+MSR-Action3D: Table 1 shows that fine-tuning De-
+SPITE, DeSPIE, or DePITE embeddings surpasses all cur-
+rent state-of-the-art point cloud HAR pre-training meth-
+ods, despite encountering a domain shift from 256
+to 2048 points. Our approach, combined with PST-
+Transformer, even outperforms PvNext [59] (94.77<95.47)
+Figure 3. Temporal moment retrieval performance across all
+modalities. Recall is reported for top-1, 10, 20, and 50 retrievals,
+considering a match correct if within 10 frames of the ground truth
+(≈half the window size).
+and MAMBA4D [31] (93.38 <95.47) and nearly matches
+KAN-HyperpointNet [7] (95.59>95.47).
+HMPEAR: As shown in Table 2, we achieve new
+SOTA on HMPEAR, outperforming all prior point cloud,
+RGB, and multi-modal approaches. While our setup uses
+twice the frames of previous methods, pretraining PST-
+Transformer in the same setup with DeSPITE, DeSPIE, or
+DePITE improves its performance by nearly 4%, demon-
+strating the effectiveness for HAR pre-training.
+LIPD-Babel-v2: Table 3 shows that all our models
+outperform baselines (PST-Transformer, LSTM, ACTOR)
+when trained from scratch on LIPD-Babel-v2. We ex-
+plore various freezing strategies, as well as linear/non-linear
+probing and projection heads, with detailed ablations in the
+supplementary material (Tables 6,7,8). In Table 3, only the
+best results of DePITE, DeSPIE, and DeSPITE are reported,
+which consistently achieve strong performance across all
+three datasets.
+Notably, across MSR-Action3D and HMPEAR, De-
+SPITE, DeSPIE, and DePITE consistently achieve the best
+performance, underlining the advantage of pre-training with
+more modalities. Furthermore, different from the results for
+matching and temporal moment retrieval, we find that train-
+ing with text benefits the fine-tuning performance for HAR.
+6
+Methods Video Acc@1 ( ↑)
+Supervised Learning Only
+MeteorNet [32] 88.50
+PSTNet [11] 91.20
+P4Transformer [10] 90.94
+Kinet [65] 93.27
+PPTr [60] 92.33
+PSTNet++ [12] 92.68
+Leaf [33] 93.84
+PST-Transformer [13] 93.73
+PST-Transformer†[13] 92.33
+MAMBA4D [31] 93.38
+PvNext [59] 94.77
+KAN-HyperpointNet [7] 95.59
+Uni-Modal Pre-Training + Transfer Learning
+PSTNet + PointCPSC [53] 92.68 (+1.48)
+PSTNet + PointCMP [52] 93.27 (+2.07)
+PST-Transformer + MaST-Pre [51] 94.08(+0.35)
+PPTr + C2P [64] 94.76 (+2.43)
+P4Transformer + M2PSC [18] 93.03(+2.09)
+PST-Transformer + M2PSC [18] 94.84(+1.11)
+Multi-Modal Pre-Training + Transfer Learning
+PST-Transformer +DePITE (Ours) 95.12(+1.39| + 2.79†)
+PST-Transformer +DeSPIE (Ours) 95.47(+1.74| + 3.14†)
+PST-Transformer +DeSPITE (Ours) 95.47(+1.74| + 3.14†)
+Table 1. 24-frame classification results on the MSR-Action3D
+dataset, clip-level accuracy (Acc) is reported.
+Method Modality Acc(Seg)↑
+Uni-Modal Supervised Learning Only
+PSTNet [11] PC 64.3
+P4-Transformer [10] PC 63.9
+PST-Transformer†[13] PC 65.94
+I3D [5] RGB 55.5
+SlowFast [14] RGB 62.2
+TimeSformer [3] RGB 56.3
+Uniformer [25] RGB 61.6
+Multi-Modal Supervised Learning Only
+AR-Proj [29] RGB+PC 60.6
+PEAR-Proj (BestPE) [29] RGB+PC 64.1
+PEAR-Proj (BestAR) [29] RGB+PC 66.0
+Multi-Modal Pre-Training + Transfer Learning
+PST-Transformer +DeSPITE (ours)PC 69.18(+3.24)
+PST-Transformer +DeSPIE (ours) PC 70.26(+4.32)
+PST-Transformer +DePITE (ours)PC 70.65(+4.71)
+Table 2. HAR classification results on the HMPEAR action recog-
+nition dataset, segment-level accuracy Acc(Seg) is reported.
+4.7. Qualitative Results: Embedding Space
+Using TSNE [56], we analyze the learned embedding space
+of DeSPITE and DeSPIE. Figure 4 (a, b) shows embed-
+dings of the same 50-frame sequence per modality (skele-
+tons •, point clouds ×, IMU ⋆), where both models exhibit
+strong cross-modal alignment, although DeSPIE demon-
+strates tighter associations. Figure 4 (c, d) extends this to
+20 sequences, revealing distinct clusters that indicate se-
+mantic motion encoding. However, DeSPIE’s embeddings
+are more distinct, qualitatively supporting our retrieval find-
+ings and confirming that text embeddings negatively affect
+matching and temporal moment retrieval performance.
+Method Modality Acc(Seg)↑
+Uni-Modal Supervised Baselines
+PST-Transformer†[13] PC 67.38
+LSTM† [19] IMU 65.62
+ACTOR† [43] Skeleton 68.23
+w/ Zero Shot
+PST-Transformer+ DeSPITE (ours)PC 30.42LSTM IMU 29.88ACTOR Skeleton 34.89
+w/ Linear Probing
+PST-Transformer+ DeSPIE (ours)PC 67.06LSTM IMU 58.29ACTOR Skeleton 61.76PST-Transformer+ DeSPITE (ours)PC 67.06LSTM IMU 62.06ACTOR Skeleton 67.20
+w/ Finetuning
+PST-Transformer+ DeSPIE (ours)PC 67.51LSTM IMU 69.21(+3.59)ACTOR Skeleton 68.31PST-Transformer+ DeSPITE (ours)PC 69.00(+1.62)LSTM IMU 68.40ACTOR Skeleton 70.64(+2.41)
+Table 3. HAR classification results on the Babel-LIPD-v2-CLS
+action recognition dataset, segment-level accuracy Acc(Seg) is re-
+ported.
+4.8. Qualitative Results: Retrieval from AMASS
+and LIPD Database
+Figure 5 shows that we can interpret IMU signals using our
+method by querying a large motion database like AMASS
+or LIPD. We show retrievals of skeletons from AMASS and
+point clouds from LIPD using IMU (top) as a query, also
+showing the ground truth. The retrievals semantically cap-
+ture the motion performed by the IMU signal, allowing us
+to understand that the IMU signal corresponds to walking
+while turning (left), doing a lunge (middle), and forward
+stretch (right), respectively. Extending IMU2CLIP [39], our
+method can help interpret IMU signals with skeletons and
+point cloud sequences.
+Figure 6 shows the corresponding retrievals between
+skeleton and point clouds. On the left, a pedestrian per-
+forms a “lunge” motion, captured effectively by the re-
+trieved skeletons from the AMASS database. On the right,
+a pedestrian performs a t-pose and then moves his arm into
+a normal standing position. The retrieved point clouds from
+the LIPD database follow these motions, showing a learned
+correspondence of motion between both modalities. We
+can see that different motion sequences are retrieved with
+different point cloud densities. T o better assess the effec-
+tiveness of DeSPITE for cross-modal retrieval, we provide
+animated videos in the supplementary material.
+4.9. Qualitative Results: Temporal Moment Re-
+trieval
+Figure 7 illustrates how effectively an encoded IMU query
+can retrieve relevant moments in a point cloud video. We
+7
+(a) DeSPIE 1 sequence
+ (b) DeSPITE 1 sequence
+(c) DeSPIE 20 sequences
+ (d) DeSPITE 20 sequences
+Figure 4. Using TSNE, we visualize the joint embedding space
+between skeletons ( •), point clouds ( ×), and IMU ( ⋆) on 1 (a,b)
+and 20 (c,d) randomly sampled sequences with 50 consecutive se-
+quences of both DeSPIE (left) and DeSPITE (right). Each point is
+colored by its time index with a colormap to emphasize the simi-
+larity among each of the modalities over time.
+IMU 
+Query
+GT
+R@1
+R@2
+R@3
+Skeleton pose retrievals LiDAR Point Cloud retrievals
+0 6 12 18 0 6 12 18Frame@ 
+ 0 6 12 18
+Accelerometer Accelerometer Accelerometer
+Figure 5. IMU →Skeleton and IMU→Point cloud Retrieval from
+AMASS and LIPD database, respectively.
+visualize cosine similarity across a 1400-frame sequence
+containing diverse activities, with peaks aligning precisely
+with the ground truth timestamps. Despite no explicit train-
+ing for this, in Query 2, our approach identifies repeated
+instances of a person standing still, highlighting the abil-
+ity of DeSPITE to encode semantic meaning for certain ac-
+Query
+GT
+R@1
+R@2
+R@3
+0 6 12 18 0 6 12 18Frame@ 
+Point CloudàSkeleton SkeletonàPoint Cloud
+Figure 6. Point cloud →Skeleton and Skeleton →Point cloud Re-
+trieval from AMASS and LIPD database, respectively.
+Figure 7. We show two random IMU queries to localize the re-
+spective moment in a 1400 frame-long point cloud sequence from
+the unseen LIPD test.
+tivities within the embedding space. We provide an ani-
+mated video of this in the supplementary material (“tempo-
+ral moment retrieval/temporal retrieval imu.gif”).
+5. Conclusion
+We introduce DeSPITE, aDeep Skeleton-Pointcloud-IMU-
+Text Embedding model, enabling novel cross-modal tasks
+such as matching for re-identification, temporal moment
+retrieval, and retrieval across modalities. Unlike prior
+RGB-centric approaches, DeSPITE leverages LiDAR point
+clouds as the primary visual modality for contrastive learn-
+ing. On the constructed LIPD-Babel dataset, we establish
+strong baselines for these tasks, providing a foundation for
+future comparisons. Additionally, we demonstrate that con-
+trastive pre-training for HAR with DeSPITE achieves new
+state-of-the-art performance on MSR-Action3D and HM-
+PEAR. Our findings highlight that text-enhanced embed-
+dings benefit HAR but slightly limit retrieval performance
+compared to text-free variants. This work paves the way
+for general-purpose LiDAR-based video encoders for hu-
+man activity understanding.
+8
+References
+[1] Matteo Bastico, Ver ´onica Ruiz Bejerano, and Alberto
+Belmonte-Hern´andez. Simultaneous real-time human fall
+detection and reidentification based on multisensors data. In
+Proceedings of the 15th International Conference on PErva-
+sive Technologies Related to Assistive Environments , pages
+365–370, 2022. 1, 3
+[2] L ´eore Bensabath, Mathis Petrovich, and Gul Varol. A cross-
+dataset study for text-based 3d human motion retrieval. In
+Proceedings of the IEEE/CVF Conference on Computer Vi-
+sion and Pattern Recognition, pages 1932–1940, 2024. 2
+[3] Gedas Bertasius, Heng Wang, and Lorenzo Torresani. Is
+space-time attention all you need for video understanding?
+In ICML, page 4, 2021. 7
+[4] Bryan Bo Cao, Abrar Alali, Hansi Liu, Nicholas Meegan,
+Marco Gruteser, Kristin Dana, Ashwin Ashok, and Shub-
+ham Jain. Vitag: Online wifi fine time measurements aided
+vision-motion identity association in multi-person environ-
+ments. In 2022 19th Annual IEEE International Conference
+on Sensing, Communication, and Networking (SECON) ,
+pages 19–27. IEEE, 2022. 1, 3
+[5] Joao Carreira and Andrew Zisserman. Quo vadis, action
+recognition? a new model and the kinetics dataset. In pro-
+ceedings of the IEEE Conference on Computer Vision and
+Pattern Recognition, pages 6299–6308, 2017. 7
+[6] Ting Chen, Simon Kornblith, Mohammad Norouzi, and Ge-
+offrey Hinton. A simple framework for contrastive learning
+of visual representations. In International conference on ma-
+chine learning, pages 1597–1607. PmLR, 2020. 5
+[7] Zhaoyu Chen, Xing Li, Qian Huang, Qiang Geng, Tianjin
+Yang, and Shihao Han. Kan-hyperpointnet for point cloud
+sequence-based 3d human action recognition. arXiv preprint
+arXiv:2409.09444, 2024. 6, 7
+[8] Shenghong Dai, Shiqi Jiang, Yifan Yang, Ting Cao, Mo Li,
+Suman Banerjee, and Lili Qiu. Advancing multi-modal sens-
+ing through expandable modality alignment. arXiv preprint
+arXiv:2407.17777, 2024. 1, 2, 3
+[9] Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina
+Toutanova. Bert: Pre-training of deep bidirectional trans-
+formers for language understanding. In Proceedings of the
+2019 conference of the North American chapter of the asso-
+ciation for computational linguistics: human language tech-
+nologies, volume 1 (long and short papers) , pages 4171–
+4186, 2019. 2
+[10] Hehe Fan, Yi Yang, and Mohan Kankanhalli. Point 4d trans-
+former networks for spatio-temporal modeling in point cloud
+videos. In Proceedings of the IEEE/CVF conference on com-
+puter vision and pattern recognition , pages 14204–14213,
+2021. 7
+[11] Hehe Fan, Xin Yu, Yuhang Ding, Yi Yang, and Mohan
+Kankanhalli. Pstnet: Point spatio-temporal convolution on
+point cloud sequences. In International Conference on
+Learning Representations, 2021. 7
+[12] Hehe Fan, Xin Yu, Yi Yang, and Mohan Kankanhalli.
+Deep hierarchical representation of point cloud videos via
+spatio-temporal decomposition. IEEE Transactions on Pat-
+tern Analysis and Machine Intelligence , 44(12):9918–9930,
+2021. 7
+[13] Hehe Fan, Yi Yang, and Mohan Kankanhalli. Point spatio-
+temporal transformer networks for point cloud video mod-
+eling. IEEE Transactions on Pattern Analysis and Machine
+Intelligence, 45(2):2181–2192, 2022. 5, 7
+[14] Christoph Feichtenhofer, Haoqi Fan, Jitendra Malik, and
+Kaiming He. Slowfast networks for video recognition. In
+Proceedings of the IEEE/CVF international conference on
+computer vision, pages 6202–6211, 2019. 7
+[15] Rohit Girdhar, Alaaeldin El-Nouby, Zhuang Liu, Mannat
+Singh, Kalyan Vasudev Alwala, Armand Joulin, and Ishan
+Misra. Imagebind: One embedding space to bind them all.
+In Proceedings of the IEEE/CVF conference on computer vi-
+sion and pattern recognition, pages 15180–15190, 2023. 1,
+2, 3, 4
+[16] Chuan Guo, Shihao Zou, Xinxin Zuo, Sen Wang, Wei Ji,
+Xingyu Li, and Li Cheng. Generating diverse and natural 3d
+human motions from text. In Proceedings of the IEEE/CVF
+Conference on Computer Vision and Pattern Recognition
+(CVPR), pages 5152–5161, 2022. 3
+[17] Mark Hamilton, Andrew Zisserman, John R Hershey, and
+William T Freeman. Separating the” chirp” from the” chat”:
+Self-supervised visual grounding of sound and language. In
+Proceedings of the IEEE/CVF conference on computer vi-
+sion and pattern recognition, pages 13117–13127, 2024. 3
+[18] Yuehui Han, Can Xu, Rui Xu, Jianjun Qian, and Jin Xie.
+Masked motion prediction with semantic contrast for point
+cloud sequence learning. In European Conference on Com-
+puter Vision, pages 414–431. Springer, 2024. 3, 7
+[19] Sepp Hochreiter and J ¨urgen Schmidhuber. Long short-term
+memory. Neural computation, 9(8):1735–1780, 1997. 5, 7
+[20] Gang Huang, Zhaozheng Hu, Jie Wu, Hanbiao Xiao, and
+Fan Zhang. Wifi and vision-integrated fingerprint for
+smartphone-based self-localization in public indoor scenes.
+IEEE Internet of Things Journal, 7(8):6748–6761, 2020. 1
+[21] Yinghao Huang, Manuel Kaufmann, Emre Aksan, Michael J
+Black, Otmar Hilliges, and Gerard Pons-Moll. Deep iner-
+tial poser: Learning to reconstruct human pose from sparse
+inertial measurements in real time. ACM Transactions on
+Graphics (TOG), 37(6):1–15, 2018. 4, 1
+[22] Diederik P Kingma and Jimmy Ba. Adam: A method for
+stochastic optimization. arXiv preprint arXiv:1412.6980 ,
+2014. 5
+[23] Bruno Korbar, Du Tran, and Lorenzo Torresani. Coopera-
+tive learning of audio and video models from self-supervised
+synchronization. Advances in Neural Information Process-
+ing Systems, 31, 2018. 3
+[24] Jialian Li, Jingyi Zhang, Zhiyong Wang, Siqi Shen, Chenglu
+Wen, Yuexin Ma, Lan Xu, Jingyi Yu, and Cheng Wang. Li-
+darcap: Long-range marker-less 3d human motion capture
+with lidar point clouds. In Proceedings of the IEEE/CVF
+conference on computer vision and pattern recognition ,
+pages 20502–20512, 2022. 1, 3, 4
+[25] Kunchang Li, Yali Wang, Peng Gao, Guanglu Song, Yu Liu,
+Hongsheng Li, and Yu Qiao. Uniformer: Unified transformer
+for efficient spatiotemporal representation learning. arXiv
+preprint arXiv:2201.04676, 2022. 7
+9
+[26] Ruilong Li, Shan Yang, David A Ross, and Angjoo
+Kanazawa. Ai choreographer: Music conditioned 3d dance
+generation with aist++. In Proceedings of the IEEE/CVF
+international conference on computer vision , pages 13401–
+13412, 2021. 1
+[27] Wanqing Li, Zhengyou Zhang, and Zicheng Liu. Action
+recognition based on a bag of 3d points. In 2010 IEEE
+computer society conference on computer vision and pattern
+recognition-workshops, pages 9–14. IEEE, 2010. 2, 3, 4
+[28] Jia-Ming Liang, Shashank Mishra, and Chun-Che Wu. En-
+hancing person identification for smart cities: Fusion of
+video surveillance and wearable device data based on ma-
+chine learning. IEEE Sensors Journal, 2024. 3
+[29] Yitai Lin, Zhijie Wei, Wanfa Zhang, Xiping Lin, Yudi Dai,
+Chenglu Wen, Siqi Shen, Lan Xu, and Cheng Wang. Hm-
+pear: A dataset for human pose estimation and action recog-
+nition. In Proceedings of the 32nd ACM International Con-
+ference on Multimedia, pages 2069–2078, 2024. 1, 2, 3, 4,
+7
+[30] Jun Liu, Amir Shahroudy, Mauricio Perez, Gang Wang,
+Ling-Yu Duan, and Alex C Kot. Ntu rgb+d 120: A large-
+scale benchmark for 3d human activity understanding. IEEE
+Transactions on Pattern Analysis and Machine Intelligence,
+42(10):2684–2701, 2020. 3
+[31] Jiuming Liu, Jinru Han, Lihao Liu, Angelica I Aviles-Rivero,
+Chaokang Jiang, Zhe Liu, and Hesheng Wang. Mamba4d:
+Efficient long-sequence point cloud video understanding
+with disentangled spatial-temporal state space models. arXiv
+preprint arXiv:2405.14338, 2024. 6, 7
+[32] Xingyu Liu, Mengyuan Yan, and Jeannette Bohg. Meteor-
+net: Deep learning on dynamic 3d point cloud sequences. In
+Proceedings of the IEEE/CVF International Conference on
+Computer Vision, pages 9246–9255, 2019. 7
+[33] Yunze Liu, Junyu Chen, Zekai Zhang, Jingwei Huang, and Li
+Yi. Leaf: Learning frames for 4d point cloud sequence un-
+derstanding. In Proceedings of the IEEE/CVF International
+Conference on Computer Vision, pages 604–613, 2023. 7
+[34] Matthew Loper, Naureen Mahmood, Javier Romero, Gerard
+Pons-Moll, and Michael J Black. Smpl: A skinned multi-
+person linear model. In Seminal Graphics Papers: Pushing
+the Boundaries, Volume 2, pages 851–866. 2023. 1
+[35] Mingqi Lu, Siyuan Yang, Xiaobo Lu, and Jun Liu. Cross-
+modal contrastive pre-training for few-shot skeleton action
+recognition. IEEE Transactions on Circuits and Systems for
+Video Technology, 2024. 3
+[36] Naureen Mahmood, Nima Ghorbani, Nikolaus F. Troje, Ger-
+ard Pons-Moll, and Michael J. Black. AMASS: Archive of
+motion capture as surface shapes. In International Confer-
+ence on Computer Vision, pages 5442–5451, 2019. 3, 4, 1
+[37] Alessandro Masullo, Tilo Burghardt, Dima Damen, Toby
+Perrett, and Majid Mirmehdi. Who goes there? exploiting
+silhouettes and wearable signals for subject identification in
+multi-person environments. InProceedings of the IEEE/CVF
+International Conference on Computer Vision Workshops ,
+pages 0–0, 2019. 1, 3, 5
+[38] Alessandro Masullo, Tilo Burghardt, Dima Damen, Toby
+Perrett, and Majid Mirmehdi. Person re-id by fusion of video
+silhouettes and wearable signals for home monitoring appli-
+cations. Sensors, 20(9):2576, 2020. 1, 3
+[39] Seungwhan Moon, Andrea Madotto, Zhaojiang Lin, Apara-
+jita Saraf, Amy Bearman, and Babak Damavandi. Imu2clip:
+Language-grounded motion sensor translation with multi-
+modal contrastive learning. In Findings of the Association
+for Computational Linguistics: EMNLP 2023, pages 13246–
+13253, 2023. 1, 2, 3, 4, 5, 7
+[40] Alisher Mukashev, Lan-Da Van, Susanta Sharma, M Farhan
+Tandia, and Yu-Chee Tseng. Person tracking by fusing pos-
+ture data from uav video and wearable sensors.IEEE Sensors
+Journal, 22(24):24150–24160, 2022. 5
+[41] Aaron van den Oord, Yazhe Li, and Oriol Vinyals. Repre-
+sentation learning with contrastive predictive coding. arXiv
+preprint arXiv:1807.03748, 2018. 1, 3, 4
+[42] Maxime Oquab, Timoth ´ee Darcet, Th ´eo Moutakanni, Huy
+V o, Marc Szafraniec, Vasil Khalidov, Pierre Fernandez,
+Daniel Haziza, Francisco Massa, Alaaeldin El-Nouby, et al.
+Dinov2: Learning robust visual features without supervision.
+arXiv preprint arXiv:2304.07193, 2023. 2
+[43] Mathis Petrovich, Michael J Black, and G ¨ul Varol. Action-
+conditioned 3d human motion synthesis with transformer
+vae. In Proceedings of the IEEE/CVF International Con-
+ference on Computer Vision, pages 10985–10995, 2021. 5,
+7
+[44] Mathis Petrovich, Michael J Black, and G ¨ul Varol. Tmr:
+Text-to-motion retrieval using contrastive 3d human motion
+synthesis. In Proceedings of the IEEE/CVF International
+Conference on Computer Vision, pages 9488–9497, 2023. 3,
+5
+[45] Abhinanda R. Punnakkal, Arjun Chandrasekaran, Nikos
+Athanasiou, Alejandra Quiros-Ramirez, and Michael J.
+Black. BABEL: Bodies, action and behavior with english
+labels. In Proceedings IEEE/CVF Conf. on Computer Vision
+and Pattern Recognition (CVPR), pages 722–731, 2021. 2,
+3, 4, 1
+[46] Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya
+Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry,
+Amanda Askell, Pamela Mishkin, Jack Clark, et al. Learning
+transferable visual models from natural language supervi-
+sion. In International conference on machine learning, pages
+8748–8763. PMLR, 2021. 1, 2, 4, 5
+[47] Nikhila Ravi, Valentin Gabeur, Yuan-Ting Hu, Ronghang
+Hu, Chaitanya Ryali, Tengyu Ma, Haitham Khedr, Roman
+R¨adle, Chloe Rolland, Laura Gustafson, Eric Mintun, Junt-
+ing Pan, Kalyan Vasudev Alwala, Nicolas Carion, Chao-
+Yuan Wu, Ross Girshick, Piotr Doll´ar, and Christoph Feicht-
+enhofer. Sam 2: Segment anything in images and videos.
+arXiv preprint arXiv:2408.00714, 2024. 2
+[48] Yiming Ren, Chengfeng Zhao, Yannan He, Peishan Cong,
+Han Liang, Jingyi Yu, Lan Xu, and Yuexin Ma. Lidar-aid
+inertial poser: Large-scale human motion capture by sparse
+inertial and lidar sensors. IEEE Transactions on Visualiza-
+tion and Computer Graphics, 29(5):2337–2347, 2023. 1, 2,
+3, 4
+[49] Sebastian Ruder. An overview of gradient descent optimiza-
+tion algorithms. arXiv preprint arXiv:1609.04747, 2016. 5
+10
+[50] Amir Shahroudy, Jun Liu, Tian-Tsong Ng, and Gang Wang.
+Ntu rgb+d: A large scale dataset for 3d human activity anal-
+ysis. In Proceedings of the IEEE conference on computer
+vision and pattern recognition, pages 1010–1019, 2016. 3
+[51] Zhiqiang Shen, Xiaoxiao Sheng, Hehe Fan, Longguang
+Wang, Yulan Guo, Qiong Liu, Hao Wen, and Xi
+Zhou. Masked spatio-temporal structure prediction for self-
+supervised learning on point cloud videos. In Proceedings
+of the IEEE/CVF International Conference on Computer Vi-
+sion, pages 16580–16589, 2023. 3, 7
+[52] Zhiqiang Shen, Xiaoxiao Sheng, Longguang Wang, Yulan
+Guo, Qiong Liu, and Xi Zhou. Pointcmp: Contrastive mask
+prediction for self-supervised learning on point cloud videos.
+In Proceedings of the IEEE/CVF Conference on Computer
+Vision and Pattern Recognition, pages 1212–1222, 2023. 3,
+7
+[53] Xiaoxiao Sheng, Zhiqiang Shen, Gang Xiao, Longguang
+Wang, Yulan Guo, and Hehe Fan. Point contrastive predic-
+tion with semantic clustering for self-supervised learning on
+point cloud videos. InProceedings of the IEEE/CVF Interna-
+tional Conference on Computer Vision, pages 16515–16524,
+2023. 3, 7
+[54] Guy Tevet, Brian Gordon, Amir Hertz, Amit H Bermano,
+and Daniel Cohen-Or. Motionclip: Exposing human motion
+generation to clip space. In European Conference on Com-
+puter Vision, pages 358–374. Springer, 2022. 1, 2, 3, 4
+[55] Matthew Trumble, Andrew Gilbert, Charles Malleson,
+Adrian Hilton, and John Collomosse. Total capture: 3d
+human pose estimation fusing video and inertial sensors.
+In Proceedings of 28th British Machine Vision Conference ,
+pages 1–13, 2017. 4, 1
+[56] Laurens Van der Maaten and Geoffrey Hinton. Visualizing
+data using t-sne. Journal of machine learning research , 9
+(11), 2008. 7
+[57] Timo von Marcard, Roberto Henschel, Michael Black, Bodo
+Rosenhahn, and Gerard Pons-Moll. Recovering accurate 3d
+human pose in the wild using imus and a moving camera. In
+European Conference on Computer Vision (ECCV), 2018. 1,
+3
+[58] Haiyan Wang, Liang Yang, Xuejian Rong, Jinglun Feng,
+and Yingli Tian. Self-supervised 4d spatio-temporal feature
+learning via order prediction of sequential point cloud clips.
+In Proceedings of the IEEE/CVF Winter Conference on Ap-
+plications of Computer Vision, pages 3762–3771, 2021. 3
+[59] Jie Wang, Tingfa Xu, Lihe Ding, Xinjie Zhang, Long Bai,
+and Jianan Li. Pvnext: Rethinking network design and
+temporal motion for point cloud video recognition. In The
+Thirteenth International Conference on Learning Represen-
+tations. 6, 7
+[60] Hao Wen, Yunze Liu, Jingwei Huang, Bo Duan, and Li
+Yi. Point primitive transformer for long-term 4d point cloud
+video understanding. In European Conference on Computer
+Vision, pages 19–35. Springer, 2022. 7
+[61] Yiteng Xu, Peishan Cong, Yichen Yao, Runnan Chen, Yue-
+nan Hou, Xinge Zhu, Xuming He, Jingyi Yu, and Yuexin
+Ma. Human-centric scene understanding for 3d large-scale
+scenarios. In Proceedings of the IEEE/CVF International
+Conference on Computer Vision, pages 20349–20359, 2023.
+1, 3
+[62] Jianfei Yang, He Huang, Yunjiao Zhou, Xinyan Chen, Yue-
+cong Xu, Shenghai Yuan, Han Zou, Chris Xiaoxuan Lu, and
+Lihua Xie. Mm-fi: Multi-modal non-intrusive 4d human
+dataset for versatile wireless sensing. Advances in Neural
+Information Processing Systems, 36:18756–18768, 2023. 3
+[63] Kangning Yin, Shihao Zou, Yuxuan Ge, and Zheng Tian. Tri-
+modal motion retrieval by learning a joint embedding space.
+In Proceedings of the IEEE/CVF Conference on Computer
+Vision and Pattern Recognition, pages 1596–1605, 2024. 1,
+2, 3
+[64] Zhuoyang Zhang, Yuhao Dong, Yunze Liu, and Li Yi.
+Complete-to-partial 4d distillation for self-supervised point
+cloud sequence representation learning. In Proceedings of
+the IEEE/CVF conference on computer vision and pattern
+recognition, pages 17661–17670, 2023. 3, 7
+[65] Jia-Xing Zhong, Kaichen Zhou, Qingyong Hu, Bing Wang,
+Niki Trigoni, and Andrew Markham. No pain, big gain: clas-
+sify dynamic point cloud sequences with static models by
+fitting feature-level space-time surfaces. In Proceedings of
+the IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, pages 8510–8520, 2022. 7
+11
+DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text
+Embeddings for Advanced Point Cloud Human Activity Understanding
+Supplementary Material
+LIPD-Babel-v1 LIPD-Babel-v2
+#Sequences Train 502958 403430
+#Sequences Test 85551 58802
+#Text Train 187641 135699
+#Text Test - 58802
+Table 4. Number of total training sequences and frame-wise text
+labels when considering 24 frame sequences at 10 fps in LIPD-
+Babel-v1 and LIPD-Babel-v2.
+6. More Information on LIPD-Babel
+LIPD [48] is a large-scale dataset combining LiDAR point
+clouds, IMU, and skeleton poses. It includes a mix of
+real and synthetic LiDAR point clouds and IMU measure-
+ments, taking advantage of the AMASS [36] motion cap-
+ture dataset. It combines their own recorded real sequences
+with ground truth SMPL [34] pose parameters from DIP-
+IMU [21], LiDARHuman26M [48], AIST++[26], and a
+subset of AMASS [36] (including ACCAD, BML-Movi,
+CMU, and TotalCapture(TC) [55]). From this large collec-
+tion of data, DIP-IMU, TC, the testing set of LiDARHu-
+man26M, and their LIPD test set are used for evaluation,
+while the remaining data is used as the training set. From
+the SMPL poses of the AMASS subsets and AIST++, LIPD
+has generated synthetic point clouds and IMU recordings.
+For DIP-IMU, they generated synthetic point clouds, and
+took the real IMU recordings. For LiDARHuman26M, real
+point clouds are provided, and LIPD generated synthetic
+IMU recordings. LIPD has provided more details on the
+generation in the supplementary material of their work but
+did not publish the code.
+While LIPD is a large-scale data for human motion with
+LiDAR, IMU, and skeletal poses, it is missing activity an-
+notations. Fortunately, the Babel dataset [45] has annotated
+the AMASS dataset with strong efforts with frame-wise ac-
+tivity annotations. Taking advantage of these annotations,
+we have merged the Babel annotations into the correspond-
+ing AMASS subsets present in LIPD, i.e., ACCAD, BML-
+Movi, CMU, and TC.
+To achieve this, we take advantage of the specific
+sequence ID’s for each AMASS sequence that are stored
+both in LIPD and in Babel. This allows a unique
+mapping between both datasets, allowing to add text
+annotations to the AMASS subset in LIPD. More specif-
+ically, all AMASS sequence ids follow the pattern of
+“dataset/sequencecategory/posesequence poses.npz”.
+For example, ”ACCAD/Female1Gestures c3d/D2 -
+Wait 1 poses.npz” or “CMU/118/118 17 poses.npz”. In
+LIPD, these sequence ids were modified to follow the pat-
+tern “dataset/sequencecategory/posesequence stageii”,
+leading to ”ACCAD/Female1Gestures c3d/D2 -
+Wait 1 stageii” “CMU/118/118 17 stageii”. Therefore,
+to achieve the mapping, a reformatting is required by
+replacing “stageii” with “poses.npz”. Babel follows the
+exact same format as AMASS, allowing a straightforward
+mapping form the AMASS subset in LIPD to the respective
+subset in Babel.
+The next difference is the sampling rate of the dataset.
+AMASS is provided at a higher FPS up to 120FPS, which
+is much higher than the 10 FPS of LIPD, while Babel is
+annotated at 30FPS. As a result, we downsample the Ba-
+bel annotations accordingly to 10FPS to align them with
+the LIPD dataset. To verify that both datasets are actually
+temporally aligned after downsampling Babel to 10 FPS,
+we carefully verified qualitatively that the skeleton poses of
+the downsampled Babel versions correspond to the poses in
+the LIPD dataset by plotting them next to each other, and
+inspecting several sequences from each dataset manually.
+When combning Babel and LIPD to LIPD-Babel, we
+obtain two versions of the dataset. First, LIPD-Babel-v1,
+which follows the exact test split of LIPD, and LIPD-Babel-
+v2, which follows the train/val/test split of Babel. LIPD-
+Babel-v1 allows to evaluate the respective matching and re-
+trieval tasks, while LIPD-Babel-v2 allows to evaluate clas-
+sification tasks with labels for both training and testing set.
+More specifically, for LIPD-Babel-v2, the official training
+split of Babel is used for the training set, and the validation
+split for the testing set. The annotations for the test split are
+not publicly available, which is why we use the validation
+set as the testing set replacement.
+Finally, we preprocess the whole dataset into 24-frame
+sliding window subsequences to ease the training and test-
+ing process. A summary of the number of sequences and
+corresponding text annotations are provided in Table 4.
+LIPD-Babel-v1 has slightly more sequences than LIPD-
+Babel-v2 because the test set of Babel is not publicly avail-
+able, because of which we remove the sequences from AC-
+CAD, BML-movi, CMU, and TC that do not have annota-
+tions.
+1
+7. Specific Performance Scores for Matching
+and Temporal Moment Retrieval
+Figure 2 and Figure 3 in the main paper effectively visual-
+izes the differences in the performance of each model and
+parameters for matching and temporal moment retrieval,
+which makes a comparison at the scale of the amount of
+different parameters that we have evaluated easier to see.
+In this section of our supplementary material, we pro-
+vide the specific matching scores between each modality
+and each dataset through a heatmap in Figure 8 to provide
+quantitative numbers for future work to compare against our
+baselines. In the same way, we present the specific tem-
+poral moment retrieval scores between each modality and
+each dataset through a heatmap in Figure 9. These results
+are the average over the number of subjects for matching
+and k-shots for temporal moment retrieval. All individual
+results for each number of subjects for matching, and top-k
+for temporal moment retrieval are provided in Figures 11-
+18, and Figures 19-22, respectively.
+8. A Simple Improved Matching Algorithm to
+Associate Different Modalities in the Em-
+bedding Space
+In practice, we observe continuous streams of point cloud,
+skeleton, and IMU time series data. Therefore, a match-
+ing score can be computed not only on similarities between
+a single query sequence and all possible subsequences of
+a video, but instead on consecutive subsequences. We de-
+fine such a matching algorithm in Algorithm 1, where the
+mean similarity score over several embeddings from a short
+temporal neighborhood is considered to compute the tem-
+poral matching score. More specifically, given N consecu-
+tive subsequences with their respectiveQ consecutive query
+embeddings Z j
+a,q, q ∈ Q from modality a and K consec-
+utive candidate embeddings Z j
+b,k, k ∈ K for modality b,
+j ≤ 0 < N . The similarity score between each query
+q ∈ Q and candidate p ∈ P is the average over all pair-wise
+similarities between the consecutive windows. Finally, the
+assigned match for each q ∈ Q is calculated using argmax
+over all candidate similarity scores.
+Figure 23 presents the average of the results over all
+modalities for each dataset, respectively. The results ver-
+ify that observing more frames leads to improved matching
+results.
+8.1. Results: Retrieval through Natural Language
+On LIPD-Babel-v2, we evaluate text-to-motion retrieval
+against TMR++ [2]. For a fair comparison, we run TMR++
+only on the subset of Babel that we use in LIPD-Babel-v2.
+Note that TMR++ has been trained on the full Babel dataset,
+which gives the model itself an advantage over our model.
+Input: Q, K consecutive query/candidate
+embeddings for respective modality a, b
+Output: One-to-Many mapping
+1 matches ← ∅
+2 foreach q ∈ Q do
+3 match ←
+arg maxk∈K
+
+1
+N
+PN
+n=1 sim(Z j
+a,q, Zj
+b,k)
+
+;
+4 matches ← matches ∪ {match};
+5 end
+6 return matches
+Algorithm 1: Matching algorithm for consecutive sub-
+sequences
+Method Training Set R-Top-1
+TMR++ Th=0.95 Full Babel 55.54
+Ours (Skeleton) Th=0.95 LIPD-Babel-v2 42.55
+Ours (Skeleton) Th=0.90 48.92
+Ours (IMU) Th=0.95 LIPD-Babel-v2 46.01
+Ours (IMU) Th=0.90 46.94
+Ours (Pointcloud) Th=0.95 LIPD-Babel-v2 48.68
+Ours (Pointcloud) Th=0.90 53.62
+Table 5. Text-to-<Skeleton, Pointcloud, IMU> retrieval on LIPD-
+Babel-v2
+The results are presented in Table 5. We use the same
+threshold (Th) as TMR++ to account for semantically simi-
+lar retrievals. In addition, we report our results for Th=0.90
+and Th=0.95 since the CLIP text embedding space may ex-
+hibit different semantic relations compared to the text em-
+beddings used by TMR++. Our results show that our perfor-
+mance is promising, but worse than TMR++, showing pos-
+sibilities for future work to improve the alignment to text.
+9. Ablation Study on LIPD-Babel-v2 for HAR
+We perform a large ablation study between all modalities
+for downstream classification. We ablate linear/non-linear
+probing and freezing or fine-tuning each model when train-
+ing for HAR on LIPD-Babel-v2. The results are presented
+in Table 6 for IMU, Table 7 for point clouds, and Table 8
+for skeletons.
+2
+Figure 8. Heatmap to visualize the respective matching results on average across all modalities and datasets at a glance
+3
+Figure 9. Heatmap to visualize the respective temporal moment retrieval results on average across all modalities and datasets at a glance
+4
+Table 6. All IMU HAR classification results on the Babel-LIPD-v2-CLS action recognition dataset, segment-level accuracy Acc(Seg) is
+reported.
+model Skeleton PC IMU Text Probing Fine tuning Projection Head Acc(seg) ↑
+Random Init √ √ linear 43.01
+Random Init √ √ non-linear 57.12
+Random Init √ √ linear 65.62
+Random Init √ √ non-linear 64.26
+PIE √ √ √ linear 60.21
+PIE √ √ √ non-linear 62.05
+PIE √ √ √ linear 68.32
+PIE √ √ √ non-linear 67.50
+SIE √ √ √ linear 44.20
+SIE √ √ √ non-linear 56.62
+SIE √ √ √ linear 66.44
+SIE √ √ √ non-linear 67.06
+SPIE √ √ √ √ linear 58.29
+SPIE √ √ √ √ non-linear 60.95
+SPIE √ √ √ √ linear 67.28
+SPIE √ √ √ √ non-linear 69.21
+PITE √ √ √ √ linear 61.14
+PITE √ √ √ √ non-linear 59.21
+PITE √ √ √ √ linear 68.54
+PITE √ √ √ √ non-linear 66.63
+SITE √ √ √ √ linear 56.69
+SITE √ √ √ √ non-linear 56.95
+SITE √ √ √ √ linear 66.86
+SITE √ √ √ √ non-linear 67.10
+SPITE √ √ √ √ √ linear 62.06
+SPITE √ √ √ √ √ non-linear 59.76
+SPITE √ √ √ √ √ linear 68.08
+SPITE √ √ √ √ √ non-linear 68.40
+5
+Table 7. All point cloud HAR classification results on the Babel-LIPD-v2-CLS action recognition dataset, segment-level accuracy Acc(Seg)
+is reported.
+model Skeleton PC IMU Text Probing Fine tuning projection Acc(seg) ↑
+Random Init √ √ linear 65.69
+Random Init √ √ non-linear 67.38
+Random Init √ √ linear 51.90
+Random Init √ √ non-linear 61.98
+PIE √ √ √ linear 65.96
+PIE √ √ √ non-linear 69.52
+PIE √ √ √ linear 68.27
+PIE √ √ √ non-linear 68.36
+SPE √ √ √ linear 66.65
+SPE √ √ √ non-linear 66.13
+SPE √ √ √ linear 63.55
+SPE √ √ √ non-linear 64.17
+SPIE √ √ √ √ linear 67.51
+SPIE √ √ √ √ non-linear 66.93
+SPIE √ √ √ √ linear 67.06
+SPIE √ √ √ √ non-linear 66.41
+SPTE √ √ √ √ linear 67.43
+SPTE √ √ √ √ non-linear 67.30
+SPTE √ √ √ √ linear 69.31
+SPTE √ √ √ √ non-linear 68.66
+PITE √ √ √ √ linear 68.84
+PITE √ √ √ √ non-linear 69.50
+PITE √ √ √ √ linear 70.04
+PITE √ √ √ √ non-linear 69.00
+SPITE √ √ √ √ √ linear 69.00
+SPITE √ √ √ √ √ non-linear 68.04
+SPITE √ √ √ √ √ linear 67.06
+SPITE √ √ √ √ √ non-linear 66.32
+6
+Table 8. All skeleton HAR classification results on the Babel-LIPD-v2-CLS action recognition dataset, segment-level accuracy Acc(Seg)
+is reported.
+model Skeleton PC IMU Text Probing Fine tuning projection Acc(seg) ↑
+Random Init √ √ linear 67.90
+Random Init √ √ non-linear 68.23
+Random Init √ √ linear 59.71
+Random Init √ √ non-linear 60.59
+SIE √ √ √ linear 67.79
+SIE √ √ √ non-linear 70.44
+SIE √ √ √ linear 50.50
+SIE √ √ √ non-linear 57.14
+SPE √ √ √ linear 69.06
+SPE √ √ √ non-linear 70.14
+SPE √ √ √ linear 58.55
+SPE √ √ √ non-linear 59.93
+SPIE √ √ √ √ linear 68.31
+SPIE √ √ √ √ non-linear 67.47
+SPIE √ √ √ √ linear 61.76
+SPIE √ √ √ √ non-linear 63.64
+SPTE √ √ √ √ linear 69.20
+SPTE √ √ √ √ non-linear 69.01
+SPTE √ √ √ √ linear 65.84
+SPTE √ √ √ √ non-linear 65.93
+SITE √ √ √ √ linear 68.14
+SITE √ √ √ √ non-linear 69.64
+SITE √ √ √ √ linear 63.83
+SITE √ √ √ √ non-linear 63.93
+SPITE √ √ √ √ √ linear 70.64
+SPITE √ √ √ √ √ non-linear 69.91
+SPITE √ √ √ √ √ linear 67.20
+SPITE √ √ √ √ √ non-linear 66.77
+7
+Figure 10. Matching, subjects=2
+Figure 11. Matching, subjects=4
+Figure 12. Matching, subjects=8
+Figure 13. Matching, subjects=12
+Figure 14. Matching, subjects=16
+Figure 15. Matching, subjects=20
+8
+Figure 16. Matching, subjects=24
+Figure 17. Matching, subjects=28
+Figure 18. Matching, subjects=32
+Figure 19. Temporal Moment Retrieval, topk=1
+Figure 20. Temporal Moment Retrieval, topk=10
+Figure 21. Temporal Moment Retrieval, topk=20
+9
+Figure 22. Temporal Moment Retrieval, topk=50
+10
+Figure 23. Performance of computing matching scores based on 1,2, or 4 consecutive windows. The matching scores are presented
+averaged over each model and modality combination to show the effectiveness of matching based on consecutive windows.
+11

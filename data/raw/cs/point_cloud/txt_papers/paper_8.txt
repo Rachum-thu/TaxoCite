@@ -1,0 +1,832 @@
+Seeing Through the Grass:
+Semantic Pointcloud Filter for Support Surface Learning
+Anqiao Li, Chenyu Yang, Jonas Frey † , Joonho Lee, Cesar Cadena, and Marco Hutter
+Abstract— Mobile ground robots require perceiving and un-
+derstanding their surrounding support surface to move around
+autonomously and safely. The support surface is commonly
+estimated based on exteroceptive depth measurements, e.g.,
+from LiDARs. However, the measured depth fails to align with
+the true support surface in the presence of high grass or other
+penetrable vegetation. In this work, we present the Semantic
+Pointcloud Filter (SPF), a Convolutional Neural Network (CNN)
+that learns to adjust LiDAR measurements to align with the
+underlying support surface. The SPF is trained in a semi-self-
+supervised manner and takes as an input a LiDAR pointcloud
+and RGB image. The network predicts a binary segmentation
+mask that identiﬁes the speciﬁc points requiring adjustment,
+along with estimating their corresponding depth values. To
+train the segmentation task, 300 distinct images are manually
+labeled into rigid and non-rigid terrain. The depth estimation
+task is trained in a self-supervised manner by utilizing the
+future footholds of the robot to estimate the support surface
+based on a Gaussian process. Our method can correctly adjust
+the support surface prior to interacting with the terrain and
+is extensively tested on the quadruped robot ANYmal. We
+show the qualitative beneﬁts of SPF in natural environments
+for elevation mapping and traversability estimation compared
+to using raw sensor measurements and existing smoothing
+methods. Quantitative analysis is performed in various natural
+environments, and an improvement by 48% RMSE is achieved
+within a meadow terrain.
+I. INTRODUCTION
+A comprehensive understanding of the robot’s surround-
+ings is a key element in achieving autonomous robot navi-
+gation in outdoor environments. Typically, ground robots are
+equipped with exteroceptive sensors such as LiDARs and
+depth cameras to directly capture the structure of the 3D
+environment. The captured geometrical information can be
+accumulated in a 2D occupancy map [1], [2], 2.5D elevation
+map [3], [4], or 3D voxel map [5] representation. These
+maps provide information about the support surface (the
+rigid surface that can provide support for the robot during
+traversing) and obstacles for downstream tasks such as mo-
+tion planning [6], [7], traversability assessment [8], [9], and
+trajectory planning [10], [11]. However, these conventional
+approaches are based on the assumption that the world is
+rigid, i.e., the robot will step on the terrain or collide with
+All authors are with the Robotic Systems Lab, ETH Zurich, 8092 Zurich,
+Switzerland. {anqiali, chenyang, jonfrey, jolee, cesarc,
+mhutter} @ethz.ch
+† The author is with the Max Planck ETH CLS.
+This work was supported by the Swiss National Science Foundation
+(SNSF) through project 188596, the National Centre of Competence in
+Research Robotics (NCCR Robotics), the European Union’s Horizon 2020
+research and innovation program under grant agreement No 101016970, No
+101070405, and No 852044, and an ETH Zurich Research Grant. Jonas
+Frey is supported by the Max Planck ETH Center for Learning Systems.
+Camera ImageRaw Pointcloud Filtered Pointcloud
+Footholds
+Support Surface
+Fig. 1. A systematic sketch for Semantic Pointcloud Filter (SPF). From its
+onboard LiDAR sensors, the raw pointcloud P (orange) is generated. The
+raw pointcloud captures the structure of vegetation, which is undesirable for
+the reconstruction of the support surface. Utilizing the semantics extracted
+from onboard sensors, our proposed SPF ﬁlters the pointcloud by adjusting
+the depth of each point in the cloud. The ﬁltered pointcloud ˆP (magenta) is
+ﬂatter and depicts the support surface.
+the obstacles rather than moving or deforming them. While
+the assumption holds in most structured environments, it
+is not the case for unstructured natural environments with
+vegetation or soft terrain. Most navigation planning and
+control pipelines often treat the penetrable vegetation as
+rigid, which leads to sub-optimal locomotion and navigation.
+For example, a robot may try to step over vegetation or avoid
+non-existing obstacles without the capability to identify the
+support surface. In contrast, humans easily traverse natural
+terrains by associating semantic information with the terrain
+property. For example, before walking on grass, humans
+can anticipate from visual information that the high grass
+is penetrable and correctly adjust their gait.
+In this work, we present a novel approach to enhance
+the environment perception capabilities of robots by learning
+the support surface from RGB images and LiDAR, thereby
+overcoming the limitations of prior geometric methods. In-
+stead of directly acquiring a fused support surface represen-
+tation, such as an elevation map or voxel map, we opt to
+reﬁne raw sensor data for broader downstream application
+adaptability. Speciﬁcally, we propose a multi-modal model
+that ﬁlters pointcloud measurements by jointly performing
+semantic segmentation and depth estimation. The semantic
+segmentation module identiﬁes the regions where the raw
+pointcloud does not align with the support surface, enabling
+the preservation of rigid obstacles during pointcloud ﬁltering,
+arXiv:2305.07995v1  [cs.RO]  13 May 2023
+which is essential for navigation tasks. Considering the
+inherent challenge associated with annotating depth data, the
+depth estimation component employs a self-supervised learn-
+ing approach by leveraging supervision signals generated by
+foothold positions. Conversely, the semantic segmentation
+component is trained in a supervised manner since the task
+of labeling the regions within an image that require depth
+adjustment is comparatively less arduous.
+We deploy our method on the legged robot ANYmal and
+validate it in a range of outdoor environments, including
+Grassland, Forest, and Hillside, against existing methods.
+Additionally, we show the beneﬁt of our method for multiple
+robotic downstream tasks, including elevation mapping and
+traversability estimation. Our results highlight our approach’s
+practicality and potential applicability in real-world scenar-
+ios.
+Our main contributions are the following:
+1) A novel Semantic Pointcloud Filter architecture that
+enables the ﬁltering of raw LiDAR data to achieve
+alignment with the underlying support surface.
+2) A semi-self-supervised learning framework that jointly
+performs support surface segmentation and depth esti-
+mation. Our framework utilizes manually labeled seg-
+mentation masks and support surface depths annotated
+by foothold positions.
+3) Real-world experiments using the legged robot ANY-
+mal, showcasing the beneﬁts of the SPF for elevation
+mapping and traversability estimation.
+II. RELATED WORK
+We provide an overview of existing support surface esti-
+mation methods and the building blocks of our work, namely,
+depth estimation and semantic segmentation.
+A. Support Surface Estimation
+Support surface estimation focuses on determining stable
+surfaces for robot mobility. In the situation where e.g. sparse
+vegetation occludes the support surface, the vegetation can
+be ﬁltered out by regarding them outliers. This problem can
+be tackled by methods using Kalman Filters [4], [12], [13]
+and other heuristics [7], [14].
+However, these methods assume that the underlying sur-
+face is mostly ﬂat. One can get a more realistic and robust
+estimation of the support surface by explicitly modeling
+the vegetation and the support surface. Various probabilistic
+models capturing both vegetation and ground characteris-
+tics [15], [16] have been proposed. They use proprioceptive
+and exteroceptive information to estimate support surfaces.
+Rather than using heuristic modeling, ˇSalansk´y et al. [17]
+introduced a learning-based method to ﬁlter a 2.5D map,
+while Wellington et al. [18] employ a learning approach to
+ﬁlter a voxel map. In our research, instead of using a fused
+representation such as an elevation map or voxel map, we
+reﬁne the raw sensor measurements directly. This allows our
+approach to generalize more effectively for a wider range of
+downstream applications.
+B. Self-supervised Depth Estimation
+Supervised depth estimation has a signiﬁcant body of
+work [19], [20], but requires pixel-wise depth labeling. Self-
+supervised learning has been applied to monocular depth
+estimation, achieving better performance than supervised
+methods [21], [22]. Further research incorporates semantic
+information [23], [24], but monocular depth estimation re-
+mains challenging due to its ill-posed nature.
+Depth completion methods use LiDAR pointcloud as ad-
+ditional input to provide explicit geometric information [25],
+[26]. The trained networks often employ an encoder-decoder
+structure [27], which we also adapt in our work to estimate
+the depth of the support surface. A similar problem of
+ﬁltering a point cloud in the domain of city-scale mapping is
+tackled by Stucker et al. [28] where they leverage semantics
+to reﬁne a large pointcloud scan.
+C. Multi-modal Semantic Segmentation
+Image-based semantic segmentation has been successfully
+applied to various robotic applications, including terrain
+classiﬁcation [29], [30]. To further improve the precision,
+various studies have explored the fusion of RGB and depth
+data for multi-modal semantic segmentation [31], [32]. Typ-
+ically, these methods employ convolutional neural networks
+(CNNs) to process input data and fuse features at different
+stages of the network. In our task, we employ semantic
+segmentation as a means of aiding the estimation of the depth
+of the support surface.
+III. METHOD
+The overview of our approach is given in Fig. 2. To better
+distinguish the supervisions for two tasks, the self-supervised
+label for depth estimation is named the support surface depth
+estimation (SSDE) label, and the label obtained manually
+for semantic segmentation is named support surface seg-
+mentation (SSSeg) label. The whole process comprises three
+stages: SSDE labels for depth estimation are generated from
+robot trajectories in a self-supervised manner without the
+need for human annotation. Subsequently, the SSSeg labels
+for semantic segmentation are manually labeled. Then the
+SPF is trained to do joint depth estimation and semantic
+segmentation. Finally, the pointcloud predicted by the SPF
+can be used for downstream applications.
+A. Problem Deﬁnition
+As shown in Fig. 1, given a camera image xrgb∈ Rm×n×3
+and raw pointcloud Pi∈ R3,i∈{ 1 . . .N}, our objective is
+to derive the ﬁltered pointcloud, ˆP, using our SPF, ˆP =
+fSPF(P,xrgb). Each point in the ﬁltered pointcloud, ˆPi∈
+R3,i∈{ 1 . . .N}, aligns with the support surfaces or the
+impenetrable obstacles.
+B. SSDE Label Generation
+We extract the foothold positions of the robot and ap-
+proximate the support surface using a Gaussian process (GP)
+similar to [16]. Then we generate pixel-wise depth labels by
+projecting the reconstructed support surface into the image.
+SSDE Label
+Semantic Loss
+Raycast
+Project
+III-B  Data Preparation III-C Training SPF
+Elevation
+Mappping
+Traversability
+Estimation
+Reproject
+Foothold
+Trajectory
+Support Surface 
+U-Net
+Raw Pointcloud 
+Filtered
+Pointcloud
+SSSeg Label
+Camera Image  
+Depth Loss
+V Application 
+Fig. 2. Overview of the system and corresponding sections. The training data is generated from pre-recorded data, consisting of raw pointcloud and
+camera images acquired from onboard sensors of the robot and robot trajectories obtained through exteroceptive observations. The support surface can
+be reconstructed from footholds extracted from the trajectories. When training the SPF, the raw pointcloud data P is ﬁrst projected onto image space
+as xd and concatenated with the camera image. The U-net-based neural network predicts jointly the depth ( using supervision of support surface depth
+estimation (SSDE) labels) and semantic segmentation (using supervision of hand-labeled semantic segmentation (SSSeg) labels). The ﬁnal output ˆy is given
+by combining xd and the predicted depth estimation ˆyde based on the predicted semantic segmentation mask ˆys. The ﬁltered pointcloud ˆP is reprojected
+from ˆy into 3D and used for two downstream tasks: elevation mapping and traversability estimation.
+1) Foothold extraction: Foothold positions serve as
+ground truth samples for the support surface. From the
+dataset, foot position trajectories are obtained using forward
+kinematics, comprising discrete height points over time.
+Footholds are extracted, assuming foot-ground contact occurs
+at local height minima in the world frame.
+Speciﬁcally, to extract footholds, a large temporal window
+WB with duration tB is constructed, and a short temporal
+window WS with duration tS is built around a point within WB
+(Fig. 3a). Mean foot heights within WS and WB are calculated,
+yielding meanS and meanB, and the maximum height change
+within WS is denoted as rS. A point is identiﬁed as a foothold
+if meanS≤ meanB and rS≤ rt, where rt is a threshold. This
+is applied iteratively for each point in WB. After evaluating
+all points, WB is moved forward, and the process is repeated.
+Footholds are denoted as Pi∈ R3,i∈ 1 . . .M, with M as the
+number of extracted footholds.
+2) Support surface reconstruction: We extrapolate the po-
+sitions of the extracted footholds in world frame to generate
+the support surface as done by Homberger et al. [16]. The
+foothold extrapolation method is valid under the assumption
+that the support surface is continuous and smooth.
+To achieve this, a grid map is employed, and the sparsely
+distributed footholds are used to determine the height of the
+corresponding cells in the grid map (Fig. 3b). This sparse
+grid map is then utilized to extrapolate the height values to
+adjacent grid cells via the implementation of a GP.
+Given a group of footholds Pi = (xi,zi), we stack their x-y
+positions into X = (x1, ...,xM) and heights Z = (z1, ...,zM).
+We model them as a GP with a data distribution of
+P (Z| X)∼ N (µ,K + σ 2
+n∗ I) (1)
+with µ∈ Rn the mean of Z, σn the noise and K the covariance
+matrix, Ki, j = k(xi,x j), where k is the kernel function [33].
+Then the distribution of the prediction at position x∗ can be
+written as z∗∼ N (µ∗,v∗), where
+a
+e
+b
+ c
+ d
+f
+Fig. 3. The reconstruction of the support surface. (a) The method to extract
+footholds. (b) Top view of the sparse grid map with the extracted foothold
+positions. (c) Reconstructed support surface using Gaussian Processes (GP)
+with color-coded elevation. (d) The corresponding variance of the recon-
+struction. The red area is with lower variance than the orange area. (e) The
+sparse depth image of the reconstructed support surface with the distance
+from the camera focal point being color-coded. (f) The corresponding
+variance of e in the image plane.
+µ∗ = kT (
+K + σ 2
+n I
+)−1
+Z
+v∗ = k∗ + σ 2
+n− kT (
+K + σ 2
+n I
+)−1
+k
+(2)
+with k∈ Rn, k j = k(x∗,x j). Our experimental results indicate
+that employing solely the Radial Basis Function (RBF)
+kernel is sufﬁcient to achieve a high level of accuracy and
+smoothness in the reconstructed support surface:
+k (xi,x j) = exp
+(
+−
+xi− x j
+2
+2l2
+)
+(3)
+To reduce the computational complexity, we ﬁt multiple
+GPs to small overlapping tiles for each local grid map. Sub-
+sequently, the individual GPs are integrated into a composite
+grid map that provides a variance and height estimate to
+represent the support surface. The height value is determined
+by calculating the mean GP prediction for the overlapping
+regions, while the variance is set to the maximum variance.
+3) Support Surface Projection: To generate training labels
+for SPF depth estimation, we reproject the generated sup-
+port surface (Sec. III-B.2) into all captured camera images
+along the trajectory. By raycasting the generated height
+grid map (Fig. 3c), we obtain correspondences between the
+pixels on the image plane and grid map cells. Given the
+correspondences, we can generate a support surface depth
+image capturing the distance from the camera center to the
+support surface (Fig. 3e), as well as project the variance
+of the Gaussian process σ into the image plane (Fig. 3f).
+The variance of the Gaussian Process does not capture the
+uncertainty with respect to the distance from which the
+support surface is observed. We found experimentally that
+using a more sophisticated formulation incorporating the
+observation distance during training did not increase the
+performance. The variance is used to mask the region of
+valid depth information using a threshold parameter τmax,
+resulting in the support surface label yde used as a target
+during training.
+C. Semantic Pointcloud Filter
+To leverage image-based computer vision techniques, P
+is projected to the camera image plane and obtain a sparse
+depth image xd∈ Rm×n. We use a image processing neural
+network to predict the ﬁltered depth, ˆy = h(xrgb,xd). The
+ﬁltered depth image is re-projected to the space as the ﬁltered
+pointcloud ˆP.
+1) Network Structure: The neural network model fol-
+lows an encoder-decoder structure with skip connections,
+as proposed in [27]. The encoder employs a pretrained
+EfﬁcientNet-B5 [34] as the backbone, where the ﬁrst con-
+volution layer is adapted to accommodate 4 input channels.
+The input to the network is a stacked tensor of the sparse
+depth image xd and the camera image xrgb.
+The decoder concurrently generates the support surface
+depth ˆyde, and binary semantic segmentation mask ˆys with
+two classes: rigid obstacles and support surfce . The ﬁnal
+output ˆy combines the support surface depth estimation ˆyde
+with the raw pointcloud xd
+ˆy = xd[ˆys == rigid] + ˆyde[ˆys == support ] (4)
+2) Training: The network is trained to minimize the total
+training loss Ltotal, given by the weighted sum of the support
+surface depth estimation loss Lde and semantic segmentation
+loss Lseg:
+Ltotal = Lseg + wLde (5)
+where w is used to balance the loss contributed by depth
+estimation and semantic segmentation. Lde of prediction ˆyde
+is computed as the mean squared error (MSE) with respect
+to SSDE labels, and is weighted by the pixel-wise variance
+σi of the support surface.
+.Lss = ∑
+i∈Css
+σ−2
+i
+(ˆyde,i− yde,i
+)2 (6)
+Css is set of pixels where yde has valid values. While Lseg is
+computed by employing the cross-entropy loss with respect
+to SSSeg labels, which is commonly used for semantic
+segmentation tasks.
+IV. IMPLEMENTATION DETAILS
+A. SSDE Generation
+When generating the SSDE labels, we set the length of
+WB to 1 .5 s, length of SB to 0 .07 s and rt to 0 .015 m. In
+RBF kernel, the l is set to 1 e−5. For the depth image of the
+reconstructed terrain, we only use the region with a variance
+lower than τmax = 0.03 as our SSDE labels.
+B. Network Training
+The neural network is trained for 9000 steps ( ∼1 hour)
+using a batch size of 6 on a single NVIDIA GeForce
+RTX3090, with an EfﬁcientNet-B5 [34] encoder pre-trained
+on ImageNet [35]. The resulting weights of the additional
+depth input channel and the decoder are randomly initialized
+following [36]. To train the network, we use the AdamW
+optimizer [37] and schedule the learning rate following [38].
+In the loss function, the w is set to 0.02. During training for
+data augmentations, we ﬁrst ﬂip xrgb and xd horizontally with
+a probability of 0.5. Secondly, the input images are randomly
+cropped from a shape of 540 × 720 to 352 × 704.
+V. EXPERIMENTS
+We ﬁrst describe the experiment dataset collection and
+training data generation (Sec. V-A). Then we test the trained
+SPF depth prediction performance and perform an ablation
+study (Sec. V-C). Finally, we showcase that the SPF ﬁltered
+pointcloud can generate more accurate results in two down-
+stream applications, namely elevation mapping (Sec. V-D)
+and traversability estimation (Sec. V-E).
+A. Dataset Overview
+Grassland
+ Hillside
+ Forest
+ Hönggerberg
+Fig. 4. Example images from different environments.
+The data is collected using the legged robot ANYmal, con-
+trolled by a human operator, in various outdoor environments
+in Perugia, Italy and H ¨onggerberg, Switzerland. ANYmal
+is equipped with a Robosense RS-Bpearl 32 beam Dome-
+LiDAR and an Alphasense Core 0 .4 MPix RGB camera unit.
+The camera images and LiDAR data are collected at a rate
+of 10 Hz, and downsampled during post-processing to 2 Hz,
+with image resolution at 540 × 720. We recorded six 10-20
+minutes trajectories from Perugia, classiﬁed into three envi-
+ronments: Grassland, Hillside, and Forest. Each environment
+contains two trajectories. The training set and testing set
+each contain three trajectories, one from each of these three
+environments. For each trajectory, 100 images were sampled
+at a 3.5-second interval to avoid repetition, and each image
+was manually annotated into two classes: support surface
+and rigid obstacles for semantic segmentation. Additionally,
+a trajectory was collected from H ¨onggerberg, Switzerland,
+only for evaluating downstream applications.
+Examples of images from the onboard camera are shown
+for the different environments in Fig. 4.
+B. Support Surface Depth Estimation
+0-2 2-4 4-6 6-8 8-10
+0
+2
+4
+6
+8Err(m)
+Grassland
+ours
+raw
+0-2 2-4 4-6 6-8 8-10
+Distance Range(m)
+Hillside
+0-2 2-4 4-6 6-8 8-10
+Forest
+Fig. 5. Comparision of the absolute error of the depth estimation with
+respect to the distance in the different environments in the testing set.
+The result presented in Fig. 5 shows the distribution of
+the absolute error of support surface depth estimation in
+relation to distance compared to the raw pointcloud. The
+absolute error is computed with respect to the SSDE labels
+from the camera and is binned by the distance. The result
+demonstrates that the performance of the raw pointcloud
+worsens in Grassland, Hillside, and Forest environments. The
+ﬁltered pointcloud also exhibits this trend, indicating that the
+quality of the raw pointcloud directly affects the performance
+of our ﬁltered pointcloud. Notably, in all environments,
+within any distance bins, the ﬁltered pointcloud outperforms
+the raw pointcloud. The error increases with respect to the
+distance, which is common in monocular depth estimation
+tasks. Additionally, the reconstructed support surface, while
+being locally consistent in proximity to the robot, becomes
+less accurate at longer ranges due to localization drift.
+C. Ablation Study
+The ﬁrst ablation assesses the impact of providing varying
+input modalities followed by investigating the use of hand-
+labeled SSSeg labels in the training of the semantic segmen-
+tation task. For rigors analysis, we train all models 10 times
+with varying random seeds and report the standard deviation.
+We evaluate depth estimation and semantic segmentation
+separately for each model. To measure the performance of
+depth estimation, we use the following metrics:
+1) Average Relative Error (REL): 1
+n ∑n
+p
+|yp− ˆyp|
+y
+2) Root Mean Squared Error (RMSE):
+√
+1
+n ∑n
+p (yp− ˆyp)2
+)
+where all metrics are commonly used to evaluate monocular
+depth estimation performance [38]. The metrics are evaluated
+with respect to all the validation pixels of the SSDE label
+within 5m. The result is shown in Table I. It is important
+to note that the error in depth estimation is assessed within
+the image space, and therefore, does not directly correspond
+to the error in the estimation of the height of the support
+surface.
+RGB Image
+ Ground Truth
+ Only LiDAR
+ Only RGB
+ Ours
+Grassland
+Forest
+Fig. 6. The impact of varying modality input on semantic segmentation.
+In a relatively simple environment with no rigid obstacles, the segmentation
+performance of all examined models appears to be comparable (1st row).
+However, in more complex environments (2nd row), the model relying solely
+on pointcloud input struggles to accurately segment the rigid obstacles
+near the ground (the trunk), while the model utilizing only RGB images
+is adversely impacted by the tree’s shadow.
+We present an ablation comparison for support surface
+depth estimation in Table I. All our models, as well as
+the Only RGB and Only LiDAR input models, outperform
+the raw pointcloud. In average, our model outperforms
+single-modality models ( Only RGB , Only LiDAR ) by 14%
+in terms of RMSE. While single-modal models may yield
+better results in speciﬁc environments, our model remains
+competitive and close (less than 0 .02 m) to the best ablations
+in all environments. Conversely, ablation models can exhibit
+an RMSE increase of more than 20% in comparison to
+our model in less favorable environments. These ﬁndings
+indicate that the multi-modal design signiﬁcantly improves
+the model’s robustness in the face of varying environmental
+conditions.
+We evaluate the semantic segmentation of ours and the
+ablated models with the mean intersection of union (mIoU)
+metric, which is a widely adopted measurement in the
+ﬁeld of semantic segmentation tasks [39]. We show the
+results for two exemplary inputs in Fig. 6, and provide
+numerical mIoU values in Table II. Surprisingly, our results
+in Table. II indicate that our model, as well as two ablations,
+demonstrate comparable performance in mIoU. This can
+be attributed to two factors. First, as illustrated in Fig. 6,
+the majority of the image is relatively straightforward to
+segment. The key challenge lies in accurately determining
+the boundaries of the support surface, which represents only
+a minor portion in comparison to the entire label. This
+causes the mIoU to be less sensitive to the segmentation of
+the area of interest. Secondly, while RGB images provide
+more explicit semantic information than pointcloud, they
+can suffer from poor lighting conditions (as demonstrated in
+Fig. 6), making it difﬁcult to generalize on our small dataset.
+Consequently, incorporating geometric information into our
+model can potentially enhance its robustness. Considering
+TABLE I
+EVALUATION OF SUPPORT SURFACE DEPTH ESTIMATION .
+Grassland Hillside Forest All
+Method RMSE ↓ REL↓ RMSE↓ REL↓ RMSE↓ REL↓ RMSE↓ REL↓
+Raw Pointcloud 0.503 0.15 0.710 0.20 0.656 0.15 0.63 0.17
+Only RGB 0.46 ± 0.03 0.15 ± 0.06 0.37 ± 0.03 0.11 ± 0.04 0.35± 0.03 0.09 ± 0.02 0.40± 0.03 0.12 ± 0.03
+Only LiDAR 0.45 ± 0.03 0.11 ± 0.01 0.29± 0.02 0.08 ± 0.01 0.46± 0.04 0.10 ± 0.01 0.41 ± 0.01 0.10 ± 0.03
+SPF 0.37± 0.02 0.11 ± 0.01 0.31± 0.04 0.10 ± 0.01 0.37 ± 0.02 0.10 ± 0.01 0.35± 0.01 0.10 ± 0.01
+TABLE II
+SUPPORT SURFACE SEMANTIC SEGMENTATION IN M IOU.
+Grassland Hillside Forest All
+No hand-label 43.93±0.93 48.61 ±0.96 50.26 ±1.19 45.99 ±0.68
+Only RGB 89.12 ±1.33 83.71±2.67 96.90±0.85 89.02 ±0.72
+Only LiDAR 90.77±0.21 83.28±0.89 96.50 ±0.07 89.14 ±0.33
+SPF 90.46 ±0.35 82.83 ±0.92 97.29±0.17 89.42 ±0.38
+all three environments, our ablation shows that multi-modal
+and single-modal perform on par for the task of semantic
+segmentation.
+We also investigate the necessity of manually labeled
+segmentation labels by comparing it to solely employing
+labels generated based on the valid regions of the SSDE
+label Css and considering other regions as rigid obstacles.
+This label does not reﬂect the scene well given that all
+untraversed regions are regarded as obstacles/ rigid. As
+shown in Table II, the models with hand-labeled data exhibit
+signiﬁcant improvement to the model trained without hand-
+labels.
+D. Elevation Mapping
+To validate SPF’s practical beneﬁts, we input the ﬁltered
+pointcloud into an elevation mapping algorithm [3], which
+fuses the pointcloud with the robot pose to generate an
+8 m×8 m grid map at 0 .04 m resolution. We compare our
+method with three baselines: Raw generates maps using
+the same elevation mapping algorithm but inputs the raw
+pointcloud. Smooth involves applying a smooth operation [3]
+on the elevation map generated from Raw. For these two
+baselines, we only feed the points within the camera’s ﬁeld
+of view (FoV) into the algorithm. An illustration of FoV is
+presented in Fig. 8. Moreover, Foothold refers to the nearest-
+neighbor completion of the footholds, where the robot tra-
+versed. This baseline exempliﬁes methods relying solely on
+proprioceptive observation and a ﬂat-ground assumption.
+The result in Fig. 7 shows three elevation mapping samples
+together with two baseline methods. In each image, we
+illustrate the robot as non-transparent (past) and transparent
+(future). These robots allow us to validate the elevation
+mapping accuracy by examining the foothold alignment with
+the estimated terrain surface. Sample (a) features high grass.
+The elevation map constructed with our SPF matches the
+robot’s foot height, while the maps from the two baselines are
+higher than the robot’s leg. Smoothing the raw elevation map
+reduces its root-mean-square error (RMSE) by 12.6% while
+our method reduces it by 56.0%. Sample (b), set in a forest
+with minimal grass, also demonstrates our method’s superior
+performance in representing support surfaces and recogniz-
+ing obstacles. Sample (c), taken from H ¨onggerberg Zurich,
+highlights a domain shift from nature to an urban setting.
+Similar to (a), our method reduces the RMSE by 42.0% com-
+pared to the raw elevation map and accurately captures the
+fence’s structure. These comparisons demonstrate that our
+SPF effectively and robustly distinguishes vegetation from
+rigid obstacles, correctly lowering the perceived vegetation
+height while preserving the structure of rigid obstacles.
+For quantitative comparison over the testing trajectory in
+Perugia Grassland, we compare the constructed elevation
+map with the SSDE labels described in Sec. III-B. Specif-
+ically, elevation maps are generated at a rate of 10 Hz as
+the trajectory is replayed. On each update of the maps,
+an error is computed between the new map and the SSDE
+labels. Then we transform these error maps into the robot’s
+frame, accumulate them, and compute the RMSE, and error
+variance, as depicted in Fig. 8. The trajectory is from the test
+set featuring a hillside. In the trajectory, the robot was mostly
+walking forward with some turning motions (The forward
+direction is shown in the bottom right of Fig. 8). Moreover,
+the elevation perceived in the front goes towards the back of
+the robot’s frame as the robot moves forward. Therefore, the
+upper parts (the part in FoV) of each subﬁgure correspond
+to the ”prediction” of elevation height, while the lower parts
+correspond to the mapping result fused over several frames.
+The elevation map constructed with our ﬁltered pointcloud
+has an RMSE of 0 .133 m, which is about 48% less than the
+0.183 m of the raw baseline. Smoothing results in an RMSE
+of 0 .170 m, which is only a 7% improvement. Our method
+has a lower error at both the front and back of the robot.
+The high error value on the top left is exceptional and is
+caused by overexposure when the robot leaves tree shades.
+As the footholds are exact samples of the support surface,
+foothold baseline achieves almost zero RMSE in the areas
+under the robot and behind the robot. However, it predicts the
+height of the untraversed area in the front much worse than
+the methods with exteroceptive observations. The standard
+deviations of the errors are shown in the second row. The
+error from the smooth baseline is more stable, resulting in
+a lower standard deviation. Both our method and the raw
+pointcloud have comparable standard deviations for their
+Camera Image
+ Ours Elevation Ours Error Raw Elevation Raw Error Smooth ElevationSmooth Error
+a)
+High Grass RMSE 0.278RMSE 0.318RMSE 0.140
+RMSE 0.049 RMSE 0.056 RMSE 0.060
+b)
+Low Grass + Forest
+c)
+Mid Grass + Fence
+RMSE 0.047 RMSE 0.081 RMSE 0.069
+Fig. 7. Comparison of elevation mapping generated from different methods in different environments. On the leftmost side are the onboard camera images.
+For each method, we provide the generated elevation map and the error map (RMSE) from a top-down perspective with respect to the support surface for
+this region of the trajectory. We compare our method ( Ours) to the raw pointcloud ( Raw) and the raw pointcloud with additional smoothing ( Smooth). The
+colorbars for error maps are placed on the right, with brighter colors indicating higher error. Our method outperforms the baselines in various environments,
+such as high grass hills (a), forests (b), and urban grasslands with impenetrable fences (c).
+RMSEVariance
+Ours Raw FootholdSmooth
+RMSE: 0.133 RMSE:0.184 RMSE: 0.171 RMSE: 0.230
+FoV
+Fig. 8. The errors between elevation maps generated using our method
+and baselines. In the ﬁrst row, the value of each pixel is the RMSE of that
+pixel over the testing trajectory, expressed in meters. The variances (second
+row) of the errors are also provided. These ﬁgures are accumulated in the
+robot frame. The forward direction and the ﬁeld of view (FoV) of the robot
+are shown in the bottom right ﬁgure. White areas indicated that no errors
+are collected in those cells.
+errors. Please note that thanks to the modularity design of our
+proposed SPF. It’s possible to leverage the beneﬁts of both
+pointcloud ﬁltering and smoothing and obtain prediction that
+is more accurate and stable.
+E. Traversability Estimation
+Filtering out noisy high grass and revealing true support
+terrain is beneﬁcial for an accurate traversability estimation.
+We estimate the traversability using the method described
+in [40]. Elevation maps constructed in Sec. V-D are used
+as the input to this algorithm. Two samples of traversability
+estimation in the natural environment are shown in Fig. 9.
+The grid maps on the right rows are colored with traversabil-
+ity, where a high traversability corresponds to blue, while
+low to red. When the robot is in the vegetation, our method
+recognizes vegetation and estimates the underlying support
+surface leading to the correct traversability estimate. On the
+Camera Image Ours Raw Point Cloud
+Traversability
+Smooth
+Fig. 9. Comparison of traversability estimation using the raw, smoothed,
+and our ﬁltered pointcloud. The traversability is color-coded, where blue
+indicates traversable and red untraversable. Our method correctly predicts
+the traversability in the meadow and forest environment. Using the raw or
+smoothed pointcloud prohibits motion planning in the meadow.
+other hand, directly using the pointcloud or the smoothed
+version lead to incorrect traversability rendering motion
+planning and navigation impossible. When the robot is in
+the forest, our method and baselines all yield reasonable
+traversability maps.
+VI. CONCLUSION
+In this work, we present our semantic pointcloud ﬁlter
+(SPF) trained in a semi-self-supervised manner, which can
+accurately adjust the pointcloud to the support surface on a
+vegetation-occluded terrain, leveraging semantics from the
+camera images and pointcloud. Using pointcloud ﬁltered
+by SPF, we improved elevation mapping and traversability
+estimation performance compared to existing baseline meth-
+ods, potentially increasing autonomy for a variety of robotic
+systems within natural environments.
+While multiple real-world experiments demonstrated the
+efﬁcacy of the proposed method, limitations exist, such as
+errors in ﬁltered depth estimation under adverse lighting
+conditions and the possibility of inaccuracy due to domain
+shifts in vegetation species and seasons. Future research will
+explore the incorporation of anomaly detection into label
+generation for semantic segmentation, eliminating the need
+for manual labeling and scaling up data collection to enhance
+robustness further. Moreover, integrating the pointcloud ﬁlter
+with downstream tasks, including locomotion, path planning,
+and exploration, holds signiﬁcant promise.
+REFERENCES
+[1] E. Marder-Eppstein, E. Berger, T. Foote, B. Gerkey, and K. Konolige,
+“The ofﬁce marathon: Robust navigation in an indoor ofﬁce environ-
+ment,” in International Conference on Robotics and Automation, 2010.
+[2] S. Macenski, F. Martin, R. White, and J. Gin ´es Clavero, “The marathon
+2: A navigation system,” in 2020 IEEE/RSJ International Conference
+on Intelligent Robots and Systems (IROS) , 2020.
+[3] T. Miki, L. Wellhausen, R. Grandia, F. Jenelten, T. Homberger, and
+M. Hutter, “Elevation mapping for locomotion and navigation using
+gpu,” 2022.
+[4] P. Fankhauser, M. Bloesch, and M. Hutter, “Probabilistic terrain
+mapping for mobile robots with uncertain localization,” IEEE Robotics
+Autom. Lett., vol. 3, no. 4, pp. 3019–3026, 2018.
+[5] H. Oleynikova et al. , “V oxblox: Incremental 3d euclidean signed
+distance ﬁelds for on-board mav planning,” in IEEE/RSJ International
+Conference on Intelligent Robots and Systems (IROS) , 2017.
+[6] T. Miki, J. Lee, J. Hwangbo, L. Wellhausen, V . Koltun, and M. Hutter,
+“Learning robust perceptive locomotion for quadrupedal robots in the
+wild,” Science Robotics, vol. 7, no. 62, p. eabk2822, 2022.
+[7] F. Jenelten, R. Grandia, F. Farshidian, and M. Hutter, “Tamols: Terrain-
+aware motion optimization for legged systems,” IEEE Transactions on
+Robotics, 2022.
+[8] J. Frey, D. Hoeller, S. Khattak, and M. Hutter, “Locomotion policy
+guided traversability learning using volumetric representations of
+complex environments,” in 2022 IEEE/RSJ International Conference
+on Intelligent Robots and Systems (IROS) , 2022.
+[9] J. Frey, M. Mattamala, N. Chebrolu, C. Cadena, M. Fallon, and
+M. Hutter, “Fast Traversability Estimation for Wild Visual Naviga-
+tion,” in Proceedings of Robotics: Science and Systems , 2023.
+[10] H. Oleynikova, Z. Taylor, R. Siegwart, and J. Nieto, “Safe local
+exploration for replanning in cluttered unknown environments for
+micro-aerial vehicles,” IEEE Robotics and Automation Letters , 2018.
+[11] T. Dang et al. , “Graph-based subterranean exploration path planning
+using aerial and legged robots,” Journal of Field Robotics , vol. 37,
+no. 8, pp. 1363–1388, 2020, wiley Online Library.
+[12] S. Thrun et al. , “Robotic mapping: A survey,” Exploring artiﬁcial
+intelligence in the new millennium , vol. 1, no. 1-35, p. 1, 2002.
+[13] P. Fankhauser, M. Bloesch, C. Gehring, M. Hutter, and R. Y . Siegwart,
+“Robot-centric elevation mapping with uncertainty estimates,” 2014.
+[14] J. Z. Kolter, Y . Kim, and A. Y . Ng, “Stereo vision and terrain modeling
+for quadruped robots,” in 2009 IEEE International Conference on
+Robotics and Automation , 2009, pp. 1557–1564.
+[15] C. K. Wellington, A. C. Courville, and A. Stentz, “A generative model
+of terrain for autonomous navigation in vegetation,” The International
+Journal of Robotics Research , vol. 25, pp. 1287 – 1304, 2006.
+[16] T. Homberger, L. Wellhausen, P. Fankhauser, and M. Hutter, “Support
+surface estimation for legged robots,” in 2019 International Confer-
+ence on Robotics and Automation (ICRA) , 2019, pp. 8470–8476.
+[17] V . ˇSalansk´y et al. , “Pose consistency kkt-loss for weakly supervised
+learning of robot-terrain interaction model,” IEEE Robotics and Au-
+tomation Letters, vol. 6, no. 3, pp. 5477–5484, 2021.
+[18] C. Wellington and A. Stentz, “Learning predictions of the load-bearing
+surface for autonomous rough-terrain navigation in vegetation,” Field
+and Service Robotics: Recent Advances in Reserch and Applications ,
+pp. 83–92, 2006.
+[19] I. Laina, C. Rupprecht, V . Belagiannis, F. Tombari, and N. Navab,
+“Deeper depth prediction with fully convolutional residual networks,”
+in 2016 Fourth International Conference on 3D Vision (3DV) , 2016,
+pp. 239–248.
+[20] B. Li, Y . Dai, and M. He, “Monocular depth estimation with hierarchi-
+cal fusion of dilated cnns and soft-weighted-sum inference,” Pattern
+Recognition, vol. 83, pp. 328–339, 2018.
+[21] H. Zhou, D. Greenwood, and S. Taylor, “Self-supervised monocular
+depth estimation with internal feature fusion,” in 32nd British Machine
+Vision Conference 2021, BMVC 2021 , p. 378.
+[22] A. Johnston and G. Carneiro, “Self-supervised monocular trained
+depth estimation using self-attention and discrete disparity volume,”
+2020 IEEE/CVF Conference on Computer Vision and Pattern Recog-
+nition (CVPR), pp. 4755–4764, 2020.
+[23] M. Klingner, J. Term ¨ohlen, J. Mikolajczyk, and T. Fingscheidt, “Self-
+supervised monocular depth estimation: Solving the dynamic object
+problem by semantic guidance,” CoRR, vol. abs/2007.06936, 2020.
+[24] V . R. Kumar et al. , “Syndistnet: Self-supervised monocular ﬁsheye
+camera distance estimation synergized with semantic segmentation for
+autonomous driving,” 2021 IEEE Winter Conference on Applications
+of Computer Vision (WACV) , pp. 61–71, 2021.
+[25] F. Ma et al. , “Self-supervised sparse-to-dense: Self-supervised depth
+completion from lidar and monocular camera,” in 2019 International
+Conference on Robotics and Automation (ICRA) , 2019, pp. 3288–
+3295.
+[26] L. Liu, Y . Liao, Y . Wang, A. Geiger, and Y . Liu, “Learning steering
+kernels for guided depth completion,” IEEE Transactions on Image
+Processing, vol. 30, pp. 2850–2861, 2021.
+[27] O. Ronneberger, P. Fischer, and T. Brox, “U-net: Convolutional
+networks for biomedical image segmentation,” in Medical Image Com-
+puting and Computer-Assisted Intervention – MICCAI 2015, N. Navab,
+J. Hornegger, W. M. Wells, and A. F. Frangi, Eds. Cham: Springer
+International Publishing, 2015, pp. 234–241.
+[28] C. Stucker, A. Richard, J. D. Wegner, and K. Schindler, “Supervised
+outlier detection in large-scale mvs point clouds for 3d city modeling
+applications,” ISPRS Annals of the Photogrammetry, Remote Sensing
+and Spatial Information Sciences , 2018.
+[29] Valada et al. , “Deep auxiliary learning for visual localization and
+odometry,” in 2018 IEEE international conference on robotics and
+automation (ICRA). IEEE, 2018, pp. 6939–6946.
+[30] B. Kuang et al. , “Semantic terrain segmentation in the navigation
+vision of planetary rovers—a systematic literature review,” Sensors,
+vol. 22, no. 21, p. 8393, 2022.
+[31] G. Rizzoli, F. Barbato, and P. Zanuttigh, “Multimodal semantic seg-
+mentation in autonomous driving: A review of current approaches and
+future perspectives,” Technologies, vol. 10, no. 4, 2022.
+[32] J. Dolz, K. Gopinath, J. Yuan, H. Lombaert, C. Desrosiers, and
+I. Ben Ayed, “Hyperdense-net: A hyper-densely connected cnn for
+multi-modal image segmentation,” IEEE Transactions on Medical
+Imaging, vol. 38, no. 5, pp. 1116–1126, 2019.
+[33] C. K. Williams and C. E. Rasmussen, Gaussian processes for machine
+learning. MIT press Cambridge, MA, 2006, vol. 2, no. 3.
+[34] M. Tan and Q. Le, “Efﬁcientnet: Rethinking model scaling for con-
+volutional neural networks,” in International conference on machine
+learning. PMLR, 2019, pp. 6105–6114.
+[35] J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei,
+“Imagenet: A large-scale hierarchical image database,” in 2009 IEEE
+Conference on Computer Vision and Pattern Recognition , 2009, pp.
+248–255.
+[36] X. Glorot and Y . Bengio, “Understanding the difﬁculty of training deep
+feedforward neural networks,” in Proceedings of the thirteenth inter-
+national conference on artiﬁcial intelligence and statistics . JMLR
+Workshop and Conference Proceedings, 2010, pp. 249–256.
+[37] I. Loshchilov and F. Hutter, “Decoupled weight decay regularization,”
+in 7th International Conference on Learning Representations, ICLR
+2019, New Orleans, LA, USA, May 6-9, 2019. OpenReview.net, 2019.
+[38] S. Farooq Bhat, I. Alhashim, and P. Wonka, “Adabins: Depth estima-
+tion using adaptive bins,” in 2021 IEEE/CVF Conference on Computer
+Vision and Pattern Recognition (CVPR) , 2021, pp. 4008–4017.
+[39] J. Long, E. Shelhamer, and T. Darrell, “Fully convolutional networks
+for semantic segmentation,” in Proceedings of the IEEE conference on
+computer vision and pattern recognition , 2015, pp. 3431–3440.
+[40] B. Yang et al., “Real-time optimal navigation planning using learned
+motion costs,” in IEEE International Conference on Robotics and
+Automation, ICRA. IEEE, 2021, pp. 9283–9289.

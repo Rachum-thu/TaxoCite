@@ -1,0 +1,922 @@
+Semantic Segmentation on Swiss3DCities: A Benchmark Study on
+Aerial Photogrammetric 3D Pointcloud Dataset
+G¨ ulcan Can∗1, Dario Mantegazza †2, Gabriele Abbate ‡2, S´ ebastien Chappuis§1, and
+Alessandro Giusti ¶2
+1Nomoko AG, Zurich, Switzerland
+2The Dalle Molle Institute for Artiﬁcial Intelligence (IDSIA), Viganello, Switzerland
+Abstract
+We introduce a new outdoor urban 3D pointcloud
+dataset, covering a total area of 2 .7 km2, sampled
+from three Swiss cities with diﬀerent characteristics.
+The dataset is manually annotated for semantic seg-
+mentation with per-point labels, and is built using
+photogrammetry from images acquired by multiro-
+tors equipped with high-resolution cameras. In con-
+trast to datasets acquired with ground LiDAR sen-
+sors, the resulting point clouds are uniformly dense
+and complete, and are useful to disparate applica-
+tions, including autonomous driving, gaming and
+smart city planning. As a benchmark, we report
+quantitative results of PointNet++, an established
+point-based deep 3D semantic segmentation model;
+on this model, we additionally study the impact of
+using diﬀerent cities for model generalization.
+1 Introduction
+Many recent achievements of deep learning depend
+on the availability of very large labeled training
+datasets [29], [10], such as ImageNet [8] for image
+classiﬁcation and MS COCO [18] for image segmen-
+tation. In this work, we propose a new dataset of
+∗Corresponding Author: gulcan@nomoko.world
+†dario.mantegazza@idsia.ch
+‡gabriele.abbate@idsia.ch
+§sebastien@nomoko.world
+¶alessandrog@idsia.ch
+dense urban 3D pointclouds, spanning 2 .7 km2, ac-
+quired using photogrammetry from three diﬀerent
+cities in Switzerland (Zurich, Zug and Davos). The
+entire dataset is manually annotated with dense la-
+bels, which associate each point to one of ﬁve cate-
+gories: terrain, construction, vegetation, vehicle, and
+urban asset.
+The main goal of the dataset is to train and vali-
+date semantic segmentation algorithms for urban en-
+vironments. Semantic segmentation consists in parti-
+tioning the data into multiple sets of points, such that
+each set represents only objects of a given type. The
+problem is relevant for many real-world applications,
+such as autonomous or assisted driving, automated
+content generation for games [15], augmented and
+virtual reality applications, and city planning [38].
+Most existing datasets [27], [3], [32] for outdoor 3D
+semantic segmentation are motivated by real-time au-
+tonomous driving applications, and are therefore ac-
+quired at low resolution by street-level Light Detec-
+tion and Ranging (LiDAR) sensors; this yields incom-
+plete point clouds (for example, areas far from roads,
+such as roofs, are either not acquired or acquired with
+very low resolution) which are unsuitable for appli-
+cations such as city planning, urban augmented or
+virtual reality (AR/VR), or gaming. In contrast, we
+acquire high-resolution photographs from unmanned
+aerial vehicles (UAV) ﬂying a grid pattern over the
+area of interest, then reconstruct the 3D shape us-
+ing photogrammetry; this allows us to densely ac-
+quire most outdoor surfaces. Similar approaches have
+been previously adopted for several applications, in-
+1
+arXiv:2012.12996v1  [cs.CV]  23 Dec 2020
+Table 1: Comparison of our datasets with the common 3D pointcloud datasets in the literature. The spatial
+size denotes either the covered area or the driven length (in the case of mobile LiDAR captures) for a dataset.
+Paper Data
+Acquisition
+Spatial
+Size City Cat. RGB Points
+Semantic
+KITTI[3] Mobile LiDAR 39 .2 × 103m Karlsruhe 25 No 4549M
+Paris-Lille3D[27] Mobile LiDAR 1 .94 × 103m Paris
+Lille 9 No 143M
+Toronto3D[32] Mobile LiDAR 1 × 103m Toronto 8 Yes 78.3M
+Semantic3D[12] Static LiDAR - St. Gallen 8 Yes 4009M
+ISPRS[21] Aerial LiDAR - Vaihingen 9 No 1.2M
+DublinCity[41] Aerial LiDAR 2 × 106m2 Dublin 13 No 260M
+DALES[33] Aerial LiDAR 10 × 106m2 Surrey, BC 8 No 505M
+SenSat
+Urban[16]
+UA V
+Photogrammetry 6 × 106m2 Birmingham
+Cambridge 13 Yes 2847M
+Swiss3DCities
+(this paper)
+UA V
+Photogrammetry 2.7 × 106m2
+Zurich
+Zug
+Davos
+5 Yes
+226M
+(Sparse: 7.5M
+Dense: 3147M)
+cluding automatic urban area mapping [20], damage
+detection [19], and cultural heritage site mapping for
+digital preservation [23]. Compared to 3D models
+built by satellite-borne cameras, this approach yields
+models with higher-resolution geometry and texture.
+High resolution data yields more accurate mod-
+els, but also aids the segmentation task because it
+contains more information to discriminate between
+diﬀerent classes; currently, state-of-the-art models
+for 3D semantic segmentation rely on deep learn-
+ing [11], [39], [4] and represent input data as vox-
+els [40], points [24] or meshes [17]; other approaches
+render multiple views of the 3D scene and then rely
+on 2D semantic segmentation models [30], [31], [5],
+which can be trained on more abundant 2D labeled
+semantic segmentation datasets.
+To show the potential of our dataset for training
+and evaluating segmentation algorithms, we consider
+the well-established PointNet++ model [24], [25] and
+report its performance when using diﬀerent splits for
+training and evaluation. In particular, the perfor-
+mance of machine learning models depends not only
+on the size of the training dataset, but also on how
+representative it is of the evaluation data: often,
+models trained on large amounts of data from a given
+environment fail to generalize to a diﬀerent target en-
+vironment. Because our dataset contains data from
+three cities with diﬀerent characteristics, it can be
+used to explore this fundamental aspect.
+The rest of the paper is organized into ﬁve sections.
+We ﬁrst describe related commonly-used datasets for
+3D semantic segmentation in Section 2. Then, in
+Section 3 we present our main contribution : a
+new pointwise labeled multi-city dataset for seman-
+tic segmentation of outdoor 3D point clouds, which
+we release to the research community in three ver-
+sions with diﬀerent point densities; we characterize
+the dataset and describe data acquisition, process-
+ing and manual labeling pipelines. In Section 4 we
+describe the applied deep learning model to demon-
+strate semantic segmentation task on our dataset.
+We discuss quantitative results in Section 5, where we
+also explore the model’s generalization ability across
+diﬀerent cities ( secondary contribution ). Section
+6 concludes the paper.
+2 Related Work
+This section summarizes relevant pointcloud datasets
+with semantic segmentation labels (see Table 1). One
+2
+Segmentation
+by 3D artists
+: Automatic
+Process : Data : Manual 
+Process
+   Colored 
+pointcloud
+(~15M vertices)
+   Textured mesh
+(1M polygons)
+Segmented
+mesh
+(1M polygons)
+SfM-based
+3D reconstruction
+Mesh simpliﬁcation
+to 1M polygons
+Mesh simpliﬁcation
+to 30M polygons
+Label transfer using
+nearest vertex
+neighbor
+: Multiple 
+Data
+Drone Flight High-resolution
+images
+Dense
+mesh 
+& pointcloud
+   Colored 
+segmented
+pointcloud
+(~15M vertices)
+Figure 1: Our data processing and segmentation pipeline.
+fundamental diﬀerence among the datasets is their
+acquisition modality, i.e. LiDAR or photogrammetry.
+2.1 LiDAR Datasets
+A lot of recent research eﬀorts are related to au-
+tonomous driving applications: in particular, recog-
+nizing and segmenting roads and relevant urban el-
+ements from images or 3D point clouds acquired by
+the car itself. In this context, laser scanning systems,
+e.g. Velodyne HDL-64E [34], are commonly used to
+acquire high-accuracy LiDAR pointcloud sequences
+from a car’s point of view. Paris-Lille[27], Semantic
+KITTI[3], and Toronto3D dataset[32] are among such
+large-scale datasets with pointwise semantic labels.
+Due to the low-lying viewpoint and focus on
+driving-related segmentation tasks, these mobile Li-
+DAR datasets show incomplete point clouds: e.g. the
+upper ﬂoors or roofs of the buildings are usually not
+captured. Even though these datasets serve their
+main scope very well, they are not suitable for other
+applications, such as urban planning.
+Semantic3D dataset[12] is a large-scale pointcloud
+dataset with per-point semantic labels. This dataset
+is acquired via a static terrestrial laser scanning sys-
+tem in the north-east of Switzerland. Several points
+to note about this dataset are gaps due the occlusions
+(also known as LiDAR shadows), moving object arti-
+facts, and varying point density based on the distance
+of the laser system to each surface or object in the
+scene.
+As captured from air (either from a UAV or a
+helicopter), aerial LiDAR datasets such as ISPRS
+airborne LiDAR pointcloud dataset [21], DublinCity
+dataset [41] and DALES dataset [33] are also relevant
+in our context. One important diﬀerence of these
+datasets with respect to ours is that, due to the nar-
+row divergence of laser beams, they can sometimes
+capture ground samples even when covered by veg-
+etation. Compared to the DublinCity aerial LiDAR
+dataset[41], ours covers a moderately larger area and,
+in the medium-density version, has a similar point
+density. This shows the relevance of our contribution
+with respect to existing aerial LiDAR datasets.
+Photogrammetric pointclouds Sun3D [36] and
+Stanford Large-Scale Indoor Spaces 3D (S3DIS) [1]
+are commonly used pointcloud datasets acquired us-
+ing Structure-from-motion 3D reconstruction tech-
+niques. These datasets are focused on indoor scenes,
+and present interesting challenges for computer vision
+research, such as the presence of clutter, and relevant
+context around diﬀerent objects, that can play a role
+in scene understanding. Due to their limited extent,
+the capturing process is much less challenging than
+in large-scale outdoor contexts, which also need to
+account for variability of weather, illumination con-
+ditions, and scales of represented objects.
+The Pix4D dataset [2] comprises of aerial pho-
+togrammetric pointclouds from three outdoor scenes
+with diﬀerent distributions of urban surfaces or ob-
+jects. The authors emphasize the importance of
+color features apart from geometric features to clas-
+sify these pointclouds into 6 semantic classes. This
+3
+dataset is relative small-scale, since it comprises of
+only three scenes with a total of 18.2 million points.
+The SenSatUrban dataset [16] is also reconstructed
+via photogrammetry from aerial photographs. The
+photographs are taken with a UAV that follows a
+double-grid ﬂight path and covers a 6 km 2 area in
+three cities in UK (Birmingham, Cambridge, and
+York). Pointwise semantic labels in 13 categories
+are available for these pointclouds. As an urban-
+focused aerial photogrammetric pointcloud, the Sen-
+SatUrban dataset is the most relevant with respect
+to our contribution. SenSatUrban covers an approxi-
+mately twice larger area than ours, and uses 13 cate-
+gories instead of ﬁve; its point density is higher than
+our medium-density version, but lower than our high-
+density version.
+3 Dataset Description
+In this section, we describe the process used to pro-
+duce our large scale aerial photogrammetry dataset,
+covering both acquisition of source photographs and
+processing to obtain 3D point clouds. We conclude
+the section by detailing the data characteristics.
+3.1 Data Acquisition
+The image data is acquired via a high-resolution cam-
+era array (nadir and oblique cameras) mounted on a
+Figure 2: The ﬂight paths while capturing the ﬁve
+Davos tiles.
+multirotor drone.
+To capture the image data, the drone is conﬁgured
+to trigger the cameras simultaneously at regular in-
+tervals. As shown in Figure 2, the drone follows a
+double grid ﬂight path [28].
+Each ﬂight acquires one or more tiles. A single
+tile corresponds to 412 m × 412 m horizontal area ap-
+proximately (around 17 hectares). The Ground Sam-
+pling Distance (GSD), i.e. the inter-pixel distance
+measured on the ground, is planned as 1 .25 cm and
+ultimately measured as 1 .28 cm cm.
+3.2 Data Processing
+After aerial image acquisition, we follow a classic pho-
+togrammetry workﬂow to reconstruct textured 3D
+models, based on RealityCapture [26], [14], a com-
+mercial photogrammetry software.
+We ﬁrst estimate the global camera poses of the
+captured images and a georeferenced sparse point
+cloud of the scene using a standard Structure-from-
+Motion (SfM) process (referred as ”alignment” in
+RealityCapture). Georeferencing is achieved using
+Ground Control Points (GCPs) and RealityCapture’s
+GCP annotation tool. Taking into account the drone-
+based acquisition described above, the GCP annota-
+tion, and the further processing of the data, we mea-
+sure a total georeferencing root mean square error
+(RMSE) of 5 .45 cm horizontally and 11 .60 cm verti-
+cally. This implies that the data is scaled to real
+world units, meters in our case. Note that georef-
+erencing is not a priority for semantic segmentation
+task apart from scaling the data to the real world
+units. Therefore, we provide all point coordinates as
+scaled and, for convenience, as zero-centered per tile
+in our dataset.
+Once the data is aligned and georeferenced, we re-
+construct a dense mesh constrained to the geographic
+region of the tile only. At that point, the raw mesh
+obtained can contain up to half a billion polygons for
+a single tile. In order to get a mesh with a more man-
+ageable size, we simplify it to a maximum number of
+30 million polygons, i.e. approximately 15 million
+vertices, with Reality Capture’s adaptive simpliﬁca-
+tion process and texture it using the captured drone
+images. The output point cloud used for segmenta-
+4
+(a)
+ (b)
+ (c)
+Figure 3: A map of (a) Switzerland in Europe, (b) highly-populated urban Zurich center, (c) rural and
+industrial Zug-Cham region, and (d) mountainous Davos region.
+(a)
+ (b)
+ (c)
+ (d)
+Figure 4: (a) A part of the simpliﬁed mesh with 1M polygons, (b) the point cloud with 15M vertices,
+(c) the semantic groundtruth, and (d) the dense pointcloud with around 220M points for PC 1 (Davos
+16 34318 -22950).
+tion is composed of the vertices of such a mesh; the
+RGB color of each point is sampled from the mesh
+texture.
+3.3 Manual Segmentation
+Figure 1 illustrates the steps after the reconstruction
+of a 3D model to obtain a segmented pointcloud. Our
+pointclouds are segmented manually into the ﬁve se-
+mantic categories as described below (terrain, con-
+struction, vegetation, vehicles and urban assets).
+3D artists complete this task using oﬀ-the-shelf 3D
+modeling software (such as Blender [7]); to make the
+process manageable, they work on each tile individu-
+ally, and operate on a 1-million polygon mesh further
+simpliﬁed from the initial mesh. It takes between six
+to twelve hours for a 3D artist to manually segment
+each tile.
+Labels are then transferred from the simpliﬁed
+mesh to the output point cloud. The label of each
+point in the output point cloud is assigned by ﬁnd-
+ing the nearest neighbor in the segmented mesh. We
+used an adaptive distance threshold to avoid match-
+ing outlier points. We found that this method gives
+satisfying results for the ﬁnal segmentation of the
+point cloud while keeping the amount of manual work
+needed at a manageable level.
+3.4 Dataset details
+The dataset represents sixteen tiles acquired from
+three cities in Switzerland (see Figure 3): six tiles
+from Zurich, ﬁve tiles from Zug and ﬁve tiles from
+Davos.
+For each tile, the dataset contains pointclouds at
+three resolutions, i.e. approximately 500 K, 15 M,
+and 225M points per tile as shown in Figure 4. Both
+500K and 15M point density pointclouds have x,y,z,
+and RGB color features. For the highest density, we
+have only x,y,z coordinates. In the rest of this paper,
+we only consider the 15M point density.
+Classes and class distribution As our dataset is
+focused on urban areas in Switzerland, it comprises
+of a large amount of terrain, building, and medium
+or high vegetation. Even though many objects of
+5
+other categories (such as vehicles or urban assets) are
+present in our dataset, they amount to a relatively
+small portion of the points because each object is rel-
+atively small. For that reason, we divide our semantic
+labeling to only ﬁve main categories: 1) terrain (in-
+cluding natural terrain, e.g. grass or soil, impervious
+terrain, e.g. road or sidewalk, and water areas, e.g.
+river or lake); 2) building; 3) urban asset (including
+traﬃc light, pole, crane, public transportation stop,
+trash bin, etc.); 4) vegetation (tree or bush); and 5)
+vehicle (car, bike, scooter, etc.). The total number of
+points per category can be found in Table 2 as well as
+the mean and standard deviation of number of points
+among tiles.
+4 Semantic Segmentation
+To exemplify the usage of the proposed dataset for
+training and evaluating semantic segmentation mod-
+els, and to provide baseline performance metrics, we
+report experiments using PointNet++ [25], a well-
+established point cloud segmentation approach.
+4.1 PointNet++
+PointNet++ [25] is a deep learning model built upon
+the PointNet [24] model. In the PointNet++ archi-
+tecture, PointNet module is used as a local feature en-
+coder and applied in a nested fashion to learn hierar-
+chical features. Moreover, PointNet++ uses farthest
+point sampling to cover more representative points
+during sampling.
+We adopt an existing implementation [35] of Point-
+Net++ developed using PyTorch [22], PyTorch-
+Lightning [9] and Hydra [37]. For a given instance,
+the input of the model is a N × 6 matrix, each row
+Table 2: Number of points per class
+Number of Points
+Category Mean Std. dev. T otal
+Terrain 4,030,709 1,731,832.3 64,491,349
+Construction 6,509,061 3,111,158.9 104,144,973
+Urban asset 167,595 121,861.0 2,681,512
+Vegetation 3,282,801 1,644,790.8 52,524,820
+Vehicle 170,662 84,486.5 2,730,595
+containing the x, y, z coordinates and R, G, B color
+of one of N input points. The output of the model
+is a matrix of N × K prediction probabilities, where
+K = 5 is the number of classes. Because the model
+is designed to handle input point clouds up to a few
+thousand points ( N = 8192 in our reference imple-
+mentation), it cannot be directly applied to our large
+outdoor datasets; therefore, we implemented the fol-
+lowing data pipeline. First, we partition the input
+data into columns with a base of 10 m × 10m and in-
+ﬁnite height. During training and validation, each
+instance is generated by picking a column, then ran-
+domly sampling (with replacement) N points from
+the column. A training epoch is obtained by gener-
+ating one instance per column. For every training
+epoch, the instances are sampled again; this yields a
+form of data augmentation since for each column a
+diﬀerent subset of points is sampled in every epoch.
+Once a model is trained, in order to segment a
+testing tile, we apply the model to every column sep-
+arately, then merge the segmentation results. To seg-
+ment a column, we randomly divide the points in the
+column in subsets, each containing exactly N points;
+for the last subset, in case less than N points are
+remaining, additional points are sampled from the
+other subsets. Each subset deﬁnes an instance an
+is segmented independently using the trained model;
+the results are then combined.
+The model is trained by minimizing the cross-
+entropy loss; to deal with heavy class imbalance, fol-
+lowing in similar works [16], the loss is weighted dif-
+ferently for each class, according to inverse-square-
+root frequency. A training batch is composed by 64
+instances and we train for 200 epochs; we do not use
+early stopping but snapshot the model which yields
+the minimum loss on the validation set (which is de-
+ﬁned on tiles diﬀerent than training and testing tiles,
+see below). Other hyper-parameters are set as in [35].
+The experiments are run on a NVIDIA RTX 2080Ti
+GPU. The longest train and test sessions are com-
+pleted in less than 6 hours.
+4.2 Experimental Setup
+Our experimental setup focuses on the following re-
+search questions, that are more related to the char-
+6
+Table 3: The pointcloud IDs used in train, validation
+and test sets for diﬀerent experiments.
+Cross-city F ull
+Model M1
+(Davos)
+M2
+(Zug)
+M3
+(Zurich) M4
+T rain Set 1, 2, 3 6, 7, 8 11, 12, 13
+1, 2, 3,
+6, 7, 8,
+11, 12, 13
+V al. Set 4 9 14 4, 9, 14
+T est Set 5, 10, 15 5, 10, 15 5, 10, 15 5, 10, 15
+acteristics of the data than to the capabilities of the
+speciﬁc model.
+• Which categories are more challenging to seg-
+ment?
+• How does the model generalize across cities?
+• How much can additional data help even if it is
+from a diﬀerent city?
+• Which training strategy is better for pointcloud
+data: an ensemble of per-city models or a single
+model trained on all data from multiple cities?
+To answer the questions above, we train four mod-
+els: three on data sampled from a single city (named
+single-city models in the following); one on data from
+all three cities. Then, we apply each model on three
+testing sets (disjoint from the training and validaiton
+sets), one per city.
+Data Splits Table 3 provides the details of data
+splits for our experiments.
+In particular, we consider ﬁve tiles for each of the
+three cities. Each tile covers approximately 0.17 km2,
+which yields 0.855 km2 and 70 million points per city.
+For each city, the ﬁve tiles are partitioned in three
+tiles for training, one tile for validation and one tile
+for testing. Single-city models are therefore trained
+on three tiles and validated on one tile. The model
+trained on all cities is trained on nine tiles and vali-
+dated on three tiles. Each of the four models is tested
+on three tiles (one per city), on which we separately
+compute performance metrics.
+Evaluation Metrics For a given testing tile, a
+model under test will produce ﬁve class probabili-
+ties (which sum to 1) for each point. The point is
+then assigned to the class that has the largest prob-
+ability. From these data, we compute the following
+commonly-used metrics [1], [12], [3] to quantify seg-
+mentation performance.
+• Overall Accuracy is the fraction of the points
+for which the predicted class coincides with
+the ground truth class (also known as micro-
+averaged accuracy).
+• Weighted Accuracy is the macro-averaged accu-
+racy that is multiplied with a per-class factor.
+For a given class c, the factor is computed as the
+proportion of the number of class samples Nc
+over the number of samples in the whole dataset
+N, i.e. Nc/N.
+• Per-class F1 score is the harmonic mean be-
+tween per-class precision and recall. An F1 score
+of 1.0 indicates an ideal classiﬁer.
+• Per-class Intersection over Union score (IoU):
+For a given class c, the IoU score is computed
+as the ratio between: the number of points that
+have been classiﬁed as class c AND are indeed of
+class c (intersection); and the number of points
+have been classiﬁed as class c OR are indeed of
+class c (union). An IoU score of 1.0 indicates an
+ideal classiﬁer.
+For all per-class metrics, we also report average values
+among all the classes and the weighted averages. For
+consistency, we report all the metrics as percentage
+values (the ratios between 0 and 1 are scaled linearly
+between 0 and 100).
+5 Results and Discussion
+5.1 Overall Performance Metrics
+On the three testing tiles, the model trained on all
+cities yields an overall accuracy of 82.8%, weighted
+accuracy of 87.6%, average F1 of 56.0%, and average
+IoU score of 45.3%.
+7
+Table 4: Per-class performance metrics for the model trained on all cities, when evaluated on one testing
+tile for each city (rows). The metrics are presented as percentage values.
+Terrain Construction Urban asset Vegetation Vehicle
+IoU F1 IoU F1 IoU F1 IoU F1 IoU F1
+Davos 66.6 80.0 69.7 82.1 4.2 8.0 80.7 89.3 13.1 23.2
+Zug 75.7 86.2 71.0 83.0 2.8 5.5 62.6 77.0 17.0 29.0
+Zurich 48.3 65.2 81.2 89.6 5.0 9.4 58.3 73.6 24.0 38.8
+Average 63.5 77.1 74.0 85.0 4.0 7.6 67.2 80.0 18.0 30.3
+(a)
+ (b)
+ (c)
+(d)
+ (e)
+ (f)
+Figure 5: (a) The RGB visualization, (b) semantic predictions with the full model, and (c) the groundtruth
+of a part of PC 5 from Davos; (d) the RGB visualization, (e) semantic predictions with the full model, and
+(f) the groundtruth of a part of PC 15 from Zurich. Legend: blue: terrain, orange: construction, green:
+vegetation, purple: vehicle, pink: urban asset.
+8
+5.2 Per-Category Performance
+Table 4 reports, for each city and for each class, the
+performance of the model trained on data from all
+cities; namely, we report the per-class F1 score and
+IoU metrics.
+We observe that “urban asset” and “vehicle”
+classes are harder to segment compared to other
+classes; this is expected due to their small size, and
+widely variable characteristics in terms of shape and
+color. IoU metrics are particularly penalized, due to
+the small size of each object.
+Figure 5 illustrates qualitative results of the full
+model for two test regions (a rural region from PC 5
+in Davos and an urban region from PC 15 in Zurich).
+As illustrated in the confusion matrix in Figure 6a,
+one can observe the following confusion cases among
+categories: 1) urban asset and other categories (es-
+pecially construction), 2) vegetation and terrain, and
+3) vehicle and construction categories. The confusion
+matrix of an additional urban test tile from Zurich
+(PC 16) is shown in Figure 6b. This confusion ma-
+trix shows similar trends the overall confusion matrix
+(average of the three test tiles). However, one can
+notice the increase in the confusion trends and ad-
+ditional confusion between terrain and construction
+categories. This pointcloud exhibits particular urban
+characteristics such as a bridge, entrance to an under-
+ground parking lot, a botanical garden on a hill, and
+glass or plants/moss/soil covered rooftops. We con-
+sider that the lower amount of terrain in this urban
+setting also makes the confusion noticeable.
+We hypothesize that a data pipeline that empha-
+sizes the relative height information and favors the
+small categories in a stronger fashion than our cur-
+rent setting (e.g. a cube-based sampling rather than
+column-based sampling) and a stronger model than
+PointNet++ might help decreasing these confusion
+cases. As our goal is to report a baseline model on
+our novel dataset, we keep these model explorations
+for future work. For simplicity, we report and discuss
+only on the three testing tiles (one per city) further
+in this section.
+5.3 Model Generalization across
+Cities
+We analyze the model generalization in a cross-city
+experiment setting.
+Figure 7 reports performance metrics for diﬀerent
+models, evaluated separately for each of the three
+cities. As seen in the ﬁrst two rows and last column,
+the performance of the M1 and M2 models, which
+were trained on rural or industrial areas in Davos
+and Zug, decreases when they are tested on the ur-
+ban Zurich test tile. Similarly, the Zurich model
+(M3), which is trained with the urban pointclouds,
+i.e. high-rise large buildings, performs worse on the
+rural Davos test tile (see third row, ﬁrst column) than
+the other test tiles. This trend is observed further
+in the ensemble results. This point emphasizes the
+importance of area characteristics while learning se-
+mantics.
+Figure 8 summarizes the same data by report-
+ing the average performance of models depending
+on whether they are trained on the same or diﬀer-
+ent cities. For example, the performance of models
+trained on a city diﬀerent than the testing city (ﬁrst
+bar) is computed as the average of six performance
+values: two values predicted by the Davos model
+(M1) on the Zug and Zurich test tiles; two values
+predicted by the Zug model (M2) on the Davos and
+Zurich test tiles; two values predicted by the Zurich
+model (M3) on Davos and Zug test tiles.
+Comparing the ﬁrst and second bar of Figure 8,
+we observe that the models trained on data from
+the same city have signiﬁcantly better performance
+(average weighted accuracy 84.9%) than the mod-
+els trained on data from a diﬀerent city (average
+weighted accuracy 82.3%), despite the fact that the
+amount of training data is the same in diﬀerent cities,
+and that areas used for training are always disjoint
+from areas used for testing.
+5.4 Impact of Data Scale
+Comparing the second and third bar of Figure 8,
+we observe that the performance of the model M4
+trained on data from all three cities (average weighted
+accuracy 87.6%) is better than the performance of the
+9
+(a)
+ (b)
+Figure 6: (a) The normalized confusion matrix of the model M4 (trained on all cities and evaluated on the
+three test tiles). Every row reports the percentage of points with a given true class, that are classiﬁed as
+each of the ﬁve classes (columns). (b) The normalized confusion matrix of the model M4 on the additional
+urban Zurich tile (PC 16).
+Figure 7: The weighted accuracy (left) and the average IoU (right) for diﬀerent models and model ensembles
+(rows) evaluated on diﬀerent cities (columns). We consider: three models trained on data from each city
+independently; one model trained on data from all three cities; three ensembles of pairs of single-city models;
+one ensemble of three single-city models.
+Figure 8: The weighted accuracy (left) and average IoU (right) for the models and ensembles (bars) trained
+on the same or diﬀerent cities.
+10
+model trained just on data from the same city (av-
+erage weighted accuracy 84.9%). This quantiﬁes the
+impact of tripling the amount of training data, even
+though the additional data comes from two diﬀerent
+cities.
+5.5 Model Ensembling
+We consider an alternative approach to training a
+single model on three cities; instead, we consider the
+three single-city models (M1, M2, and M3), apply
+each model independently to each test tile, then av-
+erage their predictions; in particular, for each given
+point in the test tile, we obtain three class probabil-
+ity vectors as outputs of each of the three models; we
+compute the element-by-element average of the three
+vectors, which yields a single class probability vec-
+tor whose 5 elements also sum to 1. This approach
+is known as model ensembling [13], [6] and is used
+frequently in machine learning.
+Comparing the third and sixth bar of Figure 8,
+we observe that the ensemble of the three single-city
+models outperforms the single model trained on the
+three cities. The ensembling approach is appealing,
+since training each model on a single-city dataset is
+simple and ﬂexible: by averaging their results, we
+minimize the consequences of overﬁtting and more
+generally counteract model variance; on the other
+hand, the computational cost for inference is tripled,
+as three models have to be evaluated for each input.
+Model ensembling experiments also allow us to
+quantify the performance gains from acquiring addi-
+tional training data; in particular, by comparing the
+ﬁrst and fourth bar of Figure 8, we can observe the
+beneﬁts of building an ensemble by adding a model
+trained on a diﬀerent city; the sixth bar shows de-
+creasing returns when adding a third model to the
+ensemble, even if it is trained on the same city used
+for evaluation.
+6 Conclusion
+This paper introduces a novel urban pointcloud
+dataset with pointwise semantic groundtruth. The
+dataset is constructed via photogrammetry on UAV-
+acquired high-resolution images of three Swiss cities.
+The dataset reports three pointcloud densities: a sim-
+pliﬁed sparse pointcloud with RGB colors and seman-
+tic labels, a regular density pointcloud with RGB
+colors and semantic labels, and a dense pointcloud
+with only x,y,z coordinates (with potential applica-
+tions e.g. in robotics for ground traversibility map-
+ping).
+The paper describes the acquisition and processing
+of the dataset, then illustrates several experiments
+on a semantic segmentation task with a prominent
+point-based deep learning benchmark model (Point-
+Net++ [25]). These experiments highlight: 1) the
+importance of the amount of training data; 2) the
+advantage of using training data from the same city
+on which the model is evaluated; 3) the viability of
+simple model ensembling approaches.
+As future work, we plan to compare additional re-
+cent deep-learning models for the semantic segmenta-
+tion task on this dataset. Moreover, we plan to study
+the eﬀects of semi-supervised and self-supervised
+learning methods on unstructured pointclouds.
+As we make this dataset available to the research
+community, we hope that it will be useful for further
+analysis of model generalization, domain-gap studies
+with respect to LiDAR datasets, and various robotics
+applications such as traversibility, and ultimately ad-
+vance the state of the art in the ﬁeld.
+7 Acknowledgments
+This work is supported partially by Nomoko AG and
+partially by the Swiss Confederation through Innosu-
+isse research project 31889.1 IP-ICT and through the
+NCCR Robotics. The authors would like to thank the
+project collaborators in the SUPSI-ISIN institute and
+the colleagues in Nomoko AG for their contributions,
+speciﬁcally to Juan Vinuales and Mario Sanchez Gal-
+lardo for the drone ﬂight operations; to Alexandre
+Ferreira do Carmo, Hugo Filipe Queiros da Cunha,
+Vincent Schmid, and Simon Scherer for supporting
+the photogrammetry steps and for manual segmenta-
+tion and labeling of the pointclouds; to Sonia Batl-
+lori and Matthias Grass for supporting the pointcloud
+processing.
+11
+References
+[1] Iro Armeni et al. “3d semantic parsing of
+large-scale indoor spaces”. In: Proceedings of
+the IEEE Conference on Computer Vision and
+Pattern Recognition. 2016, pp. 1534–1543.
+[2] C Becker et al. “Classiﬁcation of aerial pho-
+togrammetric 3D point clouds”. In: Photogram-
+metric Engineering & Remote Sensing 84.5
+(2018), pp. 287–295.
+[3] Jens Behley et al. “SemanticKITTI: A dataset
+for semantic scene understanding of lidar se-
+quences”. In: Proceedings of the IEEE Interna-
+tional Conference on Computer Vision . 2019,
+pp. 9297–9307.
+[4] Saifullahi Aminu Bello et al. “deep learning on
+3D point clouds”. In: Remote Sensing 12.11
+(2020), p. 1729.
+[5] Alexandre Boulch et al. “SnapNet: 3D point
+cloud semantic labeling with 2D deep segmen-
+tation networks”. In: Computers & Graphics 71
+(2018), pp. 189–198.
+[6] Robert T Clemen. “Combining forecasts: A
+review and annotated bibliography”. In: In-
+ternational journal of forecasting 5.4 (1989),
+pp. 559–583.
+[7] Blender Online Community. Blender - a 3D
+modelling and rendering package . Blender
+Foundation. Stichting Blender Foundation,
+Amsterdam, 2018. url: http://www.blender.
+org.
+[8] J. Deng et al. “ImageNet: A large-scale hierar-
+chical image database”. In: 2009 IEEE Confer-
+ence on Computer Vision and Pattern Recog-
+nition. 2009, pp. 248–255. doi: 10.1109/CVPR.
+2009.5206848.
+[9] WA Falcon. PyTorch Lightning . GitHub.
+2019. url: https : / / github . com /
+PyTorchLightning/pytorch-lightning.
+[10] Ian Goodfellow, Yoshua Bengio, and Aaron
+Courville. Deep learning. Vol. 1. 2. MIT press
+Cambridge, 2016.
+[11] Yulan Guo et al. “Deep Learning for 3D Point
+Clouds: A Survey”. In: IEEE Transactions
+on Pattern Analysis and Machine Intelligence
+(2019).
+[12] Timo Hackel et al. “SEMANTIC3D.NET: A
+new large-scale point cloud classiﬁcation bench-
+mark”. In: ISPRS Annals of the Photogramme-
+try, Remote Sensing and Spatial Information
+Sciences. Vol. IV-1-W1. 2017, pp. 91–98.
+[13] Sherif Hashem. “Optimal linear combinations
+of neural networks”. In: Neural networks 10.4
+(1997), pp. 599–614.
+[14] J. Heller et al. “3D reconstruction from pho-
+tographs by CMP SfM web service”. In:
+2015 14th IAPR International Conference on
+Machine Vision Applications (MVA) . 2015,
+pp. 30–34. doi: 10.1109/MVA.2015.7153126.
+[15] Mark Hendrikx et al. “Procedural content gen-
+eration for games: A survey”. In: ACM Trans-
+actions on Multimedia Computing, Communi-
+cations, and Applications (TOMM) 9.1 (2013),
+pp. 1–22.
+[16] Qingyong Hu et al. “Towards Semantic Seg-
+mentation of Urban-Scale 3D Point Clouds:
+A Dataset, Benchmarks and Challenges”. In:
+arXiv preprint arXiv:2009.03137 (2020).
+[17] Truc Le, Giang Bui, and Ye Duan. “A multi-
+view recurrent neural network for 3D mesh
+segmentation”. In: Computers & Graphics 66
+(2017), pp. 103–112.
+[18] Tsung-Yi Lin et al. “Microsoft coco: Common
+objects in context”. In: European conference on
+computer vision. Springer. 2014, pp. 740–755.
+[19] Mohammad Ebrahim Mohammadi, Daniel P
+Watson, and Richard L Wood. “Deep Learning-
+Based Damage Detection from Aerial SfM
+Point Clouds”. In: Drones 3.3 (2019), p. 68.
+[20] Francesco Nex and Fabio Remondino. “UAV for
+3D mapping applications: a review”. In: Ap-
+plied geomatics 6.1 (2014), pp. 1–15.
+12
+[21] Joachim Niemeyer, Franz Rottensteiner, and
+Uwe Soergel. “Contextual classiﬁcation of lidar
+data and building object detection in urban ar-
+eas”. In: ISPRS journal of photogrammetry and
+remote sensing 87 (2014), pp. 152–165.
+[22] Adam Paszke et al. “PyTorch: An Impera-
+tive Style, High-Performance Deep Learning
+Library”. In: Advances in Neural Information
+Processing Systems 32. Ed. by H. Wallach et al.
+Curran Associates, Inc., 2019, pp. 8024–8035.
+url: http : / / papers . neurips . cc / paper /
+9015-pytorch-an-imperative-style-high-
+performance-deep-learning-library.pdf .
+[23] Florent Poux et al. “3D point clouds in archae-
+ology: Advances in acquisition, processing and
+knowledge integration applied to quasi-planar
+objects”. In: Geosciences 7.4 (2017), p. 96.
+[24] Charles R Qi et al. “Pointnet: Deep learning
+on point sets for 3d classiﬁcation and segmen-
+tation”. In: Proceedings of the IEEE confer-
+ence on computer vision and pattern recogni-
+tion. 2017, pp. 652–660.
+[25] Charles Ruizhongtai Qi et al. “Pointnet++:
+Deep hierarchical feature learning on point sets
+in a metric space”. In: Advances in neural in-
+formation processing systems . 2017, pp. 5099–
+5108.
+[26] Reality Capture. Capturing Reality s.r.o. Drien-
+ova 3, 821 01 Bratislava, Slovakia, 2016. url:
+https://www.capturingreality.com.
+[27] Xavier Roynard, Jean-Emmanuel Deschaud,
+and Fran¸ cois Goulette. “Paris-Lille-3D: A large
+and high-quality ground-truth urban point
+cloud dataset for automatic segmentation and
+classiﬁcation”. In: The International Journal of
+Robotics Research 37.6 (2018), pp. 545–557.
+[28] Bartomeu Rub´ ı, Ramon P´ erez, and Bernardo
+Morcego. “A survey of path following control
+strategies for UAVs focused on quadrotors”.
+In: Journal of Intelligent & Robotic Systems
+(2019), pp. 1–25.
+[29] J¨ urgen Schmidhuber. “Deep learning in neural
+networks: An overview”. In:Neural networks 61
+(2015), pp. 85–117.
+[30] Hang Su et al. “Multi-view convolutional neu-
+ral networks for 3d shape recognition”. In: Pro-
+ceedings of the IEEE international conference
+on computer vision . 2015, pp. 945–953.
+[31] Hang Su et al. “Splatnet: Sparse lattice net-
+works for point cloud processing”. In: Proceed-
+ings of the IEEE Conference on Computer Vi-
+sion and Pattern Recognition . 2018, pp. 2530–
+2539.
+[32] Weikai Tan et al. “Toronto-3D: A Large-scale
+Mobile LiDAR Dataset for Semantic Segmen-
+tation of Urban Roadways”. In: Proceedings of
+the IEEE/CVF Conference on Computer Vi-
+sion and Pattern Recognition Workshops. 2020,
+pp. 202–203.
+[33] Nina Varney, Vijayan K Asari, and Quinn
+Graehling. “DALES: A Large-scale Aerial Li-
+DAR Data Set for Semantic Segmentation”.
+In: Proceedings of the IEEE/CVF Conference
+on Computer Vision and Pattern Recognition
+Workshops. 2020, pp. 186–187.
+[34] Velodyn Lidar: model HDL-64e. Velodyn Lidar.
+San Jose, California, United States, 2007. url:
+https : / / velodynelidar . com / products /
+hdl-64e/.
+[35] Erik Wijmans. Pointnet++ Pytorch . GitHub.
+2018. url: https : / / github . com /
+erikwijmans/Pointnet2_PyTorch.
+[36] Jianxiong Xiao, Andrew Owens, and Antonio
+Torralba. “Sun3d: A database of big spaces re-
+constructed using sfm and object labels”. In:
+Proceedings of the IEEE international confer-
+ence on computer vision . 2013, pp. 1625–1632.
+[37] Omry Yadan. Hydra - A framework for
+elegantly conﬁguring complex applications .
+Github. 2019. url: https : / / github . com /
+facebookresearch/hydra.
+[38] Byungyun Yang. “Developing a mobile map-
+ping system for 3D GIS and smart city plan-
+ning”. In: Sustainability 11.13 (2019), p. 3713.
+13
+[39] J. Zhang et al. “A Review of Deep Learning-
+Based Semantic Segmentation for Point
+Cloud”. In: IEEE Access 7 (2019), pp. 179118–
+179133.
+[40] Yin Zhou and Oncel Tuzel. “Voxelnet: End-to-
+end learning for point cloud based 3d object
+detection”. In: Proceedings of the IEEE Confer-
+ence on Computer Vision and Pattern Recogni-
+tion. 2018, pp. 4490–4499.
+[41] SM Zolanvari et al. “DublinCity: Annotated Li-
+DAR Point Cloud and its Applications”. In:
+arXiv preprint arXiv:1909.03613 (2019).
+14
