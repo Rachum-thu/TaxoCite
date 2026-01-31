@@ -1,0 +1,586 @@
+"citations":
+- "title": "Definition of extreme weather events (subchapter 1.1)"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Importance of Problem"
+  "topic_labels":
+  - "Food security, health, and disaster response"
+- "title": "Interaction networks for learning about objects, relations and physics"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "title": "The quiet revolution of numerical weather prediction"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Accurate medium-range global weather forecasting with 3d neural networks"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Spherical Fourier neural operators: Learning stable dynamics on the sphere"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 2
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Uncertainty quantification for data-driven weather models"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "The second met office unified model–JULES regional atmosphere and land configuration, RAL2"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Prospective Application"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Downscaling, bias correction, and data assimilation"
+- "title": "FengWu: Pushing the skillful global medium-range weather forecast beyond 10 days lead"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 2
+  - 10
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Swinrdm: integrate swinrnn with diffusion model towards high-resolution and high-quality weather forecasting"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Downscaling, bias correction, and data assimilation"
+- "title": "Fuxi: a cascade machine learning forecasting system for 15-day global weather forecast"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Fundamentals of numerical weather prediction"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Downscaling, bias correction, and data assimilation"
+- "title": "Ifs documentation cy46r1 - part v: Ensemble prediction system"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 13
+  "intent_labels":
+  - "Result Comparison"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Why should ensemble spread match the RMSE of the ensemble mean?"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 12
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - null
+- "title": "Multiscale meshgraphnets"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "title": "Strictly proper scoring rules, prediction, and estimation"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Calibration of large neural weather models"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 2
+  - 12
+  "intent_labels":
+  - "Prior Methods"
+  - "Result Comparison"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - null
+- "title": "The ERA5 global reanalysis"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 13
+  "intent_labels":
+  - "Resource Utilization"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Denoising diffusion probabilistic models"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+  - "Foundation models and generative architectures"
+- "title": "SwinVRNN: A data-driven ensemble forecasting model via learned distribution perturbation"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 1
+  - 2
+  - 9
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Foundation models and generative architectures"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Forecasting global weather with graph neural networks"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 1
+  - 2
+  - 5
+  - 10
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Auto-encoding variational Bayes"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "Neural general circulation models for weather and climate"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 2
+  - 10
+  - 15
+  "intent_labels":
+  - "Prior Methods"
+  - "Metrics Utilization"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - null
+- "title": "Learning skillful medium-range global weather forecasting"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 1
+  - 2
+  - 4
+  - 5
+  - 8
+  - 9
+  - 10
+  - 12
+  - 13
+  - 15
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Problem Formulation"
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
+  - "Result Comparison"
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "AIFS-ECMWF’s data-driven forecasting system"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 1
+  - 2
+  - 5
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "AtmoRep: A stochastic model of atmosphere dynamics using large scale representation learning"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Ensemble forecasting"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Importance of Problem"
+  "topic_labels":
+  - null
+- "title": "Generative emulation of weather forecast ensembles with diffusion models"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "Simulating continuum mechanics with multi-scale graph neural networks"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "title": "Swin transformer: Hierarchical vision transformer using shifted windows"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "A simple baseline for bayesian uncertainty in deep learning"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 2
+  - 12
+  "intent_labels":
+  - "Prior Methods"
+  - "Result Comparison"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - null
+- "title": "Residual diffusion modeling for km-scale atmospheric downscaling"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Downscaling, bias correction, and data assimilation"
+- "title": "AROME-MetCoOp: A nordic convective-scale operational weather prediction model"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Prospective Application"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Downscaling, bias correction, and data assimilation"
+- "title": "ClimaX: A foundation model for weather and climate"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 2
+  - 4
+  "intent_labels":
+  - "Prior Methods"
+  - "Problem Formulation"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Scaling transformer neural networks for skillful and reliable medium-range weather forecasting"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 2
+  - 4
+  - 10
+  "intent_labels":
+  - "Prior Methods"
+  - "Problem Formulation"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Graph-based neural weather prediction for limited area modeling"
+  "unique_context_marker": "[35]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Probabilistic forecasting with generative networks via scoring rule minimization"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 15
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "title": "Four-castnet: A global data-driven high-resolution weather model using adaptive fourier neural operators"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "ICON in climate limited-area mode (ICON release version 2.6.1): a new regional climate model"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Prospective Application"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Downscaling, bias correction, and data assimilation"
+- "title": "Gencast: Diffusion-based ensemble forecasting for medium-range weather"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 1
+  - 2
+  - 15
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+  - "Foundation models and generative architectures"
+  - "Foundation models and generative architectures"
+- "title": "WeatherBench 2: A benchmark for the next generation of data-driven global weather models"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 1
+  - 13
+  - 15
+  "intent_labels":
+  - "Domain Overview"
+  - "Benchmark Utilization"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "U-net: Convolutional networks for biomedical image segmentation"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "title": "Simple and effective vae training with calibrated decoders"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "Ensemble methods for neural network-based weather forecasts"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "The AROME-france convective-scale operational model"
+  "unique_context_marker": "[44]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Prospective Application"
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Downscaling, bias correction, and data assimilation"
+- "title": "Learning structured output representation using deep conditional generative models"
+  "unique_context_marker": "[45]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "Generative modeling by estimating gradients of the data distribution"
+  "unique_context_marker": "[46]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "Consistency models"
+  "unique_context_marker": "[47]"
+  "block_ids":
+  - 15
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "Wasserstein auto-encoders"
+  "unique_context_marker": "[48]"
+  "block_ids":
+  - 15
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "Neural discrete representation learning"
+  "unique_context_marker": "[49]"
+  "block_ids":
+  - 15
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Foundation models and generative architectures"
+- "title": "ClimODE: Climate forecasting with physics-informed neural ODEs"
+  "unique_context_marker": "[50]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Sub-seasonal forecasting with a large ensemble of deep-learning weather prediction models"
+  "unique_context_marker": "[51]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
+- "title": "Scientific challenges of convective-scale numerical weather prediction"
+  "unique_context_marker": "[52]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Importance of Problem"
+  - "Importance of Problem"
+  "topic_labels":
+  - null
+  - null
+- "title": "Layer normalization"
+  "unique_context_marker": "[53]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "The rise of data-driven weather forecasting: A first statistical assessment of machine learning-based weather forecasts in an operational-like context"
+  "unique_context_marker": "[54]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Do AI models produce better weather forecasts than physics-based models? a quantitative evaluation case study of storm ciarán"
+  "unique_context_marker": "[55]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "IPCC, 2023: Climate change 2023: Synthesis report. contribution of working groups I, II and III to the sixth assessment report of the intergovernmental panel on climate change"
+  "unique_context_marker": "[56]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Decoupled weight decay regularization"
+  "unique_context_marker": "[57]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Hurricane laura"
+  "unique_context_marker": "[58]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Searching for activation functions"
+  "unique_context_marker": "[59]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Integration of renewable energy into present and future energy systems"
+  "unique_context_marker": "[60]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Ladder variational autoencoders"
+  "unique_context_marker": "[61]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "This is the economic cost of extreme weather"
+  "unique_context_marker": "[62]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Estimation of the continuous ranked probability score with limited information and applications to ensemble weather forecasts"
+  "unique_context_marker": "[63]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
