@@ -1,0 +1,641 @@
+title: Generalizing Weather Forecast to Fine-grained Temporal Scales via Physics-AI Hybrid Modeling
+blocks:
+- block_id: 0
+  content: Data-driven artificial intelligence (AI) models have made significant advancements in weather forecasting, particularly
+    in medium-range and nowcasting. However, most data-driven weather forecasting models are black-box systems that focus
+    on learning data mapping rather than fine-grained physical evolution in the time dimension. Consequently, the limitations
+    in the temporal scale of datasets prevent these models from forecasting at finer time scales. This paper proposes a physics-AI
+    hybrid model (i.e., WeatherGFT) which Generalizes weather forecasts to Finer-grained Temporal scales beyond training dataset.
+    Specifically, we employ a carefully designed PDE kernel to simulate physical evolution on a small time scale (e.g., 300
+    seconds) and use a parallel neural networks with a learnable router for bias correction. Furthermore, we introduce a lead
+    time-aware training framework to promote the generalization of the model at different lead times. The weight analysis
+    of physics-AI modules indicates that physics conducts major evolution while AI performs corrections adaptively. Extensive
+    experiments show that WeatherGFT trained on an hourly dataset, effectively generalizes forecasts across multiple time
+    scales, including 30-minute, which is even smaller than the dataset’s temporal resolution. Code is available at https://github.com/black-yt/WeatherGFT
+    .
+  citations: []
+- block_id: 1
+  content: 'Weather forecasting plays a vital role in modern society, impacting a wide range of human activities. For example,
+    minute-level precipitation nowcasting is particularly valuable for short-term planning, such as outdoor activities, while
+    medium-range forecasts that offer daily predictions play a crucial role in long-term strategic decisions like maritime
+    trade. This field has witnessed remarkable advancements in recent years, largely attributed to the rapid progress of machine
+    learning-based (ML) weather forecasting models [38], spanning from nowcasting to medium-range forecasts.
+
+
+    Prior studies tackle the problem of weather forecasting by leveraging data-driven models trained on benchmark weather
+    forecasting datasets, such as WeatherBench [47] and ERA5 [22]. Prevalent medium-range forecasting models (e.g., FourCastNet
+    [32], GraphCast [33], and FengWu [7]) are commonly trained on the aforementioned hourly datasets to generate global forecasts
+    with a time interval of 6-hour, can not offer finer predictions like 30-minute forecasts for nowcasting.
+
+
+    A significant limitation of current ML-based weather forecasting models [32, 3, 33, 7, 18] lies in their black-box training
+    paradigm [53, 17], that is, primarily focusing on learning the mapping of data pairs with a fixed lead time (e.g., 6 hours),
+    without explicitly incorporating the laws of atmospheric dynamics which govern finer-grained physical evolution processes.
+    Consequently, this training paradigm brings a significant challenge for weather forecasting: existing black-box AI models
+    are unable to generalize at finer temporal scales beyond the inherent time resolution of the training datasets due to
+    the absence of fine-grained physics modeling.
+
+
+    To address this challenge, we propose WeatherGFT, a physics-AI hybrid model capable of simulating weather changes on fine-grained
+    time scales through a set of partial differential equations (PDEs) [50]. WeatherGFT consists of an encoder, multiple stacked
+    HybridBlocks and a decoder. As the core of our model, HybridBlock contains two branches: One utilizes PDE kernels to conduct
+    physical evolution over small time scales, while the other employs neural networks to learn unresolved atmospheric processes
+    and perform bias correction on the physical evolution. These two branches are adaptively fused through a learnable router
+    initialized as 0.5:0.5. Unlike existing models [32, 33, 7] trained with a fixed lead time, we introduce a lead time-aware
+    framework through multi-lead time training strategy and a lead time conditional decoder [43, 1], enabling the model to
+    generalize to finer-grained temporal scales. Experiments demonstrate that our method is capable of forecasting at different
+    lead times within one single model and one unified framework, overcoming the limitations of the dataset’s temporal resolution
+    and enabling 30-minute forecasts with an hourly dataset.
+
+
+    Additionally, we find two interesting insights by examining the learnable route weight of the hybrid physical-AI modules
+    at different lead times: a) The physical weight is consistently higher than the AI, indicating the significant role played
+    by the PDE kernel. b) As the lead time increases, the weight of AI gradually increases. We attribute this increment to
+    the errors accumulation of PDE kernel during the evolution process, necessitating more AI corrections. In summary, when
+    there is training data available at the lead time, such as at 1:00:00, the fitting ability of AI is enhanced. Conversely,
+    at the lead time without training data, such as at 0:30:00, the importance of physical evolution becomes more pronounced,
+    which confirms our motivation: WeatherGFT can benefit from both physics and AI adaptively.
+
+
+    We summarize the contributions of this paper as follows:
+
+    - We propose a physics-AI hybrid model that incorporates physical PDEs into the networks, enabling the simulation of fine-grained
+    physical evolution through its forward process.
+
+    - With the flexible PDE kernel and new lead time-aware training framework, our model performs multiple lead time forecasts,
+    which bridges the nowcast and medium-range forecast.
+
+    - For the first time, our model extends the forecasting ability learned from an hourly dataset to make accurate predictions
+    at a finer time scale, i.e., 30 minutes.
+
+    - Our model exhibits strong generalization ability while maintaining prediction errors comparable to those of pure AI
+    and physical models.'
+  citations:
+  - marker: '[1]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[3]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[7]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[17]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[18]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[22]'
+    intent_label: Domain Overview
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[32]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[33]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[38]'
+    intent_label: Domain Overview
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[43]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[47]'
+    intent_label: Domain Overview
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[50]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[53]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 2
+  content: 'Data-driven Weather Forecasting. In recent years, data-driven weather forecasting models based on machine learning
+    have developed rapidly [2], especially for medium-range weather forecast [54], which provides weather variables for the
+    next few days. Clare et al.[11] propose a weather forecasting approach using stacked ResNets [21], but their model only
+    considers geopotential and temperature, which is limited for real-world forecasting applications. FourCastNet [32] expands
+    the model to include additional variables such as wind at different heights, and employs Adaptive Fourier Neural Operator
+    (AFNO) [16] networks for prediction. Pangu-Weather [3] utilizes the 3D Swin Transformer [61] and introduces hierarchical
+    temporal aggregation to minimize iterations in the autoregressive forecasting, followed by FengWu [7, 57], FuXi [9] and
+    other Transformer-based [52] prediction models. Apart from Transformers, GraphCast [33] and Keisler [29] adopt a graph
+    representation of the Earth and employ Graph Neural Network (GNN) [62] for weather prediction.
+
+
+    In addition to medium-range weather forecast, nowcast [4, 55] is another important field in weather forecast, which usually
+    provides 30-minute forecasting of severe convective weather like thunderstorms. OFAF [44], Preciplstm [41], SimVP [12]
+    use convolutions to capture spatial information and model temporal information through networks such as Long Short-Term
+    Memory [60] or Recurrent Neural Network [59]. Earthformer [13] and CasCast [14] use Transformer-based models for nowcasting.
+    The former proposes cuboid attention to efficiently model space-time information, and the latter uses the diffusion model
+    [49] to address the problem of blur output. These nowcast models focus on minute-level forecasts for specific regions,
+    and is difficult to forecast for long-term such as 5-day. Consequently, there exists a significant gap (global vs. regional,
+    day-level vs. minute-level, long-term vs. shot-term) between medium-range forecasts and nowcasts. Integrating AI models
+    with physical guidance to make finer-grained predictions can bridge this gap.
+
+
+    Physical Neural Networks. Most data-driven models commonly neglect the incorporation of physics and treat networks as
+    black-boxes. In order to enhance the consistency of predictions with respect to physical laws, PINNs [5], PINO [37], and
+    DeepPhysiNet [35] add PDE loss to overall training loss. Nevertheless, these methods of changing loss functions often
+    require balancing the weights between different PDEs, and the training results are heavily affected by hyperparameters.
+    PI-HC-MoE [6], ClimODE [53] integrate physical processes into the networks, but they do not explicitly simulate the physical
+    evolution of distinct variables based on PDEs. Instead, they implement the evolution using general kernels, such as Euler
+    kernels [51]. NeuralGCM [31] employs neural networks to parameterize a dynamic core. However, it is primarily designed
+    for medium-range forecasting. These works typically focus on forecasting at fixed lead times, rather than leveraging physical
+    laws to generalize to finer-grained time scales beyond the training datasets.'
+  citations:
+  - marker: '[2]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[4]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[9]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[13]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[14]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[16]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[29]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[31]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[32]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[33]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[35]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[41]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[44]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[49]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[51]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[52]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[53]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[54]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[55]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[57]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[59]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[60]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[61]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[62]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+- block_id: 3
+  content: ''
+  citations: []
+- block_id: 4
+  content: 'Weather forecasting aims to predict future weather states Xt given current weather states X0:
+
+    Fθ(X0) = P (Xt|X0)
+
+    where θ represents the parameters of the model and t denotes the lead time. The weather state X ∈ RC×H×W consists of C
+    atmospheric variables across different pressure levels. Each variable is characterized by an H × W matrix that corresponds
+    to the projection of the Earth’s plane.
+
+
+    Assuming that the time resolution of the dataset is tdata, the lead time t for data-driven models can only be equal to
+    or greater than tdata, because these models are trained using data pairs (X0, Xt) sampled from the dataset. Consequently,
+    black-box AI models [32, 3, 33, 7, 20, 19, 15] are unable to forecast at finer lead times such as 1/2 tdata, indicating
+    a lack of temporal generalization ability.'
+  citations:
+  - marker: '[3]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[7]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[15]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[19]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[20]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[32]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[33]'
+    intent_label: Research Gap
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 5
+  content: 'Our model consists of an encoder to patchify the weather states into tokens [52], multiple (specifically, 24)
+    stacked HybridBlocks to perform weather evolution via PDE modeling, and a decoder to generate predictions under specific
+    lead-time conditions.
+
+
+    Specifically, to enable our model to generalize at a finer-grained temporal resolution, we employ PDEs to model the evolution
+    at a finer time scale:
+
+    Xts = K(X0), where ts = 1/m tdata, m ∈ Z+
+
+    We simulate the physical evolution from X0 to Xts through a uniquely designed PDE kernel (details in Section 3.3), where
+    ts is much smaller than the time resolution tdata of the dataset, allowing model to capture fine-grained weather changes.
+    By stacking PDE kernels K, the longer evolution can be achieved like Xtdata = Km ... K2 K1 X0. In this paper, we set m
+    to 12, that is, ts = 1/12 tdata.
+
+
+    To mitigate the issue of error accumulation as the number of evolutionary steps increases, we introduce a parallel Attention
+    Block [52] that performs bias correction for every 3 iterations of K. Additionally, a learnable router initialized as
+    0.5 : 0.5, is employed to adaptively fuse features from PDE kernels and the Attention Block. We encapsulate three PDE
+    kernels K and one parallel Attention Block within a HybridBlock, whose evolution time is tblock = 3 × ts = 1/4 tdata.
+
+
+    Our model can not only forecast at lead times equal to or greater than tdata, but also generalize to finer-grained time
+    scale such as 1/2 tdata even in the absence of corresponding training data pairs. This is achieved by modeling the physical
+    evolution of tblock = 1/4 tdata, rather than simply learning from data pairs (X0, Xtdata) sampled from the dataset. Notably,
+    these generalized finer-grained predictions of our model outperform temporal interpolation on multiple metrics, emphasizing
+    the advantages of fine-grained physical evolution over black-box models.'
+  citations:
+  - marker: '[52]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Foundation models and generative architectures
+- block_id: 6
+  content: 'We employ a set of five PDEs including the motion equation, the continuous equation and others to establish a
+    closed system, which simulate the physical evolution of 5 essential atmospheric variables: u (latitude-direction wind),
+    v (longitude-direction wind), z (geopotential), q (humidity), T (temperature). The partial derivative of each atmospheric
+    variable with respect to time can be separated mathematically (details in Appendix A), denotes as SPDE, which takes current
+    weather state as input and produces the derivative of each variable with respect to time. We define PDE kernel K as the
+    evolution of the variables over a short period of time ts, as demonstrated in Equation 3.
+
+
+    SPDE(X) =
+
+    {
+
+    ∂u/∂t = Su(u, v, z, q, T)
+
+    ∂v/∂t = Sv(u, v, z, q, T)
+
+    ∂z/∂t = Sz(u, v, z, q, T)
+
+    ∂q/∂t = Sq(u, v, z, q, T)
+
+    ∂T/∂t = ST(u, v, z, q, T)
+
+    },
+
+    PDE Kernel K(X) = SPDE(X) ts + X
+
+    where ts = 1/12 tdata
+
+
+    Calculating SPDE requires the use of differential and integral operations. For example, for temperature T, its derivative
+    with respect to time is shown in Equation 4. In order to efficiently calculate SPDE and enable loss backward [25], we
+    designed a fast implementation of differentiation and integration through convolution and matrix multiplication respectively.
+    Equation 5 presents the implementation of the differential and integral of X in the x direction (latitude direction).
+
+
+    ∂T/∂t = −L ∂z/∂p w − ∂z/∂p w / cp − u ∂T/∂x − v ∂T/∂y − w ∂T/∂p, where w = −∫ (∂u/∂x + ∂v/∂y) dp
+
+
+    dX/dx = 1/12 Conv(X, Kx)
+
+    ∫ X dx = XMx, Kx = [[0 0 0 0 0],[0 0 0 0 0],[1 −8 0 8 −1],[0 0 0 0 0],[0 0 0 0 0]], Mx ∈ RW×W
+
+
+    Similarly, Ky and My can be constructed to perform differential and integral operations in the y direction (longitude
+    direction). For differential and integral operations in the p direction (pressure level direction), we first reshape X
+    ∈ RC×H×W to 3D space X3D ∈ R C/P ×P ×H×W based on the variables’ pressure layers, and then implement corresponding operations
+    through Kp and Mp.'
+  citations:
+  - marker: '[25]'
+    intent_label: Resource Utilization
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 7
+  content: 'HybridBlock is a module that combines physics and AI. Firstly, it employs neural networks to address the issue
+    of error accumulation resulting from the stacking of PDE kernel K. Secondly, it utilizes the PDE kernel K to guide the
+    neural networks to learn the physical evolution of a specific time step. The structure of HybridBlock consists of three
+    PDE kernels K and one parallel Attention Block. Consequently, the time step corresponding to a HybridBlock is tblock =
+    3 × ts = 1/4 tdata.
+
+
+    HybridBlock has two branches, one is physics and the other is AI. The neural networks features XN are aligned with physical
+    features XP through a convolutional layer, followed by three PDE kernels. Subsequently, the PDE kernel output is projected
+    back to the latent space of XN through another convolutional layer. Finally, features fusion is performed through the
+    learnable router.
+
+
+    In the router, the features XN obtained from the neural networks and the features XP derived from the PDE kernels are
+    initially linearly fused along the feature dimension D, with the learnable factor r initialized as 0.5 : 0.5. Subsequently,
+    the preliminary fused features will go through an Multilayer Perceptron [40] layer containing a ReLU [36] activation function
+    to accomplish nonlinear feature fusion.'
+  citations:
+  - marker: '[36]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[40]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 8
+  content: 'HybridBlock provides the smallest time scale of model evolution, which is tblock = 1/4 tdata. Through L × HybridBlocks,
+    we can predict the weather at a lead time of L/4 tdata. To enable the model to generalize its prediction capabilities
+    to finer-grained time scales, we design a lead time conditional decoder to generate forecasts varying lead times from
+    the output of the corresponding HybridBlock.
+
+
+    In order to promote the expression of the condition, we embed the lead time t into a high-dimensional vector temb through
+    learnable Fourier embedding [48], as shown in Equation 6.
+
+
+    temb = sin(π · t · W) ⊕ cos(π · t · W) ⊕ t, where t is lead time
+
+
+    where W is a learnable vector of size 16, and ⊕ denotes concatenation. Furthermore, temb will be concatenated with the
+    output of HybridBlock and input to the decoder together. The decoder structure utilizes a Swin Transformer [39] with hierarchical
+    upsampling.'
+  citations:
+  - marker: '[39]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Foundation models and generative architectures
+  - marker: '[48]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Foundation models and generative architectures
+- block_id: 9
+  content: 'For dataset like ERA5 [22] or WeatherBench [47], their time resolution is tdata = 1h. We set the time step of
+    the PDE kernel to ts = 1/12 tdata = 300s. Consequently, the time step of each HybridBlock is tblock = 3 × ts = 900s, equivalent
+    to 15 minutes. By cascading 24 HybridBlocks, model can generate forecasts at a lead time of 24 × 15min = 6h. To encourage
+    the model to learn evolution for different lead times and generalize forecasting to finer-grained time scales, during
+    training, we not only use the output of the last HybridBlock but also include the outputs of the 4th and 12th HybridBlocks.
+    These outputs are passed through the lead time conditional decoder with corresponding temb to predict the weather states
+    at 4 × 15min = 1h and 12 × 15min = 3h.
+
+
+    During inference, we can take the output of the second HybridBlock and pass it through the decoder with corresponding
+    temb to get 2 × 15min = 30min forecasts, which are not present in the dataset. We provide a comprehensive demonstration
+    showcasing the accuracy of these generalized prediction results for time scales smaller than the dataset’s time resolution.'
+  citations:
+  - marker: '[22]'
+    intent_label: Resource Utilization
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[47]'
+    intent_label: Resource Utilization
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 10
+  content: 'Through the design of HybridBlock mixed with physics & AI and the multi-lead time training method, our model is
+    capable of simultaneously conducting short-term forecasting and long-term forecasting without additional finetuning [42]
+    on different forecasting tasks. In the experiments, we will showcase the superior performance of our model and try to
+    answer the following questions:
+
+    (1) How does the model perform on the medium-range forecasting task?
+
+    (2) How does the model perform on the generalized 30-minute nowcasting task?
+
+    (3) As a hybrid expert model of AI and physics, what roles do they each play?
+
+    (4) How do PDE kernel and multi-lead time training contribute to the overall performance?'
+  citations:
+  - marker: '[42]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 11
+  content: 'Dataset. We use WeatherBench [47] as our training dataset, whose time resolution is tdata = 1h and spatial resolution
+    is 128 × 256. The dataset spanning from 1980 to 2015 serves as training set, while the data of 2017 is the validation
+    and test sets. Our model processes 4 surface variables and 5 upper-air variables across 13 pressure levels.
+
+
+    Given that WeatherBench lacks data at finer temporal resolutions, we use the 30-minute satellite observations downloaded
+    from NASA as ground truth to quantitatively assess the model’s generalizability. NOTE: Data from NASA is only used for
+    testing and not for model training.
+
+
+    Tasks. We conducted experiments on two typical weather forecasting tasks: medium-range forecasting and precipitation nowcasting.
+    The forecast range for medium-range forecasting spans from 6 hours to 5 days, while the nowcasting is set to a range of
+    30 minutes to 2 hours.
+
+
+    Baseline Methods. We compare WeatherGFT with four forecast approaches: FourCastNet [32] uses AFNO [16] networks to simulate
+    the nonlinear relationship between weather variables, Keisler [29] models global atmospheric data through GNN, ClimODE
+    [53] adds ordinary differential equations (ODE) [26] to the neural networks, and ECMWF-IFS [46] is a physical dynamic
+    model.
+
+
+    The above three data-driven models cannot generalize forecasting to finer-grained time scales due to the absence of 30-minute
+    labels. Therefore, in nowcasting tasks, we interpolate the 30-minute forecast results through SOTA frame interpolation
+    models Flavr [28] and UPR [27]. In contrast, our model can conduct 30-minute predictions inherently without interpolating.
+
+
+    Implementation Details. We implemented the model with PyTorch [25] and trained 50 epochs on 8 NVIDIA A100 GPUs [10] for
+    3 days, with a learning rate of cosine schedule starting from 5e-4.'
+  citations:
+  - marker: '[10]'
+    intent_label: Resource Utilization
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[16]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[25]'
+    intent_label: Resource Utilization
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[27]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[28]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[29]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[32]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[46]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[47]'
+    intent_label: Resource Utilization
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[53]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 12
+  content: 'Autoregression is commonly employed in medium-term forecasting, where the model output serves as the input for
+    the subsequent forecast step, allowing for longer lead time predictions. However, prediction errors tend to accumulate
+    during the autoregression, leading to an increase in the root mean square error (RMSE). As a result, a smaller RMSE indicates
+    a more accurate prediction.
+
+
+    Our model demonstrates competitive performance across various lead times with AI or physical dynamics models, especially
+    the prediction of surface temperature (t2m) and surface wind speed (u10) is significantly better than other models. The
+    geopotential of the 500hpa pressure layer (z500) is a crucial weather variable in weather forecasting, as it reflects
+    atmospheric circulation [45], subtropical high-pressure systems [34], and other significant phenomena. Due to the modeling
+    of geopotential in the PDE, z500 prediction of our model outperforms the physical dynamic model ECMWF-IFS.
+
+
+    From the visualization, our model is more accurate in predicting the subtropical high. In addition, the prediction error
+    of our model at the lead time of 6-hour is significantly smaller than that of the physical dynamic model ECMWF-IFS.'
+  citations:
+  - marker: '[34]'
+    intent_label: Domain Overview
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[45]'
+    intent_label: Domain Overview
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 13
+  content: 'In contrast to conventional black-box AI models [32, 29, 58] used in medium-range weather forecasting, WeatherGFT
+    has the ability to break through the time scale limitations of the dataset, making the generalization to fine-grained
+    temporal scales possible. This capability is facilitated by the dynamic progression of our PDE kernel modeling and multiple
+    lead time training. Specifically, we use the second HybridBlock of the total 24 HybridBlocks to generate 30-minute generalized
+    forecasts through the lead time conditional decoder, which is very important for precipitation nowcasting.
+
+
+    To quantify the accuracy of the model’s generalized nowcasting, we utilize the NASA satellite precipitation observation
+    dataset as the ground truth, which has a time resolution of 30-minute. We evaluate forecasts at 30, 60, 90, and 120 minutes.
+    It is important to note that data of NASA were not used for training. For other comparison models that cannot directly
+    produce half-hour forecasts, we use the frame interpolation models (i.e., Flavr [28] and UPR [27]) to generate 30-minute
+    predictions.
+
+
+    CSI@th (Critical Success Index) refers to the hit rate of the area that reaches the threshold precipitation value th.
+    CSI@0.5 can reflect the overall forecast accuracy in rainy areas, and CSI@1.5 reflects the forecast accuracy in moderate
+    rainy areas. Our model surpasses others across different lead times, especially in forecasting regions of moderate rainfall,
+    i.e., CSI@1.5.
+
+
+    The visualization reveals that when using frame interpolation to obtain 30-minute predictions, there is blurring occurring
+    at different scales, resulting in the loss of extreme values. Our model, which incorporates physical constraints, provides
+    clearer predictions retaining extreme values without the need for frame interpolation.'
+  citations:
+  - marker: '[27]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[28]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[29]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[32]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[58]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 14
+  content: 'As a hybrid model combining both physics and AI components, it is crucial to analyze their contributions to the
+    prediction process. We present insights into their respective proportions by visualizing the weight parameter r within
+    the learnable router. The weights of the 24 HybridBlocks display a similar distribution:
+
+    a) The physical weight of the vast majority of HybridBlocks is significantly higher than the weight of AI, which shows
+    that in the process of simulating time evolution, the PDE kernel plays a more important role, while the Attention Block
+    only plays a supportive correction role.
+
+    b) The physical weight gradually decreases while the weight of AI increases throughout each hour (dataset time resolution).
+    This aligns with our underlying motivation, which acknowledges that errors may accumulate over time in the physics-based
+    evolution. Consequently, a greater emphasis on AI corrections becomes necessary to compensate for these accumulated errors.
+
+
+    By averaging the 4 × 6 HybridBlocks into 4 time steps, the average weight every 15-minute shows the above two conclusions
+    more clearly. To summarize, physics plays the main evolutionary role in the model, while AI plays a dynamic corrective
+    role.'
+  citations: []
+- block_id: 15
+  content: 'We use Swin Attention Block [39] as the baseline for the ablation studies. For this baseline networks without
+    PDE kernel constraints, as a black-box model, it will only learn the mapping of data pairs corresponding to the lead time.
+    Consequently, its internal information between blocks is unexplainable, which also results in being unable to predict
+    moments without data labels, such as 30-minute nowcasting.
+
+
+    PDE kernel is crucial to the generalization of finer-grained predictions. Instead of simply learning the mapping between
+    data, the model learns the evolution of the corresponding time step according to the physics laws, making information
+    of each neural network layer explainable, thereby facilitating generalized 30-minute nowcasting. In addition, we find
+    that the introduction of the PDE kernel also improved the prediction accuracy of the model.
+
+
+    Multiple lead time training accelerates convergence and improves the accuracy of model prediction. We hypothesize that
+    this phenomenon can be attributed to the loss backward from different lead times, which alleviates the issue of vanishing
+    gradients [23], allowing the parameters of different layers to quickly warm up and improve the expression of the model.'
+  citations:
+  - marker: '[23]'
+    intent_label: Domain Overview
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[39]'
+    intent_label: Result Comparison
+    topic_label: Foundation models and generative architectures
+- block_id: 16
+  content: 'Most existing data-driven weather forecast methods which operated as black-box models via purely performing data
+    mapping are unable to generalize at finer temporal scale beyond the inherent time resolution of the training datasets
+    due to the absence of the fine-grained physics modeling. This paper proposes a physics-AI hybrid model to solve this problem.
+    Through the exquisitely designed PDE kernel, each block in the networks can simulate the evolution of physical variables
+    at finer-gained time step, while AI plays the role of adaptive correction, which makes our model capable of generalizing
+    predictions to a finer time scale beyond dataset. By employing our proposed multi-lead time training strategy, our model
+    trained on an hourly dataset exhibits remarkable ability of generalized 30-minute forecasts, while maintaining prediction
+    errors that are competitive with those of pure AI and physical models in both medium-range forecast and precipitation
+    nowcast.
+
+
+    The main limitation of our model is that only five important atmospheric equations are currently considered, which is
+    still far from fully modeling the atmospheric motion process. Another limitation of this paper is that the experiments
+    have been conducted solely at a spatial resolution of 128×256. As part of our future work, we plan to extend our experiments
+    to higher resolutions such as 721 × 1440 to assess the model’s performance under different settings. Additionally, while
+    the minimum evolution time scale of our model is 15 minutes, we were unable to evaluate 15-minute generalized predictions
+    due to the absence of corresponding validation data at that specific time scale. Therefore, we are currently only able
+    to perform evaluations of 30-minute generalized predictions.
+
+
+    For future work, we plan to incorporate additional physical laws into our model and conduct higher-resolution experiments
+    to ascertain the upper limit of its capabilities.'
+  citations: []
