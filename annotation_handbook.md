@@ -208,6 +208,7 @@ Before editing, read the two taxonomies:
 Then, create a folder named `human_annotation/`.
 
 Then, for each YAML file under `human_todo/`:
+
 0. copy it to the human_annotation folder.
 1. Read the `content` block carefully.
 2. For each `marker` under `citations`, verify whether the LLM’s:
