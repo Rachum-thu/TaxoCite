@@ -328,7 +328,7 @@ blocks:
     topic_label: regionalization
   - marker: (Garfinkel and Nemhauser 1970; Mehrotra, Johnson, and Nemhauser 1998; Duque, Romas, and Surinach 2007)
     intent_label: Prior Methods
-    topic_label: Exact optimization models
+    topic_label: regionalization
   - marker: Zoltners and Shinha (1983)
     intent_label: Prior Methods
     topic_label: Adjacency-level assignment formulations
@@ -343,13 +343,13 @@ blocks:
     topic_label: Exact optimization models
   - marker: Shirabe’s model (2005)
     intent_label: Prior Methods
-    topic_label: Flow-based network connectivity formulations
+    topic_label: Exact optimization models
   - marker: (for further details, see Duque, Church, and Middleton 2011)
     intent_label: Prior Methods
     topic_label: Exact optimization models
   - marker: (e.g., Duque, Anselin, and Rey 2012)
     intent_label: Prior Methods
-    topic_label: Local search with area swaps and metaheuristics
+    topic_label: Heuristic models with explicit contiguity
 - block_id: 3
   content: ''
   citations: []
@@ -484,10 +484,10 @@ blocks:
   citations:
   - marker: Duque, Church, and Middleton (2011)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Flow-based network connectivity formulations
+    topic_label: p-regions formulations
   - marker: Shirabe (2009)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Flow-based network connectivity formulations
+    topic_label: p-regions formulations
   - marker: Hess et al. 1965
     intent_label: Prior Methods
     topic_label: Compactness-driven location–allocation approaches
@@ -499,13 +499,13 @@ blocks:
     topic_label: Compactness-driven location–allocation approaches
   - marker: Shirabe 2009
     intent_label: Algorithm/Principle Adoption
-    topic_label: Flow-based network connectivity formulations
+    topic_label: regionalization
   - marker: Duque, Church, and Middleton 2011
     intent_label: Algorithm/Principle Adoption
-    topic_label: Flow-based network connectivity formulations
+    topic_label: regionalization
   - marker: (Kim et al. 2012)
-    intent_label: Domain Overview
-    topic_label: Compactness-driven location–allocation approaches
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Flow-based network connectivity formulations
 - block_id: 5
   content: ''
   citations: []
@@ -542,7 +542,7 @@ blocks:
     intent_label: Prospective Application
     topic_label: regionalization
   - marker: Song et al. (2012)
-    intent_label: Domain Overview
+    intent_label: Prospective Application
     topic_label: regionalization
 - block_id: 7
   content: 'The test cases in this study, from p = 2 to p = 23, are successfully solved with optimality. To solve the different
