@@ -72,10 +72,10 @@ blocks:
   citations:
   - marker: (2011)
     intent_label: Prior Methods
-    topic_label: Link-selection with subtour elimination
+    topic_label: p-regions formulations
   - marker: (Vickrey 1961)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (Duque, Anselin, and Rey 2012)
     intent_label: Prior Methods
     topic_label: max-p regions formulations
@@ -90,7 +90,7 @@ blocks:
     topic_label: max-p regions formulations
   - marker: (Cliff et al. 1975; Keane 1975)
     intent_label: Importance of Problem
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (Duque, Ramos, and Surinach 2007; Li, Church, and Goodchild 2014a)
     intent_label: Prior Methods
     topic_label: Heuristic models with explicit contiguity
@@ -98,14 +98,14 @@ blocks:
     intent_label: Prior Methods
     topic_label: MTZ-order and numbering-based formulations
   - marker: (1954)
-    intent_label: Algorithm/Principle Adoption
+    intent_label: Prior Methods
     topic_label: Link-selection with subtour elimination
   - marker: (1995)
-    intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    intent_label: Research Gap
+    topic_label: Algorithms without explicit spatial contiguity constraint
   - marker: (2006)
-    intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    intent_label: Research Gap
+    topic_label: Algorithms without explicit spatial contiguity constraint
 - block_id: 2
   content: 'Problems related to aggregating areas into spatially contiguous regions have been given different names in the
     literature (e.g., region-building [Byfuglien and Nordgard 1973], conditional clustering [Lefkovitch 1980], clustering
@@ -186,31 +186,31 @@ blocks:
   citations:
   - marker: '[Byfuglien and Nordgard 1973]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[Lefkovitch 1980]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[Ferligoj and Batagelj 1982]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[Legendre 1987]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[Murtagh 1992]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[Maravalle and Simeone 1995]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[Gordon 1996]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[Wise, Haining, and Ma 1997]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[Hansen et al. 2003]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: (Browdy 1990; Macmillan and Pierce 1994; Williams 1995; Macmillan 2001; Caro et al. 2004; Ricca and Simeone 2008)
     intent_label: Domain Overview
     topic_label: Enriched aggregate constraints
@@ -221,13 +221,13 @@ blocks:
     intent_label: Domain Overview
     topic_label: Problem formulations and objectives
   - marker: Murtagh (1985)
-    intent_label: Domain Overview
+    intent_label: Prior Methods
     topic_label: Heuristic models with explicit contiguity
   - marker: Gordon (1996)
-    intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    intent_label: Prior Methods
+    topic_label: Alternative names
   - marker: Duque, Ramos, and Surinach (2007)
-    intent_label: Domain Overview
+    intent_label: Prior Methods
     topic_label: Heuristic models with explicit contiguity
   - marker: Laura et al. (2015)
     intent_label: Prior Methods
@@ -263,11 +263,11 @@ blocks:
     intent_label: Prior Methods
     topic_label: Link-selection with subtour elimination
   - marker: '3'
-    intent_label: Other Intent
+    intent_label: Prior Methods
     topic_label: Link-selection with subtour elimination
   - marker: (Gr €otschel and Nemhauser 2008)
-    intent_label: Domain Overview
-    topic_label: Link-selection with subtour elimination
+    intent_label: Prior Methods
+    topic_label: Exact optimization models
   - marker: (Orman and Williams 2006)
     intent_label: Prior Methods
     topic_label: Link-selection with subtour elimination
@@ -279,7 +279,7 @@ blocks:
     topic_label: Link-selection with subtour elimination
   - marker: (Anselin 2005; Ye and Rey 2013)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
 - block_id: 3
   content: 'In this section, for the sake of completeness, we present the Tree version of the p-regions problem, p-regionsTree,
     devised by Duque, Church, and Middleton (2011). This MIP model creates trees by introducing links between areas. A link

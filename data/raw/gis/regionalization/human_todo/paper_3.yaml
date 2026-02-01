@@ -168,8 +168,8 @@ blocks:
     solving the max- p- regions problem while considering compactness are needed.'
   citations:
   - marker: (Li et al., 2014)
-    intent_label: Research Gap
-    topic_label: Problem formulations and objectives
+    intent_label: Prior Methods
+    topic_label: Heterogeneity objective functions
   - marker: (Duque, Ramos, & Suriñach, 2007; Govorov, Beconytė, Gienko, & Putrenko, 2019)
     intent_label: Domain Overview
     topic_label: Problem formulations and objectives
@@ -192,8 +192,8 @@ blocks:
     intent_label: Prior Methods
     topic_label: max-p regions formulations
   - marker: (2014)
-    intent_label: Prior Methods
-    topic_label: Enriched aggregate constraints
+    intent_label: Domain Overview
+    topic_label: max-p regions formulations
   - marker: (2017)
     intent_label: Prior Methods
     topic_label: max-p regions formulations
@@ -205,12 +205,12 @@ blocks:
     topic_label: Problem formulations and objectives
   - marker: (Duque et al., 2007; Weaver & Hess, 1963)
     intent_label: Importance of Problem
-    topic_label: Algorithms without explicit spatial contiguity constraint
+    topic_label: Problem formulations and objectives
   - marker: (Hess & Samuels, 1971)
     intent_label: Prospective Application
     topic_label: Compactness-driven location–allocation approaches
   - marker: (Duque et al., 2007)
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Problem formulations and objectives
   - marker: (Li, Goodchild, & Church, 2013)
     intent_label: Prior Methods
@@ -300,7 +300,7 @@ blocks:
   citations:
   - marker: (Duque et  al., 2012)
     intent_label: Problem Formulation
-    topic_label: Order-based core assignment models
+    topic_label: max-p regions formulations
   - marker: (Li et  al., 2013)
     intent_label: Prior Methods
     topic_label: Problem formulations and objectives

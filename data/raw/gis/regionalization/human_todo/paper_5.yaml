@@ -122,33 +122,33 @@ blocks:
   citations:
   - marker: '[7]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[3]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[13]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[18]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[46]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[8]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[12]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[48]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[44]'
     intent_label: Prospective Application
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[15]'
-    intent_label: Prior Methods
+    intent_label: Problem Formulation
     topic_label: max-p regions formulations
   - marker: '[4]'
     intent_label: Research Gap
@@ -172,8 +172,8 @@ blocks:
     intent_label: Research Gap
     topic_label: max-p regions formulations
   - marker: '[11]'
-    intent_label: Research Gap
-    topic_label: regionalization
+    intent_label: Prospective Application
+    topic_label: Enriched aggregate constraints
   - marker: '[28]'
     intent_label: Algorithm/Principle Adoption
     topic_label: Exact optimization models
@@ -235,49 +235,49 @@ blocks:
     topic_label: Multiobjective compactness–homogeneity clustering
   - marker: '[19]'
     intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    topic_label: Alternative names
   - marker: '[10]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[33]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[36]'
     intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    topic_label: Alternative names
   - marker: '[24]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[26]'
     intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    topic_label: Alternative names
   - marker: '[16]'
     intent_label: Domain Overview
     topic_label: p-regions formulations
   - marker: '[30]'
     intent_label: Prospective Application
-    topic_label: p-regions formulations
+    topic_label: Alternative names
   - marker: '[31]'
     intent_label: Prospective Application
-    topic_label: p-regions formulations
+    topic_label: Alternative names
   - marker: '[54]'
     intent_label: Prospective Application
-    topic_label: p-regions formulations
+    topic_label: Alternative names
   - marker: '[32]'
     intent_label: Prospective Application
-    topic_label: p-regions formulations
+    topic_label: Alternative names
   - marker: '[34]'
     intent_label: Prospective Application
-    topic_label: p-regions formulations
+    topic_label: Alternative names
   - marker: '[35]'
     intent_label: Prospective Application
-    topic_label: Compactness-driven location–allocation approaches
+    topic_label: Alternative names
   - marker: '[20]'
     intent_label: Prior Methods
     topic_label: Bottom-up seeded agglomeration
   - marker: '[47]'
     intent_label: Prior Methods
-    topic_label: Heuristic models with explicit contiguity
+    topic_label: max-p regions formulations
   - marker: '[14]'
     intent_label: Prior Methods
     topic_label: Multiobjective compactness–homogeneity clustering
@@ -298,7 +298,7 @@ blocks:
     topic_label: Top-down divisive edge-removal methods
   - marker: '[22]'
     intent_label: Prior Methods
-    topic_label: Bottom-up seeded agglomeration
+    topic_label: Local search with area swaps and metaheuristics
   - marker: '[39]'
     intent_label: Prior Methods
     topic_label: Bottom-up seeded agglomeration
@@ -384,7 +384,7 @@ blocks:
     enables richer exploration capabilities to regionalization queries.'
   citations:
   - marker: '[15]'
-    intent_label: Problem Formulation
+    intent_label: Prior Methods
     topic_label: max-p regions formulations
 - block_id: 4
   content: 'This section proves the NP-hardness of the EMP problem. The NP-hardness of the EMP problem follows the results
@@ -830,25 +830,25 @@ blocks:
   citations:
   - marker: '[15]'
     intent_label: Domain Overview
-    topic_label: max-p regions formulations
+    topic_label: Alternative names
   - marker: '[21]'
     intent_label: Setting/Protocal Adoption
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[52]'
     intent_label: Domain Overview
-    topic_label: max-p regions formulations
+    topic_label: Alternative names
   - marker: '[45]'
     intent_label: Benchmark Utilization
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[9]'
     intent_label: Benchmark Utilization
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[37]'
     intent_label: Benchmark Utilization
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[42]'
     intent_label: Resource Utilization
-    topic_label: regionalization
+    topic_label: Alternative names
 - block_id: 13
   content: 'This section studies the impact of different sets of constraints on regionalization performance. Sets of constraints
     vary in terms of: (1) set size, i.e., number of constraints, (2) types of constraints, and (3) threshold ranges. We denote
@@ -972,10 +972,10 @@ blocks:
   citations:
   - marker: '[15]'
     intent_label: Research Gap
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: '[52]'
     intent_label: Research Gap
-    topic_label: regionalization
+    topic_label: Alternative names
 - block_id: 15
   content: All experiments show that the FaCT algorithm can efficiently produce feasible solutions of high quality in a few
     seconds for the vast majority of the cases. In addition, the FaCT algorithm supports relatively large datasets that serve

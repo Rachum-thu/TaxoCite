@@ -69,13 +69,13 @@ blocks:
     topic_label: p-regions formulations
   - marker: (Borgatti et al . 2009)
     intent_label: Research Gap
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: (Wheeler 1973, Whitehand and Larkham 1992, Jiang and Claramunt 2004)
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: (Jiang and Jia 2011)
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
 - block_id: 2
   content: 'Regionalization addresses the aggregation of spatial units (hereafter areas) into contiguous regions. It has been
     widely studied since the early 1960s, when electoral districting became a matter of quantitative modeling (Vickrey 1961,
@@ -125,27 +125,27 @@ blocks:
     topic_label: max-p regions formulations
   - marker: (Vickrey 1961, Nagel 1965, Bunge 1966, Aboolian et al . 2009)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (Clarke and Surkis 1968)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (Hess and Samuels 1971)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (Thomas 1979)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (Openshaw 1977)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (Curtin et al . 2010)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (see Duque et al . 2007 for a literature review of regionalization)
     intent_label: Domain Overview
-    topic_label: regionalization
+    topic_label: Alternative names
   - marker: (Duque et al. 2011b)
-    intent_label: Prior Methods
+    intent_label: Problem Formulation
     topic_label: p-regions formulations
   - marker: (Duque et al . 2012, Kim et al . 2013, Li et al . 2014b)
     intent_label: Prior Methods
@@ -154,8 +154,8 @@ blocks:
     intent_label: Prior Methods
     topic_label: Exact optimization models
   - marker: (Zoltners and Sinha 1983)
-    intent_label: Prior Methods
-    topic_label: Exact optimization models
+    intent_label: Domain Overview
+    topic_label: Alternative names
   - marker: (Kim et al . 2013)
     intent_label: Prior Methods
     topic_label: Exact optimization models
@@ -374,7 +374,7 @@ blocks:
   citations:
   - marker: (Duque et al . 2012)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Bottom-up seeded agglomeration
+    topic_label: Heuristic models with explicit contiguity
   - marker: Vickrey (1961)
     intent_label: Algorithm/Principle Adoption
     topic_label: Bottom-up seeded agglomeration
@@ -383,7 +383,7 @@ blocks:
     topic_label: Bottom-up seeded agglomeration
   - marker: Duque et al . (2012)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Bottom-up seeded agglomeration
+    topic_label: Heuristic models with explicit contiguity
 - block_id: 6
   content: 'The local search algorithm iteratively modifies an initial feasible solution by moving areas from one region to
     a neighboring region. This type of move was first applied by Nagel (1965) and is widely utilized in the literature. Duque
@@ -470,7 +470,7 @@ blocks:
   citations:
   - marker: (Duque et al . 2011a)
     intent_label: Benchmark Utilization
-    topic_label: regionalization
+    topic_label: Alternative names
 - block_id: 9
   content: 'Wuhan is a rapidly growing city and is the largest city in central China. Its modernization process is reflected
     by the expansion of the street network. By 2014, the total road length had reached 14,520 kilometers, with a road density
