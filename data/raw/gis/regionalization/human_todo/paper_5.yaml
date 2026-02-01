@@ -151,25 +151,25 @@ blocks:
     intent_label: Prior Methods
     topic_label: max-p regions formulations
   - marker: '[4]'
-    intent_label: Research Gap
+    intent_label: Prospective Application
     topic_label: max-p regions formulations
   - marker: '[17]'
-    intent_label: Research Gap
+    intent_label: Prospective Application
     topic_label: max-p regions formulations
   - marker: '[21]'
-    intent_label: Research Gap
+    intent_label: Prospective Application
     topic_label: max-p regions formulations
   - marker: '[41]'
-    intent_label: Research Gap
+    intent_label: Prospective Application
     topic_label: max-p regions formulations
   - marker: '[43]'
-    intent_label: Research Gap
+    intent_label: Prospective Application
     topic_label: max-p regions formulations
   - marker: '[49]'
-    intent_label: Research Gap
+    intent_label: Prospective Application
     topic_label: max-p regions formulations
   - marker: '[50]'
-    intent_label: Research Gap
+    intent_label: Prospective Application
     topic_label: max-p regions formulations
   - marker: '[11]'
     intent_label: Research Gap
@@ -234,26 +234,26 @@ blocks:
     intent_label: Prior Methods
     topic_label: Multiobjective compactness–homogeneity clustering
   - marker: '[19]'
-    intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    intent_label: Importance of Problem
+    topic_label: regionalization
   - marker: '[10]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[33]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[36]'
     intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    topic_label: Alternative names
   - marker: '[24]'
     intent_label: Domain Overview
-    topic_label: Problem formulations and objectives
+    topic_label: Alternative names
   - marker: '[26]'
     intent_label: Domain Overview
-    topic_label: Heuristic models with explicit contiguity
+    topic_label: Alternative names
   - marker: '[16]'
     intent_label: Domain Overview
-    topic_label: p-regions formulations
+    topic_label: Alternative names
   - marker: '[30]'
     intent_label: Prospective Application
     topic_label: p-regions formulations
@@ -274,10 +274,10 @@ blocks:
     topic_label: Compactness-driven location–allocation approaches
   - marker: '[20]'
     intent_label: Prior Methods
-    topic_label: Bottom-up seeded agglomeration
+    topic_label: max-p regions formulations
   - marker: '[47]'
     intent_label: Prior Methods
-    topic_label: Heuristic models with explicit contiguity
+    topic_label: max-p regions formulations
   - marker: '[14]'
     intent_label: Prior Methods
     topic_label: Multiobjective compactness–homogeneity clustering
@@ -793,8 +793,8 @@ blocks:
     results (Section VII-D).
   citations:
   - marker: '[27]'
-    intent_label: Other Intent
-    topic_label: Enriched aggregate constraints
+    intent_label: Resource Utilization
+    topic_label: Other Intent
 - block_id: 12
   content: 'EMP is a novel problem in the literature, so there is no direct competitor to compare our techniques against.
     In addition, due to the major enrichment EMP introduces to the MP-regions problem, existing techniques that address MP-regions

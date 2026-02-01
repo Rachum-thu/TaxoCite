@@ -86,3 +86,6 @@
 
 ### Clustering in latent space with contiguity constraints
 **Description:** Partition embeddings while enforcing adjacency, producing connected regions after training.
+
+## Other Intent
+**Description:** Any citation role not covered above or cases where the local context is insufficient to confidently map to a node (e.g., acknowledgements/credits, dataset license notes, peripheral mentions, unclear function).
