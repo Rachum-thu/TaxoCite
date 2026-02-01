@@ -66,52 +66,58 @@ blocks:
     photosensitizer to alleviate hypoxia and promote ferroptosis- and pyroptosis-mediated immunotherapy but also provides
     a framework for discovering new materials to enhance anti-tumor responses.'
   citations:
-  - marker: '[6]'
+  - marker: '[1–5]'
     intent_label: Domain Overview
     topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[7]'
+  - marker: '[6,7]'
     intent_label: Domain Overview
     topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[8]'
+  - marker: '[8,9]'
     intent_label: Domain Overview
     topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[9]'
+  - marker: '[10,11]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[12–14]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[15–21]'
+    intent_label: Domain Overview
+    topic_label: Photosensitization for ROS generation
+  - marker: '[22–24]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[9,25]'
     intent_label: Research Gap
     topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[10]'
-    intent_label: Domain Overview
-    topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[11]'
-    intent_label: Domain Overview
-    topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[14]'
-    intent_label: Research Gap
-    topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[25]'
-    intent_label: Research Gap
-    topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[26]'
-    intent_label: Prior Methods
-    topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[27]'
+  - marker: '[26,27]'
     intent_label: Prior Methods
     topic_label: Photodynamic therapy and antimicrobial treatment
   - marker: '[28]'
     intent_label: Research Gap
     topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[29]'
+  - marker: '[29,30]'
     intent_label: Research Gap
     topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[30]'
+  - marker: '[14]'
     intent_label: Research Gap
     topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[31–35]'
+    intent_label: Prior Methods
+    topic_label: Photosensitization for ROS generation
   - marker: '[36]'
     intent_label: Research Gap
     topic_label: Photodynamic therapy and antimicrobial treatment
   - marker: '[37]'
     intent_label: Research Gap
     topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[38–40]'
+    intent_label: Prior Methods
+    topic_label: Postmodification of polymer precursors
   - marker: '[41]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[42–47]'
     intent_label: Domain Overview
     topic_label: Photosensitization for ROS generation
 - block_id: 2
@@ -141,16 +147,7 @@ blocks:
     1G). The calculated values of ΔES1-T1 and ΔES1-T2 were 0.75 and −0.13 eV, respectively, indicating that MBTP-PA is prone
     to trigger the intersystem crossing process. These findings suggest that MBTP-PA is capable of producing reactive oxygen
     species (ROS).'
-  citations:
-  - marker: '[1]'
-    intent_label: Domain Overview
-    topic_label: Radiative decay pathways for bright emission
-  - marker: '[2]'
-    intent_label: Algorithm/Principle Adoption
-    topic_label: Radiative decay pathways for bright emission
-  - marker: '[5]'
-    intent_label: Algorithm/Principle Adoption
-    topic_label: Photosensitization for ROS generation
+  citations: []
 - block_id: 3
   content: After investigating its photophysical properties, we examined the reactions of MBTP-PA with amino acids, peptides,
     and proteins that have amino, hydroxyl, and thiol groups. MBTP-PA and different amino acids were added into a mixture
@@ -264,16 +261,10 @@ blocks:
     group (Figure S20, Supporting Information). These results indicate that MBTP-PA effectively induces the ICD, activating
     the adaptive immune responses through pyroptosis upon light irradiation.'
   citations:
-  - marker: '[48]'
+  - marker: '[48,49]'
     intent_label: Domain Overview
     topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[49]'
-    intent_label: Domain Overview
-    topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[50]'
-    intent_label: Domain Overview
-    topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[51]'
+  - marker: '[50,51]'
     intent_label: Domain Overview
     topic_label: Photodynamic therapy and antimicrobial treatment
 - block_id: 7
@@ -290,7 +281,7 @@ blocks:
     (Figure S25, Supporting Information).
   citations:
   - marker: '[52]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Doping and encapsulation into polymer matrices
 - block_id: 8
   content: To gain a deep understanding of the distribution and metabolism of nanoparticles in vivo, MBTP-PA-NPs (11.67 mg
@@ -343,10 +334,7 @@ blocks:
     inhibiting effect on tumors. [53,54] This suggests that MBTP-PA-NPs-mediated PDT can effectively activate immune responses,
     highlighting its potential in immunotherapy.'
   citations:
-  - marker: '[53]'
-    intent_label: Domain Overview
-    topic_label: Photodynamic therapy and antimicrobial treatment
-  - marker: '[54]'
+  - marker: '[53,54]'
     intent_label: Domain Overview
     topic_label: Photodynamic therapy and antimicrobial treatment
 - block_id: 10

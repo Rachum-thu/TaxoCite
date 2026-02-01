@@ -48,7 +48,31 @@ blocks:
     here proved effective in making accurate predictions based on limited samples. Following the initial five COFs, experimental
     synthesis of only six more COFs was needed to achieve a desirable PLQY, demonstrating the power of this interactive experiment–learning
     evolution strategy.'
-  citations: []
+  citations:
+  - marker: '[1–6]'
+    intent_label: Domain Overview
+    topic_label: aggregation-induced emission
+  - marker: '[7,8]'
+    intent_label: Prospective Application
+    topic_label: aggregation-induced emission
+  - marker: '[9–14]'
+    intent_label: Prospective Application
+    topic_label: aggregation-induced emission
+  - marker: '[15,16]'
+    intent_label: Prospective Application
+    topic_label: aggregation-induced emission
+  - marker: '[17–20]'
+    intent_label: Prior Methods
+    topic_label: aggregation-induced emission
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: aggregation-induced emission
+  - marker: '[22–27]'
+    intent_label: Prior Methods
+    topic_label: aggregation-induced emission
+  - marker: '[28]'
+    intent_label: Prior Methods
+    topic_label: aggregation-induced emission
 - block_id: 1
   content: 'There are three key steps in the workflow: (1) dataset curation, (2) model building and (3) experiment–learning
     evolution.'
@@ -62,7 +86,10 @@ blocks:
     parameters of all 46 building blocks from time-dependent DFT calculations were encoded as feature vectors for the machine
     learning models, capturing the excited-state electron–hole dynamics and electrophilic reactivity of the building blocks
     (Supplementary Note 1).
-  citations: []
+  citations:
+  - marker: '[24–26]'
+    intent_label: Prior Methods
+    topic_label: Coordination-driven assemblies and nanostructures
 - block_id: 3
   content: 'In the following step, an AI model was needed to establish a correlation between the building blocks and the targeting
     fluorescence properties of the corresponding COFs. Conventionally, compositional and chemical information for individual
@@ -87,7 +114,10 @@ blocks:
     low accuracy. The dimer approach employed here strikes an optimal balance between computational efficiency and the need
     for accurate representation of extended COF structures, thereby providing insights into excited-state properties that
     more closely approximate the actual COF structures.'
-  citations: []
+  citations:
+  - marker: '[29]'
+    intent_label: Resource Utilization
+    topic_label: Radiative decay pathways for bright emission
 - block_id: 4
   content: 'The subsequent stage involved the core evolution process, in which experimental results played an integral part
     in refinement of the AI model. Given that all 520 COF candidates had identical connectivity and similar topology (Supplementary
@@ -133,7 +163,13 @@ blocks:
     activation, followed by structural confirmation and fluorescence property characterization. This renders conventional
     high-throughput Bayesian optimization impractical for the problem at hand. Indeed, even after all 22 COF data points had
     been obtained and used as feedback, the Bayesian approach failed to yield a reasonable and converged prediction model.'
-  citations: []
+  citations:
+  - marker: '[30]'
+    intent_label: Result Comparison
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[28,31]'
+    intent_label: Research Gap
+    topic_label: null
 - block_id: 5
   content: 'The construction of COFs requires substantial experimental effort, including the synthesis of molecular building
     blocks, the growth of COF crystals, and their activation. In total, 22 high-quality COF crystals were obtained through
@@ -178,7 +214,22 @@ blocks:
     and hexagonal pores in these COFs. The distance between adjacent Ald-13 units was 2.1 nm, as measured from the HR-TEM
     images; this complied well with the corresponding structure refined by PXRD, further reinforcing the validity of the structure
     models.'
-  citations: []
+  citations:
+  - marker: '[29]'
+    intent_label: Result Comparison
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[32]'
+    intent_label: Prior Methods
+    topic_label: Processing and additive manufacturing methods
+  - marker: '[13]'
+    intent_label: Result Comparison
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[14]'
+    intent_label: Result Comparison
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[33]'
+    intent_label: Domain Overview
+    topic_label: Radiative decay pathways for bright emission
 - block_id: 6
   content: 'Recently, fluorescent COFs emerged as new frontiers in the exploration of the optical properties of COFs [34–39].
     However, the underlying mechanism remained largely unknown. Insight into these mechanisms is highly valuable as guidance
@@ -248,7 +299,16 @@ blocks:
     motifs in building blocks (Supplementary Note 9 and Supplementary Figs. 195–201), displayed negligible fluorescence in
     the experimental measurements, further implying that the governing mechanism here was different from the aggregation-induced
     emission effect.'
-  citations: []
+  citations:
+  - marker: '[34–39]'
+    intent_label: Domain Overview
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[40]'
+    intent_label: Prior Methods
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[41,42]'
+    intent_label: Prior Methods
+    topic_label: Radiative decay pathways for bright emission
 - block_id: 7
   content: Fluorescent COFs hold great promise as probes for bioimaging [43,44], as the photo-bleaching effect from small
     molecules can be largely alleviated. To achieve deeper imaging depth and a higher signal-to-noise ratio, light absorption
@@ -269,7 +329,22 @@ blocks:
     staining of major organs in mice and comprehensive routine blood and biochemical tests (Supplementary Figs. 208–210).
     This, combined with the superior photostability and deep-tissue imaging of PL-COF-11, means it is ideally suited as a
     probe for bioimaging.
-  citations: []
+  citations:
+  - marker: '[43,44]'
+    intent_label: Prospective Application
+    topic_label: Applications of AIE materials
+  - marker: '[45]'
+    intent_label: Domain Overview
+    topic_label: Applications of AIE materials
+  - marker: '[46–48]'
+    intent_label: Prior Methods
+    topic_label: Applications of AIE materials
+  - marker: '[49]'
+    intent_label: Domain Overview
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[47]'
+    intent_label: Domain Overview
+    topic_label: Applications of AIE materials
 - block_id: 8
   content: 'Despite advances in simulation techniques and the development of AI, the interplay between researchers and AI
     has yet to be fully established. In this study, an interactive experiment–learning method was used to integrate model
@@ -292,7 +367,13 @@ blocks:
     that imine linkages are formidably disfavoured was overturned in the fluorescent COFs studied here, whereas matching of
     HOMO–LUMO between building units was found to be critical to achieving high fluorescence. Such knowledge will be valuable
     for the future design of COFs but could not be extracted and verified without the assistance of AI.'
-  citations: []
+  citations:
+  - marker: '[50,51]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Photoacoustic imaging
+  - marker: '[52]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Radiative decay pathways for bright emission
 - block_id: 9
   content: ''
   citations: []

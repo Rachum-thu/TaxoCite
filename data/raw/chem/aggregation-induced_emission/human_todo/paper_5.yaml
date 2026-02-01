@@ -200,65 +200,71 @@ blocks:
     intent_label: Domain Overview
     topic_label: Photopatterning and optical data storage
   - marker: '[5]'
-    intent_label: Prospective Application
+    intent_label: Domain Overview
     topic_label: Chemosensing and analyte detection
   - marker: '[6]'
-    intent_label: Prospective Application
+    intent_label: Domain Overview
     topic_label: Photopatterning and optical data storage
   - marker: '[7]'
-    intent_label: Prospective Application
+    intent_label: Domain Overview
     topic_label: Photopatterning and optical data storage
   - marker: '[8]'
-    intent_label: Prospective Application
-    topic_label: Chemosensing and analyte detection
+    intent_label: Domain Overview
+    topic_label: Photopatterning and optical data storage
   - marker: '[9]'
-    intent_label: Prospective Application
+    intent_label: Domain Overview
     topic_label: Radiative decay pathways for bright emission
   - marker: '[10]'
-    intent_label: Prospective Application
-    topic_label: Radiative decay pathways for bright emission
+    intent_label: Domain Overview
+    topic_label: Photopatterning and optical data storage
   - marker: '[11]'
-    intent_label: Prospective Application
+    intent_label: Domain Overview
     topic_label: Photopatterning and optical data storage
   - marker: '[12]'
-    intent_label: Prospective Application
+    intent_label: Domain Overview
     topic_label: Photopatterning and optical data storage
   - marker: '[13]'
-    intent_label: Prospective Application
-    topic_label: Photopatterning and optical data storage
-  - marker: '[14]'
     intent_label: Domain Overview
     topic_label: Photopatterning and optical data storage
-  - marker: '[15]'
+  - marker: '[14,15]'
     intent_label: Domain Overview
     topic_label: Photopatterning and optical data storage
+  - marker: '[16–29]'
+    intent_label: Prior Methods
+    topic_label: Supramolecular strategies
   - marker: '[30]'
-    intent_label: Domain Overview
+    intent_label: Prior Methods
+    topic_label: Hydrogen-bonded polymer networks and gels
+  - marker: '[30,35–37]'
+    intent_label: Resource Utilization
+    topic_label: Hydrogen-bonded polymer networks and gels
+  - marker: '[38–40]'
+    intent_label: Resource Utilization
     topic_label: Doping and encapsulation into polymer matrices
-  - marker: '[33]'
+  - marker: '[41,42]'
+    intent_label: Resource Utilization
+    topic_label: Doping and encapsulation into polymer matrices
+  - marker: '[43–47]'
     intent_label: Domain Overview
     topic_label: Radiative decay pathways for bright emission
-  - marker: '[34]'
-    intent_label: Domain Overview
-    topic_label: Radiative decay pathways for bright emission
+  - marker: '[30,48,49]'
+    intent_label: Prior Methods
+    topic_label: Hydrogen-bonded polymer networks and gels
   - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Hydrogen-bonded polymer networks and gels
+  - marker: '[33,34]'
     intent_label: Domain Overview
-    topic_label: Doping and encapsulation into polymer matrices
-  - marker: '[41]'
-    intent_label: Resource Utilization
-    topic_label: Doping and encapsulation into polymer matrices
-  - marker: '[42]'
-    intent_label: Resource Utilization
-    topic_label: Doping and encapsulation into polymer matrices
-  - marker: '[48]'
-    intent_label: Domain Overview
-    topic_label: Doping and encapsulation into polymer matrices
-  - marker: '[49]'
-    intent_label: Domain Overview
-    topic_label: Doping and encapsulation into polymer matrices
+    topic_label: Radiative decay pathways for bright emission
   - marker: '[50]'
     intent_label: Resource Utilization
     topic_label: Chemosensing and analyte detection
+  - marker: '[51–53]'
+    intent_label: Domain Overview
+    topic_label: Supramolecular strategies
+  - marker: '[54–56]'
+    intent_label: Domain Overview
+    topic_label: Hydrogen-bonded polymer networks and gels
   - marker: '[57]'
     intent_label: Prospective Application
     topic_label: Processing and additive manufacturing methods

@@ -70,7 +70,73 @@ blocks:
     could impressively solve the bacterial resistance issue. Systematic antibacterial explorations were conducted, including
     bacteria staining and killing methicillin-resistant Staphylococcus aureus (MRSA), a drug resistant superbug in vitro and
     in vivo.'
-  citations: []
+  citations:
+  - marker: 1−3
+    intent_label: Domain Overview
+    topic_label: Polyelectrolyte architectures and single-chain aggregates
+  - marker: 4,5
+    intent_label: Prospective Application
+    topic_label: Polyelectrolyte architectures and single-chain aggregates
+  - marker: '6'
+    intent_label: Research Gap
+    topic_label: Polyelectrolyte architectures and single-chain aggregates
+  - marker: 7−9
+    intent_label: Prior Methods
+    topic_label: Postmodification of polymer precursors
+  - marker: 10,11
+    intent_label: Prior Methods
+    topic_label: Postmodification of polymer precursors
+  - marker: 12,13
+    intent_label: Prior Methods
+    topic_label: Postmodification of polymer precursors
+  - marker: '14'
+    intent_label: Prior Methods
+    topic_label: Main-chain copolymerization of difunctional monomers
+  - marker: '15'
+    intent_label: Prior Methods
+    topic_label: Main-chain copolymerization of difunctional monomers
+  - marker: 16,17
+    intent_label: Research Gap
+    topic_label: Polyelectrolyte architectures and single-chain aggregates
+  - marker: 18−23
+    intent_label: Domain Overview
+    topic_label: Polyelectrolyte architectures and single-chain aggregates
+  - marker: 24−28
+    intent_label: Prior Methods
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '29'
+    intent_label: Research Gap
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '30'
+    intent_label: Research Gap
+    topic_label: Radiative decay pathways for bright emission
+  - marker: 31−34
+    intent_label: Domain Overview
+    topic_label: Photosensitization for ROS generation
+  - marker: '35'
+    intent_label: Domain Overview
+    topic_label: Rotor-rich ionic cores and donor–acceptor scaffolds
+  - marker: '36'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 4,37,38
+    intent_label: Prospective Application
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 39,40
+    intent_label: Prospective Application
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '41'
+    intent_label: Prior Methods
+    topic_label: Rotor-rich ionic cores and donor–acceptor scaffolds
+  - marker: 42,43
+    intent_label: Prior Methods
+    topic_label: Rotor-rich ionic cores and donor–acceptor scaffolds
+  - marker: 44−46
+    intent_label: Prior Methods
+    topic_label: Rotor-rich ionic cores and donor–acceptor scaffolds
+  - marker: '47'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: In situ and charge-generating polymerizations
 - block_id: 2
   content: ''
   citations: []
@@ -125,7 +191,10 @@ blocks:
     thermal properties of the polyelectrolytes were evaluated by thermogravimetric analysis (TGA), and the results indicated
     that the 5% weight loss temperatures (Td) were in the range 218−323 °C (Figure S4), suggesting that they were thermally
     stable. Additionally, P1a/2d/3a and P1a/2e/3a displayed 70% of their weight even upon heating to 800 °C.'
-  citations: []
+  citations:
+  - marker: '47'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: In situ and charge-generating polymerizations
 - block_id: 4
   content: 'The structures of the resulting polymers were characterized by FT-IR and NMR spectra. To gain insight into the
     structures of these azonia-containing polyelectrolytes, model compound 2 was prepared by cascade double N-annulation reaction
@@ -191,7 +260,16 @@ blocks:
     result showed that these polyelectrolytes were stable under the exposure of normal room light (Figures S13 and S14) and
     were also able to undergo a photo-oxidative bleaching process with a tunable refractive index under the exposure of a
     strong UV light source (Figure S16, Table S3).'
-  citations: []
+  citations:
+  - marker: '48'
+    intent_label: Prospective Application
+    topic_label: Photopatterning and optical data storage
+  - marker: '49'
+    intent_label: Result Comparison
+    topic_label: Processing and additive manufacturing methods
+  - marker: 50−52
+    intent_label: Prospective Application
+    topic_label: Photopatterning and optical data storage
 - block_id: 6
   content: 'The unique azonia moiety in these polymers encouraged us to explore their ROS generation ability and application
     in bacteria killing. 53−55 H2DCF-DA is a commercial ROS indicator, which is nonfluorescent but emits green fluorescence
@@ -219,7 +297,19 @@ blocks:
     by the chemical trapping measurements with ABDA as an indicator (Figure S17). The photostability study showed that P1a/2e/3a
     indicated better photostability than organic dyes RB and 5,10,15,20-tetrakis(4-sulfonatophenyl)-porphyrin (TPPS), two
     traditional photosensitizers generally employed for PDT (Figure S15).'
-  citations: []
+  citations:
+  - marker: 53−55
+    intent_label: Prospective Application
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '56'
+    intent_label: Resource Utilization
+    topic_label: Photosensitization for ROS generation
+  - marker: '57'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '58'
+    intent_label: Resource Utilization
+    topic_label: Photosensitization for ROS generation
 - block_id: 7
   content: 'The strong 1O2 generation ability of these polyelectrolytes motivated us to further explore its performance as
     a photosensitizer in bacteria inhibition. P1a/2e/3a with the most significant ROS generation was chosen for further biological
@@ -278,7 +368,19 @@ blocks:
     group showed an obvious re-epithelialized epidermis, exhibiting intact skin microstructure comparable with normal tissue.
     Thus, the in vivo MRSA-infected mouse burn model demonstrated that the photodynamic effect of P1a/2e/3a could inhibit
     MRSA infection in the burn injury mouse model and effectively accelerate the healing process.'
-  citations: []
+  citations:
+  - marker: '39'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 59−61
+    intent_label: Importance of Problem
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '62'
+    intent_label: Domain Overview
+    topic_label: Characteristic interactions in charged systems
+  - marker: '63'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Photodynamic therapy and antimicrobial treatment
 - block_id: 8
   content: In summary, we have developed an efficient one-pot polymerization route to in situ generate functional azonia-containing
     polyelectrolytes using readily accessible nonionic reactants and commercially available cheap ionic species. Compared

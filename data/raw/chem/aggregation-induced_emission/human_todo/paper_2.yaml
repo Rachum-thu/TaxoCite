@@ -54,7 +54,49 @@ blocks:
     fluorescent photopatterning and broad-spectrum irreversible antibacterial activity. The halogen-rich polysulfonates exhibit
     a high and photoswitchable refractive index and could undergo efficient postfunctionalizations to further enrich the variety
     and functionality of photoresponsive heteroatom-containing polyesters.'
-  citations: []
+  citations:
+  - marker: '[1]'
+    intent_label: Domain Overview
+    topic_label: Photobiosynthesis enhancement
+  - marker: '[2,3]'
+    intent_label: Domain Overview
+    topic_label: Photochemical responsive systems
+  - marker: '[4,5]'
+    intent_label: Domain Overview
+    topic_label: Photochemical responsive systems
+  - marker: '[6−9]'
+    intent_label: Prospective Application
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[10]'
+    intent_label: Prospective Application
+    topic_label: Photolysis and degradable systems
+  - marker: '[11]'
+    intent_label: Research Gap
+    topic_label: Photolysis and degradable systems
+  - marker: '[12]'
+    intent_label: Research Gap
+    topic_label: Photolysis and degradable systems
+  - marker: '[13]'
+    intent_label: Research Gap
+    topic_label: Photolysis and degradable systems
+  - marker: '[14,15]'
+    intent_label: Prior Methods
+    topic_label: Main-chain copolymerization of difunctional monomers
+  - marker: '[16−19]'
+    intent_label: Domain Overview
+    topic_label: Photolysis and degradable systems
+  - marker: '[20,21]'
+    intent_label: Research Gap
+    topic_label: Main-chain copolymerization of difunctional monomers
+  - marker: '[22−24]'
+    intent_label: Prior Methods
+    topic_label: Main-chain copolymerization of difunctional monomers
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: Main-chain copolymerization of difunctional monomers
+  - marker: '[26]'
+    intent_label: Domain Overview
+    topic_label: In situ and charge-generating polymerizations
 - block_id: 2
   content: ''
   citations: []
@@ -91,7 +133,13 @@ blocks:
     the monomer scope of sulfonic acids, we found that all reacted efficiently with 1a to generate polysulfonates with excellent
     Mw in high yields, regardless of their rigidity, aromaticity, and bulkiness. All the obtained polysulfonates showed excellent
     solubility in commonly used organic solvents, such as DMF, DMSO, THF, DCM, and chloroform.'
-  citations: []
+  citations:
+  - marker: '[27−30]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Main-chain copolymerization of difunctional monomers
+  - marker: '[31]'
+    intent_label: Domain Overview
+    topic_label: Hydrogen-bonded polymer networks and gels
 - block_id: 4
   content: 'To gain insight into the structures of the halogen-rich polysulfonates, model compound 3 was prepared by reaction
     of haloalkyne 1a and p-toluenesulfonic acid under the same synthetic conditions for the polymerization (Scheme S3). Typical
@@ -117,7 +165,13 @@ blocks:
     of the polymerization was the proton transfer from disulfonic acid to dihaloalkyne, generating the vinyl carbocation intermediate.
     Then the intermediate underwent nucleophilic attack by disulfonic acid to form the alkenyl sulfonate moiety. These processes
     were repeated following the same addition mechanism, eventually forming the resulting polysulfonates.
-  citations: []
+  citations:
+  - marker: '[26]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: In situ and charge-generating polymerizations
+  - marker: '[26,31]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: In situ and charge-generating polymerizations
 - block_id: 6
   content: The absorption and emission spectra of dilute THF solutions (40 μM) of the as-synthesized polysulfonates were shown
     in Figures S25 and S26. The emission of polysulfonates is easily tunable from 440 to 550 nm by polymerization using monomers
@@ -168,7 +222,13 @@ blocks:
     increased after UV irradiation, corresponding to the methyl group of p-toluenesulfonic acid. In addition, the 1H NMR spectra
     and 13C NMR spectra of the degradation product also confirmed the disappearance of the C=C double bond and the formation
     of keto groups (Figures S33 and S34).'
-  citations: []
+  citations:
+  - marker: '[16,18,32]'
+    intent_label: Domain Overview
+    topic_label: Photolysis and degradable systems
+  - marker: '[32]'
+    intent_label: Domain Overview
+    topic_label: Photolysis and degradable systems
 - block_id: 8
   content: 'The generation of complex fluorescent patterns by photo-lithography technique is of great significance in terms
     of optical writing and reading, anticounterfeiting applications, and biological sensing systems.[33] Because of the excellent
@@ -217,7 +277,31 @@ blocks:
     at 632.8 nm before and after light irradiation with a mercury arc lamp (200−400 nm) for 40 min could be as large as 0.1.
     The excellent tunability of the film refractivity by UV irradiation enables these polymers to find promising applications
     in optical data storage devices, gradient-index optics, and integrated photonic technology.[44−48]'
-  citations: []
+  citations:
+  - marker: '[33]'
+    intent_label: Prospective Application
+    topic_label: Photopatterning and optical data storage
+  - marker: '[34,35]'
+    intent_label: Domain Overview
+    topic_label: Photolysis and degradable systems
+  - marker: '[36]'
+    intent_label: Research Gap
+    topic_label: Photopatterning and optical data storage
+  - marker: '[37,38]'
+    intent_label: Research Gap
+    topic_label: Photopatterning and optical data storage
+  - marker: '[39−41]'
+    intent_label: Domain Overview
+    topic_label: Photopatterning and optical data storage
+  - marker: '[42]'
+    intent_label: Importance of Problem
+    topic_label: Photopatterning and optical data storage
+  - marker: '[43]'
+    intent_label: Result Comparison
+    topic_label: Photopatterning and optical data storage
+  - marker: '[44−48]'
+    intent_label: Prospective Application
+    topic_label: Photopatterning and optical data storage
 - block_id: 9
   content: 'Controllable broad-spectrum bactericides and antibiotics are invaluable for modern healthcare-associated infections.[49−53]
     The ability of generating strong photoacids of the polysulfonates motivates us to further explore their antibacterial
@@ -266,7 +350,16 @@ blocks:
     models demonstrated that the polysulfonates are promising and flexible antibacterial materials for different situations,
     such as the surface sterilization of commodities, resistance to corrosion caused by microorganisms on ships, and customized
     bacterial scaffolds.'
-  citations: []
+  citations:
+  - marker: '[49−53]'
+    intent_label: Importance of Problem
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[54]'
+    intent_label: Domain Overview
+    topic_label: Photolysis and degradable systems
+  - marker: '[55]'
+    intent_label: Prior Methods
+    topic_label: Photodynamic therapy and antimicrobial treatment
 - block_id: 10
   content: Postfunctionalization is a powerful tool to endow polymers with more sophisticated structures and tunable functionalities.[56−58]
     The vinyl bromine or vinyl iodine functionality of the halogen-rich polysulfonates enables them to undergo various postfunctionalization
@@ -278,7 +371,10 @@ blocks:
     of the conjugation. P1c/2a/3a could also undergo photodegradation, but the degradation rate of P1c/2a/3a was much slower
     compared with that of the pristine polymer P1c/2a, which is probably due to the large steric hindrance and less electron
     deficiency of the hexylbenzene group compared with the iodine atom.
-  citations: []
+  citations:
+  - marker: '[56−58]'
+    intent_label: Domain Overview
+    topic_label: Postmodification of polymer precursors
 - block_id: 11
   content: In summary, we developed a catalyst-free spontaneous polymerization for the facile synthesis of photoresponsive
     halogen-rich polysulfonates in 100% atom economy. The polymerization proceeded efficiently at room temperature in air

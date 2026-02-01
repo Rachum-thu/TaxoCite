@@ -68,7 +68,58 @@ blocks:
     and MDR P. aeruginosa. This novel strategy by integrating specific targeting, discriminative imaging, and synergistic
     killing functionalities together into an AIE−phage bioconjugate is a promising methodology for the design of next-generation
     antibacterial agents.'
-  citations: []
+  citations:
+  - marker: 1,2
+    intent_label: Importance of Problem
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 3−6
+    intent_label: Importance of Problem
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 7,8
+    intent_label: Importance of Problem
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 9,10
+    intent_label: Importance of Problem
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 11,12
+    intent_label: Importance of Problem
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '13'
+    intent_label: Importance of Problem
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '14'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 15,16
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '17'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '18'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 19−21
+    intent_label: Domain Overview
+    topic_label: Chemosensing and analyte detection
+  - marker: 22−25
+    intent_label: Domain Overview
+    topic_label: Chemosensing and analyte detection
+  - marker: '26'
+    intent_label: Domain Overview
+    topic_label: Radiative decay pathways for bright emission
+  - marker: 27−29
+    intent_label: Domain Overview
+    topic_label: Radiative decay pathways for bright emission
+  - marker: 30−34
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 35,36
+    intent_label: Research Gap
+    topic_label: Chemosensing and analyte detection
+  - marker: 37,38
+    intent_label: Research Gap
+    topic_label: Chemosensing and analyte detection
 - block_id: 2
   content: ''
   citations: []
@@ -121,7 +172,16 @@ blocks:
     on one PAP entity, according to the enhanced absorbance at 457 nm of TVP−PAP compared to bare PAP. Because of the robust
     ROS generation capability of prepared AIE-phage bioconjugates (Figure S13), the particular bacterial recognition, real-time
     tracking, and synergistic bacterial killing were highly expectable (Figure 2d).'
-  citations: []
+  citations:
+  - marker: 39,40
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Photosensitization for ROS generation
+  - marker: '41'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Photosensitization for ROS generation
+  - marker: '42'
+    intent_label: Domain Overview
+    topic_label: Photosensitization for ROS generation
 - block_id: 4
   content: 'Taking advantage of the specific recognition feature of phage and the unique AIE property from TVP-S, the efficiency
     of bacterial imaging using TVP−PAP was first examined on its target bacteria (P. aeruginosa). As shown in Figure 3a, P.
@@ -152,7 +212,16 @@ blocks:
     local site with enhancement in their fluorescence emission for light-up imaging of bacteria. Therefore, significant advancement
     in targeting specificity could be achieved by the TVP−PAP bioconjugate compared to the previous AIEgens that suffered
     moderate selectivity.35'
-  citations: []
+  citations:
+  - marker: '31'
+    intent_label: Research Gap
+    topic_label: Chemosensing and analyte detection
+  - marker: 43,44
+    intent_label: Research Gap
+    topic_label: null
+  - marker: '35'
+    intent_label: Research Gap
+    topic_label: Chemosensing and analyte detection
 - block_id: 5
   content: 'Inspired by the exceptional bacteria-targeting ability of PAP and high 1O2 generation efficiency of AIEgens, we
     next checked their synergistic antibacterial performances in facing antibiotic-sensitive and MDR P. aeruginosa. The times
@@ -211,7 +280,13 @@ blocks:
     on the targeted bacteria. Compared to the previous PDI-based antibacterial tests demanding up to several micromolar AIEgens,36,45−47
     our phage-guided method showed a fairly higher efficacy and would remarkably mitigate the toxic concerns regarding the
     random interaction of traditional photosensitizers with the surrounding biomolecules.'
-  citations: []
+  citations:
+  - marker: '14'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: 36,45−47
+    intent_label: Result Comparison
+    topic_label: Photodynamic therapy and antimicrobial treatment
 - block_id: 6
   content: 'The unique fluorescence property of AIEgen was also harnessed for real-time monitoring this targeting and killing
     process. As shown in Figure 5, the successful staining of P. aeruginosa was first achieved by incubating with TVP−PAP
@@ -233,7 +308,10 @@ blocks:
     accelerate the permeation of 1O2 into the bacteria cytoplasm and caused further damages to P. aeruginosa (Figure 6b).
     A similar result with coarse cell surfaces and collapsed morphologies could also be observed in the case of MDR P. aeruginosa,
     verifying the tremendous destruction from the synergistic effect48,49 of TVP−PAP bioconjugates (Figure S28).'
-  citations: []
+  citations:
+  - marker: 48,49
+    intent_label: null
+    topic_label: null
 - block_id: 7
   content: 'Inspired by the outstanding bacteria targeting and elimination activity of TVP−PAP in vitro, we further extended
     antibacterial examinations to in vivo using a mouse model with antibiotic-sensitive or MDR P. aeruginosa infectious skin
@@ -257,7 +335,13 @@ blocks:
     light irradiation by showing intact histological characteristics. Whereas in control and TVP−PAP treated alone, invaded
     lymphocytes could be obviously observed (Figure 8). Collectively, these outstanding performances in vivo suggested the
     great potential of TVP−PAP bioconjugates in the application of target bacterial killing and infectious disease therapeutics.'
-  citations: []
+  citations:
+  - marker: '32'
+    intent_label: Result Comparison
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '45'
+    intent_label: Result Comparison
+    topic_label: Photodynamic therapy and antimicrobial treatment
 - block_id: 8
   content: In summary, we proposed a novel antibacterial strategy by integrating the fluorescence monitoring, phage targeting,
     and AIE-based photodynamic inactivation together toward a certain species of bacterium. Benefiting from the unique fluorescence
