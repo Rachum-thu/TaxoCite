@@ -55,6 +55,10 @@ After the manual seed PDFs are prepared under `data/raw/{domain}/{topic}/`, run:
 
 - `bash data/raw/auto_construct.sh <directory_path>`
 
+You should run the one below if your paper is not using ACM-like reference markers.
+
+- `bash data/raw/auto_construct_no_meta.sh <directory_path>`
+
 Example:
 - `bash data/raw/auto_construct.sh data/raw/cs/retrieval_augmented_generation`
 
