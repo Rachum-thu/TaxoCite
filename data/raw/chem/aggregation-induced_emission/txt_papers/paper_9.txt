@@ -1,0 +1,1559 @@
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654
+ 1645
+nature chemistry
+https://doi.org/10.1038/s41557-025-01974-x
+Article
+Discovery of highly fluorescent covalent 
+organic frameworks through AI-assisted 
+iterative experiment–learning cycles
+ 
+Liang Zhang1,2,3,10, Jiahui Du2,10, Zikai Xie2,4,10, Linjiang Chen    2,4,5 , Wenlang Li3, 
+Weihang Geng6, Yi Zhou    7, Xinwen Ou3, Chengtao Gong1, Yijun Gao1, Shan He3, 
+Chunxing Yan1, Chengbin Zhao    1, Yantian Jiao3, Sheng-Yi Yang3, Bing Huang1, 
+Jacky W. Y . Lam   3, Jun Qian    6, Jun Jiang    2 , Ben Zhong Tang    3  & 
+Hexiang Deng    1,8,9 
+The development of porous crystalline materials with targeted properties  
+remains challenging owing to the vast chemical design space 
+and the high cost of experimental screening. Here we develop an 
+artificial-intelligence-assisted interactive experiment–learning evolution 
+approach to accelerate the discovery of highly fluorescent covalent organic 
+frameworks (COFs). This approach integrates m od el r ec om me nd ation, 
+experimental validation and active learning in an iterative refinement cycle, 
+allowing the artificial intelligence model to evolve along the process. Among 
+the 520 possible combinations derived from a library of 2         0 a    m  i   ne a  n d 26 
+aldehyde building blocks, we needed to experimentally evaluate only 11 
+COFs to identify one with a remarkable photoluminescence quantum yield 
+of 41.3%. By embedding electronic configuration and quantum-level insights 
+into the learning process, this approach transcends intuition based on 
+statistical analysis intuition to enable material discovery driven by chemical 
+knowledge, enhancing prediction reliability and interpretability. We also 
+reveal the fluorescence mechanism of these COFs and outline the critical 
+role of HOMO–LUMO alignment and excited-state charge distribution.
+Covalent organic frameworks (COFs), which are constructed by link-
+ing molecules through covalent bonds, represent a class of crystalline 
+materials with high structural diversity1– 6. Their modular design enables 
+systematic control over structure and function, leading to exceptional 
+physical and chemical properties that make them useful in separation7,8, 
+catalysis9–14  and biological applications15,16. However, the discovery of 
+COFs with targeted properties remains a major challenge. This dif-
+ficulty stems from the combinatorial explosion of possible building 
+block pairs, making exhaustive experimental screening impractical, 
+even with the support of theoretical models and structural simulations.
+In this study, we develop an interactive experiment–learning evo-
+lution approach to allow interplay between experienced researchers 
+and artificial intelligence (AI) models, in which the AI model is refined 
+and evolves iteratively along the process (Fig. 1). We apply this strat-
+egy to the discovery of fluorescent COFs constructed from 20 amine 
+(ami) and 26 aldehyde (ald) building blocks, linked through imine 
+condensation to form a series of two-dimensional (2D) frameworks. 
+A multilayer perceptron (MLP) was used to pretrain a model based 
+on density functional theory (DFT) calculations of 520 dimers and 
+orbital-level descriptors of the building blocks, followed by a Siamese 
+neural network to recommend new candidates in subsequent learning 
+cycles. Using this approach, we identified a COF with a photolumines-
+cence quantum yield (PLQY) of 41.3% after only four generations of 
+experiment–model iteration.
+Received: 29 October 2024
+Accepted: 15 September 2025
+Published online: 31 October 2025
+ Check for updates
+A full list of affiliations appears at the end of the paper.  e-mail: linjiangchen@ustc.edu.cn; jiangj1@ustc.edu.cn; tangbenz@cuhk.edu.cn;  
+hdeng@whu.edu.cn
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654 1646
+Article https://doi.org/10.1038/s41557-025-01974-x
+small, composed of just a few atoms. By contrast, the unit cells of 
+molecule-based crystals, such as COFs and metal–organic frameworks 
+(MOFs), are much larger, often containing hundreds of atoms. As a 
+result, conventional protocols are not suitable owing to computational 
+challenges and high resource demands. Attempts have been made with 
+MOFs to gain intuition from synthetic conditions for a known structure 
+using a genetic algorithm21. The design of new MOFs was also achieved 
+using large language models (LLMs) to extract critical information from 
+unstructured text in the literature22– 27. However, these approaches typi-
+cally focused on structure compositions and synthetic conditions and 
+did not provide chemical insight involving the electronic structure of 
+the building blocks or the corresponding excited state. Such insights 
+are vital for elucidation of structure–property relationships. Our pro-
+tocol embeds chemical knowledge, including frontier orbital theory 
+Cycle 1
+Dataset curation
+a
+b
+c
+MLP model
+Interactive learning
+Experiment–learning
+evolution
+Cycle 2
+PLQY
+XCOF points in the workflow
+fn−1 /parenleft.ucX/parenright.uc
+Learn and re/f.shortine
+Recommend
+Synthesis
+and test
+PL-COF-1 PL-COF-2 PL-COF-11
+Fine-tuning
+of the model
+Ami units (20) Ald units (26)
++  Dimer models Bridged by
+ PL-COF (520, where 494 dimer models were built)
+Chemical
+space
+Extracting
+  building blocks
+Literature
+Literature
+Research
+expert
+N
+Output: excited-state properties of dimers 
+14 descriptors
+for ami units
+14 descriptors 
+for ald units Output: /f.shortluorescence property of PL-COFs
+Input:
+/two.den
+d2d1 d3 d4
+d2d1 d3 d4
+NH 2NH
+CHO
+CHO
+Input:
+Encode Pretraining
+Pretraining
++
+2NH CHO
++
+ Prediction
+ Dimer
+ PL-COFs
+Chemical space
+Ami units (20)
+Unit candidates:
+COF candidates:
+Ald units (26)
+H2 H2N N
+H2 H2N N
+H2 H2N N
+H2 H2N N
+NN
+OHC
+OHC
+CHO
+CHO
+N
+OHC
+OHC
+N
+S
+N
+N
+CHO
+CHO
+H2N H2N
+H2N H2N
+NN
+OHC
+OHC
+CHO
+CHO
+CN
+NC
+N N
+ LLM 
+Precise recommendation
+Ald units
+Ami units
+PLQY
+1
+1
+2
+3
+4
+5
+High
+Low
+2 3 4 5 6 7
+evo
+d2d1 d3 d4 d2d1 d3 d4 d2d1 d3 d4 d2d1 d3 d4
+Fig. 1 | Workflow of AI-assisted experiment–learning approach for 
+fluorescence COF discovery. a, Selection of candidate ami and ald building 
+blocks facilitated by LLM reading of COF papers and extraction of chemical 
+structures. b, Construction of the MLP model to correlate the properties of the 
+building blocks with the fluorescence properties of the corresponding COFs, 
+using a dimer as the bridge. c, Interactive experiment–learning evolution using 
+the Siamese network, in which actual experimental results were used to fine-tune 
+the model, increasing the precision of the recommendation in the next iteration 
+cycle. In this way, a PL-COF with optimal fluorescence properties under the same 
+topology was obtained efficiently only after a few generations of evolution.
+A unique feature of the workflow is the embedding of electronic 
+structure information—including frontier orbital energies and 
+excited-state charge distributions—into the learning process, ena -
+bling more chemically meaningful predictions. Analysis of the dataset 
+obtained using this workflow revealed key factors influencing fluores-
+cence, including HOMO–LUMO alignment between building blocks and 
+the distribution of excited-state charge within dimers. These results 
+enabled us to resolve structure–property relationships in COFs and 
+identify hidden mechanisms. The workflow thus represents a transfer-
+able protocol for materials discovery that incorporates both chemical 
+knowledge and data-driven modelling.
+Previous work has demonstrated the possibility of using AI to 
+accelerate the discovery of inorganic crystals by proposing a shortlist of 
+candidates17– 20. However, the unit cells of these crystals were relatively
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654
+ 1647
+Article https://doi.org/10.1038/s41557-025-01974-x
+and electronic configuration, within the machine learning process. 
+This enables the model to move beyond statistical fitting, instead 
+integrating chemical insight into predictions and thereby improving 
+interpretability. Notably, conventional Bayesian optimization, used in 
+the study of molecular catalysts28, failed to converge in this context. By 
+comparison, the Siamese neural network used here proved effective 
+in making accurate predictions based on limited samples. Following 
+the initial five COFs, experimental synthesis of only six more COFs was 
+needed to achieve a desirable PLQY , demonstrating the power of this 
+interactive experiment–learning evolution strategy.
+Results and discussion
+There are three key steps in the workflow: (1) dataset curation, (2) model 
+building and (3) experiment–learning evolution (Fig. 1).
+Dataset curation and encoding
+LLMs have proven efficient in screening potential organic units for 
+the synthesis of MOFs24– 26. Here we applied a similar methodology to 
+COFs, in which 20 ami and 26 ald units were identified as candidate 
+building blocks for the construction of 2D imine-linked COFs with bex 
+topology (Fig. 1a, Supplementary Note 1 and Extended Data Figs. 1 and 
+2). However, for the encoding process, pivoting to active learning, a 
+new set of parameters consisting of electronic structures of the build-
+ing blocks was used; this was in contrast to previous work on porous 
+crystals. Specifically, a set of 14 key electronic structure parameters 
+of all 46 building blocks from time-dependent DFT calculations were 
+encoded as feature vectors for the machine learning models, capturing 
+the excited-state electron–hole dynamics and electrophilic reactivity 
+of the building blocks (Supplementary Note 1).
+Model building and pretraining
+In the following step, an AI model was needed to establish a correlation 
+between the building blocks and the targeting fluorescence properties 
+of the corresponding COFs. Conventionally, compositional and chemi-
+cal information for individual motifs or building blocks has been used 
+to predict the properties of the entire extended framework. However, 
+the electronic properties of the extended frameworks usually differed 
+markedly from those of their isolated building blocks.
+T o bridge the knowledge gap in the AI model, we used a dimer 
+composed of one ald and one ami building block with an imine link -
+age as an intermediate molecule connecting the structural vari -
+ables and the electronic states of the corresponding COF . Based 
+on single-crystal structures of 2D imine COFs 29, we assigned a trans  
+conformation to the imine linkage in the dimer and constrained 
+both building blocks to an in-plane configuration to mimic their 
+arrangement in the 2D COF layers (Extended Data Fig. 3 and 
+Supplementary Figs. 25–29). DFT calculations were performed on the 
+dimers constructed by a previously curated dataset of 20 ami and 26 
+ald units; the results showed a critical excited-state charge redistribu-
+tion facilitated by imine bonds, in which the contributions from the 
+ami and ald units were captured (Fig. 1b and Supplementary Figs. 1–
+24). A machine learning model based on MLP, which is well known 
+for its efficient handling of variables in large numbers, was built for 
+pretraining, with 28 descriptors extracted from the building blocks 
+as the input and DFT calculation results for 520 dimer combinations 
+as the output (Fig. 1b ).
+Direct excited-state calculations of entire periodic COF struc -
+tures are deemed to be computationally prohibitive, particularly 
+considering 520 possible combinations, whereas classic treatment 
+based on building-block-only calculations suffers from low accu -
+racy. The dimer approach employed here strikes an optimal balance 
+between computational efficiency and the need for accurate repre-
+sentation of extended COF structures, thereby providing insights 
+into excited-state properties that more closely approximate the 
+actual COF structures.
+Interactive experiment–learning evolution
+The subsequent stage involved the core evolution process, in which 
+experimental results played an integral part in refinement of the AI 
+model. Given that all 520 COF candidates had identical connectivity 
+and similar topology (Supplementary Table 1), we used a Siamese neu-
+ral network model, a type of model that excels at learning similarities 
+based on limited data points. Utilizing a compact ten-dimensional vec-
+tor embedding (Supplementary Note 1), the Siamese neural network 
+successfully predicted the strongest fluorescent COFs in bex topology. 
+Photoluminescent COFs (PL-COFs) PL-COF-10 and PL-COF-11, with 21% 
+and 41.3% quantum yield (Supplementary Tables 2 and 3), respectively, 
+were identified through a fast track with 4 generations of interactive 
+experiment–learning evolution (Fig. 2).
+Specifically, the active learning process was initiated with five 
+randomly selected candidates from the chemical space as preliminary 
+recommendations (Fig. 2a), PL-COF-1 to PL-COF-5, termed the first 
+generation (Gen I). The initial results revealed suboptimal performance 
+for most of the synthesized COFs, except for PL-COF-4, which exhib-
+ited an absolute solid PLQY of 10.6%. These experimental results were 
+incorporated into the dataset as the start of the AI model.
+Starting from the second generation (Gen II), a sequential active 
+learning iteration approach was adopted. In each iteration, one COF 
+was predicted and investigated experimentally, after which the AI 
+model was refined, incorporating new experimental input, and then 
+used for the next prediction (Fig. 2b ). Following three iterations in 
+Gen II, the averaged fluorescence quantum yield of three recom -
+mended COFs, PL-COF-6, PL-COF-7 and PL-COF-8, was 8.7%; this was 
+higher than that of the initial five random recommendations (2.7%). 
+PL-COF-8 had a PLQY of 11%, readily surpassing that of PL-COF-4, 
+which had the highest PLQY in Gen I. After Gen II, another three itera-
+tions were performed as the third generation (Gen III). The average 
+PLQY of COFs in this cycle, PL-COF-9, PL-COF-10 and PL-COF-11, was 
+27%, much higher than that achieved in Gen II. Notably, PL-COF-11 
+achieved the highest PLQY of 41.3%, positioning it as a promising can-
+didate within the explored chemical space. Notably, even PL-COF-10, 
+with the second highest PLQY of 21%, performed comparably to the 
+state-of-the-art fluorescent 2D COF under the same bex topology 30 
+(Supplementary Tables 2 and 3).
+Finally, an additional set of experiments was conducted to further 
+evaluate the robustness and generality of the model predictions as 
+the fourth generation (Gen IV), with 11 additional COFs (PL-COF-12 to 
+PL-COF-22) selected from regions in the chemical space adjacent to 
+high-performing candidates (Fig. 2c). Despite the structural similarity 
+to previous ones, these COFs exhibited relatively weak fluorescence, 
+with an average PLQY of 1.5%. These results agreed well with the pre-
+dictions from the model and further demonstrate the power of the 
+Siamese neural network in structure recommendation based on the 
+limited experimental dataset that was accessible.
+The tool chosen for the data refinement within the machine 
+learning process is crucial. Bayesian optimization, as used in con -
+ventional AI models, is good at prediction based on a large number 
+of experimental results, in cases in which the experimental results 
+are relatively easy to obtain and constitute a continuous chemical 
+space28,31. However, each COF involves a combination of discrete 
+building blocks, and time-consuming experimental investigation 
+of each COF is required to yield a single reliable data point, even for 
+the most experienced researchers in the field. Such experimental 
+processes include but are not limited to synthesis of building block 
+molecules, growth of COF crystals, sample accumulation and activa -
+tion, followed by structural confirmation and fluorescence property 
+characterization. This renders conventional high-throughput Bayes -
+ian optimization impractical for the problem at hand. Indeed, even 
+after all 22 COF data points had been obtained and used as feedback, 
+the Bayesian approach failed to yield a reasonable and converged 
+prediction model.
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654 1648
+Article https://doi.org/10.1038/s41557-025-01974-x
+Construction and characterization of 22 PL-COFs
+The construction of COFs requires substantial experimental effort, 
+including the synthesis of molecular building blocks, the growth of COF 
+crystals, and their activation. In total, 22 high-quality COF crystals were 
+obtained through optimization of crystal growth conditions, which 
+involved 11 ald units (termed Ald-1, Ald-7, Ald-8, Ald-10, Ald-11, Ald-13, 
+and Ald-20 to Ald-25) and 6 ami units (Ami-8, Ami-10, Ami-11, Ami-12, 
+Ami-15 and Ami-17) (Extended Data Figs. 1 and 2, Supplementary Note 
+2 and Supplementary Figs. 25–29). These steps have the potential to be 
+incorporated into automated systems in the future32, but here they were 
+executed manually to demonstrate the compatibility of this AI-assisted 
+approach with the standard operations accessible in most laboratories.
+Powder X-ray diffraction (PXRD) analysis was performed on 
+these COFs using laboratory-based X-ray sources, with selected 
+samples further confirmed by synchrotron-based analysis (Fig. 3 , 
+Extended Data Fig. 3 and Supplementary Figs. 30–32). The PXRD pat-
+terns exhibited sharp diffraction peaks, indicating high crystallinity. 
+PXRD pattern refinement revealed a common bex topology in most of 
+these COFs (Fig. 3, Supplementary Table 1 and Supplementary Figs. 33–
+53), except for one in Gen IV (PL-COF-22). The formation of imine 
+linkages was confirmed through a series of spectroscopic analyses, 
+including Fourier transform infrared spectroscopy (Supplementary 
+Note 3 and Supplementary Figs. 54–75), X-ray photoelectron spec -
+troscopy (Supplementary Note 4 and Supplementary Figs. 76–97) 
+and solid-state 13C cross-polarization nuclear magnetic resonance 
+spectroscopy (Supplementary Note 5 and Supplementary Figs. 98–119). 
+The permanent porosity of the PL-COFs was evaluated through nitrogen 
+adsorption isotherms at 77 K. The derived Brunauer–Emmett–T eller 
+surface areas ranged from 150 to 1,680 m2 g− 1 (Supplementary Note 6 
+and Supplementary Figs. 120–140). Optical properties of these COFs 
+5.7 9.4 11.0
+21.0
+41.3
+18.6
+(Generation IV)
+Model initialization
+Active learning
+Supplementary
+ sampling
+evo
+PLQY
+Cycles
+PLQY
+Siamese networkChemical space
+Cycle
+Cycle Cycle Cycle
+Cycle Cycle
+0
+PL-COF-1PL-COF-2PL-COF-3PL-COF-4PL-COF-5
+10
+20
+30
+Absolute
+PLQY (%)
+40 Weak emission
+0.03 0.1 0.5 2.5
+10.6
++
+5 recommended COFs
+PL-COF-1
+PL-COF-3 PL-COF-4 PL-COF-5
+PL-COF-2
+(Generation I)
+a
+b
+c
+(Generations II and III)
+Gen II
+PL-COF-7
+2 3
+PL-COF-8
+PL-COF-6
+1
+5
+PL-COF-10
+6
+PL-COF-11
+4
+PL-COF-9
+0
+Gen I Gen II Gen III Gen IV
+10
+20
+30
+40Absolute PLQY (%)
+CN
+NC
+N N
+N
+NN
+N N
+N
+NN
+N
+S
+N
+NN
+N
+N
+S
+N
+N N
+N
+NSN
+N
+N N
+N
+S
+N
+N
+NN
+CN
+NC
+Ami units
+Ald units
+PLQY PLQY PLQY
+PLQYPLQY
+PLQY PLQY
+11
+15
+11
+12
+17
+8
+10
+1 7 8 10 21 20 13 24 25 23
+1.8 0.4 2.01.8
+2.5
+0.5
+0.1
+0.1
+9.4 5.7
+11.0
+7.1 0.5 2.2
+Transition dipole moment 
+High
+Low
+0.03 0.5
+10.6
+0.17
+21.0 18.6
+0.18
+Gen III
+41.3
+PL-COF-4
+PL-COF-9
+PL-COF-10
+PL-COF-11
+PL-COF-7
+PL-COF-6
+PL-COF-8
+PL-COF-5
+PL-COF-1
+PL-COF-3
+PL-COF-2
+Fig. 2 | Details of each generation in the interactive experiment–learning 
+evolution process. a, The active learning process is initiated by five randomly 
+recommended COF structures (Gen I) with even distribution in the chemical 
+space, marked as yellow dots. The corresponding PL-COFs were synthesized, 
+and their PLQY values were measured as feedback to be used in prediction for 
+the following generations. b, Two key generations, Gen II and Gen III, were each 
+composed of three sequential iteration cycles, in which one COF was predicted 
+and investigated experimentally at a time for each cycle. The prediction accuracy 
+of the Siamese network model improved during the process, after which the best 
+PL-COF was identified. c, Eleven supplemental COFs were selected from regions 
+adjacent to high-performing candidates to validate the accuracy of prediction. 
+These COFs also enriched the dataset and enabled a more comprehensive 
+investigation of the structure–function relationships between molecular 
+building block parameters and COF fluorescence properties.
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654
+ 1649
+Article https://doi.org/10.1038/s41557-025-01974-x
+Gen I Gen II Gen III Gen IV 
+a
+b
+c
+d
+10 n m
+e
+10 n m
+i
+PL-COF-11
+PL-COF-8
+PL-COF-4
+PL-COF-22
+NH2H2N
+NH2H2N
+NH2H2N
+NH2H2N
+NH2H2N
+NH2H2N
+NH2H2N
+H2N NH2
+Ami-8
+Ald-13
+N N
+S
+NN
+CHO
+CHOOHC
+OHC
+Ami-11
+Ald-24
+Ami-11
+Ald-23
+Ami-12
+Ald-13
+N N
+S
+NN
+CHO
+CHOOHC
+OHC
+N N
+N
+S
+S
+N
+NN
+CHO
+CHOOHC
+OHC
+N N
+NSN
+CHO
+CHOOHC
+OHC
+2 n m
+2 n m
+a
+b
+c
+a
+b
+c
+1 nm –1
+1 nm –1
+1 nm –1
+PL-COF-4
+a/b = 1.26
+a/b = 1.50
+PL-COF-11
+k
+l
+f h
+g
+j
+1 nm –1
+FilteredRaw
+FilteredRaw
+d100  = 2.14 nm
+d010  = 2.76 nm
+d100  = 1.94 nm
+d010  = 2.87 nm
+5 15
+2θ (°)
+25
+PL-COF-8
+PL-COF-22
+5 15
+2θ (°)
+25
+5 15
+2θ (°)
+25
+5 15
+2θ (°)
+25
+Fig. 3 | Actual experimental data of PL-COFs as reliable support for ML models 
+and establishment of structure–property correlation. a– d, Structures of  
+PL-COFs refined from PXRD patterns: PL-COF-4 (a), PL-COF-8 (b), PL-COF-11  
+(c) and PL-COF-22 (d) are displayed here for Gen I to Gen IV, respectively, and the 
+unit cells of PL-COF-4 and PL-COF-11 are marked in the 2D plane of the structures. 
+e– h, Images for PL-COF-4 with a resolution of 4.1 Å: HR-TEM image (e), selected-
+area ED pattern (f), fast Fourier transform (g), and zoomed-in HR-TEM image 
+(h, raw on left and filtered on right); experiments were repeated three times 
+independently with similar results. i– l, Images of PL-COF-11 with a resolution 
+of 5.1 Å: HR-TEM image (i), selected-area ED pattern (j), fast Fourier transform 
+(k) and zoomed-in HR-TEM image (l, raw on left and filtered on right); experiments 
+were repeated three times independently with similar results. The a/b ratio of the 
+structure model refined from PXRD was consistent with those obtained from ED 
+and fast Fourier transform images. One representative COF was demonstrated for 
+each generation.
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654 1650
+Article https://doi.org/10.1038/s41557-025-01974-x
+were evaluated through ultraviolet–visible light absorption (Supple-
+mentary Note 7 and Supplementary Figs. 141–162) and fluorescence 
+spectroscopy (Supplementary Figs. 163–182).
+Accurate structural determination of COFs is crucial for estab -
+lishing reliable structure–property correlations and exploring the 
+underlying mechanisms. Representative COFs in this series, PL-COF-3 
+and PL-COF-4 in Gen I and PL-COF-11 in Gen III, were analysed by 
+electron diffraction (ED) and imaged using transmission electron 
+microscopy (TEM) (Fig. 3 and Supplementary Figs. 25–29). These COF 
+crystals exhibited layered rhombus morphology with sizes up to 0.5 µm 
+(Supplementary Figs. 27–29). ED patterns revealed a distinct mirror 
+plane perpendicular to the COF layer, further confirmed by the cor -
+responding TEM images (Fig. 3e,f and Supplementary Figs. 27–29). 
+These observations were consistent with the structural models based 
+on the bex topology (Fig. 3e,f and Supplementary Figs. 27–29). There 
+were several possible structures under the same topology, in which 
+the orientation of the building blocks and the conformation of the 
+C=N linkage varied (Supplementary Figs. 25–26). Detailed analysis 
+of the unit cell parameters difference enabled precise discrimination 
+among these variants. For PL-COF-4, the a/b ratio derived from the ED 
+pattern was 1.29, in good accordance with the modelled value of 1.26. 
+In this configuration, the long axis of the pyrene unit in Ami-8 was 
+parallel to that of the ald unit, Ald-13, and the C=N bonds adopted an 
+orthogonal orientation (Fig. 3e and Supplementary Fig. 25). This was 
+consistent with the conformation of pyrene and the C=N bond in Py-1P 
+solved by single-crystal X-ray diffraction29 but distinctly different from 
+the model proposed in previous studies with an a/b ratio of 1.49 (ref. 
+13). Similarly, for PL-COF-11, the a/b ratio derived from the ED pattern 
+was 1.48, in good accordance with the modelled value of 1.50, and both 
+the C=C bond in Ami-11 and the C=N linkage were parallel to the long 
+axis of the ald unit, Ald-13 (Fig. 3f and Supplementary Fig. 26). This 
+structure also diverged markedly from that reported in the literature 
+with an a/b ratio of 1.83 (ref. 14). T o further confirm the structure in real 
+space, high-resolution TEM (HR-TEM) was performed (Fig. 3e,f and 
+Supplementary Figs. 27–29). Although the electron beam sensitivity 
+of COFs33, two types of pores could be clearly observed, with resolu -
+tions of 4.4 Å, 4.1 Å and 5.1 Å for PL-COF-3, PL-COF-4 and PL-COF-11, 
+respectively, corresponding to diamond-shaped and hexagonal pores 
+in these COFs. The distance between adjacent Ald-13 units was 2.1 nm, 
+as measured from the HR-TEM images; this complied well with the 
+corresponding structure refined by PXRD (Supplementary Fig. 28), 
+further reinforcing the validity of the structure models.
+Mechanism studies
+Recently, fluorescent COFs emerged as new frontiers in the explora-
+tion of the optical properties of COFs34– 39. However, the underlying 
+mechanism remained largely unknown. Insight into these mechanisms 
+is highly valuable as guidance for the future design of fluorescent COFs.
+Here the AI model obtained after experiment–learning evolu -
+tion of 22 PL-COFs was used to reveal the mechanism, correlating 
+the electronic structure parameters of the building block with the 
+fluorescence properties of the corresponding COFs. T o elucidate 
+the key contributing factors, 28 descriptors of the building blocks 
+were ranked by the Shapley additive explanations model (Fig. 4a and 
+Supplementary Figs. 1–3). Among the top six descriptors highlighting 
+the relevance to the fluorescence properties of COFs, five originated 
+from the ald unit (electrophilicity index, Mulliken electronegativity, 
+electron delocalization index, hole delocalization index and h index) 
+and one from the ami unit (Sr index). For ald units, a larger Mulliken 
+electronegativity indicates a reduced propensity to accept electrons, 
+enhancing COF fluorescence. Conversely, a higher electrophilicity 
+index suggests an increased tendency to accept external electrons 
+and undergo electrophilic reactions, showing an opposing trend. This 
+demonstrates that ald units with greater electronegativity are more 
+likely to favour the fluorescence of COFs. Among the hole–electron 
+distribution descriptors, a higher electron delocalization index implies 
+a smaller spatial distribution region of the unoccupied transition orbit-
+als, whereas a smaller hole delocalization index and larger h index 
+represent more diffuse occupied transition orbitals and hole–elec -
+tron average distribution, all contributing to enhanced fluorescence. 
+This suggests that ald units with concentrated unoccupied transition 
+orbitals and spread-out occupied transition orbitals promote COF 
+fluorescence. For ami units, a larger Sr index reflects greater spatial 
+overlap between holes and electrons, indicating that stronger localized 
+excitation characteristics lead to reduced fluorescence.
+Furthermore, systematic analysis of electron–hole distributions 
+in the dimers of 22 PL-COFs revealed distinctively different patterns 
+between fluorescent and non-fluorescent COFs (Fig. 4b–f ). In highly 
+fluorescent COFs, including PL-COF-4, PL-COF-8, PL-COF-9, PL-COF-10, 
+PL-COF-11, PL-COF-16, PL-COF-21 and PL-COF-22, the electron–hole 
+pairs were predominantly localized near the ald units (Fig. 4f and 
+Supplementary Figs. 4–23). By contrast, the electron–hole distribu -
+tion was mainly found on ami units for dimers in most of the weak or 
+non-fluorescent COFs (PL-COF-1 to PL-COF-3, PL-COF-5 to PL-COF-7, 
+PL-COF-12 to PL-COF-13, and PL-COF-15 to PL-COF-19 (Fig. 4f and 
+Supplementary Figs. 4–23). Quantitative assessment of electron–hole 
+distributions of the dimers further supported this trend (Fig. 4b–e ).  
+A greater contribution of electron and hole density from the ald unit 
+was correlated with an increased PLQY value, as reflected by the clus-
+tering of red points at the upper-right corner in Fig. 4b,d , represent-
+ing highly fluorescent COFs. On the contrary, a smaller contribution 
+from the ami unit was correlated with greater fluorescence (Fig. 4c,e). 
+Localized excitation within the ald unit was likely to be the fluorophore, 
+whereas the ami unit might act as a quencher.
+Note that these quantitative contributions from electron–hole 
+distributions of the dimers were also employed as output parameters in 
+the pretraining model, further indicating their critical role in the expla-
+nation of the fluorescence properties of COFs. T o verify the correlation 
+between dimers and the COF , two dimers were synthesized: dimer-1, 
+derived from weakly fluorescent PL-COF-3; and dimer-2, derived from 
+strongly fluorescent PL-COF-11 (Supplementary Figs. 185–194). Their 
+photophysical behaviours mirrored those of the corresponding COFs.
+Efficient local electron excitation on the ald unit is critical for the 
+overall fluorescence of the COF . Strong donor–acceptor–donor motifs 
+in ald, such as in Ald-13, which is quite stable even in the presence of 
+influence from ami, are favourable to generation of strong fluorescence 
+in COF . When combined with various ami units, the match between 
+HOMO and LUMO of both ald and ami units was another requirement 
+for the overall fluorescence of the COF (Fig. 4g,h). For example, amino 
+units such as Ami-8, Ami-11 and Ami-17, with HOMO levels higher than 
+that of Ald-25, promoted electron transfer from ami to ald units. By 
+contrast, the HOMO alignment between Ami-10 and Ald-25 reduced 
+Fig. 4 | Mechanistic insights into the fluorescence property of the COFs in 
+correlation to the building blocks. a, Shapley additive explanations model 
+ranking the importance of 28 descriptors for building blocks based on a 
+postmodified model supported by experimental results. b– c, Contribution of 
+the ald (b) and ami (c) units to the electron and hole distributions of the dimer 
+as percentages, analysed across 494 combinations. d– e, Contributions of 
+the ald (d) and ami (e) units to 22 dimers as percentages, corresponding to 22 
+experimentally studied COFs. The red dots representing strong fluorescence in 
+COF are segregated at the upper-right corner in b and d and lower-left corner in 
+c and e. f, Summary of trends identified in b– e. g, HOMO–LUMO levels of Ami-11 
+compared with various ald units. h, HOMO–LUMO levels of Ald-25 compared with 
+different ami units. i, Mechanism for the fluorescence of 2D COFs, in which the 
+match between the HOMO–LUMO levels of building blocks is critical.
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654
+ 1651
+Article https://doi.org/10.1038/s41557-025-01974-x
+a
+f
+g h i
+E (eV) vacuum
+LUMO
+HOMO
+–8
+Ami-11 Ald-7 Ald-10 Ald-11 Ald-20 Ald-13 Ald-25 Ami-11 Ami-8 Ami-10 Ami-17 Ami-12
+–6
+–4
+–2
+0
+2
+Match
+LUMO
+HOMO
+Match
+Match
+elec_index_ald
+mull_neg_ald
+mull_neg_ami
+edi_ald
+edi_ami
+hdi_ald
+hdi_ami
+hardness_ami
+hardness_ald
+h_index_ami
+sr_index_ald
+sr_index_ami
+h_index_ald
+SHAP value (impact on model output)
+–0.004 –0.002 0.002
+LowFeature value
+High
+0
+delta_sigma_ald
+delta_sigma_ami
+t_index_ald
+t_index_ami
+d_index_ami
+d_index_ald
+vea_ald
+vea_ami
+ex_energy_ami
+ex_energy_ald
+elec_index_ami
+fosc_ald
+fosc_ami
+vip_ami
+vip_ald
+High fluorescent COFNon-fluorescent COF
+PET on 
+(non-fluorescent)
+PET oﬀ 
+(fluorescent)
+Ald unit
+(fluorophore)
+Ami unit (quencher)
+Ami unit (quencher)
+Hole: Electron:
+Hole: Electron:
+Excitation
+Ald unitAld unit
+Ald unitAld unit
+High fluorescent
+Excitation
+Non-fluorescent
+hole
+Cald   = 98.48%
+hole
+Cami  = 1.45%
+hole
+Cald   = 18.74%
+hole
+Cami  = 81.22%
+Ami unit Ami unit
+Ami unit Ami unit
+b c
+d e
+Contribution of
+ald unit to electron (%)
+Contribution of ald unit to hole (%)
+20
+0
+200 40 60 80 100
+40
+60
+80
+100 No PLQY
+PLQY < 5
+PLQY < 5
+PLQY > 10
+5 ≤ PLQY ≤ 10
+Contribution of
+ald unit to electron (%)
+Contribution of ald unit to hole (%)
+20
+0
+200 40 60 80 100
+40
+60
+80
+100
+Contribution of
+ami unit to electron (%)
+Contribution of ami unit to hole (%)
+20
+0
+200 40 60 80 100
+40
+60
+80
+100
+Contribution of
+ami unit to electron (%)
+Contribution of ami unit to hole (%)
+20
+0
+200 40 60 80 100
+40
+60
+80
+100
+3
+2
+1
+0
+0 1 2 3
+100
+99
+98
+97
+97 98 99 100
+L
+H
+Fluorophore Quencher
+L
+H
+e
+L
+H
+L
+H
+Fluorophore Quencher
+e
+Fluorophore Quencher
+L
+H
+L
+H
+Match
+e
+Fluorophore Quencher
+L
+H
+L
+H
+Match e
+MismatchMismatch
+Ald unit
+(fluorophore)
+No PLQY
+PLQY < 5
+PLQY > 10
+5 ≤ PLQY ≤ 10
+PLQY < 5
+PLQY > 10
+5 ≤ PLQY ≤ 10
+hole
+Cald   = 25.25%
+hole
+Cami  = 74.8%
+hole
+hole
+Cald   = 99.3%
+Cami  = 0.65%
+E (eV) vacuum
+–8
+–6
+–4
+–2
+0
+2
+PLQY > 10
+5 ≤ PLQY ≤ 10
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654 1652
+Article https://doi.org/10.1038/s41557-025-01974-x
+electron transfer, leading to moderate fluorescence (5.7%). The HOMO 
+of Ald-25 exceeded that of Ami-12 and its LUMO was lower, leading 
+to maintenance of high fluorescence. This HOMO–LUMO alignment 
+trend was consistently observed across all 22 experimentally obtained 
+PL-COFs (Supplementary Fig. 24). In highly fluorescent PL-COF-4 and 
+PL-COF-22, the ald units exhibited both higher HOMOs and lower 
+LUMOs than the ami units, and the excited-state electron–hole distri-
+butions were localized on the ald fluorophores. Such a phenomenon 
+can also be observed in molecules, where photo-induced electron 
+transfer (PET) theory applies (Fig. 4i). Although PET theory has been 
+previously proposed to explain the fluorescence properties of COFs40, 
+among many other possible mechanisms 41,42, this work establishes a 
+robust and quantitative correlation based on a large variety of COF 
+structures, rather than single cases.
+Systematic analysis of the HOMO–LUMO levels of 11 ald and 6 ami 
+units using DFT calculations further confirmed that the enveloping of 
+the HOMO and LUMO of the ald units within those of the ami units was 
+a prerequisite for inhibition of PET (Supplementary Fig. 24), hence the 
+strengthening of the fluorescence of the COF . This was consistent with 
+the experimental observations. In addition, femtosecond pump-probe 
+transient absorption measurements were conducted (Supplementary 
+Note 8, Supplementary Figs. 183–184 and Supplementary Table 4). 
+PL-COF-9 and PL-COF-11, with high PLQY values, exhibited time delays 
+on the scale of 1 ns, indicating suppressed intramolecular electron 
+transfer, in good accordance with the HOMO–LUMO analysis of their 
+constituent building blocks. By contrast, PL-COF-1, PL-COF-2, PL-COF-12 
+and PL-COF-16, with weak or no fluorescence, showed fast transient 
+absorption intensity delays within 100 ps, revealing fast electron 
+transfer in these COFs upon light irradiation. Note that PL-COF-3, 
+PL-COF-5, PL-COF-12, PL-COF-15, PL-COF-16 and PL-COF-19, which 
+contained aggregation-induced emission motifs in building blocks 
+(Supplementary Note 9 and Supplementary Figs. 195–201), displayed 
+negligible fluorescence in the experimental measurements, further 
+implying that the governing mechanism here was different from the 
+aggregation-induced emission effect.
+Two-photon fluorescence bioimaging
+Fluorescent COFs hold great promise as probes for bioimaging43,44, as 
+the photo-bleaching effect from small molecules can be largely allevi-
+ated. T o achieve deeper imaging depth and a higher signal-to-noise 
+ratio, light absorption with a longer wavelength was highly desirable45; 
+here two-photon fluorescence (2PF) is an effective solution 46– 48. In 
+100  µm
+300  µm
+500  µm
+2.8 µm
+700  µm
+1.9 µm
+800  µm
+100 µm
+900  µm
+100  µm
+500  µm
+300  µm
+Ald-13
+PL-COF-11
+a b
+0
+50
+100
+150
+200
+250
+300
+350
+400
+450
+500
+550
+600
+650
+700
+750
+800
+850
+900
+050100
+150
+200
+250
+300
+350
+350
+300
+250
+200
+150
+100
+50
+0
+Position Z (µm)
+Position Y (µm)
+Position X (µm)
+100 µm
+Penetration depth: 924 µm (PL-COF-11)
+Fig. 5 | Intravital 2PF imaging of mouse brain vasculature labelled with 
+PL-COF-11 and Ald-13. a, 2PF images of blood vessels at varying depths and 
+three-dimensional reconstruction of the brain vasculature in a PL-COF-11-
+treated mouse, acquired under NIR-II (1,200 nm) excitation; data were obtained 
+three times independently with similar results. b, 2PF images of blood vessels 
+at different depths using Ald-13 as a probe. Data were obtained three times 
+independently with similar results. The imaging depth and resolution of 2D COF 
+as a probe were much better than those of the building block molecule.
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654
+ 1653
+Article https://doi.org/10.1038/s41557-025-01974-x
+previous studies, we showed that COFs with strong one-photon fluo-
+rescence often exhibited 2PF49. Here we also applied the above COFs 
+in the 2PF performance test, using PL-COF-11 as an example (Fig. 5). A 
+power-dependent fluorescence slope of 1.9 was observed in the test of 
+PL-COF-11 nanoparticles, with an average crystal size of 100 nm (Supple-
+mentary Note 10 and Supplementary Figs. 202–204), under an excita-
+tion wavelength of 1,200 nm; this demonstrated a 2PF property in the 
+near-infrared (NIR)-II region, which is ideally suited for bioimaging. In 
+the test of mouse brain vasculature using a femtosecond laser with an 
+excitation wavelength of 1,200 nm, nanosized PL-COF-11 achieved an 
+imaging depth of up to 924 µm in three-dimensional reconstructions. 
+Capillaries as small as 1.9 µm were clearly resolved in deep tissue even 
+at 800 µm (Fig. 5a). By contrast, its molecular counterpart, the Ald-13 
+unit, yielded an imaging depth of only 520 µm, limited by its short 
+absorption wavelength in light (810 nm, a typical NIR-I region) (Fig. 5b 
+and Supplementary Figs. 205 and 206). The enhanced 2PF performance 
+of COFs was consistent with our previous observation47, and here the 
+2PF absorption wavelength of COF was extended to the previously 
+inaccessible NIR-II region, expanding its utility in bioimaging. Further-
+more, photostability tests showed that the fluorescence of the Ald-13 
+unit diminished by 40% after 25 min of irradiation, whereas PL-COF-11 
+retained more than 90% of its initial fluorescence under the same condi-
+tions (Supplementary Fig. 207). Moreover, PL-COF-11 exhibited good 
+biosafety, as evidenced by hematoxylin and eosin staining of major 
+organs in mice and comprehensive routine blood and biochemical 
+tests (Supplementary Figs. 208–210). This, combined with the superior 
+photostability and deep-tissue imaging of PL-COF-11, means it is ideally 
+suited as a probe for bioimaging.
+Conclusion
+Despite advances in simulation techniques and the development of AI, 
+the interplay between researchers and AI has yet to be fully established. 
+In this study, an interactive experiment–learning method was used to 
+integrate model prediction, experimental validation and active learn-
+ing through progressive evolution cycles. This approach enabled us to 
+identify highly fluorescent COFs through only a few iteration cycles and 
+with a small number of experimental variety searches.
+The embedding of electronic structure in an AI model tran -
+scended the classic intuition gained from a chemical formula, enabling 
+us to gain chemical insight concerning the frontier orbitals and excited 
+state. This resulted in much better correlations with the chemical 
+and physical properties associated with electronic structures, as 
+exemplified by the fluorescence here. A Siamese neural network, 
+previously used in image recognition 50,51 and spectral analysis 52, was 
+used here as an efficient model to recommend COF structures based 
+on limited experimental results, demonstrating its power for discovery 
+of materials.
+This approach, incorporating AI and efforts from researchers, 
+was also shown to be efficient in mechanism studies. The knowledge 
+accumulated from the interactive experiment–learning evolution 
+here allowed extraction of chemical insights from the fact-supported 
+AI model and thus offered accuracy and reliability beyond random 
+guesses. The conventional view that imine linkages are formidably 
+disfavoured was overturned in the fluorescent COFs studied here, 
+whereas matching of HOMO–LUMO between building units was found 
+to be critical to achieving high fluorescence. Such knowledge will be 
+valuable for the future design of COFs but could not be extracted and 
+verified without the assistance of AI.
+Online content
+Any methods, additional references, Nature Portfolio reporting sum-
+maries, source data, extended data, supplementary information, 
+acknowledgements, peer review information; details of author con -
+tributions and competing interests; and statements of data and code 
+availability are available at https://doi.org/10.1038/s41557-025-01974-x.
+References
+1. Cote, A. P. et al. Porous, crystalline, covalent organic frameworks. 
+Science 310, 1166–1170 (2005).
+2. El-Kaderi, H. M. et al. Designed synthesis of 3D covalent organic 
+frameworks. Science 316, 268–272 (2007).
+3. Ding, S.-Y. & Wang, W. Covalent organic frameworks (COFs): from 
+design to applications. Chem. Soc. Rev. 42, 548–568 (2013).
+4. Lohse, S. M. & Bein, T. Covalent organic frameworks: structures, 
+synthesis, and applications. Adv. Funct. Mater. 28,  
+1705553–1705623 (2018).
+5. Diereks, C. S. & Yaghi, O. M. The atom, the molecule, and the 
+covalent organic framework. Science 355, 923–931 (2017).
+6. Tan, K. T. et al. Covalent organic frameworks. Nat. Rev. Methods 
+Primers 3, 1 (2023).
+7. Zhao, S. et al. Hydrophilicity gradient in covalent organic 
+frameworks for membrane distillation. Nat. Mater. 20, 1551–1558 
+(2021).
+8. Ying, Y., Peh, S., Yang, H., Yang, Z. & Zhao, D. Ultrathin covalent 
+organic framework membranes via a multi-interfacial engineering 
+strategy for gas separation. Adv. Mater. 34, 2104946 (2022).
+9. Ding, S. Y. et al. Construction of covalent organic framework for 
+catalysis: Pd/COF-LZU1 in Suzuki–Miyaura coupling reaction.  
+J. Am. Chem. Soc. 133, 19816–19822 (2011).
+10. Vyas, V. et al. A tunable azine covalent organic framework 
+platform for visible light-induced hydrogen generation.  
+Nat. Commun. 6, 8508 (2015).
+11. Zhang, J., Han, X., Wu, X., Liu, Y. & Cui, Y. Multivariate chiral 
+covalent organic frameworks with controlled crystallinity 
+and stability for asymmetric catalysis. J. Am. Chem. Soc. 139, 
+8277–8285 (2017).
+12. Yun, Y. & Jiang, H.-L. Structural regulation of covalent organic 
+frameworks for catalysis. Acc. Chem. Res. 57, 1214–1226 (2024).
+13. Yang, M. et al. Three-motif molecular junction type covalent 
+organic frameworks for efficient photocatalytic aerobic oxidation. 
+J. Am. Chem. Soc. 146, 3396–3404 (2024).
+14. Liu, J.-C. et al. Constructing donor-acceptor covalent organic 
+frameworks for highly efficient H2O2 photosynthesis coupled 
+with oxidative organic transformations. Angew. Chem. Int. Ed. 64, 
+e202416240 (2025).
+15. Guan, Q., Zhou, L.-L., Li, W.-Y., Li, Y.-A. & Dong, Y.-B. Covalent 
+organic frameworks (COFs) for cancer therapeutics. Chem. Eur. J. 
+26, 5583–5591 (2020).
+16. Zhang, L. et al. Covalent organic frameworks as favorable 
+constructs for photodynamic therapy. Angew. Chem. Int. Ed. 58, 
+14213–14218 (2019).
+17. Angello, N. H. et al. Closed-loop transfer enables artificial 
+intelligence to yield chemical knowledge. Nature 633, 351–358 
+(2024).
+18. Krenn, M. et al. On scientific understanding with artificial 
+intelligence. Nat. Rev. Phys. 4, 761–769 (2022).
+19. Low, K., Coote, M. L. & Izgorodina, E. I. Inclusion of more physics 
+leads to less data: learning the interaction energy as a function of 
+electron deformation density with limited training data. J. Chem. 
+Theory Comput. 18, 1607–1618 (2022).
+20. Merchant, A. et al. Scaling deep learning for materials discovery. 
+Nature 624, 80–85 (2023).
+21. Moosavi, S. M. et al. Capturing chemical intuition in synthesis of 
+metal-organic frameworks. Nat. Commun. 10, 539 (2019).
+22. Lyu, H., Ji, Z., Wuttke, S. & Yaghi, O. M. Digital reticular chemistry. 
+Chem 6, 2219–2241 (2020).
+23. Gagliardi, L. & Yaghi, O. M. Three future directions for 
+metal-organic frameworks. Chem. Mater. 35, 5711–5712 (2023).
+24. Kang, Y., Park, H., Smit, B. & Kim, J. A multi-modal pre-training 
+transformer for universal transfer learning in metal-organic 
+frameworks. Nat. Mach. Intell. 5, 309–318 (2023).
+Nature Chemistry | Volume 17 | November 2025 | 1645–1654 1654
+Article https://doi.org/10.1038/s41557-025-01974-x
+25. Zheng, Z. et al. A GPT-4 reticular chemist for guiding MOF 
+discovery. Angew. Chem. Int. Ed. 62, e202311983 (2023).
+26. Zheng, Z. et al. ChatGPT research group for optimizing the 
+crystallinity of MOFs and COFs. ACS Cent. Sci. 9, 2161–2170 
+(2023).
+27. Zheng, Z. et al. Shaping the water-harvesting behavior of 
+metal-organic frameworks aided by fine-tuned GPT models.  
+J. Am. Chem. Soc. 145, 28284–28295 (2023).
+28. Li, X. et al. Sequential closed-loop Bayesian optimization as a 
+guide for organic molecular metallophotocatalyst formulation 
+discovery. Nat. Chem. 16, 1286–1294 (2024).
+29. Yi, L. et al. Structure evolution of 2D covalent organic frameworks 
+unveiled by single-crystal X-ray diffraction. J. Am. Chem. Soc. 146, 
+19643–19648 (2024).
+30. Gao, Q. et al. Highly photoluminescent two-dimensional 
+imine-based covalent organic frameworks for chemical sensing. 
+Chem. Commun. 54, 2349–2352 (2018).
+31. Shields, B. J. et al. Bayesian reaction optimization as a tool for 
+chemical synthesis. Nature 590, 89–96 (2021).
+32. Zhu, Q. et al. Automated synthesis of oxygen-producing catalysts 
+from Martian meteorites by a robotic AI chemist. Nat. Synth. 3, 
+319–328 (2024).
+33. Peng, Y. et al. Intramolecular hydrogen bonding-based topology 
+regulation of two-dimensional covalent organic frameworks.  
+J. Am. Chem. Soc. 142, 13162–13169 (2020).
+34. Jin, E. et al. Designed synthesis of stable light-emitting 
+two-dimensional sp2 carbon-conjugated covalent organic 
+frameworks. Nat. Commun. 9, 4143 (2018).
+35. Li, X. et al. Tuneable near white-emissive two-dimensional 
+covalent organic frameworks. Nat. Commun. 9, 2335 (2018).
+36. Evans, A. M. et al. Emissive single-crystalline boroxine-linked 
+colloidal covalent organic frameworks. J. Am. Chem. Soc. 141, 
+19728–19735 (2019).
+37. Wang, Y. et al. Linkages make a difference in the 
+photoluminescence of covalent organic frameworks. Angew. 
+Chem. Int. Ed. 62, e202310794 (2023).
+38. Yang, M. et al. Saturated linkers in two-dimensional covalent 
+organic frameworks boost their luminescence. J. Am. Chem. Soc. 
+145, 14417–14426 (2023).
+39. Yuan, M. et al. Hydrogen isotope effect endows a breakthrough 
+in photoluminescent covalent organic frameworks. J. Am. Chem. 
+Soc. 146, 1250–1256 (2024).
+40. Gan, W. et al. Modulation of imine-based aggregation-induced 
+emission fluorescence performance through the extension of 
+molecular linkers. Asian J. Org. Chem. 12, e202200559 (2023).
+41. Chen, X. et al. Turning non-emissive schiff bases into aggregate 
+emitters. Angew. Chem. Int. Ed. 63, e202402175 (2024).
+42. Zhang, L. et al. Covalent organic frameworks for optical 
+applications. Aggregate 2, e24 (2021).
+43. Yang, L.-L. et al. Two-photon absorption induced cancer 
+immunotherapy using covalent organic frameworks. Adv. Funct. 
+Mater. 31, 2103056 (2021).
+44. Xu, H. & Cheng, P. Metal-organic frameworks with 
+aggregation-induced emission. Aggregate 5, e518 (2024).
+45. Fan, Y. et al. Lifetime-engineered NIR-II nanoparticles unlock 
+multiplexed in vivo imaging. Nat. Nanotech. 13, 941–946 (2018).
+46. Li, Z., Lv, S., Wang, Y., Chen, S. & Liu, Z. Construction of 
+LRET-based nanoprobe using upconversion nanoparticles with 
+confined emitters and bared surface as luminophore. J. Am. 
+Chem. Soc. 137, 3421–3427 (2015).
+47. Hong, Y. et al. Facile access to far-red fluorescent probes with 
+through-space charge-transfer effects for in vivo two-photon 
+microscopy of the mouse cerebrovascular system. Angew. Chem. 
+Int. Ed. 61, e202209590 (2022).
+48. Zhang, Q.-S. et al. Highly two-photon and X-ray excited 
+long-persistent luminescence in a crystalline host-guest 
+aggregate. Aggregate 5, e456 (2024).
+49. Zhang, L. et al. Covalent organic framework for efficient 
+two-photon absorption. Matter 2, 1049–1063 (2020).
+50. Petr, I. et al. SensorDBSCAN: semi-supervised active learning 
+powered method for anomaly detection and diagnosis.  
+IEEE Access 13, 25186–25197 (2025).
+51. Al-jibury, E. et al. A deep learning method for replicate-based 
+analysis of chromosome conformation contacts using Siamese 
+neural networks. Nat. Commun. 14, 5007 (2023).
+52. Zhan, T. et al. SSCNN-S: a spectral-spatial convolution neural 
+network with Siamese architecture for change detection.  
+Remote Sens. 13, 895 (2021).
+Publisher’s note Springer Nature remains neutral with regard to 
+jurisdictional claims in published maps and institutional affiliations.
+Springer Nature or its licensor (e.g. a society or other partner) holds 
+exclusive rights to this article under a publishing agreement with 
+the author(s) or other rightsholder(s); author self-archiving of the 
+accepted manuscript version of this article is solely governed by the 
+terms of such publishing agreement and applicable law.
+© The Author(s), under exclusive licence to Springer Nature Limited 
+2025
+1Key Laboratory of Biomedical Polymers Ministry of Education, College of Chemistry and Molecular, Sciences, Wuhan University, Wuhan, China. 2Sate 
+Key Laboratory of Precision and Intelligent Chemistry, Hefei National Research Center for Physical Sciences at the Microscale, School of Chemistry and 
+Materials Science, University of Science and Technology of China, Hefei, China. 3Department of Chemistry, The Hong Kong Branch of Chinese National 
+Engineering Research Center for Tissue Restoration and Reconstruction, Division of Life Science, State Key Laboratory of Molecular Neuroscience, 
+and Department of Chemical and Biological Engineering, The Hong Kong University of Science and Technology, Hong Kong, China. 4Department of 
+Chemistry, University of Liverpool, Liverpool, UK. 5School of Chemistry, School of Computer Science, University of Birmingham, Birmingham, UK. 6State 
+Key Laboratory of Extreme Photonics and Instrumentation, International Research Center for Advanced Photonics, Centre for Optical and Electromagnetic 
+Research, College of Optical Science and Engineering, Zhejiang University, Hangzhou, China. 7School of Physical Science and Technology, ShanghaiTech 
+University, Shanghai, China. 8The Institute for Advanced Studies, Wuhan University, Wuhan, China. 9Hubei Yangtze Memory Laboratories, Wuhan, China. 
+10These authors contributed equally: Liang Zhang, Jiahui Du, Zikai Xie.  e-mail: linjiangchen@ustc.edu.cn; jiangj1@ustc.edu.cn; tangbenz@cuhk.edu.cn; 
+hdeng@whu.edu.cn
+Nature Chemistry
+Article https://doi.org/10.1038/s41557-025-01974-x
+Methods
+Chemicals
+The ami and ald building blocks were bought from Shanghai Kyl -
+pharm. Co., Ltd. Puromycin, and organic solvents, including 
+o-dichlorobenzene, n-butanol, dioxane, acetic acid and acetone, were 
+procured from Adamas-beta. All chemicals were of analytical grade and 
+were utilized without further purification.
+Animals
+The C57BL/6 mice (6–8 weeks old, approximately 20 g) utilized in this 
+study were obtained from SLAC Laboratory Animal (Shanghai, China). 
+All experimental animals were housed under standardized conditions 
+at the Laboratory Animal Center of Zhejiang University and main -
+tained in specific-pathogen-free environments with a 12-h light/dark 
+cycle, room temperature of 25 °C and humidity levels of 50.0 ± 5.0%. 
+The animals had ad libitum access to food and water, and there was 
+no sex bias in the selection of subjects. All experimental procedures 
+received approval from the Animal Use and Care Committee at Zhejiang 
+University (ZJU20240156).
+Construction and activation of PL-COFs
+A Pyrex tube was charged with 0.1 mmol tetratopic ami building blocks 
+and 0.1 mmol tetratopic ald; to this mixture, o-dichlorobenzene (1.5 ml) 
+and n-butanol (1.5 ml) were added, followed by addition of 300 µl of 
+acetic acid (6 M). The resulting mixture was rapidly frozen at 77 K (liquid 
+N2 bath), evacuated to an internal pressure of 30 mT orr and sealed by 
+flame to maintain a length of 20 cm. After a natural warm-up to room 
+temperature, the tube was transferred to an oven and heated at 120 °C 
+for 7 days. The PL-COF samples were obtained by filtration, subse -
+quently washed with acetone, and sequentially fluxed with dioxane 
+and acetone in a Soxhlet extractor for 24 h for each solvent. Then, the 
+PL-COF samples were heated to 120 °C and kept at the same tempera-
+ture for 12 h to achieve complete activation.
+Automated pipeline for extracting ald and ami precursors from 
+relevant COF literature. T o automate the extraction of ald and ami 
+precursors used in the synthesis of COFs, we developed a data extrac-
+tion pipeline that leveraged the OpenAI GPT-4o API. This pipeline was 
+applied to a dataset of 132 imine COF-related papers, including 6 review 
+articles and 126 original research papers. Each paper was processed to 
+identify and record relevant ald and ami precursors, along with their 
+specific roles in COF synthesis.
+The pipeline began with loading of full-text PDFs using the PyPD-
+FLoader from LangChain, which extracts content on a per-page basis. 
+This extracted text was then fed into the GPT-4o model, guided by a 
+custom system prompt designed to focus on identification of precur-
+sor compounds and their involvement in COF formation. The model 
+output structured data in compliance with OpenAI’s structured output 
+format, ensuring consistency and precision. T o validate the structured 
+data, we employed Pydantic models, which ensured correct extraction 
+of precursor names, their roles and the corresponding paper titles, 
+thereby ensuring accuracy in extracting the information. This process 
+resulted in a reliable, reproducible pipeline for extraction and catego-
+rization of chemical precursors essential to COF research.
+Calculation of optoelectronic properties for the building units 
+of PL-COF
+DFT was utilized to elucidate the optoelectronic characteristics of ald 
+and ami functional groups forming COFs. These characteristics, reflect-
+ing both excited-state behaviour and molecular reactivity, were inte-
+grated as predictive variables in machine learning algorithms. Detailed 
+process and calculation levels can be found in Supplementary Note 7.
+The derived optoelectronic properties were bifurcated into two 
+main groups. The first encompassed descriptors of the initial sin -
+glet excited state (S1). This included the excitation energy, oscillator 
+strength for absorption, and three metrics indicating the electron–hole 
+spatial interaction: overlap index (Sr index), centroid distance and 
+separation index. In addition, four parameters described the spatial 
+extent of the electron–hole distribution: hole and electron delocaliza-
+tion indices, their dispersion difference and their average dispersion 
+(h index). The second group contained descriptors indicating the 
+electrochemical reactivity of the building blocks, including the verti-
+cal ionization potential, electron affinity, Mulliken electronegativity, 
+electrophilicity and hardness.
+For dimer analyses, we explored the spatial distribution changes in 
+electron–hole pairs postlinkage. Mulliken population analysis quanti-
+fied the relative contributions of ami and ald units to the electron–hole 
+distribution in the S1 state. These dimer properties formed the basis 
+for training an MLP model, leveraging characteristics of the building 
+blocks to predict excited-state behaviours.
+Pretraining AI models and using them to inform interactive 
+experiment–learning cycles
+The experimental objective of this study was to search for potential 
+ald–ami pairings within a discrete sample matrix, organized as a 26 × 20 
+matrix of ami and ald building blocks, incorporating classic motifs 
+used in the design of fluorescent molecules. Given this setup, Bayesian 
+optimization, which is typically suited for continuous spaces, was not 
+appropriate for this experimental context. Instead, as precalculated 
+optoelectronic features were available for each ald and ami build -
+ing block, as well as their dimers, leveraging these feature vectors 
+through a deep-learning model was more effective. This led us to opt 
+for the Siamese network, which is specially designed for similarity 
+measurement tasks. In addition, the Siamese neural network offers 
+an advantage in small datasets, as it learns similarities between input 
+pairs (in this case, two ald–ami dimers). By comparing pairs, the model 
+can combine any ald–ami dimer with others to form new input pairs, 
+increasing the amount of data available for training. This approach 
+enhances the model’s ability to learn, despite the limitations imposed 
+by the small dataset.
+For each ald–ami dimer, the input was constructed as a concat -
+enated vector pair comprising a 14-dimensional feature vector for 
+the ald and a 14-dimensional feature vector for the ami. Before model 
+training, all features were scaled using min–max normalization to 
+ensure proportional contributions from each feature during train -
+ing. We employed a Siamese neural network to measure the perfor -
+mance differences of each ald–ami dimer. The Siamese network was 
+implemented using a shared MLP encoder and trained to minimize 
+both contrastive loss and mean squared error. Detailed architecture, 
+optimization parameters and training procedures are described in 
+Supplementary Note 1. T o develop a robust feature extractor, we pre-
+trained a model before making recommendations. The input was a 
+28-dimensional ald–ami dimer vector, and the prediction target was 
+to estimate the electron–hole distribution of the dimer formed by this 
+ald–ami pair (as described in Supplementary Information: Supplemen-
+tary Note 1). Initially, five random ald–ami dimers were recommended. 
+In each recommendation cycle, we paired previously tested dimers, 
+refined the Siamese network with a pretrained extractor and evaluated 
+untested dimers on the basis of their similarity to tested pairs. The 
+top-performing dimers were then selected for further experimentation 
+based on these evaluations.
+Reporting summary
+Further information on research design is available in the Nature 
+Portfolio Reporting Summary linked to this article.
+Data availability
+The data supporting the findings of this study are available within 
+the paper and Supplementary Information. Source data are provided 
+with this paper.
+Nature Chemistry
+Article https://doi.org/10.1038/s41557-025-01974-x
+Code availability
+All Python scripts used to extract the COF literature data, build the 
+pretrained MLP models and construct the iterative experimental 
+recommendations using a Siamese network are available at GitHub 
+via https://github.com/pic-ai-robotic-chemistry/Fluorocofs.
+Acknowledgements
+H.D. thanks the National Key Research and Development Program of 
+China (2022YFA1502902, 2018YFA0704000) and the National Natural 
+Science Foundation of China (22521203, 22025106, 22320102003, 
+22025304, 22033007); B.Z.T. thanks the Research Grants Council 
+of Hong Kong (C6014-20W and 16303320) and the Innovation and 
+Technology Commission (ITC-CNERC14SC01 and ITCPD/17-9); and J.J. 
+thanks the Strategic Priority Research Program (Grant XDB0450302) 
+and the Young Scientists in Basic Research Program (Grant YSBR-
+005) of the Chinese Academy of Sciences for support. The AI-driven 
+experiments, simulations and model training were performed on the 
+robotic AI-Scientist platform of the Chinese Academy of Science. We 
+thank Z. Liu and Z. Mao at Hubei University for the 2PF bioimaging 
+application; J. Deng, Z.-J. Sun, A. Shen, M.-J. Zhang and Z. Chen at 
+Wuhan University for biosafety testing and valuable input in refining 
+the paper; and W. Wen, H. Lin, and other staff at beamlines BL14B1 
+and BL13HB of the Shanghai Synchrotron Radiation Facility, Core 
+Research Facilities of College of Chemistry and Molecular Sciences at 
+Wuhan University, for the solid-state nuclear magnetic resonance and 
+TEM characterizations.
+Author contributions
+H.D. and L.Z. conceived the idea and led the experimental parts. 
+J.J., L.C. and J.D. designed the AI-assisted workflow. B.Z.T., H.D., W.L. 
+and L.Z. proposed the initial mechanism. L.Z. synthesized all the 
+COFs in this work. L.Z., W.G., Y.Z., Y.G., C.G., S.H. and Y.J. performed 
+the structure characterizations. J.D., Z.X. and L.C. built the AI 
+models. J.D., W.L., C.Z. and X.O. performed the DFT calculations. 
+Y.Z. and C.Y. obtained the TEM images. J.Q. and W.G. performed the 
+bioimaging tests. L.Z., S.-Y.Y., J.W.Y.L., J.Q. and H.D. participated in 
+the experimental data analysis. H.D., L.Z., L.C., J.D. and J.J. wrote 
+the first version of the paper, and all authors contributed to the 
+final version.
+Competing interests
+The authors declare no competing interests.
+Additional information
+Extended data is available for this paper at https://doi.org/10.1038/
+s41557-025-01974-x.
+Supplementary information The online version contains 
+supplementary material available at https://doi.org/10.1038/ 
+s41557-025-01974-x.
+Correspondence and requests for materials should be addressed to 
+Linjiang Chen, Jun Jiang, Ben Zhong Tang or Hexiang Deng.
+Peer review information Nature Chemistry thanks Juyoung Yoon and 
+the other, anonymous, reviewer(s) for their contribution to the peer 
+review of this work.
+Reprints and permissions information is available at  
+www.nature.com/reprints.
+Nature Chemistry
+Article https://doi.org/10.1038/s41557-025-01974-x
+Extended Data Fig. 1 | Illustration of a pool of 26 ald building blocks utilized for the construction of PL-COFs. A comprehensive literature search on fluorescent 
+molecular building blocks and COF-related studies was conducted using GPT-4o. Subsequently, expert curation refined this information to identify a pool of 26 ald 
+units for further investigation.
+Nature Chemistry
+Article https://doi.org/10.1038/s41557-025-01974-x
+Extended Data Fig. 2 | Illustration of a pool of 20 ami building blocks utilized for the construction of PL-COFs. GPT-4o was utilized to perform an extensive review 
+of literature encompassing fluorescence molecular building blocks and studies relevant to COFs. Subsequently, through expert curation, a set of 20 ami units  
+was identified.
+Nature Chemistry
+Article https://doi.org/10.1038/s41557-025-01974-x
+Extended Data Fig. 3 | PXRD patterns and their corresponding chemical structure of PL-COFs. a to r, PXRD patterns of PL-COFs, insert: the chemical structure of 
+these PL-COFs, where sharp peaks were obtained in these PXRD patterns, revealing the high crystallinity of these PL-COFs.
+1 nature portfolio  |  reporting summaryMarch 2021
+Corresponding author(s):
+Linjiang Chen, Jun Jiang, Ben Zhong Tang, 
+Hexiang Deng
+Last updated by author(s): Aug 23, 2025
+Reporting Summary
+Nature Portfolio wishes to improve the reproducibility of the work that we publish. This form provides structure for consistency and transparency 
+in reporting. For further information on Nature Portfolio policies, see our Editorial Policies and the Editorial Policy Checklist.
+Statistics
+For all statistical analyses, confirm that the following items are present in the figure legend, table legend, main text, or Methods section.
+n/a Confirmed
+The exact sample size (n) for each experimental group/condition, given as a discrete number and unit of measurement
+A statement on whether measurements were taken from distinct samples or whether the same sample was measured repeatedly
+The statistical test(s) used AND whether they are one- or two-sided 
+Only common tests should be described solely by name; describe more complex techniques in the Methods section.
+A description of all covariates tested
+A description of any assumptions or corrections, such as tests of normality and adjustment for multiple comparisons
+A full description of the statistical parameters including central tendency (e.g. means) or other basic estimates (e.g. regression coefficient) 
+AND variation (e.g. standard deviation) or associated estimates of uncertainty (e.g. confidence intervals)
+For null hypothesis testing, the test statistic (e.g. F, t, r) with confidence intervals, effect sizes, degrees of freedom and P value noted 
+Give P values as exact values whenever suitable.
+For Bayesian analysis, information on the choice of priors and Markov chain Monte Carlo settings
+For hierarchical and complex designs, identification of the appropriate level for tests and full reporting of outcomes
+Estimates of effect sizes (e.g. Cohen's d, Pearson's r), indicating how they were calculated
+Our web collection on statistics for biologists contains articles on many of the points above.
+Software and code
+Policy information about availability of computer code
+Data collection The fluorescence images were collected from the customized software of TEKWIN SYSTEM (5D640).
+Data analysis Quantitative analysis of the fluorescence images was performed using ImageJ software (Version 1.6.0, National Institutes of Health, USA). 
+Data were analyzed using MATLAB R2020b, OriginPro 2018 (64-bit) and GraphPad Prism 8.0 (USA). The density functional theory calculations 
+of the molecules were carried out using Gaussian 16 program. All Python scripts used to extract the COF literature data, build the pre-trained 
+MLP models, and construct the iterative experimental recommendations by a Siamese network are available at https://github.com/pic-ai-
+robotic-chemistry/Fluorocofs.
+For manuscripts utilizing custom algorithms or software that are central to the research but not yet described in published literature, software must be made available to editors and 
+reviewers. We strongly encourage code deposition in a community repository (e.g. GitHub). See the Nature Portfolio guidelines for submitting code & software for further information.
+2 nature portfolio  |  reporting summaryMarch 2021
+Data
+Policy information about availability of data
+All manuscripts must include a data availability statement. This statement should provide the following information, where applicable: 
+- Accession codes, unique identifiers, or web links for publicly available datasets 
+- A description of any restrictions on data availability 
+- For clinical datasets or third party data, please ensure that the statement adheres to our policy 
+ 
+The authors declare that the data supporting the findings of this study are available within the paper and its Supplementary Information files. All Python scripts used 
+to extract the COF literature data, build the pre-trained MLP models, and construct the iterative experimental recommendations by a Siamese network are available 
+at https://github.com/pic-ai-robotic-chemistry/Fluorocofs.
+Human research participants
+Policy information about studies involving human research participants and Sex and Gender in Research. 
+Reporting on sex and gender N/A
+Population characteristics N/A
+Recruitment N/A
+Ethics oversight N/A
+Note that full information on the approval of the study protocol must also be provided in the manuscript.
+Field-specific reporting
+Please select the one below that is the best fit for your research. If you are not sure, read the appropriate sections before making your selection.
+Life sciences Behavioural & social sciences  Ecological, evolutionary & environmental sciences
+For a reference copy of the document with all sections, see nature.com/documents/nr-reporting-summary-flat.pdf
+Life sciences study design
+All studies must disclose on these points even when the disclosure is negative.
+Sample size N/A
+Data exclusions No data were excluded from the data analysis.
+Replication Experiments were repeated in at least three independent experiments with similar results. All experiments were reproduced to reliably 
+support the conclusions stated in the manuscript.
+Randomization All samples were randomly allocated into experimental groups.
+Blinding The investigators were blinded to group allocation during data collection and analysis.
+Reporting for specific materials, systems and methods
+We require information from authors about some types of materials, experimental systems and methods used in many studies. Here, indicate whether each material, 
+system or method listed is relevant to your study. If you are not sure if a list item applies to your research, read the appropriate section before selecting a response.
+3 nature portfolio  |  reporting summaryMarch 2021
+Materials & experimental systems
+n/a Involved in the study
+Antibodies
+Eukaryotic cell lines
+Palaeontology and archaeology
+Animals and other organisms
+Clinical data
+Dual use research of concern
+Methods
+n/a Involved in the study
+ChIP-seq
+Flow cytometry
+MRI-based neuroimaging
+Animals and other research organisms
+Policy information about studies involving animals; ARRIVE guidelines recommended for reporting animal research, and Sex and Gender in 
+Research
+Laboratory animals The C57 mice (6-8 weeks old, ~20 g) involved in this work were purchased from the SLAC Laboratory Animal Co. Ltd. (Shanghai, 
+China). All the experimental animals were housed under standard conditions in the Laboratory Animal Center of Zhejiang University, 
+which were maintained and bred in specific pathogen-free conditions with a 12h light and 12h dark cycle, 25°C room temperature 
+and 50.0±5.0% humidity and had access to food and water ad libitum.
+Wild animals The study did not involve wild animals.
+Reporting on sex There was no sex bias in the animals used.
+Field-collected samples The study did not involve samples collected from the field.
+Ethics oversight All experimental procedures were approved by Animal Use and Care Committee at Zhejiang University. The C57 mice (6-8 weeks old, 
+~20 g)  involved in this work were purchased from the SLAC Laboratory Animal Co. Ltd. (Shanghai, China). All the experimental 
+animals were housed under standard conditions in the Laboratory Animal Center of Zhejiang University, which were maintained and 
+bred in specific pathogen-free conditions with a 12h light and 12h dark cycle, 25°C room temperature and 50.0±5.0% humidity and 
+had access to food and water ad libitum. There was no sex bias in the animals used.
+Note that full information on the approval of the study protocol must also be provided in the manuscript.

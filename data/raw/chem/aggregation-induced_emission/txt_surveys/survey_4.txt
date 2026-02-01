@@ -1,0 +1,1062 @@
+Bringing Inherent Charges into Aggregation-Induced Emission
+Research
+Xiaolin Liu, Chunlei Zhu, * and Ben Zhong Tang *
+Cite This: Acc. Chem. Res. 2022, 55, 197 −208 Read Online
+ACCESS Metrics & More Article Recommendations
+CONSPECTUS: Charged organic molecules, such as DNA, RNA,
+proteins, and polysaccharides, are ubiquitous and indispensable in
+natural living systems, which possess speci ﬁc biological functions to
+interact with oppositely charged species via electrostatic attraction.
+The molecules with inherent charges typically di ﬀerentiate
+themselves from the neutral ones with unique attributes (e.g.,
+ionic interactions and high polarity), thereby playing a pivotal role
+in a broad spectrum of areas, including supramolecular chemistry,
+structural biology, and materials science. It is thus of great
+importance to explore and develop various charged organic systems
+for biomimicry and the creation of functional materials. In 2001, our
+group reported a peculiar luminogen that exhibited weak emission
+in solution but had signi ﬁcantly enhanced emission in aggregates,
+and we, for the ﬁrst time, coined this phenomenon as aggregation-induced emission (AIE). The AIE concept signi ﬁcantly changes
+the cognition of the scienti ﬁc community toward classic photophysical phenomena. Since the discovery of this unusual luminescence
+phenomenon, AIE luminogens (AIEgens) have attracted extensive attention from researchers in a plethora of disciplines because of
+their high brightness in aggregates, large Stokes shift, excellent photostability, and good biocompatibility. In the past 10 years, our
+laboratory has expended a great amount of e ﬀort to bring inherent charges into AIE research and acquired fruitful achievements.
+In this Account, we summarize the progress of charged AIE systems primarily made by our laboratory. We start with a brief
+introduction to charged AIEgens and then discuss their design strategies from molecular and topological perspectives, respectively.
+Next, we review the unique properties of charged AIEgens, including D −A interactions, anion −π
++ interactions, and intermolecular
+electrostatic interactions, with an emphasis on how they di ﬀerentiate themselves from the neutral analogs. On the one hand,
+positively charged AIEgens exhibit unique photophysical properties by forming typical donor −acceptor structures to manipulate the
+emission wavelength or initiate ultralong persistent luminescence. On the other hand, positively charged AIEgens exhibit unique
+physiochemical properties, such as an adjustable targeting capability toward biological targets and a strong capability for the
+generation of reactive oxygen species. Furthermore, we showcase the applications of charged AIEgens in imaging and diagnosis,
+photodynamic therapy, gas separation, and solar desalination. Finally, we conclude this Account with a summary and some
+perspectives regarding the existing challenges and future directions. We hope that this Account can spark new ideas and inspire
+scientists from di ﬀerent disciplines to explore this nascent yet promising research area.
+■ KEY REFERENCES
+• Wang, J.; Gu, X.; Zhang, P.; Huang, X.; Zheng, X.; Chen,
+M.; Feng, H.; Kwok, R. T. K.; Lam, J. W. Y.; Tang, B. Z.
+Ionization and Anion−π
++ Interaction: A New Strategy for
+Structural Design of Aggregation-Induced Emission
+Luminogens. J. Am. Chem. Soc. 2017, 139(46), 16974 −
+16979.
+1 A new strategy that utilized anion−π+interactions to
+block π−π stacking was f irst demonstrated for the
+construction of charged AIE systems.
+• Alam, P.; Leung, N. L. C.; Liu, J.; Cheung, T. S.; Zhang,
+X.; He, Z.; Kwok, R. T. K.; Lam, J. W. Y.; Sung, H. H. Y.;
+Williams, I. D.; Chan, C. C. S.; Wong, K. S.; Peng, Q.;
+Tang, B. Z. Two Are Better Than One: A Design Principle
+for Ultralong-Persistent Luminescence of Pure Organics.
+Adv. Mater. 2020, 32(22), 2001026.
+2 The cationic
+phosphonium could serve as a strong organic trap for the
+construction of organic long-persistent luminescence systems
+with detectable af terglow for up to 7 h.
+Received: October 10, 2021
+Published: January 5, 2022
+Articlepubs.acs.org/accounts
+© 2022 American Chemical Society
+197
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+Downloaded via UNIV ILLINOIS URBANA-CHAMPAIGN on January 18, 2022 at 15:50:40 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+• Wang, J.; Gu, X.; Ma, H.; Peng, Q.; Huang, X.; Zheng, X.;
+Sung, S. H. P.; Shan, G.; Lam, J. W. Y.; Shuai, Z.; Tang, B.
+Z. A Facile Strategy for Realizing Room Temperature
+Phosphorescence and Single Molecule White Light
+Emission. Nat. Commun. 2018, 9(1), 2963.
+3 The photo-
+physical properties of charged AIE systems could be easily
+tuned through the introduction of anion −π
++interactions and
+the external heavy atom ef fect.
+• Liu, X.; Xiao, M.; Xue, K.; Li, M.; Liu, D.; Wang, Y.; Yang,
+X.; Hu, Y.; Kwok, R. T. K.; Qin, A.; Zhu, C.; Lam, J. W. Y.;
+Tang, B. Z. Heteroaromatic Hyperbranched Polyelec-
+trolytes: Multicomponent Polyannulation and Photo-
+dynamic Biopatterning. Angew. Chem., Int. Ed. 2021,
+60(35), 19222 −19231.
+4 Highly ef f icient multicomponent
+polymerization was developed for the synthesis of hetero-
+aromatic hyperbranched polyelectrolytes for the photo-
+dynamic patterning of living organisms.
+1. INTRODUCTION
+Charged organic species are widespread in natural living
+systems, which play a crucial role in a variety of biological
+processes, such as DNA transcription, protein folding, and
+cellular signal transduction.
+5,6 The root cause of why nature
+adopts charged molecules probably lies in their unique
+physiochemical properties, including dynamic ionic interac-
+tions, excellent water solubility, high mobility, high conductivity,
+and structural and functional ﬂexibility.
+7 To unravel the mystery
+of sophisticated biological machinery and develop new func-
+tional materials, scientists have devoted considerable e ﬀort to
+the study of charged organic systems. For example, the onset of
+DNA nanotechnology in the 1980s greatly pro ﬁted from the
+precise self-assembly of charged biological materials, leading to
+the establishment of a series of compelling areas (e.g., DNA
+origami).
+8 Inspired by natural polyelectrolytes (e.g., DNA, RNA,
+proteins, and polysaccharides), synthetic polyelectrolytes have
+been developed to understand their formation mechanisms and
+biological functions. Besides, certain functional components
+have also been introduced into synthetic polyelectrolytes to
+enable extra functionalities beyond nature.
+9 Over the past few
+decades, scientists have set up a plethora of research frontiers
+related to charged organic molecules and have actively explored
+their practical applications, including energy,
+10 environmental,11
+and biomedical ﬁelds.12
+Figure 1. Molecular design strategy for charged AIEgens. (A) Two typical molecular models of charged AIEgens. (B−D) Examples of commonly used
+building blocks for the construction of charged AIEgens, including (B) the AIE moieties, (C) the cations, and (D) the anions.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+198
+In 2001, our group reported an unusual luminescence
+phenomenon of a propeller-shaped organic molecule 1-
+methyl-1,2,3,4,5-pentaphenylsilole, which was weakly emissive
+in solution but showed remarkably enhanced emission in
+aggregates.
+13 This unique phenomenon was de ﬁned as
+aggregation-induced emission (AIE), which signi ﬁcantly breaks
+the constraints of aggregation-caused quenching (ACQ) and
+thereby changes the cognition of the scienti ﬁc community
+toward classic photophysical phenomena. In contrast to
+conventional ACQ luminogens, AIE luminogens (AIEgens)
+exhibit a multitude of bene ﬁts, such as high brightness in
+aggregates, low background ﬂuorescence, excellent photo-
+stability, and good biocompatibility, making them an attractive
+class of luminescent materials.
+14,15 Nevertheless, these prom-
+inent advantages are somewhat underutilized in the early stage.
+Speciﬁcally, early studies primarily focused on the development
+of neutral AIEgens with shor t-wavelength emission as
+exempliﬁed by tetraphenylethylene (TPE), hexaphenylsilole
+(HPS), and their derivatives. 16 In terms of practical utilization,
+these materials were de ﬁcient in functionality and speci ﬁcity.
+Later on, the introduction of inherent charges into AIEgens
+largely broadened the scope of AIE research. At the beginning,
+charged AIEgens were designed to identify given analytes with
+opposite charges through electrostatic interactions.
+17 Afterward,
+the assembly behaviors of charged AIEgens were desirably
+employed to construct various functional systems, including
+light-harvesting materials,
+18 circularly polarized luminescent
+materials,19 supramolecular organic room-temperature phos-
+phorescence (RTP) materials,20 highly emissive metallacages,21
+and pure organic cages. 22 Furthermore, the photophysical
+behaviors and photochemical processes of charged AIEgens
+were desirably tuned simply by varying the counterions.
+3,23
+The combination of inherent charges and AIE opens up a
+brand new and hot frontier in chemical research and has yielded
+fruitful achievements in the past decade. However, there is a lack
+of prior publications that systematically elaborate on the
+research progress of charged AIE systems. In this Account, we
+aim to provide an in-depth overview of the fundamentals of
+inherently charged AIE systems and answer some critical
+scientiﬁc questions. For example, how can one achieve the
+rational design of charged AIE systems with the desired
+properties? How do charged AIEgens di ﬀerentiate themselves
+from the neutral ones? Why are they ideal candidates for speciﬁc
+applications? Speciﬁcally, we start with a discussion of the design
+strategies of charged AIEgens from molecular and topological
+perspectives, respectively. Next, we review the unique properties
+of charged AIEgens, including D −A interactions, anion −π
++
+interactions, and intermolecular electrostatic interactions, with
+an emphasis on how they di ﬀerentiate themselves from the
+neutral analogs. Furthermore, we showcase the applications of
+charged AIEgens in imaging and diagnosis, photodynamic
+therapy, gas separation, and solar desalination. Finally, we
+conclude this Account with a summary and some perspectives
+regarding the existing challenges and future directions.
+2. DESIGN STRATEGIES OF CHARGED AIEGENS
+2.1. From a Molecular Perspective
+In terms of designing charged AIEgens, the AIE moieties and the
+corresponding counterions are two indispensable components.
+To endow charged molecules with AIE characteristics, one
+popular strategy is to decorate the ionic core with adequate
+aromatic rotors (Figure 1A, left), exempliﬁed by the phenyl ring,
+pyridine, naphthalene, anthracene, and pyrene.
+1,3,24 In good
+solvents, these rotors have active intramolecular rotations to
+dramatically consume the excitation energy via nonradiative
+transition. In contrast, the molecular motions are signi ﬁcantly
+restricted in aggregates or in the solid state, leading to the
+suppressed nonradiative decay and thus the activation of the
+radiative channel. Another design strategy is to functionalize
+previously reported neutral AIEgens with one or more charged
+units ( Figure 1 A, right). Among various building blocks, TPE
+and triphenylamine (TPA) are two classes of representative AIE
+moieties for the construction of charged AIEgens ( Figure 1B).
+TPE and its derivatives are the most reliable moieties to initiate
+the AIE eﬀect (even after attachment with a variety of functional
+groups), which can be seen in a large portion of charged
+AIEgens.
+25−27 Notably, although TPE is a weak electron donor,
+its electron-donating ability can be reinforced by substituting the
+phenyl rings with electron donors such as alkoxy groups.26 Being
+another class of AIE moieties, TPA and its derivatives are
+intrinsically strong electron donors due to the presence of a lone
+pair of electrons on the nitrogen atom. When an appropriate
+cation is attached to the TPA moiety, a typical donor −acceptor
+(D−A) structure is formed, which is a common strategy for red-
+shifting the absorption and emission spectra of luminescent
+materials.
+28−31
+On the basis of these two design strategies, our group has
+developed a plethora of charged AIEgens with diverse
+functionalities. To date, a library of organic cations has been
+delicately established ( Figure 1 C). Speci ﬁcally, nonaromatic
+quaternary ammonium 1 and quaternary phosphonium 2 can
+endow charged AIEgens with improved water solubility.
+31−33
+Relative to nonaromatic cations, aromatic cations (either single
+or multiple rings, 3−14) can bring about additional optical and
+electronic properties for charged AIEgens due to the
+introduction of delocalized π electrons. Among various aromatic
+cations, pyridinium 5 is most commonly used because it can be
+easily generated through an S N2 reaction between the pyridine
+group and organic halides. 34 Besides, with the rapid develop-
+ment of ring-closing metathesis and C−H activation/annulation
+reactions,35 an increasing number of polycyclic aromatic
+hydrocarbon cations with high complexity and heteroatoms
+have been exploited.
+4,36−38 It is noteworthy that as the extension
+of the aromatic structure, the hydrophobicity of the resulting
+molecules is gradually increased, leading to decreased water
+solubility. In terms of the anions, both inorganic (e.g., halide
+ions, BF
+4
+−, and PF 6
+−) and organic (e.g., CF 3SO3
+− and BPh4
+−)
+groups have been demonstrated ( Figure 1D). In principle, they
+can be directly incorporated through chemical reactions 38 or
+introduced postreaction through ion exchange. 39 In most cases,
+anions simply act as the counterion of the cationic AIE
+moiety.40−42 However, some organic anions are covalently
+attached to the AIE moiety to yield negatively charged
+AIEgens.
+43 Notably, the presence of counterions has a
+p r o m i n e n ti m p a c to nt h es o l u b i l i t y ,40 toxicity, 44 crystal
+packing,23 and photophysical properties, 3 providing a facile
+approach for modulating the performance of the resulting
+charged AIEgens.
+2.2. From a Topological Perspective
+Chemistry topology is becoming particularly important due to
+its signiﬁcant impact on material performance. In this regard, our
+group has expended great e ﬀort to build a series of charged
+AIEgens featured as distinct molecular architectures. On the one
+hand, the charged moieties can be utilized as repeating units
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+199
+either in the backbone 36 or in the side chain 45 to form linear or
+hyperbranched polymers (i.e., polyelectrolytes, Figure 2 A). In
+contrast to small-molecule analogs, linear polyelectrolytes
+typically exhibit red-shifted absorption and emission as well as
+enhanced photosensitization due to the strengthened con-
+jugation e ﬀect.45 Besides, the entanglement of polymer chains
+within these linear polyelectrolytes gives rise to improved
+mechanical strength and processability, facilitating their real-
+world applications in the form of large-area thin ﬁlms through
+simple spin coating. Notably, combined with AIE behavior, the
+resulting polyelectrolyte thin ﬁlms are highly ﬂuorescent and are
+ideal candidates for a variety of applications such as photo-
+patterning.36 Unlike one-dimensional linear polyelectrolytes,
+the polymer chains in the hyperbranched polyelectrolytes can
+simultaneously elongate in three dimensions. Such a three-
+dimensional (3D) structure is typically associated with
+decreased chain entanglement and increased charge density in
+the backbone.
+4 In addition, the compact structure of hyper-
+branched polyelectrolytes partially restricts intramolecular
+motions, leading to the formation of single-molecule aggregates
+even in dilute solution. 46 On the other hand, during the course
+of noncovalent assembly, ionic interactions play a decisive role
+in regulating the orientation and arrangement of small-molecule
+charged AIEgens. Such a stable noncovalent linkage can be
+employed to build supramolecular frameworks ( Figure 2 B).
+47
+Interestingly, through the rational design of the molecular
+geometry and coordination modes of charged AIEgens, it is
+possible to tune the pore size and tunnel shape of the resulting
+supramolecular frameworks. Typically, supramolecular assem-
+blies exhibit reversibly transformed properties due to their
+Figure 2. Design strategy for charged AIEgens with di ﬀerent topological architectures. (A) Covalent backbone rigidi ﬁcation. (B) Noncovalent
+assembly.
+Figure 3. D−A interactions in charged AIE systems. (A) Simpli ﬁed Jablonski diagram of the TICT dynamics in the D −A system. (B) Chemical
+structure of TVPA and its simulated molecular orbitals. (C) Fluorescence photograph and PL spectra of TVPA in solvents with di ﬀerent polarities.
+Reproduced with permission from ref 29. Copyright 2021 Wiley-VCH. (D) Schematic illustration of organic long-persistent luminescence enabled by
+D−A interactions. (E) Chemical structures of DMA and TPP-3C2B. (F) Photographs of TPP-3C2B/DMA crystals showing the long-lasting afterglow
+luminescence. Reproduced with permission from ref 2. Copyright 2020 Wiley-VCH.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+200
+intrinsic noncovalent assembly manner. During such a process,
+AIE can serve as a useful tool to dynamically monitor the
+assembly behavior, providing an opportunity for the develop-
+ment of stimuli-responsive luminescent systems.
+48
+3. PROPERTIES OF CHARGED AIEGENS
+As an attractive class of luminescent materials, charged AIEgens
+simultaneously possess the unique properties of AIE and
+(poly)electrolytes. Since the advantages of AIE have been
+largely discussed elsewhere, we herein focus our discussion on
+the extra properties introduced by the charged moieties,
+including D −A interactions, anion −π
++ interactions, and
+intermolecular electrostatic interactions.
+3.1. D−A Interactions
+In principle, the cationic moieties of charged AIEgens are
+electron-deﬁcient, making them ideal electron acceptors to
+facilitate intra- and intermolecular D−A interactions. In terms of
+intramolecular D −A interactions, the hybridization of frontier
+orbitals between the donor and the acceptor typically results in a
+narrowed energy band gap; thus, the energy levels of charged
+AIEgens can be rationally tuned through the selection of suitable
+donor and acceptor units.
+26,30,38 In polar environments, the
+excited charged AIEgens undergo fast intramolecular electron
+transfer from the donor to the acceptor, leading to the
+conformational transition from a locally excited (LE) state to
+a twisted intramolecular charge transfer (TICT) state and thus
+red-shifted emission ( Figure 3 A).
+37,49 As a result, charged
+AIEgens are ideal candidates for the construction of polarity-
+sensitive ﬂuorescent probes. In an example, TVPA, a cationic
+AIEgen with a typical D −A structure (chemical structure in
+Figure 3B), showed a pronounced solvatochromic eﬀect, with its
+emission color shifting from blue ( λ
+em = 436 nm) to red ( λem =
+610 nm) when the solvent varied from nonpolar toluene to
+highly polar methanol ( Figure 3C).
+29 Taking advantage of the
+TICT eﬀect of TVPA, it was possible to visualize the microphase
+separation and hydrophilicity-to-hydrophobicity transformation
+of thermoresponsive composite hydrogels in response to
+temperature variations.
+Unlike intramolecular D −A interactions, the intermolecular
+D−A interactions between positively charged AIEgens and
+electron donors can facilitate intermolecular charge transfer,
+charge separation, and charge migration, providing an
+opportunity for the construction of organic long-persistent
+luminescent systems. In a proposed model ( Figure 3 D), the
+photoinduced charge transfer occurs between the donor and
+acceptor to generate a pair of radicals, which is followed by
+charge separation and multistep charge migration among the
+acceptors. The excited radical eventually recombines with a
+donor radical, leading to the release of energy in the form of
+light. On the basis of this working mechanism, our group
+developed a dual organic system with the electron-de ﬁcient
+quaternary phosphonium bromide salt TPP-3C2B as the
+acceptor and the electron-rich aromatic amine DMA as the
+donor (chemical structures in Figure 3E).
+2 In this system, TPP-
+3C2B not only served as the electron acceptor to favor
+photoinduced charge transfer but also stabilized the excited
+radicals by suppressing unwanted reactions via the bulky phenyl
+rings and favoring radical delocalization across the phenyl rings.
+In this case, the electron was subjected to particularly slow
+charge recombination, giving rise to visible afterglow lumines-
+cence with a duration of up to 7 h, which is barely seen in
+previous studies ( Figure 3F).
+3.2. Anion−π+ Interactions
+In terms of positively charged aromatic AIEgens, there exists a
+strong a ﬃ nity between the aromatic cations and the counter-
+anions due to electrostatic forces and ion-induced polarization,
+referred to as anion −π
++ interactions.38,50 In a recent study, we
+systematically investigated the role of anion −π+ interactions in
+the manipulation of the photophysical properties of luminogens
+(Figure 4A). In traditional neutral luminogens (e.g., TriPO-C,
+Figure 4B), π−π stacking dominated intermolecular interactions
+(Figure 4C), leading to the occurrence of ACQ due to molecular
+aggregation.
+1 Nevertheless, the detrimental π−π stacking could
+be suppressed through the introduction of anion −π+ inter-
+actions, which facilitated the ACQ-to-AIE transformation. For
+example, a powder of TriPO-PN (a charged analog of TriPO-C)
+exhibited a typical AIE phenomenon with a ﬂuorescence
+quantum yield that was ca. 7-fold higher than that in solution.
+Crystallographic analysis indicated that two PF
+6
+− anions were
+located on both sides of the cationic oxazole core at distances of
+3.385 and 3.416 Å, which could serve as built-in blockers to
+impede π−π stacking ( Figure 4 D). Besides, by introducing
+heavy halide ions (e.g., Br
+− and I−) into the oxazolium system,
+the resulting molecules exhibited both AIE and RTP character-
+istics. In TPO-Br (another charged analog of TriPO-C), the
+heavy atom Br
+− was spatially close to the cationic chromophore
+Figure 4. Anion−π+ interactions in charged AIE systems. (A) Schematic illustration of the anion −π+ interactions. (B) Chemical structures of TriPO-
+C, TriPO-PN, and TPO-Br. (C) Intermolecular stacking of TriPO-C. Anion −π+ distances in (D) TriPO-PN and (E) TPO-Br. Adapted with
+permission from refs 1 and 3. Copyright 2017 American Chemical Society and 2018 Springer Nature.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+201
+due to the anion−π+ interactions (Figure 4E).3 In this situation,
+the intersystem crossing (ISC) channel was desirably switched
+on, causing the powder of TPO-Br to exhibit detectable RTP
+with a lifetime of up to 706 μs.
+3.3. Intermolecular Electrostatic Interactions
+Electrostatic interactions (i.e., opposite charges attract whereas
+identical charges repel) are a ubiquitous physical phenomenon,
+which play an important role in materials science. On the one
+hand, composite materials with all-in-one functionalities can be
+easily fabricated by means of intermolecular electrostatic
+interactions, which not only expand the diversity and
+functionality of charged AIE systems but also favor the
+construction of synergistic theranostic systems (i.e., “1+1>
+2”).
+51,52 In a recent study, our group fabricated an organic/
+inorganic hybrid nanomaterial through the electrostatic
+interactions between positively charged AIEgens and negatively
+charged 2D nanosheets of black phosphorus.53 Furthermore, we
+explored its application in the near-infrared (NIR) ﬂuores-
+cence−photothermal dual-imaging-guided synergistic photo-
+dynamic−photothermal therapies. On the other hand, positively
+charged AIEgens can selectively bind with negatively charged
+biological species (e.g., DNA, mitochondrial membranes, and
+bacterial membranes) and sensitively probe their residing
+microenvironment through real-time ﬂuorescence feedback
+(Figure 5 A).
+17,25,32,49 Combined the electrostatic interactions
+with the TICT e ﬀect, a cationic AIEgen IQ- Cm (chemical
+structure in Figure 5 B) could be used to target the negative
+surfaces of E. coli (Gram-negative bacteria), S. aureus (Gram-
+positive bacteria), and C. albicans (fungi).54 Because of the
+Figure 5. Intermolecular electrostatic interactions of charged AIEgens. (A) Intermolecular electrostatic interactions of positively charged AIEgens with
+negatively charged biological species. (B) Chemical structure of IQ- Cm. (C) Use of IQ- Cm for the visual discrimination of three di ﬀerent
+microorganisms and the corresponding ﬂuorescence photographs. (D) Zeta potentials of three microorganisms before and after incubation with IQ-
+Cm in phosphate-buﬀered saline (PBS). Adapted with permission from ref 54. Copyright 2020 The Royal Society of Chemistry.
+Figure 6. Use of charged AIEgens for imaging and diagnosis. (A) Chemical structure of MTTT-BT. (B) CLSM images of 4T1 cells postincubation
+with MTTT-BT dots for 3 h. (C) NIR-Iﬂuorescence imaging (upper row), NIR-IIﬂuorescence imaging (middle row), and PA imaging (lower row) of
+tumor-bearing mice postintratumoral injection of MTTT-BT dots at di ﬀerent time points. Reproduced with permission from ref 57. Copyright 2021
+Elsevier.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+202
+distinct membrane structures and membrane compositions, IQ-
+Cm exhibited three di ﬀerent “turn-on” ﬂuorescence ( Figure
+5C), which was probably attributed to the di ﬀerential binding
+sites of these microorganisms. The zeta potential results showed
+that in contrast to S. aureus and C. albicans, IQ-Cm signiﬁcantly
+neutralized the negative charge of E. coli (Figure 5D), suggesting
+the surface association with E. coli and deep penetration into S.
+aureus and C. albicans . It is worth noting that by varying the
+number and type of the ionic moieties, it is possible to tune the
+binding strength and targeting capability of charged AIEgens
+toward biological analytes.
+33,55,56
+4. APPLICATIONS OF CHARGED AIEGENS
+By virtue of the unique properties of charged AIEgens, a large
+number of applications have been delicately exploited, including
+imaging and diagnosis, photodynamic therapy, gas separation,
+and solar desalination. These applications are separately
+discussed in the following sections.
+4.1. Imaging and Diagnosis
+Charged AIEgens are ideal materials for imaging and diagnosis
+applications due to their tunable targeting capability, high
+brightness in aggregates, low background signal, and high
+resistance to photobleaching, which are barely seen in traditional
+ACQ dyes. On the one hand, charged AIEgens can be used to
+monitor complicated cellular processes and re ﬂect key
+physiological and pathological changes. 27,39,56 In a recent
+study, our group developed a series of pyridinium-containing
+AIEgens for the selective identi ﬁcation of cancer cells over
+normal cells, which was favorably achieved because of the
+diﬀerential mitochondria l membrane potential.
+34 Besides,
+during photodynamic therapy (PDT)-induced cell apoptosis,
+these charged AIEgens could undergo mitochondrion-to-
+nucleus translocation, enabling in situ monitoring of the PDT
+eﬀect through real-time ﬂuorescence signals. In contrast to in
+vitro cellular imaging, in vivo bioimaging is particularly
+challenging because of the strong tissue absorption, scattering,
+and auto ﬂuorescence.
+14 To overcome these limitations, we
+developed an NIR-emissive charged AIEgen MTTT-BT
+(chemical structure in Figure 6 A), which possessed high
+ﬂuorescence brightness, a large tissue-penetration depth, and
+prominent photoacoustic (PA) signals to facilitate multimodal
+in vivo imaging.
+57 Featuring a typical D −A structure and an
+elongated π-conjugated system, MTTT-BT had an extremely
+large Stokes shift (over 240 nm) and strong NIR emission with
+the tail extending to the second NIR (NIR-II, 1000 −1700 nm)
+Figure 7. Use of charged AIEgens for PDT. (A) Schematic illustration showing the electron transition of aggregated ACQ and charged AIE PSs upon
+excitation. (B) Chemical structures of TBZPy, MTBZPy, TNZPy, and MTNZPy. ROS generation by TBZPy, MTBZPy, TNZPy, and MTNZPy in
+(C) dimethyl sulfoxide (DMSO) and (D) PBS/DMSO (99/1 v/v) upon white-light irradiation, in which 2 ′,7′-dichlorodihydroﬂuorescein diacetate
+(H2DCF-DA) was used as the ﬂuorescent indicator. (E) Live/dead staining of cells with diﬀerent treatments, in which live and dead cells were shown
+in green and red, respectively. (F) Schematic illustration showing the photodynamic patterning procedure of bacteria. (G) Reconstituted 3D CLSM
+images of a bacterial grid viewed from the top direction at diﬀerent time points. The yellow dashed lines outline the border of the bacterial grid, and the
+bacteria are shown in green. Adapted with permission from refs 59 and 4. Copyright 2020 and 2021 Wiley-VCH.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+203
+region. An in vitro cellular imaging study demonstrated that the
+MTTT-BT dots (i.e., nanoaggregates of MTTT-BT with a
+hydrodynamic size of ca. 30 nm) could be eﬃ ciently internalized
+by 4T1 cells and located in the lysosomes (Figure 6B). An in vivo
+imaging study showed that the tumor tissue was speci ﬁcally
+visualized by the strong NIR-I, NIR-II, and PA signals even 12 h
+postinjection (Figure 6C), indicating the selective accumulation
+of the MTTT-BT dots in the tumor site via passive targeting.
+4.2. Photodynamic Therapy
+In the PDT process, photosensitizers (PSs) in the excited triplet
+state undergo either type I (electron transfer) or type II (energy
+transfer) photochemical pathways to produce various reactive
+oxygen species (ROS) to cause severe cell damage.
+31,38,45 Given
+the noninvasive nature, spatiotemporal controllability, negligible
+drug resistance, low systemic toxicity, and immunostimulatory
+activity, PDT has emerged as an e ﬀective modality for the
+treatment of cancer and pathogenic infections. Classic ACQ PSs
+generally show poor ROS production in aggregates because of
+π−π stacking-caused nonradiative decay ( Figure 7 A).58 In
+contrast, the nonradiative transition is signiﬁcantly suppressed in
+the aggregates of charged AIE PSs due to the restricted
+molecular motions. Besides, the energy gap between the singlet
+and triplet ( ΔE
+st) is also reduced as a result of the strong D −A
+interactions.28,36 In this case, the ISC process is remarkably
+unlocked, leading to enhanced ROS generation. Moreover, the
+electrostatic interactions between positively charged AIEgens
+and negatively charged biological species can strengthen their
+proximity in 3D space, which maximize the PDT e ﬀect and also
+facilitate imaging-guided PDT. In an example, we developed
+four charged AIE PSs with diﬀerent degrees of D−A interactions
+(TBZPy < MTBZPy < TNZPy < MTNZPy; chemical structure
+in Figure 7B).
+59 These AIEgens exhibited poor ROS generation
+in DMSO due to the active molecular motions ( Figure 7C); on
+the contrary, ROS generation was markedly enhanced when
+aggregates were formed in aqueous environments ( Figure 7D).
+Among them, TNZPy and MTNZPy displayed type-I ROS
+generation due to the strong intramolecular charge transfer,
+enabling them to photodynamically kill cancer cells both in
+normoxia and in hypoxia ( Figure 7 E). In a recent study, we
+further extended the application scope of PDT and achieved the
+customizable photodynamic patterning of living organisms with
+AIE polyelectrolytes ( Figure 7F−G), indicating its potential in
+tissue engineering and biochips.
+4 In addition to single-mode
+PDT, we also developed a series of charged AIEgen-based
+multimode theranostic materials that integrated PDT with
+photothermal therapy,53,60 chemotherapy,61 and/or phagother-
+apy,42 which can be used for the establishment of synergistic
+therapeutic systems.
+4.3. Gas Separation
+I nm o d e r ns o c i e t y ,g a ss e p a r a t i o ni sac h a l l e n g i n gy e t
+indispensable technique that plays a crucial role in fuel capture,
+biogas upgrading, and the recovery of industrial byproducts.
+62 It
+Figure 8. Use of charged AIEgens for gas separation. (A) Chemical structure of PCS. (B) Schematic illustration showing the formation of a nanotunnel
+through the assembly of PCS. (C) Crystal packing along thec axis of the hexagonal framework of the nanotunnel. (D) Adsorption isotherms of PCSD in
+CH4 (298 K), CH4 (273 K), CO2 (298 K), and CO2 (273 K). (E) CO2/CH4 (50/50 v/v) selectivity values of PCSD versus absolute pressure predicted
+by the ideal adsorbed solution theory calculation. (F) Normalized PL spectra of PCS S (PCSS1−PCSS6, the number in the superscript indicates the
+solvent type) and their ground samples. (G) Fluorescence images of the PCS S samples (PCSS1−PCSS6 displayed from left to right). Adapted with
+permission from ref 48. Copyright 2021 Wiley-VCH.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+204
+is thus of great importance to develop cost-e ﬀective and highly
+selective materials for eﬃ cient gas separation. To date, a number
+of porous materials have been fabricated, in which gas separation
+is fulﬁlled on the basis of the size of gas molecules or their aﬃ nity
+for the porous materials. In this aspect, charged AIEgens are
+emerging as an attractive candidate for the construction of
+porous materials for gas separation. On the one hand, the ionic
+interactions among charged AIEgens can facilitate self-assembly
+to form stable supramolecular frameworks with tunable pore
+sizes.
+47,48 On the other hand, the highly polar charged AIEgens
+can enhance the separation selectivity by exhibiting a strong
+aﬃ nity for polar species.49 Moreover, charged AIEgens typically
+exhibit polarity-sensitive emission behaviors,29 which endow the
+materials with a vapochrometric capability during gas sorption/
+separation and/or porosity transformation to further broaden
+their applications. In a recent study, we utilized a linear charged
+AIEgen PCS (chemical structure in Figure 8A) as the molecular
+brick to construct honeycomb-like supramolecular nanotunnels
+(pore size = 6.2 Å) via X-aggregation packing ( Figure 8B,C).
+48
+The crystal structure of desolvated PCS (PCS D) possessed
+excellent thermal and chemical stability, which is rarely seen in
+organic supramolecular frameworks. Gas sorption results
+conﬁrmed that PCS D absorbed a decent amount of CO 2 (2.8
+mmol/g) but only a small amount of CH4 (0.26 mmol/g) under
+the conditions of 273 K and 1 bar (Figure 8D). According to the
+ideal adsorbed solution theory, the CO 2/CH4 selectivity was
+calculated to be 16.8 at 273 K and 7.4 at 298 K ( Figure 8 E),
+w h i c hw e r es o m eo ft h eh i g h e s tv a l u e sa m o n go r g a n i c
+supramolecular frameworks under identical conditions. Inter-
+estingly, six kinds of solvated crystals (PCS S1−PCSS6) were
+obtained in di ﬀerent solvents with tunable emission. Notably,
+the porosity of these solvated crystals could be reversibly
+transformed from the porous crystals to the nonporous
+amorphous solid through grinding and vapor fuming, which
+was attributed to the dynamic noncovalent interactions. More
+importantly, the transformation process could be clearly
+visualized by the di ﬀerential emission colors ( Figure 8F,G).
+4.4. Solar Desalination
+Solar desalination is a technique that utilizes solar energy to
+evaporate seawater and obtain fresh water by collecting the
+condensed steam, which can potentially address the issue of
+global water shortages.
+63 One of the critical problems in solar
+desalination lies in the development of materials with high solar-
+to-thermal conversion e ﬃ ciencies. The intrinsic molecular
+rotors in charged AIEgens can favor active molecular motions
+when the molecules are loosely packed, leading to the
+consumption of the excitation energy via nonradiative decay
+and thus the generation of heat.
+60 In view of the D −A
+interaction-promoted spectral redshift 30 and thus e ﬃ cient
+photothermal conversion, charged AIEgens are considered to
+be promising candidates for solar desalination. Compared with
+traditional photothermal materials (e.g., carbon-based materi-
+als), an unparalleled advantage of charged AIEgens is their
+adequate solubility in common organic solvents, endowing them
+with excellent processability and thus high compatibility with
+other manufactured materials. Taking advantage of the broad
+absorption in the visible region ( Figure 9 B) as well as the
+photothermal eﬀect of MTTT-BT (chemical structure in Figure
+9A), we explored its application in solar desalination.
+64 First,
+MTTT-BT was doped into poly(vinylidene ﬂuoride-co-hexa-
+ﬂuoropropylene) to form a 2D electrospun nanoﬁbrous mat and
+a 3D all- ﬁber aerogel (AFA, remolded from the 2D mat via
+lyophilization). In contrast to the 2D electrospun nano ﬁbrous
+mat that had high light re ﬂection and scattering, the 3D AFA
+exhibited particularly enhanced light absorption due to the
+multiple collision of photons within the porous structure (Figure
+9C). Under 1 sun irradiation, the temperature of the 3D AFA
+increased to 87 °C within 100 s even without wrapping any
+Figure 9. Use of charged AIEgens for solar desalination. (A) Chemical structure of MTTT-BT. (B) Absorption spectra of MTTT-BT in DMSO. (C)
+Photographs and SEM images of an MTTT-BT-doped 2D electrospun nanoﬁbrous mat (upper row) and 3D AFA (lower row). (D) IR thermography
+showing the temperature of the 3D AFA at di ﬀerent positions under 1 sun irradiation. (E) Mass change of water as a function of time under di ﬀerent
+illumination intensities. (F) Evaporation rate (ER) and the corresponding energy conversion e ﬃ ciency of the 3D AFA under di ﬀerent illumination
+intensities. (G) ER of the 3D AFA (black) and the control group (red) varying from 6:00 to 18:00 within 1 day. Inset: photographs of the 3D AFA
+before and after irradiation. Adapted with permission from ref 64. Copyright 2020 American Chemical Society.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+205
+thermal insulation materials (Figure 9D), indicating its potential
+in the reduction of heat loss from the irradiated area to the
+surrounding aqueous environment. Related experimental results
+demonstrated that the 3D AFA exhibited a solar-to-vapor
+conversion eﬃ ciency of up to 89% under 1 sun irradiation and an
+evaporation rate of 10.9 kg m
+−2 day−1 under natural sunlight
+(Figure 9 E−G), suggesting its potential in e ﬃ cient solar
+desalination.
+5. CONCLUDING REMARKS AND FUTURE
+PERSPECTIVES
+As an emerging class of functional materials, charged AIEgens
+are attracting increasing attention because of their unique
+properties that originate from both AIE and (poly)electrolytes,
+including high brightness in aggregates, low background signals,
+high resistance to photobleaching, D −A interactions, anion−π
++
+interactions, and intermolecular electrostatic interactions. In
+this Account, we summarized our recent activities on the study
+of charged AIEgens, including the design strategies, unique
+properties, and applications in imaging and diagnosis, photo-
+dynamic therapy, gas separation, and solar desalination.
+Despite these achievements, there is still a large potential for
+further investigations of charged AIE systems. First, although
+positively charged AIEgens are well established, negatively
+charged AIEgens remain largely unexplored because of the
+limited type of organic anions. Since negatively charged AIEgens
+are expected to display properties distinct from those of the
+positive analogs, such as cation −π
+− interactions and opposite
+recognition behaviors, the development of negatively charged
+AIEgens is highly preferred to further expand the application
+scope of charged AIEgens. Second, in terms of molecular
+topology (e.g., asymmetric, mac rocyclic, helical, star-like,
+dendritic, and ladder-like) a nd mesoscale self-assembly
+architectures, the family members of charged AIEgens still
+need to be enriched, which are critical to the generation of high-
+performance materials for a variety of high-technology
+applications. Third, charged AIEgens are one of the promising
+tools for revealing the mystery of ionic interactions. In a
+preliminary study, our group developed two AIEgens with
+opposite charges to build a self-reporting system for the
+visualization of ionic interactions among electrolytes.
+65 Looking
+ahead, an increasing number of charged AIE systems should be
+exploited to facilitate the understanding of complicated
+biological processes and enable a multitude of practical
+applications. It is hoped that this Account can spark new ideas
+and inspire scientists from diverse disciplines to explore this
+nascent yet promising research area.
+■ AUTHOR INFORMATION
+Corresponding Authors
+Chunlei Zhu − Key Laboratory of Functional Polymer
+Materials of Ministry of Education, State Key Laboratory of
+Medicinal Chemical Biology, Institute of Polymer Chemistry,
+College of Chemistry, Nankai University, Tianjin 300071,
+China;
+orcid.org/0000-0003-2477-306X;
+Email: chunlei.zhu@nankai.edu.cn
+Ben Zhong Tang − Department of Chemistry, the Hong Kong
+Branch of Chinese National Engineering Research Center for
+Tissue Restoration and Reconstruction, and Guangdong-Hong
+Kong-Macao Joint Laboratory of Optoelectronic and Magnetic
+Functional Materials, The Hong Kong University of Science
+and Technology, Kowloon, Hong Kong 999077, China;
+Shenzhen Institute of Molecular Aggregate Science and
+Engineering, School of Science and Engineering, The Chinese
+University of Hong Kong, Shenzhen, Shenzhen City,
+Guangdong 518172, China;
+orcid.org/0000-0002-0293-
+964X; Email: tangbenz@ust.hk, tangbenz@cuhk.edu.cn
+Author
+Xiaolin Liu − Department of Chemistry, the Hong Kong Branch
+of Chinese National Engineering Research Center for Tissue
+Restoration and Reconstruction, and Guangdong-Hong Kong-
+Macao Joint Laboratory of Optoelectronic and Magnetic
+Functional Materials, The Hong Kong University of Science
+and Technology, Kowloon, Hong Kong 999077, China;
+orcid.org/0000-0002-6909-117X
+Complete contact information is available at:
+https://pubs.acs.org/10.1021/acs.accounts.1c00630
+Notes
+The authors declare no competing ﬁnancial interest.
+Biographies
+Xiaolin Liu obtained her B.S. from Sun Yat-sen University in 2017 and
+Ph.D. from the Hong Kong University of Science and Technology in
+2021 with Prof. Ben Zhong Tang. Her research interests focus on the
+design, synthesis, and applications of functional polyelectrolytes.
+Chunlei Zhu received his B.S. from Jilin University in 2008 and Ph.D.
+from the Institute of Chemistry, Chinese Academy of Sciences in 2013
+with Prof. Shu Wang. He then conducted his postdoctoral research with
+Prof. Younan Xia at the Georgia Institute of Technology from 2014 to
+2017 and with Prof. Ben Zhong Tang at the Hong Kong University of
+Science and Technology from 2017 to 2018. He started his
+independent research career in the College of Chemistry at Nankai
+University in 2018. His current research interests focus on the design
+and fabrication of functional organic and/or polymeric materials for
+biomedical applications.
+Ben Zhong Tang received his B.S. and Ph.D. degrees from South China
+University of Technology and Kyoto University in 1982 and 1988,
+respectively. He conducted his postdoctoral work at the University of
+Toronto from 1989 to 1994. Then he joined the Hong Kong University
+of Science and Technology and was promoted to Chair Professor in
+2008 and the Stephen K. C. Cheong Professor of Science in 2013. He
+currently works as a Distinguished Presidential Chair Professor at The
+Chinese University of Hong Kong, Shenzhen. His research interests
+include macromolecular chemistry, materials science, and biomedical
+sciences.
+■ ACKNOWLEDGMENTS
+This work was ﬁnancially supported by the National Natural
+Science Foundation of China (21788102, 52003123, and
+92163126), the Fundamental Research Funds for the Central
+Universities (Nankai University, 63213121 and 63213058), the
+Research Grants Council of Hong Kong (16307020, 16306620,
+N-HKUST609/19, and C6014-20W), the Innovation and
+Technology Commission (ITC-CNERC14SC01), and the
+Natural Science Foundation of Guangdong Province
+(2019B121205002).
+■ REFERENCES
+(1) Wang, J.; Gu, X.; Zhang, P.; Huang, X.; Zheng, X.; Chen, M.; Feng,
+H.; Kwok, R. T. K.; Lam, J. W. Y.; Tang, B. Z. Ionization and Anion−π+
+Interaction: A New Strategy for Structural Design of Aggregation-
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+206
+Induced Emission Luminogens. J. Am. Chem. Soc. 2017, 139 (46),
+16974−16979.
+(2) Alam, P.; Leung, N. L. C.; Liu, J.; Cheung, T. S.; Zhang, X.; He, Z.;
+Kwok, R. T. K.; Lam, J. W. Y.; Sung, H. H. Y.; Williams, I. D.; Chan, C.
+C. S.; Wong, K. S.; Peng, Q.; Tang, B. Z. Two Are Better Than One: A
+Design Principle for Ultralong-Persistent Luminescence of Pure
+Organics. Adv. Mater. 2020, 32 (22), 2001026.
+(3) Wang, J.; Gu, X.; Ma, H.; Peng, Q.; Huang, X.; Zheng, X.; Sung, S.
+H. P.; Shan, G.; Lam, J. W. Y.; Shuai, Z.; Tang, B. Z. A Facile Strategy for
+Realizing Room Temperature Phosphorescence and Single Molecule
+White Light Emission. Nat. Commun. 2018, 9 (1), 2963.
+(4) Liu, X.; Xiao, M.; Xue, K.; Li, M.; Liu, D.; Wang, Y.; Yang, X.; Hu,
+Y.; Kwok, R. T. K.; Qin, A.; Zhu, C.; Lam, J. W. Y.; Tang, B. Z.
+Heteroaromatic Hyperbranched Polyelectrolytes: Multicomponent
+Polyannulation and Photodynamic Biopatterning. Angew. Chem., Int.
+Ed. 2021, 60 (35), 19222−19231.
+(5) Fuoss, R. M.; Sadek, H. Mutual Interaction of Polyelectrolytes.
+Science 1949, 110 (2865), 552−554.
+(6) Shamshina, J. L.; Kelley, S. P.; Gurau, G.; Rogers, R. D. Chemistry:
+Develop Ionic Liquid Drugs. Nature 2015, 528 (7581), 188−189.
+(7) Nordness, O.; Brennecke, J. F. Ion Dissociation in Ionic Liquids
+and Ionic Liquid Solutions. Chem. Rev. 2020, 120 (23), 12873−12902.
+(8) Seeman, N. C.; Sleiman, H. F. DNA Nanotechnology. Nat. Rev.
+Mater. 2018, 3 (1), 17068.
+(9) Zhu, C.; Liu, L.; Yang, Q.; Lv, F.; Wang, S. Water-Soluble
+Conjugated Polymers for Imaging, Diagnosis, and Therapy. Chem. Rev.
+2012, 112 (8), 4687−4735.
+(10) Bates, M.; Lunt, R. R. Organic Salt Photovoltaics. Sustainable
+Energy Fuels 2017, 1 (5), 955−968.
+(11) Zhang, W.; Zhao, Q.; Yuan, J. Porous Polyelectrolytes: The
+Interplay of Charge and Pores for New Functionalities. Angew. Chem.,
+Int. Ed. 2018, 57 (23), 6754−6773.
+(12) Egorova, K. S.; Gordeev, E. G.; Ananikov, V. P. Biological
+Activity of Ionic Liquids and Their Application in Pharmaceutics and
+Medicine. Chem. Rev. 2017, 117 (10), 7132−7189.
+(13) Luo, J.; Xie, Z.; Lam, J. W. Y.; Cheng, L.; Chen, H.; Qiu, C.;
+Kwok, H. S.; Zhan, X.; Liu, Y.; Zhu, D.; Tang, B. Z. Aggregation-
+Induced Emission of 1-Methyl-1,2,3,4,5-Pentaphenylsilole. Chem.
+Commun. 2001, 18, 1740−1741.
+(14) Zhu, C.; Kwok, R. T. K.; Lam, J. W. Y.; Tang, B. Z. Aggregation-
+Induced Emission: A Trailblazing Journey to the Field of Biomedicine.
+ACS Appl. Bio Mater. 2018, 1 (6), 1768−1786.
+(15) Xue, K.; Wang, C.; Wang, J.; Lv, S.; Hao, B.; Zhu, C.; Tang, B. Z.
+A Sensitive and Reliable Organic Fluorescent Nanothermometer for
+Noninvasive Temperature Sensing. J. Am. Chem. Soc. 2021, 143 (35),
+14147−14157.
+(16) Hong, Y.; Lam, J. W. Y.; Tang, B. Z. Aggregation-Induced
+Emission. Chem. Soc. Rev. 2011, 40 (11), 5361−5388.
+(17) Hong, Y.; Xiong, H.; Lam, J. W. Y.; Häußler, M.; Liu, J.; Yu, Y.;
+Zhong, Y.; Sung, H. H. Y.; Williams, I. D.; Wong, K. S.; Tang, B. Z.
+Fluorescent Bioprobes: Structural Matching in the Docking Processes
+of Aggregation-Induced Emission Fluorogens on DNA Surfaces. Chem.
+-Eur. J. 2010, 16 (4), 1232−1245.
+(18) Li, Y.; Dong, Y.; Cheng, L.; Qin, C.; Nian, H.; Zhang, H.; Yu, Y.;
+Cao, L. Aggregation-Induced Emission and Light-Harvesting Function
+of Tetraphenylethene-Based Tetracationic Dicyclophane. J. Am. Chem.
+Soc. 2019, 141 (21), 8412−8415.
+(19) Jiang, Q.; Xu, X.; Yin, P.-A.; Ma, K.; Zhen, Y.; Duan, P.; Peng, Q.;
+Chen, W.-Q.; Ding, B. Circularly Polarized Luminescence of Achiral
+Cyanine Molecules Assembled on DNA Templates. J. Am. Chem. Soc.
+2019, 141 (24), 9490−9494.
+(20) Ma, X.-K.; Liu, Y. Supramolecular Purely Organic Room-
+Temperature Phosphorescence. Acc. Chem. Res. 2021, 54 (17), 3403−
+3414.
+(21) Yu, G.; Cook, T. R.; Li, Y.; Yan, X.; Wu, D.; Shao, L.; Shen, J.;
+Tang, G.; Huang, F.; Chen, X.; Stang, P. J. Tetraphenylethene-Based
+Highly Emissive Metallacage as a Component of Theranostic
+Supramolecular Nanoparticles. Proc. Natl. Acad. Sci. U. S. A. 2016,
+113 (48), 13720−13725.
+(22) Cheng, L.; Liu, K.; Duan, Y.; Duan, H.; Li, Y.; Gao, M.; Cao, L.
+Adaptive Chirality of an Achiral Cage: Chirality Transfer, Induction,
+and Circularly Polarized Luminescence through Aqueous Host −Guest
+Complexation. CCS Chem. 2020, 2, 2749−2763.
+(23) Hu, F.; Zhang, G.; Zhan, C.; Zhang, W.; Yan, Y.; Zhao, Y.; Fu, H.;
+Zhang, D. Highly Solid-State Emissive Pyridinium-Substituted
+Tetraphenylethylene Salts: Emission Color-Tuning with Counter
+Anions and Application for Optical Waveguides. Small 2015, 11
+(11), 1335−1344.
+(24) Nishiuchi, T.; Sotome, H.; Fukuuchi, R.; Kamada, K.; Miyasaka,
+H.; Kubo, T. Optical Nature of Non-Substituted Triphenylmethyl
+Cation: Crystalline State Emission, Thermochromism, and Phosphor-
+escence. Aggregate 2021, 2, e126.
+(25) Leung, C. W. T.; Hong, Y.; Chen, S.; Zhao, E.; Lam, J. W. Y.;
+Tang, B. Z. A Photostable AIE Luminogen for Specific Mitochondrial
+Imaging and Tracking. J. Am. Chem. Soc. 2013, 135 (1), 62−65.
+(26) Feng, H.-T.; Zou, S.; Chen, M.; Xiong, F.; Lee, M.-H.; Fang, L.;
+Tang, B. Z. Tuning Push −Pull Electronic Effects of AIEgens to Boost
+the Theranostic Efficacy for Colon Cancer. J. Am. Chem. Soc. 2020, 142
+(26), 11442−11450.
+(27) Gao, T.; Wu, Y.; Wang, W.; Deng, C.; Chen, Y.; Yi, L.; Song, Y.;
+Li, W.; Xu, L.; Xie, Y.; Fang, L.; Jin, Q.; Zhang, L.; Tang, B. Z.; Xie, M.
+Biomimetic Glucan Particles with Aggregation-Induced Emission
+Characteristics for Noninvasive Monitoring of Transplant Immune
+Response. ACS Nano 2021, 15 (7), 11908−11928.
+(28) Xu, W.; Lee, M. M. S.; Nie, J.-J.; Zhang, Z.; Kwok, R. T. K.; Lam,
+J. W. Y.; Xu, F.-J.; Wang, D.; Tang, B. Z. Three-Pronged Attack by
+Homologous Far-Red/NIR AIEgens to Achieve 1 + 1+1 > 3 Synergistic
+Enhanced Photodynamic Therapy. Angew. Chem., Int. Ed. 2020, 59
+(24), 9610−9616.
+(29) Hu, Y.; Barbier, L.; Li, Z.; Ji, X.; Le Blay, H.; Hourdet, D.; Sanson,
+N.; Lam, J. W. Y.; Marcellan, A.; Tang, B. Z. Hydrophilicity-
+Hydrophobicity Transformation , Thermoresponsive Morphome-
+chanics, and Crack Multifurcation Revealed by AIEgens in Mechan-
+ically Strong Hydrogels. Adv. Mater. 2021, 33 (39), 2101500.
+(30) Wang, D.; Lee, M. M. S.; Shan, G.; Kwok, R. T. K.; Lam, J. W. Y.;
+Su, H.; Cai, Y.; Tang, B. Z. Highly Efficient Photosensitizers with Far-
+Red/Near-Infrared Aggregation-Induced Emission for in Vitro and in
+Vivo Cancer Theranostics. Adv. Mater. 2018, 30 (39), 1802105.
+(31) Ma, Y.; Zhuang, Z.; Xing, L.; Li, J.; Yang, Z.; Ji, S.; Hu, R.; Zhao,
+Z.; Huo, Y.; Tang, B. Z. The AIE-Active Dual-Cationic Molecular
+Engineering: Synergistic Effect of Dark Toxicity and Phototoxicity for
+Anticancer Therapy. Adv. Funct. Mater. 2021, 31 (49), 2106988.
+(32) Wang, D.; Su, H.; Kwok, R. T. K.; Hu, X.; Zou, H.; Luo, Q.; Lee,
+Michelle M. S.; Xu, W.; Lam, J. W. Y.; Tang, B. Z. Rational Design of a
+Water-Soluble NIR AIEgen, and Its Application in Ultrafast Wash-Free
+Cellular Imaging and Photodynamic Cancer Cell Ablation. Chem. Sci.
+2018, 9
+(15), 3685−3693.
+(33) Shi, X.; Sung, S. H. P.; Chau, J. H. C.; Li, Y.; Liu, Z.; Kwok, R. T.
+K.; Liu, J.; Xiao, P.; Zhang, J.; Liu, B.; Lam, J. W. Y.; Tang, B. Z. Killing
+G(+) or G( −) Bacteria? The Important Role of Molecular Charge in
+AIE-Active Photosensitizers. Small Methods 2020, 4 (7), 2000046.
+(34) Zhang, T.; Li, Y.; Zheng, Z.; Ye, R.; Zhang, Y.; Kwok, R. T. K.;
+Lam, J. W. Y.; Tang, B. Z. In Situ Monitoring Apoptosis Process by a
+Self-Reporting Photosensitizer. J. Am. Chem. Soc. 2019, 141 (14),
+5612−5616.
+(35) Sucunza, D.; Cuadro, A. M.; Alvarez-Builla, J.; Vaquero, J. J.
+Recent Advances in the Synthesis of Azonia Aromatic Heterocycles. J.
+Org. Chem. 2016, 81 (21), 10126−10135.
+(36) Liu, X.; Li, M.; Han, T.; Cao, B.; Qiu, Z.; Li, Y.; Li, Q.; Hu, Y.; Liu,
+Z.; Lam, J. W. Y.; Hu, X.; Tang, B. Z. In Situ Generation of Azonia-
+Containing Polyelectrolytes for Luminescent Photopatterning and
+Superbug Killing. J. Am. Chem. Soc. 2019, 141 (28), 11259−11268.
+(37) Jiang, M.; Gu, X.; Kwok, R. T. K.; Li, Y.; Sung, H. H. Y.; Zheng,
+X.; Zhang, Y.; Lam, J. W. Y.; Williams, I. D.; Huang, X.; Wong, K. S.;
+Tang, B. Z. Multifunctional AIEgens: Ready Synthesis, Tunable
+Emission, Mechanochromism, Mitochondrial, and Bacterial Imaging.
+Adv. Funct. Mater. 2018, 28 (1), 1704589.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+207
+(38) Li, Q.; Li, Y.; Min, T.; Gong, J.; Du, L.; Phillips, D. L.; Liu, J.;
+Lam, J. W. Y.; Sung, H. H. Y.; Williams, I. D.; Kwok, R. T. K.; Ho, C. L.;
+Li, K.; Wang, J.; Tang, B. Z. Time-Dependent Photodynamic Therapy
+for Multiple Targets: A Highly Efficient AIE-Active Photosensitizer for
+Selective Bacterial Elimination and Cancer Cell Ablation.Angew. Chem.,
+Int. Ed. 2020, 59 (24), 9470−9477.
+(39) Wang, C.; Zhao, X.; Jiang, H.; Wang, J.; Zhong, W.; Xue, K.; Zhu,
+C. Transporting Mitochondrion-Ta rgeting Photosensitizers into
+Cancer Cells by Low-Density Lipoproteins for Fluorescence-Feedback
+Photodynamic Therapy. Nanoscale 2021, 13 (2), 1195−1205.
+(40) Wei, P.; Li, Z.; Zhang, J.-X.; Zhao, Z.; Xing, H.; Tu, Y.; Gong, J.;
+Cheung, T. S.; Hu, S.; Sung, H. H. Y.; Williams, I. D.; Kwok, R. T. K.;
+Lam, J. W. Y.; Tang, B. Z. Molecular Transmission: Visible and Rate-
+Controllable Photoreactivity and Synergy of Aggregation-Induced
+Emission and Host −Guest Assembly. Chem. Mater. 2019, 31 (3),
+1092−1100.
+(41) Wei, P.; Zhang, J.-X.; Zhao, Z.; Chen, Y.; He, X.; Chen, M.; Gong,
+J.; Sung, H. H. Y.; Williams, I. D.; Lam, J. W. Y.; Tang, B. Z. Multiple yet
+Controllable Photoswitching in a Single AIEgen System. J. Am. Chem.
+Soc. 2018, 140 (5), 1966−1975.
+(42) He, X.; Yang, Y.; Guo, Y.; Lu, S.; Du, Y.; Li, J.-J.; Zhang, X.;
+Leung, N. L. C.; Zhao, Z.; Niu, G.; Yang, S.; Weng, Z.; Kwok, R. T. K.;
+Lam, J. W. Y.; Xie, G.; Tang, B. Z. Phage-Guided Targeting,
+Discriminative Imaging, and Synergistic Killing of Bacteria by AIE
+Bioconjugates. J. Am. Chem. Soc. 2020, 142 (8), 3959−3969.
+(43) Hong, Y.; Meng, L.; Chen, S.; Leung, C. W. T.; Da, L.-T.; Faisal,
+M.; Silva, D.-A.; Liu, J.; Lam, J. W. Y.; Huang, X.; Tang, B. Z.
+Monitoring and Inhibition of Insulin Fibrillation by a Small Organic
+Fluorogen with Aggregation-Induced Emission Characteristics. J. Am.
+Chem. Soc. 2012, 134 (3), 1680−1689.
+(44) Huang, Y.; Zhang, G.; Hu, F.; Jin, Y.; Zhao, R.; Zhang, D.
+Emissive Nanoparticles from Pyridinium-Substituted Tetraphenyl-
+ethylene Salts: Imaging and Selective Cytotoxicity Towards Cancer
+Cells in Vitro and in Vivo by Varying Counter Anions. Chem. Sci. 2016,
+7 (12), 7013−7019.
+(45) Zhou, T.; Hu, R.; Wang, L.; Qiu, Y.; Zhang, G.; Deng, Q.; Zhang,
+H.; Yin, P.; Situ, B.; Zhan, C.; Qin, A.; Tang, B. Z. An AIE-Active
+Conjugated Polymer with High ROS-Generation Ability and
+Biocompatibility for Efficient Photodynamic Therapy of Bacterial
+Infections. Angew. Chem., Int. Ed. 2020, 59 (25), 9952−9956.
+(46) Chen, R.; Gao, X.; Cheng, X.; Qin, A.; Sun, J. Z.; Tang, B. Z. A
+Red-Emitting Cationic Hyperbranched Polymer: Facile Synthesis,
+Aggregation-Enhanced Emission, Large Stokes Shift, Polarity-Insensi-
+tive Fluorescence and Application in Cell Imaging. Polym. Chem. 2017,
+8 (40), 6277−
+6282.
+(47) Jiang, H.; Xie, L.; Duan, Z.; Lin, K.; He, Q.; Lynch, V. M.; Sessler,
+J. L.; Wang, H. Fluorescent Supramolecular Organic Frameworks
+Constructed by Amidinium-Carboxylate Salt Bridges. Chem. -Eur. J.
+2021, 27 (60), 15006−15012.
+(48) Wei, P.; He, X.; Zheng, Z.; He, D.; Li, Q.; Gong, J.; Zhang, J.;
+Sung, H. H. Y.; Williams, I. D.; Lam, J. W. Y.; Liu, M.; Tang, B. Z.
+Robust Supramolecular Nano-Tunnels Built from Molecular Bricks.
+Angew. Chem., Int. Ed. 2021, 60 (13), 7148−7154.
+(49) Gao, Y.; He, Z.; He, X.; Zhang, H.; Weng, J.; Yang, X.; Meng, F.;
+Luo, L.; Tang, B. Z. Dual-Color Emissive AIEgen for Specific and Label-
+Free Double-Stranded DNA Recognition and Single-Nucleotide
+Polymorphisms Detection. J. Am. Chem. Soc. 2019, 141 (51),
+20097−20106.
+(50) Cai, X.; Xie, N.; Li, Y.; Lam, J. W. Y.; Liu, J.; He, W.; Wang, J.;
+Tang, B. Z. A Smart AIEgen-Functionalized Surface with Reversible
+Modulation of Fluorescence and Wettability. Mater. Horiz. 2019, 6
+(10), 2032−2039.
+(51) Ji, X.; Li, Z.; Hu, Y.; Xie, H.; Wu, W.; Song, F.; Liu, H.; Wang, J.;
+Jiang, M.; Lam, J. W. Bioinspired Hydrogels with Muscle-Like Structure
+for AIEgen-Guided Selective Self-Healing. CCS Chem. 2020, 2, 1146−
+1156.
+(52) Mao, D.; Hu, F.; Yi, Z.; Kenry; Xu, S.; Yan, S.; Luo, Z.; Wu, W.;
+Wang, Z.; Kong, D.; Liu, X.; Liu, B. AIEgen-Coupled Upconversion
+Nanoparticles Eradicate Solid Tumors through Dual-Mode Ros
+Activation. Sci. Adv. 2020, 6 (26), eabb2712.
+(53) Huang, J.; He, B.; Zhang, Z.; Li, Y.; Kang, M.; Wang, Y.; Li, K.;
+Wang, D.; Tang, B. Z. Aggregation-Induced Emission Luminogens
+Married to 2D Black Phosphorus Nanosheets for Highly Efficient
+Multimodal Theranostics. Adv. Mater. 2020, 32 (37), 2003382.
+(54) Zhou, C.; Jiang, M.; Du, J.; Bai, H.; Shan, G.; Kwok, R. T. K.;
+Chau, J. H. C.; Zhang, J.; Lam, J. W. Y.; Huang, P.; Tang, B. Z. One
+Stone, Three Birds: One AIEgen with Three Colors for Fast
+Differentiation of Three Pathogens. Chem. Sci. 2020, 11 (18), 4730−
+4740.
+(55) Feng, G.; Wang, C.; Chen, C.; Pan, Y.; Wu, M.; Wang, Y.; Liu, J.;
+Liu, B. Modulating Cell Specificity and Subcellular Localization by
+Molecular Charges and Lipophilicity. Chem. Mater. 2020, 32 (24),
+10383−10393.
+(56) Alam, P.; He, W.; Leung, N. L. C.; Ma, C.; Kwok, R. T. K.; Lam, J.
+W. Y.; Sung, H. H. Y.; Williams, I. D.; Wong, K. S.; Tang, B. Z. Red AIE-
+Active Fluorescent Probes with Tunable Organelle-Specific Targeting.
+Adv. Funct. Mater. 2020, 30 (10), 1909268.
+(57) Wen, H.; Zhang, Z.; Kang, M.; Li, H.; Xu, W.; Guo, H.; Li, Y.;
+Tan, Y.; Wen, Z.; Wu, Q.; Huang, J.; Xi, L.; Li, K.; Wang, L.; Wang, D.;
+Tang, B. Z. One-for-All Phototheranostics: Single Component AIE
+Dots as Multi-Modality Theranostic Agent for Fluorescence-Photo-
+acoustic Imaging-Guided Synergistic Cancer Therapy. Biomaterials
+2021
+, 274, 120892.
+(58) Mao, D.; Liu, B. Biology-Oriented Design Strategies of AIE
+Theranostic Probes. Matter 2021, 4 (2), 350−376.
+(59) Wan, Q.; Zhang, R.; Zhuang, Z.; Li, Y.; Huang, Y.; Wang, Z.;
+Zhang, W.; Hou, J.; Tang, B. Z. Molecular Engineering to Boost AIE-
+Active Free Radical Photogenerators and Enable High-Performance
+Photodynamic Therapy under Hypoxia. Adv. Funct. Mater. 2020, 30
+(39), 2002057.
+(60) Li, M.; Wen, H.; Li, H.; Yan, Z.-C.; Li, Y.; Wang, L.; Wang, D.;
+Tang, B. Z. AIEgen-Loaded Nanofibrous Membrane as Photodynamic/
+Photothermal Antimicrobial Surface for Sunlight-Triggered Biopro-
+tection. Biomaterials 2021, 276, 121007.
+(61) Zhuang, J.; Li, N.; Zhang, Y.; Li, B.; Wen, H.; Zhang, X.; Zhang,
+T.; Zhao, N.; Tang, B. Z. Esterase-Activated Theranostic Prodrug for
+Dual Organelles-Targeted Imaging and Synergetic Chemo-Photo-
+dynamic Cancer Therapy. CCS Chem. 2021, 3, 1964−1979.
+(62) Qian, Q.; Asinger, P. A.; Lee, M. J.; Han, G.; Mizrahi Rodriguez,
+K.; Lin, S.; Benedetti, F. M.; Wu, A. X.; Chi, W. S.; Smith, Z. P. MOF-
+Based Membranes for Gas Separations. Chem. Rev. 2020, 120 (16),
+8161−8266.
+(63) Zhang, L.; Xu, Z.; Zhao, L.; Bhatia, B.; Zhong, Y.; Gong, S.;
+Wang, E. N. Passive, High-Efficiency Thermally-Localized Solar
+Desalination. Energy Environ. Sci. 2021, 14 (4), 1771−1793.
+(64) Li, H.; Wen, H.; Li, J.; Huang, J.; Wang, D.; Tang, B. Z. Doping
+AIE Photothermal Molecule into All-Fiber Aerogel with Self-Pumping
+Water Function for Efficiency Solar Steam Generation. ACS Appl.
+Mater. Interfaces 2020, 12 (23), 26033−26040.
+(65) Xing, H.; Liu, J.; Wang, X.; Yu, Y.; Yu, Y.; Wang, H.; Ju, H.; Yang,
+Y.; Lin, Y.; Wang, X. Motion Restricted by Hydration Shell: A Self-
+Reporting System for Visualizing Electrolyte Interactions ChemRxiv
+2020, DOI: 10.26434/chemrxiv.13396184.v1.
+Accounts of Chemical Research pubs.acs.org/accounts Article
+https://doi.org/10.1021/acs.accounts.1c00630
+Acc. Chem. Res. 2022, 55, 197 −208
+208

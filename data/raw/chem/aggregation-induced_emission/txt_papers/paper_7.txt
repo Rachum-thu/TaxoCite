@@ -1,0 +1,801 @@
+RESEARCH ARTICLE
+www.advmat.de
+Lab-in-Cell:ACovalentPhotosensitizerReversesHypoxia
+andEvokesFerroptosisandPyroptosisforEnhanced
+Anti-TumorImmunity
+Bingnan Wang, Guiquan Zhang, Zhizai Chen, Hanchen Shen, Chunyang Li, Jianqing Li,
+Meixi Yi, Jianwei Sun, Ryan T. K. Kwok,* Jacky W. Y. Lam,* Anjun Qin,*
+and Ben Zhong Tang*
+Photodynamicimmunotherapypresentsanon-invasivestrategycharacterized
+byspatiotemporalcontrolandminimalsideeﬀectstoinduceimmunogenic
+celldeath(ICD).Thisapproachsigniﬁcantlyenhancesthereleaseof
+tumor-associatedantigensanddamage-associatedmolecularpatterns,
+therebyimprovingcancerimmunotherapyoutcomes.However,hypoxiaand
+antioxidantdefensesattumorsitesconsiderablydiminishtheeﬃcacyof
+photodynamicimmunotherapy.Inthiswork,acovalentwarhead,
+alkyneamide,isintroducedintoanAIEphotosensitizertodevelopanovel
+covalentphotosensitizer,MBTP-PA,whichtargetsredoxsystemsand
+facilitatesferroptosis-andpyroptosis-mediatedphotodynamic
+immunotherapybythiol-yneclickreactions.Thecovalentphotosensitizer
+interactswithintracellularthiolcompoundssuchascysteineandglutathione,
+disruptingtheintracellularantioxidantsystemandalleviatinghypoxia.This
+resultsinenhancedphotodynamictherapy(PDT)eﬃcacycomparedtothe
+non-covalentphotosensitizerMBTP-A.Furthermore,inconjunctionwithPDT,
+thisreactiontherapycanactivateICDthroughferroptosisandpyroptosis,
+therebyenhancinganti-tumorimmunity.Notably,invivoinjectionof
+MBTP-PAnanoparticlesatthetumorsiteledtotheeliminationofprimary
+tumors,inhibitingdistaltumorsandexhibitingminimalsideeﬀects.
+Therefore,thisworknotonlyintegratesthethiol-yneclickreactionsinto
+cellularsystems,signiﬁcantlyenhancingtheeﬃcacyofphotodynamic
+immunotherapybutalsopavesthewayfordevelopingnovelphotosensitizers.
+B.Wang,H.Shen,J.Sun,R.T.K.Kwok,J.W.Y.Lam,B.Z.Tang
+DepartmentofChemistry
+theHongKongBranchofChineseNationalEngineeringResearchCentre
+forTissueRestorationandReconstruction
+DepartmentofChemicalandBiologicalEngineering
+DivisionofLifeScience
+andStateKeyLaboratoryofMolecularNeuroscience
+TheHongKongUniversityofScience&Technology
+ClearWaterBay,Kowloon,HongKong999077,China
+E-mail:chryan@ust.hk;chjacky@ust.hk;tangbenz@cuhk.edu.cn
+The ORCID identiﬁcation number(s) for the author(s) of this article
+canbefoundunder https://doi.org/10.1002/adma.202415673
+DOI:10.1002/adma.202415673
+1.Introduction
+Cancer immunotherapy is a rapidly
+evolving ﬁeld that harnesses the pa-
+tient’s immune system to combat ma-
+lignant tumors, [1–5] oﬀering innovative
+strategies alongside traditional thera-
+pies such as surgery, chemotherapy, and
+radiotherapy.[6,7] A critical step in tumor
+immunotherapy is achieving eﬃcient im-
+munogenic cell death (ICD).[8,9] During
+ICD, the release of damage-associated
+molecular patterns (DAMPs), including
+calreticulin(CRT)andhighmobilitygroup
+box 1 (HMGB1), promotes the matura-
+tion of dendritic cells (DCs) and T cell
+diﬀerentiation, activates the immune re-
+sponse, and initiates adaptive antitumor
+immunity.[10,11] Recently, evidence increas-
+ingly suggests that an immune response
+is elicited following photodynamic therapy
+(PDT), highlighting its potential as an
+immunogenic treatment approach. [12–14]
+PDT is a non-invasive treatment that
+oﬀers spatiotemporal control by utilizing
+photosensitizers to produce singlet oxygen
+(1O2) through energy transfer (Type II) or
+other reactive oxygen species (ROS) via
+G.Zhang,C.Li,J.Li,M.Yi,A.Qin
+StateKeyLaboratoryofLuminescentMaterialsandDevices
+GuangdongProvincialKeyLaboratoryofLuminescencefromMolecular
+Aggregates
+CenterforAggregation-InducedEmission
+AIEInstitute
+SouthChinaUniversityofTechnology
+Guangzhou510640,China
+E-mail:msqinaj@scut.edu.cn
+Z.Chen
+DepartmentofGynecology
+GuangdongProvincialPeople’sHospital
+(GuangdongAcademyofMedicalSciences)
+SouthernMedicalUniversity
+Guangzhou510080,China
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(1of14)
+www.advancedsciencenews.com www.advmat.de
+electron transfer (Type I) when exposed to light, eﬀectively de-
+stroying tumor tissue.[15–21] During PDT, cells undergo the pro-
+cess of ICD, releasing DAMPs, and activating the systemic
+adaptive immune response.[22–24] However, the immune eﬀects
+elicited by PDT-induced ICD are inﬂuenced by several factors,
+which can lead to suboptimal outcomes in immunotherapy.[9,25]
+PDT should be combined with immune checkpoint blockade
+reagentstoachieveabetteranti-tumorimmuneeﬀect. [26,27] The
+primaryfactorsaﬀectingeﬃcacyinclude:1)thelimitedresidence
+timeof photosensitizers in tumorcells, resultingin insuﬃcient
+enrichment;[28] 2) hypoxia and the tumor’s antioxidant system,
+which diminish the eﬀectiveness of PDT;[29,30] and 3) the ten-
+dencyofPDTtoinduceapoptosis,whichisnotconducivetothe
+releaseofDAMPs. [14] Therefore,toachievehighlyeﬀectiveanti-
+tumor immunity, it is crucial to develop long-lasting photosen-
+sitizers that can alleviate tumor hypoxia and antioxidant system
+whileeﬀectivelyinducingICD.
+To enhance the eﬃcacy of PDT, strategies such as designing
+Type I photosensitizers and developing oxygen-carrying meth-
+ods to increase tumor oxygen levels have been explored.[31–35]
+However,simplyboostingtheoxidativecapacityofPDTisinade-
+quate,asrobustantioxidantresponsesintumorcellscansignif-
+icantly diminishits eﬀectiveness.[36] Malignant tumorsthatsur-
+vivetheseresponsesmaydeveloptolerancetoPDT. [37] Therefore,
+it is essential to develop photosensitizers that speciﬁcally target
+redoxsystemstoimprovePDTeﬃcacy.Inorganicchemistry,ac-
+tivatedalkyneandthiolclickreactionshavebeendevelopedand
+successfullyappliedinpolymersynthesis, 3Dprinting,andbio-
+conjugation,owingtotheirmildreactionconditions,speciﬁcity,
+andhigheﬃciency.[38–40] Thiolcompoundssuchascysteine(Cys)
+andglutathione(GSH),playacriticalroleasintracellularantiox-
+idantsinmaintainingredoxbalance. [41] Byincorporatinganacti-
+vatedalkyneintophotosensitizersasacovalentwarhead,aclick
+reaction can occur between the alkyne and thiol groups within
+cells.Thisreactionconsumesreducingsubstancesandenhances
+theoxidationstate,therebysigniﬁcantlyimprovingtheeﬀective-
+nessofPDT.Additionally,thisclickreactioncouldstimulateim-
+muneresponsesandprolongtheresidencetimeofthephotosen-
+sitizeratthelesionsite,resultinginmoreeﬀectivePDT-mediated
+immunotherapy.
+Aggregation-induced emission (AIE) photosensitizers exhibit
+superior ROS production eﬃciency in aggregated states com-
+pared to traditional photosensitizers.[42–47] To leverage this ad-
+vantage, we incorporated the covalent warhead alkynamide into
+an AIE photosensitizer, developing an endoplasmic reticulum-
+targeting covalent photosensitizer MBTP-PA, aimed at alleviat-
+ing hypoxia and evoking ferroptosis- and pyroptosis-mediated
+immunotherapy.Alkynamidereactswiththiolcompoundssuch
+as Cys, GSH, and proteins, forming covalent bonding with in-
+tracellular substances and extending the retention time of the
+photosensitizer(Scheme1A).Thisintracellularreactionnotonly
+alleviates hypoxia but also induces oxidative stress in cells, re-
+sulting in improved PDT eﬃcacy. In addition, following reac-
+B.Z.Tang
+SchoolofScienceandEngineering
+ShenzhenInstituteofAggregateScienceandTechnology
+TheChineseUniversityofHongKong
+Shenzhen518172,China
+tion therapy and PDT, ferroptosis and pyroptosis are induced,
+leading to the release of a series of inﬂammatory factors and
+DMAPs. These factors stimulate the maturation and antigen-
+presentingabilityofDCsandactivatetheTcells-dependentadap-
+tive immune response. This systemic anti-tumor immunity ef-
+fectivelydestroysprimarytumorsandeﬀectivelyinhibitsdistant
+tumors (Scheme1B). Therefore, this work not only develops a
+covalent AIE photosensitizer to alleviate hypoxia and promote
+ferroptosis- and pyroptosis-mediated immunotherapy but also
+provides a framework for discovering new materials to enhance
+anti-tumorresponses.
+1.1.PhotophysicalProperties
+MBTP-PA with alkynamide was synthesized by re-
+acting MBTP-A with propargylic acid in the pres-
+ence of 4-Dimethylaminopyridine (DMAP) and 1-(3-
+Dimethylaminopropyl)-3-ethylcarbodiimide (EDC). Its structure
+was conﬁrmed using13CN M R ,1H NMR, and high-resolution
+mass spectrometry (Figure 1A;F i g u r e sS1–S3, Supporting
+Information). The photophysical properties of MBTP-PA were
+initially examined. The UV–vis spectra revealed an absorption
+peak (𝜆abs) at 463 nm in a dilute DMSO solution (Figure1B).
+As depicted in photoluminescence (PL) spectra (Figure1C), the
+emission peaks of MBTP-PA in solid ﬁlm and DMSO solution
+were 652 and 666 nm, respectively. Furthermore, the AIE eﬀect
+of MBTP-PA in DMSO/H2O mixtures was investigated because
+MBTP-PA is soluble in DMSO but not in H2O. As shown
+in Figure 1D,E, increasing the water fraction (fw)i nD M S O
+signiﬁcantly enhanced the ﬂuorescence of MBTP-PA. Whenfw
+increased from 40% to 50%, the PL intensity increased sharply,
+demonstrating AIE characteristics. However, the PL intensity of
+MBTP-PAdecreasedwhen fw exceeded80%.
+TobetterunderstandthePLchangesofMBTP-PAaggregates,
+we measured the particle size of MBTP-PA at varying water
+contents. The results indicated that the average particle size at
+50.36 nm (fw = 80%) was smaller than that at 224.6 nm (fw =
+50%). The smaller particle size indicates that the eﬀective ag-
+gregation of MBTP-PA was reduced, and the surface area was
+increased, resulting in decreased PL intensity. In addition, the
+absolute ﬂuorescence quantum yield (ФF) of MBTP-PA ranged
+from 0.4% in DMSO to 6.8% in solid ﬁlm, explaining its AIE
+properties(Table S1,SupportingInformation).Notably,duetoits
+strongdonor-acceptorstructure,MBTP-PAexhibitspronounced
+solvatochromism in solvents of varying polarity, including hex-
+ane, 1,4-dioxane, ethyl acetate, and DMSO (FigureS4,S u p -
+porting Information). To further investigate this donor-acceptor
+structure, MBTP-PA was analyzed using density functional the-
+ory (DFT) calculations. The geometries of MBTP-PA were opti-
+mized using the M062x/6-31G** level (Figure1F). The delocal-
+ized electron density of the highest occupied molecular orbital
+(HOMO) was primarily concentrated in the dimethoxytripheny-
+lamine segment. In contrast, the lowest unoccupied molecular
+orbital(LUMO)wasconcentratedonthebenzo[1,2,5]thiadiazole
+unit, demonstrating strong intramolecular charge transfer in
+MBTP-PA. Furthermore, the energy level distribution between
+singlet (S) and triplet (T) states was calculated (Figure1G). The
+calculatedvaluesof ΔES1-T1 and ΔES1-T2 were0.75and −0.13eV,
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(2of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Scheme 1.A) The thiol-yne click reaction between the covalent AIE photosensitizer, MBTP-PA, and thiols on proteins within cells. B) Schematic illus-
+trationsofferroptosis-andpyroptosis-mediatedimmunotherapyfacilitatedbytheclickreactiontherapyandPDT,anditsinhibitoryeﬀectonmeta static
+tumorsisdemonstratedbytheinjectionofMBTP-PAnanoparticlesintotheprimarytumor.
+respectively, indicatingthatMBTP-PAispronetotriggerthein-
+tersystem crossing process. These ﬁndings suggest that MBTP-
+PAiscapableofproducingreactiveoxygenspecies(ROS).
+1.2.ExplorationofThiol-YneClickReactionofMBTP-PAwith
+ThiolCompounds
+After investigating its photophysical properties, we examined
+the reactions of MBTP-PA with amino acids, peptides, and pro-
+teinsthathaveamino,hydroxyl,andthiolgroups.MBTP-PAand
+diﬀerent amino acids were added into a mixture of PBS and
+THF (v/v= 1:1) with a pH 7.4, we found that L-lysine and L-
+arginine (which contain amino group), as well as L-serine, and
+L-tyrosine (which contain hydroxyl group), did not react with
+MBTP-PA (Figure 2A,B). In contrast, Boc-Cys-OMe, Cys, and
+GSH,whichcontainthiolgroups,reactedeﬃcientlywithMBTP-
+PA (Figure2C;F i g u r e sS5–S8, Supporting Information). These
+results demonstrate that MBTP-PA possesses high selectivity in
+itsreactionwiththiolsubstances.Furthermore,bovineserumal-
+bumin(BSA)waschosenasamodelproteintoverifythepoten-
+tial reaction with MBTP-PA, given that BSA contains one non-
+oxidizedcysteine(Cys-34).Inthiscontext,MBTP-PAwasreacted
+withBSAinaPBSsolutioncontaining1%DMSO.Theresulting
+MBTP-BSAproductwasanalyzedusingsodiumdodecylsulfate-
+polyacrylamidegelelectrophoresis(SDS-PAGE).Asanticipated,
+MBTP-BSA exhibited signiﬁcant ﬂuorescence under UV radia-
+tion(Figure 2D),whileBSAalonedidnotemitanyﬂuorescence.
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(3of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Figure 1.A) Synthesis of the photosensitizer MBTP-PA. B) UV–vis spectrum of MBTP-PA in DMSO solution. C) Normalized photoluminescence (PL)
+spectra of MBTP-PA in DMSO solution and its solid ﬁlm. D) PL spectra of MBTP-PA in DMSO solutions with varying water volume fractions (fw).
+E) Plots showing the ratio of I/I0, as a function of the DMSO/water mixture composition, where I represent the ﬂuorescent intensity and I0 is the
+minimum intensity. Inset: the size distribution of MBTP-PA in DMSO with 50% and 80% water fraction. F) LUMO and HOMO wave functions for the
+geometricalstructuresofMBTP-PAoptimizedbyM062x/6-31G **.G)Singletandtripletenergylevelsandthe ΔEST valuesofMBTP-PA.
+Therefore, MBTP-PA can eﬀectively label proteins containing
+thiolgroupswithouttheneedforcatalysts.
+1.3.AnalysisofROSGenerationAbilityandSpecies
+To evaluate changes in ROS generation before and after MBTP-
+PAinteractswithcellularsubstances,weassessedtheROSgen-
+eration capacity and analyzed the ROS species of MBTP-PA,
+MBTP-BSA, MBTP-PA+BSA, MBTP-A, and Chlorin e6 (Ce6).
+We used 2,7-dichlorodihydroﬂuorescein (DCFH), a commercial
+indicator that detects various types of ROS, as a reporter for
+ROS activity. As illustrated inFigures 3A and S9 (Supporting
+Information), the PL intensity of the DCFH solution contain-
+ingphotosensitizerssigniﬁcantlyincreasedwithprolongedwhite
+light irradiation time (10 mW cm−2). The rates of PL inten-
+sity growth were ranked as follows: MBTP-PA+BSA > MBTP-
+PA > MBTP-BSA > MBTP-A > Ce6. These ﬁndings reveal that
+MBTP-PA has a greater ROS generation capacity than MBTP-
+A and Ce6. Notably, the ROS production rate decreased after
+MBTP-PA reacted with BSA, likely due to the formation of
+MBTP-BSA.
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(4of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Figure2. A,B)ReactionsofMBTP-PAwithaminoacidscontaining(A)aminogroupsand(B)hydroxylgroupsinamixtureofPBSandTHF(v/v =1:1)
+withapH7.4.Inset:photographsofthinlayerchromatography(TLC)plate.“S”indicatesthesubstrateMBTP-PA,“P”marksthereactionsolutionpoin t,
+and “M” denotes the mixing pointsof MBTP-PA and P. C) Reactions of MBTP-PA with N-(tert-butoxycarbonyl)-L-cysteine methyl ester (Boc-Cys-OMe),
+cysteine (Cys), and glutathione (GSH) in a mixture of PBS and THF (v/v= 1:1) with a pH 7.4. D) Schematic diagram of MBTP-PA reacting with BSA
+(left)andwesternblotimagesforMBTP-BSA(right).
+To identify the type of ROS generated by MBTP-PA, dihy-
+drorhodamine 123 (DHR123) and hydroxyphenyl ﬂuorescein
+(HPF) were applied as indicators for superoxide radical (O2
+−•)
+and hydroxyl radical (HO·), respectively. This approach allowed
+ustocharacterizethephotosensitizers’capacitytoproduceType
+I ROS. As shown in Figures3Band S10(Supporting Informa-
+tion),thePLintensityoftheseindicatorsvariedwithlightirradia-
+tiontime.TheproductionrateofO 2
+−• followedtheorder:MBTP-
+PA+BSA>MBTP-PA>MBTP-BSA>MBTP-A>Ce6,whilethe
+production rate of HO· was ranked as follows: MBTP-PA+BSA
+>Ce6>MBTP-PA ≈ MBTP-BSA>MBTP-A(Figure 3C;Figure
+S11,SupportingInformation).TheseresultsindicatethatMBTP-
+PAexhibitsastrongerabilitytoproduceTypeIROSthanMBTP-
+A for both O2
+−• and HO·, with a notable decrease in the pro-
+duction rate of Type I ROS observed after MBTP-PA reacts with
+BSA. In addition, 5-tert-butoxycarbonyl5-methyl-1-pyrroline N-
+oxide (BMPO) was used to capture HO· and O2
+−• generated by
+MBTP-PAandMBTP-Aunderwhitelight(Figure S12,Support-
+ingInformation).Thecharacteristicsignalofelectronparamag-
+neticresonance(EPR)wasdetected,providingadditionalconﬁr-
+mationoftheTypeIROSgeneration.
+On the other hand, 9,10-anthracenediyl-bis(methylene) di-
+malonic acid (ABDA) was utilized as a1O2 indicator to de-
+termine whether Type II ROS was generated. As shown in
+Figures 4D and S13(Supporting Information), the decompo-
+sition rate of ABDA across all groups, except for Ce6, aligned
+closely with that of the control group, and no signiﬁcant EPR
+signal was detected, when the1O2 was captured using 2,2,6,6-
+tetramethylpiperidine(TEMP)(Figure S14,SupportingInforma-
+tion), indicating that MBTB-PA did not produce1O2. Collec-
+tively, these results aﬃrm that MBTP-PA functions as a Type I
+photosensitizer.
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(5of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Figure 3.A–C) Change of PL intensities of (A) 10μm DCFH, (B) 10μm DHR123, and (C) 5μm HPF in the presence of MBTP-PA, MBTP-BSA, MBTP-
+PA+BSA,MBTP-A,andCe6inPBScontaining1%DMSO,asafunctionoflightirradiationtime.D)Decompositionratesof50 μmABDAinthepresenceof
+MBTP-PA,MBTP-BSA,MBTP-PA +BSA,MBTP-A,andCe6inPBSwith1%DMSOvaryingwithlightirradiationtime.AandA 0 representtheabsorbances
+ofABDAbeforeandafterirradiation,respectively.
+1.4.FluorescenceImagingandAntitumorActivityAnalysis
+Following our investigation of the ROS production capacity of
+MBTP-PA, we further examined its localization and anti-tumor
+activity within cells. In order to highlight the characteristics of
+the covalent photosensitizer MBTP-PA, we selected MBTP-A as
+acontrol.First,weexaminedthecellularuptakeratesandreten-
+tion time of both MBTP-PA and MBTP-A. As shown in Figures
+S15andS16(SupportingInformation),4T1cellswereincubated
+either with MBTP-PA or MBTP-A, and confocal laser scanning
+microscopy (CLSM) was employed to capture images at various
+time points. By analyzing the mean ﬂuorescence intensity in
+the cells, we found that the intracellular accumulation of both
+compoundsincreasedovertime,withMBTP-Aenteringthecells
+more rapidly than MBTP-PA. After 24 h of incubation, we re-
+placed the medium to observe the change in intracellular ﬂuo-
+rescenceintensity.AsshowninFigure S17(SupportingInforma-
+tion),MBTP-PAexhibitedalongerretentiontimeofintracellular
+ﬂuorescencecomparedtoMBTP-A,indicatingthatcovalentpho-
+tosensitizershavesuperiorretentionincells.
+Tofurtherelucidatethediﬀerencesinintracellulardistribution
+between MBTP-A and MBTP-PA, we conducted co-localization
+experiments using commercial organelle biomarkers. The re-
+sults revealed that Pearson’s correlation coeﬃcient of 0.87 be-
+tween MBTP-A and Lyso-Tracker Green, indicating that MBTP-
+A predominantly localized in lysosomes (Figure4A). In con-
+trast,MBTP-PAshowedahighdegreeofoverlapwithER-Tracker
+Green, yielding the Pearson’s correlation coeﬃcient of 0.91,
+compared to lower correlations with Mito-Tracker Green, Lyso-
+TrackerGreen,andBodipy(Figure 4B).
+Subsequently, we evaluated the tumor-killing eﬃcacy of
+MBTP-PA in both normoxic and hypoxic conditions, leveraging
+itsrobustROSgenerationcapacityofandchemicalreactivity.In
+the absence of white light irradiation, over 50% of MBTP-PA-
+stained 4T1 cells were killed at concentrations exceeding 8μm
+(Figure 4C). However, MBTP-PA maintained over 80% of cell
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(6of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Figure 4.A,B) Colocalization images of 4T1 cells co-stained with (A) MBTP-A or (B) MBTP-PA and Lyso-Tracker Green, Mito-Tracker Green, Bodipy or
+ER-Tracker Green. C,D) Cell viabilities of 4T1 cells were assessed under (C) in normoxic (21% O2) or (D) hypoxia (0.1% O2) conditions after exposure
+to varying concentrations of MBTP-PA with or without light irradiation (30 mW cm−2) for 30 min. E) Western blot analysis of 4T1 cells incubated with
+MBTP-A or MBTP-PA, captured under a bright ﬁeld (using Coomassie blue staining) and UV light. F,G) ROS generation analyses using the indicator
+DCFH-DA in 4T1 cells F) incubated with 32μm MBTP-PA or MBTP-A in normoxia or hypoxia for 48 h, or G) incubated with 5μm MBTP-PA or MBTP-A
+inthedarkfor24h,followedbyirradiationwithwhitelight(30mWcm −2)for5min.Thewavelengthofwhitelightis400–1000nm.
+viability in normal L929 cells at concentrations below 8μm
+(Figure S18, Supporting Information). Under white light expo-
+sure, the cytotoxic eﬀect of MBTP-PA on 4T1 cells was further
+signiﬁed.AlthoughMBTP-Aexhibitedanobviousphotodynamic
+antitumoreﬀect,itseﬃcacywasdramaticallydiminishedorren-
+dered ineﬀective in hypoxia conditions. In contrast, MBTP-PA
+retained its killing eﬀect (Figure4D), attributed to its reaction
+withthiolgroups.Toconﬁrmthesebiologicalreactionsoccurring
+incells,welysedtheMBTP-PA-treated4T1cellsandperformed
+Westernblotanalyses.AsdepictedinFigure 4E,distinctﬂuores-
+centproteinbandswereobservedintheMBTP-PAgroup,butnot
+intheMBTP-Agroup,indicatingthatMBTP-PAreactedwithin-
+tracellularproteins.Inaddition,weusedDCFH-DAtoassessthe
+intracellularoxidationlevels.Intheabsenceoflight,greenﬂuo-
+rescencefromDCFwasdetectedinthecellstreatedwithMBTP-
+PA under both normoxia and hypoxia conditions, but MBTP-A
+did not produce such ﬂuorescence (Figure4F). The results sug-
+gestedthatMBTP-PAinducedintracellularoxidativestressbyde-
+pleting reductive substances. For the cells incubated by MBTP-
+PA or MBTP-A illuminated with white light (30 mW cm−2)f o r
+5min,thegreenﬂuorescencesignalsfromDCFwereobservedin
+bothgroups(Figure 4G),indicatingthatMBTP-AandMBTP-PA
+generated ROS in cells under white light. The substantial ROS
+production by MBTP-A and MBTP-PA contributed to the eﬀec-
+tivekillingoftumorcells.
+1.5.ResearchontheMechanismofCellDeath
+The reaction of covalent photosensitizers MBTP-PA with thiol
+compounds induced intracellular oxidative stress. Previous
+studies have shown that redox imbalance is associated with
+ferroptosis.[48,49] Therefore, we investigated the ferroptosis trig-
+gered by MBTP-PA. GSH is a critical reducing agent that main-
+tains the redox balance in cells. Our analysis revealed that the
+intracellular GSH levels of MBTP-PA and MBTP-PA+Lg r o u p s
+were lower compared to the control group (Figure5A). This re-
+ductionwasattributedtotheconsumptionofGSHandthesub-
+sequent generation of substantial amounts of ROS under white
+light.Moreover,wecharacterizedthelevelsofGPx4proteinand
+lipidperoxides,whicharethekeyindicatorsofferroptosis.West-
+ernblotanalysisrevealedadecreaseinGPx4expressioninboth
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(7of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Figure5. A)RelativeGSHcontentincellstreatedwithMBTP-PAandMBTP-PA +L.B)WesternblotassayofGPx4expression,C)Lipidperoxidationassay
+measuringMDAlevelsin4T1cellssubjectedtovarioustreatments.D)Anti-tumoractivityofMBTP-PAinthepresenceofferrostatin-1.E)Morphologi cal
+changesincellsacrossdiﬀerenttreatmentgroups.F–H)SecretionlevelsofIL-18(F),IL-1 𝛽(G),andLDHrelease(H)in4T1cellstreatedwithMBTP-PA
+andMBTP-PA+L.I)WesternblotanalysisofGSDMDandcaspase-1cleavage.J,K)ImmunoﬂuorescentstainingshowingJ)CRTand(K)HMGB-1in4T1
+cellsaftertreatmentwithMBTP-PAorMBTAP-PA +L.Datawerepresentedasmeans ±SD.n=3,*p<0.05,**p<0.01,*** p<0.001.
+MBTP-PAandMBTP-PA +Lgroups(Figure 5B).Lipidperoxida-
+tion assays indicated that the level of malondialdehyde (MDA),
+a byproduct of oxidation, in the MBTP-PA group was compa-
+rable to that of the control group. However, after the cells un-
+derwent PDT, the MBTP-PA+L group exhibited signiﬁcantly el-
+evated MDA levels compared to the other groups (Figure5C),
+suggestingthatMBTP-PAinducestumorcelldeathviaferropto-
+sis under white light irradiation. Meanwhile, the anti-tumor ac-
+tivityofMBTP-PAwasinhibitedinthepresenceofferrostatin-1
+(Figure5D),yetitstillshowedanotableanti-tumoreﬀect.Wehy-
+pothesized that the antitumor activity of MBTP-PA is not solely
+dependentontheferroptosis.Furthermore,weobservedthatthe
+cellsintheMBTP-PAgroupatahighconcentrationof32 μm,as
+wellasthoseintheMBTP-PA +Lgroup,exhibitedfoamingbehav-
+ior(Figure 5E;Figure S19,SupportingInformation),suggesting
+thatthesecellsmaybeundergoingpyroptosis. [50,51]
+To validate our hypothesis, we assessed the factors associated
+withpyroptosis.Theresultsrevealedthatinﬂammatorycytokines
+(IL-1𝛽andIL-18)andlactatedehydrogenase(LDH)werereleased
+in the treatment group (Figure5F–H). In addition, pyroptosis-
+related proteins were analyzed. Notably, the levels of GSDMD
+andpro-caspase-1weresigniﬁcantlyreducedintheMBTP-PA +L
+group,whilethelevelsofGSDMD-Nandcleaved-caspase-1were
+increased(Figure 5I).TheseresultsindicatethatMBTP-PAgen-
+erates ROS upon light irradiation, which activates caspase-1
+withinthecells.ThisactivationleadstothecleavageofGSDMD
+intoitsactiveGSDMD-Nfragments,whichsubsequentlytranslo-
+cate to the cell membrane, forming pores to induce pyroptosis.
+Next, we veriﬁed pyroptosis-mediated immunogenic cell death
+(ICD)bydetectingcalreticulin(CRT)andHGMB-1biomarkers.
+As shown in Figure5J,K, the exposure of CRT in MBTP-PA-
+stained 4T1 cells signiﬁcantly increased under light irradiation.
+Additionally,HMGB1wasfoundtomigratefromthenucleusto
+the cytoplasm and ATP was signiﬁcantly released in the treat-
+mentgroup(Figure S20,SupportingInformation).Theseresults
+indicate that MBTP-PA eﬀectively induces the ICD, activating
+the adaptive immune responses through pyroptosis upon light
+irradiation.
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(8of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Figure6. A)PreparationofMBTP-PA-NPs.B)SizedistributionanalysisandC)zetapotentialmeasurementofMBTP-PA-NPs.D)Stabilityassessmentof
+MBTP-PA-NPsover30daysinH 2O.E)IntravenousinjectionofMBTP-PA-NPsinmice.F)TemporalchangesinﬂuorescenceintensityofMBTP-PA-NPs
+invariousorgansandtumors.G)HemolysisrateevaluationofMBTP-PA-NPs.
+1.6.PreparationandCharacterizationofMBTP-PANanoparticles
+To facilitate the in vivo application of MBTP-PA, DSPE-PEG2000
+and DSPE-PEG2000-cRGD were utilized to encapsulate MBTP-
+PA, because they have the advantages of increased drug circu-
+lation time, enhanced stability, reduced protein adsorption, and
+improvedencapsulationeﬃciency.[52] ThismethodformsMBTP-
+PA nanoparticles (MBTP-PA-NPs) with an average particle size
+of 110.9 nm and a zeta potential of−33.4 eV (Figure 6A–C).
+and the encapsulation eﬃciency is 46.7%. The long-term parti-
+clesizestabilitytestconﬁrmedthatMBTP-PA-NPsremainstable
+for up to 30 days (Figure6D; FigureS21, Supporting Informa-
+tion). Photophysical characterization demonstrated that MBTP-
+PA-NPs exhibit an absorption maximum of 472 nm, a maxi-
+mum emission peak of 650 nm, and an absolute ﬂuorescence
+quantumyieldof6.4%(Figure S22,SupportingInformation).In
+addition, cellular uptake and ﬂuorescence colocalization imag-
+ing showed that MBTP-PA-NPs entered cells more rapidly than
+MBTP-PAandwerepredominantlylocalizedintheendoplasmic
+reticulum (FiguresS23and S24, Supporting Information). Cell
+viabilitytestsshowedthatthenanoparticlesexhibitedhighercy-
+totoxicitytowardcancercellsthannormalcells(Figure S25,Sup-
+portingInformation).
+1.7.IntracellularDistributionandSafetyEvaluationof
+MBTP-PA-NPsInVivo
+Togainadeepunderstandingofthedistributionandmetabolism
+of nanoparticles in vivo, MBTP-PA-NPs (11.67 mg kg−1)w e r e
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(9of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Figure7. A)Schematicdiagramofthetumortreatmentprocessinvivo.B)Changesinbodyweightofmiceacrossdiﬀerenttreatmentgroupsovertime.
+C) Volume changes of the primary tumor and D) distant tumor in tumor-bearing mice subjected to various treatments (n = 6). E and F) Photographs
+of(E)theprimarytumorand(F)thedistanttumoronthe14thdayfollowingdiﬀerenttreatments.G)Weightsofprimaryanddistanttumoronthe14th
+day.Datawaspresentedmeans ±SD(n =6).*p<0.05,**p<0.01,*** p<0.001.Thewavelengthofwhitelightis400–1000nm.
+injected into tumor-bearing mice via the tail vein (Figure6E),
+and their distribution was monitored using ﬂuorescence mi-
+croscopy. At 24 h post-injection, the ﬂuorescence intensity was
+notably higher in the liver, lung, and tumor, indicating that the
+MBTP-PA-NPs primarily accumulated in these organs and tis-
+sues (Figure6F). By 48 h, the ﬂuorescence intensity in the liver
+and lung decreased and increased in the tumor. This suggests
+thattheMBTP-PA-NPsundergometabolicprocessingpreferen-
+tial accumulation at the tumor site. After 72 h, the ﬂuorescence
+intensity in the liver, lung, and tumor gradually diminished.
+Furthermore, following the injection of MBTP-PA-NPs (11.67
+mgkg−1)intonormalmice,weassessedvariousbloodroutinein-
+dicatorsandhemolysisrate.AsshowninFigure 6GandFigures
+S26andS27(SupportingInformation),nosigniﬁcanthemolysis
+wasobservedatconcentrationsbelow128 μgmL−1(Theredinthe
+supernatantisthecoloroftheMBTP-PA-NPsitselfinFigure 6G),
+andtherewerenonotablediﬀerencesinﬁfteenbloodindicators
+comparedtothecontrolgroup.TheseresultsindicatethatMBTP-
+PA-NPsexhibitminimaltoxicityattheseconcentrations.
+1.8.SynergisticTreatmentofPrimaryTumorandDistantTumor
+AfterconﬁrmingthesafetyofMBTP-PA-NPs,weappliedMBTP-
+PA-NPsinphotodynamicimmunotherapytotargetandsuppress
+distant tumors in a bilateral 4T1 tumor model. As shown in
+Figure 7A, MBTP-PA-NPs (3.5 mg kg−1) were injected into the
+primarytumor(leftside),followedbyirradiationwithwhitelight
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(10of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Figure 8.A) Histological H&E staining of tumor and muscle tissues after completing the in vivo antitumor assay. Scale bar: 100μm. B) Fluorescent
+stainingofTUNEL,Ki67,CRT,andHMGB-1intumortissuessubjectedtodiﬀerenttreatments.C)ProportionsofCD80 + andCD86+ expressioninspleen
+samples.D)ProportionsofinﬁltratingTlymphocytes(CD8 + andCD4+)indistanttumors,measuredacrossdiﬀerenttreatmentgroups.
+(150mWcm−2)for30minaftera24hincubationperiod.Wethen
+monitoredandcollectedgrowthdataforbothprimaryanddistant
+tumors(rightside)inmice.Theresultsshowednosigniﬁcantdif-
+ference in the weight of mice among all groups (Figure7B). By
+analyzingthetumorvolumeandweight(Figure 7C–G),wefound
+thatMBTP-PA-NPssigniﬁcantlyinhibitedthegrowthofthepri-
+mary tumor. Notably, the MBTP-PA-NPs+L group showed even
+greateranti-tumoractivitycomparedtoMBTP-PA-NPsalone,at-
+tributed to the synergistic eﬀects of intracellular reactions and
+PDT. Regarding the distant tumors, their growth was signiﬁ-
+cantly suppressed in the MBTP-PA-NPs+L group, likely due to
+theimmuneresponseelicitedbythistherapeuticapproach.
+Inaddition,hematoxylinandeosin(H&E)tumorstainingwas
+conducted to assess cell morphology. Notable voids and kary-
+opyknosis were observed in the primary tumors treated with
+MBTP-PA-NPs and the distant tumors treated with the MBTP-
+PA-NPs+Lgroup.IntheprimarytumoroftheMBTP-PA-NPs +L
+group,H&Estainingoftheadjacentmuscletissuesrevealednor-
+mal histological characteristics (Figure 8A). Additionally, H&E
+staining of key organs in the treatment groups showed no sig-
+niﬁcantdamage,demonstratinggoodbiosafetyofMBTP-PA-NPs
+(FigureS28,SupportingInformation).Furthermore,theTUNEL
+staining and Ki67 analysis of the distant tumor revealed that
+manytumorcelldeathsandsigniﬁcantlyinhibitedcellprolifera-
+tioninthetreatmentgroup,corroboratingtheﬁndingsfromthe
+H&Estaining(Figure 8B).
+To investigate the immunological mechanisms underlying
+pyroptosis-mediated photoimmunotherapy induced by MBTP-
+PA-NPs, we conducted immunological analyses on the spleen
+and distant tumors four days post-treatment. Staining of CRT
+and HMGB1 in distant tumors showed the expression of both
+markers in the MBTP-PA-NPs and MBTP-PA-NPs+Lg r o u p s
+(Figure8B). Subsequently, we analyzed the presence of mature
+dendritic cells (DCs) and activated immune cells. In the spleen,
+the proportion of mature DCs (CD86+,C D 8 0+)w a sf o u n dt o
+be79.01%and87.98%inMBTP-PA-NPsandMBTP-PA-NPs +L
+groups, respectively, much higher than those in the control
+group,indicatingthatboththereactiveactivityandthephotody-
+namic eﬀects of MBTP-PA contribute to the maturation of DCs
+(Figure8C).
+To further investigate whether mature DCs can activate dif-
+ferent types of T cells (CD4+ and CD8+), we analyzed the lev-
+els of these T cell subsets in distant tumors using ﬂow cytome-
+try. The results showed a signiﬁcant increase in the proportion
+of eﬀector CD4+ T cells in the MBTP-PA-NPs+L group, while
+the proportion of CD8+ did not obviously change (FigureS29,
+Supporting Information). These ﬁndings indicate that CD4+ T
+cells play a pivotal role in photodynamic immunotherapy. This
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(11of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+inhibitory eﬀect on distal tumors could be attributed to the fact
+thatCD4+ TcellsassistCD8 + Tcellstoinhibittumorgrowth,and
+CD4+ Tcellshaveaninhibitingeﬀectontumors. [53,54] Thissug-
+gests that MBTP-PA-NPs-mediated PDT can eﬀectively activate
+immuneresponses,highlightingitspotentialinimmunotherapy
+(Figure8D).
+2.Conclusion
+This study successfully integrates a covalent warhead, alky-
+namide into an AIE type I photosensitizer, culminating in the
+development of the novel targeted endoplasmic reticulum cova-
+lent photosensitizer, MBTP-PA. It facilitates ferroptosis and py-
+roptosis, enabling a synergistic approach to photodynamic im-
+munotherapy. It also demonstrates its covalent capability by ef-
+ﬁciently reacting with thiol compounds such as Cys, GSH, and
+BSA. Additionally, it outperforms the non-covalent photosensi-
+tizer MBTP-A in terms of cellular retention and the induction
+of intracellular oxidative stress, which help alleviate tumor hy-
+poxia and enhance the eﬃcacy of photodynamic therapy. More
+importantly,theMBTP-PA-NPsnotonlypromoteferroptosisand
+pyroptosisthroughthiol-ynereactiontherapyandphotodynamic
+therapy,butalsoinitiatetheICD.Thiswasvalidatedthroughanti-
+tumorexperimentsinabilateral4T1tumormodel,demonstrat-
+ing the eﬀective elimination of primary tumors and signiﬁcant
+suppression of distant tumors. And MBTP-PA-NPs have no ap-
+parent damage to normal tissues, showing excellent biosafety.
+Overall, this research not only introduces a new class of co-
+valent photosensitizers, but also provides a framework for de-
+veloping advanced therapeutic materials to improve anti-tumor
+strategies.
+3.ExperimentalSection
+SynthesisofMBTP-PA : MBTP-A(0.4mmol,212mg),EDC(0.8mmol,
+124 mg), and DCM (12.0 mL) were placed into a 50 mL round bottom
+ﬂask. Propiolic acid (0.6 mmol, 42 mg) was then added slowly to the
+mixture in the ice water bath. Next, the solution of DMAP (0.02 mmol,
+2.4 mg) in DCM (8.0 mL) was added dropwise into the above mixture.
+Then, the temperature was spontaneously warmed to room-temperature
+and the reaction was stirred for 3 h (the progress of the reaction was
+monitoredbyTLC).Aftercompletionofthereaction,thereactionwasex-
+tracted three times with water and DCM. The organic phase was dried
+with anhydrous sodium sulfate. The DCM was removed under vacuum
+and the resultant residue was puriﬁed by ﬂash chromatography on sil-
+ica gel to get the red solid MBTP-PA in 55% yield (eluent: DCM).1H
+NMR (400 MHz, CDCl3) 𝛿7.97 (d,J = 8.0 Hz, 2H), 7.81 (d,J = 8.0 Hz,
+2H), 7.76–7.68 (m, 5H), 7.14 (d,J = 12.0 Hz, 4H), 7.06 (d,J = 8.0 Hz,
+2H), 6.87 (d,J = 8.0 Hz, 2H), 3.81 (s, 6H), 2.97 (s, 1H).13CN M R
+(100 MHz, CDCl3) 𝛿156.1, 154.1, 153.7, 149.6, 149.0, 140.5, 134.4,
+133.2, 129.9, 129.8, 127.1, 126.8, 120.0, 119.6, 114.8, 74.4, 55.5. HRMS
+(MALDI-TOF)m/z[M +Na]+ calcdforC 35H26N4O3SNa+ 605.1618,found
+605.1625.
+Intracellular Reaction: 4T1 cells were seeded in a 6-well plate at 6×
+105 cells per well and incubated for 12 h. The medium was then replaced
+with fresh DMEM (10% FBS) containing MBTP-A or MBTP-PA (100μm).
+After 24 h of incubation with the compounds, the medium was removed,
+andthecellswerewashedthreetimeswithPBS.Thecellswerecollected,
+lysedonicefor15minusinglysisbuﬀer,andcentrifugedat12000rpmfor
+1 5m i na t4°C. The supernatant was collected, boiled, and used for pro-
+tein electrophoresis. Protein concentration was determined using a BCA
+reagent.Proteinswereseparatedby10%SDS-PAGE,andthebandswere
+visualizedusingaUVmodeofgelimager.Theproteinbandswerestained
+with Coomassie Brilliant Blue, washed with water ﬁve times, and imaged
+withagelimager.
+Preparation of Nanoparticles: MBTP-PA (1.0 mg), DSPE-PEG2000-
+cRGD (1.5 mg), and DSPE-PEG2000 (1.5 mg) were dissolved in 1 mL of
+THF under ultrasonic dispersion. Then the homogeneous mixture was
+quickly added to ultrapure water (10 mL). After sonication using a probe
+sonicator for 3 min, the mixture was collected and concentrated by cen-
+trifugal ﬁlters for further use. The obtained nanoparticles were stored at
+4 °C.
+Establishment of 4T1 Tumor Models: The Animal Ethics Committee
+of the South China Agricultural University granted approval for all ani-
+malexperimentprotocols(approvalnumber:2023d098).Abilateraltumor
+mousemodelwasinitiatedbysubcutaneouslyinjecting4T1cellsintothe
+left and right hips of mice at−8a n d−2 days prior to treatment, respec-
+tively,toinduceprimaryanddistanttumors.
+In Vivo Biodistribution Evaluation: The mice bearing 4T1 tumors were
+administered with MBTP-PA-NPs (11.67 mg kg−1) through tail-vein in-
+jection (n = 3). After injection for several times (24, 48, 72, and 96 h),
+these mice were euthanized to extract heart, liver, spleen, lung, kidney,
+and tumor. Fluorescence imaging of these tissues were conducted using
+animagingsystem.
+InVivoTherapeuticEﬃcacyEvaluation : The4T1tumor-bearingBALB/c
+mice were randomly divided into four groups (n = 6). The mice in each
+group were systemically administrated with PBS or MBTP-PA-NPs (3.5
+mg kg−1) through intratumor injection. After administrated for 24 h,
+the primary tumors of mice were exposed under white light irradiation
+(150mWcm −2)for30min.Afterdiﬀerenttreatments,thetherapeuticeﬃ-
+cacieswereevaluatedbymeasuringthesizesofbothprimaryanddistant
+tumors every 2 days for 14 days. Tumor volumes (V) were calculated ac-
+cording to the formula: V= (tumor length)× (tumor width)2/2. After 14
+daysoftreatments,themiceineachgroupwereeuthanized,andboththe
+primary and distant tumors were extracted to weigh. The wavelength of
+whitelightwas400–1000nm.
+SupportingInformation
+SupportingInformationisavailablefromtheWileyOnlineLibraryorfrom
+theauthor.
+Acknowledgements
+B.W. and G.Z. contributed equally to this work. This work was ﬁ-
+nancially supported by the Innovation and Technology Commission of
+Hong Kong (ITC-CNERC14SC01 and ITCPD/17-9), the Research Grants
+Council of Hong Kong (16303221 and C6014-20 W), the Fund of
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(12of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+Guangdong Provincial Key Laboratory of Luminescence from Molec-
+ular Aggregates (2023B1212060003), the Shenzhen Key Laboratory of
+Functional Aggregate Materials (ZDSYS20211021111400001), and the
+Science Technology Innovation Commission of Shenzhen Municipality
+(KQTD20210811090142053andJCYJ2022081810-3007014).
+ConﬂictofInterest
+Theauthorsdeclarenoconﬂictofinterest.
+DataAvailabilityStatement
+The data that support the ﬁndings of this study are available from the
+correspondingauthoruponreasonablerequest.
+Keywords
+aggregation-induced emission, covalent photosensitizer, ferroptosis and
+pyroptosis,intracellularclickreactions,photodynamicimmunotherapy
+Received:October14,2024
+Revised:February12,2025
+Publishedonline:February23,2025
+[1] I.Mellman,G.Coukos,G.Dranoﬀ, Nature2011,480,480.
+[2] S.L.Topalian,J.M.Taube,D.M.Pardoll, Science2020,367,182.
+[3] Y.Tang,H.K.Bisoyi,X.M.Chen,Z.Liu,X.Chen,S.Zhang,Q.Li, Adv.
+Mater.2023,35,2300232.
+[4] L.Zhang,S.C.Wan,J.Zhang,M.J.Zhang,Q.C.Yang,B.Zhang,W.
+Y .W a n g ,J .S u n ,R .T .K .K w o k ,J .W .Y .L a m ,H .D e n g ,Z .J .S u n ,B .Z .
+Tang,J.Am. Chem. Soc.2023,145,17689.
+[5] M. Wen, J. Ouyang, C. Wei, H. Li, W. Chen, Y. N. Liu,Angew. Chem.,
+Int. Ed.2019,58,17425.
+[6] Q. Chen, J. Chen, Z. Yang, J. Xu, L. Xu, C. Liang, X. Han, Z. Liu,Adv.
+Mater.2019,31,1802228.
+[7] J.Qi, F. Jin,Y. You, Y. Du, D. Liu, X.Xu, J.Wang, L. Zhu,M. Chen,G.
+Shu,L.Wu,J.Ji,Y.Du, Nat. Commun.2021,12,4755.
+[8] O. Kepp, L. Galluzzi, I. Martins, F. Schlemmer, S. Adjemian, M.
+Michaud,A.Q.Sukkurwala,L.Menger,L.Zitvogel,G.Kroemer, Can-
+cer Metast. Rev.2011,30,61.
+[9] C. Chen, X. Ni, S. Jia, Y. Liang, X. Wu, D. Kong, D. Ding,Adv. Mater.
+2019,31,1904914.
+[10] L. Galluzzi, A. Buqué, O. Kepp, L. Zitvogel, G. Kroemer,Nat. Rev.
+Immunol.2017,17,97.
+[11] M. Obeid, A. Tesniere, F. Ghiringhelli, G. M. Fimia, L. Apetoh, J.
+L. Perfettini, M. Castedo, G. Mignot, T. Panaretakis, N. Casares, D.
+Métivier,N.Larochette,P.vanEndert,F.Ciccosanti,M.Piacentini,L.
+Zitvogel,G.Kroemer, Nat. Med.2007,13,54.
+[12] A.P.Castano,P.Mroz,M.R.Hamblin, Nat.Rev.Cancer 2006,6,535.
+[13] Z. Deng, N. Wang, Y. Liu, Z. Xu, Z. Wang, T. C. Lau, G. Zhu,J. Am.
+Chem. Soc.2020,142,7803.
+[14] X. Su, W. J. Wang, Q. Cao, H. Zhang, B. Liu, Y. Ling, X. Zhou, Z. W.
+Mao,Angew. Chem., Int. Ed.2022,61,202115800.
+[15] X. Zhao, J. Liu, J. Fan, H. Chao, X. Peng,C h e m .S o c .R e v .2021, 50,
+4185.
+[16] S.Liu,B.Wang,Y.Yu,Y.Liu,Z.Zhuang,Z.Zhao,G.Feng,A.Qin,B.
+Z.Tang, ACS Nano2022,16,9130.
+[17] B. Wang, S. Liu, X. Liu, R. Hu, A. Qin, B. Z. Tang,Adv. Healthcare
+Mater.2021,10,2101067.
+[18] Z.Zhuang,J.Li,P.Shen,Z.Zhao,B.Z.Tang, Aggregate2024,5,e540.
+[19] B.Wang,L.Wang,X.Liu,J.Zhu,R.Hu,A.Qin,B.Z.Tang, ACSAppl.
+Bio Mater.2022,5,4955.
+[20] S.Chen,B.Li,Y.Yue,Z.Li,L.Qiao,G.Qi,Y.Ping,B.Liu, Adv.Mater.
+2024,36,2404296.
+[21] K.X.T eng,D.Zhang,B.K.Liu,Z.F .Liu,L.Y .Niu,Q.Z.Y ang, Angew.
+Chem., Int. Ed.2024,63,202318783.
+[22] J. Qi, S. Jia, X. Kang, X. Wu, Y. Hong, K. Shan, X. Kong, Z. Wang, D.
+Ding,Adv. Mater.2022,34,2203309.
+[23] R.Zheng,C.Huang,H.Zhou,L.Zhao,Q.Li,G.Chen,L.Zhao,S.Li,
+Aggregate2024,5,e610.
+[24] X. Kang, Y. Zhang, J. Song, L. Wang, W. Li, J. Qi, B. Z. Tang,Nat.
+Commun.2023,14,5216.
+[25] J. Li, H. Gao, R. Liu, C. Chen, S. Zeng, Q. Liu, D. Ding,Sci. China
+Chem.2020,63,1428.
+[26] K. Lu, C. He, N. Guo, C. Chan, K. Ni, R. R. Weichselbaum, W. Lin,J.
+Am. Chem. Soc.2016,138,12502.
+[27] J. Xu, L. Xu, C. Wang, R. Yang, Q. Zhuang, X. Han, Z. Dong, W. Zhu,
+R.Peng,Z.Liu, ACS Nano2017,11,4463.
+[28] R. Xu, Q. Shen, P. Zhang, Z. Wang, Y. Xu, L. Meng, D. Dang,Adv.
+Mater.2024,36,2402434.
+[ 2 9 ] G .Y a n g ,L .X u ,Y .C h a o ,J .X u ,X .S u n ,Y .W u ,R .P e n g ,Z .L i u ,Nat.
+Commun.2017,8,902.
+[30] Z.Chen,L.Liu,R.Liang,Z.Luo,H.He,Z.W u,H.Tian,M.Zheng,Y .
+Ma,L.Cai, ACS Nano2018,12,8633.
+[ 3 1 ] W .C h e n ,Z .W a n g ,M .T i a n ,G .H o n g ,Y .W u ,M .S u i ,M .C h e n ,J .A n ,
+F.Song,X.Peng, J. Am. Chem. Soc.2023,145,8130.
+[32] S. Liu, Y. Pei, Y. Sun, Z. Wang, H. Chen, D. Zhu, M. R. Bryce, B. Z.
+Tang,Y.Chang, Aggregate2024,5,e547.
+[33] T. Zhang, X. Yang, X. Ou, M. M. S. Lee, J. Zhang, C. Xu, X. Yu,
+P. Gong, J. W. Y. Lam, P. Zhang, B. Z. Tang,Adv. Mater.2023, 35,
+2303186.
+[34] C. Zhang, W. J. Qin, X. F. Bai, X. Z. Zhang,Nano Today2020, 35,
+100960.
+[ 3 5 ] Y .T .F a n ,T .J .Z h o u ,P .F .C u i ,Y .J .H e ,X .C h a n g ,L .X i n g ,H .L .J i a n g ,
+Adv. Funct. Mater.2019,29,1806708.
+[36] L.Shi,P.Zhang,X.Liu,Y.Li,W.Wu,X.Gao,B.Liu, Adv.Mater. 2022,
+34,2206659.
+[37] L.Shi,W.Wu,Y.Duan,L.Xu,Y.Xu,L.Hou,X.Meng,X.Zhu,B.Liu,
+Angew. Chem., Int. Ed.2020,59,19168.
+[38] X.F u,A.Qin,B.Z.T ang, Aggregate2023,4,e350.
+[39] J.C.Worch,A.P.Dove, Acc. Chem. Res.2022,55,2355.
+[40] B. Wang, C. Li, D. He, K. Ding, Q. Tian, G. Feng, A. Qin, B. Z. Tang,
+Small2024,20,2307309.
+[41] Z. Liu, S. Liu, B. Liu, Q. Meng, M. Yuan, X. Ma, J. Wang, P. a. Ma, J.
+Lin,Adv. Funct. Mater.2024,34,2407153.
+[42] F.Hu,S.Xu,B.Liu, Adv. Mater.2018,30,1801350.
+[43] M.M.S.Lee,D.M.Lin,J.H.C.Chau,E.Y.Yu,D.Ding,R.T.K.Kwok,
+D.Wang,B.Z.Tang, ACS Nano2023,17,11039.
+[44] J. Jia, Z. Ma, J. Zhuang, L. Huo, C. Zhou, N. Li, N. Zhao,Aggregate
+2024,5,e516.
+[45] Y.Wang,J.Liao,Y.Lyu,Q.Guo,Z.Zhu,X.Wu,J.Yu,Q.Wang,W.H.
+Zhu,Adv. Funct. Mater.2023,33,2301692.
+[46] S.Wang,C.Chen,J.Wu,J.Zhang,J.W.Y.Lam,H.Wang,L.Chen,B.
+Z.Tang, Sci. China Chem.2022,65,870.
+[47] Z. Liu, H. Zou, Z. Zhao, P. Zhang, G. G. Shan, R. T. K.
+K w o k ,J .W .Y .L a m ,L .Z h e n g ,B .Z .T a n g ,ACS Nano 2019, 13,
+11283.
+[48] C. Liang, X. Zhang, M. Yang, X. Dong, Adv. Mater. 2019, 31,
+1904197.
+[49] Y.Wang,Z.Chen,J.Li,Y.Wen,J.Li,Y.Lv,Z.Pei,Y.Pei, Adv.Sci. 2024,
+11,2306178.
+[50] C. Lee, M. Park, W. C. B. Wijesinghe, S. Na, C. G. Lee, E. Hwang,
+G. Yoon, J. K. Lee, D. H. Roh, Y. H. Kwon, J. Yang, S. A. Hughes,
+J. E. Vince, J. K. Seo, D. Min, T. H. Kwon,Nat. Commun.2024, 15,
+4025.
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(13of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+www.advancedsciencenews.com www.advmat.de
+[51] Y .Chen,W .Li,S.Kwon,Y .W ang,Z.Li,Q.Hu,J.Am.Chem.Soc. 2023,
+145,9815.
+[52] C. Jing, I. O. Chukwunweike, H. Zhong-Bo, X. Jing,Curr. Pharm. De-
+sign2015,21,1598.
+[53] B.Kruse,A.C.Buzzai,N.Shridhar,A.D.Braun,S.Gellert,K.Knauth,
+J.Pozniak,J.Peters,P.Dittmann,M.Mengoni,T.C.vanderSluis,S.
+Höhn, A. Antoranz, A. Krone, Y. Fu, D. Yu, M. Essand, R. Geﬀers,
+D. Mougiakakos, S. Kahlfuß, H. Kashkar, E. Gaﬀal, F. M. Bosisio, O.
+Bechter, F. Rambow, J. C. Marine, W. Kastenmüller, A. J. Müller, T.
+Tüting,Nature2023,618,1033.
+[54] A. ´Sledzi´nska, M. Vila de Mucha, K. Bergerhoﬀ, A. Hotblack,
+D. F. Demane, E. Ghorani, A. U. Akarca, M. A. V. Marzolini,
+I. Solomon, F. A. Vargas, M. Pule, M. Ono, B. Seddon, G.
+Kassiotis, C. E. Ariyan, T. Korn, T. Maraﬁoti, G. M. Lord, H. Stauss,
+R. G. Jenner, K. S. Peggs, S. A. Quezada, Immunity 2020, 52,
+151.
+Adv. Mater.2025,37,2415673 ©2025Wiley-VCHGmbH2415673(14of14)
+ 15214095, 2025, 13, Downloaded from https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.202415673 by <Shibboleth>-member@library.princeton.edu, Wiley Online Library on [31/01/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License

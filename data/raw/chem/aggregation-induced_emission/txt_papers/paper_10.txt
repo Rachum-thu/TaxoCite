@@ -1,0 +1,818 @@
+2101500 (1 of 11) © 2021 Wiley-VCH GmbH
+www.advmat.de
+ReseaRch aRticle
+Hydrophilicity-Hydrophobicity Transformation, 
+Thermoresponsive Morphomechanics, and Crack 
+Multifurcation Revealed by AIEgens in Mechanically Strong 
+Hydrogels
+Yubing Hu, Lucile Barbier, Zhao Li, Xiaofan Ji, Heiva Le Blay, Dominique Hourdet, 
+Nicolas Sanson, Jacky W. Y. Lam,* Alba Marcellan,* and Ben Zhong Tang*
+Dr. Y . B. Hu, Dr. Z. Li, Prof. X. F. Ji, Dr. J. W. Y . Lam, Prof. B. Z. Tang
+Department of Chemistry
+the Hong Kong Branch of Chinese National Engineering Research Center 
+for Tissue Restoration and Reconstruction
+Institute for Advanced Study
+The Hong Kong University of Science and Technology
+Guangdong-Hong Kong-Macro Joint Laboratory of Optoelectronic  
+and Magnetic Functional Materials
+Clear Water Bay, Kowloon, Hong Kong 999077, China
+E-mail: chjacky@ust.hk; tangbenz@ust.hk
+Dr. Y . B. Hu, Dr. J. W. Y . Lam, Prof. B. Z. Tang
+HKUST-Shenzhen Research Institute
+No. 9 Yuexing 1st RD, South Area, Hi-tech Park  
+Nanshan, Shenzhen 518057, China
+DOI: 10.1002/adma.202101500
+and imply hydrogel integration into bio-
+medical devices, [1]  soft actuators, [2]  or 
+bioelectronics[3]  that require demanding 
+mechanical behavior. Mechanical weak-
+nesses of synthetic hydrogels, in terms of 
+fracture stiffness, toughness, adhesion, or  
+excessive swelling, are often addressed as 
+limitation factor to practical development. 
+In contrast, living matter has optimized 
+the tissues with diverse hierarchical com-
+partmentalized structure and adjustable 
+mechanical properties to realize their 
+functionalities in a changing environ-
+ment.
+[4]  Many forced-related biological 
+tissues, such as spider silk, muscle, and 
+tendon, are assembled from a variety of 
+ordered protein fibers in aqueous media 
+and exhibit intricate adaptive swelling 
+and mechanical behaviors under stimuli. 
+Moreover, these fibrillar soft tissues 
+develop extremely high fracture tough-
+ness (given their high water content) and 
+demonstrate an intriguing damage behavior by tearing along 
+the interfaces between fibers under excessive tension to pre-
+vent injury to the entire tissue (Figure 1a).
+[5–8]  From a structural 
+perspective, dynamic noncovalent interactions and conforma-
+tional variations of proteins play a crucial role in their strong 
+Biomimetic exploration of stimuli-responsive and crack-resistant hydrogels is of 
+great academic and practical significance, although the rational design of tough 
+hydrogels is limited by insufficient mechanism study due to the lack of imaging 
+techniques to “see” hydrogels at mesoscale level. A series of composite hydro-
+gels with compartmentalized thermal response is designed by incorporating 
+aggregation- and polarity-sensitive fluorescent probes in a poly(N-isopropy-
+lacrylamide) (PNIPAM) network grafted with poly(N,N-dimethylacrylamide) 
+side-chains. The fluorescence technique is explored as a powerful tool to 
+directly visualize their hydrophilicity-hydrophobicity transformation and the 
+composition-dependent microphase separation. Based on the morphological 
+observation and mechanical measurements, the concept of morphomechanics 
+with a comprehensive mechanism clarification is proposed. In this regard, the 
+thermoresponsive toughening is attributed to the formation of multiple non-
+covalent interactions and the conformational changes of PNIPAM chains. The 
+enhanced fracture energy by crack multifurcation is related to the tearing-like 
+disruption of weak interfaces between the separated phases.
+The ORCID identification number(s) for the author(s) of this article 
+can be found under https://doi.org/10.1002/adma.202101500.
+L. Barbier, H. L. Blay, Prof. D. Hourdet, Dr. N. Sanson, Dr. A. Marcellan
+Soft Matter Sciences and Engineering
+ESPCI Paris
+PSL Research University, Sorbonne Universités
+Laboratoire Sciences et Ingénierie de la Matière Molle CNRS
+10 Rue Vauquelin, Paris 75005, France
+E-mail: alba.marcellan@espci.fr
+Prof. B. Z. Tang
+Center for Aggregation-Induced Emission
+SCUT-HKUST Joint Research Institute
+State Key Laboratory of Luminescent Materials and Devices
+South China University of Technology
+Guangzhou 510640, China
+Prof. B. Z. Tang
+AIE institute
+Guangzhou Development Distinct, Huangpu, Guangzhou 510530, China
+1. Introduction
+Wet and soft matter is ubiquitous in nature. In living matter, 
+structure and function are intimately linked to the environment. 
+Many recent technologies are based on hydrogel responsiveness  
+Adv. Mater. 2021, 2101500
+© 2021 Wiley-VCH GmbH2101500 (2 of 11)
+www.advmat.dewww.advancedsciencenews.com
+and tunable mechanical properties. [9,10]  Although a deep under-
+standing of the relationship between their molecular structure, 
+supramolecular interactions, and mechanical behavior remains 
+a big challenge, it is still fascinating for synthetic scientists and 
+engineers to develop bioinspired high-strength and stimuli-
+responsive hydrogels.
+[11]
+To meet the ever-increasing requirements, continuous 
+effort has been devoted to the development of high-strength 
+hydrogels.
+[12,13]  Among them, the design original polymer 
+network topologies, as double-networks, [14]  sliding-ring net-
+works,[15]  tetra-poly(ethylene glycol) networks, [16]  or the intro-
+duction of structural and dynamical heterogeneities, as in 
+nanocomposite gels,
+[17,18]  have shown significant mechanical 
+enhancement than their conventional counterparts. Despite 
+these great achievements, biomimetic approach can offer 
+a broad platform to explore energy dissipation pathways for 
+crack-resistant hydrogels.
+[19,20]  Recently, protein-inspired 
+phase-separated hydrogels have been proved to enhance the 
+toughness of polymer networks.
+[21,22]  A systematic crack 
+bifurcation has been also reported to prevent crack fracture 
+of the whole phase-separated hydrogels, which is promising 
+to mimic the tearing behavior in hydrogels (Figure 1b).
+[23]  To 
+describe such behavior of sacrificing the noncovalent inter -
+actions or weak interfaces to preserve the integrity of the 
+whole, morphomechanics is proposed here to draw on the 
+mechanical breakage of intramolecular bonds in mechano-
+chemistry.
+[24]  While the network topology and fiber-like forma-
+tion of phase-separated domains, appears to be a key-aspect 
+on fracture toughness enhancement,
+[25,26]  the observation of 
+the phase separation morphology and the understanding of 
+the strengthening mechanism are still insufficient. Moreover, 
+the current understanding of toughening scenarios is often 
+deduced from the chemical nature of network structure and 
+the macroscopic properties.
+[27–29]  So far, the coupling effects 
+due to noncovalent interactions and morphological structures 
+on the mechanical property are still under debate due to the 
+lack of mesoscale imaging techniques. It appears essential to 
+develop effective techniques to “see” the mesoscale morpholo-
+gies in various hydrated states and to clarify their roles in frac-
+ture toughening.
+[30,31]
+In this framework, many modern microscopic techniques 
+including scanning electron microscopy, transmission electron 
+microscopy, and atomic force microscopy are inadequate. These 
+cost and time-consuming imaging techniques are generally per-
+formed in a vacuum state and have destructive sample prepara-
+tion processes. On the contrary, fluorescence technique offers a 
+direct approach to visualize the analytes in a simple, sensitive, 
+high-contrast, and onsite manner. However, many traditional 
+fluorophores exhibit weak or no emission in the solid state and 
+aqueous environment due to the aggregation-caused quenching 
+effect.
+[32]  Fortunately, this negative effect can be overcome by 
+luminogens (AIEgens) with aggregation-induced emission 
+(AIE), which are generally non-emissive in dilute solutions 
+but emit intensely in the aggregated state due to the restric-
+tion of intramolecular motions.
+[33]  AIEgens are often embedded 
+with electron-donating (D) and accepting (A) units to trigger 
+polarity-responsive emission change assisted by the twisted 
+intramolecular charge transfer (TICT) effect.
+[34]  Herein, we 
+developed a new polymerizable fluorescent probe with AIE and 
+TICT characters for the direct visualization of microphase sepa-
+ration patterns and hydrophilicity-hydrophobicity transforma-
+tion in thermoresponsive composite hydrogels. Combined with 
+their mechanical behaviors, thermoresponsive toughening, 
+and crack multi-bifurcation, we gain a deep understanding of 
+their structure–property relationships and propose a detailed 
+strengthening mechanism of hydrogels.
+2. Results and Discussions
+2.1. Fluorescent Probe with Response to Aggregation  
+and Polarity Change
+To visualize the morphological change of stimuli-responsive 
+hydrogels, we designed and synthesized a new water-soluble 
+AIEgen named TVPA with the chemical structure shown in 
+Figure 2a. The electron-donating triphenylamine and the elec-
+tron-withdrawing pyridinium unit are connected to the eth-
+ylene core, which endows TVPA with molecular rotors, a D−A 
+structure, and ionic character. The three-step synthetic route is 
+provided in Figure S1, Supporting Information. The reaction 
+intermediates and TVPA were fully characterized by NMR and 
+mass spectroscopies (Figure S2−S9, Supporting Information). 
+The theoretical frontier molecular orbital distribution was cal-
+culated by density functional theory calculations [m062x/6-311G 
+(d, p)]. As shown in Figure 2a, the highest occupied molecular 
+orbital (HOMO) mainly localizes in the triphenylamine unit 
+and the lowest unoccupied molecular orbital (LUMO) mainly 
+locates in the pyridinium unit. Such electron separation of 
+HOMO and LUMO indicates a π–π* transition with a charge 
+transfer character.
+The photoluminescence (PL) and the quantum yields 
+(QYs) in water, glycerol, and the solid state of TVPA were first 
+investigated to verify the desired optical properties. As shown 
+in Figure 2b, the water-soluble TVPA exhibits weak red emis-
+sion in dilute aqueous solution but emits intensely in viscous 
+glycerol and in the solid state with 87 and 54 times higher 
+intensity, respectively. The corresponding QYs of TVPA are 
+also increased from 0.4% to 10.7% and 6.1%, respectively, 
+Adv. Mater. 2021, 2101500
+Figure 1. Biomimetic design of high-strength hydrogels. a) Simplified 
+tearing model of fibrillar soft tissues[5–8]  under excessive tension. b) Bioin-
+spired design for crack-resistant hydrogels by deflecting the fracture along 
+the stretching axis through crack bifurcation.
+© 2021 Wiley-VCH GmbH2101500 (3 of 11)
+www.advmat.dewww.advancedsciencenews.com
+confirming the AIE characteristic of TVPA because of the 
+restriction of intramolecular motions. Considering the D− A 
+structure of TVPA, we recorded its PL spectra and fluores-
+cent photos in different solvents and polymer films with 
+various polarities. Figure  2c demonstrates the remarkable 
+solvatochromic effect of TVPA: its emission color gradu-
+ally shifts from blue (λ
+em = 436 nm) to red (λ em = 610 nm) 
+when the solvent is changed from non-polar toluene to 
+polar methanol. The TVPA-doped polymer films also dis-
+play the same bathochromic shift from blue emission (λ
+em = 
+457 nm) in non-polar polybutadiene to red emission (λ em = 
+621 nm) in polar PEG (Figure  2d). Such polarity-responsive 
+behaviors clearly manifest the TICT characteristic of TVPA. 
+In short, we successfully synthesized a AIEgen with desired 
+strong emission in the aggregated state and high sensi-
+tivity to environmental polarity. From synthetic prospective, 
+acrylate-containing TVPA probe is promising to be covalently 
+incorporated in polymer network by olefinic polymerization 
+in aqueous media. Such characteristics make it a promising 
+fluorescent sensor to the crowdedness and polarity change in 
+macromolecular systems.
+2.2. Fluorescent Response in Stimuli-Responsive Hydrogels
+Based on the previous efforts in phase-separated hydrogels, we 
+attempted to incorporate TVPA in the chemically crosslinked 
+poly(N-isopropylacrylamide) (PNIPAM) network grafted with 
+poly(N,N-dimethylacrylamide) (PDMA) side-chains as schemat-
+ically illustrated in Figure 3a. The PDMA macromonomer was 
+synthesized according to the procedure reported in Figure S10,  
+Supporting Information. Gels synthesis was carried out in  
+water. 2 mm thick hydrogel plates were prepared by free rad   ical 
+copolymerization of NIPAM, TVPA, PDMA macromono   mer, and 
+N,N′-methylenebisacrylamide (MBA) as chemical crosslinker 
+using a redox initiation at room temperature with potassium 
+Adv. Mater. 2021, 2101500
+Figure 2. Chemical structure and photophysical response of TVPA probe. a) Chemical structure of TVPA and its theoretical calculated molecular orbital 
+amplitude plots of HOMO and LUMO. b) PL spectra of TVPA in water (10 µM), viscous glycerol (10 µM), and the solid state. Inset: The corresponding 
+fluorescent photographs and quantum yield (QY) of TVPA. Fluorescent photographs and PL spectra of TVPA c) in solvents with different polarities: 
+toluene, acetone, dimethyl sulfoxide (DMSO), and methanol (MeOH) and d) in spin-coated polymer films with various polarities: polybutadiene (PB), 
+polystyrene (PS), poly(methyl methacrylate) (PMMA) and poly(ethylene glycol) (PEG).
+© 2021 Wiley-VCH GmbH2101500 (4 of 11)
+www.advmat.dewww.advancedsciencenews.com
+peroxodisulfate and N,N,N′,N′-tetramethylethylenediamine. 
+We anticipated that the copolymer network can alternate 
+from the as-prepared homogeneous state at room tempera-
+ture to a biphasic state under thermal stimulus above the 
+lower critical solution temperature of PNIPAM (LCST, T
+c ≈ 
+32 °C) and back to the homogeneous state below the LCST. [35]  
+Indeed, the well-hydrated PNIPAM chains should undergo 
+a coil-to-globule transition and collapse into PNIPAM-rich 
+hydrophobic domains above the LCST. At the same time, 
+the water released is absorbed by the hydrophilic PDMA 
+phase which thus makes it possible to preserve the swelling 
+of the gel (as polymer concentration) at macroscopic scale by 
+osmotic contribution. Thus, from preparation state, gels can  
+undergo microphase separation at almost constant macro-
+scopic volume for T  > T
+c. Meanwhile, the covalently incorpo-
+rated TVPA is expected to exhibit fluorescence in terms of 
+both intensity and color changes, from weakly red-emissive in 
+the extended hydrophilic PNIPAM chains to intensively blue-
+emissive in the crowded hydrophobic PNIPAM-rich domains. 
+Using this design principle, three hydrogels (GN2D3, GN3D3, 
+and GN6D3) were achieved from N-isopropylacrylamide 
+(NIPAM,N) network and grafted PDMA macromonomers 
+(D) with different weight ratios (N/D: 2/3, 3/3, and 6/3)  
+while keeping the same PNIPAm network (content and cross-
+link density) (Figure S11 and Table S1, Supporting Informa-
+tion). For comparison purposes, GN and GD hydrogels were  
+Adv. Mater. 2021, 2101500
+Figure 3. Schematic illustration of design principle and visualization of hydrophilicity-hydrophobicity transformation in aqueous medium. a) TVPA 
+was incorporated into the crosslinked NIPAM polymer network by free radical polymerization of NIPAM, TVPA, PDMA macromonomer, and MBA 
+crosslinker. The collapse of the resulting PNIPAM network is induced above its transition temperature (Tc) and the emission of the incorporated TVPA 
+is expected to be enhanced and blue-shifted in the crowded and hydrophobic PNIPAM domains. Three hydrogels were prepared with different weight 
+fractions of NIPAM and PDMA. b–d, PL spectra of TVPA-incorporated b) GN2D3, GN3D3, and GN6D3, c) GD and d) GN hydrogels at 20 and 60 °C 
+in water (λ
+ex  = 380 nm). Inset: fluorescent photos of hydrogels at 20 and 60 °C taken under 365 nm UV light. Fluorescent photos of various hydrogels 
+with stimuli-responsive gelation. e) PEG-PPG-PEG solution is gelled at 40 °C and its thermoresponsive emission color is gradually blue-shifted with 
+increasing temperature. f) A mixture of PEG and α-CD solutions is gelled after the complex formation for 24 h. g) Chitosan solution (pH 5.6) is gelled 
+upon the addition of sodium hydroxide solution (0.01 M).
+© 2021 Wiley-VCH GmbH2101500 (5 of 11)
+www.advmat.dewww.advancedsciencenews.com
+prepared from NIPAM and N ,N-dimethylacrylamide with 
+TVPA, respectively.
+The macroscopic properties of three hydrogels were investi-
+gated at different temperatures by swelling experiments, trans-
+mittance, and PL measurements. Starting from the as-prepared 
+(reference) state, as expected, the three hydrogels largely swell 
+when equilibrated in water at 20 °C and the level of swelling 
+at equilibrium increases with the PDMA content (Figure S12, 
+Supporting Information). In comparison, the swelling of hydro-
+gels equilibrated at 60 °C remains closer to the reference state, 
+either above, similar, or below for GN2D3, GN3D3, and GN6D3, 
+respectively. Such swelling behavior implies that they success-
+fully inherit the thermoresponsive properties from LCST-type 
+PNIPAM and their swelling ability is tunable by changing the 
+weight fraction of PNIPAM and PDMA. From the absorption 
+spectra, the change in transmittance at 600 nm was determined 
+as a function of temperature between 20 and 60 °C (Figure S13, 
+Supporting Information). For all the samples, GN2D3, GN3D3, 
+and GN6D3, the transmittance drops dramatically between 24 
+and 34 °C with a visible change from transparent to opaque. 
+This macroscopic observation, common to the three hydrogels, 
+clearly indicates the transition from homogeneous to hetero-
+geneous system due the formation of PNIPAM-rich domains 
+above their LCST.
+[36]
+As the incorporation of TVPA into the hydrogels provides 
+direct access to the fluorescence technique in hydrogels, we 
+carefully studied the PL of the three hydrogels in the prepara-
+tion state and after heating in water for 30 min. As indicated in 
+Figure  3b, all the PL spectra of GN2D3, GN3D3, and GN6D3 
+display remarkable both intensity and color changes at T
+c. By 
+heating from 20 to 60 °C, the PL intensity increases by up to 
+17 times and the PL maximum shifts from 620 to 480 nm. The 
+reversible fluorescence change between dark orange (20 °C) 
+and bright blue (60 °C) is observable by naked eyes. Among 
+the three hydrogels, GN6D3 with the highest composition of 
+PNIPAM shows strongest intensity enhancement owing to 
+its slight macroscopic shrinkage. GN2D3 has the largest blue 
+shift to 470 nm, which indicates that PNIPAM chains have col-
+lapsed into strongly dehydrated and dense domains. To better 
+understand the source of fluorescence change, we studied the 
+PL of GN and GD at 20 and 60 °C. As shown in Figure 3c,d, the 
+temperature only exerts a strong influence on the fluorescence 
+of GN. The emission color of GN at the temperature above 
+T
+c is close to that of traditional non-polar polymers. Refer -
+ring to the AIE and TICT characteristics of TVPA probe, such 
+enhanced and blue-shifted fluorescence underlines the coil-to-
+globule conformational change and implies the transformation 
+from hydrophilic PNIPAM chains into hydrophobic PNIPAM 
+domains above the LCST. In other words, TVPA can serve as a 
+simple and effective reporter to micro-environmental changes 
+in hydrogels, especially to the transformation from molecular 
+hydrophilicity to morphological hydrophobicity.
+To demonstrate this newly proposed concept, additional 
+proof-of-concept experiments were performed on stimuli-
+responsive gelation of TVPA-containing synthetic polymers, 
+synthetic-natural complex and natural polymers. In Figure 3e, 
+the thermo-responsive gelation of poly(ethylene glycol)-block-
+poly(propylene glycol)-block-poly(ethylene glycol) (PEG-PPG-
+PEG) solution displays a gradual blue-shifted emission when 
+its aqueous solution is heated, traducing dehydration level. A 
+mixture of weakly red-emissive α-cyclodextrin (α-CD) and PEG 
+solutions turns into a hydrogel after the formation of an inclu-
+sion complex α-CD-PEG, which exhibits a strong orange emis-
+sion (Figure 3f). Again, with the diffusion of sodium hydroxide, 
+the chitosan solution gradually gels with the shift of the emis-
+sion color from red to orange (Figure  3g). Collectively, these 
+emission behaviors show that TVPA can sensitively detect both 
+environmental concentration and polarity changes, respectively 
+by intensity and color-shift emission, taking place in stimuli-
+responsive hydrogels. More generally, the TVPA probe allows 
+for probing the hydrophilic-hydrophobic transformation in bio-
+logical macromolecular systems and would make it possible to 
+assess the transition level through the polarity of the environ-
+ment as a function of the emission color.
+2.3. Fluorescent Imaging of Microphase Separated Hydrogels
+Based on the preliminary results, the fluorescence micro-
+scope was employed to systematically investigate the ther -
+moresponsive morphology of the hydrogels at the mesoscopic 
+scale (Figure S14, Supporting Information). The GN3D3 
+hydrogel, selected as representative sample for the analysis of 
+thermal effect, was studied a) in the preparation state, b) after 
+immersing in water at 60 °C for 30 min, and c) after overnight 
+recovery at 20 °C, respectively. Under thermal cycling, fluores-
+cent images of GN3D3 switch reversibly between chromatic-
+orange and chromatic-blue emission, which is consistent with 
+the macroscopic observation. The appearance of Newton’s rings 
+with multicolor fringes illustrates the existence of light inter -
+ference. By applying simple optics principles,
+[37]  we can draw 
+two guidelines: 1) the numbers of interference fringes in New-
+ton’s rings are positively correlated with the actual size of the 
+corresponding objects; 2) the distance between two construc-
+tive fringes of same color, called as fringe spacing, depends 
+on the refractive index of local polymer domains. The role of 
+light interference in the optical observation of the fluorescent 
+composite hydrogels is interpretated in detail (Figure S15, Sup-
+porting Information). The interference patterns in Figure 4a 
+display continuous irregular combinations of Newton’s rings, 
+which are associated with some spatial heterogeneities distri-
+bution of partially hydrated polymer phase and aqueous phase 
+trapped during polymerization.
+[38]  Noted that a morphological 
+pattern with two distinct regions in Figure  4b is generated by 
+heating GN3D3 above the LCST while its volume change at the 
+macroscopic level is almost negligible. Region I displays plenty 
+of strongly emissive spherical domains, which result from the 
+large difference in refractive index between polymer concen-
+trated domains (PNIPAM-rich) and water (or highly hydrated 
+polymer regions). Region II is a more uniform pattern dis-
+playing weakly emissive matrix corresponding to the domains 
+where the highly hydrated PDMA domains exhibit a refrac-
+tive index comparable to water. Such assignment of region I 
+and region II are supported by further comparison with the 
+morphologies of GD and GN after immersing in water at  
+60 °C (Figure S16, Supporting Information). After the thermal 
+cycling, an entire Newton’s ring spreads over the entire area 
+in the recovered pattern with relatively wide fringe spacing,  
+Adv. Mater. 2021, 2101500
+© 2021 Wiley-VCH GmbH2101500 (6 of 11)
+www.advmat.dewww.advancedsciencenews.com
+suggesting a more homogenous network produced by rehydra-
+tion of PNIPAM domains and rearrangement of both PDMA 
+and PNIPAM chains (Figure  4c). By immersing GN3D3 in 
+water at different temperatures, the scale of phase transi-
+tion and the size of PNIPAM-rich domains are continuously 
+increasing from 25 to 65 °C (Figure S16, Supporting Informa-
+tion). This series of interference patterns obtained by thermal 
+cycling demonstrates the reliability of fluorescent observations 
+and the reversibility of the system.
+The fluorescence images of GN2D3, GN3D3, and GN6D3 
+were then taken to compare the impact of gel topology over the 
+microphase separation patterns. As presented in Figure  4d–i, 
+the ratio of PNIPAM network and PDMA grafts exerts a great 
+influence on the phase-separated morphologies. In GN2D3 
+with PDMA as the major component, a uniform disper -
+sion of the PDMA-rich matrix with isolated PNIPAM-rich 
+spherical domains is observed (Figure  4d,g). From GN2D3 to 
+GN3D3, the content of hydrophilic grafts is decreased, and the 
+PNIPAM-rich spherical domains appear to be more intercon-
+nected (Figure  4b,e,h). The picture for GN6D3 (Figure  4f,i) 
+appears more complex with even larger polymer-rich domains 
+interconnected. From the morphological changes, we deduce 
+that the PNIPAM network collapses through the pearl necklace-
+like formation of intrachain micelles and the spacer between 
+micelles becomes closer as the content of hydrophilic PDMA 
+grafts decreases. In fact, these phase-separated patterns pro-
+vide good experimental evidence for the theoretical models of 
+sparsely grafted amphiphilic copolymer self-assemblies.
+[39]  In 
+terms of Newton’s rings assigned to PNIAM-rich domains, the 
+numbers of interference fringe and the fringe spacing gradu-
+ally increase from GN2D3, GN3D3 to GN6D3. This suggests 
+that the PNIPAM-core micelles become larger and more uni-
+form with increasing composition of PNIPAM. These observa-
+tions demonstrate that the AIE-assisted fluorescent imaging 
+offers a simple, high-contrast, and onsite access to visualize 
+stimuli-responsive morphological variations and differentiate 
+the composition-dependent phase-separated patterns. In this 
+way, fluorescence technique affords a new way of revealing 
+mesostructures in hydrogels which had never been observed so 
+far.
+2.4. Mechanical Response and Fracture Mode of Fiber-Like Gels
+After exploring the stimuli-responsive and composition-
+dependent microphase separation of GN2D3, GN3D3, and 
+GN6D3, we investigate the impact of such morphologies on 
+the mechanical behavior. The temperature-induced viscoelastic 
+properties were first studied under small deformations, probing 
+the mechanical response of gel’s microstructure without strong 
+perturbations from its conformation at rest. Note that samples 
+were tested under isolated conditions, that is, immersed in par -
+affin oil, to prevent water evaporation or swelling during experi-
+ment. The frequency-dependence of their viscoelastic behaviors 
+Adv. Mater. 2021, 2101500
+Figure 4. Visualization of microphase separation by fluorescent microscopy. Fluorescent images of thermoresponsive hydrogels a) in the preparation 
+state, b) after immersing in water at 60 °C, and c) after overnight recovery at room temperature using GN3D3 as a representative example. Fluorescence 
+images of microphase-separated hydrogels of d,g) GN2D3, e,h) GN3D3, and f,i) GN6D3 after immersing in water at 60 °C for 30 min.
+© 2021 Wiley-VCH GmbH2101500 (7 of 11)
+www.advmat.dewww.advancedsciencenews.com
+at 20 and 60 °C was examined to verify their temperature-
+dependent viscoelastic moduli (Figure S17, Supporting Infor -
+mation). Then the thermo-responsive mechanical properties at 
+small deformations were measured by temperature sweep at a 
+constant frequency (f  = 1 rad s −1 ). As illustrated in Figure 5a,  
+heating the hydrogel samples from 20 to 60 °C triggers a dra-
+matic increase of the elastic modulus (G′) corresponding to 
+the emergence and progress of microphase separation, where 
+the elastic PNIPAM network collapses into a stiffened phase. 
+The rheological measurement under heating and cooling pro-
+cess shows excellent superposition performance, implying the 
+recovery and stability of the system at a slow rate of tempera-
+ture change (0.25 °C min
+−1 ). As expected from optical observa-
+tion of phase-separated patterns, the addition of PDMA grafts 
+implies a limitation of phase separation domains—from vir -
+tually continuous to more isolated domains—and results in a 
+decreased reinforcement efficiency, in terms of G′ for T  > T
+c. 
+Sufficiently far from Tc, the contribution of dissipative contribu-
+tion remains quite low, the loss modulus (G′′) being one order 
+of magnitude lower than G′.
+We then investigated the large strain behaviors of GN2D3, 
+GN3D3, and GN6D3 at 20 and 60 °C by tensile stress–strain 
+measurements (Figure  5b–d and Figure S18 and S19, Sup-
+porting Information). As shown in Figure  5b, at 20 °C, all 
+Adv. Mater. 2021, 2101500
+Figure 5. Thermoresponsive viscoelastic, large strain behavior and crack multifurcation. a) Temperature-dependent shear storage (solid symbols, G′) 
+and loss (open symbols, G″) moduli of GN2D3 (black), GN3D3 (blue), and GN6D3 (red) with a heating/cooling rate of 0.25 °C min −1 . b) Tensile stress–
+strain curves of GN2D3, GN3D3 and GN6D3 at 20 and 60 °C. c) Tensile moduli of GN2D3, GN3D3 and GN6D3 at 20 (yellow) and 60 °C (green) Inset: 
+Microphase separation patterns referring to the actual situation. d) Plot of reduced stress versus 1/λ at 20 and 60 °C corresponding to the stress–strain 
+curves in (b). e) Tensile stress–strain curves of GN2D3, GN3D3, and GN6D3 with pre-crack at 60 °C. f) Comparative analysis of fracture energies of 
+pre-cracked hydrogels. Inset: Schematic diagram of crack furcation referring to the actual situation. Pictures taken during tensile tests of pre-cracked 
+hydrogels in paraffin oil baths at 60 °C, which record the crack propagation and multifurcation process of g) GN2D3, h) GN3D3, and i) GN6D3.
+© 2021 Wiley-VCH GmbH2101500 (8 of 11)
+www.advmat.dewww.advancedsciencenews.com
+the samples show the typical response of lightly covalently 
+crosslinked polymer networks. Indeed, the PNIPAM network 
+below T
+c is supposed to feature entropy-driven elasticity. At  
+20 °C, Young’s modulus (E) is rather similar, independently of 
+network topologies, and the obtained values are in line with 
+viscoelastic data (E  ≅ 3G′). Conversely, at 60 °C stress–strain 
+curves significantly overestimate the purely entropic contri-
+bution of the network at 20 °C. Such remarkable changes on  
+fracture strain and stress are ascribed to the conformational 
+entanglement of the collapsed PNIPAM chains and the formation 
+of multiple noncovalent interactions in PNIPAM domains above 
+LCST, respectively. GN6D3 displays the highest E of 18.3 kPa  
+at 60 °C, which is consistent with the role of PNIPAM as a 
+thick continuous matrix as observed at mesoscale. In addition, 
+an interesting crack deflection occurs when stretching GN6D3 
+to large strain (Figure S19, Supporting Information). To graphi-
+cally depict their divergence from entropy-driven elasticity, 
+stress–strain behaviors have been plotted as reduced stress 
+versus reciprocal elongation (1/λ) according to semi-empirical 
+model.
+[40]  As shown in Figure  5d, the almost horizontal lines 
+at 20 °C indicate that their original mechanical performance 
+is dominated by entropic elasticity. In contrast, at 60 °C their 
+reduced stress (1/λ) curves obviously deviate from entropic 
+elasticity, displaying roughly softening and hardening behav-
+iors. The softening behavior is contributed from the disrup-
+tion of noncovalent interactions that dissipate energy during 
+the unraveling of the collapsed PNIPAM network from globule 
+conformation to stretched state. After the consumption of phys-
+ical associations, the polymer chains are oriented and aligned 
+along the stretching direction and account for the final hard-
+ening behavior before fracture.
+Tensile tests on notched specimen were performed at 60 °C  
+to focus on the crack propagation and fracture toughening 
+mechanisms. The notch was made with a razor blade to ini-
+tiate the crack propagation where the notch induces high strain 
+amplification. The tensile stress–strain curves are plotted in 
+Figure  5e and the corresponding stretching processes are 
+recorded using pictures (Figure 5g–i) and videos (Videos S1–S3,  
+Supporting Information). All GNxDy topologies exhibit strong 
+resistance to crack propagation by shielding the crack tip sin-
+gularity: first by crack blunting, followed by systematic crack 
+furcation perpendicularly to the plane of the notch. Interest-
+ingly, pre-notched specimens in Figure 5e sustain higher frac-
+ture stresses than their un-notched counterparts in Figure 5b, 
+suggesting that toughening mechanisms are operating more 
+efficiently under severe loading, as knotty-tearing fracture 
+mode in natural rubbers.
+[41]  As depicted in Figure  5g, GN2D3 
+with pre-crack displays blunting and one crack deflection 
+along the stretching direction. GN3D3 displays three consecu-
+tive crack deflections and GN6D3 is further developed into 
+crack multifurcation, that is, five crack branches are noticed 
+(Figure  5h,i). This multifurcation behavior exactly mimics the 
+tearing behavior of fibrillar tissues and inherits the advantage 
+of keeping the integrity of the material as much as possible. In 
+laminate materials, theoretical criterion for crack deflection is 
+reached when the adhesive energy of the interface becomes less 
+than the cohesive energy in a certain ratio.
+[42]  In our case, as the 
+composition of PNIPAM increases from GN2D3 to GN6D3, the 
+cohesive energy of hydrogels is intensified and the opportunity 
+of encountering the PNIPAM/PDMA interfaces along the crack 
+path also raises. This explains the increasing process of crack 
+multifurcation observed from GN2D3, GN3D3 to GN6D3. The 
+fracture energies of notched specimens, which describe the 
+strain energy required to propagate the crack across hydrogels, 
+have been estimated in Figure  5f. With crack multifurcation, 
+GN6D3 displays the highest fracture energy at around 800 J m
+−2 .  
+This is a quite high value considering the high hydration level 
+of the gel, as the fracture energy for unfilled rubber is around 
+1000 J m
+−2 . The key-point, here, relies on multiple fracture sur -
+face area that is generated during the failure process as addi-
+tional energy dissipation pathway which resembles the fiber-
+assembled biological tissues. Acquiring such ability to resist 
+crack penetration and maintain the integrity of the entire body 
+by partial sacrifice in strengthened hydrogels are of great sig-
+nificance for material engineering and practical applications.
+2.5. Mechanism Study
+Based on the above studies, going from microscopic hydrophi-
+licity-hydrophobicity transformation to mesoscopic morpholog-
+ical variation and up to macroscopic mechanical performance, 
+we propose a toughening mechanism as illustrated in Figure 6.  
+So far, it has been widely accepted that the LCST behavior of 
+PNIPAM is associated with the “hydrophobic interactions” of 
+the hydrophobic backbone and isopropyl groups,
+[43–45]  but this 
+is a limited view. According to the microenvironmental polarity 
+change indicated by TVPA probe, the PNIPAM network has 
+completely transformed from hydrophilicity to hydrophobicity 
+under thermal stimulus (Figure 6a). By analyzing the molecular 
+structure of PNIPAM, the amide groups present favorable 
+interactions with water molecules through hydrogen bonds 
+at low temperature and promote water solubility of PNIPAM 
+chains. However, above the LCST, the coil-to-globule transi-
+tion generates the collapsed PNIPAM domains with extensive 
+intra- and inter-chain hydrogen bonds between amide groups, 
+which will occupy the previous hydrogen-bond acceptors or 
+donors for water and make the whole PNIPAM domains water 
+insoluble. The dehydration of C O and N H groups and the 
+formation of new hydrogen bonds between amide groups are 
+further proved by the temperature-dependent infrared spectro-
+scopy measurements (Figure S20, Supporting Information). In 
+this way, the PNIPAM domains are strengthened significantly 
+due to the massive generation of noncovalent interactions, 
+mainly including hydrogen bonds. Of course topological con-
+straints implied by the distributions of network mesh-sizes and 
+hydrophilic grafts make the morphology of the phase separa-
+tion more complex.
+Under uniaxial mechanical stretching, the strengthened 
+phase-separated hydrogels gradually break noncovalent inter -
+actions and dissipate the strain energy during the unraveling 
+of the collapsed PNIPAM domains (Figure  6b). The orienta-
+tion and alignment of polymer network with the reversible 
+formation of new noncovalent interactions in highly stretched 
+hydrogels, generate fiber-like structures and lead to an efficient 
+resistance to crack propagation. Hence, the mechanical perfor -
+mance of the stimuli-responsive phase-separated hydrogels is 
+improved just by heating when the macroscopic volume change 
+Adv. Mater. 2021, 2101500
+© 2021 Wiley-VCH GmbH2101500 (9 of 11)
+www.advmat.dewww.advancedsciencenews.comAdv. Mater. 2021, 2101500
+is balanced by the swelling of PDMA domains. The role of 
+fiber-like microphase separation is well demonstrated in ten-
+sile mode on pre-notched specimens. As shown in Figure  6c, 
+the crack propagation along the horizontal direction is blocked 
+when the crack tip meets a weak interface between PNIPAM 
+and PDMA phases. Since the adhesive energy of PNIPAM/
+PDMA interfaces is incomparable to the cohesive energy, the 
+crack deflects along the vertical stretching direction. Mean-
+while, the concentrated tensile stress activates the chain orien-
+tation and alignment around the initial crack tip where strain 
+amplification takes place. In contrast, the weaker areas at the 
+edges of the hydrogel are cracked into additional notches, prob-
+ably in the PDMA-rich swollen phase. In other words, the heter-
+ogeneous distribution of dense polymer-rich domains and weak 
+highly hydrated phases promotes the formation of tearing-like 
+crack multifurcation phenomenon, which efficiently enlarges 
+the mechanical strain energy required to propagate the crack 
+across the sample. Furthermore, the composition-dependence 
+of the crack multifurcation is related to the thickness and the 
+interface to volume ratio of fibrillar structures, which is pre-
+dictable from their microphase separation patterns. Briefly, the 
+above-mentioned mechanical behaviors of sacrificing the non-
+covalent interactions or weak interfaces between two separated 
+phases in order to retard the fracture failure and preserve the 
+integrity of the whole exactly match the proposed concept of 
+morphomechanics.
+3. Conclusion
+In summary, we have successfully realized the direct visuali-
+zation at mesoscale level of microphase separation with easy  
+Figure 6. Proposed mechanism for thermoresponsive toughening and crack multifurcation. a) The reversible transformation of molecular hydrophi-
+licity and morphological hydrophobicity during thermally induced hydration and dehydration of PNIPAM network. The previous hydrogen bond accep-
+tors in PNIPAM for water molecules are occupied by intra and interchain hydrogen bonds above the LCST. b) Disruption of noncovalent interactions, 
+mainly hydrogen bonds, contributes to the strain energy dissipation during the disentanglement of collapsed PNIPAM network. The regained nonco-
+valent interactions during the orientation and alignment of the highly stretched PNIPAM network also reinforce the tensile strength before fracture.  
+c) Proposed multifurcation mechanism of microphase separated hydrogels induced by pre-crack. Pre-crack propagates until it meets the weak interface 
+of PDMA-rich (light grey) and PNIPAM-rich (dark grey) phases and induces crack deflection along the stretching direction. Increasing fracture surface 
+area by crack multifurcation retards the fracture and enlarges fracture energy.
+© 2021 Wiley-VCH GmbH2101500 (10 of 11)
+www.advmat.dewww.advancedsciencenews.comAdv. Mater. 2021, 2101500
+differentiation of hydrophobic collapsed PNIPAM domains in 
+gels by developing a fluorescent indicator with both AIE and 
+TICT characters that can be easily integrated into the PNIPAM 
+network by polymerization in aqueous medium. The presence 
+of hydrophilic macromonomer grafts in the network prevents 
+the macroscopic collapse of the hydrogel and helps the genera-
+tion of hierarchical fibrillary structures. The microphase sepa-
+ration can be readily identified at the mesoscale as spherical 
+domains with different interconnected modes in a facile, high-
+contrast, and noninvasive manner. These observations under 
+fluorescence microscopy revealed dense and hydrophobic mes-
+ostructures which had never been observed so far.
+The overall mechanism study has been well summarized 
+by the proposed concept of morphomechanics. In contrast to 
+the general understanding of “hydrophobic interactions,” the 
+transformation from molecular hydrophilicity to morphological 
+hydrophobicity has been attributed to the formation of multiple 
+non-covalent interactions. The universality of these transfor -
+mations by several stimuli-responsive sol-gel transitions, such 
+concept could meet interests on materials science and biology 
+communities. The crack multifurcation has been associated the 
+fibrillary structures by direct observation of microphase separa-
+tion patterns, which provides an additional energy dissipation 
+pathway and enhances fracture energy. The mesoscopic explo-
+ration of stimuli-responsive materials remains a key-point to 
+the design of high-strength gels or more biomimetic materials. 
+For instance, for a better understanding of how biopolymers 
+regulate their inter and intra assemblies via phase transition to 
+perform various biological functions such as reaction accelera-
+tion, signal transduction, and transcriptional regulation.
+[46]
+Supporting Information
+Supporting Information is available from the Wiley Online Library or 
+from the author.
+Acknowledgements
+The authors are grateful for the financial support from the National 
+Science Foundation of China (21788102, 21490570, and 21490574), 
+the Research Grant Council of Hong Kong (16305618, 16304819, 
+N-HKUST609/19, and C6009-17G), the Science and Technology Plan 
+of Shenzhen (JCYJ20160229205601482, JCYJ20170818113602462, 
+JCYJ20180306180231853, and JCYJ 20180306174910791), the Innovation 
+and Technology Commission (ITC-CNERC14SC01), and National Key 
+Research and Development Program of China (2018YFE0190200), 
+and ESPCI Paris – Sorbonne Université—CNRS. Y .B.H. also thanks 
+Mohamed Hanafi, Guylaine Ducouret, Xiaolin Liu, Junkai Liu, Louis 
+Debertrand, Zuxiang Xu, and Qingyun Li for their technical assistance.
+Conflict of Interest
+The authors declare no conflict of interest.
+Author Contributions
+A.M. and B.Z.T. initiated the international collaboration to study the inner 
+structure and mechanical mechanism of hydrogels. Y .B.H. proposed this 
+specific idea, performed all experiments, and wrote the manuscript. A.M. 
+and B.Z.T. provided their kind guidance and financial support. D.H., 
+N.S., J.W.Y .L., and A.M. offered many suggestions for the revisions of 
+manuscript. L.B., Z.L., X.F.J., and H.L.B. taught the experimental details 
+to Y .B.H. from synthesis to mechanical measurement.
+Data Availability Statement
+The data that supports the findings of this study are available in the 
+Supporting Information of this article.
+Keywords
+aggregation-induced emission, crack multifurcation, hydrophilicity-
+hydrophobicity transformation, microphase separation
+Received: February 22, 2021
+Revised: May 21, 2021
+Published online: 
+[1] S. I.  Park, D. S.  Brenner, G.  Shin, C. D.  Morgan, B. A.  Copits,  
+H. U. Chung, M. Y . Pullen, K. N. Noh, S. Davidson, S. J. Oh, Nat. 
+Biotechnol. 2015, 33, 1280.
+[2] M.  Wehner, R. L.  Truby, D. J.  Fitzgerald, B.  Mosadegh,  
+G. M. Whitesides, J. A. Lewis, R. J. Wood, Nature 2016, 536, 451.
+[3] H. Yuk, B. Lu, X. Zhao, Chem. Soc. Rev. 2019, 48, 1642.
+[4] W.  Huang, D.  Restrepo, J. Y .  Jung, F. Y .  Su, Z.  Liu, R. O.  Ritchie, 
+J.  McKittrick, P.  Zavattieri, D.  Kisailus, Adv. Mater. 2019, 31,  
+1901561.
+[5] C. Riekel, C. Craig, M. Burghammer, M. Müller, Naturwissenschaften 
+2001, 88, 67.
+[6] J. E. Muscolino, Kinesiology-E-Book: The Skeletal System and Muscle 
+Function, Elsevier Health Sciences, Amsterdam 2014.
+[7] R.  Bahr, S.  Mæhlum, Clinical Guide to Sports Injuries, Human 
+Kinetics, Champaign, IL 2004.
+[8] P. K. Hansma, G. E. Fantner, J. H. Kindt, P. J. Thurner, G. Schitter, 
+P. J.  Turner, S. F.  Udwin, M. M.  Finch, J. Musculoskeletal Neuronal 
+Interact. 2005, 5, 313.
+[9] T. Scheibel, Curr. Opin. Biotechnol. 2005, 16, 427.
+[10] M. J. Buehler, S. Keten, Nano Res. 2008, 1, 63.
+[11] U. G. Wegst, H. Bai, E. Saiz, A. P. Tomsia, R. O. Ritchie, Nat. Mater. 
+2015, 14, 23.
+[12] C. W.  Peak, J. J.  Wilker, G.  Schmidt, Colloid Polym. Sci. 2013, 291, 
+2031.
+[13] X. Zhao, Soft Matter 2014, 10, 672.
+[14] J. P. Gong, Y . Katsuyama, T. Kurokawa, Y . Osada, Adv. Mater. 2003, 
+15, 1155.
+[15] Y . Okumura, K. Ito, Adv. Mater. 2001, 13, 485.
+[16] T. Sakai, T. Matsunaga, Y . Yamamoto, C. Ito, R. Yoshida, S. Suzuki, 
+N.  Sasaki, M.  Shibayama, U.-i.  Chung, Macromolecules 2008, 41, 
+5379.
+[17] S. v.  Rose, A.  Dizeux, T.  Narita, D.  Hourdet, A.  Marcellan, Macro-
+molecules 2013, 46, 4095.
+[18] K. Haraguchi, T. Takehisa, Adv. Mater. 2002, 14, 1120.
+[19] J. Kopeček, Biomaterials 2007, 28, 5185.
+[20] J. S. Mohammed, W. L. Murphy, Adv. Mater. 2009, 21, 2361.
+[21] T.  Nonoyama, Y . W.  Lee, K.  Ota, K.  Fujioka, W.  Hong, J. P.  Gong, 
+Adv. Mater. 2020, 32, 1905878.
+[22] J. L. Holloway, A. M. Lowman, G. R. Palmese, Soft Matter 2013, 9 , 826.
+[23] H. Guo, N. Sanson, D. Hourdet, A. Marcellan, Adv. Mater. 2016, 28, 
+5857.
+© 2021 Wiley-VCH GmbH2101500 (11 of 11)
+www.advmat.dewww.advancedsciencenews.comAdv. Mater. 2021, 2101500
+[24] S. L.  James, C. J.  Adams, C.  Bolm, D.  Braga, P.  Collier, T.  Friščić, 
+F. Grepioni, K. D. Harris, G. Hyett, W. Jones, Chem. Soc. Rev. 2012, 
+41, 413.
+[25] C.  Mussault, H.  Guo, N.  Sanson, D.  Hourdet, A.  Marcellan, Soft 
+Matter 2019, 15, 8653.
+[26] H.  Guo, C.  Mussault, A.  Brûlet, A.  Marcellan, D.  Hourdet, 
+N. Sanson, Macromolecules 2016, 49, 4295.
+[27] Q. Chen, H. Chen, L. Zhu, J. Zheng, J. Mater. Chem. B 2015, 3, 3654.
+[28] B.  Wu, W.  Chassé, R.  Peters, T.  Brooijmans, A. A.  Dias, A.  Heise,  
+C. J.  Duxbury, A. P.  Kentgens, D. F.  Brougham, V. M.  Litvinov,  
+Macromolecules 2016, 49, 6531.
+[29] E.  Ducrot, Y .  Chen, M.  Bulters, R. P.  Sijbesma, C.  Creton, Science 
+2014, 344, 186.
+[30] K. Li, Y . Lin, C. Lu, Chem. - Asian J. 2019, 14, 715.
+[31] Z. Wang, J. Nie, W. Qin, Q. Hu, B. Z. Tang, Nat. Commun. 2016, 7 , 12033.
+[32] T. Förster, K. Kasper, Ber. Bunsen-Ges. 1955, 59, 976.
+[33] J. Mei, N. L. Leung, R. T. Kwok, J. W. Lam, B. Z. Tang, Chem. Rev. 
+2015, 115, 11718.
+[34] R.  Hu, E.  Lager, A.  Aguilar-Aguilar, J.  Liu, J. W.  Lam, H. H.  Sung,  
+I. D. Williams, Y . Zhong, K. S. Wong, E. Pena-Cabrera, J. Phys. Chem. 
+C 2009, 113, 15845.
+[35] M. Heskins, J. E. Guillet, J. Macromol. Sci., Part A 1968, 2, 1441.
+[36] S. Nayak, S. B. Debord, L. A. Lyon, Langmuir 2003, 19, 7374.
+[37] M. Born, E. Wolf, Principles of Optics: Electromagnetic Theory of Prop-
+agation, Interference, and Diffraction of Light, Elsevier, Amsterdam 
+2013.
+[38] M. Shibayama, Macromol. Chem. Phys. 1998, 199, 1.
+[39] O. Borisov, E. Zhulina, Macromolecules 2005, 38, 2506.
+[40] M. Mooney, J. Appl. Phys. 1940, 11, 582.
+[41] G. R. Hamed, Rubber Chem. Technol. 1994, 67, 529.
+[42] K. Kendall, Proc. R. Soc. A 1975, 344, 287.
+[43] C. Wu, S. Zhou, Macromolecules 1995, 28, 8381.
+[44] E. C. Cho, J. Lee, K. Cho, Macromolecules 2003, 36, 9929.
+[45] A. Halperin, M. Kröger, F. M. Winnik, Angew. Chem., Int. Ed. 2015, 
+54, 15342.
+[46] E. J. N. Dolgin, Nature 2018, 555, 300.

@@ -1,0 +1,908 @@
+In Situ Generation of Azonia-Containing Polyelectrolytes for
+Luminescent Photopatterning and Superbug Killing
+Xiaolin Liu, †,§,# Mengge Li, ‡,# Ting Han, †,§ Bing Cao, ‡ Zijie Qiu, †,§ Yuanyuan Li, †,§ Qiyao Li, †,§
+Yubing Hu, †,§ Zhiyang Liu, †,§ Jacky W. Y. Lam, *,†,§ Xianglong Hu, *,‡ and Ben Zhong Tang *,†,§,∥
+†Department of Chemistry, Hong Kong Branch of Chinese National Engineering Research Center for Tissue Restoration and
+Reconstruction, Institute for Advanced Study, Department of Chemical and Biological Engineering, Institute of Molecular
+Functional Materials, The Hong Kong University of Science and Technology, Clear Water Bay, Kowloon, Hong Kong, China
+‡Ministry of Education Key Laboratory of Laser Life Science & Institute of Laser Life Science, College of Biophotonics, South China
+Normal University, Guangzhou 510631, China
+§HKUST-Shenzhen Research Institute, No. 9 Yuexing 1st Road, South Area, Hi-tech Park, Nanshan, Shenzhen 518057, China
+∥Center for Aggregation-Induced Emission, SCUT-HKUST Joint Research Institute, State Key Laboratory of Luminescent Materials
+and Devices, South China University of Technology, Guangzhou 510640, China
+*S Supporting Information
+ABSTRACT: Polyelectrolytes play an important role in both natural
+biological systems and human society, and their synthesis, functional
+exploration, and profound application are thus essential for biomimicry
+and creating new materials. In this study, we developed an e ﬃ cient
+synthetic methodology for in situ generation of azonia-containing
+polyelectrolytes in a one-pot manner by using readily accessible nonionic
+reactant in the presence of commercially available cheap ionic species.
+The resulting polyelectrolytes are emissive in the solid state and can
+readily form luminescent photopatterns with di ﬀerent colors. The
+azonia-containing polyelectrolytes possess extraordinary potency of
+reactive oxygen species (ROS) generation, enabling them to
+impressively kill methicillin-resistant Staphylococcus aureus (MRSA), a
+drug resistant superbug, both in vitro and in vivo .
+■ INTRODUCTION
+Many important biological macromolecules are polyelectro-
+lytes, such as DNA, proteins, polypeptides, and polysacchar-
+ides.
+1−3 Polyelectrolytes are ionizable polymers possessing the
+combined behaviors of polymers and electrolytes, which can
+drastically change the ﬂuid properties of aqueous solutions and
+interact with oppositely charged macromolecules, small ions,
+and even neutral particles. Polyelectrolytes have demonstrated
+great potency in many aspects, for example, thickening agents
+in food industry, wastewater treatment in environment science,
+and diagnostic and therapeutic agents in medicine.
+4,5 For
+biomimicry and creating new materials, it is attractive to
+synthesize and study polyelectrolytes. However, the progress is
+unsatisfactory because of their synthetic di ﬃ culty.6 The main
+methodology for the synthesis of polyelectrolytes is post-
+modiﬁcation of nonionic polymers. 7−9 One archetype example
+is sodium polystyrenesulfonate (NaPSS), which is synthesized
+by adding sulfonate groups after polymerization.
+10,11 Another
+typical example is poly(acrylic acid) (PAA), which is generally
+obtained by the hydrolysis of polyacrylate. 12,13 Theoretically,
+the postmodiﬁcations are hard to be 100% completed, allowing
+patches along the polymer chain, which are impossible to be
+removed and puri ﬁed. Some coupling reactions (Heck
+14 and
+Sonogashira 15) are also employed for the synthesis of
+polyelectrolytes, but they frequently require expensive and
+limited types of ionic monomers.
+Most commercially available polyelectrolytes (such as
+NaPSS and PAA) are commodity polymers, which are cheap
+and useful in daily life but show no advanced functional
+properties. 16,17 Specialty polymers (such as conducting
+polymers, liquid crystalline polymers, and biomedical poly-
+mers) are attracting much interest because of their novel
+functionalities. 18−23 There has been some progress in
+developing specialty polyelect rolytes, with water-soluble
+conjugated polymers being a typical example. Plenty of
+water-soluble conjugated polymers have been designed and
+synthesized for bioimaging, diagnosis, and therapy, 24−28 using
+their ﬂuorescence and photodynamic properties. However,
+traditional specialty polymers often su ﬀer from the aggrega-
+tion-caused quenching e ﬀect in the condensed state, which
+signiﬁcantly decreases their emission e ﬃ ciency or intersystem
+crossing (ISC) e ﬃ ciency because of the high probability of the
+excited state to undergo nonradiative relaxation. 29 As it is hard
+Received: May 3, 2019
+Published: June 20, 2019
+Article
+pubs.acs.org/JACSCite This: J. Am. Chem. Soc. 2019, 141, 11259 −11268
+© 2019 American Chemical Society 11259 DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+Downloaded via UNIV ILLINOIS URBANA-CHAMPAIGN on November 21, 2022 at 00:35:45 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+to completely avoid aggregation in diverse practical applica-
+tions, new specialty polyelectrolytes are in great demand to
+address these problems.
+30
+In our previous work, some azonia aromatic compounds
+have been found to show aggregation-induced emission (AIE)
+characteristics with strong reactive oxygen species (ROS)
+generation ability.
+31−34 The azonia rings are highly electron-
+deﬁcient, and it is thus easy to form donor −acceptor (D −A)
+structures with tunable emission color by combining with
+diﬀerent electron donors.
+35 Many reported antibiotics are also
+azonia-containing molecules, but the processability of these
+small molecules is quite limited.
+36 Thus, we intend to combine
+the excellent performance of azonia aromatic compounds with
+processable polymers to create new functional materials with
+expectable optical properties and processability. The resulting
+azonia-containing polyelectrolytes are expected to show good
+processing ability that can be easily fabricated into luminescent
+ﬁlms for applications in surface modi ﬁcation, patterning, and
+large area display systems. With high charge density in the
+polymer chain, the azonia-containing polyelectrolytes may
+show a ﬃ nity to negative charge species (such as bacteria
+membrane and DNA), which enables them to wrap the surface
+of bacteria and physically kill them.
+4,37,38 By introducing D −A
+structure into the polyelectrolytes, the nonradiative decay
+channel is blocked due to the rigid structure,
+29 which is
+beneﬁcial for bioimaging and ROS generation. As a result, the
+azonia-containing polyelectrolytes are potential powerful
+weapons to kill superbugs by photodynamic therapy besides
+physically killing.
+39,40
+Owing to the attractive properties of azonia aromatic
+compounds, many novel approaches have been developed for
+the synthesis of azonia small molecules,
+41 including ring-
+closing metathesis reactions, 42,43 annulation reactions based on
+C−H activation, 44−46 and so on. However, it is challenging to
+develop these small molecule reactions for polymer synthesis
+due to the limited organic reactions with mild reaction
+conditions, broad monomer scope, and high e ﬃ ciency. In
+2017, Jun et al. reported an e ﬃ cient method for the synthesis
+of benzoquinolizinium salts in a one-pot manner from simple
+starting materials ( Scheme 1A).
+47 Inspired by this work, we try
+to develop such an e ﬃ cient small molecule reaction into a
+useful tool for the synthesis of azonia-containing polyelec-
+trolytes.
+In this study, we developed a synthetic methodology by
+readily accessible nonionic reactant in the presence of
+commercially available cheap ionic species to in situ generate
+azonia-containing polyelectrolytes in a one-pot manner. The
+main-chain polyelectrolytes were generated in excellent yields
+(up to 99%) with high molecular weights (up to 28700 Da).
+The azonia-containing polyelectrolytes were luminescent in the
+solid state with good processing ability, which enabled them to
+be excellent candidate materials for ﬂuorescent photopattern
+generation. With extraordinary strong ROS generation ability,
+these polyelectrolytes could impressively solve the bacterial
+resistance issue. Systematic antibacterial explorations were
+conducted, including bacteria staining and killing methicillin-
+resistant Staphylococcus aureus (MRSA), a drug resistant
+superbug in vitro and in vivo .
+■ RESULTS AND DISCUSSION
+Polymerization. Monomers used in this work are easily
+available. Allylamines 1a and 1b, tetra ﬂuoroboric acid (HBF 4,
+3a), sodium hexa ﬂuorophosphate (NaPF 6, 3b), sodium
+triﬂuoromethanesulfonate (NaCF 3SO3, 3c), sodium tetraphe-
+nylborate (NaBPh 4, 3d), sodium tetra ﬂuoroborate (NaBF 4),
+and hexa ﬂuorophosphoric acid (HPF 6) were commercially
+available and used without further puri ﬁcation. The internal
+diynes 2a−h used in this work were readily synthesized
+without column chromatography puri ﬁcation. All of the
+polymerizations were catalyzed by [Cp *RhCl2]2 and Cu-
+(OAc)2·H2O and conducted under an air atmosphere in a one-
+pot manner.
+To obtain soluble polyelectrolytes with high molecular
+weights in high yields, we systematically investigated the
+polymerization conditions using 1a, 2a, and 3a as monomers.
+The solvent, monomer ratio, catalyst loading, concentration,
+and reaction time were carefully investigated ( Table 1 ). The
+eﬀect of solvent on the polymerization was ﬁrst investigated
+(entries 1 −5, Table 1 ). Polar solvents such as MeOH, DCM,
+MeOH/DMSO, and MeOH/DCM mixed solvents were
+investigated, and the best polymerization result was obtained
+in MeOH/DCM (v/v, 1/1), a ﬀording polymer with M
+w of
+19200 Da in 72% yield (entry 5, Table 1 ). It was found that
+the monomer ratio (entries 5 and 6, Table 1 ) exerted little
+eﬀect on the polymerization, while the catalyst loading (entries
+5 and 7 −9, Table 1 ) played a crucial role in the polymer-
+ization. Decreasing the amount of [Cp *RhCl2]2 from 10 to 5
+mol % even increased the Mw and yield (entry 7, Table 1), but
+further reducing the loading of [Cp *RhCl2]2 or Cu(OAc) 2·
+H2O led to a sharp decrease in both the values of Mw and yield.
+With the optimized catalyst loading, we further investigated the
+eﬀect of monomer concentration and reaction time on the
+polymerization. When the monomer concentration of 1a was
+decreased from 0.2 to 0.15 M, both the M
+w and yield decreased
+sharply (entry 11, Table 1). When the monomer concentration
+of 1a was improved from 0.2 to 0.25 M, the Mw and yield
+decreased slightly, with partial gelation occurring (entry 10,
+Table 1 ). A time of 24 h was adopted as the optimal reaction
+time, as a further decrease of the reaction time led to
+unsatisfactory values of M
+w and yield (entries 12 and 13, Table
+1).
+Scheme 1. Synthesis of Azonia-Containing Polyelectrolytes
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11260
+With the optimized polymerization conditions in hand,
+diﬀerent monomer combinations were applied to test the
+robustness and wide applicability of this polymerization route
+(Table 2). Monomers 2a−c were internal diynes with a ﬂexible
+alkyl chain or oxyalkyl chain as a spacer, while 2d−f were rigid
+conjugated diynes with di ﬀerent electron densities. Monomers
+3a−d were abundant and cheap acid or salt. Diynes 2a−f all
+reacted e ﬃ ciently with 1a and 3a,a ﬀording polyelectrolytes
+with high yield and molecular weight (entries 1 −6, Table 2 ).
+The diarylacetylene structure was crucial for this polymer-
+ization, as only a trace amount of product was obtained when
+tert-butyl-substituted diyne 2g (Scheme S1 ) was used as a
+diyne monomer to react with 1a and 3a. The ﬂuorene-
+substituted diyne 2h (Scheme S1 )a l s of a i l e dt ob e
+polymerized e ﬀectively, probably due to the large steric
+hindrance of the ﬂuorene moiety. Regarding the monomer
+scope of allylamines, both unsubstituted allylamine 1a or
+methyl-substituted allylamine 1b could react e ﬃ ciently with
+diyne 2a or 2e in the presence of 3a (entries 1, 2, 7, and 8,
+Table 2). However, 1b was less reactive compared to 1a, which
+was probably due to the steric hindrance of the methyl group.
+Finally, we further explored the in ﬂuence of ion source on the
+polymerization process. On the basis of the mechanism of
+small molecules,
+47 we proposed a mechanism of the polymer-
+ization route ( Scheme S3 ). In the proposed mechanism, the
+ion source could react with the seven-membered rhodacycle
+complex D to form benzoquinolizium salt, which was crucial to
+the polymerization. We had demonstrated that HBF
+4 3a,
+NaPH6 3b, and NaCF 3SO3 3c could react e ﬃ ciently with 1a
+and 2a to generate polyelectrolytes with moderate Mw and
+yield (entries 1, 9, and 10, Table 2), while the NaBPh 4 3d was
+much less reactive with 1a and 2a (entry 11, Table 2 ),
+presumably resulting from the steric hindrance. HPF 6 failed to
+polymerize with 1a and 2a, probably due to the too strong
+acidity or decomposition upon heating of HPF 6. These results
+indicated that we successfully developed an e ﬃ cient and
+powerful polymerization tool for the construction of azonia-
+containing polyelectrolytes. The only byproduct produced
+from this polymerization was hydrogen ion, indicating its high
+atom economy.
+Most of the obtained polyelectrolytes showed good
+solubility in commonly used organic solvents, such as DCM,
+chloroform, DMSO, and N,N-dimethylformamide (DMF),
+whereas P1b/2a/3a and P1a/2a/3c were partially insoluble in
+these solvents. The thermal properties of the polyelectrolytes
+were evaluated by thermogravimetric analysis (TGA), and the
+results indicated that the 5% weight loss temperatures ( T
+d)
+were in the range 218 −323 °C( Figure S4 ), suggesting that
+they were thermally stable. Additionally, P 1a/2d/3a and P1a/
+2e/3a displayed 70% of their weight even upon heating to 800
+°C.
+Structural Characterization. The structures of the
+resulting polymers were characterized by FT-IR and NMR
+spectra. To gain insight into the structures of these azonia-
+containing polyelectrolytes, model compound 2 was prepared
+by cascade double N-annulation reaction of allylamine 1a,
+diphenylacetylene 1, and HBF
+4 under the same synthetic
+conditions for the polyelectrolytes ( Scheme S2 ). Typical FT-
+IR analysis and 1H NMR and 13C NMR spectra of polymer
+P1a/2a/3a, model compound 2, and their corresponding
+monomers 1a and 2a were performed accordingly for further
+illustration. In the FT-IR spectra ( Figure S1 ), the N −H
+stretching vibration of 1a and the C C stretching vibrations
+of 2a occurred at 3012 and 2220 cm −1, respectively. These
+Table 1. Optimization of the Polyannulation Reaction a
+entry solvent [ 1a] (M) [ 2a] (M) [Rh] (%) [Cu] (equiv) yield (%) Mn
+b Mw
+b Mw/Mn
+b
+1 MeOH 0.20 0.20 10 5 trace
+2c MeOH/DMSO 0.20 0.20 10 5 trace
+3c MeOH/DMSO 0.20 0.20 10 5 trace
+4 DCM 0.20 0.20 10 5 54 7600 13700 1.8
+5 MeOH/DCM 0.20 0.20 10 5 72 14800 19200 1.3
+6 MeOH/DCM 0.20 0.25 10 5 87 12700 16500 1.3
+7 MeOH/DCM 0.20 0.20 5 5 93 20400 28700 1.4
+8 MeOH/DCM 0.20 0.20 2.5 5 4 4500 4900 1.1
+9 MeOH/DCM 0.20 0.20 5 2.5 trace
+10 MeOH/DCM 0.25 0.25 5 5 85 15800 20500 1.3
+11 MeOH/DCM 0.15 0.15 5 5 72 6400 9600 1.5
+12
+d MeOH/DCM 0.20 0.20 5 5 70 12400 16100 1.3
+13d MeOH/DCM 0.20 0.20 5 5 21 6700 8700 1.3
+14e MeOH/DCM 0.20 0.20 5 5 47 3500 7900 2.3
+aUnless otherwise noted, the polymerizations were carried out at 130 °C in air for 24 h, [ 3a] = 0.3 M, in MeOH, DCM, or their mixture (1:1).
+bEstimated by GPC in DMF on the basis of a linear polystyrene calibration. cMeOH/DMSO = 8:2 (entry 2) and 6:4 (entry 3). dThe reaction time
+was 18 h (entry 12) and 12 h (entry 13). eNaBF4 was used instead of HBF 4.
+Table 2. Polyannulation Results of Di ﬀerent Monomers a
+entry monomer yield (%) Mn
+b Mw
+b Mw/Mn
+b
+1 1a/2a/3a 93 20400 28700 1.4
+2 1a/2b/3a 60 11900 14900 1.3
+3c 1a/2c/3a 99 17900 24000 1.3
+4 1a/2d/3a 71 14000 20000 1.4
+5 1a/2e/3a 74 18900 22700 1.2
+6d 1a/2f/3a 78 5700 8100 1.4
+7d 1b/2a/3a 52 17700 26000 1.5
+8 1b/2e/3a 53 18800 23700 1.3
+9 1a/2a/3b 64 13100 21500 1.6
+10d 1a/2a/3c 75 16800 25100 1.5
+11 1a/2a/3d 25 5600 7600 1.3
+aUnless otherwise noted, the polymerizations were carried out at 130
+°C in air for 24 h, [ 1]=[ 2] = 0.2 M, [ 3] = 0.3 M, [Rh] = 5 mol %,
+[Cu] = 5 equiv. Solvent: DCM/MeOH = 1:1. bEstimated by GPC in
+DMF on the basis of a linear polystyrene calibration. cThe reaction
+time was 36 h. dPartially insoluble.
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11261
+peaks could not be observed in the spectra of P 1a/2a/3a and
+2. Meanwhile, a new peak associated with B −F stretching
+vibrations appeared at 1083 cm −1, indicating the successful
+occurrence of the reaction. Similar results were obtained in the
+FT-IR spectra of other polymers ( Figures S2 and S3 ).
+In addition, NMR spectra could provide more detailed
+information about the polymer structures. In the 1H NMR
+spectra, the protons at positions “a”, “b”, and “c” of 1a resonate
+at δ 5.95, 5.43, and 3.63 ppm, respectively, but disappeared in
+the 1H NMR spectra of P 1a/2a/3a and 2. Most importantly,
+new peaks emerged at δ 8.84 and 8.37 ppm in the spectra of
+P1a/2a/3a and 2, corresponding to the aromatic protons from
+the newly formed benzoquinolizinium rings ( Figure 1 A−D).
+The 13C NMR spectra further veri ﬁed the polymer structure
+(Figure 1 E−H). The characteristic peaks of C Ci n 2a were
+not observed in the polymer spectrum. Instead, the aromatic
+carbon on benzoquinolizinium rings resonated at δ 143−120
+ppm in the spectra of P 1a/2a/3a and 2. For all of the 11
+polyelectrolytes, the characteristic peaks at δ 8.90−8.10 ppm
+all emerged in their 1H NMR spectra and their characteristic
+CC peaks at δ 90.0−88.0 ppm all disappeared in their 13C
+NMR spectra, con ﬁrming successful fabrication of their azonia-
+containing polyelectrolytes accordingly ( Figures S22 −S48).
+Photoluminescence (PL) Properties and Photopat-
+tern. The absorption and emission spectra of dilute DCM
+solutions (10 μM) of the resulting azonia-containing
+polyelectrolytes were shown in Figures S6 and S7 . Due to
+the strong electron-withdrawing azonia aromatic moiety, the
+maximum emission wavelength of these polymers was facilely
+tunable from 490 to 610 nm, which arised from the
+polymerization from diyne monomers with di ﬀerent electron
+densities.
+By incorporating TPE and TPA moieties into the
+polyelectrolyte skeletons, respectively, the resulting polymers
+P1a/2d/3a and P 1a/2e/3a showed typical AIE features.
+Taking P 1a/2d/3a as an example, its DCM solution emitted
+weakly at 574 nm. With the addition of hexane, a nonpolar
+poor solvent for the polymer, the emission intensity gradually
+increased. The photographs of these dispersions taken in
+DCM/hexane mixtures with di ﬀerent hexane fractions visually
+showed the trends in ﬂuorescence ( Figure 2 A), and the
+maximum emission wavelengths slightly blue-shifted to 558 nm
+(Figure 2 B). The PL intensity of P 1a/2d/3a aggregates in
+DCM/hexane mixture with 99% hexane fraction ( I
+99) was
+∼13-fold higher than that in pure DCM solution ( I0)( Figure
+2C). A similar phenomenon was observed for P 1a/2e/3a
+(Figure S9 ).
+After that, the solid ﬂuorescence of these azonia-containing
+polyelectrolytes was examined ( Figure 2 D); all of these
+polymers were emissive in the solid state. P 1a−b/2a−c/3a−
+b displayed yellow-green emission, P 1a/2d/3a and P1b/2e/3a
+emitted orange ﬂuorescence, and P 1a/2e/3a exhibited red
+emission. PL spectra of these polymers in the solid state were
+further obtained ( Figure 2 E). Because of the excellent
+solubility and ﬁlm-forming ability of P 1/2/3, their uniform
+ﬁlms could be easily fabricated without defect on silica wafers
+by a simple spin-coating technique.
+Figure 1. 1H NMR spectra of (A) 1a in D2O and (B) 2a, (C) model compound 2 and (D) P 1a/2a/3a in CD2Cl2. 13C NMR spectra of (E) 1a in
+D2O and (F) 2a, (G) model compound 2 and (H) P 1a/2a/3a in CD 2Cl2.
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11262
+Macroscopically processable polymers with high refractive
+indices (RIs) are promising candidate materials for various
+photonic applications, including optical chips, prisms, optical
+waveguides, memories, and holographic image recording
+systems.48 Since multifused heterocyclic rings were incorpo-
+rated in the polymer main chain, the azonia-containing
+polyelectrolytes are expected to show a high refractive index.
+The thin ﬁlms of P 1/2/3 were prepared by spin-coating, and
+their refractive indexes were measured accordingly. As
+summarized in Figure S8 and Table S1 , their thin ﬁlms indeed
+showed high n values of 1.817 −1.600 in the spectral region of
+400−900 nm. Their n values at 632.8 nm ( n
+632.8) were in the
+range 1.686 −1.621, which were much higher than common
+polymers such as polystyrene, polycarbonate, poly(methyl
+methacrylate), and polyacrylate with n632.8 in the region of
+1.49−1.58.49
+The generation of ﬂuorescent patterns by the photo-
+lithography technique is of great signi ﬁcance in terms of the
+photonic and electronic applications. 50−52 As shown in Figure
+2F−H, after irradiation by UV light in air for 20 min through a
+copper photomask, the ﬂuorescence of the exposed regions
+(lines) was completely quenched due to the photo-oxidation of
+the chromophores, while the emissive squares were protected
+by copper and remained intact. Thus, two-dimensional
+ﬂu o r e s c e n tp a t t e r n sw i t hd iﬀerent emissive colors were
+generated with high resolution and sharp edges. By changing
+the shape and scale of the photomask, various patterns in
+diﬀerent scales could be generated, such as QR code, which
+could be used for information storage ( Figure 2 I). Herein,
+these azonia-containing polyelectrolytes were expected to be
+promising materials for pattern fabrication, which would have
+profound implications in constructing electronic and photonic
+devices and various hybrid devices as excellent luminescent
+photoresist materials in a cost-e ﬃ cient photolithography
+process. The photostability result showed that these poly-
+electrolytes were stable under the exposure of normal room
+light ( Figures S13 and S14 ) and were also able to undergo a
+photo-oxidative bleaching process with a tunable refractive
+index under the exposure of a strong UV light source ( Figure
+S16, Table S3 ).
+ROS Generation. The unique azonia moiety in these
+polymers encouraged us to explore their ROS generation
+ability and application in bacteria killing.
+53−55 H2DCF-DA is a
+commercial ROS indicator, which is non ﬂuorescent but emits
+green ﬂuorescence when oxidized by ROS. 56 H2DCF-DA was
+utilized to investigate the ROS generation ability of these
+Figure 2. (A) Photographs of P 1a/2d/3a in DCM/hexane mixtures with di ﬀerent hexane fractions ( f H) taken under 365 nm UV irradiation from a
+hand-held UV lamp. (B) Emission spectra of P 1a/2d/3a in DCM/hexane mixtures with di ﬀerent hexane fractions. Excitation wavelength: 380 nm.
+(C) Plot of relative emission intensity ( I/I0) versus the composition of the DCM/hexane mixture of P 1a/2d/3a. Solution concentration: 10 μM.
+(D) Luminescent photographs of polymer P 1/2/3 in the solid state. (E) Emission spectra of thin ﬁlms of P 1/2/3. Excitation wavelength: 450 nm
+for P 1a/2e/3a and 380 nm for the other polymers. (F −I) Two-dimensional ﬂuorescent photopatterns generated by photolithography of ﬁlms of
+(F) P 1a/2a/3a, (G) P 1a/2d/3a, (H) P 1a/2e/3a, and (I) P 1a/2d/3a taken under UV irradiation. Excitation wavelength: 330 −385 nm.
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11263
+azonia-containing polyelectrolytes, and P 1a/2e/3a,P 1a/2d/
+3a, and P 1a/2c/3a were chosen for demonstration. As shown
+in Figure S10 , in the mixture of polyelectrolytes and H2DCF-
+DA, the ﬂuorescence intensity of H2DCF-DA at 525 nm
+increased gradually with the extension of irradiation time. A
+steeper slope of curves indicated a much higher ROS
+generation rate, suggesting that three polyelectrolytes exhibited
+ad i ﬀerent ROS generation e ﬃ ciency in the order of P 1a/2e/
+3a >P 1a/2d/3a >P 1a/2c/3a.
+Among all of the ROS species, such as superoxide (O
+2
+−),
+hydrogen peroxide (H 2O2), hydroxyl radical ( OH), and
+singlet oxygen ( 1O2), 1O2 is regarded as a primary cytotoxic
+agent.57 Herein, 9,10-anthracenediyl-bis(methylene)-dimalonic
+acid (ABDA), a speci ﬁc probe to detect 1O2, was utilized to
+prove the generation of 1O2 from azonia-containing poly-
+electrolytes.58 In the presence of 1O2, ABDA is transformed
+into endoperoxide, leading to a decrease of ABDA absorption
+at 378 nm. The absorbance spectra of ABDA solution in the
+presence of P 1a/2c/3a,P 1a/2d/3a, and P 1a/2e/3a were
+recorded upon white light irradiation ( Figure 3 A−C). In the
+presence of these polyelectrolytes, noticeable reduction of
+ABDA absorption was observed, especially for P 1a/2e/3a,
+which caused the fastest drop of ABDA absorption ( Figure
+3D). For comparison, a commercial dye, Rose Bengal, which
+was widely used to generate
+1O2 with a singlet oxygen quantum
+yield of 75%, was investigated under the same condition
+(Figures S11 and S12 ). The decomposition rates of ABDA in
+the presence of polyelectrolytes and Rose Bengal were
+calculated quanti ﬁcationally ( Figure 3 D), and the results
+indicated that P 1a/2e/3a was able to generate
+1O2 much more
+eﬀectively than Rose Bengal. Such strong 1O2 generation
+ability of P 1a/2e/3a was probably due to the extended
+conjugation length between donor and acceptor, which
+minimized the ΔE
+ST and enhanced the possibility of the ISC
+process. Also, the strong D −A conjugated structure of P 1a/
+2e/3a rigidiﬁed its polymer backbone, which could minimize
+its nonradiative decay and thus promote the ISC process.
+Notably, undetectable ROS generation of monomers 1a, 2e,
+and 3a was also proved by the chemical trapping measure-
+ments with ABDA as an indicator ( Figure S17 ). The
+photostability study showed that P 1a/2e/3a indicated better
+photostability than organic dyes RB and 5,10,15,20-tetrakis(4-
+sulfonatophenyl)-porphyrin (TPPS), two traditional photo-
+sensitizers generally employed for PDT ( Figure S15 ).
+Superbug Killing. The strong
+1O2 generation ability of
+these polyelectrolytes motivated us to further explore its
+performance as a photosensitizer in bacteria inhibition. P 1a/
+2e/3a with the most signi ﬁcant ROS generation was chosen
+for further biological evaluation. The hydrodynamic diameter
+of P 1a/2e/3a micelles was determined to be ∼106 nm by
+dynamic laser scattering (DLS) analysis, and the transmission
+electron microscopy (TEM) analysis con ﬁrmed the spherical
+morphology and size ( Figure 4A). Then, in vitro antimicrobial
+activities of P 1a/2e/3a were ﬁrst evaluated toward representa-
+tive Gram-positive S. aureus and Gram-negative E. coli,
+respectively ( Figure S18 ). The polymer showed weak
+inhibition to E. coli even under light irradiation but strong
+inhibition to S. aureus under white light irradiation with a
+minimal inhibition concentration (MIC) of 15 μg/mL. The
+diﬀerent antimicrobial ability was probably due to the
+membrane di ﬀerence between Gram-negative bacteria and
+Gram-positive bacteria; it was di ﬃ cult for polymer micelles to
+access the membrane of Gram-negative bacteria due to its extra
+protective membrane components.
+39
+MRSA is one of the most notorious drug-resistant Gram-
+positive bacteria in the hospital environment and community
+settings, leading to a variety of clinical syndromes such as
+endocarditis, pneumonia, and central nervous system in-
+fections.
+59−61 As the polyelectrolyte P 1a/2e/3a showed good
+inhibition to Gram-positive S. aureus, the inhibition potency
+against MRSA was evaluated to further explore its antimicro-
+bial ability against drug-resistant bacteria. As shown in Figure
+4B, the high charge density in the polymer main chain enabled
+P1a/2e/3a to possess a high a ﬃ nity to negatively charged
+bacteria membrane and thus could stain MRSA quickly, as
+short as 5 min. Furthermore, persistent ﬂuorescence was found
+for bacteria even upon incubation for 60 min, which was
+favorable for extended light irradiation.
+After that, the quantitative MRSA inhibition of P 1a/2e/3a
+was performed in the presence or absence of light
+irradiation (Figure 4C). In the dark state, P 1a/2e/3a exhibited
+moderate inhibition against MRSA, as the positive charges on
+the polyelectrolyte main chain enabled the micelles to adhere
+and fuse with the bacteria membrane and thus physically
+damaged bacteria membrane to some extent.
+62 Upon white
+light irradiation, P 1a/2e/3a could generate 1O2 eﬃ ciently
+apart from the physical damage e ﬀect, leading to much
+stronger inhibition against MRSA with an MIC value of ∼30
+μg/mL. In addition, the raw monomers 1a, 2e, and 3a of P1a/
+2e/3a all exhibited minimal bacteria inhibition even in the
+presence of light irradiation, which further highlighted
+advantageous P 1a/2e/3a with remarkable PDT potency
+(Figure S19 ).
+Furthermore, the morphology change of MRSA upon
+diverse treatments was observed by TEM and SEM analysis
+(Figure 4D and E). After incubation at 37 °C for 30 min, both
+the control sample and the single light-treating sample
+exhibited a smooth membrane surface and an intact membrane
+Figure 3. (A−C) UV −vis absorption spectra of ABDA in the
+presence of (A) P 1a/2e/3a, (B) P 1a/2d/3a, and (C) P 1a/2c/3a.
+(D) The decomposition rates of ABDA by P 1/2/3 and Rose Bengal
+where A0 and A are the absorbance of ABDA in the presence of PSs at
+378 nm before and after irradiation, respectively.
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11264
+structure, while the cell surface of MRSA became rough and
+out of shape under the treatment of P 1a/2e/3a in the dark
+state; many micelles were found to be around the bacteria,
+demonstrating e ﬃ cient binding, adhesion, and further fusion
+with the MRSA membrane. Finally, as the yellow arrows
+indicated, much more signi ﬁcant membrane shrinking and
+deformation were observed upon micelle binding and extra
+light irradiation.
+To investigate the biocompatibility of the polyelectrolytes,
+MTT assays were performed for P 1a/2e/3a upon incubation
+with primary skin ﬁbroblast cells for 24 h. P 1a/2e/3a showed
+undetectable toxicity toward the cells even up to 175 μg/mL
+under light irradiation ( Figure S20 ), exhibiting good
+biocompatibility and antibac terial selectivity, which was
+favorable for in vivo applications.
+An in vivo bacteria inhibition experiment was conducted on
+a MRSA-infected mouse burn model.
+63 Diﬀerent treatments
+were applied to the MRSA-infected burn sites, and the
+recovery process was evaluated in 14 days ( Figure 5 A). An
+eﬀectively accelerated wound healing process was observed
+when treated with vancomycin or P 1a/2e/3a with light
+irradiation, as compared to the control group ( Figure 5 B and
+C). After the whole treating process in 14 days, the mice were
+sacriﬁced and their wound tissues were harvested for further
+evaluation. Although vancomycin could also enhance the
+wound healing process, the quantitative experiments showed
+that the inhibition e ﬀect of P 1a/2e/3a under white light
+irradiation was much better than vancomycin, the golden
+standard for Gram-positive bacteria treatment ( Figure 5 D,
+Figure S21 ). Histologic analysis was conducted to further
+evaluate the treatment e ﬀect ( Figure 5 E). Normal mouse skin
+was highly heterogeneous tissue, containing epidermis, dermis
+with hair follicle, and subcutaneous layer. At the 14th day, the
+control group only showed a partially re-epithelialized and
+thickened epidermis, while tissue of the P 1a/2e/3a under the
+light-irradiation-treated group showed an obvious re-epithe-
+lialized epidermis, exhibiti ng intact skin microstructure
+comparable with normal tissue. Thus, the in vivo MRSA-
+infected mouse burn model demonstrated that the photo-
+dynamic e ﬀect of P 1a/2e/3a could inhibit MRSA infection in
+the burn injury mouse model and e ﬀectively accelerate the
+healing process.
+Figure 4. (A) Hydrodynamic diameter distribution and TEM image of the P 1a/2e/3a aqueous suspension. (B) Fluorescent images, DIC images,
+and their merge images of MRSA upon treatment with P 1a/2e/3a. (C) Quantitative antibacterial tests of P 1a/2e/3a against MRSA in the presence
+or absence of light irradiation. (D) Morphology change of MRSA upon diverse treatments observed by TEM. (E) Morphology change of MRSA
+upon diverse treatments observed by SEM.
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11265
+■ CONCLUSION
+In summary, we have developed an e ﬃ cient one-pot
+polymerization route to in situ generate functional azonia-
+containing polyelectrolytes using readily accessible nonionic
+reactants and commercially available cheap ionic species.
+Compared with traditional synthetic strategies of polyelec-
+trolytes, this new strategy did not require a postmodi ﬁcation
+step or expensive ionic monomers. The polymerization
+proceeded e ﬃ ciently in air with high tolerance to the
+monomer feed ratio, generating polyelectrolytes in excellent
+yields (up to 99%) with high molecular weights (up to 28700)
+in high atom economy. With electron-de ﬁcient azonia fused
+rings in the polymer main chain, the emission color of the
+resulting polyelectrolytes could be easily tuned by changing the
+electron donor. With high luminescence in the solid state,
+good processing ability, and high refractive indices, these
+polymers were excellent materials for ﬂuorescent photo-
+patterns and promising for optical applications. Notably, the
+azonia-containing polyelectrolytes had a strong ROS gener-
+ation ability and could impressively kill the drug resistant
+superbug. P 1a/2e/3a was demonstrated to e ﬀectively kill
+MRSA both in vitro and in the MRSA-infected mouse burn
+model. The e ﬃ cient one-pot synthetic methodology to azonia-
+containing polyelectrolytes provided a new strategy for the
+synthesis of polyelectrolytes, greatly enriching the family of
+polyelectrolytes. Current charge-generating polymerization
+provided these prominent functional positively charged
+polyelectrolytes, which were promising candidates for various
+biomedical applications, such as tissue engineering, surface
+modiﬁcation, and self-healing materials.
+■ ASSOCIATED CONTENT
+*S Supporting Information
+The Supporting Information is available free of charge on the
+ACS Publications website at DOI: 10.1021/jacs.9b04757.
+Details of the materials, methods, synthetic procedures,
+and characterization data (IR, NMR, TGA, DSC, etc.);
+photophysical properties, photostability study, and light
+refraction data of the pol ymers; ROS-generation
+detection, quantitative antibacterial tests data, and
+MTT assays ( PDF)
+■ AUTHOR INFORMATION
+Corresponding Authors
+*chjacky@ust.hk
+*xlhu@scnu.edu.cn, huxlong@mail.ustc.edu.cn
+*tangbenz@ust.hk
+Figure 5. (A) Schematic illustration for the construction of the MRSA-infected mouse burn model and the therapeutic pro ﬁle. (B) Typical
+photographs of MRSA-infected burn sites upon di ﬀerent treatments under dark or light irradiation during the therapeutic processes. (C) Relative
+eschar size analysis after diverse treatments at the 14th day. (D) The number of MRSA in the infected tissues was quanti ﬁed at the 14th day. (E)
+Histologic analysis of the MRSA-infected burn injury tissue by hematoxylin and eosin staining for di ﬀerent treatment groups. As a comparison,
+commercial vancomycin was evaluated in parallel. Blue dotted lines indicate the epithelium border, green arrows show the adipose cells, and black
+arrows present the hair follicles.
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11266
+ORCID
+Xiaolin Liu: 0000-0002-6909-117X
+Ting Han: 0000-0003-1521-6333
+Zijie Qiu: 0000-0003-0728-1178
+Yubing Hu: 0000-0003-3083-0067
+Xianglong Hu: 0000-0001-9202-1543
+Ben Zhong Tang: 0000-0002-0293-964X
+Author Contributions
+#X.L. and M.L. contributed equally to this work.
+Notes
+The authors declare no competing ﬁnancial interest.
+■ ACKNOWLEDGMENTS
+This work was ﬁnancially supported by the National Science
+Foundation of China (21788102 and 21674040), the Research
+Grants Council of Hong Kong (16308116, C6009-17G, and A-
+HKUST605/16), the Innovation and Technology Commission
+(ITC-CNERC14SC01 and ITS/254/17), the National Key
+Research and Development program of China
+(2018YFE0190200), the Science and Technology Plan of
+Shen-zhen (JCYJ20170818113530705 and
+JCYJ20180306180231853), the Natural Science Foundation
+for Distinguished Young Scholars of Guangdong Province
+(2016A030306013), and the Pearl River Young Talents
+Program of Science and Technology in Guangzhou
+(201906010047).
+■ REFERENCES
+(1) Fuoss, R. M. Polyelectrolytes. Science 1948, 108 (2812), 545 −
+550.
+(2) Regelson, W.; Kuhar, S.; Tunis, M.; Fields, J.; Johnson, J.;
+Gluesenkamp, E. Synthetic Polyelectrolytes as Tumour Inhibitors.
+Nature 1960, 186 (4727), 778 −780.
+(3) Rubinstein, M.; Papoian, G. A. Polyelectrolytes in Biology and
+Soft Matter. Soft Matter 2012, 8 (36), 9265 −9267.
+(4) Li, X.; Bai, H.; Yang, Y.; Yoon, J.; Wang, S.; Zhang, X.
+Supramolecular Antibacterial Materials for Combatting Antibiotic
+Resistance. Adv. Mater. 2018, 31 (5), 1805092.
+(5) Meka, V. S.; Sing, M. K.; Pichika, M. R.; Nali, S. R.; Kolapalli, V.
+R.; Kesharwani, P. A Comprehensive Review on Polyelectrolyte
+Complexes. Drug Discovery Today 2017, 22 (11), 1697 −1706.
+(6) Laschewsky, A. Recent Trends in the Synthesis of Polyelec-
+trolytes. Curr. Opin. Colloid Interface Sci. 2012, 17 (2), 56 −63.
+(7) Mortimer, D. A. Synthetic Polyelectrolytes a Review. Polym.
+Int. 1991, 25 (1), 29 −41.
+(8) Laschewsky, A. Structures and Synthesis of Zwitterionic
+Polymers. Polymers 2014, 6 (5), 1544 −1601.
+(9) Eftekhari, A.; Saito, T. Synthesis and Properties of Polymerized
+Ionic Liquids. Eur. Polym. J. 2017, 90, 245 −272.
+(10) Sen, A. K.; Roy, S.; Juvekar, V. A. On the Importance of
+Purification of Sodium Polystyrene Sulfonate. ISRN Anal. Chem.
+2012, 2012, 514509.
+(11) Tran, Y.; Auroy, P. Synthesis of Poly (Styrene Sulfonate)
+Brushes. J. Am. Chem. Soc. 2001, 123 (16), 3644 −3654.
+(12) Hua, F.; Kita, R.; Wegner, G.; Meyer, W. Interactions between
+Brushlike Polyacrylic Acid Side Chains on a Polyacrylate Backbone in
+Dioxane−Water.
+ChemPhysChem 2005, 6 (2), 336 −343.
+(13) Mori, H.; Mu ̈ller, A. H. New Polymeric Architectures with
+(Meth) Acrylic Acid Segments. Prog. Polym. Sci. 2003, 28 (10),
+1403−1439.
+(14) Zhu, C.; Yang, Q.; Liu, L.; Wang, S. A Potent Fluorescent
+Probe for the Detection of Cell Apoptosis. Chem. Commun. 2011, 47
+(19), 5524 −5526.
+(15) Moon, J. H.; McDaniel, W.; MacLean, P.; Hancock, L. F. Live-
+Cell-Permeable Poly (P-Phenylene Ethynylene). Angew. Chem. 2007,
+119 (43), 8371 −8373.
+(16) Xiang, T.; Wang, L.-R.; Ma, L.; Han, Z.-Y.; Wang, R.; Cheng,
+C.; Xia, Y.; Qin, H.; Zhao, C.-S. From Commodity Polymers to
+Functional Polymers. Sci. Rep. 2015, 4, 4604.
+(17) Lemstra, P. J.; Kirschbaum, R. Speciality Products Based on
+Commodity Polymers. Polymer 1985, 26 (9), 1372 −1384.
+(18) Fan, J.; Borguet, Y. P.; Su, L.; Nguyen, T. P.; Wang, H.; He, X.;
+Zou, J.; Wooley, K. L. Two-Dimensional Controlled Syntheses of
+Polypeptide Molecular Brushes Via N-Carboxyanhydride Ring-
+Opening Polymerization and Ring-Opening Metathesis Polymer-
+ization. ACS Macro Lett. 2017, 6 (9), 1031 −1035.
+(19) Nicholson, J. W. Polyelectrolyte Materials − Reflections on a
+Highly Charged Topic. Chem. Soc. Rev. 1994, 23 (1), 53 −58.
+(20) Jiang, Y.; Freyer, J. L.; Cotanda, P.; Brucks, S. D.; Killops, K. L.;
+Bandar, J. S.; Torsitano, C.; Balsara, N. P.; Lambert, T. H.; Campos,
+L. M. The Evolution of Cyclopropenium Ions into Functional
+Polyelectrolytes. Nat. Commun. 2015, 6, 5950.
+(21) Zhu, T.; Sha, Y.; Yan, J.; Pageni, P.; Rahman, M. A.; Yan, Y.;
+Tang, C. Metallo-Polyelectrolytes as a Class of Ionic Macromolecules
+for Functional Materials. Nat. Commun. 2018, 9 (1), 4329.
+(22) Zhu, T.; Xu, S.; Rahman, A.; Dogdibegovic, E.; Yang, P.;
+Pageni, P.; Kabir, M. P.; Zhou, X.-d.; Tang, C. Cationic Metallo-
+Polyelectrolytes for Robust Alkaline Anion-Exchange Membranes.
+Angew. Chem., Int. Ed. 2018, 57 (9), 2388 −2392.
+(23) Li, Y.; Du, W.; Sun, G.; Wooley, K. L. Ph-Responsive Shell
+Cross-Linked Nanoparticles with Hydrolytically Labile Cross-Links.
+Macromolecules 2008, 41 (18), 6605 −6607.
+(24) Jiang, H.; Taranekar, P.; Reynolds, J. R.; Schanze, K. S.
+Conjugated Polyelectrolytes: Synthesis, Photophysics, and Applica-
+tions. Angew. Chem., Int. Ed. 2009, 48 (24), 4300 −4316.
+(25) Zhu, C.; Liu, L.; Yang, Q.; Lv, F.; Wang, S. Water-Soluble
+Conjugated Polymers for Imaging, Diagnosis, and Therapy. Chem.
+Rev. 2012, 112 (8), 4687 −4735.
+(26) Elsabahy, M.; Heo, G. S.; Lim, S.-M.; Sun, G.; Wooley, K. L.
+Polymeric Nanostructures for Imaging and Therapy. Chem. Rev. 2015,
+115 (19), 10967 −11011.
+(27) Pu, K.-Y.; Liu, B. Fluorescent Conjugated Polyelectrolytes for
+Bioimaging. Adv. Funct. Mater. 2011, 21 (18), 3408 −3423.
+(28) Yuan, H.; Liu, Z.; Liu, L.; Lv, F.; Wang, Y.; Wang, S. Cationic
+Conjugated Polymers for Discrimination of Microbial Pathogens. Adv.
+Mater. 2014, 26 (25), 4333 −4338.
+(29) Hu, F.; Xu, S.; Liu, B. Photosensitizers with Aggregation-
+Induced Emission: Materials and Biomedical Applications. Adv.
+Mater. 2018, 30 (45), 1801350.
+(30) Zhu, C.; Kwok, R. T. K.; Lam, J. W. Y.; Tang, B. Z.
+Aggregation-Induced Emission: A Trailblazing Journey to the Field of
+Biomedicine. ACS Appl. Bio Mater. 2018, 1 (6), 1768 −1786.
+(31) Jiang, M.; Kwok, R. T.; Li, X.; Gui, C.; Lam, J. W.; Qu, J.; Tang,
+B. Z. A Simple Mitochondrial Targeting Aiegen for Image-Guided
+Two-Photon Excited Photodynamic Therapy. J. Mater. Chem. B 2018,
+6 (17), 2557 −2565.
+(32) Jiang, M.; Gu, X.; Kwok, R. T.; Li, Y.; Sung, H. H.; Zheng, X.;
+Zhang, Y.; Lam, J. W.; Williams, I. D.; Huang, X. Multifunctional
+Aiegens: Ready Synthesis, Tunable Emission, Mechanochromism,
+Mitochondrial, and Bacterial Imaging. Adv. Funct. Mater. 2018, 28
+(1), 1704589.
+(33) Wang, D.; Lee, M. M.; Shan, G.; Kwok, R. T.; Lam, J. W.; Su,
+H.; Cai, Y.; Tang, B. Z. Highly Efficient Photosensitizers with Far-
+Red/near-Infrared Aggregation-Induced Emission for in Vitro and in
+Vivo Cancer Theranostics. Adv. Mater. 2018, 30 (39), 1802105.
+(34) Zhang, T.; Li, Y.; Zheng, Z.; Ye, R.; Zhang, Y.; Kwok, R. T. K.;
+Lam, J. W. Y.; Tang, B. Z. In Situ Monitoring Apoptosis Process by a
+Self-Reporting Photosensitizer. J. Am. Chem. Soc. 2019, 141 (14),
+5612−5616.
+(35) Yin, J.; Tan, M.; Wu, D.; Jiang, R.; Li, C.; You, J. Synthesis of
+Phenalenyl-Fused Pyrylium Cations: Divergent C −H Activation/
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11267
+Annulation Reaction Sequence of Naphthalene Aldehydes with
+Alkynes. Angew. Chem., Int. Ed. 2017, 56 (42), 13094 −13098.
+(36) Bica, K.; Rijksen, C.; Nieuwenhuyzen, M.; Rogers, R. D. In
+Search of Pure Liquid Salt Forms of Aspirin: Ionic Liquid Approaches
+with Acetylsalicylic Acid and Salicylic Acid. Phys. Chem. Chem. Phys.
+2010, 12 (8), 2011 −2017.
+(37) Cao, B.; Xiao, F.; Xing, D.; Hu, X. L. Polyprodrug
+Antimicrobials: Remarkable Membrane Damage and Concurrent
+Drug Release to Combat Antibiotic Resistance of Methicillin-
+Resistant Staphylococcus Aureus. Small 2018, 14 (41), 1802008.
+(38) Wang, B.; Yuan, H.; Liu, Z.; Nie, C.; Liu, L.; Lv, F.; Wang, Y.;
+Wang, S. Cationic Oligo (P-Phenylene Vinylene) Materials for
+Combating Drug Resistance of Cancer Cells by Light Manipulation.
+Adv. Mater. 2014, 26 (34), 5986 −5990.
+(39) Xiao, F.; Cao, B.; Wang, C.; Guo, X.; Li, M.; Xing, D.; Hu, X. L.
+Pathogen-Specific Polymeric Antimicrobials with Significant Mem-
+brane Disruption and Enhanced Photodynamic Damage to Inhibit
+Highly Opportunistic Bacteria. ACS Nano 2019, 13 (2), 1511 −1525.
+(40) Wang, B.; Wang, M.; Mikhailovsky, A.; Wang, S.; Bazan, G. C.
+A Membrane-Intercalating Conjugated Oligoelectrolyte with High-
+Efficiency Photodynamic Antimicrobial Activity. Angew. Chem., Int.
+Ed. 2017, 56 (18), 5031 −5034.
+(41) Sucunza, D.; Cuadro, A. M.; Alvarez-Builla, J.; Vaquero, J. J.
+Recent Advances in the Synthesis of Azonia Aromatic Heterocycles. J.
+Org. Chem. 2016, 81 (21), 10126 −10135.
+(42) Fu, G. C.; Grubbs, R. H. The Application of Catalytic Ring-
+Closing Olefin Metathesis to the Synthesis of Unsaturated Oxygen
+Heterocycles. J. Am. Chem. Soc. 1992, 114 (13), 5426 −5427.
+(43) Abengozar, A.; Abarca, B.; Cuadro, A. M.; Sucunza, D.; Alvarez-
+Builla, J.; Vaquero, J. J. Azonia Aromatic Cations by Ring-Closing
+Metathesis: Synthesis of Azaquinolizinium Cations. Eur. J. Org. Chem.
+2015, 2015 (19), 4214 −4223.
+(44) Prakash, S.; Muralirajan, K.; Cheng, C. H. Cobalt-Catalyzed
+Oxidative Annulation of Nitrogen-Containing Arenes with Alkynes:
+An Atom-Economical Route to Heterocyclic Quaternary Ammonium
+Salts. Angew. Chem., Int. Ed. 2016, 55 (5), 1844 −1848.
+(45) Ge, Q.; Hu, Y.; Li, B.; Wang, B. Synthesis of Conjugated
+Polycyclic Quinoliniums by Rhodium (Iii)-Catalyzed Multiple C −H
+Activation and Annulation of Arylpyridiniums with Alkynes. Org. Lett.
+2016, 18 (10), 2483 −2486.
+(46) Toriumi, N.; Asano, N.; Miyamoto, K.; Muranaka, A.;
+Uchiyama, M. N-Alkynylpyridinium Salts: Highly Electrophilic
+Alkyne−Pyridine Conjugates as Precursors of Cationic Nitrogen-
+Embedded Polycyclic Aromatic Hydrocarbons. J. Am. Chem. Soc.
+2018, 140 (11), 3858 −3862.
+(47) Han, Y. R.; Shim, S.-H.; Kim, D.-S.; Jun, C.-H. Synthesis of
+Benzoquinolizinium Salts by Rh (Iii)-Catalyzed Cascade Double N-
+Annulation Reactions of Allylamines, Diarylacetylenes, and Hbf4. Org.
+Lett. 2017, 19 (11), 2941 −2944.
+(48) Higashihara, T.; Ueda, M. Recent Progress in High Refractive
+Index Polymers. Macromolecules 2015, 48 (7), 1915 −1929.
+(49) Hiorns, R. Polymer Handbook, 4th Edn, Edited by J Brandup,
+Eh Immergut and Ea Grulke, Associate Editors a Abe and Dr Bloch,
+John Wiley and Sons, New York, 1999, Pp 2250, Price £210 Isbn 0 −
+471−16628−6. Polym. Int. 2000, 49 (7), 807 −807.
+(50) Wang, Y.; Fedin, I.; Zhang, H.; Talapin, D. V. Direct Optical
+Lithography of Functional Inorganic Nanomaterials. Science 2017, 357
+(6349), 385 −388.
+(51) Perry, J. W. Two Beams Squeeze Feature Sizes in Optical
+Lithography. Science 2009, 324 (5929), 892 −893.
+(52) Wang, Q. H.; Jin, Z.; Kim, K. K.; Hilmer, A. J.; Paulus, G. L. C.;
+Shih, C.-J.; Ham, M.-H.; Sanchez-Yamagishi, J. D.; Watanabe, K.;
+Taniguchi, T.; Kong, J.; Jarillo-Herrero, P.; Strano, M. S. Under-
+standing and Controlling the Substrate Effect on Graphene Electron-
+Transfer Chemistry Via Reactivity Imprint Lithography. Nat. Chem.
+2012, 4, 724.
+(53) Yu, C. Y.; Xu, H.; Ji, S.; Kwok, R. T.; Lam, J. W.; Li, X.;
+Krishnan, S.; Ding, D.; Tang, B. Z. Mitochondrion-Anchoring
+Photosensitizer with Aggregation-Induced Emission Characteristics
+Synergistically Boosts the Radiosensitivity of Cancer Cells to Ionizing
+Radiation. Adv. Mater. 2017, 29 (15), 1606167.
+(54) You, X.; Ma, H.; Wang, Y.; Zhang, G.; Peng, Q.; Liu, L.; Wang,
+S.; Zhang, D. Pyridinium-Substituted Tetraphenylethyleneentailing
+Alkyne Moiety: Enhancement of Photosensitizing Efficiency and
+Antimicrobial Activity. Chem. - Asian J. 2017, 12 (9), 1013 −1019.
+(55) Zhang, C.-J.; Hu, Q.; Feng, G.; Zhang, R.; Yuan, Y.; Lu, X.; Liu,
+B. Image-Guided Combination Chemotherapy and Photodynamic
+Therapy Using a Mitochondria-Targeted Molecular Probe with
+Aggregation-Induced Emission Characteristics. Chem. Sci. 2015, 6
+(8), 4580 −4586.
+(56) Zheng, Z.; Zhang, T.; Liu, H.; Chen, Y.; Kwok, R. T. K.; Ma,
+C.; Zhang, P.; Sung, H. H. Y.; Williams, I. D.; Lam, J. W. Y.; Wong, K.
+S.; Tang, B. Z. Bright near-Infrared Aggregation-Induced Emission
+Luminogens with Strong Two-Photon Absorption, Excellent Organ-
+elle Specificity, and Efficient Photodynamic Therapy Potential. ACS
+Nano 2018, 12 (8), 8145 −8159.
+(57) Kearns, D. R. Physical and Chemical Properties of Singlet
+Molecular Oxygen. Chem. Rev. 1971, 71 (4), 395 −427.
+(58) Zhu, C.; Yang, Q.; Liu, L.; Lv, F.; Li, S.; Yang, G.; Wang, S.
+Multifunctional Cationic Poly(P-Phenylene Vinylene) Polyelectro-
+lytes for Selective Recognition, Imaging, and Killing of Bacteria over
+Mammalian Cells. Adv. Mater. 2011, 23 (41), 4805 −4810.
+(59) Courtney, C. M.; Goodman, S. M.; McDaniel, J. A.; Madinger,
+N. E.; Chatterjee, A.; Nagpal, P. Photoexcited Quantum Dots for
+Killing Multidrug-Resistant Bacteria. Nat. Mater. 2016, 15, 529.
+(60) Chin, W.; Zhong, G.; Pu, Q.; Yang, C.; Lou, W.; De Sessions, P.
+F.; Periaswamy, B.; Lee, A.; Liang, Z. C.; Ding, X.; Gao, S.; Chu, C.
+W.; Bianco, S.; Bao, C.; Tong, Y. W.; Fan, W.; Wu, M.; Hedrick, J. L.;
+Yang, Y. Y. A Macromolecular Approach to Eradicate Multidrug
+Resistant Bacterial Infections While Mitigating Drug Resistance
+Onset. Nat. Commun. 2018, 9 (1), 917.
+(61) Wu, C.; Shang, Z.; Lemetre, C.; Ternei, M. A.; Brady, S. F.
+Cadasides, Calcium-Dependent Acidic Lipopeptides from the Soil
+Metagenome That Are Active against Multidrug-Resistant Bacteria. J.
+Am. Chem. Soc. 2019, 141 (9), 3910 −3919.
+(62) Engler, A. C.; Wiradharma, N.; Ong, Z. Y.; Coady, D. J.;
+Hedrick, J. L.; Yang, Y.-Y. Emerging Trends in Macromolecular
+Antimicrobials to Fight Multi-Drug-Resistant Infections. Nano Today
+2012, 7 (3), 201 −222.
+(63) Li, Y.; Liu, G.; Wang, X.; Hu, J.; Liu, S. Enzyme-Responsive
+Polymeric Vesicles for Bacterial-Strain-Selective Delivery of Anti-
+microbial Agents. Angew. Chem., Int. Ed. 2016, 55 (5), 1760 −1764.
+Journal of the American Chemical Society Article
+DOI: 10.1021/jacs.9b04757
+J. Am. Chem. Soc. 2019, 141, 11259 −11268
+11268
