@@ -47,9 +47,19 @@ def main():
         print(chunk.content, end="", flush=True)
         output.append(chunk.content)
 
+    # Post-process: add "Other Topics" category for fault tolerance
+    taxonomy_text = "".join(output).strip()
+
+    # Check if "Other" category already exists at level 2
+    if not any(line.strip().startswith("## Other") for line in taxonomy_text.split("\n")):
+        # Add "Other Topics" category at the end
+        other_category = "\n\n## Other Topics\n**Description:** Topics and methods that do not fit into the above categories or are emerging areas."
+        taxonomy_text += other_category
+        print("\n\n[Auto-added: ## Other Topics for fault tolerance]")
+
     # Write output
     with open(args.output, "w", encoding="utf-8") as f:
-        f.write("".join(output))
+        f.write(taxonomy_text)
 
     print(f"\n\nTaxonomy successfully written to: {args.output}")
 
