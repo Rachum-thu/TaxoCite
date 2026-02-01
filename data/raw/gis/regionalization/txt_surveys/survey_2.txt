@@ -1,0 +1,360 @@
+Spatial Regionalization: Formulations, Algorithms, and
+Applications
+Yongyi Liu
+University of California, Riverside
+Riverside, California
+yliu786@ucr.edu
+Yunhan Chang
+University of California, Riverside
+Riverside, California
+ychan268@ucr.edu
+Amr Magdy
+University of California, Riverside
+Riverside, California
+amr@cs.ucr.edu
+Abstract
+Spatial regionalization partitions a set of spatial polygons into con-
+tiguous, non-overlapping regions that optimize a specific objective
+function. This spatial operation serves diverse applications in envi-
+ronmental science, urban planning, public health, and economics.
+Due to the NP-hardness of this problem, most studies rely on heuris-
+tics and approximation techniques to balance solution quality with
+runtime efficiency. This tutorial reviews the main methods in the
+literature of spatial regionalization, organizing them into four cate-
+gories: (i) linear and integer-programming formulations, (ii) top-
+down divisive strategies, (iii) bottom-up agglomerative strategies,
+and (iv) learning-based methods. For each category, we outline the
+core ideas and representative algorithms. We also discuss the open
+problems and future research directions.
+CCS Concepts
+•Information systems → Geographic information systems; •
+Location based services ;
+Keywords
+Spatial Grouping Query, Spatial Regionalization
+ACM Reference Format:
+Yongyi Liu, Yunhan Chang, and Amr Magdy. 2025. Spatial Regionalization:
+Formulations, Algorithms, and Applications. In The 33rd ACM International
+Conference on Advances in Geographic Information Systems (SIGSPATIAL
+’25), November 3–6, 2025, Minneapolis, MN, USA. ACM, New York, NY, USA,
+4 pages. https://doi.org/10.1145/3748636.3758023
+1 Overview
+Spatial regionalization is the problem of partitioning a spatial space
+into contiguous regions that optimize a chosen objective. It is widely
+utilized across various domains, including public health [ 8], e.g.,
+delineating epidemic outbreak zones, environmental science [37],
+e.g., identifying homogeneous climate zones for climate change
+studies, and public policy [11, 12], e.g., school redistricting.
+Spatial regionalization problems exhibit various forms, primarily
+differentiated by their input/output, constraints, and objective func-
+tions, yet all are NP-hard constrained optimization problems. One
+key distinction is whether the number of regions is predetermined
+as input or dynamically determined by the algorithm and produced
+This work is licensed under a Creative Commons Attribution 4.0 International License.
+SIGSPATIAL ’25, November 3–6, 2025, Minneapolis, MN, USA
+© 2025 Copyright held by the owner/author(s).
+ACM ISBN 979-8-4007-2086-4/2025/11
+https://doi.org/10.1145/3748636.3758023
+as output. When the number of regions is input, the problem for-
+mulation is referred to as the p-regions problem [5, 18, 24, 26, 29].
+Conversely, when the optimal number of regions is part of the so-
+lution to the optimization problem itself, the formulation is called
+the max-p regions problem [2, 3, 17, 19, 20, 22, 32–35].
+Objective functions in spatial regionalization also vary consid-
+erably, fundamentally influencing the resulting region boundaries.
+Many algorithms measure heterogeneity as the sum of pairwise at-
+tribute dissimilarities within each region [2, 17, 18, 22, 29, 35], while
+others use deviations from a regional mean [ 6, 7]. Beyond these
+generic metrics, application-specific designs tailor the objective to
+domain goals. School redistricting systems such as REGAL [ 12]
+and SPATIAL [11] combine capacity balance with student travel
+distance to yield equitable, short-commute districts. Mobility and
+economic studies favor flow-modularity measures that keep com-
+muter or freight movements largely inside each region [ 10, 25].
+This tutorial emphasizes the general heterogeneity functions while
+noting these domain-driven variants.
+User-defined constraints also play in categorizing regionalization
+problems. PRUC formulation [29], for example, enriches the stan-
+dard p-regions problem by supporting an aggregate user-defined
+constraint, thereby increasing practical applicability. Similarly, EMP
+formulation [22] significantly expands the classic max-𝑝 problem
+by supporting multiple simultaneous constraints, enabling users
+to use all the SQL aggregate functions. Such enriched constraints
+broaden the range of real-world planning scenarios that regional-
+ization algorithms can capture while still allowing heuristic solvers
+to scale.
+Spatial regionalization is naturally relevant to the ACM SIGSPA-
+TIAL conference audience [2, 5, 7, 9, 11, 12, 27]. The audience of
+this tutorial will learn a comprehensive overview about the litera-
+ture of spatial regionalization with in-depth technical details and
+discussions of challenges either from the algorithmic point of view
+(computing challenges) or from the application point of view (inter-
+disciplinary challenges). We divide the existing regionalization algo-
+rithms into four categories.(i) Linear/integer programming mod-
+els [15, 18, 23] that cast objectives and constraints as linear equa-
+tions to provideexact solutions with solvers such as CPLEX.(ii) Top-
+down divisive approaches [6, 7, 21] that provide approximate so-
+lutions by starting with the whole space and iteratively divide it to
+yield successively finer, homogeneous regions.(iii) Bottom-up ag-
+glomerative heuristics [2, 3, 11, 12, 16, 17, 19, 21, 22, 29–31, 35] that
+provide approximate solutions by merging small adjacent polygons
+to form larger regions. (iv) Learning-based methods [27, 28, 36]
+This work is partially supported by the National Science Foundation, USA, grant
+IIS-2237348, the Google-CAHSI research grant, and Microsoft unrestricted gift.
+Figure 1: Tutorial Outline
+that find approximate solutions by training machine-learning mod-
+els, typically graph or embedding networks, to embed polygons
+and then cluster them under contiguity constraints.
+Figure 1 summarizes the two major categorizations used in this
+tutorial. Throughout this manuscript, the terms spatial polygons,
+spatial units, and spatial areas are used interchangeably where the
+context allows clear interpretation. The rest of this section briefly
+outlines each part.
+1.1 Part 1: Spatial Regionalization Formulations
+Part 1 begins by introducing classical spatial regionalization prob-
+lems, followed by their variants concerning constraints and ob-
+jective functions. As shown in Figure 1, spatial regionalization
+problems generally fall into two broad categories: (i) The 𝑝-regions
+formulations [18, 26, 29], in which the analyst specifies a fixed
+number of regions ( 𝑝) in advance. The objective is to partition
+spatial units into exactly 𝑝 regions, minimizing internal hetero-
+geneity regarding selected attributes. (ii) The max- 𝑝 regions for-
+mulations [2, 3, 17, 19, 22, 35] treat the number of regions as an
+outcome of the optimization process itself. Therefore, the goal is to
+identify the maximum number of feasible regions, each satisfying
+minimum size or other feasibility constraints.
+Various objective functions quantify intra-region heterogeneity
+in these formulations. Some methods define heterogeneity using
+pairwise attribute differences among all spatial units within a re-
+gion, effectively summing up the dissimilarities between every pair
+of constituent units [
+2, 17, 18, 22, 29, 35]. Other approaches measure
+heterogeneity as deviations from a regional mean or centroid [6, 7],
+summing the differences between each spatial unit’s attribute val-
+ues and the regional average. Although differing mathematically,
+these functions all aim to form internally homogeneous regions
+based on chosen attributes.
+Different formulations impose different constraints. For instance,
+PRUC [29] augments 𝑝-regions with a single user-defined aggre-
+gate threshold (e.g., minimum population) per region. Enriched
+Max-P (EMP) [22] expands max-p to support multiple simultane-
+ous aggregate constraints, effectively allowing any SQL-style sum,
+count, or average condition within each region. These enriched
+formulations let analysts encode realistic policy rules while keeping
+the underlying optimization framework scalable.
+1.2 Part 2: Exact Algorithms
+A foundational approach to spatial regionalization is formulating
+it as an exact optimization problem, typically using a linear pro-
+gramming model [15, 18, 23]. This formulation is proposed in [18]
+where constraints and objectives are formulated as linear equations.
+Recent advancements [15] revise the linear formulation by using
+fewer variables in modeling the spatial contiguity, greatly reducing
+memory footprint. The linear model is solved using optimization
+tools such as CPLEX [1]. However, exact solutions via linear pro-
+gramming are computationally impractical for large datasets due to
+the NP-hard nature of the problem. In practice, exact optimization is
+affordable for a few hundred spatial units, sufficient for detailed case
+studies or for validating heuristic quality, but becomes prohibitive
+for larger-sized datasets.
+1.3 Part 3: Top-down Divisive Algorithms
+Top-down divisive methods [6, 7, 21] begin by considering all spatial
+units as a single region and iteratively divide them into increasingly
+homogeneous subregions. Typically, these methods model the spa-
+tial units as nodes within a spatial neighborhood graph, with edges
+representing adjacency. A common strategy involves transforming
+this graph into a spanning tree and iteratively removing edges to
+partition the graph into clusters. For instance, the Spatial ’K’luster
+Analysis by Tree Edge Removal (SKATER) algorithm [6] constructs
+a minimum spanning tree (MST) using edge weights based on dis-
+similarity between adjacent units. SKATER progressively cuts edges
+that significantly reduce within-region heterogeneity until the de-
+sired number of regions is achieved. SKATER-CON [7], an extension
+of SKATER, generates multiple random MSTs, applies SKATER to
+each tree, and integrates these results into a final consensus re-
+gionalization. REDCAP [21] is a special case that combines both
+bottom-up and top-down strategies. It first applies a dynamically
+constrained agglomerative phase that heuristically merges neigh-
+boring units to build a spatially contiguous hierarchy, and then
+partitions that hierarchy by removing edges that mostly reduce
+within-region heterogeneity.
+1.4 Part 4: Bottom-up Agglomerative
+Algorithms
+Bottom-up algorithms are widely used for spatial regionalization,
+forming regions by merging smaller spatial areas (polygons) into
+larger contiguous clusters. These algorithms typically employ a
+two-phase heuristic: an initial solution construction phase to es-
+tablish feasible regions, followed by an heuristic search phase to
+optimize region boundaries [
+2, 3, 9, 11, 12, 16, 17, 19, 21, 22, 29–
+31, 35, 38]. In the initial solution phase, spatial areas are selected as
+seeds and expanded into preliminary regions while ensuring conti-
+guity. The optimization phase then iteratively reassigns or swaps
+areas between regions to improve the objective function. Variations
+among these methods include different approaches to seed selec-
+tion [2, 11, 12, 17, 29], heuristics guiding areas reassignment [29–
+31, 35], and supported constraints or criteria [17, 18, 22, 29].
+The foundational bottom-up method, AZP [ 30], begins with
+a random partition and employs local greedy search, transfer-
+ring neighboring boundary units between regions whenever such
+moves improve the objective. To avoid local optima, subsequent
+improvement [
+31] introduces heuristics, including Tabu Search
+and Simulated Annealing, enabling occasional acceptance of in-
+ferior solutions for overall improvement. ARISeL [16] further op-
+timizes initial seeding by strategically selecting dispersed initial
+seeds, yielding more robust starting partitions and enhancing final
+outcomes. Similarly, GSLO [29] selects spatially dispersed seeds
+and employs parallel computation alongside combined heuristic
+search strategies for significantly improved efficiency. The bottom-
+up methods are also broadly utilized in max-𝑝 regionalization prob-
+lems [2, 3, 17, 19, 22, 35], aiming to maximize region count under
+given constraints by growing from the seeded regions. Variations of
+such include compactness requirements [
+19], simultaneous multiple
+constraints [22], and efficient heuristic methods for large-scale ap-
+plications [2, 3]. Domain-specific adaptations such as REGAL [12]
+and SPATIAL [11] apply bottom-up agglomeration to specialized
+contexts, e.g., school districting.
+1.5 Part 5: Learning-based Algorithms
+Learning-based spatial regionalization algorithms employ modern
+representation-learning techniques, most commonly graph neural
+networks (GNNs), to discover regions. A typical two-step pattern
+first learns low-dimensional embeddings for each spatial polygon
+on an adjacency graph that encodes contiguity, then clusters the em-
+beddings while enforcing that only neighbouring units can merge.
+Region2Vec [27, 28] follows this paradigm: they train an unsu-
+pervised GNN whose loss jointly rewards attribute similarity and
+interaction intensity between adjacent polygons, and subsequently
+apply a contiguity-constrained linkage to obtain regions. MNCD-
+KE [36] adopts a related two-stage strategy: a multilayer commu-
+nity detector generates “kernel” units that are already cohesive in
+both attributes and flows, after which a kernel-extension heuristic
+greedily grows each seed while respecting contiguity, size, and
+compactness constraints.
+1.6 Part 6: Open Problems and Future Research
+Spatial regionalization research faces two key challenges. First, the
+lack of a unified query framework. Such a framework would accept
+arbitrary user-defined constraints and automatically select or com-
+pose the optimal solution strategy. Currently, each problem variant
+relies on a specialized algorithm, forcing practitioners to manually
+align problem requirements with specific code bases. A prototype
+of such a framework was introduced in [4], but it remains limited,
+lacking comprehensive support for diverse workloads and objec-
+tive functions. Second, the absence of standardized benchmarks
+and datasets. Most studies use customized datasets and evaluation
+metrics, hindering consistent comparisons across algorithms. Fi-
+nally, recent work [13, 14] suggest that quantum computing could
+tackle the combinatorial explosion inherent in spatial regionaliza-
+tion by exploring large solution spaces more efficiently than classi-
+cal heuristics. Integrating quantum optimization could open a new
+path toward globally optimal yet tractable spatial rationalization.
+2 Previous Tutorials
+An earlier version of this tutorial will be presented at SSTD 2025
+conference (http://sstd2025.github.io/). This edition enriches that
+material by adding a whole new part about learning-based region-
+alization techniques (Part 5) and introducing quantum computing
+as a whole new direction for spatial regionalization, positioning
+this in the literature of spatial optimization (Part 6).
+References
+[1] 2009. V12. 1: User’s Manual for CPLEX. IBM Corporation 46, 53 (2009), 157.
+[2] Hussah Alrashid, Yongyi Liu, and Amr Magdy. 2022. SMP: Scalable Max-p
+Regionalization. In Proceedings of ACM SIGSPATIAL.
+[3] Hussah Alrashid, Yongyi Liu, and Amr Magdy. 2023. PAGE: Parallel Scalable
+Regionalization Framework. ACM Transactions on Spatial Algorithms and Systems
+(ACM TSAS) 9, 3 (2023).
+[4] Hussah Alrashid and Amr Magdy. 2023. A Scalable Unified System for Seeding
+Regionalization Queries. In Proceedings of the International Symposium on Spatial
+and Temporal Data (SSTD).
+[5] Hussah Alrashid, Amr Magdy, and Sergio Rey. 2023. Statistical Inference for
+Spatial Regionalization. In Proceedings of ACM SIGSPATIAL.
+[6] Renato M Assunção, Marcos Corrêa Neves, Gilberto Câmara, and Corina da
+Costa Freitas. 2006. Efficient Regionalization Techniques for Socio-economic
+Geographical Units using Minimum Spanning Trees. International Journal of
+Geographical Information Science (IJGIS) 20, 7 (2006).
+[7] Orhun Aydin, Mark V Janikas, Renato Assunçao, and Ting-Hwan Lee. 2018.
+SKATER-CON: Unsupervised Regionalization via Stochastic Tree Partitioning
+within a Consensus Framework using Random Spanning Trees. In Proceedings
+of the International Workshop on AI for Geographic Knowledge Discovery (ACM
+SIGSPATIAL).
+[8] Roberto Benedetti, Federica Piersimoni, Giacomo Pignataro, and Francesco Vidoli.
+2020. Identification of Spatially Constrained Homogeneous Clusters of COVID-19
+Transmission in Italy. Regional Science Policy & Practice 12, 6 (2020).
+[9] Daniel Bereznyi, Ahmad Qutbuddin, YoungGu Her, and KwangSoo Yang. 2020.
+Node-attributed Spatial Graph Partitioning. In Proceedings of ACM SIGSPATIAL.
+[10] Gianpiero Bianchi, Renato Bruni, Alessandra Reale, and Fabio Sforzi. 2016. A
+Min-cut Approach to Functional Regionalization, with a Case Study of the Italian
+Local Labour Market Areas. Optimization Letters 10 (2016).
+[11] Subhodip Biswas, Fanglan Chen, Zhiqian Chen, Chang-Tien Lu, and Naren Ra-
+makrishnan. 2020. Incorporating Domain Knowledge into Memetic Algorithms
+for Solving Spatial Optimization Problems. In Proceedings of ACM SIGSPATIAL.
+[12] Subhodip Biswas, Fanglan Chen, Zhiqian Chen, Andreea Sistrunk, Nathan Self,
+Chang-Tien Lu, and Naren Ramakrishnan. 2019. REGAL: A Regionalization
+Framework for School Boundaries. In Proceedings of ACM SIGSPATIAL.
+[13] Yunhan Chang, Amr Magdy, and Federico M. Spedalieri. 2025. Quantum Model-
+ing of Spatial Contiguity Constraints. In ACM SIGMOD Workshop on Quantum
+Computing and Quantum-Inspired Technology for Data-Intensive Systems and
+Applications (Q-Data). 7 pages. https://doi.org/10.1145/3736393.3736691
+[14] Yunhan Chang, Amr Magdy, Federico M. Spedalieri, and Ibrahim Sabek.
+2025. Spatial Regionalization: A Hybrid Quantum Computing Approach.
+arXiv:2506.18799 [quant-ph] https://arxiv.org/abs/2506.18799
+[15] Djordje Dugošija, Aleksandar Savić, and Zoran Maksimović. 2020. A New Integer
+Linear Programming Formulation for the Problem of Political Districting. Annals
+of Operations Research 288 (2020).
+[16] Juan Carlos Duque. 2004.Design of Homogenous Territorial Units. A Methodological
+Proposal and Applications. Universitat de Barcelona.
+[17] Juan C Duque, Luc Anselin, and Sergio J Rey. 2012. The Max-p-regions Problem.
+Journal of Regional Science 52, 3 (2012).
+[18] Juan C Duque, Richard L Church, and Richard S Middleton. 2011. The p-regions
+Problem. Geographical Analysis 43, 1 (2011).
+[19] Xin Feng, Sergio Rey, and Ran Wei. 2022. The Max-p-compact-regions Problem.
+Transactions in GIS 26, 2 (2022).
+[20] David C Folch and Seth E Spielman. 2014. Identifying Regions based on Flexible
+User-defined Constraints. International Journal of Geographical Information
+Science (IJGIS) 28, 1 (2014).
+[21] Diansheng Guo. 2008. Regionalization with Dynamically Constrained Agglomera-
+tive Clustering and Partitioning (REDCAP). International Journal of Geographical
+Information Science (IJGIS) 22, 7 (2008).
+[22] Yunfan Kang and Amr Magdy. 2022. EMP: Max-P Regionalization with Enriched
+Constraints. In International Conference on Data Engineering (IEEE ICDE).
+[23] Hyun Kim, Yongwan Chun, and Kamyoung Kim. 2015. Delimitation of Functional
+Regions using a p-regions Problem Approach. International Regional Science
+Review 38, 3 (2015).
+[24] Kamyoung Kim, Denis J Dean, Hyun Kim, and Yongwan Chun. 2016. Spatial
+Optimization for Regionalization Problems with Spatial Interaction: A Heuristic
+Approach. International Journal of Geographical Information Science (IJGIS) 30, 3
+(2016).
+[25] Per Kropp and Barbara Schwengler. 2016. Three-step Method for Delineating
+Functional Labour Market Regions. Regional Studies 50, 3 (2016).
+[26] Wenwen Li, Richard L Church, and Michael F Goodchild. 2014. The p-compact-
+regions Problem. Geographical Analysis 46, 3 (2014).
+[27] Yunlei Liang, Jiawei Zhu, Wen Ye, and Song Gao. 2022. Region2Vec: Community
+Detection on Spatial Networks using Graph Embedding with Node Attributes
+and Spatial Interactions. In Proceedings of ACM SIGSPATIAL.
+[28] Yunlei Liang, Jiawei Zhu, Wen Ye, and Song Gao. 2025. GeoAI-enhanced Com-
+munity Detection on Spatial Networks with Graph Deep Learning. Computers,
+Environment and Urban Systems 117 (2025), 102228.
+[29] Yongyi Liu, Ahmed R Mahmood, Amr Magdy, and Sergio Rey. 2021. PRUC:
+P-regions with User-defined Constraint. Proceedings of the VLDB Endowment 15,
+3 (2021).
+[30] Stan Openshaw. 1977. A Geographical Solution to Scale and Aggregation Prob-
+lems in Region-Building, Partitioning and Spatial Modeling. Transactions of the
+Institute of British Geographers (1977).
+[31] Stan Openshaw and Liang Rao. 1995. Algorithms for Reengineering 1991 Census
+Geography. Environment and Planning A 27, 3 (1995).
+[32] Bing She, Juan C Duque, and Xinyue Ye. 2017. The Network-max-P-regions
+Model. International Journal of Geographical Information Science (IJGIS) 31, 5
+(2017).
+[33] Viney Sindhu. 2018. Exploring Parallel Efficiency and Synergy for Max-P Region
+Problem Using Python. (2018).
+[34] Ran Wei, Sergio Rey, and Tony H Grubesic. 2022. A Probabilistic Approach to
+Address Data Uncertainty in Regionalization. Geographical Analysis 54, 2 (2022).
+[35] Ran Wei, Sergio Rey, and Elijah Knaap. 2021. Efficient Regionalization for Spa-
+tially Explicit Neighborhood Delineation. International Journal of Geographical
+Information Science (IJGIS) 35, 1 (2021).
+[36] Liyan Xu, Jintong Tang, Hezhishi Jiang, Hongbin Yu, Qian Huang, Yinsheng Zhou,
+and Yu Liu. 2024. MNCD-KE: A Novel Framework for Simultaneous Attribute-
+and Interaction-based Geographical Regionalization. International Journal of
+Geographical Information Science (IJGIS) 38, 10 (2024).
+[37] Xue Yang, Jan Magnusson, and Chong-Yu Xu. 2019. Transferability of Regional-
+ization Methods under Changing Climate. Journal of Hydrology 568 (2019).
+[38] Yang Zhou, Hong Cheng, and Jeffrey Xu Yu. 2009. Graph Clustering based on
+Structural/Attribute Similarities. Proceedings of the VLDB Endowment 2, 1 (2009).

@@ -1,0 +1,1854 @@
+EMP: Max-P Regionalization with Enriched
+Constraints
+Y unfan Kanga, b
+aDepartment of Computer Science and Engineering
+bCenter for Geospatial Sciences
+University of California, Riverside
+ykang040@ucr.edu
+Amr Magdy a, b
+aDepartment of Computer Science and Engineering
+bCenter for Geospatial Sciences
+University of California, Riverside
+amr@cs.ucr.edu
+Abstract—Spatial regionalization is the process of grouping a
+set of spatial areas into spatially contiguous and homogeneous
+regions. This paper introduces an enriched max-p-regions (EMP)
+problem; a regionalization process that allows enriched user-
+deﬁned constraints based on SQL aggregate functions. In addi-
+tion to enabling richer constraints, it enables users to employ
+multiple constraints simultaneously to signiﬁcantly push the
+expressiveness and effectiveness of the existing regionalization
+literature. The EMP problem is NP-hard and signiﬁcantly
+enriches the existing regionalization problems. Such a major
+enrichment introduces several challenges in both feasibility and
+scalability. To address these challenges, we propose the Fa CT
+algorithm, a three-phase greedy approach that ﬁnds a feasible set
+of spatial regions that satisfy EMP constraints while supporting
+large datasets compared to the existing literature. Our extensive
+experimental evaluation has demonstrated the effectiveness and
+scalability of our techniques on several real datasets.
+Index Terms—spatial, regionalization, max-p, aggregate
+I. I NTRODUCTION
+Regionalization is the process of clustering a set of areas
+into spatially contiguous and homogeneous regions. Unlike
+traditional clustering of multi-dimensional points, the basic
+units in regionalization are spatial polygons that are grouped
+based on both attribute values and adjacency in space. Re-
+gionalization is widely used in numerous applications such as
+epidemic analysis [7], service delivery systems [3], water qual-
+ity assessment [13], weather temperature classiﬁcation [18],
+rainfall erosivity estimation [46], health data analysis [8], spa-
+tial crowdsourcing [12], [48], and constituency allocation [44].
+Identifying regions is a computational and conceptual chal-
+lenge. One of the fundamental challenges is determining the
+spatial scale of the studied phenomena. For example, snowing
+is spatially correlated at the level of multiple states, e.g., the
+USA midwest states, while temperature is spatially correlated
+at a county level. Most regionalization routines require the
+number of regions, p, as an input parameter, e.g., in the USA,
+p =5 0 is a state level and p = 3000 is a county level. This puts
+the burden of determining the spatial scale on the data analysts,
+forcing them to analyze multiple p values, which increases the
+computational cost and limits the query expressiveness.
+The latest regionalization formulation, called the max-p-
+regions problem (or MP-regions), has addressed the scale
+problem [15] and become popular in different applications,
+including urban spatial structures [4], measuring intra-urban
+poverty [17], population growth analysis [21], crime anal-
+ysis [41], regional inequality analysis [43], spatial uncer-
+tainty [49], and neighborhood delineation [50]. With the obser-
+vation that researchers usually know a condition that a region
+must satisfy to be suitable for the analysis, the MP-regions
+automatically discovers the maximum number of regions that
+satisfy a given user-deﬁned constraint instead of forcing users
+to input p. However, the MP-regions problem has several
+limitations in both scalability and expressiveness. Currently,
+the state-of-the-art algorithms take 3-60 mins to process a
+dataset with ∼ 3k areas, depending on the threshold value. As
+a result, existing real applications, listed above, use relatively
+small data, ranging from tens of areas [11], [21], [43] to only
+a few hundred [4], [17], [41], [49], [50]. It is explicitly stated
+in [49] that to use the MP-regions algorithms “ one must be
+willing to reduce the number of geographic units of analy-
+sis.” Such severe scalability limitations prevent the existing
+MP-regions formulation from supporting a wide variety of
+user-deﬁned constraints that enable users to express ﬂexible
+regionalization queries for various applications.
+Existing MP-regions formulation allows a single user-
+deﬁned threshold lower bound on one attribute , e.g., total
+region population ≥ 100K. However, many analysis tasks can-
+not be catered with a single constraint that involves a simple
+threshold. In many real applications, it is common to have
+multiple constraints with different aggregate functions. For
+example, studies show that the COVID-19 virus transmission
+pattern is closely related to prosperity and labor mobility [7].
+In order to make region-speciﬁc recommendations for pre-
+venting the virus spread, policymakers can issue a query to
+identify reasonably populated regions with a total population
+≥ 200000, an average monthly income between $3000 to
+$5000, and public transportation passengers ≥ 10000. Another
+example is studying the changes in population requires con-
+sidering multiple factors that inﬂuence the phenomenon [21]
+with different aggregation functions such as the minimum
+population of each area, the maximum school drop-out rate,
+the average age of the population, and total unemployment.
+A third example is the patrol sector partition problem [11]
+that aims to consider the number of calls and the workload
+balance. These example applications signiﬁcantly beneﬁt from
+1914
+2022 IEEE 38th International Conference on Data Engineering (ICDE)
+2375-026X/22/$31.00 ©2022 IEEE
+DOI 10.1109/ICDE53745.2022.00189
+2022 IEEE 38th International Conference on Data Engineering (ICDE) | 978-1-6654-0883-7/22/$31.00 ©2022 IEEE | DOI: 10.1109/ICDE53745.2022.00189
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+enriching the expressiveness of MP-regions queries that will
+enable exploring different scenarios and expanding analysis
+capabilities. Currently, such advanced regionalization queries
+cannot be expressed using the existing MP-regions formulation
+due to its limited support for user-deﬁned constraints, limiting
+its full potential in many real applications.
+This paper introduces an enriched MP-regions problem
+(EMP) that addresses the existing MP-regions limitations.
+EMP enables users to analyze one to two orders of magnitude
+larger datasets than the currently supported ones. Further-
+more, EMP enriches user-deﬁned constraints with three novel
+features: (1) EMP provides an enriched set of aggregates
+that contains three families of aggregate functions, namely,
+extrema aggregates , centrality aggregates , and counting ag-
+gregates. The three families of aggregates are inspired by
+the standard SQL aggregate functions from which we adopt
+minimum and maximum as extrema aggregates, average as
+a centrality aggregate, and summation and count as counting
+aggregates. (2) EMP allows using a range comparison operator
+that expresses all possible comparisons, less-than-or-equal ( ≤ ),
+larger-than-or-equal ( ≥ ), and range comparison. This enables
+users to set both lower and upper bounds for their constraints
+instead of only lower bounds in existing formulations. (3) EMP
+supports multiple constraints instead of a single constraint.
+The EMP formulation addresses the limitation of the existing
+MP-regions formulation and reveals the full potential for
+regionalization queries in different applications.
+The EMP problem is an NP-hard problem (see Section IV),
+so ﬁnding an optimal solution is intractable. We formulated the
+EMP as a mathematical optimization problem using mixed-
+integer programming (MIP) problem [28] and solved it with
+the world’s fastest MIP solver Gurobi [25]. The optimizer
+takes 33.86s to ﬁnd an optimal solution for 9 areas, 10 hours
+for 16 areas, and is not able to return a feasible solution for
+25 areas after 110 hours of execution [29]. This clearly shows
+the infeasibility of ﬁnding an exact solution for hundreds or
+thousands of areas in a reasonable runtime. However, even
+ﬁnding an approximate solution faces two main challenges.
+First, the newly introduced constraints are non-monotonic.
+Therefore, adding or removing areas to and from a certain
+region does not provide any guarantee of satisfying or violating
+these constraints. This requires exhaustive exploration for the
+whole search space to ﬁnd the solution, which is intractable
+with such an NP-hard problem. Second, while satisfying mul-
+tiple non-monotonic constraints, a region can easily become
+overlarge. Having oversized regions reduces the number of
+regions p, which contradicts the objective of maximizing p.
+To address these challenges, we introduce Fa CT , a three-
+phase algorithm to solve the EMP problem. The ﬁrst phase
+derives theoretical bounds to verify the feasibility of ﬁnding a
+solution given the user-deﬁned constraints. In addition, in the
+case of infeasibility, it enables the user to potentially alter input
+data to satisfy the constraints. This provides great ﬂexibility
+to tune either data or query parameters adaptively and enables
+rich exploratory analysis capabilities for a wide variety of
+datasets. The second phase constructs a feasible solution that
+satisﬁes the input constraints while maximizing the number of
+regions p. The phase is divided into three independent steps
+with the following features: (a) Each step is carefully designed
+to exploit the mathematical properties of one type of constraint
+to maximize the p to its theoretical upper bound. (b) The input
+and output of each step are designed exquisitely to reduce the
+search space for the following steps and mitigate the conﬂicts
+introduced by the different mathematical properties of different
+constraints. (c) The steps are independent of each other,
+enabling Fa CT to construct feasible solutions progressively
+and handle any arbitrary combinations of constraint types
+effectively and efﬁciently. (d) The algorithm provides multiple
+parameter tuning options so that the users can choose the best
+aggregate strategy according to the use case and the char-
+acteristic of the dataset. (e) The algorithm supports datasets
+with multiple connected components, while the MP-regions
+formulation supports only a single connected component. The
+third phase of Fa CT performs a local search adapting the
+Tabu search [23] and swaps areas between regions to improve
+the overall heterogeneity of the regions.
+Our experimental evaluation demonstrates the effectiveness
+of Fa CT on real datasets. We evaluate the impact of dif-
+ferent threshold ranges, different combinations of constraints,
+and the scalability to process datasets. Our contributions are
+summarized as follows:
+• We deﬁne an enriched max-p regions problem (EMP) that
+reveals the full potential of max-p regionalization.
+• We prove the NP-hardness of the EMP problem.
+• We propose Fa CT ; a three-phase greedy algorithm that
+provides approximate solutions for the EMP problem.
+• We perform an extensive experimental evaluation that
+shows the effectiveness of our techniques on real datasets.
+The rest of this paper is organized as follows. Section II
+presents the related work. Section III deﬁnes the problem and
+Section IV proves its NP-hardness. Our proposed solution is
+detailed in Section V, and its time and space complexity are
+analyzed in Section VI. Section VII shows the experimental
+evaluations and Section VIII concludes the paper.
+II. R ELA TED WORK
+The regionalization problem originates from the demand
+for aggregating homogeneous regions in the analytical tasks
+performed by social scientists and statisticians [19]. Region-
+alization is referred to by different names, including region
+building [10], conditional clustering [33], clustering with rela-
+tional constraints [19], contiguity-constrained clustering [36],
+constrained classiﬁcation [24], maximum split clustering under
+connectivity constraints [26], and p-regions problem [16]
+that is used in a variety of applications such as detecting
+functional regions [30], [31], network-constrained urban man-
+agement [54], and partitioning compact regions [32], [34],
+[35]. The max-p-regions problem (MP-regions) [15] has been
+introduced to eliminate the requirement for inputting the
+number of regions in advance. It aggregates areas into a
+maximum number of regions so that each region satisﬁes a
+single user-deﬁned constraint with a summation aggregate,
+1915
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+e.g., total population ≥ 20K. Existing variants [20], [21],
+[47] use the road network-based connectivity as an additional
+spatial constraint to aggregate regions or use multiple attributes
+to impose the constraint. However, all existing variants still
+support only a single constraint of one type as the MP-regions
+problem.
+Existing regionalization techniques that perform multi-
+criteria districting [11], [14], [21], [51], [53] use multi-
+objective optimization to partition the space based on multiple
+attributes. These techniques still put the burden of determining
+the spatial scale, i.e., the number of output regions, on the user.
+They also allow the user to deﬁne a single constraint on one
+of the attributes, limiting the query expressiveness. Our EMP
+problem addresses these limitations. It enables users to deﬁne
+multiple constraints on different attributes to provide ﬂexible
+and expressive queries. In addition, it inherits the automatic
+discovery of the appropriate number of regions from the MP-
+regions and eliminates the spatial scale problem.
+We classify the popular approaches to tackle the NP-
+hard rationalization problems into two main categories. The
+ﬁrst category is the clustering methods [38], [40] with two
+phases. The ﬁrst phase clusters the centroids of polygons
+using a traditional clustering algorithm. The second phase
+then imposes the spatial connectivity constraint to ensure
+that each region is geographically connected. The second
+category adopts a two-phase contiguity-constrained heuristic
+optimization approach [5], [15], [22], [39], [47]. The set of
+spatial areas is usually represented by a graph that encodes
+the spatial contiguity relationships. With the spatial contiguity
+constraint imposed explicitly, a feasible initial solution is
+constructed in the ﬁrst phase and then optimized using heuris-
+tic or mixed-heuristic search methods in the second phase.
+The construction methods include tree partition [5], [6] and
+greedy aggregation [15], [20], [22], [39]. The heuristic search
+phase optimizes the objective function to improve the region
+homogeneity [5], [6], [22] or geographical compactness [22]
+without violating the contiguity constraint.
+Our work follows the second category of contiguity-
+constrained heuristic optimization search. We consider mul-
+tiple constraints with different aggregate functions that do not
+exist in the literature, so none of the existing methods can
+obtain a feasible solution that satisﬁes our enriched constraints.
+III. P ROBLEM DEFINITION
+This section formally deﬁnes the enriched max-p regions
+(EMP) problem. Let A = {a
+1,a 2, ..., an} denote the set of
+areas. Each area ai is deﬁned by four attributes: ai=(i,bi,Si,di),
+where i is the area identiﬁer, bi is an arbitrary spatial polygon
+that deﬁnes the area’s spatial boundaries, Si is a set of spatially
+extensive attributes and di is a dissimilarity attribute. The
+dissimilarity attribute di is used in computing output regions’
+heterogeneity. The rest of the section presents basic deﬁnitions,
+then deﬁnes the EMP problem formally.
+Deﬁnition III.1 (User-deﬁned Constraint) . A user-deﬁned
+constraint c is a condition that is deﬁned as “ l ≤ f (s) ≤ u”o r
+“ f (s) ∈ [l, u]”. c is identiﬁed with a 4-tuple: ( f ,s,l,u), where
+f is an aggregate function, s is a spatially extensive attribute,
+l ∈ [−∞ , ∞ ) is a number that represents a lower bound, and
+u ∈ (−∞ , ∞ ] is a number that represents an upper bound.
+EMP allows f to be MIN, MAX, A VG, SUM, or COUNT
+that compute minimum, maximum, average, summation, and
+count aggregates, respectively, with the same semantic as the
+SQL standards. The attribute s is a spatially extensive attribute
+whose value is divided over the smaller areas when the area
+is fragmented. For example, the population value of a state is
+divided over its cities, so the population is a spatially extensive
+attribute. This is the opposite to spatially intensive attributes,
+such as temperature, that are not divided when the spatial area
+is fragmented. Examples of s include the population, labor
+force, and households in each area. When l = −∞ , the range
+has an open-ended lower bound and the constraint becomes
+f (s) ≤ u. Similarly, when u = ∞ , it becomes f (s) ≥ l.
+Deﬁnition III.2 (Region). A region R is a set of g areas:
+R = {a
+1,a 2, ..., ag}, such that: (1) g ≥ 1, i.e., R contains at
+least one area. (2) Areas in R are spatially contiguous, i.e., ∀
+ai,a j ∈ R, ∃ a sequence of areas ( ak,...,al) s.t. both ( ai, ak)
+and ( al, aj) are spatial neighbors, and every two consecutive
+areas in the sequence are spatial neighbors.
+Deﬁnition III.3 (Heterogeneity). Heterogeneity H(P ) of a set
+of regions P is deﬁned as:
+H(P )=
+∑
+∀ R∈ P
+∑
+∀ ai,aj ∈ R
+|di − dj| (1)
+This deﬁnition of H is popular in the MP-regions liter-
+ature, so it is recognized by social sciences experts as a
+primary measure for region heterogeneity. However, our work
+can support alternative deﬁnitions, such as improving spatial
+compactness or balancing multiple criteria. The reason is that
+our second phase, which is based on Tabu search as discussed
+in Section V, can deal with different optimization functions.
+EMP Problem . The EMP problem is deﬁned as follows:
+Input: Given: (1) A set of n areas: A = {a
+1,a 2, ..., an}.
+(2) A set of user-deﬁned constraints C = {c1,c 2, ..., cm}.
+Output: (1) A set of regions P = {R1,R 2, ..., Rp}, where
+1 ≤ p ≤ n and each region Ri satisﬁes the below EMP
+constraints and objectives. (2) A set U0 = A−⋃p
+i=1
+Ri, i.e., U0
+contains all areas that are not assigned to any feasible region
+R
+i, ∀1 ≤ i ≤ p. Areas in U0 may not be spatially contiguous.
+EMP Constraints:
+• Ri ∩ Rj = ∅, ∀Ri,R j ∈ P ∧ i ̸= j
+• Ri satisﬁes all constraints cj ∈ C,
+. ∀ 1 ≤ i ≤ p, 1 ≤ j ≤ m
+Objectives:
+• Maximizing the number of regions p.
+• Minimizing regions’ overall heterogeneity H(P ).
+EMP has two objectives. In case they contradict during
+building the output regions, the ﬁrst objective (maximizing
+1916
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+the number of regions) is favored over the second one (min-
+imizing regions’ heterogeneity). This allows users to obtain
+the maximum number of desirable regions without provid-
+ing the number of regions as an input, as favored by the
+domain experts [15], which addresses a major limitation in
+the previous regionalization problems. The second objective
+uses a dissimilarity attribute that is not necessarily a spatial
+attribute. For example, social scientists produce regions that
+are homogeneous in average income level.
+Comparing the EMP problem with the original MP-regions
+problem [15], there are two major differences that are in-
+troduced by the enriched user-deﬁned constraints. First, the
+enriched constraints are not always monotonic. Assuming that
+all spatially extensive attribute values are positive, adding an
+area to a region or removing an area from a region in MP-
+regions guarantees a monotone change towards satisfying the
+constraint threshold. This is not the case for the EMP problem
+due to allowing A VG, MIN, and MAX constraints. In addition,
+the EMP problem allows upper-bounded threshold ranges,
+so adding areas to a region without additional validation
+leads to violating the SUM and COUNT constraints’ upper
+bounds. Second, the EMP problem allows unassigned areas,
+U
+0, to exist in the ﬁnal area partition, contrary to the MP-
+regions problem. This provides ﬂexibility to satisfy multi-
+ple constraints of different types, especially MIN and MAX
+constraints that commonly cause invalid areas, as discussed
+in the following sections. Allowing unassigned areas enables
+constraints such as MIN and MAX to serve as ﬁlters to
+ﬁlter out areas with undesired properties, which introduces
+more tolerance and enables richer exploration capabilities to
+regionalization queries.
+IV . NP- HARDNESS OF EMP
+This section proves the NP-hardness of the EMP problem.
+The NP-hardness of the EMP problem follows the results that
+the MP-regions problem is NP-hard [1], [2], [15]. The MP-
+regions problem takes as input: (1) a set of spatially contiguous
+areas A = {a
+1,a 2, ..., an}. Each area ai is associated with an
+identiﬁer i, a spatial polygon bi, a spatially extensive attribute
+si and a dissimilarity attribute di, (2) a threshold value t.F o r
+the purpose of the proof, we solve both the MP-regions and
+the EMP problem as decision problems with a ﬁxed p = k.
+Theorem 1. The EMP problem is NP-hard.
+Proof. Let X = ( A, t) be an instance of the MP-regions
+problem. We construct an instance Y = ( A
+′,C ) of the EMP
+problem as follows: (1) For each area ai ∈ X.A, add
+to Y.A′ an area a′
+i
+= {i, bi,S ′
+i,d i}, S′
+i = {si}. (2) Let
+C = {(SUM, S ′[0],t , ∞ )}. (3) Let the number of regions p
+equal k. This reduction is of polynomial time of O(n) where
+n is the number of areas in A. Therefore, an algorithm that
+decides on the instance Y of the EMP problem decides on
+the instance X of the MP-regions problem as well. As the
+MP-regions problem is NP-hard, then the EMP problem is
+NP-hard, and the proof is complete.
+V. P ROPOSED SOLUTION
+This section presents Fa CT , a three-phase algorithm that
+ﬁnds a feasible solution for an instance of the EMP problem
+with low overall heterogeneity. The ﬁrst phase is a feasibility
+phase that veriﬁes the existence of any feasible solution
+given the user-deﬁned constraints. The second phase is a
+construction phase that constructs a feasible initial solution
+with the maximum number of regions p while satisfying
+all user-deﬁned constraints. This phase represents the major
+contribution of this algorithm. It balances two challenging
+objectives: satisfying multiple non-monotonic user-deﬁned
+constraints and producing a maximum number of spatially
+contiguous regions. The third phase is a local search phase
+that improves the initial solution of the construction phase in
+terms of the heterogeneity score. The following sections detail
+each phase.
+A. Feasibility Phase
+The EMP problem deals with arbitrary combinations of con-
+straints on different attributes. The goal of the feasibility phase
+is to signal the user at an early stage for: (1) the infeasibility
+of ﬁnding a solution for the given set of constraints on the
+given dataset, and (2) the possibility of removing some areas
+to satisfy the given constraints.
+The fact that our algorithm can detect and ﬁlter out invalid
+areas for all constraints, including non-monotonic constraints,
+gives it major practical advantages when employing multiple
+constraints. The algorithm is not only able to give users a
+heads-up on the infeasibility of their constraints, but also users
+can choose to remove input areas that cause such infeasibility
+automatically. This gives data analysts great ﬂexibility to
+analyze a wide variety of datasets and constraints.
+Given a set of user-deﬁned constraints C =
+{(MIN,s
+min,l min,u min), (MA X,s max,l max,u max),
+(AV G, savg ,l avg ,u avg ), (SUM, s sum,l sum,u sum),
+(COUNT,s count,l count,u count)}, we check the feasibility
+of applying each type of constraint as follows:
+(1) For A VG constraints , we compute the average value
+AV G (savg ) of attribute savg over all areas. If AV G(savg ) <
+lavg or AV G(savg ) >u avg , we infer that there exists no
+partition where all regions satisfy the A VG constraint without
+removing any area. This is justiﬁed by Theorem 3 below.
+Theorem 2. If ∃P = {R
+1,R 2, ..., Rp} so that every region
+Ri ∈ P satisﬁes c =( AV G, savg ,l avg ,u avg ) and P contains
+all areas in a set A, then the average value AV G(savg ) of savg
+over all areas of A satisﬁes c, i.e., lavg ≤ AV G(savg ) ≤ uavg .
+Proof. If p =1 , i.e., P = {A}, the proposition is trivially
+true. If p> 1, as all regions in P satisfy c,w eh a v e :
+lavg ≤ Ri.AV G(savg ) ≤ uavg , ∀i, 1 ≤ i ≤ p (2)
+where Ri.AV G(savg ) represents the average value of attribute
+savg over areas in region Ri. Let |Ri| denote the number of
+areas in region Ri.A s P contains all areas, we have:
+p∑
+i=1
+|Ri|= n (3)
+1917
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+Also, by deﬁnition:
+AV G(savg ) × n =
+p∑
+i=1
+(|Ri|×Ri.AV G) (4)
+AV G(savg )=
+∑p
+i=1
+(|Ri|×Ri.AV G)
+n
+≤
+∑p
+i=1
+|Ri|uavg
+n = uavg
+(5)
+AV G(savg )=
+∑p
+i=1
+(|Ri|×Ri.AV G)
+n
+≥
+∑p
+i=1
+|Ri|lavg
+n = lavg
+(6)
+Equations 5 and 6 =⇒ lavg ≤ AV G(savg ) ≤ uavg .
+Hence, the Theorem 2 is true, and the proof is complete.
+Theorem 3. F o ra na r e as e tA and an A VG constraint c =
+(AV G, savg ,l avg ,u avg ), if the average value of savg over A,
+AV G(savg ), does not satisfy c, i.e., AV G(savg ) <l avg or
+AV G(savg ) >u avg , then ∄P = {R1,R 2, ..., Rp} such that P
+partitions all areas in A and Ri ∈ P satisﬁes c, ∀1 ≤ i ≤ p.
+Theorem 3 is proved by proving its contrapositive Theorem 2.
+(2) For MIN constraints , we compute the minimum
+and maximum values over all areas for attribute smin,
+MIN (smin) and MA X(smin), respectively. Two different
+cases could cause infeasibility: (a) If MA X(smin) <l min
+or MIN (smin) >u min, then there is no area that satisﬁes
+the MIN constraint and no valid regions can be constructed,
+so there is no feasible solution. (b) If MIN (s
+min) <l min <
+MA X(smin), all areas with smin <l min are invalid areas that
+cannot be part of any valid region, so they must be ﬁltered out
+to build a feasible solution. Therefore, there is room to ﬁnd a
+feasible solution after removing invalid areas.
+(3) Similarly for MAX constraints , there are two cases of
+infeasibility: (a) If MIN (s
+max) >u max or MA X(smax) <
+lmax, there is no area that satisﬁes the MAX constraint, and
+there is no feasible solution. (b) Areas with smax >u max are
+invalid areas that must be ﬁltered out to ﬁnd a solution.
+(4) For SUM constraints , we compute the minimum
+and summation of all areas for ssum, MIN (ssum) and
+SUM (ssum), respectively. There are three cases of infeasi-
+bility: (a) If MIN (ssum) >u sum, no region can have ssum
+within the range. (b) If SUM (ssum) <l sum, even the trivial
+region containing all areas cannot have ssum within the range.
+(c) Areas with ssum >u sum are invalid and must be removed.
+(5) For COUNT constraints , if the number of areas n<
+lcount, there is no feasible solution as a region containing all
+areas cannot meet the lower bound lcount.
+The feasibility phase iterates through the area set and
+computes the needed attribute aggregates for all constraints
+in a single pass. This pass is enough to ﬁlter out invalid areas,
+that have s
+min <l min, smax >u max,o r ssum >u sum,
+to eliminate potential invalid regions. However, the feasibility
+pass is not enough to ﬁlter out invalid areas for the A VG
+constraint. This is performed during the following construction
+phase while imposing A VG constraints. All invalid areas are
+ﬁltered out from A, added to the set U
+0, and they are not
+considered in any further processing. The remaining areas in
+set A are passed to the following phases.
+B. Construction Phase
+The construction phase greedily constructs a feasible solu-
+tion that: (a) satisﬁes all user-deﬁned constraints, (b) maxi-
+mizes the number of regions p, and (c) minimizes the num-
+ber of unassigned areas. This phase faces the challenges of
+simultaneously satisfying multiple non-monotonic constraints
+while preventing building oversized regions that contradict
+maximizing p. To address these challenges, the construction
+phase satisﬁes each family of user-deﬁned constraints in a
+separate step, and each step handles different constraints in
+isolation. By this, we gain several beneﬁts towards address-
+ing the challenges. First, each step focuses on one type of
+optimization, making it an easier problem to solve. Second,
+dividing the logic into consecutive steps provides ﬂexibility to
+handle queries with any arbitrary subset of different constraints
+(as discussed in Section V -D). Third, the order of steps makes
+use of the mathematical properties of different aggregate
+functions to increase the probability of producing a feasible
+solution. MIN, MAX, and SUM constraints are used as ﬁlters
+to oust invalid areas and provide seed areas for the following
+steps. Then, A VG constraint, which is the most challenging
+to satisfy, takes the seed areas and grows as many regions as
+possible. The last step performs only necessary modiﬁcations
+to satisfy any violated SUM and COUNT constraints, which
+are easier to satisfy due to the monotonicity of SUM and
+COUNT aggregate functions. Fourth, separated steps facilitate
+maximizing the value of p, as detailed later, without violating
+the constraints that have been satisﬁed previously. Conse-
+quently, our construction phase produces an initial partitioning
+for the space with a near-optimal p value that is fed to the fol-
+lowing phase to minimize the regions’ heterogeneity. Although
+reducing the overall heterogeneity score is an objective for the
+ﬁnal solution, this phase is not primarily designed to minimize
+heterogeneity, which is optimized in the following phase.
+The construction phase executes multiple iterations. Each
+iteration produces a feasible partition, and we maintain the
+partition with the highest p value. Each iteration is divided into
+three steps. The ﬁrst step satisﬁes extrema constraints (MIN
+and MAX constraints), the second step satisﬁes centrality con-
+straints (A VG constraints), and the third step satisﬁes counting
+constraints (SUM and COUNT constraints). We detail each
+step below. The area set in Figure 1a is used as a running
+example to illustrate different steps of the construction. For
+simplicity and without loss of generality, we assume that all
+constraints are imposed on the same attribute s.
+Step 1: Filtering and Seeding . The ﬁrst step satisﬁes
+extrema constraints, i.e., MIN and MAX constraints. These
+two constraints have two functionalities: (a) ﬁltering out the
+invalid areas, and (b) specifying the set of seed areas .
+Invalid areas are excluded during the feasibility phase (Sec-
+tion V -A). We select seed areas as the areas that meet lower
+1918
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+a2
+s2=2
+d2=12
+a1
+s1=1
+d2=11
+a5
+s5=5
+d5=15
+a6
+s6=6
+d6=16
+a3
+s3=3
+d3=13
+a7
+s7=7
+d7=17
+a8
+s8=8
+d8=18
+a9
+s9=9
+d9=19
+a4
+s4=4
+d4=14
+(a) Example area set
+Min Seed
+Max Seeda2
+s2=2
+d2=12
+a5
+s5=5
+d5=15
+a6
+s6=6
+d6=16
+a4
+s4=4
+d4=14
+a3
+s3=3
+d3=13
+a7
+s7=7
+d7=17
+(b) Area ﬁltration and seed area
+selection
+Fig. 1: Step 1: Filtering and Seeding
+and upper bound values of one of MIN or MAX constraints.
+For instance, for two constraints c
+1 =( MIN,s 1,l 1,u 1) and
+c2 =( MA X,s 2,l 2,u 2), any area with l1 ≤ s1 ≤ u1 or
+l2 ≤ s2 ≤ u2 is a valid seed area. This rule is generalizable
+to any number of MIN and MAX constraints.
+This step provides three levels of optimizations through
+choosing a seed area that satisﬁes the bounds of only one con-
+straint. First, it ﬁnds seed areas for any arbitrary combination
+of MIN/MAX constraints. For constraints that are imposed on
+different attributes or have disjoint upper and lower bounds,
+there is no single area that satisﬁes all of them. So, considering
+each constraint in isolation from others provides ﬂexibility to
+ﬁnd seeds for any query. Second, the number of seed areas is
+an upper bound for the number of regions p as each feasible
+region must contain at least one seed area for each constraint.
+So, using a maximum number of seed areas and growing
+the regions based on them contributes to the objective of
+maximizing p. Third, it enables piggybacking the seed areas
+selection on the invalid areas ﬁltration during the feasibility
+phase. While checking the validity of an area, the algorithm
+checks the seeding conditions and mark seed areas.
+Example: Figure 1b illustrates the result of Step 1 for the
+example area set in Figure 1a. The extrema constraints are
+set as {(MIN,s , 2, 4), (MA X,s ,6, 7)}. Areas a
+1, a8, and a9
+are moved to set U0 because their attribute values are below
+2 or above 7. The remaining areas after ﬁltering are shown in
+Figure 1b. Area a
+2, a3, and a4 are selected as seed areas for
+the MIN constraint and area a6 and a7 are selected as seed
+areas for the MAX constraint, as shown in Figure 1b.
+Complexity analysis. All operations of the feasibility phase
+and Step 1 of the construction phase are performed in one pass
+over the n areas. Each area is validated against all MIN, MAX,
+and SUM constraints to be classiﬁed as either invalid, valid,
+or seed area. The time complexity is O(m × n), where m is
+the number of constraints and typically m< <n .
+Remark 1. The time complexity of the feasibility phase and
+the Filtering and Seeding is O(m × n).
+Step 2: Region Growing . The second step grows regions
+that satisfy the A VG constraint c =( AV G, s, l, u), without
+violating the MIN/MAX constraints. This step is divided into
+three substeps. The ﬁrst substep initializes a set of regions. The
+second substep assigns the unassigned areas to the regions. The
+third substep combines regions to ensure each region satisﬁes
+all constraints. We detail each substep below.
+Substep 2.1 utilizes the set of seed areas, called seeds,
+from Step 1 to initialize a set of initial regions. Areas in
+seeds already satisfy at least one of the MIN/MAX con-
+straints, so they must be included in any valid region. The
+algorithm iterates over seeds and classiﬁes all seed areas
+into three subsets based on their A VG attribute value s:
+unassigned
+avg, unassigned low, and unassigned high.
+unassigned avg contains areas that satisfy the condition
+l ≤ s ≤ u. unassigned low contains seed areas that satisfy
+s<l , i.e., s value is lower than c’s lower bound. Similarly,
+unassigned high contains seed areas with s>u . Only areas
+in unassigned avg satisfy c and are used in region initializa-
+tion directly. As we want to maximize the number of output
+regions p, we make each area in unassigned
+avg a separate
+region, and all new regions are added to a region list P . Then,
+we merge areas in unassigned low and unassigned high
+with their spatial neighbors to compose regions that satisfy c.
+Algorithm 1 gives the merging procedure.
+Algorithm 1 initiates each unassigned area as a temporary
+region R (Lines 4 to 6). While R does not satisfy the constraint
+c’s bounds, the algorithm tries to add a neighbor area an that
+moves R’s overall average of attribute s towards c’s range
+(Lines 16 to 21). Once R satisﬁes c, it is added to the region
+list P (Lines 10 to 12). If R’s neighbors are exhausted and
+cannot form a valid region, the whole procedure is reverted,
+and areas of R remain unassigned.
+Substep 2.2 tries to assign all remaining unassigned areas,
+either seed areas or regular areas. Similar to classifying seeds
+areas in Substep 2.1, all areas that are not in seeds set are
+added to either unassigned
+avg set, unassigned low set,
+or unassigned high set, depending on their s value. There
+are two rounds for assigning the remaining unassigned areas.
+In the ﬁrst round, we try to add the unassigned areas to their
+neighbor regions. All areas in unassigned
+avg can be safely
+added to any of its neighbor regions as it is guaranteed not to
+introduce a violation of c. For each area in unassigned
+low
+and unassigned high, we must check if adding it to the
+neighbor region violates c. The second round tries to assign the
+areas in unassigned high and unassigned low by merging
+the regions. Given an unassigned area a, the algorithm tries
+to merge one of a’s neighbor regions R and R’s neighbor
+region with a and checks if c is satisﬁed for the newly merged
+region. The merging process terminates when all a’s neighbors
+cannot absorb it or a merge limit, i.e., the number of allowed
+merge trials, is reached. The merge limit is set to prevent the
+formation of oversized regions and control the runtime.
+Substep 2.3 combines neighbor regions to ensure that all
+regions satisfy all MIN and MAX constraints. Because areas
+that form seeds are selected by a single MIN or MAX
+constraint, regions that are aggregated based on a single seed
+area are guaranteed to satisfy only one of those constraints.
+To ensure each region satisﬁes all constraints, the algorithm
+iterates over the region list P and merges the region that does
+not satisfy every constraint with one of its neighbor regions
+1919
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+Algorithm 1: Region Growing - Merging Areas
+Input: c =( AV G, s, l, u), unassigned low,
+unassigned high, P
+Output: unassigned low, unassigned high, P
+1 removed areas ←∅
+2 u areas ← unassigned low ∪ unassigned high
+3 foreach area a ∈ u areas do
+4 Create a tempory region R with R.id = -1;
+5 R.addArea(a);
+6 updated = true;
+7 neighbor areas = R.getNeighbors();
+8 while updated do
+9 updated = false;
+10 if l ≤ R.getAverage() ≤ u then
+11 R.updateId(P .size() + 1);
+12 P .add(R);
+13 removed areas.addAll(R.areas);
+14 end
+15 else
+16 foreach area an in neighbor areas do
+17 if an is not assigned to any region then
+18 if (R.getAverage() <l AND an.s >u )
+OR (( R.getAverage() >u AND an.s <
+l)) then
+19 R.addArea(an);
+20 updated = true;
+21 break;
+22 end
+23 end
+24 end
+25 end
+26 end
+27 end
+28 unassigned low.removeAll(removed areas);
+29 unassigned high.removeAll(removed areas);
+30 return unassigned low, unassigned high, P ;
+a2
+s2=2
+d2=12
+a5
+s5=5
+d5=15
+a6
+s6=6
+d6=16
+a4
+s4=4
+d4=14
+a3
+s3=3
+d3=13
+a7
+s7=7
+d7=17
+(a) Substep 2.1: Region Initial-
+ization
+a2
+s2=2
+d2=12
+a5
+s5=5
+d5=15
+a6
+s6=6
+d6=16
+a4
+s4=4
+d4=14
+a3
+s3=3
+d3=13
+a7
+s7=7
+d7=17
+(b) Substep 2.2: Area Assign-
+ment
+Fig. 2: Step 2: Region Growing - Substep 2.1 & 2.2-Round 1
+that satisfy other constraints. The iteration stops when all
+regions in the P satisfy MIN and MAX constraints, i.e., each
+region contains at least one seed area for each MIN/MAX
+constraint. This substep does not affect satisfying the A VG
+constraint c because merging two regions that already satisfy
+c produces a region that still satisﬁes it. Thus, after Step 2
+concludes, all regions in the region list P satisfy all the MIN,
+MAX, and A VG constraints.
+Example: Figure 2 shows an example of Substep 2.1 and
+Substep 2.2. Given c =( AV G, s, 4, 5), in Substep 2.1,
+only seed area a
+4 is added to unassigned avg and ini-
+tialized as a new region Rred (Figure 2a). a2 and a3 are
+a2
+s2=2
+d2=12
+a3
+s3=3
+d3=13
+a6
+s6=6
+d6=16
+a5
+s5=5
+d5=15
+a4
+s4=4
+d4=14
+(a) Unassigned area a2.
+a2
+s2=2
+d2=12
+a3
+s3=3
+d3=13
+a6
+s6=6
+d6=16
+a5
+s5=5
+d5=15
+a4
+s4=4
+d4=14
+(b) Region merging and
+Assigning a2.
+Fig. 3: Step 2: Region Growing - Substep 2.2 - Round 2
+a2
+s2=2
+d2=12
+a5
+s5=5
+d5=15
+a6
+s6=6
+d6=16
+a4
+s4=4
+d4=14
+a3
+s3=3
+d3=13
+a7
+s7=7
+d7=17
+(a) Case 1
+a2
+s2=2
+d2=12
+a5
+s5=5
+d5=15
+a6
+s6=6
+d6=16
+a4
+s4=4
+d4=14
+a3
+s3=3
+d3=13
+a7
+s7=7
+d7=17
+(b) Case 2
+Fig. 4: Step 2: Region Growing - Substep 2.3
+added to unassigned low and a6 and a7 are added to
+unassigned high. The average of a2.s2 and a6.s6 is 4, and
+they are combined to form the region Rblue. Similarly, a3
+and a7 form the region Rgreen with average value 5. So,
+Substep 2.2 initializes three regions as depicted in Figure 2a.
+Then, in Substep 2.2, the remaining unassigned area a
+5 is
+assigned to its neighbor region Rblue as depicted in Figure 2b.
+Example: Figure 3 provides an example for Round 2 of
+Substep 2.2. In contrast to the example in Figure 2, the
+unassigned area a
+2 cannot be added to its neighbor region
+Rblue = {a3,a 6} directly. Adding a2 to Rblue generates a re-
+gion with an average s value equals 3.67, which is smaller than
+4 and violates the constraint c =( AV G, s, 4, 5). Instead, the
+algorithm forms a temporary region Rred = {a3,a 4,a 5,a 6}
+by merging Rblue and its neighbor region Rgreen = {a4,a 5},
+as shown in Figure 3b. Rred accepts a2 and the average value
+is 4.4, which satisﬁes the constraint c.
+Example: Figure 4 gives an example of Substep 2.3 for
+the example region partition in Figure 2b. Rred = {a4}
+contains only the MIN seed area; hence it does not sat-
+isfy the MAX constraint. Because both neighbor regions
+R
+blue = {a2,a 5,a 6} and Rgreen = {a3,a 7} satisfy the MAX
+constraint, Rred can be combined with either region to form
+a region satisfying all constraints. The results are depicted in
+Figure 4a and Figure 4b, respectively.
+Complexity analysis. The Substep 2.1 and the ﬁrst round
+of the Substep 2.2 iterate through all seed areas and each
+takes O(n) time. The second round of the Substep 2.2 iterates
+through the unassigned area set for multiple iterations. In each
+iteration, at least one area is removed from the unassigned
+area set or otherwise no update is made and the loop breaks.
+The number of unassigned areas is ≤ n, hence the worst-
+case total number of operations is ∑
+n
+i=1
+i = O(n2). The
+merge operations are bounded by a constant number and each
+1920
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+operation takes constant time to update the attribute values and
+append the area list. Substep 2.3 iterates through all regions
+once, thus taking maximum of O(n) time. Thus, Step 2 time
+complexity is O(n)+ O(n)+ O(n
+2)+ O(n)= O(n2).
+Remark 2. The time complexity of Region Growing is O(n2).
+Step 3: Monotonic Adjustments . Step 3 satisﬁes SUM
+and COUNT constraints while maintaining the constraints that
+have been satisﬁed in the previous steps. The SUM constraint
+is used in the MP-regions problem, hence we build this step
+based on the MP-regions construction algorithms [52]. How-
+ever, because regions are initialized for the MIN, MAX, and
+A VG constraints, adjustments are needed on both area level
+and region level to satisfy the counting constraints. Because
+SUM and COUNT constraints are monotonic, areas are added
+to regions that fall under the lower bound or removed from
+regions that go above the upper bound to make every region
+valid. We iterate over constructed regions. For each region that
+violates one of the SUM or COUNT constraints, the algorithm
+ﬁrst tries to swap areas with neighbor regions without violating
+the other constraints. The spatial contiguity of the region is
+validated by ensuring that the donor region still forms a single
+connected component after swapping. After no updates can
+be made by swapping areas, the algorithm tries to merge
+regions below the lower bounds or remove areas from regions
+above the upper bounds. When no changes can be made, the
+infeasible regions are removed, and the partition is considered
+ﬁnalized for the construction phase.
+Example: With the input shown in Figure 4a and the
+example constraints c
+4 =( SUM, s, 12, ∞ ) and c5 =
+(COUNT,s, −∞ , 4), the region Rgreen = {a3,a 7} does
+not satisfy c4. The boundary area with the neighbor region
+Rblue = {a1,a 4,a 5,a 6} is a4. Area a4 is swapped from
+Rblue to Rgreen after ensuring that both regions still satisfy
+all the other constraints, and Rblue is spatially continuous
+and still above the lower bound of c4. The result is de-
+picted in Figure 4b. After swapping, the receiver region
+R
+green = {a4,a 5,a 7} satisﬁes all the constraints, so the
+swapping attempts are terminated.
+Complexity analysis. Each area is swapped at most once
+because the region that becomes feasible after the swap keeps
+the area to remain valid. Each swap updates and validates
+all attributes of both the donor and receiver regions, which
+takes O(2m) operations. Checking donor region connectivity
+is O(n) in the worst case. As a result, the time complexity of
+swapping is O((2m + n) × n)= O(n
+2). The area removal of
+regions that exceed the upper bounds and removing infeasible
+regions take one O(n) pass each. Thus, the overall time
+complexity is O(n
+2)+ O(n)+ O(n)= O(n2).
+Remark 3. The time complexity of Monotonic Adjustments is
+O(n2).
+C. Local Search Phase
+The partition with the largest number of regions p is for-
+warded from the construction phase to the local search phase to
+optimize the overall regions’ heterogeneity. The local search
+phase uses the Tabu search algorithm [23], a meta-heuristic
+search algorithm, to minimize the overall heterogeneity.
+In brief, the Tabu search algorithm keeps moving areas
+among neighbor regions without violating the user-deﬁned
+constraints in any region. Starting from the feasible partition
+constructed in the construction phase, the Tabu search algo-
+rithm moves to the best neighboring partition. Moving to a
+solution that has worse total heterogeneity is allowed to escape
+from the local optimal solution. The made moves are stored in
+a tabu list, with a ﬁxed tabu tenure, and the reverse moves are
+forbidden to prevent cycles. When a move leads to a partition
+better than the best partition so far, the algorithm chooses this
+move even if the tabu list prohibits it. The algorithm stops
+when no better move can be made in a speciﬁed number of
+steps, and the best partition found is returned as the ﬁnal result.
+This phase does not change the number of regions p. Instead,
+it still produces p regions but with better overall heterogeneity.
+Complexity analysis. The Tabu search is an incomplete
+algorithm, so we derive a complexity approximation based on
+the parameters and the problem-speciﬁc neighborhood compu-
+tation. Tabu search performs n iterations without heterogeneity
+improvement and the counter resets on improvement, so the
+total number of iterations is O(αn) in the worst case, where
+α is the number of moves that beat the existing optimal
+heterogeneity score. In each iteration, we update the valid
+moves using a region connectivity check for each boundary
+area in the region updated by the previous move, which takes
+O(n × n) time in the worst case. A move attempt takes O(n)
+to compute the pair-wise dissimilarity in the worst case. So,
+the overall time complexity is O(αn × (n
+2 + n)) = O(αn3).
+Experimentally, the moves that improve heterogeneity happen
+at an early stage of the local search, causing the total number
+of iterations much smaller than 2n.
+Remark 4. The time complexity of the Local Search phase is
+O(αn
+3), where α is the number of valid moves that improve
+the heterogeneity over the existing optimum.
+D. Handling Arbitrary Sets of Constraints
+Our discussion so far assumes the incoming query contains
+all types of constraints. However, it is common to have a subset
+of these constraints. For example, a query could have only
+one A VG constraint, or one MIN constraint and one COUNT
+constraint. This section discusses how the Fa CT algorithm
+handles queries with an arbitrary subset of constraints.
+The Fa CT algorithm handles absent constraints as they
+exist with an inﬁnite range (−∞ , ∞ ), which affects both the
+feasibility and the construction phases. If a MIN/MAX con-
+straint type is absent, the feasibility phase does not remove any
+invalid areas under MIN/MAX, and Step 1 of the construction
+phase selects all areas as the seed areas. If the A VG constraint
+is missing, the Region Growing step adds all areas in seeds to
+unassigned
+avg and then initializes single-area regions. Areas
+not in seeds are then added to unassigned avg and merged to
+neighbor regions iteratively. If SUM/COUNT constraints are
+1921
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+absent, Step 3 of the construction phase is omitted. Therefore,
+designing the Fa CT algorithm with independent steps enables
+it to effectively handle queries with any subset of constraints.
+VI. C OMPLEXITY ANALYSIS
+This section analyzes the time and space complexity of
+the Fa CT algorithm. According to Remarks 1, 2, and 3 in
+Section V -B, the time complexity of the feasibility and the
+three steps of the construction phases are O(n), O(n
+2), and
+O(n2), respectively. Thus, the total time complexity of both
+phases is O(n2). According to Remark 4 in Section V -C, the
+time complexity of the Local Search phase is O(αn3). This
+gives the overall worst-case time complexity of Fa CT as
+O(αn3), where α is the total number of moves that improves
+the existing optimal heterogeneity in the local search process.
+For space complexity, the area set takes O(m × n) space to
+store the n areas, each associated with m attributes assuming
+there are m constraints. The space complexity for the seed area
+selection is O(n). The Region Growing step stores temporary
+regions with O(n) areas. After the region initialization, each
+region is stored with m attributes and an area set. The regions
+are disjoint, so the space taken by the region list is bounded
+by O(m × n). The Monotonic Adjustments step and the Local
+Search phase update the region list in place and does not
+require additional space. Thus, the overall space complexity
+is O(m × n).
+VII. E XPERIMENT EV ALUA TION
+This section presents an extensive experimental evaluation
+of our proposed work to address the EMP problem. The
+code and data for reproducing the results presented in this
+section are publicly available [27]. The rest of the section
+introduces the experimental setup (Section VII-A), studies
+the impact of different constraints types and threshold ranges
+on the performance (Section VII-B), shows the scalability of
+the Fa CT algorithm (Section VII-C), and summarizes the
+experimental results (Section VII-D).
+A. Experimental Setup
+EMP is a novel problem in the literature, so there is no direct
+competitor to compare our techniques against. In addition, due
+to the major enrichment EMP introduces to the MP-regions
+problem, existing techniques that address MP-regions problem
+cannot be trivially extended and adopted as baselines to
+solve the EMP problem. Therefore, our experiments focus on
+evaluating the performance and effectiveness of our proposed
+work. We also study the impact of different combinations of
+enriched constraints.
+Evaluation datasets . We use nine real datasets that repre-
+sent the census tracts of the USA, outlined as follows: (1) the
+Los Angeles City (denoted as 1k) that includes 1012 areas,
+(2) the Los Angeles County (denoted as 2k) that includes
+2344 areas, (3) Southern California (denoted as 4k) as iden-
+tiﬁed by the Southern California Association of Governments
+(SCAG) [45] that includes 3947 areas, (4) the State of Cali-
+fornia (denoted as 8k) that includes 8049 areas, and (5) Five
+multi-state datasets with ∼ 10k to ∼ 50k areas, as detailed in
+Name No. of areas States
+10k 10255 CA, NV , AZ
+20k 20570 10k + OR, W A, ID, UT, MT, WY ,
+CO, NM, OK, NE, SD, ND
+30k 29887 20k +TX, LA, AR, MO, IA
+40k 40214 30k + MN, MS, AL, TN, KY , IL, WI
+50k 49943 40k + GA, IN, MI, OH, WV
+TABLE I: Description of the multi-state datasets
+Constraint Type Aggregate Attribute Range
+Extrema MIN POP16UP (−∞ , 3000]
+Centrality AV G EMPLOYED [1500,3500]
+Counting SUM TOTALPOP [20000, ∞ )
+TABLE II: Default attribute and ranges for different con-
+straints.
+Table I. Our default dataset is 2k. Typical evaluation datasets in
+the existing literature have between 300-3000 areas [15], [52],
+so our default dataset size is comparable to the largest datasets
+in the literature. All datasets are joined with real attributes
+from 2010 US census data about facts in each census tract.
+All datasets share the same three spatial extensive attributes as
+shown in Table II, one per constraint type, and the dissimilarity
+attribute is HOUSEHOLDS. POP16UP attribute represents the
+population with age sixteen or above. EMPLOYED attribute
+refers to the employed population. TOTALPOP is the total
+population. HOUSEHOLDS is the number of households in
+each area, and it is used to measure region heterogeneity.
+The evaluation attributes are selected based on factors that
+inﬂuence the population growth rate [21], which makes the
+partitions obtained through the experiments useful for studying
+population growth. The shapeﬁles of the census tracts and the
+attribute tables are provided by the US Census Bureau [9] and
+SCAG [37] and joined using the QGIS software [42].
+All experiments are based on Java 14 implementations using
+an Intel Xeon W-2123(3.60 GHz) and 20GB RAM allocated
+under Windows 10. We use three performance measures: the
+runtime for both construction and local search phases, the
+answer set size p, and improvement in regions’ heterogeneity,
+deﬁned as the ratio of the absolute difference between the
+heterogeneity score before and after the local search phase to
+the heterogeneity score before the local search. Our parameters
+include threshold range and dataset size. Unless mentioned
+otherwise, the default dataset is 2k, area pickup criteria are
+random, the A VG merge limit is three, the length of the tabu
+list equals ten, and the maximum number of moves without
+improvement for Tabu search equals the dataset size. The
+default threshold ranges and attributes are shown in Table II
+for each constraint type. For space limitation and similarity of
+results on aggregates of the same type, we present results for
+one aggregate function in each constraint type.
+B. Impact of Constraints Types
+This section studies the impact of different sets of con-
+straints on regionalization performance. Sets of constraints
+vary in terms of: (1) set size, i.e., number of constraints,
+(2) types of constraints, and (3) threshold ranges. Sec-
+tions VII-B1, VII-B2 and VII-B3 evaluate sets that include
+MIN, A VG, and SUM constraints, respectively. MIN con-
+1922
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+1
+ 2
+ 4
+ 8
+ 16
+-∞ -2 -∞ -3.5-∞ -5
+Time(s)
+Range(x1000)
+Tabu
+M
+MA
+MS
+MAS
+Fig. 5: Runtime for MIN with
+l = ∞
+ 0.125
+ 0.25
+ 0.5
+ 1
+ 2
+ 4
+ 8
+2-∞ 3.5-
+∞
+5-∞
+Time(s)
+Range(x1000)
+Tabu
+M
+MS
+MA
+MAS
+Fig. 6: Runtime for MIN with
+u = ∞
+ 0.5
+ 1
+ 2
+ 4
+ 8
+ 16
+3±0.53±1 3±1.53±2
+Time(s)
+Range(x1000)
+Tabu
+M
+MS
+MA
+MAS
+(a) V arying range lengths
+ 0.5
+ 1
+ 2
+ 4
+ 8
+10±10
+20±10
+30±10
+40±10
+Time(s)
+Range(x1000)
+Tabu
+M
+MS
+MA
+MAS
+(b) V arying range midpoints
+Fig. 7: Runtime for MIN with bounded l and u
+straints are denoted as M, combinations of MIN and A VG
+constraints are denoted as MA, combinations of MIN and SUM
+constraints are denoted as MS, combinations of MIN, A VG,
+and SUM constraints are denoted as MAS. Time of local search
+is denoted as Tabu.
+1) MIN Constraint: This section evaluates regionalization
+queries with MIN constraints, c =( MIN,s ,l,u ), in combi-
+nation with other constraint types. MIN and MAX constraints
+perform two roles: ﬁltering invalid areas and selecting seed
+areas, and both depend on the range threshold [l, u]. Hence,
+we explore three cases: (a) ranges with l = −∞ , which show
+the impact of u values on seed area selection, (b) ranges with
+u = ∞ , which show the impact of l values on invalid area
+ﬁltration, and (c) ranges with bounded values of l and u that
+show their simultaneous impact.
+Ranges with l = −∞ . Figure 5 shows the runtime of
+the construction phase and Tabu search. The runtime highly
+depends on the types of constraints. Table III gives the number
+of regions p for different constraints combinations. In all
+cases, the single MIN constraint, M, produces the maximum
+of regions p that is bounded by the number of seed areas.
+The p value increases with the increase of the upper bound
+u.A s u increases, the number of seed areas increases and it
+takes fewer iterations to partition the areas into regions, so the
+runtime decreases in Figure 5. When the other constraints are
+added, the regions in the ﬁnal result contain more than one
+seed area, so p decreases. With more seed areas, the initialized
+region becomes smaller and the SUM constraint takes more
+operations to satisfy. This causes the runtime of MS and MAS
+to increase by a small amount although the time for MIN and
+A VG actually decreases. Increasing u leads to increasing the
+heterogeneity improvement from 6.96% at u =2 k to 40.2%
+at u =5 k due to higher p.
+Ranges with u = ∞ . Table III shows the p values and
+Figure 6 gives the construction time and local search time
+for different constraint combinations. As we increase the
+lower bound l, more invalid areas are ﬁltered out, while
+typically the remaining areas are scattered. As a result, the
+p value decreases, and hence runtime decreases signiﬁcantly
+due to the lower number of regions. The heterogeneity score
+improvement reduces as l increases with up to 17.6% due to
+decreasing p that narrows the search space of the local search.
+Ranges with bounded l and u. We explore bounded ranges
+that vary the range length while ﬁxing the range midpoint.
+Table III gives the p values and Figure 7a shows the runtime.
+When the range length increases, the p value increases because
+fewer areas are ﬁltered out and more regions are initialized.
+As a result, both total and construction time increase due to
+larger search space. However, there is no clear trend for the
+Tabu search time.
+For a range with a ﬁxed length and shifted midpoint to
+a higher value, both construction time and local search time
+decrease, as shown in Figure 7b. For larger values, the area set
+is chopped into small connected components but the number
+of seed areas is relatively stable. As a result, Steps 2 and 3
+of the construction phase terminate faster and reduce runtime.
+The p value depends on the correlation between attributes of
+MIN and A VG constraints. If they are not correlated, then the
+p value strictly decreases for larger midpoint values. When
+they are correlated, p might increase or decrease, depending
+on the correlation. In all cases, the heterogeneity improvement
+increases when p increases, by up to 11.3% in this case.
+2) A VG Constraint: The average aggregate function is non-
+monotonic. Satisfying the constraint can be computationally
+heavy with certain ranges. To illustrate this, we explore two
+cases: (a) ranges with ﬁxed length and changing midpoints,
+and (b) ranges with a ﬁxed midpoint but varying lengths.
+Ranges with ﬁxed range length . In this experiment, the
+length of the A VG range is ﬁxed to be 2k and the midpoint
+shifts from 1k to 4.5k, with the step size = 0.5k. We focus on
+the performance of the A VG constraint to exclude the impact
+of other constraints. Figure 8 shows the distribution of the
+A VG attribute value of the areas in the default dataset, which
+is a positively skewed distribution. The A VG attribute values
+of most of the areas are below 4k, but there are several outliers
+with values up to 6149. Figure 9a shows the p value and
+the number of unassigned areas (UA) for each range while
+Figure 9b gives the runtime. When the midpoint is set to be
+1k to 2.5k, about half of the areas lie within the given range
+and it is also relatively easy to combine areas whose value is
+outside the range. As a result, the number of unassigned areas
+is reduced to 0 when the midpoint increases to 2k and 2.5k
+but the runtime is below 3.2s. The ranges are also ﬂexible for
+the Tabu search phase, with the heterogeneity score improved
+by up to 30.1%. When the range is set to be 3k ± 1k, more
+than half of the areas lie below l but it is possible to combine
+them with one of the outliers whose attribute value is well
+above the upper bound. In addition, as an area is assigned, the
+newly formed region may lead to the possibility of assigning
+the neighbor areas. Hence the enclave assignment process
+continues for multiple iterations until no further update can
+1923
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+Ranges wit hl=- ∞ Ranges with u = ∞ Ranges with bounded u and l
+(-∞ ,2k] (-∞ ,3.5k] (-∞ ,5k] [2k,∞ ) [3.5k,∞ ) [5k,∞ ) [2.5k,3.5k] [2k,4k] [1.5k,4.5k] [1k,5k] [1k,2k] [2k,3k] [3k,4k] [4k,5k]
+M 270 1447 2172 2074 898 173 834 1501 1895 2109 207 789 712 401
+MS 184 354 365 342 142 12 281 334 356 362 159 307 215 78
+MA 208 1037 1483 1593 812 97 776 1206 1398 1496 175 654 704 386
+MAS 170 335 341 337 145 7 275 328 339 344 152 304 215 74
+TABLE III: p values for different threshold ranges for MIN constraint combinations.
+ 0
+ 20
+ 40
+ 60
+ 80
+ 100
+ 120
+ 140
+ 160
+ 180
+ 200
+ 0  1000 2000 3000 4000 5000 6000
+Frequency
+AVG Attribute value
+Fig. 8: Distribution of
+A VG attribute value
+ 0
+ 500
+1000
+1500
+2000
+2500
+1±1 1.5
+±1
+2±1 2.5
+±1
+3±1 3.5
+±1
+4±1 4.5
+±1
+Range(x1000)
+p
+UA
+(a) p and UA
+ 1
+ 4
+ 16
+ 64
+ 256
+ 1024
+1±11.5
+±1
+2±12.5
+±1
+3±13.5
+±1
+4±14.5
+±1
+Time(s)
+Range (x1000)
+Tabu
+A
+(b) Runtime
+Fig. 9: Impact different A VG range midpoints
+ 0
+ 500
+ 1000
+ 1500
+ 2000
+ 2500
+3±0.53±1 3±1.53±2
+p
+Range(x1000)
+A
+MA
+AS
+MAS
+(a) p
+ 0
+ 200
+ 400
+ 600
+ 800
+ 1000
+ 1200
+ 1400
+ 1600
+3±0.53±1 3±1.53±2
+unassigned areas
+Range(x1000)
+A
+MA
+AS
+MAS
+(b) Unassigned areas
+Fig. 10: Impact different A VG range lengths
+be made. As a result, it takes a much longer time, but the
+percentage of unassigned areas is reduced signiﬁcantly to 9%.
+When the midpoint is further increased to above 3.5k,i ti st o o
+hard for the algorithm to form feasible regions as almost all
+areas fall below the lower bound of the range. As a result, most
+areas remain unassigned and the construction time becomes
+much shorter as the algorithm quickly ﬁnds that no further
+changes can be made. When the midpoint is above 3k, there
+are limited feasible moves for the Tabu search because the
+A VG constraint is too tight. As a result, the Tabu search time
+is negligible and the heterogeneity improvements are below
+0.4%.
+Ranges with ﬁxed midpoint . Based on the observation
+from the previous experiment, we set the midpoint to be 3k,
+which is the most challenging setting for the algorithm, and
+alter the length of the range. Combinations with the other
+constraints are also included to demonstrate how the A VG
+constraint can bottleneck the performance in special cases.
+The p values for different constraint combinations are given in
+Figure 10a and the runtime is shown in Figure 11. The ﬁgures
+show increasing p values with longer ranges, but the runtime
+depends on the range length. Different range lengths affect the
+runtime signiﬁcantly, while different constraint combinations
+with the same range have much less impact on the construction
+time. This is because the runtime of the A VG step dominates
+the total runtime of the construction phase. When the range is
+3k ± 0.5k, the range is so tight that the algorithm quickly ﬁnds
+no possible enclaves assignment, so the A VG step terminates
+early. However, 60% of the areas remain unassigned, as
+shown in Figure 10b. Similar to the previous experiment, the
+range 3k ± 1k is the most challenging case and the runtime
+dominates the other constraints. However, the reduction in the
+number of unassigned areas is also signiﬁcant for all constraint
+combinations. When the range is further enlarged, most of the
+areas lie within the range and it is much easier to assign the
+enclaves without merging. Thus, the time is much shorter, and
+all areas are assigned as well. The ﬁnal heterogeneity score
+also reduces when the range is enlarged due to the reduction
+in region sizes. The heterogeneity improvement increases to
+up to 21.8% because when the range is enlarged, it becomes
+Ranges with u = ∞ Ranges with different lengths
+[1k,∞ ) [10k,∞ ) [20k,∞ ) [30k,∞ ) [40k,∞ ) [15k, 25k] [10k,30k] [5k,35k]
+MP 2298 717 373 245 185 N/A N/A N/A
+S 2298 720 371 245 186 489 714 1358
+MS 1056 581 342 237 179 408 567 785
+AS 1545 642 345 233 177 445 640 1095
+MAS 758 518 323 226 172 370 497 631
+TABLE IV: p values for different threshold ranges for SUM
+constraint combinations.
+ 2
+ 4
+ 8
+ 16
+ 32
+ 64
+ 128
+ 256
+ 512
+ 1024
+3±0.53±1 3±1.53±2
+Time(s)
+Range(x1000)
+Tabu
+A
+MA
+AS
+MAS
+Fig. 11: Runtime for A VG
+with different range lengths
+ 1
+ 2
+ 4
+ 8
+ 16
+ 32
+10-
+∞
+20-
+∞
+30-
+∞
+40-
+∞
+Time(s)
+Range(x1000)
+Tabu
+MP
+S
+MS
+AS
+MAS
+Fig. 12: Runtime for SUM
+with u = ∞
+easier to ﬁnd a valid move for the local search.
+3) SUM Constraint: SUM constraints are the only type of
+constraints that are used in existing state-of-the-art solutions
+for the max-p regions (MP-regions) problem. We compare
+with them, denoted as MP , using a single SUM constraint
+with an open upper bound, i.e., [l, ∞ ). Table IV shows the p
+values and Figures 12 and 13 give the runtime for different
+constraint combinations with SUM aggregate. At u = ∞ ,
+the p value decreases with increasing lower bound l while
+runtime does not increase as much for both MP-regions and
+Fa CT . According to Table IV, our Fa CT algorithm gives
+comparable p value to MP-regions when the constraints are set
+to be the same. The construction time is slightly higher due to
+the overhead introduced by steps that validate the feasibility
+of the query and handle the other constraints. However, due
+to shorter tabu search time, the overall runtime of EMP is less
+than half of the runtime for the MP-regions when u =3 0k or
+40k. In addition, the Fa CT algorithm handles generic types
+of constraints, which are not supported by the competitor. The
+heterogeneity score increases when l increases, by up to 72.6%
+for both MP-regions and the single constraint S, 13.8% for MS,
+and less than 1% for AS and MAS due to the effect of A VG
+1924
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+2
+ 4
+ 8
+ 16
+20±5
+20±10
+20±15
+Time(s)
+Range(x1000)
+Tabu
+S
+MS
+AS
+MAS
+Fig. 13: Runtime for SUM
+with a changing range length
+ 0.5
+ 1
+ 2
+ 4
+ 8
+ 16
+ 32
+ 64
+ 128
+ 256
+1k 2k 4k 8k
+Time(s)
+Dataset
+Tabu
+M
+A
+S
+MA
+MS
+AS
+MAS
+Fig. 14: Runtime varying
+datasets 1k to 4k
+ 0.25
+ 1
+ 4
+ 16
+ 64
+ 256
+ 1024
+ 4096
+10k 20k 30k 40k 50k
+Time(s)
+Dataset
+Tabu
+M
+A
+S
+MA
+MS
+AS
+MAS
+Fig. 15: Runtime varying
+datasets for 10k-50k
+ 16
+ 64
+ 256
+ 1024
+ 4096
+ 16384
+1k 2k 4k 8k
+Time(s)
+Dataset
+Tabu
+A
+MA
+AS
+MAS
+Fig. 16: Runtime varying
+datasets for A VG constraint
+with range 3k ± 1k
+constraint. Increasing the region’s size provides local search
+with more potential moves, hence it better improves overall
+heterogeneity. For bounded threshold ranges, in Table IV and
+Figure 13, both p values and construction runtime decrease
+when the lower bound l increases and the trend is similar to
+u = ∞ . The heterogeneity score increases by up to 30.4%
+for S, 6.9% for MS, 3.76% for AS, and 2.49% for MAS,
+with increasing range length due to the larger region size.
+However, the unassigned areas could reach up to 25.1% when
+u is bounded for MS, AS, and MAS. This is because areas
+are removed so that each region does not exceed u. Fa CT
+algorithm reports output statistics to users so they are equipped
+with information about the impact of different threshold ranges
+on the given dataset, and are able to tune query parameters
+insightfully.
+C. FaCT Scalability
+This section discusses the scalability of the Fa CT algo-
+rithm. We run the algorithm for different constraint com-
+binations with the default threshold values on the nine
+evaluation datasets. The dataset size of the 50k dataset is
+17 times the largest dataset used in the existing literature of
+regionalization [15], [52]. As the A VG constraint is identiﬁed
+as a clear performance bottleneck when the range is set to
+be 3k ± 1k , our discussion contains two parts. The ﬁrst part
+shows the results for the constraint combinations with the A VG
+set to be default range (Figure 14 and Figure 15) to show the
+scalability of Fa CT in normal cases, while in the second
+part we focus on constraint combinations including A VG with
+range 3k ± 1k (Figure 16) to see how the computation of the
+A VG constraint scales in extreme cases.
+Figure 14 and 15 show that when the A VG constraint is not
+the bottleneck, the runtime increases linearly with the input
+size for M and quadratically for the other constraints. For
+all datasets, Fa CT provides a very acceptable runtime for
+regionalization applications.
+Figure 16 shows that when the range of the A VG is set to
+be 3k ± 1k, A VG constraints increase the construction time to
+a large extent. For other datasets, the runtime increases with
+increasing input size at a much higher rate than the previous
+experiment, which implies less scalability advantage for A VG
+constraint. The construction runtime does not strictly increase
+with increasing the input size. The construction time for the
+4k dataset is shorter than that for the 2k dataset, except for AS
+and MAS. This difference is caused by the merging procedure
+in the A VG constraint. Generally, more areas are easier to
+aggregate in regions that satisfy the A VG constraint. In all
+cases, the construction time scales much better than the Tabu
+time, and it still provides a solution with almost the same
+quality.
+D. Summary Of Results
+All experiments show that the Fa CT algorithm can efﬁ-
+ciently produce feasible solutions of high quality in a few
+seconds for the vast majority of the cases. In addition, the
+Fa CT algorithm supports relatively large datasets that serve
+all existing applications. When more areas are ﬁltered or fewer
+seed areas are identiﬁed by the extrema constraints, both p and
+the runtime tend to decrease. The behavior of the centrality
+constraint depends on the range speciﬁed and the distribution
+of the attributes. However, it shows reasonable performance
+in the vast majority of the cases. The counting constraints can
+formulate the MP-regions problem as a sub-problem of EMP
+and gives comparable scalability and result quality.
+VIII. C ONCLUSION
+This paper introduces an enriched max-p (EMP) region-
+alization problem that extends the existing regionalization
+problems with SQL-inspired user-deﬁned constraints. The
+EMP problem clusters a set of spatial areas into homogeneous
+regions that satisfy the user-deﬁned constraints. The EMP
+problem enables enriched types of constraints that support
+SQL-inspired aggregate functions, MIN, MAX, A VG, SUM,
+and COUNT, with range operators. We prove the NP-hardness
+of the EMP problem. To tackle this problem, we propose
+Fa CT ; a three-phase algorithm that ﬁnds an approximate
+solution with a maximum number of regions and minimum
+overall heterogeneity. The ﬁrst phase checks the feasibility of
+ﬁnding a solution given the input constraints. It also provides
+users with insightful information to tune their input and enable
+ﬂexible exploration for various datasets. The second phase
+constructs an initial solution, and the third phase further
+optimizes it to provide a ﬁnal solution. We have empirically
+demonstrated the capability of Fa CT to provide efﬁcient and
+effective performance on various real datasets.
+For future work, we explore multi-objective optimization
+methods and further improve the algorithm performance
+through parallelization.
+1925
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
+REFERENCES
+[1] NP-hardness of MP-regions. https://cs.ucr.edu/ ∼amr/MP
+Regionalization NPHardness.pdf, 2021.
+[2] K. Andreev and H. Racke. Balanced graph partitioning. Theory of
+Computing Systems , 39(6):929–939, 2006.
+[3] M. P . Armstrong, G. Rushton, R. Honey, B. T. Dalziel, P . Lolonis, S. De,
+and P . J. Densham. Decision Support for Regionalization: A Spatial
+Decision Support System for Regionalizing Service Delivery Systems.
+CEUS, 15:37–53, 1991.
+[4] D. Arribas-Bel and C. R. Schmidt. Self-Organizing Maps and the US
+Urban Spatial Structure. EPB, 40:362–371, 2013.
+[5] R. M. Assunc ¸ ˜ao, M. C. Neves, G. C ˆamara, and C. da Costa Freitas. Ef-
+ﬁcient regionalization techniques for socio-economic geographical units
+using minimum spanning trees. International Journal of Geographical
+Information Science , 20(7):797–811, 2006.
+[6] O. Aydin, M. V . Janikas, R. Assunc ¸ ˜ao, and T.-H. Lee. Skater-con:
+Unsupervised regionalization via stochastic tree partitioning within a
+consensus framework using random spanning trees. In Proceedings of
+the 2nd ACM SIGSPATIAL International Workshop on AI for Geographic
+Knowledge Discovery , pages 33–42, 2018.
+[7] R. Benedetti, F. Piersimoni, G. Pignataro, and F. Vidoli. The Identi-
+ﬁcation of Spatially Constrained Homogeneous Clusters of Covid-19
+Transmission in Italy. RSPP, 12:1169–1187, 2020.
+[8] N. Bullen, G. Moon, and K. Jones. Deﬁning localities for health
+planning: a gis approach. Social Science & Medicine , 42(6):801–816,
+1996.
+[9] U. C. Bureau. Explore census data. https://data.census.gov/cedsci/.
+[10] J. Byfuglien and A. Nordg ˚ard. Region-building—a comparison of
+methods. Norwegian Journal of Geography , 1973.
+[11] M. Camacho-Collados, F. Liberatore, and J. M. Angulo. A multi-criteria
+police districting problem for the efﬁcient and effective design of patrol
+sector. European journal of operational research, 246(2):674–684, 2015.
+[12] Z. Chen, P . Cheng, L. Chen, X. Lin, and C. Shahabi. Fair task assignment
+in spatial crowdsourcing. Proceedings of the VLDB Endowment ,
+13(12):2479–2492, 2020.
+[13] K. S. Cheruvelil, P . A. Soranno, M. T. Bremigan, T. Wagner, and S. L.
+Martin. Grouping Lakes for Water Quality Assessment and Monitoring:
+The Roles of Regionalization and Spatial Scale. JEM, 41:425–440, 2008.
+[14] J. H. Danumah, S. N. Odai, B. M. Saley, J. Szarzynski, M. Thiel,
+A. Kwaku, F. K. Kouame, and L. Y . Akpa. Flood risk assessment and
+mapping in abidjan district using multi-criteria analysis (ahp) model and
+geoinformation techniques,(cote d’ivoire). Geoenvironmental Disasters,
+3(1):1–13, 2016.
+[15] J. C. Duque, L. Anselin, and S. J. Rey. The max-p-regions problem.
+Journal of Regional Science , 52(3):397–419, 2012.
+[16] J. C. Duque, R. L. Church, and R. S. Middleton. The p-regions problem.
+Geographical Analysis , 43(1):104–126, 2011.
+[17] J. C. Duque, J. E. Patino, L. A. Ruiz, and J. E. Pardo-Pascual. Measuring
+Intra-urban Poverty Using Land Cover and Texture Metrics Derived from
+Remote Sensing Data. LUP, 135:11–21, 2015.
+[18] A. El Kenawy, J. I. L ´opez-Moreno, and S. M. Vicente-Serrano. Summer
+Temperature Extremes in Northeastern Spain: Spatial Regionalization
+and Links to Atmospheric Circulation (1960–2006). TAC, 113:387–405,
+2013.
+[19] A. Ferligoj and V . Batagelj. Clustering with relational constraint.
+Psychometrika, 47(4):413–426, 1982.
+[20] D. C. Folch and S. E. Spielman. Identifying regions based on ﬂexible
+user-deﬁned constraints. International Journal of Geographical Infor-
+mation Science , 28(1):164–184, 2014.
+[21] R. Fragoso, C. Rego, and V . Bushenkov. Clustering of territorial areas:
+A multi-criteria districting problem. Journal of Quantitative Economics ,
+14(2):179–198, 2016.
+[22] R. S. Garﬁnkel and G. L. Nemhauser. Optimal political districting by
+implicit enumeration techniques. Management Science , 16(8):B–495,
+1970.
+[23] F. Glover and M. Laguna. Tabu search. In Handbook of combinatorial
+optimization, pages 2093–2229. Springer, 1998.
+[24] A. Gordon. A survey of constrained classiﬁcation. Computational
+Statistics & Data Analysis , 21(1):17–29, 1996.
+[25] L. Gurobi Optimization. Gurobi optimizer reference manual, 2018.
+[26] P . Hansen, B. Jaumard, C. Meyer, B. Simeone, and V . Doring. Maximum
+split clustering under connectivity constraints. Journal of Classiﬁcation ,
+20(2):143–180, 2003.
+[27] Y . Kang. Fact. https://github.com/Y unfanKang/FaCT, 2021.
+[28] Y . Kang. Modeling the enriched Max-P region problem asa Mixed-
+integer programming problem. https://github.com/Y unfanKang/FaCT/
+blob/main/EMP-MIP/EMP
+MIP Formulation.pdf, 2022.
+[29] Y . Kang. Solving the MIP formulation of EMP with Gurobi solver.
+https://github.com/Y unfanKang/FaCT/blob/main/EMP-MIP/, 2022.
+[30] H. Kim, Y . Chun, and K. Kim. Delimitation of Functional Regions
+Using a P-Regions Problem Approach. IRSR, 38:235–263, 2015.
+[31] K. Kim, Y . Chun, and H. Kim. p-Functional Clusters Location Problem
+for Detecting Spatial Clusters with Covering Approach. Geographical
+Analysis, 49:101–121, 2017.
+[32] J. Laura, W. Li, S. J. Rey, and L. Anselin. Parallelization of a
+Regionalization Heuristic in Distributed Computing Platforms–a Case
+Study of Parallel-P-Compact-Regions Problem. IJGIS, 29:536–555,
+2015.
+[33] L. P . Lefkovitch. Conditional clustering. Biometrics, pages 43–58, 1980.
+[34] W. Li, R. L. Church, and M. F. Goodchild. An Extendable Heuristic
+Framework to Solve the P-Compact-Regions Problem for Urban Eco-
+nomic Modeling. CEUS, 43:1–13, 2014.
+[35] W. Li, R. L. Church, and M. F. Goodchild. The p-Compact-Regions
+Problem. Geographical Analysis , 46:250–273, 2014.
+[36] F. Murtagh. A survey of algorithms for contiguity-constrained clustering
+and related problems. The computer journal , 28(1):82–88, 1985.
+[37] S. C. A. of Governments. Scag open data portal. https://gisdata-scag.
+opendata.arcgis.com/.
+[38] S. Openshaw. A regionalisation program for large data sets. Computer
+Applications, 3(4):136–147, 1973.
+[39] S. Openshaw. A geographical solution to scale and aggregation problems
+in region-building, partitioning and spatial modelling. Transactions of
+the institute of british geographers , pages 459–472, 1977.
+[40] S. Openshaw. Classifying and regionalizing census data. Census users’
+handbook, pages 239–270, 1995.
+[41] J. E. Patino, J. C. Duque, J. E. Pardo-Pascual, and L. A. Ruiz. Using
+Remote Sensing to Assess the Relationship Between Crime and the
+Urban Layout. Applied Geography , 55:48–60, 2014.
+[42] Welcome to the QGIS project! https://www.qgis.org/, 2020. May 2020.
+[43] S. J. Rey and M. L. Sastr ´e-Guti´errez. Interregional Inequality Dynamics
+in Mexico. SEA, 5:277–298, 2010.
+[44] D. J. Rossiter and R. J. Johnston. Program group: the identiﬁcation of all
+possible solutions to a constituency-delimitation problem. Environment
+and Planning A , 13(2):231–238, 1981.
+[45] Southern California Association of Governments - SCAG. https://scag.
+ca.gov/, 2020. May 2020.
+[46] S. Sch ¨onbrodt-Stitt, A. Bosch, T. Behrens, H. Hartmann, X. Shi, and
+T. Scholten. Approximation and Spatial Regionalization of Rainfall
+Erosivity Based on Sparse Data in a Mountainous Catchment of the
+Y angtze River in Central China. JESPR, 20:6917–6933, 2013.
+[47] B. She, J. C. Duque, and X. Y e. The network-max-p-regions model.
+IJGIS, 31:962–981, 2017.
+[48] T. Song, Y . Tong, L. Wang, J. She, B. Y ao, L. Chen, and K. Xu.
+Trichromatic online matching in real-time spatial crowdsourcing. In
+2017 IEEE 33rd International Conference on Data Engineering (ICDE) ,
+pages 1009–1020. IEEE, 2017.
+[49] S. E. Spielman and D. C. Folch. Reducing Uncertainty in the American
+Community Survey through Data-driven Regionalization. PloS ONE ,
+10:e0115626, 2015.
+[50] D. A. Stow, C. D. Lippitt, and J. R. Weeks. Geographic Object-
+based Delineation of Neighborhoods of Accra, Ghana using QuickBird
+Satellite Imagery. PE&RS, 76:907–914, 2010.
+[51] T. Vilutien ˙e and E. K. Zavadskas. The application of multi-criteria
+analysis to decision support for the facility management of a residential
+district. Journal of Civil Engineering and Management , 9(4):241–252,
+2003.
+[52] R. Wei, S. Rey, and E. Knaap. Efﬁcient Regionalization for Spatially
+Explicit Neighborhood Delineation. IJGIS, 35:1–17, 2020.
+[53] S. Y anık, J. Kalcsics, S. Nickel, and B. Bozkaya. A multi-period
+multi-criteria districting problem applied to primary care scheme with
+gradual assignment. International Transactions in Operational Research,
+26(5):1676–1697, 2019.
+[54] X. Y e, B. She, and S. Benya. Exploring Regionalization in the Network
+Urban Space. JGSA, 2:4, 2018.
+1926
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 22:51:25 UTC from IEEE Xplore.  Restrictions apply.
