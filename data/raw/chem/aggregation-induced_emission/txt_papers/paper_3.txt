@@ -1,0 +1,930 @@
+Phage-Guided Targeting, Discriminative Imaging, and Synergistic
+Killing of Bacteria by AIE Bioconjugates
+Xuewen He, Yujun Yang, * Yongcan Guo, Shuguang Lu, Yao Du, Jun-Jie Li, Xuepeng Zhang,
+Nelson L. C. Leung, Zheng Zhao, Guangle Niu, Shuangshuang Yang, Zhi Weng, Ryan T. K. Kwok,
+Jacky W. Y. Lam, Guoming Xie, * and Ben Zhong Tang *
+Cite This: J. Am. Chem. Soc. 2020, 142, 3959 −3969 Read Online
+ACCESS Metrics & More Article Recommendations *sı Supporting Information
+ABSTRACT: New agents with particular speci ﬁcity toward targeted
+bacteria and supere ﬃ cacy in antibacterial activity are urgently needed in
+facing the crisis of worldwide antibiotic resistance. Herein, a novel strategy
+by equipping bacteriophage (PAP) with photodynamic inactivation (PDI)-
+active AIEgens (luminogens with aggregation-induced emission property)
+was presented to generate a type of AIE −PAP bioconjugate with superior
+capability for both targeted imaging and synergistic killing of certain
+species of bacteria. The targeting ability inherited from the bacteriophage
+enabled the bioconjugates to speci ﬁcally recognize the host bacteria with
+preserved infection activity of phage itself. Meanwhile, the AIE
+characteristic empowered them a monitoring functionality, and the real-
+time tracking of their interactions with targets was therefore realized via
+convenient ﬂuorescence imaging. More importantly, the PDI-active AIEgens could serve as powerful in situ photosensitizers
+producing high-eﬃ ciency reactive oxygen species (ROS) under white light irradiation. As a result, selective targeting and synergistic
+killing of both antibiotic-sensitive and multi-drug-resistant (MDR) bacteria were successfully achieved in in vitro and in vivo
+antibacterial tests with excellent biocompatibility. This novel AIE −phage integrated strategy would diversify the existing pool of
+antibacterial agents and inspire the development of promising drug candidates in the future.
+■ INTRODUCTION
+Bacterial infectious diseases have become one of the greatest
+global challenges, which seriously threaten the health and
+civilization of human beings,
+1,2 and increasing evidence revealed
+that bacteria can also indirectly promote the occurrence and
+progression of other diseases, such as cancer.
+3−6 On the other
+hand, bacterial communities are indispensable to human health,
+such as intestinal microbes whose balances determined the
+nutrient absorption from digested food in our bodies and should
+be always protected from unintentional damage.
+7,8 Therefore, in
+the antibacterial battle, promoting an antibacterial agent in
+terms of targeting and killing e ﬃ ciency is persistently pursued.
+Antibiotics have been predominately employed in the treatment
+of bacterial infections since the discovery of penicillin. However,
+by use of antibiotics, even narrow-spectrum antibiotics, both
+harmful bacteria and bene ﬁcial microbes could be killed,
+resulting in side e ﬀects such as diarrhea, constipation, and
+inﬂammatory bowels.
+9,10 The global abuse or overuse of
+antibiotics has promoted bacterial evolution and intensi ﬁed
+the antibiotic resistance.11,12 The situation is worsening with the
+rapidly increased di ﬃ culty and cost in producing new robust
+antibacterial agents. 13 Thus, it is highly desirable to develop
+pinpoint accurate drugs to kill certain species of harmful
+pathogens. Fortunately, bacteriophage had been veri ﬁed with
+particular speci ﬁcity to their hosts
+14 and could evolve
+synchronously to adapt to infect resistant bacteria. 15,16
+Phagotherapy, which was use d before antibiotics were
+discovered, is now going through a revival driven by the crisis
+of antibiotic resistance.
+17 However, the bacteriophage alone
+normally shows a moderate antibacterial e ﬀect, hindering the
+curing of infectious diseases, especially the acute infections. 18
+Because of the lack of imaging moieties, the processes of
+phagotherapy including targe t recognition, binding, and
+infection could not be easily monitored, resulting in di ﬃ cult
+real-time evaluation of therapeutic performance. The introduc-
+tion of sensitively detectable “radar” with powerful “weaponry”
+will therefore promote phagotherapy as a deluxe ensemble for
+both visualization of its infection process and their subsequent
+discriminative eradication.
+Fluorescence imaging technology has emerged as a rapid,
+facile, and powerful tool for visualization and tracking of
+bioanalytes with merits of high sensitivity, low cost, and fast
+Received: December 1, 2019
+Published: January 30, 2020
+Articlepubs.acs.org/JACS
+© 2020 American Chemical Society
+3959
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+Downloaded via HONG KONG UNIV SCIENCE TECHLGY on July 23, 2021 at 15:57:45 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+responsiveness. 19−21 Surpassing traditional organic ﬂuoro-
+phores that have usually su ﬀered severe photobleaching and
+moderate signal-to-noise ratio, the newly developed luminogens
+with aggregation-induced emission characteristics (AIEgens)
+are becoming attractive candidates for advanced biosensing and
+imaging application.
+22−25 AIEgens display weak emission in
+solution but intensi ﬁed ﬂuorescence upon aggregation via the
+restriction of intramolecular motion. 26 The unique light-up
+ﬂuorescence with negligible background noise and remarkable
+photostability qualiﬁes AIEgens to be a superior choice in long-
+lasting ﬂuorescence imaging and tracking for dynamic
+bioprocesses.27−29 What is more, with intelligent molecular
+designing, AIE-based materials display exceptional photo-
+dynamic activity for the treatments of malignant cancer and
+the inactivation of bacteria.
+30−34 However, the speci ﬁc
+discrimination of a certain species of bacterium has not yet
+been previously demonstrated by AIEgens, making them
+unsuitable for accurately removing certain targeted bacte-
+rium.
+35,36 Although the bioorthogonal method showed improve-
+ment in targeted labeling, the incorporation of exogenous
+reactive groups was demanding with challenges for large-scale
+applications.
+37,38 These limitations propelled us to engineer
+AIEgens with pinpoint speci ﬁcity to realize the discriminative
+imaging and killing of a certain species of bacterium.
+Herein, a novel strategy was presented by integrating AIEgens
+with bacteriophage to form a new class of antimicrobial
+bioconjugates (TVP −PAP) for the imaging and killing of a
+certain species of bacterium ( Scheme 1 ). Phage targeting
+P. aeruginosa was chosen as a prototype. The AIE molecule,
+TVP-S, was designed with excellent ﬂuorescence properties and
+eﬃ cient PDI activity. Through a simple amino −carboxyl
+reaction, the AIEgens could be facilely modi ﬁed onto the
+surface of phage entity. The generated TVP −PAP perfectly
+preserved the properties of both AIEgen and phage, with
+intrinsic AIE ﬂuorescence serving the function of real-time
+monitoring of phage −bacterium interaction and particular
+speciﬁcity in bacterial targeting. What is more, the synergistic
+antibacterial e ﬀect with e ﬃ ciency that signi ﬁcantly surpassing
+both individuals in the bioconjugates was achieved by
+integrating the PDI activity of AIEgen and the infection ability
+of phage itself. Superior performance of the bioconjugate was
+also demonstrated in in vivo treatment of infectious wounds
+caused by both antibiotic-sensitive and MDR P. aeruginosa. This
+novel strategy by integrating speci ﬁc targeting, discriminative
+imaging, and synergistic killing functionalities together into an
+AIE−phage bioconjugate is a promising methodology for the
+design of next-generation antibacterial agents.
+■ RESULTS AND DISCUSSION
+AIEgen Synthesis, Property Characterizations, and
+Bioconjugation with Bacteriophage. The AIE compound
+TVP-S was designed and synthesized through three-step
+reactions ( Figure 1 aa n d Figure S1 ). Its structure was
+determined by nuclear magnetic resonance (NMR), high
+resolution mass spectroscopy, and X-ray di ﬀraction (XRD,
+Figure S2) as shown in the Supporting Information. Attributed
+to the existence of a positively charged pyridinium group and the
+hydrophilic carboxyl group in its structure, TVP-S could be well
+dissolved in a high-polarity solvent including water. More
+importantly, the activated carboxyl group in TVP-S structure
+endows it capability to straightforwardly react with the amino
+group that is widespread in the bioorganism. The obvious
+absorbance of TVP-S in the range between 400 and 600 nm with
+a maximum at 457 nm showed its strong capability of visible
+light absorption ( Figure 1b). As TVP-S could be well dissolved
+in solvent with large polarity, we investigated its AIE features in
+dimethyl sulfoxide (DMSO)/chloroform (CHCl 3) mixtures via
+varying the fractions of CHCl 3. As shown in Figure 1c, TVP-S
+exhibited an apparent AIE property. Fluorescence could hardly
+be observed when it was dissolved in a good solvent, DMSO,
+whereas strong aggregated- state emission with 47 times
+enhancement in intensity appeared when the fraction of
+chloroform reached 99% ( Figure 1 d). Their maximum
+emissions in the aggregation state are located at 630 nm,
+indicating its long-wavelength emission properties and large
+Stokes shifts. The signi ﬁcant increase in the absolute
+ﬂuorescence quantum yield of TVP-S in chloroform (33.3%)
+versus in DMSO (1.6%) further veri ﬁed its typical AIE feature.
+Scheme 1. Phage-Guided Targeting, Discriminative Imaging, and Synergistic Killing of Bacteria by AIE Bioconjugates a
+aThe processes including (I) the particular recognition of bacteria by AIEgen conjugated phage; (II) the bacterial lighting up imaging by AIE
+ﬂuorescence and the phage infections as well as the ROS generation of AIEgens; and (III) the synergistic killing of the target bacteria by phage
+infections and AIE-base photodynamic inactivation.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3960
+BSA and bacteria could also induce the aggregation of TVP-S in
+aqueous solution with signi ﬁcant emission enhancements
+(Figures S3 and S4 ). Moreover, dynamic light scattering
+(DLS) analysis was performed to con ﬁrm the aggregation
+process by decreasing the solvent polarity, with obvious
+increases in the average hydrodynamic diameters ( Figure S5).
+The strong absorption of TVP-S in the visible light region
+could lead to the utilization of white light as the source for PDI-
+based antibacterial application. The ROS generation e ﬃ ciency
+of TVP-S was initially determined by using of 2 ′,7′-
+dichloroﬂuorescin diacetate (DCFH) as indicator, which
+could emit ﬂuorescence with a “turn-on” process triggered by
+ROS. As depicted in Figure S6, DCFH alone was nonemissive
+and remained almost constant during 10 min white light
+irradiation (∼4.2 mW cm
+−2). In contrast, the emission intensity
+of DCFH gradually increased and reached 23-fold within the
+same period exposure to white light irradiation in the presence of
+TVP-S. In addition, up to 72.3% of singlet oxygen ( 1O2)
+quantum yield for TVP-S was determined by using 9,10-
+anthracenediylbis(methylene)dimalonic acid (ABDA) as an
+indicator and Rose Bengal (RB) as a standard with ∼75%
+quantum yield for
+1O2
+39,40 (Figure 1e,f and Figure S7). Sodium
+azide (NaN 3)a sa 1O2 quencher41 was further added to the
+ABDA solution in the presence of TVP-S. As shown inFigure S8,
+the decomposition rate of ABDA slowed down gradually with
+increase of the concentration of NaN
+3, and 2.0 mg/mL NaN 3
+could completely inhibited the decomposition of ABDA,
+implying
+1O2 was indeed generated by TVP-S. Meanwhile, no
+obvious enhancements could be observed in the signal from the
+hydroxyphenyl ﬂuorescein (HBF) indicator for hydroxyl
+radicals (OH • ) and the dihydrorhodamine (DHR) indicator
+for superoxide radicals (O2
+• −), indicating that 1O2 accounted for
+nearly all of the ROS generated by TVP-S (Figures S9 and S10).
+As the 1O2 should be stemmed from the energy transfer process
+between the triplet oxygen and triplet excited-state photo-
+sensitizer, we further checked the existence of triplet excitons in
+TVP-S. As shown in Figure S11 , TVP-S exhibited strong
+phosphorescence emission with a lifetime of up to 31.3 μsa t7 7
+K, clearly demonstrating its eﬃ cient intersystem crossing (ISC)
+to the triplet excited state. Theoretically, this is also quite
+rational given TVP-S contains a Br atom which usually boosts
+the ISC process in organic molecular systems (the well-known
+heavy atom e ﬀect
+42).
+With the activated carboxyl group in its molecular structure,
+TVP-S could facilely react with the amino group in the outside
+proteins of bacteriophage and was ready to form the AIE-
+featured phage bioconjugate (TVP −PAP). As illustrated in
+Figure 2a, the intensiﬁed absorbance of PAP phage in the range
+400−500 nm after AIEgen modi ﬁcation con ﬁrmed the
+successful bioconjugation reaction between TVP-S and PAP.
+According to concentration titrations, the molar extinction
+coeﬃ cients of TVP-S and PAP were calculated to be 1.94 × 10
+4
+and 3.41 × 1010 M−1 cm−1, respectively (Figure 2b,c and Figure
+S12). The molar ratio of TVP-S to PAP in the TVP −PAP
+bioconjugate was determined to be on average 8200 AIEgen
+molecules bound on one PAP entity, according to the enhanced
+absorbance at 457 nm of TVP −PAP compared to bare PAP.
+Because of the robust ROS generation capability of prepared
+AIE-phage bioconjugates ( Figure S13 ), the particular bacterial
+recognition, real-time tracking, and synergistic bacterial killing
+were highly expectable ( Figure 2d).
+Particularly Speci ﬁc Bacteria Imaging by TVP −PAP.
+Taking advantage of the speci ﬁc recognition feature of phage
+and the unique AIE property from TVP-S, the e ﬃ ciency of
+bacterial imaging using TVP −PAP was ﬁrst examined on its
+target bacteria ( P. aeruginosa ). As shown in Figure 3 a, P.
+aeruginosa could be stained with bright ﬂuorescence upon
+incubating with TVP −PAP for 30 min, and the staining
+eﬃ ciency could reach 100% e ﬃ ciency (also shown in Figure
+S14). Compared to the commercial cell membrane staining dye,
+DiO, P. aeruginosa could be light-up stained by the TVP −PAP
+probe with a much higher staining e ﬃ ciency (Figure S15). To
+test the particular speciﬁcity of this TVP−PAP probe stemming
+from the inherent recognition capability of bacteriophage, we
+employed two types of bacteria, G
+− A. baumannii (Figure S16)
+and G+ S. aureus (Figure S17), as controls. The results showed
+that even for the process extending to 60 min, neither bacteria
+could be stained by TVP −PAP probes, and no apparent
+ﬂuorescence signals emitted out from either of them in the AIE
+ﬂuorescence channel.
+Encouraged by this exciting result, we further conducted real-
+time tracking of the bacterial staining process in the mixed
+microbes including A. baumannii (G
+−) and host bacteria P.
+aeruginosa (G−) to verify the particular selectivity of the TVP −
+PAP probe to its targetP. aeruginosa. Clearly, the arrow indicated
+A. baumannii could never be stained throughout the whole
+Figure 1. (a) Molecular structure of AIEgen (TVP-S). (b) Normalized
+UV−vis spectra of TVP-S dissolved in water, DMSO, and chloroform.
+(c) AIE curve of TVP-S in the mixture of DMSO and CHCl 3 with
+varying volume fractions. (d) Plotting of the emission maximum of
+TVP-S versus the fraction of the DMSO/CHCl 3 mixture. (e)
+Photodegradation of ABDA with TVP-S under white light irradiation
+in water. [TVP-S] = [Rose Bengal] = 5 × 10−6 M, and [ABDA] = 2 ×
+[TVP-S]. (f) Decomposition rates of ABDA with light irradiation at 379
+nm absorbance.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3961
+incubation process by monitoring both the bright- ﬁeld pictures
+and the ﬂuorescence images as shown in Figure 3b. In contrast,
+the recognition and attachment between TVP −PAP and P.
+aeruginosa started after 10 min coincubation to emit out a
+ﬂuorescence signal. With the time elapsing to 30 min, the
+ﬂuorescence signal became gradually stronger, and more
+detailed tracking of TVP −PAP was also carried out, in which
+the ﬂuorescence signal of bacteria intensi ﬁed to a platform after
+30 min, consistent with the necessary time for phage targeted
+binding and infection to the host ( Figure S18). These results of
+nearly all P. aeruginosa being successfully stained while no
+ﬂuorescence being observed from A. baumannii demonstrated
+the particular speci ﬁcity of TVP −PAP probe to its target
+bacteria. The use of AIEgen alone for bacterial imaging via
+nonspeciﬁc electrostatic or hydrophobic −hydrophobic inter-
+action indicated that it is impossible to realize the absolute
+discrimination of a certain species of bacterium. 31 The stable
+and eﬃ cient staining of G − bacteria was always challenged due
+to the blocking of their complicated cell walls. 43,44 The
+introduction of bacteriophage could guide AIEgen to realize
+discriminative light-up imaging likely equipped with a sensing
+“radar”. The TVP−PAP carried AIEgen to anchor and aggregate
+on the surface of target bacteria, resulting in the enrichment of a
+large number of AIEgens at local site with enhancement in their
+ﬂuorescence emission for light-up imaging of bacteria. There-
+fore, signi ﬁcant advancement in targeting speci ﬁcity could be
+achieved by the TVP −PAP bioconjugate compared to the
+previous AIEgens that su ﬀered moderate selectivity.
+35
+Targeted Antibacterial E ﬀect via Phage-Guided
+Photodynamic Inactivation. Inspired by the exceptional
+bacteria-targeting ability of PAP and high 1O2 generation
+eﬃ ciency of AIEgens, we next checked their synergistic
+Figure 2. (a) UV−vis spectra of the aqueous solution of TVP−PAP (9.375 × 109 PFU mL−1), PAP (9.375 × 109 PFU mL−1), and TVP-S (4.26 × 10−6
+mol L−1). The inner plotting was from 16-fold concentrated TVP −PAP (1.5 × 1011 PFU mL−1) and PAP (1.5 × 1011 PFU mL−1). (b, c) Standard
+absorbance curve of TVP-S and PAP, respectively. Abs 457nm and Abs256nm could be ﬁtted linearly with their concentrations. Through subtraction of
+Abs457nm of TVP−PAP by Abs457nm of PAP, the concentration of modi ﬁed AIEgens in the TVP −PAP conjugates could be calculated, and on average
+8200 AIEgens were bound on one PAP entity. (d) Cartoon illumination of the synergistic e ﬀect of AIEgen-modi ﬁed phage for particularly speci ﬁc
+bacterial recognition, real-time ﬂuorescent tracking, phage infection, and AIE PDI activity integrated synergistic bacterial killing.
+Figure 3. Targeted bacterial imaging. (a) Fluorescence imaging of P.
+aeruginosa incubated with TVP−PAP for 30 min. All the scale bars were
+10 μm. (b) Speciﬁcity test of TVP −PAP by ﬂuorescence imaging of P.
+aeruginosa and A. baumanni coincubated with TVP −PAP. Arrows
+indicate A. baumannii without staining by TVP −PAP. TVP−PAP was
+excited at 488 nm, and the emission was collected at 580 −680 nm.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3962
+antibacterial performances in facing antibiotic-sensitive and
+MDR P. aeruginosa . The times for incubation and white light
+illumination were ﬁrst optimized by examining the survival rate
+of P. aeruginosa . To avoid the instant decrease of bacterial
+survival rate, a small amount of TVP −PAP (9.54 × 105 PFU
+mL−1) was added in each group. As shown in Figure S19, with
+elongation of the incubation time from 0 to 30 min, the bacterial
+survival rate decreased from 98.3% to 74.7%, consistent with the
+saturation time in the above imaging process (Figure S18). Next,
+we ﬁxed the incubation time at 30 min and then irradiated the
+bacterial suspensions by white light (4.2 mW cm
+−2) for 2, 10, 30,
+and 60 min. Nearly 79% of P. aeruginosa could be eradicated
+after 30 min illumination, and the e ﬃ cacy remained unchanged
+even upon irradiation prolonged to 60 min, indicating the
+saturation of ROS generation at this condition. Furthermore, the
+bacterial survival rate signi ﬁcantly increased after reversing the
+sequence of incubation and illumination, suggesting the critical
+role of phage targeting and infection before TVP −PAP-guided
+ROS generation on the bacterial surface ( Figure S20 ). Thus,
+light illumination following 30 min coincubation was applied in
+the subsequent antibacterial tests.
+The synergistic antibacterial e ﬀect of TVP −PAP was next
+tested by comparing with the same molar concentrations of
+individual AIEgen and PAP entity. As shown in Figure 4 a, for
+antibiotic-sensitive P. aeruginosa, neither incubation in darkness
+(control I-30 and control I-60) nor with further white light
+irradiation (control I-30 and L-30) could pose an apparent
+inﬂuence on the bacterial survival rate. Similarly, TVP-S alone
+could neither inhibit the bacterial growth crossing the tested
+concentration range (4.33−21.65 pM, according to the 3.18:1−
+15.9:1 molar ratio), no matter with or without light irradiation. It
+was possible that the nonspeci ﬁc AIEgens and their relative low
+concentration on the surface of bacteria weakened the
+destructive e ﬀect. In contrast, upon PAP treatment, the
+antibacterial e ﬀect initiated when its concentration increased
+to 9.54 × 10
+5 PFU mL−1 (according to the 9.54:1 molar ratio)
+under darkness (PAP I-60). The bacterial survival rate further
+decreased to 48.3% when the concentration increased to 15.9 ×
+105 PFU mL−1 (according to the 15.9:1 molar ratio) in a dose-
+dependent manner. This result indicated the inherited infection
+capability of the TVP−PAP bioconjugate from the PAP moiety.
+With assistance from AIEgen, TVP −PAP showed a slightly
+higher antibacterial eﬃ ciency in the darkness compared to PAP
+alone (TVP −PAP I-30 vs PAP I-30) crossing the tested
+concentration range, possibly contributed by the dark toxicity of
+the AIEgens enriched on the surface of P. aeruginosa . Upon
+elongating the interaction time for another 30 min (TVP −PAP
+I-60), this dark toxicity became much stronger and could cause
+another 20% decrease in the bacterial survival rate at the
+concentration of 9.54 × 10
+5 PFU mL −1. Furthermore, by
+harnessing the extra PDI activity under white light irradiation,
+we could observe signi ﬁcant enhancements in the antibacterial
+eﬃ ciency (TVP−PAP I-30 and L-30). With the concentration of
+TVP−PAP increasing to 1.59 × 10
+6 PFU mL −1, the bacteria
+survival rate rapidly decreased to 6.9%. The agar plate pictures
+also veri ﬁed the excellent antibacterial e ﬀect from TVP −PAP
+bioconjugates which was much superior to TVP-S and PAP
+alone (Figure S21), and complete inhibition could be achieved
+Figure 4. Antibacterial evaluation. (a) Survival rate of antibiotic-sensitive (left) and MDRP. aeruginosa (right) upon various treatments (bacteria were
+ﬁxed at 1.0 × 105 CFU mL−1 in each group). (b) P. aeruginosa and A. baumannii (each with 1.0 × 105 CFU mL−1) incubated together with TVP−PAP
+(1.59 × 106 PFU mL−1). (c) Same concentrations of P. aeruginosa and S. aureus incubated together with TVP−PAP. Inner pictures in (b) and (c) are
+the corresponding CFU count assays with I-30 and L-30 treatment. The arrows indicate P. aeruginosa identiﬁed via colony morphology and colony
+color for another 36 h incubation (I: incubation; L: light illumination. I-30: coincubated for 30 min at 37°C in darkness; I-60: coincubated at 37°C for
+30 min and then at 25 °C for 30 min in darkness; I-30 and L-30: coincubated at 37°C for 30 min in darkness and then at 25 °C for 30 min under white
+light). The concentration of TVP−PAP was determined by using PAP as the standard, and the concentration of TVP-S was calculated according to the
+molar ratio of TVP-S to PAP in TVP −PAP bioconjugate. **P < 0.01, ***P < 0.001.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3963
+by increasing TVP−PAP to 2.544 × 106 PFU mL−1 (Figures S22
+and S23). PAP could keep an infectious capability after TVP-S
+modiﬁcation for at least 1 week ( Figures S24 and S25 ).
+Extending to the clinical isolated MDR P. aeruginosa, a similar
+dose-dependent antibacterial proﬁle was presented upon TVP−
+PAP treatment. When the concentration of TVP−PAP increases
+to 6.36 × 107 PFU mL−1, the eradication e ﬃ ciency could reach
+64.8% (TVP−PAP I-60), and the eﬃ ciency could even rise up to
+99.5% under white light irradiation (TVP−PAP I-30 and L-30).
+In contrast, at the same concentration, the individual AIEgen
+(TVP-S I30 and L-30) and PAP (PAP I30 and L-30) could only
+kill 7.0% and 46.5% bacteria, respectively, deﬁnitely verifying the
+signiﬁcantly synergistic antibacterial e ﬀect boosted by the PDI
+activity of AIEgens.
+The targeted killing is another critical consideration in
+antibacterial test. Herein, the character of PAP was introduced
+for the bacterial discrimination and their following targeted
+killing. This capability of TVP −PAP was checked in two-
+component systems by culturing host bacteria, P. aeruginosa
+(G
+−), with nonhost bacteria, A. baumannii (G−)o r S. aureus
+(G+), respectively. As shown in Figure 4b,c, in the presence of
+light irradiation, P. aeruginosa was e ﬀectively killed, and few
+colonies formed upon TVP−PAP treatment, whereas the colony
+quantity of A. baumannii or S. aureus was nearly una ﬀected,
+consistent with the above selective staining result of TVP −PAP
+to its target. The phage-guided targeting was proposed to play a
+critical role in achieving this super-antibacterial performance.
+PAP ﬁrst speciﬁcally recognized the antibiotic-sensitive or MDR
+Figure 5. Real-time monitoring of TVP−PAP infecting P. aeruginosa and the PDI eﬀect. Bacteria were ﬁrst coincubated with TVP−PAP (molar ratio of
+TVP−PAP to P. aeruginosa was 15.9:1) for 30 min and irradiated under white light for another 50 min.
+Figure 6. SEM imaging of bacterial killing e ﬀect. (a) P. aeruginosa
+without any treatment. (b) P. aeruginosa incubated with TVP−PAP and
+under white light irradiation.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3964
+P. aeruginosa through its tail protein binding to lipopolysac-
+charide of the host bacteria. 14 Then the AIEgens (low to 21.65
+pM in 1.59 × 106 PFU mL−1 TVP−PAP) were enriched on the
+bacterial surface. Following the infection process of phage itself,
+the AIEgens generating e ﬃ cient
+1O2 in situ under white light
+irradiation could further promote the destruction on the
+targeted bacteria. Compared to the previous PDI-based
+antibacterial tests demanding up to several micromolar
+AIEgens,
+36,45−47 our phage-guided method showed a fairly
+higher e ﬃ cacy and would remarkably mitigate the toxic
+concerns regarding the random interaction of traditional
+photosensitizers with the surrounding biomolecules.
+Tracking of the Phage-Guided Targeting and Killing
+Process. The unique ﬂuorescence property of AIEgen was also
+harnessed for real-time monitoring this targeting and killing
+process. As shown in Figure 5 , the successful staining of P.
+aeruginosa was ﬁrst achieved by incubating with TVP −PAP
+bioconjugates, with emitting out robust ﬂuorescence signal
+under imaging (also quantitated in Figure S26). After exposure
+to white light starting from the time point at 30 min, bacterial
+morphologies became gradually blurred with illumination
+lasting, with obvious appearance of fragments in the bright
+ﬁeld. In the ﬂuorescence ﬁeld, signals disappeared in a large
+fraction of bacteria after 10 min irradiation, along with the
+apparent agglomeration of bacterial cells. These change in
+morphology and ﬂuidity indicated destruction happened on the
+targeted bacteria. To MDR P. aeruginosa, the real-time tracking
+was performed upon interaction with a higher concentration of
+TVP−PAP (6.36 × 10
+7 PFU mL −1)( Figure S27 ). Similarly,
+after 30 min coincubation, it was easy to observe the bacterial
+cell fragment whose amount obviously increased with the
+elapsing of white light irradiation time, indicating the
+aggravating damage to the MDR bacteria.
+Figure 7. In vivo evaluation of TVP −PAP in treatment of antibiotic-sensitive and MDR P. aeruginosa infected wounds on mice. (a) The treatment
+process illustrated with time elapsing. (b) Photographs of wounds treated by TVP −PAP plus white light irradiation for di ﬀerent time periods. (c)
+Relative wound size analysis after diverse treatments for 8 days. The initial P. aeruginosa was 2.0 × 107 CFU. (d) Photographs of wounds treated by
+TVP−PAP plus white light irradiation for diﬀerent time periods. (e) Relative wound size analysis after diverse treatments for 8 days. The initial MDRP.
+aeruginosa was 2.0 × 106 CFU.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3965
+To gain more insights into the antibacterial e ﬀect of TVP −
+PAP, SEM imaging was employed to monitor the morphological
+changes on antibiotic-sensitive and MDR P. aeruginosa .A s
+shown in Figure 6a, without TVP−PAP treatment, P. aeruginosa
+possessed a smooth surface with an intact cell wall and well-
+stereo-shaped body. In contrast, after treatment with TVP−PAP
+and white light irradiation, the cell walls of P. aeruginosa
+apparently became rough and even ruptured with the
+disappearance of its original stereo shape.
+Also, numerous holes appeared on the bacterial surface. These
+holes punched by phage would accelerate the permeation of 1O2
+into the bacteria cytoplasm and caused further damages to P.
+aeruginosa (Figure 6b). A similar result with coarse cell surfaces
+and collapsed morphologies could also be observed in the case of
+MDR P. aeruginosa, verifying the tremendous destruction from
+the synergistic e ﬀect
+48,49 of TVP −PAP bioconjugates ( Figure
+S28).
+In Vivo Synergistic Eradication of Skin Infections.
+Inspired by the outstanding bacteria targeting and elimination
+activity of TVP−PAP in vitro, we further extended antibacterial
+examinations to in vivo using a mouse model with antibiotic-
+sensitive or MDR P. aeruginosa infectious skin wounds. The
+biocompatibility of TVP−PAP on normal cells wasﬁrst checked.
+As illustrated in Figure S29 , for both dark and illumination
+groups, the viability of HaCaT cells still remained up to 83%
+even the TVP−PAP concentration went up to 8.45 × 10
+10 PFU
+mL−1. The imaging result of HaCaT cell incubated with TVP −
+PAP further veri ﬁed its low toxicity as no obvious ﬂuorescence
+signal could be detected ( Figure S30). Compared to the TVP-S
+molecules, the improved biocompatibility of TVP −PAP
+provided a basis for their in vivo antibacterial application
+(Figure S31).
+After model building, the antibiotic-sensitive and MDR P.
+aeruginosa infected mice were randomly separated into three
+groups with various treatments (as depicted in Figure 7 a).
+Through monitoring the healing processes of the wounds, it was
+clear that the mice treated with TVP−PAP nearly recovered at 8
+day post-treatment ( Figure 7 b,d). Both of the relative wound
+sizes infected by antibiotic-sensitive and MDR P. aeruginosa
+decreased to below 10%, signi ﬁcantly smaller compared to the
+PBS control or TVP −PAP alone group ( Figure 7 c,e). The
+wound healing was much faster than the previous reports using
+AIE polymer
+32 and an AIEgen−antibiotic conjugate in the case
+of G− bacterial infection,45 demonstrating the supereﬃ ciency of
+the phage-guided bacterial killing. The infected skin tissues were
+then collected, and bacterial colony numbers were counted to
+quantify the antibacterial e ﬃ cacy of TVP −PAP. It turned out
+that both numbers of bacteria in the groups treated with TVP −
+PAP plus white light irradiation were much smaller comparing to
+the PBS control and TVP −PAP alone treated group ( Figure
+S32). The hematoxylin and eosin (H&E) staining also proved
+the superior outcome of TVP −PAP treatment plus white light
+irradiation by showing intact histological characteristics. Where-
+as in control and TVP−PAP treated alone, invaded lymphocytes
+could be obviously observed ( Figure 8 ). Collectively, these
+outstanding performances in vivo suggested the great potential
+of TVP−PAP bioconjugates in the application of target bacterial
+killing and infectious disease therapeutics.
+■ CONCLUSIONS
+In summary, we proposed a novel antibacterial strategy by
+integrating the ﬂuorescence monitoring, phage targeting, and
+AIE-based photodynamic inactivation together toward a certain
+species of bacterium. Bene ﬁting from the unique ﬂuorescence
+property, eﬀective
+1O2 generation capability, particular targeting
+speciﬁcity, TVP −PAP had been successfully utilized in the
+discriminative imaging, selective and e ﬃ cient killing of targeted
+bacteria, without apparent inﬂuence in the nontargeting bacteria
+or the normal mammalian cells. The in vitro test demonstrated
+that even MDR P. aeruginosa could be killed with nearly 100%
+eﬃ ciency attributing to the synergistic e ﬀect within TVP−PAP.
+Additionally, in vivo study veriﬁed that the healing rates of both
+antibiotic-sensitive and MDR bacteria infected wound could be
+signiﬁcantly accelerated. These remarkable performances
+validated that the superior potential of TVP −PAP bioconjugate
+in synergistic bacterial recognizing and killing that surpassing
+each individual component within the bioconjugate. Through
+changing to other phages, this AIE-phage conjugated strategy
+Figure 8. Histologic analysis of the bacterial infected injury tissue. (a) P. aeruginosa and (b) MDR P. aeruginosa infected injury tissue by H&E staining
+for diﬀerent treatment groups, respectively. All scale bars were equal to 10 μm.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3966
+could be extended to be a universal approach for producing
+particular speciﬁc antibacterial agents, holding great potential to
+the treatment of bacterial infections as well as diseases indirectly
+inﬂuenced by bacteria, such as the chemo- or immunotherapy
+resistant cancer with critical bacterial participation.
+■ ASSOCIATED CONTENT
+*sı Supporting Information
+The Supporting Information is available free of charge at
+https://pubs.acs.org/doi/10.1021/jacs.9b12936.
+Materials, methods, and Figures S1 −S32 (PDF)
+■ AUTHOR INFORMATION
+Corresponding Authors
+Yujun Yang − Key Laboratory of Laboratory Medical Diagnostics,
+Ministry of Education, Department of Laboratory Medicine,
+Chongqing Medical Laboratory Micro ﬂuidics and SPRi
+Engineering Research Center, Chongqing Medical University,
+Chongqing 400016, China;
+orcid.org/0000-0002-5637-
+7304; Email: yangyujun@cqmu.edu.cn
+Guoming Xie − Key Laboratory of Laboratory Medical
+Diagnostics, Ministry of Education, Department of Laboratory
+Medicine, Chongqing Medical Laboratory Microﬂuidics and SPRi
+Engineering Research Center, Chongqing Medical University,
+Chongqing 400016, China;
+orcid.org/0000-0002-7497-
+1964; Email: guomingxie@cqmu.edu.cn
+Ben Zhong Tang − Department of Chemistry, Hong Kong Branch
+of Chinese National Engineering Research Centre for Tissue
+Restoration and Reconstruction, Institute for Advanced Study,
+Division of Life Science, Department of Chemical and Biomedical
+Engineering, The Hong Kong University of Science and
+Technology, Clear Water Bay, Kowloon, Hong Kong; HKUST-
+Shenzhen Research Institute, Shenzhen 518057, China; NSFC
+Center for Luminescence from Molecular Aggregates, SCUT-
+HKUST Joint Research Laboratory, State Key Laboratory of
+Luminescent Materials and Devices, South China University of
+Technology, Guangzhou 510640, China;
+orcid.org/0000-
+0002-0293-964X; Email: tangbenz@ust.hk
+Authors
+Xuewen He − Department of Chemistry, Hong Kong Branch of
+Chinese National Engineering Research Centre for Tissue
+Restoration and Reconstruction, Institute for Advanced Study,
+Division of Life Science, Department of Chemical and Biomedical
+Engineering, The Hong Kong University of Science and
+Technology, Clear Water Bay, Kowloon, Hong Kong; HKUST-
+Shenzhen Research Institute, Shenzhen 518057, China;
+orcid.org/0000-0002-8414-5164
+Yongcan Guo − Clinical Laboratory, Traditional Chinese
+Medicine Hospital A ﬃ liated to Southwest Medical University,
+Luzhou 646000, China
+Shuguang Lu − Department of Microbiology, College of Basic
+Medical Science, Army Medical University, Chongqing 400038,
+China
+Yao Du − Key Laboratory of Laboratory Medical Diagnostics,
+Ministry of Education, Department of Laboratory Medicine,
+Chongqing Medical Laboratory Micro ﬂuidics and SPRi
+Engineering Research Center, Chongqing Medical University,
+Chongqing 400016, China
+Jun-Jie Li − Key Laboratory of Laboratory Medical Diagnostics,
+Ministry of Education, Department of Laboratory Medicine,
+Chongqing Medical Laboratory Micro ﬂuidics and SPRi
+Engineering Research Center, Chongqing Medical University,
+Chongqing 400016, China
+Xuepeng Zhang − Department of Chemistry, Hong Kong Branch
+of Chinese National Engineering Research Centre for Tissue
+Restoration and Reconstruction, Institute for Advanced Study,
+Division of Life Science, Department of Chemical and Biomedical
+Engineering, The Hong Kong University of Science and
+Technology, Clear Water Bay, Kowloon, Hong Kong; HKUST-
+Shenzhen Research Institute, Shenzhen 518057, China;
+orcid.org/0000-0002-2608-6098
+Nelson L. C. Leung − Department of Chemistry, Hong Kong
+Branch of Chinese National Engineering Research Centre for
+Tissue Restoration and Reconstruction, Institute for Advanced
+Study, Division of Life Science, Department of Chemical and
+Biomedical Engineering, The Hong Kong University of Science
+and Technology, Clear Water Bay, Kowloon, Hong Kong;
+HKUST-Shenzhen Research Institute, Shenzhen 518057, China
+Zheng Zhao − Department of Chemistry, Hong Kong Branch of
+Chinese National Engineering Research Centre for Tissue
+Restoration and Reconstruction, Institute for Advanced Study,
+Division of Life Science, Department of Chemical and Biomedical
+Engineering, The Hong Kong University of Science and
+Technology, Clear Water Bay, Kowloon, Hong Kong; HKUST-
+Shenzhen Research Institute, Shenzhen 518057, China
+Guangle Niu − Department of Chemistry, Hong Kong Branch of
+Chinese National Engineering Research Centre for Tissue
+Restoration and Reconstruction, Institute for Advanced Study,
+Division of Life Science, Department of Chemical and Biomedical
+Engineering, The Hong Kong University of Science and
+Technology, Clear Water Bay, Kowloon, Hong Kong; HKUST-
+Shenzhen Research Institute, Shenzhen 518057, China;
+orcid.org/0000-0002-5403-6880
+Shuangshuang Yang − Key Laboratory of Laboratory Medical
+Diagnostics, Ministry of Education, Department of Laboratory
+Medicine, Chongqing Medical Laboratory Microﬂuidics and SPRi
+Engineering Research Center, Chongqing Medical University,
+Chongqing 400016, China
+Zhi Weng − Key Laboratory of Laboratory Medical Diagnostics,
+Ministry of Education, Department of Laboratory Medicine,
+Chongqing Medical Laboratory Micro ﬂuidics and SPRi
+Engineering Research Center, Chongqing Medical University,
+Chongqing 400016, China
+Ryan T. K. Kwok− Department of Chemistry, Hong Kong Branch
+of Chinese National Engineering Research Centre for Tissue
+Restoration and Reconstruction, Institute for Advanced Study,
+Division of Life Science, Department of Chemical and Biomedical
+Engineering, The Hong Kong University of Science and
+Technology, Clear Water Bay, Kowloon, Hong Kong; HKUST-
+Shenzhen Research Institute, Shenzhen 518057, China;
+orcid.org/0000-0002-6866-3877
+Jacky W. Y. Lam − Department of Chemistry, Hong Kong Branch
+of Chinese National Engineering Research Centre for Tissue
+Restoration and Reconstruction, Institute for Advanced Study,
+Division of Life Science, Department of Chemical and Biomedical
+Engineering, The Hong Kong University of Science and
+Technology, Clear Water Bay, Kowloon, Hong Kong; HKUST-
+Shenzhen Research Institute, Shenzhen 518057, China
+Complete contact information is available at:
+https://pubs.acs.org/10.1021/jacs.9b12936
+Author Contributions
+X.H. and Y.Y. contributed equally to this work.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3967
+Notes
+The authors declare no competing ﬁnancial interest.
+■ ACKNOWLEDGMENTS
+The authors acknowledge funding to B.Z.T. from the Research
+Grants Council of Hong Kong (C6009-17G), the Innovation
+and Technology Commission (ITC-CNERC14SC01), the
+National Natural Science Foundation of China (21788102),
+the Natural Science Foundation of Guangdong Province
+(2019B030301003), and the National Key Research and
+Development program of China (2018YFE0190200). B.Z.T. is
+also grateful for the support from the Science and Technology
+Plan of Shenzhen (JCYJ20160229205601482). G.X. is grateful
+for funding from the National Natural Science Foundation of
+China (81672112, 81972025) and the Chongqing Technology
+Innovation and Application Demonstration Project
+(cstc2018jscx-msybX0010). Y.Y. is grateful for funding from
+the Chongqing Special Postd octoral Science Foundation
+(Xm2017090), the Science and Technology Research Program
+of Chongqing Municipal Education Commission
+(Kjqn201900416). R.T.K.K. is also grateful for funding from
+the Science and Technology Plan of Shenzhen
+(JCYJ20180507183832744). The authors thank Dr. Ling-
+Hong Xiong in Shenzhen Center for Disease Control and
+Prevention and her funding from the National Natural Science
+Foundation of China (21705111). We also thank Dr. Weijun
+Zhao for the measurements of phosphorescence spectra and
+lifetime decay, Dr. Li Zhang for help in drawing the schematic
+ﬁgures, and Dr. Lei Xu for help in building the animal models.
+■ REFERENCES
+(1) Ten Threats to Global Health in 2019. World Health
+Organization, 2019; https://www.who.int/emergencies/ten-threats-
+to-global-health-in-2019.
+(2) Looke, D.; Gottlieb, T.; Jones, C. A. The Global Challenges of
+Infectious Diseases. Med. J. Aust. 2015, 202, 225−226.
+(3) Geller, L. T.; Barzily-Rokni, M.; Danino, T.; Jonas, O. H.; Shental,
+N.; Nejman, D.; Gavert, N.; Zwang, Y.; Cooper, Z. A.; Shee, K.; Thaiss,
+C. A.; Reuben, A.; Livny, J.; Avraham, R.; Frederick, D. T.; Ligorio, M.;
+Chatman, K.; Johnston, S. E.; Mosher, C. M.; Brandis, A.; Fuks, G.;
+Gurbatri, C.; Gopalakrishnan, V.; Kim, M.; Hurd, M. W.; Katz, M.;
+Fleming, J.; Maitra, A.; Smith, D. A.; Skalak, M.; Bu, J.; Michaud, M.;
+Trauger, S. A.; Barshack, I.; Golan, T.; Sandbank, J.; Flaherty, K. T.;
+Mandinova, A.; Garrett, W. S.; Thayer, S. P.; Ferrone, C. R.;
+Huttenhower, C.; Bhatia, S. N.; Gevers, D.; Wargo, J. A.; Golub, T.
+R.; Straussman, R. Potential Role of Intratumor Bacteria in Mediating
+Tumor Resistance to the Chemotherapeutic Drug Gemcitabine. Science
+2017, 357, 1156−1160.
+(4) Routy, B.; Le Chatelier, E.; Derosa, L.; Duong, C. P. M.; Alou, M.
+T.; Daille ̀re, R.; Fluckiger, A.; Messaoudene, M.; Rauber, C.; Roberti,
+M. P.; Fidelle, M.; Flament, C.; Poirier-Colame, V.; Opolon, P.; Klein,
+C.; Iribarren, K.; Mondrago ́n, L.; Jacquelot, N.; Qu, B.; Ferrere, G.;
+Clémenson, C.; Mezquita, L.; Masip, J. R.; Naltet, C.; Brosseau, S.;
+Kaderbhai, C.; Richard, C.; Rizvi, H.; Levenez, F.; Galleron, N.;
+Quinquis, B.; Pons, N.; Ryffel, B.; Minard-Colin, V.; Gonin, P.; Soria, J.-
+C.; Deutsch, E.; Loriot, Y.; Ghiringhelli, F.; Zalcman, G.; Goldwasser,
+F.; Escudier, B.; Hellmann, M. D.; Eggermont, A.; Raoult, D.; Albiges,
+L.; Kroemer, G.; Zitvogel, L. Gut Microbiome Influences Efficacy of
+PD-1−Based Immunotherapy Against Epithelial Tumors. Science 2018,
+359,9 1−97.
+(5) Yu, T.; Guo, F.; Yu, Y.; Sun, T.; Ma, D.; Han, J.; Qian, Y.; Kryczek,
+I.; Sun, D.; Nagarsheth, N.; Chen, Y.; Chen, H.; Hong, J.; Zou, W.;
+Fang, J.-Y. Fusobacterium Nucleatum Promotes Chemoresistance to
+Colorectal Cancer by Modulating Autophagy. Cell 2017, 170, 548 −
+563.
+(6) Zheng, D.-W.; Dong, X.; Pan, P.; Chen, K.-W.; Fan, J.-X.; Cheng,
+S.-X.; Zhang, X.-Z. Phage-Guided Modulation of the Gut Microbiota of
+Mouse Models of Colorectal Cancer Augments Their Responses to
+Chemotherapy. Nat. Biomed. Eng. 2019, 3, 717−728.
+(7) Nicholson, J. K.; Holmes, E.; Kinross, J.; Burcelin, R.; Gibson, G.;
+Jia, W.; Pettersson, S. Host-Gut Microbiota Metabolic Interactions.
+Science 2012, 336, 1262−1267.
+(8) Tremaroli, V.; Ba ̈ckhed, F. Functional Interactions between the
+Gut Microbiota and Host Metabolism. Nature 2012, 489, 242−249.
+(9) Scott, N. A.; Andrusaite, A.; Andersen, P.; Lawson, M.; Alcon-
+Giner, C.; Leclaire, C.; Caim, S.; Le Gall, G.; Shaw, T.; Connolly, J. P.;
+et al. Antibiotics Induce Sustained Dysregulation of Intestinal T Cell
+Immunity by Perturbing Macrophage Homeostasis. Sci. Transl. Med.
+2018,
+10, eaao4755.
+(10) Stecher, B.; Maier, L.; Hardt, W.-D. ’Blooming’ in the Gut: How
+Dysbiosis Might Contribute to Pathogen Evolution.Nat. Rev. Microbiol.
+2013, 11, 277−284.
+(11) Davies, S. C.; Fowler, T.; Watson, J.; Livermore, D. M.; Walker,
+D. Annual Report of the Chief Medical Officer: Infection and the Rise
+of Antimicrobial Resistance. Lancet 2013, 381, 1606−1609.
+(12) Váradi, L.; Luo, J. L.; Hibbs, D. E.; Perry, J. D.; Anderson, R. J.;
+Orenga, S.; Groundwater, P. W. Methods for the Detection and
+Identification of Pathogenic Bacteria: Past, Present, and Future. Chem.
+Soc. Rev. 2017, 46, 4818−4832.
+(13) Baker, S. J.; Payne, D. J.; Rappuoli, R.; De Gregorio, E.
+Technologies to Address Antimicrobial Resistance.Proc. Natl. Acad. Sci.
+U. S. A. 2018, 115, 12887−12895.
+(14) Nobrega, F. L.; Vlot, M.; de Jonge, P. A.; Dreesens, L. L.;
+Beaumont, H. J.; Lavigne, R.; Dutilh, B. E.; Brouns, S. J. Targeting
+Mechanisms of Tailed Bacteriophages. Nat. Rev. Microbiol. 2018, 16,
+760−773.
+(15) Thiel, K. Old Dogma, New Tricks 21st Century Phage
+Therapy. Nat. Biotechnol. 2004, 22,3 1−36.
+(16) Brockhurst, M. A.; Morgan, A. D.; Fenton, A.; Buckling, A.
+Experimental Coevolution with Bacteria and Phage: The Pseudomonas
+FluorescensΦ2 Model System. Infect., Genet. Evol. 2007, 7, 547−552.
+(17) Levin, B. R.; Bull, J. J. Population and Evolutionary Dynamics of
+Phage Therapy. Nat. Rev. Microbiol. 2004, 2, 166−173.
+(18) Zhang, Q.-G.; Buckling, A. Phages Limit the Evolution of
+Bacterial Antibiotic Resistance in Experimental Microcosms.Evol. Appl.
+2012, 5, 575−582.
+(19) Wen, C.-Y.; Jiang, Y.-Z.; Li, X.-Y.; Tang, M.; Wu, L.-L.; Hu, J.;
+Pang, D.-W.; Zeng, J.-B. Efficient Enrichment and Analyses of Bacteria
+at Ultralow Concentration with Quick-Response Magnetic Nano-
+spheres. ACS Appl. Mater. Interfaces 2017, 9, 9416−9425.
+(20) Kobayashi, H.; Ogawa, M.; Alford, R.; Choyke, P. L.; Urano, Y.
+New Strategies for Fluorescent Probe Design in Medical Diagnostic
+Imaging. Chem. Rev. 2010, 110, 2620−2640.
+(21) He, X.; Zeng, T.; Li, Z.; Wang, G.; Ma, N. Catalytic Molecular
+Imaging of MicroRNA in Living Cells by DNA-Programmed
+Nanoparticle Disassembly. Angew. Chem., Int. Ed. 2016, 55, 3073 −
+3076.
+(22) Xiong, L.-H.; He, X.; Zhao, Z.; Kwok, R. T. K.; Xiong, Y.; Gao, P.
+F.; Yang, F.; Huang, Y.; Sung, H. H.-Y.; Williams, I. D.; Lam, J. W. Y.;
+Cheng, J.; Zhang, R.; Tang, B. Z. Ultrasensitive Virion Immunoassay
+Platform with Dual-Modality Based on a Multifunctional Aggregation-
+Induced Emission Luminogen. ACS Nano 2018, 12, 9549−9557.
+(23) He, X.; Yin, F.; Wang, D.; Xiong, L.-H.; Kwok, R. T. K.; Gao, P.
+F.; Zhao, Z.; Lam, J. W. Y.; Yong, K.-T.; Li, Z.; Tang, B. Z. AIE Featured
+Inorganic-Organic Core@ Shell Nanoparticle for High-Efficiency
+SiRNA Delivery and Real-Time Monitoring. Nano Lett. 2019, 19,
+2272−2279.
+(24) Kwok, R. T. K.; Leung, C. W. T.; Lam, J. W. Y.; Tang, B. Z.
+Biosensing by Luminogens with Aggregation-Induced Emission
+Characteristics. Chem. Soc. Rev. 2015, 44, 4228−4238.
+(25) He, X.; Zhao, Z.; Xiong, L.-H.; Gao, P. F.; Peng, C.; Li, R. S.;
+Xiong, Y.; Li, Z.; Sung, H. H.-Y.; Williams, I. D.; Kwok, R. T. K.; Lam, J.
+W. Y.; Huang, C. Z.; Ma, N.; Tang, B. Z. Redox-Active AIEgen-Derived
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3968
+Plasmonic and Fluorescent Core@ Shell Nanoparticles for Multi-
+modality Bioimaging. J. Am. Chem. Soc. 2018, 140, 6904−6911.
+(26) Mei, J.; Leung, N. L. C.; Kwok, R. T. K.; Lam, J. W. Y.; Tang, B. Z.
+Aggregation-Induced Emission: Together We Shine, United We Soar!
+Chem. Rev. 2015, 115, 11718−11940.
+(27) Yuan, Y.; Liu, B. Visualization of Drug Delivery Processes Using
+AIEgens. Chem. Sci. 2017, 8, 2537−2546.
+(28) Ni, X.; Zhang, X.; Duan, X.; Zheng, H.-L.; Xue, X.-S.; Ding, D.
+Near-Infrared Afterglow Luminescent Aggregation-Induced Emission
+Dots with Ultrahigh Tumor-to-Liver Signal Ratio for Promoted Image-
+Guided Cancer Surgery. Nano Lett. 2019, 19, 318−330.
+(29) Wang, Y.; Zhang, Y.; Wang, J.; Liang, X.-J. Aggregation-Induced
+Emission (AIE) Fluorophores as Imaging Tools to Trace the Biological
+Fate of Nano-Based Drug Delivery Systems. Adv. Drug Delivery Rev.
+2019, 143, 161−176.
+(30) Mao, D.; Wu, W.; Ji, S.; Chen, C.; Hu, F.; Kong, D.; Ding, D.; Liu,
+B. Chemiluminescence-Guided Cancer Therapy Using a Chemiexcited
+Photosensitizer. Chem. 2017, 3, 991−1007.
+(31) He, X.; Xiong, L.-H.; Zhao, Z.; Wang, Z.; Luo, L.; Lam, J. W. Y.;
+Kwok, R. T. K.; Tang, B. Z. AIE-Based Theranostic Systems for
+Detection and Killing of Pathogens. Theranostics 2019, 9, 3223−3248.
+(32) Liu, X.; Li, M.; Han, T.; Cao, B.; Qiu, Z.; Li, Y.; Li, Q.; Hu, Y.; Liu,
+Z.; Lam, J. W. Y.; Hu, X.; Tang, B. Z. In Situ Generation of Azonia-
+Containing Polyelectrolytes for Luminescent Photopatterning and
+Superbug Killing. J. Am. Chem. Soc. 2019, 141, 11259−11268.
+(33) Lan, M.; Zhao, S.; Liu, W.; Lee, C.-S.; Zhang, W.; Wang, P.
+Photosensitizers for Photodynamic Therapy. Adv. Healthcare Mater.
+2019, 8, 1900132.
+(34) Gao, S.; Yan, X.; Xie, G.; Zhu, M.; Ju, X.; Stang, P. J.; Tian, Y.;
+Niu, Z. Membrane Intercalation-Enhanced Photodynamic Inactivation
+of Bacteria by a Metallacycle and TAT-Decorated Virus Coat Protein.
+Proc. Natl. Acad. Sci. U. S. A. 2019, 116, 23437−23443.
+(35) Kang, M.; Kwok, R. T. K.; Wang, J.; Zhang, H.; Lam, J. W. Y.; Li,
+Y.; Zhang, P.; Zou, H.; Gu, X.; Li, F.; Tang, B. Z. A Multifunctional
+Luminogen with Aggregation-Induced Emission Characteristics for
+Selective Imaging and Photodynamic Killing of both Cancer Cells and
+Gram-Positive Bacteria. J. Mater. Chem. B 2018, 6, 3894−3903.
+(36) Kang, M.; Zhou, C.; Wu, S.; Yu, B.; Zhang, Z.; Song, N.; Lee, M.
+M. S.; Xu, W.; Xu, F.-J.; Wang, D.; Wang, L.; Tang, B. Z. Evaluation of
+Structure−Function Relationships of Aggregation-Induced Emission
+Luminogens for Simultaneous Dual Applications of Specific Discrim-
+ination and Efficient Photodynamic Killing of Gram-Positive Bacteria.J.
+Am. Chem. Soc. 2019, 141, 16781−16789.
+(37) Mao, D.; Hu, F.; Ji, S.; Wu, W.; Ding, D.; Kong, D.; Liu, B.
+Metal− Organic-Framework-Assisted In Vivo Bacterial Metabolic
+Labeling and Precise Antibacterial Therapy. Adv. Mater. 2018, 30,
+1706831.
+(38) Hu, F.; Mao, D.; Kenry; Cai, X.; Wu, W.; Kong, D.; Liu, B. A
+Light-Up Probe with Aggregation-Induced Emission for Real-Time
+Bio-orthogonal Tumor Labeling and Image-Guided Photodynamic
+Therapy. Angew. Chem., Int. Ed. 2018, 57, 10182−10186.
+(39) Lambert, C. R.; Kochevar, I. E. Does Rose Bengal Triplet
+Generate Superoxide Anion? J. Am. Chem. Soc. 1996, 118, 3297−3298.
+(40) Lan, M.; Zhao, S.; Xie, Y.; Zhao, J.; Guo, L.; Niu, G.; Li, Y.; Sun,
+H.; Zhang, H.; Liu, W.; Zhang, J.; Wang, P.; Zhang, W. Water-Soluble
+Polythiophene for Two-Photon Excitation Fluorescence Imaging and
+Photodynamic Therapy of Cancer. ACS Appl. Mater. Interfaces 2017, 9,
+14590−14595.
+(41) Liu, Z.; Zou, H.; Zhao, Z.; Zhang, P.; Shan, G.-G.; Kwok, R. T. K.;
+Lam, J. W. Y.; Zheng, L.; Tang, B. Z. Tuning Organelle Specificity and
+Photodynamic Therapy Efficiency by Molecular Function Design. ACS
+Nano 2019, 13, 11283−11293.
+(42) McClure, D. S. Triplet-Singlet Transitions in Organic Molecules.
+Lifetime Measurements of the Triplet State. J. Chem. Phys. 1949, 17,
+905−913.
+(43) Gupta, R. S. Protein Phylogenies and Signature Sequences: A
+Reappraisal of Evolutionary Relationships among Archaebacteria,
+Eubacteria, and Eukaryotes. Microbiol. Mol. Biol. Rev. 1998, 62,
+1435−1491.
+(44) Engler, A. C.; Wiradharma, N.; Ong, Z. Y.; Coady, D. J.; Hedrick,
+J. L.; Yang, Y.-Y. Emerging Trends in Macromolecular Antimicrobials
+to Fight Multi-Drug-Resistant Infections. Nano Today 2012, 7, 201 −
+222.
+(45) Li, Y.; Zhao, Z.; Zhang, J.; Kwok, R. T. K.; Xie, S.; Tang, R.; Jia,
+Y.; Yang, J.; Wang, L.; Lam, J. W. Y.; Zheng, W.; Jiang, X.; Tang, B. Z. A
+Bifunctional Aggregation-Induced Emission Luminogen for Monitor-
+ing and Killing of Multidrug-Resistant Bacteria. Adv. Funct. Mater.
+2018, 28, 1804632.
+(46) Qi, G.; Hu, F.; Kenry; Shi, L.; Wu, M.; Liu, B. An AIEgen-Peptide
+Conjugate as a Phototheranostic Agent for Phagosome-Entrapped
+Bacteria. Angew. Chem., Int. Ed. 2019, 58, 16229−16235.
+(47) Hu, F.; Qi, G.; Kenry; Mao, D.; Zhou, S.; Wu, M.; Wu, W.; Liu, B.
+Visualization and In Situ Ablation of Intracellular Bacterial Pathogens
+through Metabol ic Labeling. Angew. Chem., Int. Ed. 2019 ,
+DOI: 10.1002/anie.201910187.
+(48) Sang, W.; Zhang, Z.; Dai, Y.; Chen, X. Recent Advances in
+Nanomaterial-Based Synergistic Combination Cancer Immunother-
+apy. Chem. Soc. Rev. 2019, 48, 3771−3810.
+(49) Fan, W.; Yung, B.; Huang, P.; Chen, X. Nanotechnology for
+Multimodal Synergistic Cancer Therapy. Chem. Rev. 2017, 117,
+13566−13638.
+Journal of the American Chemical Society pubs.acs.org/JACS Article
+https://dx.doi.org/10.1021/jacs.9b12936
+J. Am. Chem. Soc. 2020, 142, 3959 −3969
+3969

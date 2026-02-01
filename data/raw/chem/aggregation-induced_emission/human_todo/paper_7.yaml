@@ -1,0 +1,418 @@
+title: 'Lab-in-Cell: A Covalent Photosensitizer Reverses Hypoxia and Evokes Ferroptosis and Pyroptosis for Enhanced Anti-Tumor
+  Immunity'
+blocks:
+- block_id: 0
+  content: Photodynamic immunotherapy presents a non-invasive strategy characterized by spatiotemporal control and minimal
+    side effects to induce immunogenic cell death (ICD). This approach significantly enhances the release of tumor-associated
+    antigens and damage-associated molecular patterns, thereby improving cancer immunotherapy outcomes. However, hypoxia and
+    antioxidant defenses at tumor sites considerably diminish the efficacy of photodynamic immunotherapy. In this work, a
+    covalent warhead, alkynamide, is introduced into an AIE photosensitizer to develop a novel covalent photosensitizer, MBTP-PA,
+    which targets redox systems and facilitates ferroptosis- and pyroptosis-mediated photodynamic immunotherapy by thiol-yne
+    click reactions. The covalent photosensitizer interacts with intracellular thiol compounds such as cysteine and glutathione,
+    disrupting the intracellular antioxidant system and alleviating hypoxia. This results in enhanced photodynamic therapy
+    (PDT) efficacy compared to the non-covalent photosensitizer MBTP-A. Furthermore, in conjunction with PDT, this reaction
+    therapy can activate ICD through ferroptosis and pyroptosis, thereby enhancing anti-tumor immunity. Notably, in vivo injection
+    of MBTP-PA nanoparticles at the tumor site led to the elimination of primary tumors, inhibiting distant tumors and exhibiting
+    minimal side effects. Therefore, this work not only integrates the thiol-yne click reactions into cellular systems, significantly
+    enhancing the efficacy of photodynamic immunotherapy but also paves the way for developing novel photosensitizers.
+  citations: []
+- block_id: 1
+  content: 'Cancer immunotherapy is a rapidly evolving field that harnesses the patient’s immune system to combat malignant
+    tumors, [1–5] offering innovative strategies alongside traditional therapies such as surgery, chemotherapy, and radiotherapy.[6,7]
+    A critical step in tumor immunotherapy is achieving efficient immunogenic cell death (ICD).[8,9] During ICD, the release
+    of damage-associated molecular patterns (DAMPs), including calreticulin (CRT) and high mobility group box 1 (HMGB1), promotes
+    the maturation of dendritic cells (DCs) and T cell differentiation, activates the immune response, and initiates adaptive
+    antitumor immunity.[10,11] Recently, evidence increasingly suggests that an immune response is elicited following photodynamic
+    therapy (PDT), highlighting its potential as an immunogenic treatment approach. [12–14]
+
+
+    PDT is a non-invasive treatment that offers spatiotemporal control by utilizing photosensitizers to produce singlet oxygen
+    (1O2) through energy transfer (Type II) or other reactive oxygen species (ROS) via electron transfer (Type I) when exposed
+    to light, effectively destroying tumor tissue.[15–21] During PDT, cells undergo the process of ICD, releasing DAMPs, and
+    activating the systemic adaptive immune response.[22–24] However, the immune effects elicited by PDT-induced ICD are influenced
+    by several factors, which can lead to suboptimal outcomes in immunotherapy.[9,25] PDT should be combined with immune checkpoint
+    blockade reagents to achieve a better anti-tumor immune effect. [26,27] The primary factors affecting efficacy include:
+    1) the limited residence time of photosensitizers in tumor cells, resulting in insufficient enrichment;[28] 2) hypoxia
+    and the tumor’s antioxidant system, which diminish the effectiveness of PDT;[29,30] and 3) the tendency of PDT to induce
+    apoptosis, which is not conducive to the release of DAMPs. [14] Therefore, to achieve highly effective anti-tumor immunity,
+    it is crucial to develop long-lasting photosensitizers that can alleviate tumor hypoxia and antioxidant system while effectively
+    inducing ICD.
+
+
+    To enhance the efficacy of PDT, strategies such as designing Type I photosensitizers and developing oxygen-carrying methods
+    to increase tumor oxygen levels have been explored.[31–35] However, simply boosting the oxidative capacity of PDT is inadequate,
+    as robust antioxidant responses in tumor cells can significantly diminish its effectiveness.[36] Malignant tumors that
+    survive these responses may develop tolerance to PDT. [37] Therefore, it is essential to develop photosensitizers that
+    specifically target redox systems to improve PDT efficacy. Inorganic chemistry, activated alkyne and thiol click reactions
+    have been developed and successfully applied in polymer synthesis, 3D printing, and bioconjugation, owing to their mild
+    reaction conditions, specificity, and high efficiency.[38–40] Thiol compounds such as cysteine (Cys) and glutathione (GSH),
+    play a critical role as intracellular antioxidants in maintaining redox balance. [41] By incorporating an activated alkyne
+    into photosensitizers as a covalent warhead, a click reaction can occur between the alkyne and thiol groups within cells.
+    This reaction consumes reducing substances and enhances the oxidation state, thereby significantly improving the effectiveness
+    of PDT. Additionally, this click reaction could stimulate immune responses and prolong the residence time of the photosensitizer
+    at the lesion site, resulting in more effective PDT-mediated immunotherapy.
+
+
+    Aggregation-induced emission (AIE) photosensitizers exhibit superior ROS production efficiency in aggregated states compared
+    to traditional photosensitizers.[42–47] To leverage this advantage, we incorporated the covalent warhead alkynamide into
+    an AIE photosensitizer, developing an endoplasmic reticulum-targeting covalent photosensitizer MBTP-PA, aimed at alleviating
+    hypoxia and evoking ferroptosis- and pyroptosis-mediated immunotherapy. Alkynamide reacts with thiol compounds such as
+    Cys, GSH, and proteins, forming covalent bonding with intracellular substances and extending the retention time of the
+    photosensitizer. This intracellular reaction not only alleviates hypoxia but also induces oxidative stress in cells, resulting
+    in improved PDT efficacy. In addition, following reaction therapy and PDT, ferroptosis and pyroptosis are induced, leading
+    to the release of a series of inflammatory factors and DMAPs. These factors stimulate the maturation and antigen-presenting
+    ability of DCs and activate the T cells-dependent adaptive immune response. This systemic anti-tumor immunity effect effectively
+    destroys primary tumors and effectively inhibits distant tumors. Therefore, this work not only develops a covalent AIE
+    photosensitizer to alleviate hypoxia and promote ferroptosis- and pyroptosis-mediated immunotherapy but also provides
+    a framework for discovering new materials to enhance anti-tumor responses.'
+  citations:
+  - marker: '[6]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[7]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[8]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[9]'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[10]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[11]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[14]'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[25]'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[28]'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[29]'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[30]'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[36]'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[37]'
+    intent_label: Research Gap
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[41]'
+    intent_label: Domain Overview
+    topic_label: Photosensitization for ROS generation
+- block_id: 2
+  content: 'MBTP-PA with alkynamide was synthesized by reacting MBTP-A with propargylic acid in the presence of 4-Dimethylaminopyridine
+    (DMAP) and 1-(3-Dimethylaminopropyl)-3-ethylcarbodiimide (EDC). Its structure was confirmed using 13C NMR, 1H NMR, and
+    high-resolution mass spectrometry (Figures S1–S3, Supporting Information). The photophysical properties of MBTP-PA were
+    initially examined. The UV–vis spectra revealed an absorption peak (λabs) at 463 nm in a dilute DMSO solution (Figure
+    1B). As depicted in photoluminescence (PL) spectra (Figure 1C), the emission peaks of MBTP-PA in solid film and DMSO solution
+    were 652 and 666 nm, respectively. Furthermore, the AIE effect of MBTP-PA in DMSO/H2O mixtures was investigated because
+    MBTP-PA is soluble in DMSO but not in H2O. As shown in Figure 1D,E, increasing the water fraction (fw) in DMSO significantly
+    enhanced the fluorescence of MBTP-PA. When fw increased from 40% to 50%, the PL intensity increased sharply, demonstrating
+    AIE characteristics. However, the PL intensity of MBTP-PA decreased when fw exceeded 80%.
+
+
+    To better understand the PL changes of MBTP-PA aggregates, we measured the particle size of MBTP-PA at varying water contents.
+    The results indicated that the average particle size at 50.36 nm (fw = 80%) was smaller than that at 224.6 nm (fw = 50%).
+    The smaller particle size indicates that the effective aggregation of MBTP-PA was reduced, and the surface area was increased,
+    resulting in decreased PL intensity. In addition, the absolute fluorescence quantum yield (ΦF) of MBTP-PA ranged from
+    0.4% in DMSO to 6.8% in solid film, explaining its AIE properties (Table S1, Supporting Information). Notably, due to
+    its strong donor-acceptor structure, MBTP-PA exhibits pronounced solvatochromism in solvents of varying polarity, including
+    hexane, 1,4-dioxane, ethyl acetate, and DMSO (Figure S4, Supporting Information). To further investigate this donor-acceptor
+    structure, MBTP-PA was analyzed using density functional theory (DFT) calculations. The geometries of MBTP-PA were optimized
+    using the M062x/6-31G** level (Figure 1F). The delocalized electron density of the highest occupied molecular orbital
+    (HOMO) was primarily concentrated in the dimethoxytriphenylamine segment. In contrast, the lowest unoccupied molecular
+    orbital (LUMO) was concentrated on the benzo[1,2,5]thiadiazole unit, demonstrating strong intramolecular charge transfer
+    in MBTP-PA. Furthermore, the energy level distribution between singlet (S) and triplet (T) states was calculated (Figure
+    1G). The calculated values of ΔES1-T1 and ΔES1-T2 were 0.75 and −0.13 eV, respectively, indicating that MBTP-PA is prone
+    to trigger the intersystem crossing process. These findings suggest that MBTP-PA is capable of producing reactive oxygen
+    species (ROS).'
+  citations:
+  - marker: '[1]'
+    intent_label: Domain Overview
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[2]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Radiative decay pathways for bright emission
+  - marker: '[5]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Photosensitization for ROS generation
+- block_id: 3
+  content: After investigating its photophysical properties, we examined the reactions of MBTP-PA with amino acids, peptides,
+    and proteins that have amino, hydroxyl, and thiol groups. MBTP-PA and different amino acids were added into a mixture
+    of PBS and THF (v/v = 1:1) with a pH 7.4, we found that L-lysine and L-arginine (which contain amino group), as well as
+    L-serine, and L-tyrosine (which contain hydroxyl group), did not react with MBTP-PA (Figure 2A,B). In contrast, Boc-Cys-OMe,
+    Cys, and GSH, which contain thiol groups, reacted efficiently with MBTP-PA (Figure 2C; Figures S5–S8, Supporting Information).
+    These results demonstrate that MBTP-PA possesses high selectivity in its reaction with thiol substances. Furthermore,
+    bovine serum albumin (BSA) was chosen as a model protein to verify the potential reaction with MBTP-PA, given that BSA
+    contains one non-oxidized cysteine (Cys-34). In this context, MBTP-PA was reacted with BSA in a PBS solution containing
+    1% DMSO. The resulting MBTP-BSA product was analyzed using sodium dodecyl sulfate-polyacrylamide gel electrophoresis (SDS-PAGE).
+    As anticipated, MBTP-BSA exhibited significant fluorescence under UV radiation, while BSA alone did not emit any fluorescence.
+    Therefore, MBTP-PA can effectively label proteins containing thiol groups without the need for catalysts.
+  citations: []
+- block_id: 4
+  content: 'To evaluate changes in ROS generation before and after MBTP-PA interacts with cellular substances, we assessed
+    the ROS generation capacity and analyzed the ROS species of MBTP-PA, MBTP-BSA, MBTP-PA+BSA, MBTP-A, and Chlorin e6 (Ce6).
+    We used 2,7-dichlorodihydrofluorescein (DCFH), a commercial indicator that detects various types of ROS, as a reporter
+    for ROS activity. As illustrated in Figures 3A and S9 (Supporting Information), the PL intensity of the DCFH solution
+    containing photosensitizers significantly increased with prolonged white light irradiation time (10 mW cm−2). The rates
+    of PL intensity growth were ranked as follows: MBTP-PA+BSA > MBTP-PA > MBTP-BSA > MBTP-A > Ce6. These findings reveal
+    that MBTP-PA has a greater ROS generation capacity than MBTP-A and Ce6. Notably, the ROS production rate decreased after
+    MBTP-PA reacted with BSA, likely due to the formation of MBTP-BSA.
+
+
+    To identify the type of ROS generated by MBTP-PA, dihydrorhodamine 123 (DHR123) and hydroxyphenyl fluorescein (HPF) were
+    applied as indicators for superoxide radical (O2−•) and hydroxyl radical (HO·), respectively. This approach allowed us
+    to characterize the photosensitizers’ capacity to produce Type I ROS. As shown in Figures 3B and S10 (Supporting Information),
+    the PL intensity of these indicators varied with light irradiation time. The production rate of O2−• followed the order:
+    MBTP-PA+BSA > MBTP-PA > MBTP-BSA > MBTP-A > Ce6, while the production rate of HO· was ranked as follows: MBTP-PA+BSA >
+    Ce6 > MBTP-PA ≈ MBTP-BSA > MBTP-A (Figure 3C; Figure S11, Supporting Information). These results indicate that MBTP-PA
+    exhibits a stronger ability to produce Type I ROS than MBTP-A for both O2−• and HO·, with a notable decrease in the production
+    rate of Type I ROS observed after MBTP-PA reacts with BSA. In addition, 5-tert-butoxycarbonyl5-methyl-1-pyrroline N-oxide
+    (BMPO) was used to capture HO· and O2−• generated by MBTP-PA and MBTP-A under white light (Figure S12, Supporting Information).
+    The characteristic signal of electron paramagnetic resonance (EPR) was detected, providing additional confirmation of
+    the Type I ROS generation.
+
+
+    On the other hand, 9,10-anthracenediyl-bis(methylene) dimalonic acid (ABDA) was utilized as a 1O2 indicator to determine
+    whether Type II ROS was generated. As shown in Figures 4D and S13 (Supporting Information), the decomposition rate of
+    ABDA across all groups, except for Ce6, aligned closely with that of the control group, and no significant EPR signal
+    was detected, when the 1O2 was captured using 2,2,6,6-tetramethylpiperidine (TEMP) (Figure S14, Supporting Information),
+    indicating that MBTP-PA did not produce 1O2. Collectively, these results affirm that MBTP-PA functions as a Type I photosensitizer.'
+  citations: []
+- block_id: 5
+  content: 'Following our investigation of the ROS production capacity of MBTP-PA, we further examined its localization and
+    anti-tumor activity within cells. In order to highlight the characteristics of the covalent photosensitizer MBTP-PA, we
+    selected MBTP-A as a control. First, we examined the cellular uptake rates and retention time of both MBTP-PA and MBTP-A.
+    As shown in Figures S15 and S16 (Supporting Information), 4T1 cells were incubated either with MBTP-PA or MBTP-A, and
+    confocal laser scanning microscopy (CLSM) was employed to capture images at various time points. By analyzing the mean
+    fluorescence intensity in the cells, we found that the intracellular accumulation of both compounds increased over time,
+    with MBTP-A entering the cells more rapidly than MBTP-PA. After 24 h of incubation, we replaced the medium to observe
+    the change in intracellular fluorescence intensity. As shown in Figure S17 (Supporting Information), MBTP-PA exhibited
+    a longer retention time of intracellular fluorescence compared to MBTP-A, indicating that covalent photosensitizers have
+    superior retention in cells.
+
+
+    To further elucidate the differences in intracellular distribution between MBTP-A and MBTP-PA, we conducted co-localization
+    experiments using commercial organelle biomarkers. The results revealed that Pearson’s correlation coefficient of 0.87
+    between MBTP-A and Lyso-Tracker Green, indicating that MBTP-A predominantly localized in lysosomes (Figure 4A). In contrast,
+    MBTP-PA showed a high degree of overlap with ER-Tracker Green, yielding the Pearson’s correlation coefficient of 0.91,
+    compared to lower correlations with Mito-Tracker Green, Lyso-Tracker Green, and Bodipy (Figure 4B).
+
+
+    Subsequently, we evaluated the tumor-killing efficacy of MBTP-PA in both normoxic and hypoxic conditions, leveraging its
+    robust ROS generation capacity and chemical reactivity. In the absence of white light irradiation, over 50% of MBTP-PA-stained
+    4T1 cells were killed at concentrations exceeding 8 μm (Figure 4C). However, MBTP-PA maintained over 80% of cell viability
+    in normal L929 cells at concentrations below 8 μm (Figure S18, Supporting Information). Under white light exposure, the
+    cytotoxic effect of MBTP-PA on 4T1 cells was further signified. Although MBTP-A exhibited an obvious photodynamic antitumor
+    effect, its efficacy was dramatically diminished or rendered ineffective in hypoxia conditions. In contrast, MBTP-PA retained
+    its killing effect (Figure 4D), attributed to its reaction with thiol groups. To confirm these biological reactions occurring
+    in cells, we lysed the MBTP-PA-treated 4T1 cells and performed Western blot analyses. As depicted in Figure 4E, distinct
+    fluorescent protein bands were observed in the MBTP-PA group, but not in the MBTP-A group, indicating that MBTP-PA reacted
+    with intracellular proteins. In addition, we used DCFH-DA to assess the intracellular oxidation levels. In the absence
+    of light, green fluorescence from DCF was detected in the cells treated with MBTP-PA under both normoxia and hypoxia conditions,
+    but MBTP-A did not produce such fluorescence (Figure 4F). The results suggested that MBTP-PA induced intracellular oxidative
+    stress by depleting reductive substances. For the cells incubated by MBTP-PA or MBTP-A illuminated with white light (30
+    mW cm−2) for 5 min, the green fluorescence signals from DCF were observed in both groups (Figure 4G), indicating that
+    MBTP-A and MBTP-PA generated ROS in cells under white light. The substantial ROS production by MBTP-A and MBTP-PA contributed
+    to the effective killing of tumor cells.'
+  citations: []
+- block_id: 6
+  content: 'The reaction of covalent photosensitizers MBTP-PA with thiol compounds induced intracellular oxidative stress.
+    Previous studies have shown that redox imbalance is associated with ferroptosis.[48,49] Therefore, we investigated the
+    ferroptosis triggered by MBTP-PA. GSH is a critical reducing agent that maintains the redox balance in cells. Our analysis
+    revealed that the intracellular GSH levels of MBTP-PA and MBTP-PA+L groups were lower compared to the control group (Figure
+    5A). This reduction was attributed to the consumption of GSH and the subsequent generation of substantial amounts of ROS
+    under white light. Moreover, we characterized the levels of GPx4 protein and lipid peroxides, which are the key indicators
+    of ferroptosis. Western blot analysis revealed a decrease in GPx4 expression in both MBTP-PA and MBTP-PA+L groups (Figure
+    5B). Lipid peroxidation assays indicated that the level of malondialdehyde (MDA), a byproduct of oxidation, in the MBTP-PA
+    group was comparable to that of the control group. However, after the cells underwent PDT, the MBTP-PA+L group exhibited
+    significantly elevated MDA levels compared to the other groups (Figure 5C), suggesting that MBTP-PA induces tumor cell
+    death via ferroptosis under white light irradiation. Meanwhile, the anti-tumor activity of MBTP-PA was inhibited in the
+    presence of ferrostatin-1 (Figure 5D), yet it still showed a notable anti-tumor effect. We hypothesized that the antitumor
+    activity of MBTP-PA is not solely dependent on the ferroptosis. Furthermore, we observed that the cells in the MBTP-PA
+    group at a high concentration of 32 μm, as well as those in the MBTP-PA+L group, exhibited foaming behavior (Figure 5E;
+    Figure S19, Supporting Information), suggesting that these cells may be undergoing pyroptosis. [50,51]
+
+
+    To validate our hypothesis, we assessed the factors associated with pyroptosis. The results revealed that inflammatory
+    cytokines (IL-1β and IL-18) and lactate dehydrogenase (LDH) were released in the treatment group (Figure 5F–H). In addition,
+    pyroptosis-related proteins were analyzed. Notably, the levels of GSDMD and pro-caspase-1 were significantly reduced in
+    the MBTP-PA+L group, while the levels of GSDMD-N and cleaved-caspase-1 were increased (Figure 5I). These results indicate
+    that MBTP-PA generates ROS upon light irradiation, which activates caspase-1 within the cells. This activation leads to
+    the cleavage of GSDMD into its active GSDMD-N fragments, which subsequently translocate to the cell membrane, forming
+    pores to induce pyroptosis.
+
+
+    Next, we verified pyroptosis-mediated immunogenic cell death (ICD) by detecting calreticulin (CRT) and HMGB1 biomarkers.
+    As shown in Figure 5J,K, the exposure of CRT in MBTP-PA-stained 4T1 cells significantly increased under light irradiation.
+    Additionally, HMGB1 was found to migrate from the nucleus to the cytoplasm and ATP was significantly released in the treatment
+    group (Figure S20, Supporting Information). These results indicate that MBTP-PA effectively induces the ICD, activating
+    the adaptive immune responses through pyroptosis upon light irradiation.'
+  citations:
+  - marker: '[48]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[49]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[50]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[51]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+- block_id: 7
+  content: To facilitate the in vivo application of MBTP-PA, DSPE-PEG2000 and DSPE-PEG2000-cRGD were utilized to encapsulate
+    MBTP-PA, because they have the advantages of increased drug circulation time, enhanced stability, reduced protein adsorption,
+    and improved encapsulation efficiency.[52] This method forms MBTP-PA nanoparticles (MBTP-PA-NPs) with an average particle
+    size of 110.9 nm and a zeta potential of −33.4 eV (Figure 6A–C). The encapsulation efficiency is 46.7%. The long-term
+    particle size stability test confirmed that MBTP-PA-NPs remain stable for up to 30 days (Figure 6D; Figure S21, Supporting
+    Information). Photophysical characterization demonstrated that MBTP-PA-NPs exhibit an absorption maximum of 472 nm, a
+    maximum emission peak of 650 nm, and an absolute fluorescence quantum yield of 6.4% (Figure S22, Supporting Information).
+    In addition, cellular uptake and fluorescence colocalization imaging showed that MBTP-PA-NPs entered cells more rapidly
+    than MBTP-PA and were predominantly localized in the endoplasmic reticulum (Figures S23 and S24, Supporting Information).
+    Cell viability tests showed that the nanoparticles exhibited higher cytotoxicity toward cancer cells than normal cells
+    (Figure S25, Supporting Information).
+  citations:
+  - marker: '[52]'
+    intent_label: Prior Methods
+    topic_label: Doping and encapsulation into polymer matrices
+- block_id: 8
+  content: To gain a deep understanding of the distribution and metabolism of nanoparticles in vivo, MBTP-PA-NPs (11.67 mg
+    kg−1) were injected into tumor-bearing mice via the tail vein, and their distribution was monitored using fluorescence
+    microscopy. At 24 h post-injection, the fluorescence intensity was notably higher in the liver, lung, and tumor, indicating
+    that the MBTP-PA-NPs primarily accumulated in these organs and tissues. By 48 h, the fluorescence intensity in the liver
+    and lung decreased and increased in the tumor. This suggests that the MBTP-PA-NPs underwent metabolic processing and preferential
+    accumulation at the tumor site. After 72 h, the fluorescence intensity in the liver, lung, and tumor gradually diminished.
+    Furthermore, following the injection of MBTP-PA-NPs (11.67 mg kg−1) into normal mice, we assessed various blood routine
+    indicators and hemolysis rate. As shown in Figure 6G and Figures S26 and S27 (Supporting Information), no significant
+    hemolysis was observed at concentrations below 128 μg mL−1 (the red in the supernatant is the color of the MBTP-PA-NPs
+    itself), and there were no notable differences in fifteen blood indicators compared to the control group. These results
+    indicate that MBTP-PA-NPs exhibit minimal toxicity at these concentrations.
+  citations: []
+- block_id: 9
+  content: 'After confirming the safety of MBTP-PA-NPs, we applied MBTP-PA-NPs in photodynamic immunotherapy to target and
+    suppress distant tumors in a bilateral 4T1 tumor model. MBTP-PA-NPs (3.5 mg kg−1) were injected into the primary tumor
+    (left side), followed by irradiation with white light (150 mW cm−2) for 30 min after a 24 h incubation period. We then
+    monitored and collected growth data for both primary and distant tumors (right side) in mice. The results showed no significant
+    difference in the weight of mice among all groups. By analyzing the tumor volume and weight, we found that MBTP-PA-NPs
+    significantly inhibited the growth of the primary tumor. Notably, the MBTP-PA-NPs+L group showed even greater anti-tumor
+    activity compared to MBTP-PA-NPs alone, attributed to the synergistic effects of intracellular reactions and PDT. Regarding
+    the distant tumors, their growth was significantly suppressed in the MBTP-PA-NPs+L group, likely due to the immune response
+    elicited by this therapeutic approach.
+
+
+    In addition, hematoxylin and eosin (H&E) tumor staining was conducted to assess cell morphology. Notable voids and karyopyknosis
+    were observed in the primary tumors treated with MBTP-PA-NPs and the distant tumors treated with the MBTP-PA-NPs+L group.
+    In the primary tumor of the MBTP-PA-NPs+L group, H&E staining of the adjacent muscle tissues revealed normal histological
+    characteristics. Additionally, H&E staining of key organs in the treatment groups showed no significant damage, demonstrating
+    good biosafety of MBTP-PA-NPs (Figure S28, Supporting Information). Furthermore, the TUNEL staining and Ki67 analysis
+    of the distant tumor revealed that many tumor cell deaths and significantly inhibited cell proliferation in the treatment
+    group, corroborating the findings from the H&E staining.
+
+
+    To investigate the immunological mechanisms underlying pyroptosis-mediated photoimmunotherapy induced by MBTP-PA-NPs,
+    we conducted immunological analyses on the spleen and distant tumors four days post-treatment. Staining of CRT and HMGB1
+    in distant tumors showed the expression of both markers in the MBTP-PA-NPs and MBTP-PA-NPs+L groups. Subsequently, we
+    analyzed the presence of mature dendritic cells (DCs) and activated immune cells. In the spleen, the proportion of mature
+    DCs (CD86+, CD80+) was found to be 79.01% and 87.98% in MBTP-PA-NPs and MBTP-PA-NPs+L groups, respectively, much higher
+    than those in the control group, indicating that both the reactive activity and the photodynamic effects of MBTP-PA contribute
+    to the maturation of DCs.
+
+
+    To further investigate whether mature DCs can activate different types of T cells (CD4+ and CD8+), we analyzed the levels
+    of these T cell subsets in distant tumors using flow cytometry. The results showed a significant increase in the proportion
+    of effector CD4+ T cells in the MBTP-PA-NPs+L group, while the proportion of CD8+ did not obviously change. These findings
+    indicate that CD4+ T cells play a pivotal role in photodynamic immunotherapy. This inhibitory effect on distal tumors
+    could be attributed to the fact that CD4+ T cells assist CD8+ T cells to inhibit tumor growth, and CD4+ T cells have an
+    inhibiting effect on tumors. [53,54] This suggests that MBTP-PA-NPs-mediated PDT can effectively activate immune responses,
+    highlighting its potential in immunotherapy.'
+  citations:
+  - marker: '[53]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+  - marker: '[54]'
+    intent_label: Domain Overview
+    topic_label: Photodynamic therapy and antimicrobial treatment
+- block_id: 10
+  content: This study successfully integrates a covalent warhead, alkynamide into an AIE type I photosensitizer, culminating
+    in the development of the novel targeted endoplasmic reticulum covalent photosensitizer, MBTP-PA. It facilitates ferroptosis
+    and pyroptosis, enabling a synergistic approach to photodynamic immunotherapy. It also demonstrates its covalent capability
+    by efficiently reacting with thiol compounds such as Cys, GSH, and BSA. Additionally, it outperforms the non-covalent
+    photosensitizer MBTP-A in terms of cellular retention and the induction of intracellular oxidative stress, which help
+    alleviate tumor hypoxia and enhance the efficacy of photodynamic therapy. More importantly, the MBTP-PA-NPs not only promote
+    ferroptosis and pyroptosis through thiol-yne reaction therapy and photodynamic therapy, but also initiate the ICD. This
+    was validated through anti-tumor experiments in a bilateral 4T1 tumor model, demonstrating the effective elimination of
+    primary tumors and significant suppression of distant tumors. And MBTP-PA-NPs have no apparent damage to normal tissues,
+    showing excellent biosafety. Overall, this research not only introduces a new class of covalent photosensitizers, but
+    also provides a framework for developing advanced therapeutic materials to improve anti-tumor strategies.
+  citations: []
+- block_id: 11
+  content: ''
+  citations: []
+- block_id: 12
+  content: 'MBTP-A (0.4 mmol, 212 mg), EDC (0.8 mmol, 124 mg), and DCM (12.0 mL) were placed into a 50 mL round bottom flask.
+    Propiolic acid (0.6 mmol, 42 mg) was then added slowly to the mixture in the ice water bath. Next, the solution of DMAP
+    (0.02 mmol, 2.4 mg) in DCM (8.0 mL) was added dropwise into the above mixture. Then, the temperature was spontaneously
+    warmed to room-temperature and the reaction was stirred for 3 h (the progress of the reaction was monitored by TLC). After
+    completion of the reaction, the reaction was extracted three times with water and DCM. The organic phase was dried with
+    anhydrous sodium sulfate. The DCM was removed under vacuum and the resultant residue was purified by flash chromatography
+    on silica gel to get the red solid MBTP-PA in 55% yield (eluent: DCM). 1H NMR (400 MHz, CDCl3) δ 7.97 (d, J = 8.0 Hz,
+    2H), 7.81 (d, J = 8.0 Hz, 2H), 7.76–7.68 (m, 5H), 7.14 (d, J = 12.0 Hz, 4H), 7.06 (d, J = 8.0 Hz, 2H), 6.87 (d, J = 8.0
+    Hz, 2H), 3.81 (s, 6H), 2.97 (s, 1H). 13C NMR (100 MHz, CDCl3) δ 156.1, 154.1, 153.7, 149.6, 149.0, 140.5, 134.4, 133.2,
+    129.9, 129.8, 127.1, 126.8, 120.0, 119.6, 114.8, 74.4, 55.5. HRMS (MALDI-TOF) m/z [M + Na]+ calcd for C35H26N4O3SNa+ 605.1618,
+    found 605.1625.'
+  citations: []
+- block_id: 13
+  content: 4T1 cells were seeded in a 6-well plate at 6 × 10^5 cells per well and incubated for 12 h. The medium was then
+    replaced with fresh DMEM (10% FBS) containing MBTP-A or MBTP-PA (100 μm). After 24 h of incubation with the compounds,
+    the medium was removed, and the cells were washed three times with PBS. The cells were collected, lysed on ice for 15
+    min using lysis buffer, and centrifuged at 12000 rpm for 15 min at 4 °C. The supernatant was collected, boiled, and used
+    for protein electrophoresis. Protein concentration was determined using a BCA reagent. Proteins were separated by 10%
+    SDS-PAGE, and the bands were visualized using a UV mode of gel imager. The protein bands were stained with Coomassie Brilliant
+    Blue, washed with water five times, and imaged with a gel imager.
+  citations: []
+- block_id: 14
+  content: MBTP-PA (1.0 mg), DSPE-PEG2000-cRGD (1.5 mg), and DSPE-PEG2000 (1.5 mg) were dissolved in 1 mL of THF under ultrasonic
+    dispersion. Then the homogeneous mixture was quickly added to ultrapure water (10 mL). After sonication using a probe
+    sonicator for 3 min, the mixture was collected and concentrated by centrifugal filters for further use. The obtained nanoparticles
+    were stored at 4 °C.
+  citations: []
+- block_id: 15
+  content: 'The Animal Ethics Committee of the South China Agricultural University granted approval for all animal experiment
+    protocols (approval number: 2023d098). A bilateral tumor mouse model was initiated by subcutaneously injecting 4T1 cells
+    into the left and right hips of mice at −8 and −2 days prior to treatment, respectively, to induce primary and distant
+    tumors.'
+  citations: []
+- block_id: 16
+  content: The mice bearing 4T1 tumors were administered with MBTP-PA-NPs (11.67 mg kg−1) through tail-vein injection (n =
+    3). After injection for several times (24, 48, 72, and 96 h), these mice were euthanized to extract heart, liver, spleen,
+    lung, kidney, and tumor. Fluorescence imaging of these tissues were conducted using an imaging system.
+  citations: []
+- block_id: 17
+  content: 'The 4T1 tumor-bearing BALB/c mice were randomly divided into four groups (n = 6). The mice in each group were
+    systemically administrated with PBS or MBTP-PA-NPs (3.5 mg kg−1) through intratumor injection. After administrated for
+    24 h, the primary tumors of mice were exposed under white light irradiation (150 mW cm−2) for 30 min. After different
+    treatments, the therapeutic efficacies were evaluated by measuring the sizes of both primary and distant tumors every
+    2 days for 14 days. Tumor volumes (V) were calculated according to the formula: V = (tumor length) × (tumor width)^2 /
+    2. After 14 days of treatments, the mice in each group were euthanized, and both the primary and distant tumors were extracted
+    to weigh. The wavelength of white light was 400–1000 nm.
+
+
+    Supporting Information is available from the Wiley Online Library or from the author.'
+  citations: []

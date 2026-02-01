@@ -1,0 +1,446 @@
+title: Phage-Guided Targeting, Discriminative Imaging, and Synergistic Killing of
+  Bacteria by AIE Bioconjugates
+abstract: New agents with particular specificity toward targeted bacteria and superefficacy
+  in antibacterial activity are urgently needed in facing the crisis of worldwide
+  antibiotic resistance. Herein, a novel strategy by equipping bacteriophage (PAP)
+  with photodynamic inactivation (PDI)-active AIEgens (luminogens with aggregation-induced
+  emission property) was presented to generate a type of AIE−PAP bioconjugate with
+  superior capability for both targeted imaging and synergistic killing of certain
+  species of bacteria. The targeting ability inherited from the bacteriophage enabled
+  the bioconjugates to specifically recognize the host bacteria with preserved infection
+  activity of phage itself. Meanwhile, the AIE characteristic empowered them a monitoring
+  functionality, and the real-time tracking of their interactions with targets was
+  therefore realized via convenient fluorescence imaging. More importantly, the PDI-active
+  AIEgens could serve as powerful in situ photosensitizers producing high-efficiency
+  reactive oxygen species (ROS) under white light irradiation. As a result, selective
+  targeting and synergistic killing of both antibiotic-sensitive and multi-drug-resistant
+  (MDR) bacteria were successfully achieved in in vitro and in vivo antibacterial
+  tests with excellent biocompatibility. This novel AIE−phage integrated strategy
+  would diversify the existing pool of antibacterial agents and inspire the development
+  of promising drug candidates in the future.
+abstract_is_verbatim: true
+segmented_markdown: '# Phage-Guided Targeting, Discriminative Imaging, and Synergistic
+  Killing of Bacteria by AIE Bioconjugates
+
+
+  ## Abstract
+
+  <block id="0">
+
+  New agents with particular specificity toward targeted bacteria and superefficacy
+  in antibacterial activity are urgently needed in facing the crisis of worldwide
+  antibiotic resistance. Herein, a novel strategy by equipping bacteriophage (PAP)
+  with photodynamic inactivation (PDI)-active AIEgens (luminogens with aggregation-induced
+  emission property) was presented to generate a type of AIE−PAP bioconjugate with
+  superior capability for both targeted imaging and synergistic killing of certain
+  species of bacteria. The targeting ability inherited from the bacteriophage enabled
+  the bioconjugates to specifically recognize the host bacteria with preserved infection
+  activity of phage itself. Meanwhile, the AIE characteristic empowered them a monitoring
+  functionality, and the real-time tracking of their interactions with targets was
+  therefore realized via convenient fluorescence imaging. More importantly, the PDI-active
+  AIEgens could serve as powerful in situ photosensitizers producing high-efficiency
+  reactive oxygen species (ROS) under white light irradiation. As a result, selective
+  targeting and synergistic killing of both antibiotic-sensitive and multi-drug-resistant
+  (MDR) bacteria were successfully achieved in in vitro and in vivo antibacterial
+  tests with excellent biocompatibility. This novel AIE−phage integrated strategy
+  would diversify the existing pool of antibacterial agents and inspire the development
+  of promising drug candidates in the future.
+
+
+  </block>
+
+  ## Introduction
+
+  <block id="1">
+
+  Bacterial infectious diseases have become one of the greatest global challenges,
+  which seriously threaten the health and civilization of human beings,1,2 and increasing
+  evidence revealed that bacteria can also indirectly promote the occurrence and progression
+  of other diseases, such as cancer.3−6 On the other hand, bacterial communities are
+  indispensable to human health, such as intestinal microbes whose balances determined
+  the nutrient absorption from digested food in our bodies and should be always protected
+  from unintentional damage.7,8 Therefore, in the antibacterial battle, promoting
+  an antibacterial agent in terms of targeting and killing efficiency is persistently
+  pursued.
+
+
+  Antibiotics have been predominately employed in the treatment of bacterial infections
+  since the discovery of penicillin. However, by use of antibiotics, even narrow-spectrum
+  antibiotics, both harmful bacteria and beneficial microbes could be killed, resulting
+  in side effects such as diarrhea, constipation, and inflammatory bowels.9,10 The
+  global abuse or overuse of antibiotics has promoted bacterial evolution and intensified
+  the antibiotic resistance.11,12 The situation is worsening with the rapidly increased
+  difficulty and cost in producing new robust antibacterial agents.13 Thus, it is
+  highly desirable to develop pinpoint accurate drugs to kill certain species of harmful
+  pathogens. Fortunately, bacteriophage had been verified with particular specificity
+  to their hosts14 and could evolve synchronously to adapt to infect resistant bacteria.15,16
+  Phagotherapy, which was used before antibiotics were discovered, is now going through
+  a revival driven by the crisis of antibiotic resistance.17 However, the bacteriophage
+  alone normally shows a moderate antibacterial effect, hindering the curing of infectious
+  diseases, especially the acute infections.18 Because of the lack of imaging moieties,
+  the processes of phagotherapy including target recognition, binding, and infection
+  could not be easily monitored, resulting in difficult real-time evaluation of therapeutic
+  performance. The introduction of sensitively detectable “radar” with powerful “weaponry”
+  will therefore promote phagotherapy as a deluxe ensemble for both visualization
+  of its infection process and their subsequent discriminative eradication.
+
+
+  Fluorescence imaging technology has emerged as a rapid, facile, and powerful tool
+  for visualization and tracking of bioanalytes with merits of high sensitivity, low
+  cost, and fast responsiveness.19−21 Surpassing traditional organic fluorophores
+  that have usually suffered severe photobleaching and moderate signal-to-noise ratio,
+  the newly developed luminogens with aggregation-induced emission characteristics
+  (AIEgens) are becoming attractive candidates for advanced biosensing and imaging
+  application.22−25 AIEgens display weak emission in solution but intensified fluorescence
+  upon aggregation via the restriction of intramolecular motion.26 The unique light-up
+  fluorescence with negligible background noise and remarkable photostability qualifies
+  AIEgens to be a superior choice in long-lasting fluorescence imaging and tracking
+  for dynamic bioprocesses.27−29 What is more, with intelligent molecular designing,
+  AIE-based materials display exceptional photodynamic activity for the treatments
+  of malignant cancer and the inactivation of bacteria.30−34 However, the specific
+  discrimination of a certain species of bacterium has not yet been previously demonstrated
+  by AIEgens, making them unsuitable for accurately removing certain targeted bacterium.35,36
+  Although the bioorthogonal method showed improvement in targeted labeling, the incorporation
+  of exogenous reactive groups was demanding with challenges for large-scale applications.37,38
+  These limitations propelled us to engineer AIEgens with pinpoint specificity to
+  realize the discriminative imaging and killing of a certain species of bacterium.
+
+
+  Herein, a novel strategy was presented by integrating AIEgens with bacteriophage
+  to form a new class of antimicrobial bioconjugates (TVP−PAP) for the imaging and
+  killing of a certain species of bacterium. Phage targeting P. aeruginosa was chosen
+  as a prototype. The AIE molecule, TVP-S, was designed with excellent fluorescence
+  properties and efficient PDI activity. Through a simple amino−carboxyl reaction,
+  the AIEgens could be facilely modified onto the surface of phage entity. The generated
+  TVP−PAP perfectly preserved the properties of both AIEgen and phage, with intrinsic
+  AIE fluorescence serving the function of real-time monitoring of phage−bacterium
+  interaction and particular specificity in bacterial targeting. What is more, the
+  synergistic antibacterial effect with efficiency that significantly surpassing both
+  individuals in the bioconjugates was achieved by integrating the PDI activity of
+  AIEgen and the infection ability of phage itself. Superior performance of the bioconjugate
+  was also demonstrated in in vivo treatment of infectious wounds caused by both antibiotic-sensitive
+  and MDR P. aeruginosa. This novel strategy by integrating specific targeting, discriminative
+  imaging, and synergistic killing functionalities together into an AIE−phage bioconjugate
+  is a promising methodology for the design of next-generation antibacterial agents.
+
+
+  </block>
+
+  ## Results and Discussion
+
+  <block id="2">
+
+
+  </block>
+
+  ### AIEgen Synthesis, Property Characterizations, and Bioconjugation with Bacteriophage
+
+  <block id="3">
+
+  The AIE compound TVP-S was designed and synthesized through three-step reactions
+  (Figure 1 and Figure S1). Its structure was determined by nuclear magnetic resonance
+  (NMR), high resolution mass spectroscopy, and X-ray diffraction (XRD, Figure S2)
+  as shown in the Supporting Information. Attributed to the existence of a positively
+  charged pyridinium group and the hydrophilic carboxyl group in its structure, TVP-S
+  could be well dissolved in a high-polarity solvent including water. More importantly,
+  the activated carboxyl group in TVP-S structure endows it capability to straightforwardly
+  react with the amino group that is widespread in the bioorganism. The obvious absorbance
+  of TVP-S in the range between 400 and 600 nm with a maximum at 457 nm showed its
+  strong capability of visible light absorption (Figure 1b). As TVP-S could be well
+  dissolved in solvent with large polarity, we investigated its AIE features in dimethyl
+  sulfoxide (DMSO)/chloroform (CHCl3) mixtures via varying the fractions of CHCl3.
+  As shown in Figure 1c, TVP-S exhibited an apparent AIE property. Fluorescence could
+  hardly be observed when it was dissolved in a good solvent, DMSO, whereas strong
+  aggregated-state emission with 47 times enhancement in intensity appeared when the
+  fraction of chloroform reached 99% (Figure 1d). Their maximum emissions in the aggregation
+  state are located at 630 nm, indicating its long-wavelength emission properties
+  and large Stokes shifts. The significant increase in the absolute fluorescence quantum
+  yield of TVP-S in chloroform (33.3%) versus in DMSO (1.6%) further verified its
+  typical AIE feature. BSA and bacteria could also induce the aggregation of TVP-S
+  in aqueous solution with significant emission enhancements (Figures S3 and S4).
+  Moreover, dynamic light scattering (DLS) analysis was performed to confirm the aggregation
+  process by decreasing the solvent polarity, with obvious increases in the average
+  hydrodynamic diameters (Figure S5).
+
+
+  The strong absorption of TVP-S in the visible light region could lead to the utilization
+  of white light as the source for PDI-based antibacterial application. The ROS generation
+  efficiency of TVP-S was initially determined by using of 2′,7′-dichlorofluorescin
+  diacetate (DCFH) as indicator, which could emit fluorescence with a “turn-on” process
+  triggered by ROS. As depicted in Figure S6, DCFH alone was nonemissive and remained
+  almost constant during 10 min white light irradiation (∼4.2 mW cm−2). In contrast,
+  the emission intensity of DCFH gradually increased and reached 23-fold within the
+  same period exposure to white light irradiation in the presence of TVP-S. In addition,
+  up to 72.3% of singlet oxygen (1O2) quantum yield for TVP-S was determined by using
+  9,10-anthracenediylbis(methylene)dimalonic acid (ABDA) as an indicator and Rose
+  Bengal (RB) as a standard with ∼75% quantum yield for 1O2 39,40 (Figure 1e,f and
+  Figure S7). Sodium azide (NaN3) as a 1O2 quencher41 was further added to the ABDA
+  solution in the presence of TVP-S. As shown in Figure S8, the decomposition rate
+  of ABDA slowed down gradually with increase of the concentration of NaN3, and 2.0
+  mg/mL NaN3 could completely inhibit the decomposition of ABDA, implying 1O2 was
+  indeed generated by TVP-S. Meanwhile, no obvious enhancements could be observed
+  in the signal from the hydroxyphenyl fluorescein (HBF) indicator for hydroxyl radicals
+  (OH•) and the dihydrorhodamine (DHR) indicator for superoxide radicals (O2•−), indicating
+  that 1O2 accounted for nearly all of the ROS generated by TVP-S (Figures S9 and
+  S10). As the 1O2 should be stemmed from the energy transfer process between the
+  triplet oxygen and triplet excited-state photosensitizer, we further checked the
+  existence of triplet excitons in TVP-S. As shown in Figure S11, TVP-S exhibited
+  strong phosphorescence emission with a lifetime of up to 31.3 μs at 77 K, clearly
+  demonstrating its efficient intersystem crossing (ISC) to the triplet excited state.
+  Theoretically, this is also quite rational given TVP-S contains a Br atom which
+  usually boosts the ISC process in organic molecular systems (the well-known heavy
+  atom effect42).
+
+
+  With the activated carboxyl group in its molecular structure, TVP-S could facilely
+  react with the amino group in the outside proteins of bacteriophage and was ready
+  to form the AIE-featured phage bioconjugate (TVP−PAP). As illustrated in Figure
+  2a, the intensified absorbance of PAP phage in the range 400−500 nm after AIEgen
+  modification confirmed the successful bioconjugation reaction between TVP-S and
+  PAP. According to concentration titrations, the molar extinction coefficients of
+  TVP-S and PAP were calculated to be 1.94 × 10^4 and 3.41 × 10^10 M−1 cm−1, respectively
+  (Figure 2b,c and Figure S12). The molar ratio of TVP-S to PAP in the TVP−PAP bioconjugate
+  was determined to be on average 8200 AIEgen molecules bound on one PAP entity, according
+  to the enhanced absorbance at 457 nm of TVP−PAP compared to bare PAP. Because of
+  the robust ROS generation capability of prepared AIE-phage bioconjugates (Figure
+  S13), the particular bacterial recognition, real-time tracking, and synergistic
+  bacterial killing were highly expectable (Figure 2d).
+
+
+  </block>
+
+  ### Particularly Specific Bacteria Imaging by TVP−PAP
+
+  <block id="4">
+
+  Taking advantage of the specific recognition feature of phage and the unique AIE
+  property from TVP-S, the efficiency of bacterial imaging using TVP−PAP was first
+  examined on its target bacteria (P. aeruginosa). As shown in Figure 3a, P. aeruginosa
+  could be stained with bright fluorescence upon incubating with TVP−PAP for 30 min,
+  and the staining efficiency could reach 100% efficiency (also shown in Figure S14).
+  Compared to the commercial cell membrane staining dye, DiO, P. aeruginosa could
+  be light-up stained by the TVP−PAP probe with a much higher staining efficiency
+  (Figure S15). To test the particular specificity of this TVP−PAP probe stemming
+  from the inherent recognition capability of bacteriophage, we employed two types
+  of bacteria, G− A. baumannii (Figure S16) and G+ S. aureus (Figure S17), as controls.
+  The results showed that even for the process extending to 60 min, neither bacteria
+  could be stained by TVP−PAP probes, and no apparent fluorescence signals emitted
+  out from either of them in the AIE fluorescence channel.
+
+
+  Encouraged by this exciting result, we further conducted real-time tracking of the
+  bacterial staining process in the mixed microbes including A. baumannii (G−) and
+  host bacteria P. aeruginosa (G−) to verify the particular selectivity of the TVP−PAP
+  probe to its target P. aeruginosa. Clearly, the arrow indicated A. baumannii could
+  never be stained throughout the whole incubation process by monitoring both the
+  bright-field pictures and the fluorescence images as shown in Figure 3b. In contrast,
+  the recognition and attachment between TVP−PAP and P. aeruginosa started after 10
+  min coincubation to emit out a fluorescence signal. With the time elapsing to 30
+  min, the fluorescence signal became gradually stronger, and more detailed tracking
+  of TVP−PAP was also carried out, in which the fluorescence signal of bacteria intensified
+  to a platform after 30 min, consistent with the necessary time for phage targeted
+  binding and infection to the host (Figure S18). These results of nearly all P. aeruginosa
+  being successfully stained while no fluorescence being observed from A. baumannii
+  demonstrated the particular specificity of TVP−PAP probe to its target bacteria.
+  The use of AIEgen alone for bacterial imaging via nonspecific electrostatic or hydrophobic−hydrophobic
+  interaction indicated that it is impossible to realize the absolute discrimination
+  of a certain species of bacterium.31 The stable and efficient staining of G− bacteria
+  was always challenged due to the blocking of their complicated cell walls.43,44
+  The introduction of bacteriophage could guide AIEgen to realize discriminative light-up
+  imaging likely equipped with a sensing “radar”. The TVP−PAP carried AIEgen to anchor
+  and aggregate on the surface of target bacteria, resulting in the enrichment of
+  a large number of AIEgens at local site with enhancement in their fluorescence emission
+  for light-up imaging of bacteria. Therefore, significant advancement in targeting
+  specificity could be achieved by the TVP−PAP bioconjugate compared to the previous
+  AIEgens that suffered moderate selectivity.35
+
+
+  </block>
+
+  ### Targeted Antibacterial Effect via Phage-Guided Photodynamic Inactivation
+
+  <block id="5">
+
+  Inspired by the exceptional bacteria-targeting ability of PAP and high 1O2 generation
+  efficiency of AIEgens, we next checked their synergistic antibacterial performances
+  in facing antibiotic-sensitive and MDR P. aeruginosa. The times for incubation and
+  white light illumination were first optimized by examining the survival rate of
+  P. aeruginosa. To avoid the instant decrease of bacterial survival rate, a small
+  amount of TVP−PAP (9.54 × 10^5 PFU mL−1) was added in each group. As shown in Figure
+  S19, with elongation of the incubation time from 0 to 30 min, the bacterial survival
+  rate decreased from 98.3% to 74.7%, consistent with the saturation time in the above
+  imaging process (Figure S18). Next, we fixed the incubation time at 30 min and then
+  irradiated the bacterial suspensions by white light (4.2 mW cm−2) for 2, 10, 30,
+  and 60 min. Nearly 79% of P. aeruginosa could be eradicated after 30 min illumination,
+  and the efficacy remained unchanged even upon irradiation prolonged to 60 min, indicating
+  the saturation of ROS generation at this condition. Furthermore, the bacterial survival
+  rate significantly increased after reversing the sequence of incubation and illumination,
+  suggesting the critical role of phage targeting and infection before TVP−PAP-guided
+  ROS generation on the bacterial surface (Figure S20). Thus, light illumination following
+  30 min coincubation was applied in the subsequent antibacterial tests.
+
+
+  The synergistic antibacterial effect of TVP−PAP was next tested by comparing with
+  the same molar concentrations of individual AIEgen and PAP entity. As shown in Figure
+  4a, for antibiotic-sensitive P. aeruginosa, neither incubation in darkness (control
+  I-30 and control I-60) nor with further white light irradiation (control I-30 and
+  L-30) could pose an apparent influence on the bacterial survival rate. Similarly,
+  TVP-S alone could neither inhibit the bacterial growth crossing the tested concentration
+  range (4.33−21.65 pM, according to the 3.18:1−15.9:1 molar ratio), no matter with
+  or without light irradiation. It was possible that the nonspecific AIEgens and their
+  relative low concentration on the surface of bacteria weakened the destructive effect.
+  In contrast, upon PAP treatment, the antibacterial effect initiated when its concentration
+  increased to 9.54 × 10^5 PFU mL−1 (according to the 9.54:1 molar ratio) under darkness
+  (PAP I-60). The bacterial survival rate further decreased to 48.3% when the concentration
+  increased to 15.9 × 10^5 PFU mL−1 (according to the 15.9:1 molar ratio) in a dose-dependent
+  manner. This result indicated the inherited infection capability of the TVP−PAP
+  bioconjugate from the PAP moiety. With assistance from AIEgen, TVP−PAP showed a
+  slightly higher antibacterial efficiency in the darkness compared to PAP alone (TVP−PAP
+  I-30 vs PAP I-30) crossing the tested concentration range, possibly contributed
+  by the dark toxicity of the AIEgens enriched on the surface of P. aeruginosa. Upon
+  elongating the interaction time for another 30 min (TVP−PAP I-60), this dark toxicity
+  became much stronger and could cause another 20% decrease in the bacterial survival
+  rate at the concentration of 9.54 × 10^5 PFU mL−1. Furthermore, by harnessing the
+  extra PDI activity under white light irradiation, we could observe significant enhancements
+  in the antibacterial efficiency (TVP−PAP I-30 and L-30). With the concentration
+  of TVP−PAP increasing to 1.59 × 10^6 PFU mL−1, the bacteria survival rate rapidly
+  decreased to 6.9%. The agar plate pictures also verified the excellent antibacterial
+  effect from TVP−PAP bioconjugates which was much superior to TVP-S and PAP alone
+  (Figure S21), and complete inhibition could be achieved by increasing TVP−PAP to
+  2.544 × 10^6 PFU mL−1 (Figures S22 and S23). PAP could keep an infectious capability
+  after TVP-S modification for at least 1 week (Figures S24 and S25).
+
+
+  Extending to the clinical isolated MDR P. aeruginosa, a similar dose-dependent antibacterial
+  profile was presented upon TVP−PAP treatment. When the concentration of TVP−PAP
+  increases to 6.36 × 10^7 PFU mL−1, the eradication efficiency could reach 64.8%
+  (TVP−PAP I-60), and the efficiency could even rise up to 99.5% under white light
+  irradiation (TVP−PAP I-30 and L-30). In contrast, at the same concentration, the
+  individual AIEgen (TVP-S I-30 and L-30) and PAP (PAP I-30 and L-30) could only kill
+  7.0% and 46.5% bacteria, respectively, definitely verifying the significantly synergistic
+  antibacterial effect boosted by the PDI activity of AIEgens.
+
+
+  The targeted killing is another critical consideration in antibacterial test. Herein,
+  the character of PAP was introduced for the bacterial discrimination and their following
+  targeted killing. This capability of TVP−PAP was checked in two-component systems
+  by culturing host bacteria, P. aeruginosa (G−), with nonhost bacteria, A. baumannii
+  (G−) or S. aureus (G+), respectively. As shown in Figure 4b,c, in the presence of
+  light irradiation, P. aeruginosa was effectively killed, and few colonies formed
+  upon TVP−PAP treatment, whereas the colony quantity of A. baumannii or S. aureus
+  was nearly unaffected, consistent with the above selective staining result of TVP−PAP
+  to its target. The phage-guided targeting was proposed to play a critical role in
+  achieving this super-antibacterial performance. PAP first specifically recognized
+  the antibiotic-sensitive or MDR P. aeruginosa through its tail protein binding to
+  lipopolysaccharide of the host bacteria.14 Then the AIEgens (low to 21.65 pM in
+  1.59 × 10^6 PFU mL−1 TVP−PAP) were enriched on the bacterial surface. Following
+  the infection process of phage itself, the AIEgens generating efficient 1O2 in situ
+  under white light irradiation could further promote the destruction on the targeted
+  bacteria. Compared to the previous PDI-based antibacterial tests demanding up to
+  several micromolar AIEgens,36,45−47 our phage-guided method showed a fairly higher
+  efficacy and would remarkably mitigate the toxic concerns regarding the random interaction
+  of traditional photosensitizers with the surrounding biomolecules.
+
+
+  </block>
+
+  ### Tracking of the Phage-Guided Targeting and Killing Process
+
+  <block id="6">
+
+  The unique fluorescence property of AIEgen was also harnessed for real-time monitoring
+  this targeting and killing process. As shown in Figure 5, the successful staining
+  of P. aeruginosa was first achieved by incubating with TVP−PAP bioconjugates, with
+  emitting out robust fluorescence signal under imaging (also quantitated in Figure
+  S26). After exposure to white light starting from the time point at 30 min, bacterial
+  morphologies became gradually blurred with illumination lasting, with obvious appearance
+  of fragments in the bright field. In the fluorescence field, signals disappeared
+  in a large fraction of bacteria after 10 min irradiation, along with the apparent
+  agglomeration of bacterial cells. These change in morphology and fluidity indicated
+  destruction happened on the targeted bacteria. To MDR P. aeruginosa, the real-time
+  tracking was performed upon interaction with a higher concentration of TVP−PAP (6.36
+  × 10^7 PFU mL−1) (Figure S27). Similarly, after 30 min coincubation, it was easy
+  to observe the bacterial cell fragment whose amount obviously increased with the
+  elapsing of white light irradiation time, indicating the aggravating damage to the
+  MDR bacteria.
+
+
+  To gain more insights into the antibacterial effect of TVP−PAP, SEM imaging was
+  employed to monitor the morphological changes on antibiotic-sensitive and MDR P.
+  aeruginosa. As shown in Figure 6a, without TVP−PAP treatment, P. aeruginosa possessed
+  a smooth surface with an intact cell wall and well-stereo-shaped body. In contrast,
+  after treatment with TVP−PAP and white light irradiation, the cell walls of P. aeruginosa
+  apparently became rough and even ruptured with the disappearance of its original
+  stereo shape. Also, numerous holes appeared on the bacterial surface. These holes
+  punched by phage would accelerate the permeation of 1O2 into the bacteria cytoplasm
+  and caused further damages to P. aeruginosa (Figure 6b). A similar result with coarse
+  cell surfaces and collapsed morphologies could also be observed in the case of MDR
+  P. aeruginosa, verifying the tremendous destruction from the synergistic effect48,49
+  of TVP−PAP bioconjugates (Figure S28).
+
+
+  </block>
+
+  ### In Vivo Synergistic Eradication of Skin Infections
+
+  <block id="7">
+
+  Inspired by the outstanding bacteria targeting and elimination activity of TVP−PAP
+  in vitro, we further extended antibacterial examinations to in vivo using a mouse
+  model with antibiotic-sensitive or MDR P. aeruginosa infectious skin wounds. The
+  biocompatibility of TVP−PAP on normal cells was first checked. As illustrated in
+  Figure S29, for both dark and illumination groups, the viability of HaCaT cells
+  still remained up to 83% even the TVP−PAP concentration went up to 8.45 × 10^10
+  PFU mL−1. The imaging result of HaCaT cell incubated with TVP−PAP further verified
+  its low toxicity as no obvious fluorescence signal could be detected (Figure S30).
+  Compared to the TVP-S molecules, the improved biocompatibility of TVP−PAP provided
+  a basis for their in vivo antibacterial application (Figure S31).
+
+
+  After model building, the antibiotic-sensitive and MDR P. aeruginosa infected mice
+  were randomly separated into three groups with various treatments (as depicted in
+  Figure 7a). Through monitoring the healing processes of the wounds, it was clear
+  that the mice treated with TVP−PAP nearly recovered at 8 day post-treatment (Figure
+  7b,d). Both of the relative wound sizes infected by antibiotic-sensitive and MDR
+  P. aeruginosa decreased to below 10%, significantly smaller compared to the PBS
+  control or TVP−PAP alone group (Figure 7c,e). The wound healing was much faster
+  than the previous reports using AIE polymer32 and an AIEgen−antibiotic conjugate
+  in the case of G− bacterial infection,45 demonstrating the superefficiency of the
+  phage-guided bacterial killing. The infected skin tissues were then collected, and
+  bacterial colony numbers were counted to quantify the antibacterial efficacy of
+  TVP−PAP. It turned out that both numbers of bacteria in the groups treated with
+  TVP−PAP plus white light irradiation were much smaller comparing to the PBS control
+  and TVP−PAP alone treated group (Figure S32). The hematoxylin and eosin (H&E) staining
+  also proved the superior outcome of TVP−PAP treatment plus white light irradiation
+  by showing intact histological characteristics. Whereas in control and TVP−PAP treated
+  alone, invaded lymphocytes could be obviously observed (Figure 8). Collectively,
+  these outstanding performances in vivo suggested the great potential of TVP−PAP
+  bioconjugates in the application of target bacterial killing and infectious disease
+  therapeutics.
+
+
+  </block>
+
+  ## Conclusions
+
+  <block id="8">
+
+  In summary, we proposed a novel antibacterial strategy by integrating the fluorescence
+  monitoring, phage targeting, and AIE-based photodynamic inactivation together toward
+  a certain species of bacterium. Benefiting from the unique fluorescence property,
+  effective 1O2 generation capability, particular targeting specificity, TVP−PAP had
+  been successfully utilized in the discriminative imaging, selective and efficient
+  killing of targeted bacteria, without apparent influence in the nontargeting bacteria
+  or the normal mammalian cells. The in vitro test demonstrated that even MDR P. aeruginosa
+  could be killed with nearly 100% efficiency attributing to the synergistic effect
+  within TVP−PAP. Additionally, in vivo study verified that the healing rates of both
+  antibiotic-sensitive and MDR bacteria infected wound could be significantly accelerated.
+  These remarkable performances validated that the superior potential of TVP−PAP bioconjugate
+  in synergistic bacterial recognizing and killing that surpassing each individual
+  component within the bioconjugate. Through changing to other phages, this AIE-phage
+  conjugated strategy could be extended to be a universal approach for producing particular
+  specific antibacterial agents, holding great potential to the treatment of bacterial
+  infections as well as diseases indirectly influenced by bacteria, such as the chemo-
+  or immunotherapy resistant cancer with critical bacterial participation.
+
+  </block>'
