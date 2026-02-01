@@ -135,31 +135,31 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: Enriched aggregate constraints
   - marker: '[2]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: regionalization
   - marker: '[3]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: regionalization
   - marker: '[4]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: regionalization
   - marker: '[5]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: regionalization
   - marker: '[6]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: regionalization
   - marker: '[7]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: regionalization
   - marker: '[8]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: regionalization
   - marker: '[9]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: regionalization
   - marker: '[10]'
     intent_label: Prior Methods
     topic_label: max-p regions formulations
@@ -186,7 +186,7 @@ blocks:
     topic_label: max-p regions formulations
   - marker: '[20]'
     intent_label: Research Gap
-    topic_label: max-p regions formulations
+    topic_label: Enriched aggregate constraints
   - marker: '[21]'
     intent_label: Research Gap
     topic_label: Exact optimization models
@@ -201,7 +201,7 @@ blocks:
     topic_label: Local search with area swaps and metaheuristics
   - marker: '[25]'
     intent_label: Prior Methods
-    topic_label: Heuristic models with explicit contiguity
+    topic_label: regionalization
 - block_id: 2
   content: 'The regionalization problem originates from the demand for aggregating homogeneous regions in the analytical tasks
     performed by social scientists and statisticians [26]. Regionalization is referred to by different names, including region
@@ -249,25 +249,25 @@ blocks:
     topic_label: Multiobjective compactness–homogeneity clustering
   - marker: '[20]'
     intent_label: Prior Methods
-    topic_label: p-regions formulations
+    topic_label: Multiobjective compactness–homogeneity clustering
   - marker: '[26]'
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Heuristic models with explicit contiguity
   - marker: '[27]'
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Heuristic models with explicit contiguity
   - marker: '[28]'
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Heuristic models with explicit contiguity
   - marker: '[29]'
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Heuristic models with explicit contiguity
   - marker: '[30]'
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: '[31]'
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: max-p regions formulations
   - marker: '[32]'
     intent_label: Domain Overview
     topic_label: p-regions formulations
@@ -276,22 +276,22 @@ blocks:
     topic_label: p-regions formulations
   - marker: '[34]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: Heuristic models with explicit contiguity
   - marker: '[35]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: Heuristic models with explicit contiguity
   - marker: '[36]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: Heuristic models with explicit contiguity
   - marker: '[37]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: Compactness-driven location–allocation approaches
   - marker: '[38]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: Compactness-driven location–allocation approaches
   - marker: '[39]'
     intent_label: Prospective Application
-    topic_label: Alternative names
+    topic_label: Compactness-driven location–allocation approaches
   - marker: '[40]'
     intent_label: Prior Methods
     topic_label: Bottom-up seeded agglomeration
@@ -300,13 +300,13 @@ blocks:
     topic_label: Heuristic models with explicit contiguity
   - marker: '[42]'
     intent_label: Prior Methods
-    topic_label: p-regions formulations
+    topic_label: Multiobjective compactness–homogeneity clustering
   - marker: '[43]'
     intent_label: Prior Methods
     topic_label: Multiobjective compactness–homogeneity clustering
   - marker: '[44]'
     intent_label: Prior Methods
-    topic_label: p-regions formulations
+    topic_label: Multiobjective compactness–homogeneity clustering
   - marker: '[45]'
     intent_label: Prior Methods
     topic_label: Conventional clustering with post hoc contiguity checks
@@ -318,13 +318,13 @@ blocks:
     topic_label: Top-down divisive edge-removal methods
   - marker: '[48]'
     intent_label: Prior Methods
-    topic_label: Local search with area swaps and metaheuristics
+    topic_label: Bottom-up seeded agglomeration
   - marker: '[49]'
     intent_label: Prior Methods
     topic_label: Bottom-up seeded agglomeration
   - marker: '[50]'
     intent_label: Prior Methods
-    topic_label: Local search with area swaps and metaheuristics
+    topic_label: Bottom-up seeded agglomeration
   - marker: '[51]'
     intent_label: Prior Methods
     topic_label: Top-down divisive edge-removal methods
@@ -437,7 +437,7 @@ blocks:
     topic_label: Heterogeneity objective functions
   - marker: '[53]'
     intent_label: Problem Formulation
-    topic_label: Alternative names
+    topic_label: Enriched aggregate constraints
 - block_id: 4
   content: 'This section proves the NP-hardness of the IMS problem. The NP-hardness of the IMS problem follows the results
     that the MP-regions problem is NP-hard [10], [54], [55]. The MP-regions problem takes as input: (1) a set of spatially
@@ -840,10 +840,10 @@ blocks:
   citations:
   - marker: '[10]'
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: max-p regions formulations
   - marker: '[56]'
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: max-p regions formulations
 - block_id: 15
   content: 'We first assess the effectiveness of FaCT by comparing it against two heuristic baseline methods that represent
     common strategies for spatially constrained partitioning:

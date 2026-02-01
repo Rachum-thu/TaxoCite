@@ -81,49 +81,49 @@ blocks:
   citations:
   - marker: Hanson (2024)
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Clapp et al., 2008
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Jud and Watts 1981
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Kane et al., 2006
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Rivkin and Welch 2006
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: De Brey et al., 2021
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Carlson et al., 2020
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Enriched aggregate constraints
   - marker: Saporito and Van Riper 2016
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Enriched aggregate constraints
   - marker: Reardon and Rhodes 2011
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Enriched aggregate constraints
   - marker: Parents Involved in Community Schools v. Seattle School District No. 1 (2007)
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Enriched aggregate constraints
   - marker: FCPS 2024
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Sistrunk et al., 2023
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Asson et al., 2024
     intent_label: Research Gap
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Richards, 2014
     intent_label: Research Gap
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Saporito and Van Riper, 2016
     intent_label: Research Gap
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
 - block_id: 2
   content: 'A variety of optimization models with diverse objectives and constraints have been used to determine SAZ boundaries
     in order to facilitate public school student assignment ( Caro et al., 2004 ; Delmelle et al., 2014; Ferland and Guénette
@@ -182,55 +182,55 @@ blocks:
   citations:
   - marker: FCPS 2024
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Sistrunk et al., 2023
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Caro et al., 2004
     intent_label: Prior Methods
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Delmelle et al., 2014
     intent_label: Prior Methods
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Ferland and Guénette 1990
     intent_label: Prior Methods
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Heckman and Taylor 1969
     intent_label: Prior Methods
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Lemberg and Church 2000
     intent_label: Prior Methods
     topic_label: Enriched aggregate constraints
   - marker: Schoepfle and Church, 1991
     intent_label: Prior Methods
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Wei et al., 2022
     intent_label: Prior Methods
-    topic_label: Heterogeneity objective functions
+    topic_label: Problem formulations and objectives
   - marker: Franklin and Koenigsberg, 1973
     intent_label: Prior Methods
-    topic_label: Compactness-driven location–allocation approaches
+    topic_label: Exact optimization models
   - marker: Jennergren and Obel 1980
     intent_label: Prior Methods
-    topic_label: Algorithms without explicit spatial contiguity constraint
+    topic_label: Compactness-driven location–allocation approaches
   - marker: Maxfield 1972
     intent_label: Prior Methods
-    topic_label: Algorithms without explicit spatial contiguity constraint
+    topic_label: Compactness-driven location–allocation approaches
   - marker: Schoepfle and Church 1991
     intent_label: Prior Methods
     topic_label: Enriched aggregate constraints
   - marker: Andersson et al., 2012
     intent_label: Importance of Problem
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Li and Zhao 2015
     intent_label: Importance of Problem
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Liu et al., 2024
     intent_label: Importance of Problem
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Belford and Ratliff 1972
     intent_label: Prior Methods
-    topic_label: Algorithms without explicit spatial contiguity constraint
+    topic_label: Compactness-driven location–allocation approaches
   - marker: Franklin and Koenigsberg 1973
     intent_label: Prior Methods
     topic_label: Exact optimization models
@@ -238,11 +238,11 @@ blocks:
     intent_label: Prior Methods
     topic_label: Exact optimization models
   - marker: Saporito (2017)
-    intent_label: Domain Overview
-    topic_label: Alternative names
+    intent_label: Research Gap
+    topic_label: Heterogeneity objective functions
   - marker: Asson et al. (2024)
-    intent_label: Domain Overview
-    topic_label: Alternative names
+    intent_label: Research Gap
+    topic_label: Heterogeneity objective functions
   - marker: Logan et al., 2008
     intent_label: Domain Overview
     topic_label: Heterogeneity objective functions
@@ -251,7 +251,7 @@ blocks:
     topic_label: Heterogeneity objective functions
   - marker: Richards 2014
     intent_label: Domain Overview
-    topic_label: Alternative names
+    topic_label: Heterogeneity objective functions
   - marker: Logan and Oakley 2004
     intent_label: Domain Overview
     topic_label: Heterogeneity objective functions
@@ -585,7 +585,7 @@ blocks:
     topic_label: Heterogeneity objective functions
   - marker: ( Caro et al., 2004 ; Lemberg and Church 2000 )
     intent_label: Problem Formulation
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: ( Farley 1984; Logan et al., 2008; Logan and Oakley 2004; Wei et al., 2022; Wilson 1985)
     intent_label: Metrics Utilization
     topic_label: Heterogeneity objective functions
@@ -593,11 +593,11 @@ blocks:
     intent_label: Prior Methods
     topic_label: Exact optimization models
   - marker: (Saporito 2017 )
-    intent_label: Domain Overview
-    topic_label: Alternative names
+    intent_label: Research Gap
+    topic_label: Problem formulations and objectives
   - marker: ( Asson et al., 2024 ; Saporito 2017)
     intent_label: Research Gap
-    topic_label: Alternative names
+    topic_label: Problem formulations and objectives
   - marker: Shirabe (2005)
     intent_label: Algorithm/Principle Adoption
     topic_label: Flow-based network connectivity formulations
@@ -606,7 +606,7 @@ blocks:
     topic_label: Flow-based network connectivity formulations
   - marker: ( Cohon, 2013 )
     intent_label: Algorithm/Principle Adoption
-    topic_label: Problem formulations and objectives
+    topic_label: Enriched aggregate constraints
 - block_id: 4
   content: 'We utilized the proposed model to assess racial segregation in the Riverside Unified School District (RUSD) in
     California, USA. The analysis was based on public school data from the 2015-2016 academic year, sourced from the National
@@ -760,7 +760,7 @@ blocks:
   citations:
   - marker: (Mawene and Bal. 2020)
     intent_label: Importance of Problem
-    topic_label: Alternative names
+    topic_label: Heterogeneity objective functions
   - marker: (Burdick–Will, 2018)
     intent_label: Importance of Problem
-    topic_label: Alternative names
+    topic_label: Heterogeneity objective functions
