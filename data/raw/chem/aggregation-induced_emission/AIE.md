@@ -7,7 +7,7 @@ aggregation-induced emission (AIE) and aggregate-state photophysics.
 
 ## I. Aggregation Role (Core Conceptual Axis)
 
-- Activation-type AIE
+- Activation-type AIEE
 - Transformation-type AIE
 - Emergence-type AIE
 
