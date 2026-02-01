@@ -15,6 +15,9 @@
 ### Enriched aggregate constraints
 **Description:** User-defined thresholds enforce size, balance, or aggregates per region during optimization.
 
+## Alternative names
+**Description:** Provide broad background about the research area, common concepts, or a high-level landscape of the domain.
+
 ## Algorithms without explicit spatial contiguity constraint
 **Description:** Approaches indirectly enforce contiguity, often corrected a posteriori after aggregation.
 
