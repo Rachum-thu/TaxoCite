@@ -1,0 +1,357 @@
+title: 'Spatial Regionalization: A Hybrid Quantum Computing Approach'
+blocks:
+- block_id: 0
+  content: Quantum computing has shown significant potential to address complex optimization problems; however, its application
+    remains confined to specific problems at limited scales. Spatial regionalization remains largely unexplored in quantum
+    computing due to its complexity and large number of variables. In this paper, we introduce the first hybrid quantum-classical
+    method to spatial regionalization by decomposing the problem into manageable subproblems, leveraging the strengths of
+    both classical and quantum computation. This study establishes a foundational framework for effectively integrating quantum
+    computing methods into realistic and complex spatial optimization tasks. Our initial results show a promising quantum
+    performance advantage for a broad range of spatial regionalization problems and their variants.
+  citations: []
+- block_id: 1
+  content: 'Quantum annealing [12] is an optimization technique inspired by quantum mechanics, designed to solve complex optimization
+    problems by exploring a vast solution space through quantum fluctuations. Unlike its classical counterpart, simulated
+    annealing [15] that is based on thermal fluctuations, quantum annealing uses quantum tunneling to escape local minima
+    and potentially converge on the global optimum. In recent years, the quantum annealing hardware has been significantly
+    advanced to support thousands of qubits, e.g., D-Wave Quantum Inc. annealer currently offers approximately 5000 qubits
+    [14]. However, current quantum systems remain constrained by notable technical limitations that limit solving problems
+    of large sizes. To address the scale challenge, quantum annealers are supplemented by hybrid solvers that integrate classical
+    CPUs with Quantum Processing Units (QPUs) at different phases. The classical computer handles problem decomposition, setting
+    initial conditions, and refining results using well-established optimization methods, while the QPU leverages quantum
+    annealing with its native QUBO-like formulations [11]. These solvers, such as DQM, CQM, and NL solvers [8], can partition
+    large-scale problems into smaller sub-problems that are then solved with the QPU. Such advances have enabled quantum computers
+    to handle complex optimization problems and enterprise-level applications [7].
+
+
+    Spatial regionalization is an essential and expensive spatial operation that serves many real-world applications in economics,
+    urban planning, and other domains requiring efficient spatial resource allocation [2, 13, 17]. Regionalization aggregates
+    spatial areas into contiguous regions, aiming to minimize heterogeneity within each region. Constrained by explicit spatial
+    contiguity requirements, spatial regionalization is proved to be NP-hard [13], and finding optimal solutions remains computationally
+    infeasible due to combinatorial complexity [3, 13, 17].
+
+
+    This paper introduces the first hybrid quantum-classical approach designed for seeding-based spatial regionalization.
+    We decompose regionalization into smaller, quantum-processable subproblems and explore the solution space more effectively
+    than the traditional heuristic methods. Specifically, we decompose seeding-based regionalization into two phases, spanning
+    five stages, adapting a variation of our framework proposed in [4] for classical computers. Then, the quantum annealing
+    is leveraged to improve the performance of two stages: seed selection and local optimization, which are used by all seeding-based
+    regionalization techniques. Therefore, our proposed improvements are general and applicable in various applications. Our
+    initial empirical results on the D-Wave quantum annealer show promising improvements in seed selection quality and local
+    optimization runtime. Ongoing and future explorations might exploit our quantum model in [6] for enforcing spatial contiguity
+    constraints, which are imposed by all regionalization techniques, to build a quantum-optimized region growing stage. The
+    rest of this paper introduces a brief background, discusses the related work, and presents our proposed approach and initial
+    empirical results.'
+  citations:
+  - marker: '[12]'
+    intent_label: Domain Overview
+    topic_label: Other Intent
+  - marker: '[15]'
+    intent_label: Domain Overview
+    topic_label: Heuristic models with explicit contiguity
+  - marker: '[14]'
+    intent_label: Domain Overview
+    topic_label: Other Intent
+  - marker: '[11]'
+    intent_label: Domain Overview
+    topic_label: Other Intent
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Other Intent
+  - marker: '[7]'
+    intent_label: Prospective Application
+    topic_label: Other Intent
+  - marker: '[2, 13, 17]'
+    intent_label: Prospective Application
+    topic_label: regionalization
+  - marker: '[13]'
+    intent_label: Importance of Problem
+    topic_label: regionalization
+  - marker: '[3, 13, 17]'
+    intent_label: Importance of Problem
+    topic_label: regionalization
+  - marker: '[4]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: Other Intent
+- block_id: 2
+  content: 'Quantum annealing (QA) has been proposed as a novel heuristic to solve many of the well-known NP-hard problems
+    [12], and it is similar to Simulated Annealing (SA). In SA, a solution space is explored by randomly proposing changes
+    to the current solution. If the new value of the objective function is decreased, the proposed change is accepted. If
+    the objective function increases, the change is accepted with some probability according to the temperature. In QA, these
+    changes are applied on a quantum superposition of the different solutions, allowing for a massively parallel search of
+    the solution space. This quantum parallelism, combined with the quantum tunneling [6], facilitates fast exploration and
+    potentially avoids being stuck in local minima.
+
+
+    Quadratic Unconstrained Binary Optimization (QUBO). In QA, the problem is represented as a QUBO formulation that consists
+    of a quadratic objective function over binary variables, while any constraints are represented as penalty terms [11].
+    QUBO is an optimization technique that is inherently similar to other operations research techniques and requires no or
+    limited background knowledge of the internals of the quantum annealing process from a user perspective. Under the hood,
+    the quantum annealer encodes the QUBO formulation in the interactions between qubits, which are the quantum counterpart
+    of the classical binary bits. More details about the quantum annealing process can be found in [6].
+
+
+    Hybrid quantum-classical computing. Although many optimization problems can be formulated as QUBOs, the limitations in
+    the current quantum hardware, e.g., small size and low degree of qubit connectivity, restrict the size and complexity
+    of problems that can be practically solved. This challenge is further amplified in problems with many constraints, where
+    encoding constraints as penalty terms [11] often requires additional slack variables, consuming even more qubits. A widely
+    adopted and practical approach is integrating quantum annealers within a hybrid framework, combining both classical CPU
+    and quantum computing powers to solve large problems efficiently using hybrid solvers. The core idea of a hybrid solver
+    is to decompose large or dense problems into smaller subproblems that fit within the connectivity and size constraints
+    of the quantum hardware. In this framework, a quantum processor is paired with a classical heuristic in an iterative loop:
+    the quantum processor solves selected subproblems, while the classical component manages orchestration, constraint handling,
+    and post-processing. By offloading constraint enforcement and much of the solution space exploration to the classical
+    side, hybrid solvers effectively mitigate the challenges posed by sparse qubit connectivity.
+
+
+    D-Wave Quantum Inc., a leading provider of quantum annealing hardware, currently offers four hybrid solvers tailored to
+    different problem types and variable domains: the Binary Quadratic Model (BQM), the Discrete Quadratic Model (DQM), the
+    Constrained Quadratic Model (CQM), and the Nonlinear-Program Hybrid Solver (NL-solver) [8]. Notably, both CQM and NL-solver
+    support the explicit expression of constraints in a declarative form.'
+  citations:
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Heuristic models with explicit contiguity
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Enriched aggregate constraints
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Exact optimization models
+  - marker: '[6]'
+    intent_label: Domain Overview
+    topic_label: Other Intent
+- block_id: 3
+  content: 'Classical spatial regionalization clusters a collection of spatial areas, i.e., polygons, into regions that are
+    spatially contiguous and homogeneous with respect to one or more attributes [2–4, 10, 13, 17]. Numerous variants exist,
+    for example, the p-regions problem takes the number of regions p as user input, the max-p-regions problem automatically
+    finds the maximum number of regions, whereas the p-compact-regions problem emphasizes spatial compactness of regions.
+    All regionalization variants are NP-hard, so practical solutions rely on heuristics to find approximate good solutions
+    for large data. The two major classes of classical solutions are: (a) seeding-based regionalization and (b) graph-based
+    regionalization. Seeding-based regionalization techniques select seed areas and build regions, i.e., clusters, around
+    these seeds [4, 10]. Graph-based regionalization builds connected regions by working directly on spatial adjacency graphs
+    [10]. It includes both top-down, e.g., SKATER, and bottom-up agglomerative techniques, e.g., REDCAP [10]. Over the past
+    decade, it has been empirically shown that seeding-based techniques have better scalability than graph-based techniques,
+    so they empower spatial data analysts to support large datasets [2, 3, 13, 17]. However, classical heuristics are computationally
+    extensive and prone to getting trapped in local optima, making the search for high-quality solutions expensive. By using
+    quantum tunneling, quantum annealing can achieve high-quality solutions faster. None of the existing techniques leverages
+    quantum annealing to address this NP-hard problem.
+
+
+    Quantum-based spatial clustering has emerged as a promising tool for NP-hard clustering and partitioning problems. Mapping
+    spatial clustering to QUBO form is non-trivial, yet several studies show feasibility for related graph-partitioning tasks.
+    Ushijima-Mwesigwa [19] encodes modularity-maximizing community detection as a QUBO, with each node’s binary spin indicating
+    community membership. Negre [18] extends this to k communities on a D-Wave 2000Q, obtaining modularity scores comparable
+    to leading classical algorithms. Arthur and Date [5] formulate balanced k-means clustering as a QUBO, achieving clustering
+    quality on par with classical k-means and highlighting potential scalability benefits. These proof-of-concept results
+    illustrate that quantum annealing can effectively handle clustering objectives, optimizing over assignments of points
+    to clusters in a manner that, in some cases, escapes local minima that trap classical heuristics.
+
+
+    Quantum clustering studies omitted explicit enforcement for spatial contiguity, as it requires a prohibitive number of
+    qubits and scales poorly with the problem size. They relied on adjacency graph structures that implicitly encoded connectivity.
+    Very recent work addresses spatial contiguity directly [6] based on the discrete quadratic model (DQM) [8]. However, none
+    of the existing quantum-based clustering approaches have addressed seeding spatial regionalization, which is shown over
+    the past decade to be the most scalable class of spatial regionalization algorithms. Our work is the first to explore
+    seeding spatial regionalization on quantum computers.'
+  citations:
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Other Intent
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: Other Intent
+  - marker: '[2–4, 10, 13, 17]'
+    intent_label: Prior Methods
+    topic_label: Heuristic models with explicit contiguity
+  - marker: '[4, 10]'
+    intent_label: Prior Methods
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[10]'
+    intent_label: Prior Methods
+    topic_label: Top-down divisive edge-removal methods
+  - marker: '[2, 3, 13, 17]'
+    intent_label: Prior Methods
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[19]'
+    intent_label: Prior Methods
+    topic_label: Other Intent
+  - marker: '[18]'
+    intent_label: Prior Methods
+    topic_label: Other Intent
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: Other Intent
+- block_id: 4
+  content: 'Spatial regionalization is an NP-hard clustering problem, so all existing algorithms use heuristic-based search
+    to find good approximate solutions rather than optimal solutions. Most existing seeding-based techniques work in two phases:
+    (1) finding an initial solution, and (2) optimizing the initial solution to output a final solution. Building on our previous
+    work in [4], the first phase has four stages: seed selection, region growing, enclave assignment, and constraint adjustments.
+    The second phase is one stage: local optimization that employs heuristic search techniques to improve the approximate
+    solution quality, measured in regional heterogeneity.
+
+
+    We propose a hybrid approach that uses quantum annealing to improve the seed selection and the local optimization stages,
+    while other stages are handled using efficient classical algorithms as in [17]. These two stages have the highest potential
+    to utilize the quantum annealing advantages to improve the runtime or solution quality. The seed selection is purely quantum-encoded.
+    The local optimization is an iterative hybrid loop: the CPU prepares a set of potential region border areas, which the
+    QPU then shuffles to refine the solution. This ongoing work shows a preliminary, promising exploration that will be further
+    strengthened in future explorations. The rest of this section describes each quantum-encoded stage.'
+  citations:
+  - marker: '[4]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[17]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Bottom-up seeded agglomeration
+- block_id: 5
+  content: 'The seed selection stage takes n spatial areas, i.e., polygons, as input and finds p spatially scattered seed
+    areas to build regions around. Scatteredness ensures seeds remain well-separated so that subsequent regional growth is
+    not squeezed together. We measure scatteredness as the minimum pairwise distance between geometric centroids of seed areas,
+    as in [17], with the objective of maximizing this scatteredness. Therefore, seed selection maps to a well-known problem
+    called the max-min dispersion [20]. To address the max-min dispersion, we adopt a quantum-friendly formulation based on
+    the Maximum Independent Set (MIS) [9]. Given a set of 2D points V, we first define a complete graph G = (V, E) where each
+    edge eij is assigned a weight equal to the Euclidean distance dij between points i and j. The MIS is a set of vertices
+    where no two vertices in the set are connected by an edge, and the set has the largest possible size among all such sets
+    in the graph. For a candidate minimum (dispersion) distance threshold dm, we construct a subgraph G'' = (V, E'') by removing
+    all edges with dij > dm. Solving the MIS on G'' yields a subset of points where all pairwise distances are at least dm.
+    If the MIS size is less than the required number of seeds p, dm is reduced; otherwise, it can be increased. A binary search
+    over feasible values of dm identifies the largest achievable dispersion.
+
+
+    We associate a binary variable xi with each spatial area, where xi = 1 if area i is selected as a seed and 0 otherwise.
+    The primary objective is to maximize the number of seeds, which is equivalent to minimizing the term −∑i xi. To enforce
+    the MIS constraint, we introduce a penalty λMIS for any pair of connected seeds being selected simultaneously. This results
+    in the following objective function:
+
+    X = − ∑︁ i ∈V xi + λMIS ∑︁ (i,j) ∈E'' xi xj
+
+    Minimizing X thus yields the largest possible set of seeds that are all separated by at least the distance threshold dm.
+    This technique is encoded as a BQM model [8]. For space limitations, our complete BQM formulation is described in [1].'
+  citations:
+  - marker: '[8]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Other Intent
+  - marker: '[17]'
+    intent_label: Problem Formulation
+    topic_label: Problem formulations and objectives
+  - marker: '[20]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[9]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Other Intent
+  - marker: '[1]'
+    intent_label: Problem Formulation
+    topic_label: Problem formulations and objectives
+- block_id: 6
+  content: 'The local optimization stage takes an initial solution of p spatially-contiguous regions as input, and outputs
+    an optimized solution. The optimized solution still consists of p spatially-contiguous regions but with lower regional
+    heterogeneity. This stage is by far the most time-consuming stage for all seeding-based regionalization techniques, and
+    it also determines the final objective function value, i.e., heterogeneity. This makes it the best candidate to leverage
+    the quantum advantage for faster runtime and better objective value.
+
+
+    We employ quantum annealing to model a “swap-or-move” local search technique that improves the initial solution by shuffling
+    border movable areas between neighboring regions. The goal is minimizing an objective function representing the overall
+    regional heterogeneity while maintaining the spatial contiguity of each region. By finding articulation areas using the
+    classic method [17], we can find all movable areas in linear time. The heterogeneity of a region R is defined as HR =
+    ∑ ai,aj ∈R,i<j |A(ai) − A(aj)|, for the dissimilarity attribute A of all pairs of areas ai, aj ∈ R. The overall heterogeneity
+    H is the summation of heterogeneity of all the p regions, i.e., H = ∑p k=1 HRk, ∀1 ≤ k ≤ p. If an area ai moves from a
+    donor region Rd to a receiver region Rr, both HRd and HRr change, and hence H changes.
+
+
+    We employ a Constraint Quadratic Model (CQM) [8] to optimize choosing area moves that improve the objective function H.
+    It is computationally expensive to aggregate the attribute A over all area pairs directly on a QPU due to an architectural
+    limitation of the qubits. To overcome this, we adopt an estimation strategy that avoids full recalculation of H by directly
+    estimating the change in heterogeneity (ΔH) resulting from a move. The objective function is modeled using key statistical
+    attributes of a region R, its total number of areas (NR), mean attribute A value (MR), and attribute A variance (VR),
+    along with the value of attribute Am of a movable border area am ∈ R. These statistics are chosen for their computational
+    efficiency, as they can be updated in linear or constant time on a classic computer. The potential destinations for movable
+    areas serve as the model’s variables. By assuming the attributes of large datasets are normally distributed, when a region
+    adds or removes an area, this change is estimated using its statistical properties:
+
+    ΔˆHadd = NR · √(VR + (MR − Am)^2)
+
+    ΔˆHremove = −(NR − 1) · √(VR + (MR − Am)^2)
+
+    ΔH = ΔˆHadd + ΔˆHremove.
+
+    By estimating ΔH for every potential move, we can leverage quantum optimization to simultaneously evaluate multiple relocations
+    and select the combination that most significantly reduces total system heterogeneity. To preserve spatial contiguity,
+    we impose a critical constraint: each region may either donate or receive at most one area per iteration, but not both.
+    This constraint is necessary because moving an area can alter the set of remaining movable areas and change the receivable
+    areas of the donor region.
+
+
+    The hybrid quantum local optimization stage executes multiple iterations. Each iteration computes the list of movable
+    areas using the classical CPU. Then, the list is dispatched to the QPU to explore multiple area moves using a CQM model
+    to find a better solution.
+
+
+    Based on the separator theorem [16], the number of potential movable border areas ranges from 2√(n p) to 2 p √n in every
+    single iteration. For space limitations, our CQM formulation is detailed in [1].'
+  citations:
+  - marker: '[8]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Other Intent
+  - marker: '[17]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[1]'
+    intent_label: Problem Formulation
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[16]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Other Intent
+- block_id: 7
+  content: 'The proposed BQM and CQM models for seed selection and location optimization, respectively, are implemented using
+    Python 3.12 and constructed using the D-Wave Ocean toolbox ’dimod’ library (version 0.12.14). We run our algorithms on
+    an on-premise D-Wave Advantage annealing quantum computer (housed at the USC Quantum Computing Center) accessed via D-Wave’s
+    Leap cloud APIs. The current QPU has Pegasus P16 topology and provides ∼5000 superconducting flux-qubits, each is 15-way
+    connected. We compare our quantum algorithms versus the classical counterparts in PRUC [17], setting its user threshold
+    to zero and using the same evaluation datasets. The default value of dataset size is 50 and p is 10. All results are collected
+    after 10 iterations of local optimization. The relative improvement of runtime is calculated as ((Tclassic − Tquantum)
+    / Tclassic × 100)%, and similarly for quality improvements.
+
+
+    Figure 1 shows initial results for the local optimization performance. Figure 1a depicts the relative improvements, as
+    percentages, of our quantum local optimization versus the classical counterpart in both runtime and quality, measured
+    as the objective function value (overall regional heterogeneity H). With increasing dataset size (DS), the runtime improvement
+    increases while the quality improvement decreases. The quality improvement starts at 22.4% at DS=50 and continuously decreases
+    to 6.3% at DS=5k. This suggests that quantum annealing keeps marginal improvements in solution quality with increasing
+    data sizes, yet it will not degrade the quality. On the contrary, the runtime improvement continuously increases from
+    -191% (a slowdown) at DS=50 to 62.3% (a speedup) at DS=5k. These results are confirmed in Figure 1b, which shows relatively
+    stable quantum runtime as data size increases. This shows a promising quantum advantage in terms of runtime speedup with
+    larger datasets. It worth noting that a dataset of all US counties has 3.2k polygons, so 5k datasets are used in many
+    practical applications.
+
+
+    Figure 2 shows initial results for the seed selection performance. Figure 2a depicts the relative improvements, as percentages,
+    showing better runtime and quality improvements with increasing p value. However, the quantum runtime ranges from 300-500
+    milliseconds compared to 3-7 milliseconds for the classical algorithm for this small dataset size, so the increasing improvement
+    is not significant and must be tested on larger data sizes that our preliminary model does not currently support. On the
+    contrary, the quality improvement, measured as the min seed distance, is significantly improved to reach 46.5%. This is
+    confirmed by the absolute quality values in Figure 2b as larger p makes it harder for classical heuristics to optimize
+    for many seeds, while the quantum annealer can still explore a larger search space. This suggests a potential quantum
+    advantage in improving the seed selection quality.'
+  citations:
+  - marker: '[17]'
+    intent_label: Result Comparison
+    topic_label: max-p regions formulations
+- block_id: 8
+  content: This paper has presented the first hybrid quantum approach to address the spatial regionalization problem. The
+    approach decomposes the regionalization process into stages, and exploits the quantum computing power for the two most
+    promising stages, seed selection and local optimization. Two algorithms have been proposed and realized using D-Wave’s
+    BQM and CQM hybrid solvers. The presented initial results suggest a potential quantum advantage to improve the objective
+    function quality of seed selection and the runtime efficiency of the local optimization. More explorations are ongoing
+    to improve the models in terms of scalability, more effective heuristics, and support richer variants of spatial regionalization
+    problems. Future extensions can use our quantum model to enforce spatial contiguity [6] towards a quantum region growing
+    stage.
+  citations:
+  - marker: '[6]'
+    intent_label: Prospective Application
+    topic_label: max-p regions formulations

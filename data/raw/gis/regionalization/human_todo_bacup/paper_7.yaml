@@ -1,0 +1,314 @@
+title: 'SMP: Scalable Max-P Regionalization'
+blocks:
+- block_id: 0
+  content: MP-regions is an NP-hard problem that groups spatial areas to produce a maximum number of regions by enforcing
+    a user-defined constraint at the regional level. Existing approximate algorithms for MP-regions do not scale for large
+    datasets due to their high computational cost. This paper introduces SMP; a scalable technique to support MP-regions on
+    large datasets. SMP works on two stages. The first stage finds an initial solution through randomized search, and the
+    second stage improves this solution through efficient heuristic search. SMP optimizes the region building efficiency and
+    quality by tuning the randomized area selection to trade-off runtime with region homogeneity. The experimental evaluation
+    shows the superiority of our technique to support an order of magnitude larger datasets efficiently compared to the state-of-the-art
+    techniques while producing high-quality solutions.
+  citations: []
+- block_id: 1
+  content: 'Regionalization is the process of clustering a set of spatial polygons into spatially contiguous regions that
+    meet user-defined constraints [10]. An example of regionalization is clustering cities in California into regions so that
+    each region has at least 30K COVID-19 infections. The traditional problem formulations [8, 10, 21] put a major hurdle
+    on users to input the number of regions p. Such a hurdle introduced the challenging “spatial scale problem”, as users
+    fail to determine the appropriate spatial scale according to the underlying data. A new formulation, called max-p-regions
+    (or MP-regions for short), has recently addressed the spatial scale problem [7] and became popular in different applications.
+    Instead of forcing users to input p, the MP-regions automatically discovers the appropriate value of p based on a user-defined
+    constraint on a certain attribute. This gives the user more tractable and flexible expressiveness. However, it suffers
+    from severe scalability limitations and cannot support even moderate-sized datasets.
+
+
+    MP-regions is an NP-hard problem, therefore, finding an exact solution is prohibitively expensive and impractical in real
+    applications. Besides, existing approximate algorithms support relatively small datasets. For ∼3,000 US counties, the
+    proposed techniques in [7, 30] consume from 2.5 minutes up to several hours, depending on the underlying constraints,
+    for each single regionalization query. In fact, real applications already use datasets that are an order of magnitude
+    larger than this dataset. Therefore, such inefficient time makes existing techniques incapable of supporting many real-world
+    applications. For example, such limitation is crystal clear when MP-regions is applied to reduce the uncertainty of American
+    Community Survey data [ 29], which help determine how more than $675 billion in USA federal and state funds are distributed
+    each year [4] and is heavily used by community organizations, governmental agencies, social scientists in various disciplines
+    [ 5]. This scalability limitation urges the need to build scalable regionalization algorithms to support large-sized data.
+
+
+    This paper proposes SMP; a system-level module that scales up MP-regions on large spatial datasets. SMP employs a two-phase
+    approximate search. In the first phase, it employs novel heuristics to find an initial solution efficiently. Existing
+    regionalization techniques grow as many randomized regions as possible in the first phase. This produces a large number
+    of enclave areas as randomization cause enclave areas to remain unassigned. On the other hand, SMP is designed to reduce
+    the number of enclaves and maximize the number of regions. It builds the initial regions with minimal inter-regional gaps
+    by selecting new borders based on a criterion of spatial compactness. In the second phase, SMP optimizes existing heuristics
+    to improve the initial solution. This approximate search avoids exhaustive exploration of the search space, so it efficiently
+    supports large datasets that are not currently supported.
+
+
+    Our experiments on real datasets show significant improvements in regionalization scalability and quality by saving up
+    to 97% of query time compared to existing competitors. The rest of the paper is organized as follows. Section 2 discusses
+    the related work. Section 3 formulates the MP-regions problem. Section 4 introduces our proposed technique. Finally, Section
+    5 provides experimental evaluation and Section 6 concludes the paper.'
+  citations:
+  - marker: '[10]'
+    intent_label: Problem Formulation
+    topic_label: Problem formulations and objectives
+  - marker: '[8, 10, 21]'
+    intent_label: Problem Formulation
+    topic_label: p-regions formulations
+  - marker: '[7]'
+    intent_label: Problem Formulation
+    topic_label: max-p regions formulations
+  - marker: '[7, 30]'
+    intent_label: Research Gap
+    topic_label: Heuristic models with explicit contiguity
+  - marker: '[ 29]'
+    intent_label: Prospective Application
+    topic_label: max-p regions formulations
+  - marker: '[4]'
+    intent_label: Importance of Problem
+    topic_label: max-p regions formulations
+  - marker: '[ 5]'
+    intent_label: Importance of Problem
+    topic_label: max-p regions formulations
+- block_id: 2
+  content: 'The regionalization literature studies various problems under spatial clustering [13, 20] and spatial graph partitioning
+    [6, 32]. The latter is related to regionalization as spatial polygons can be modeled as a node-attributed spatial neighborhood
+    graph, and regionalization can be expressed as a graph partitioning problem. However, the different objectives and constraints
+    on the output sub-graphs make existing spatial graph partitioning techniques inapplicable for regionalization problems.
+    The most related problems to our work are the p-regions [2, 8, 14, 16–19, 31] and the max-p-regions (MP-regions) [1, 7,
+    9, 11, 22, 25–30]. The p-regions problem is related in the sense that the MP-regions problem is a successor that overcomes
+    its limitations. There is an existing literature on the p-regions problem that ranges from building compact regions [2,
+    16–18], network-constrained regionalization [31], and functional regions delimitation [14, 15]. Despite this literature,
+    the fundamental change in MP-regions compared to p-regions makes it inapplicable to adopt existing p-regions techniques.
+
+
+    The literature on MP-regions [7] is more related to our work. MP-regions has variations with a single constraint [7, 28,
+    30], multiple constraints [11], and network-aware regionalization [27], in addition to a variety of applications that
+    are built on top of them [1, 9, 22, 25, 26, 29]. Existing techniques build variations of the same framework, which is
+    also used in our proposed technique in spirit. This framework first builds a set of regions as an initial solution, then
+    uses a heuristic search to improve the solution quality and find a final approximate solution. The differences among these
+    different techniques are in the way of performing the two steps, including different heuristics to build the initial regions,
+    different types of heuristic search, processing optimizations of different steps, or the underlying spatial space, e.g.,
+    Euclidean space versus network-constrained space. Distinguished from all existing work, our work is the first to build
+    an efficient technique that addresses the scalability issue of MP-regions. Our technique significantly beats all existing
+    techniques in different performance measures and is able to support an order of magnitude larger datasets.'
+  citations:
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: max-p regions formulations
+  - marker: '[13, 20]'
+    intent_label: Domain Overview
+    topic_label: Conventional clustering with a posteriori contiguity correction
+  - marker: '[6, 32]'
+    intent_label: Domain Overview
+    topic_label: Top-down divisive edge-removal methods
+  - marker: '[2, 8, 14, 16–19, 31]'
+    intent_label: Prior Methods
+    topic_label: p-regions formulations
+  - marker: '[1, 7, 9, 11, 22, 25–30]'
+    intent_label: Prior Methods
+    topic_label: max-p regions formulations
+  - marker: '[2, 16–18]'
+    intent_label: Prior Methods
+    topic_label: p-regions formulations
+  - marker: '[31]'
+    intent_label: Prior Methods
+    topic_label: p-regions formulations
+  - marker: '[14, 15]'
+    intent_label: Prior Methods
+    topic_label: p-regions formulations
+  - marker: '[7, 28, 30]'
+    intent_label: Prior Methods
+    topic_label: max-p regions formulations
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Enriched aggregate constraints
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: Flow-based network connectivity formulations
+  - marker: '[1, 9, 22, 25, 26, 29]'
+    intent_label: Prospective Application
+    topic_label: max-p regions formulations
+- block_id: 3
+  content: 'This section provides a formal definition for the MP-regions problem. The problem input is a set of spatial areas
+    𝐴 = {𝑎0, 𝑎1, 𝑎2, .., 𝑎𝑛}. Each area 𝑎𝑖 is defined with four attributes: 𝑎𝑖 = (𝑖, 𝑏𝑖, 𝑠𝑖, 𝑑𝑖), where 𝑖 is the area identifier,
+    𝑏𝑖 is an arbitrary spatial polygon that defines the area’s spatial boundaries, 𝑠𝑖 is a spatially extensive attribute,
+    and 𝑑𝑖 is a dissimilarity attribute. A spatially extensive attribute 𝑠𝑖 of an area is an attribute whose value is divided
+    over the smaller sub-areas when the area is fragmented. For example, the population value of a county is divided over
+    its cities, so the population is a spatially extensive attribute. This is the opposite of spatially intensive attributes,
+    such as temperature, that are not divided when the spatial area is fragmented. The dissimilarity attribute 𝑑𝑖 is used
+    in computing output regions’ heterogeneity. The MP-regions problem is defined as follows:
+
+
+    Input: (1) A set of 𝑛 areas: 𝐴 = {𝑎0, 𝑎1, 𝑎2, ..., 𝑎𝑛}. All the areas in 𝐴 are spatially contiguous and form a single
+    spatially connected component. (2) A threshold 𝑇. (3) An objective function 𝐻.
+
+
+    Output: A set of regions 𝑅 = {𝑟1, 𝑟2, ..., 𝑟𝑝} of size 𝑝, where each region 𝑟𝑖 is a non-empty set of spatially continuous
+    areas satisfying the below constraints and objectives.
+
+
+    Constraints:
+
+    - 1 ≤ 𝑝 ≤ 𝑛
+
+    - |𝑟𝑖| ≥ 1, ∀𝑟𝑖 ∈ 𝑅
+
+    - 𝑟𝑖 ∩ 𝑟𝑗 = ∅, ∀𝑟𝑖, 𝑟𝑗 ∈ 𝑅 ∧ 𝑖 ≠ 𝑗
+
+    - Ð𝑝 𝑖=1 𝑟𝑖 = 𝐴, ∀𝑟𝑖 ∈ 𝑅
+
+    - (∑︁ ∀𝑎𝑖 𝑗 ∈𝑟𝑖 𝑠𝑖 𝑗) ≥ 𝑇, ∀𝑟𝑖 ∈ 𝑅 (1)
+
+
+    Objectives:
+
+    - Maximizing 𝑝.
+
+    - Minimizing the total heterogeneity 𝐻(𝑅) in dissimilarity attributes belonging to the same region.
+
+
+    In this paper, 𝐻(𝑅) is defined as follows:
+
+    𝐻(𝑅) = ∑︁ ∀𝑟𝑖 ∈𝑅 ∑︁ ∀𝑎𝑖 𝑗,𝑎𝑖𝑘 ∈𝑟𝑖 |𝑑𝑖 𝑗 − 𝑑𝑖𝑘 | (2)
+
+
+    The first two constraints impose that the output has at least one region (𝑝 ≥ 1), and each region has at least one area
+    (|𝑟𝑖| ≥ 1). The third and fourth constraints ensure that each area is assigned to exactly one region, so the regions are
+    both disjoint and covering all input areas. The last constraint ensures that each region has a total value of the spatially
+    extensive attribute 𝑠 equals to at least the input threshold 𝑇, e.g., total population of each region ≥ 𝑇.
+
+
+    The objectives are two-fold. The first objective is maximizing the number of output regions 𝑝. This is the main objective
+    of MP-regions problems, and it is prioritized over the second objective. This objective allows to eliminate the number
+    of regions as a user-input, which addresses a major limitation in the previous regionalization problems. The second objective
+    favors output regions to be as homogeneous as possible, measured as a function of a dissimilarity attribute. This attribute
+    is not necessarily to be a spatial attribute. For example, a social scientist might need to produce regions that are homogeneous
+    in average income level.'
+  citations: []
+- block_id: 4
+  content: 'This section presents SMP; which builds on a prevalent two-stage framework to address NP-hard problems, finding
+    an initial solution and then improving it. SMP consists of three phases: region growing phase, region gluing phase, and
+    optimization phase.
+
+
+    The region growing phase efficiently builds a set of initial regions with a maximum size over multiple iterations. The
+    region gluing phase finalizes building the initial regions by assigning any remaining areas that do not belong to any
+    region. Finally, the optimization phase improves the quality of the solution.
+
+
+    The main observation of our technique is that all existing techniques generate a large number of enclave areas while growing
+    initial regions. These enclaves are scattered all over the space, so they leave gaps between regions but cannot form regions
+    themselves. SMP employs a layered growing technique that increases the number of initial regions through optimizing the
+    area selection criteria for this objective while maintaining an efficient runtime. The layered growing technique changes
+    the criteria of choosing the seed areas and the criteria of growing the regions from total randomness to constrained randomness.
+    Existing techniques select a random seed area every time they grow a new region. Then, the region grows based on the spatial
+    neighbors of this seed area. The criteria of selecting a total random seed for every region does not give any guarantee
+    about the relative spatial distribution of regions. So, on average, it scatters regions all around the space and leaves
+    a large number of enclaves in between. The layered-growth instead groups these enclaves in one part of the space, enabling
+    to grow three regions instead of two and reduces the number of enclaves.'
+  citations: []
+- block_id: 5
+  content: At the beginning of the phase, the seed for the first region 𝑟1 is chosen at random. Then all the neighbor areas
+    of 𝑟1 are stored in a queue 𝑞𝑟1. While growing 𝑟1, we add the first unassigned area from 𝑞𝑟1 to the region and update
+    𝑞𝑟1 accordingly. This ensures that the unassigned neighbor areas of 𝑟1 are processed and added to the region layer by
+    layer, which leads to a compact region shape that reduces the probability of forming gaps between 𝑟1 and other regions
+    to be grown later. If there exists no unassigned neighbor areas but the total extensive attribute of 𝑟1 is still below
+    the threshold, then all the areas are marked as enclaves. Once the region reaches the threshold, it is added to the list
+    of regions and a new region starts growing. After the first region, for all subsequent regions, the seed area is chosen
+    from the direct neighbor areas of existing regions. For region 𝑟𝑖+1, the seed area is the first unassigned area from the
+    last grown region 𝑟𝑖’s queue 𝑞𝑟𝑖. If all the areas in 𝑞𝑟𝑖 are assigned, then the algorithm turns to 𝑞𝑟𝑖−1, 𝑞𝑟𝑖−2, up to
+    𝑞𝑟1. This phase is repeated MI times to produce different initial solutions, and the solution with the largest number
+    of regions p is kept for further processing.
+  citations: []
+- block_id: 6
+  content: The initial solution produced by the region growing phase might include enclave areas that are not assigned to
+    any region. The region gluing phase assigns enclave areas to existing regions. To do this, we iterate over the list of
+    enclave areas. For each enclave area, we list their neighbor areas from the spatial neighborhood graph, and in turn we
+    list their neighbor regions. If it has no neighbor regions, we skip it in this step, and it is picked up again when at
+    least one of its neighbors is assigned to a region. If it has one neighbor region, it is assigned to that region. If it
+    has multiple neighbor regions, it is assigned to the region that gives the lowest heterogeneity value increase. We repeat
+    this process until assigning all the enclaves.
+  citations: []
+- block_id: 7
+  content: 'The optimization phase optimizes the heterogeneity value H(R) of the initial solution. We use a heuristic search
+    technique based on a modified simulated annealing (MSA) algorithm [30]. The technique moves areas from a region to another
+    neighbor region so that the H(R) value is improved. The original simulated annealing algorithm [7] generates a set of
+    movable areas by identifying all the areas that could be moved from one region (donor region) to the neighboring regions
+    (recipient regions). The algorithm then selects an area to move randomly without violating the input constraints. The
+    move is accepted if it improves the H(R) value of the current solution. Otherwise, the move is accepted with a probability
+    calculated using the Boltzmann’s equation: e^{-Δ H/TM} where -Δ H represents the heterogeneity variation on both donor
+    region and recipient region, and TM represents the temperature. The temperature TM is decreased at each iteration at a
+    fixed cooling rate PH until TM reaches a predefined value. The MSA algorithm [30] reduces the overhead of recomputing
+    valid moves and introduces a tabu list, similar to tabu search [12], to prevent search cycles.
+
+
+    An area is considered movable if it satisfies two conditions: (1) the donor region’s threshold remains above T after removing
+    the area, (2) the area is not an articulation area (i.e. moving the area does not break the spatial contiguity of the
+    donor region). Enforcing the second condition involves identifying the articulation areas which is a computational bottleneck.
+    To solve this, we employ Tarjan’s algorithm [24] to find all the articulation areas in a single graph traversal.'
+  citations:
+  - marker: '[7]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[30]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[12]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[24]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Other Intent
+- block_id: 8
+  content: This section provides an experimental evaluation for SMP.
+  citations: []
+- block_id: 9
+  content: 'We evaluate our proposed technique SMP against two alternatives: (1) state-of-the-art technique for MP-regions
+    problem [30], denoted as MP, (2) An optimized version of MP, denoted as MP*, that uses a set instead of a list to maintain
+    the regions’ unassigned neighbors while growing the regions. We use three performance measures: runtime as a measure for
+    scalability, number of regions 𝑝 and heterogeneity as measures for solution quality. We use the dataset size (DS) to evaluate
+    the performance with the following values: ≈ 10, 20, 30, 35, 40, 50, 60, 70 (×10^3) areas. The maximum iterations for
+    the region growing phase MI is set to 40, the threshold T is set to 250 × 10^6, and the number of iterations in the optimization
+    phase NI is set to 50. The length of the tabu list (LI), the temperature of computing the Boltzmann’s probability (TM),
+    and its cooling rate (PH), are set to 100, 1, and 0.9, respectively, extending the optimal values from [7]. All the experiments
+    are based on Java 14 implementation and run on Ubuntu 16.04 with a quad-core 3.5GHz processor and 128GB of memory.'
+  citations:
+  - marker: '[7]'
+    intent_label: Hyperparameter Utilization
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[30]'
+    intent_label: Result Comparison
+    topic_label: Bottom-up seeded agglomeration
+- block_id: 10
+  content: We evaluate all techniques on the TIGER Line shape files for (i) the census tracts of the US states, and (II) the
+    county subdivisions [3]. In our experiment, we define the spatially extensive attribute over the AWATER attribute that
+    represents the water area. The dissimilarity attribute is defined over the ALAND attribute that represents the land area.
+    The county subdivisions dataset includes 35 × 10^3 areas. For the census tracts dataset, the shape files of different
+    neighboring states are merged together to form seven datasets of increasing sizes ranging from 10 × 10^3 to 70 × 10^3
+    areas.
+  citations:
+  - marker: '[3]'
+    intent_label: Benchmark Utilization
+    topic_label: max-p regions formulations
+- block_id: 11
+  content: Figure 2a shows that SMP have linear runtime scalability with increasing dataset size ranging 0.9 to 54 seconds.
+    While on the other hand, MP encounters an exponentially increasing runtime ranging from 22 to 1297 seconds. MP* is faster
+    than MP with a runtime ranging from 2 to 53 seconds but is still slower than SMP. Our technique is 10 to 29 times faster
+    than MP for the largest dataset. The speedup ratio increases with dataset sizes. The changes introduced in SMP, either
+    in the region growing phase or the optimization phase, are the dominating factors in speeding up the processing. Figure
+    3 shows that increasing DS increases both 𝑝 (Figure 3a) and the heterogeneity (Figure 3b) for all alternatives. Since
+    larger datasets have more areas, using the same default threshold value leads to growing more regions that adds to the
+    heterogeneity score. SMP generates 26-370 regions more than MP and MP*. SMP has a significantly lower heterogeneity than
+    the other competitors. The better 𝑝 value of SMP comes from growing the regions with small inter-regional gaps, which
+    leads to smaller number of scattered enclaves and increases the number of regions. Dividing the same dataset into more
+    regions leads to reducing the heterogeneity due to having a fewer number of area pairs that contribute to computing the
+    heterogeneity.
+  citations: []
+- block_id: 12
+  content: This paper addresses the scalability issue of MP-regions. MP-regions is a regionalization problem that clusters
+    spatial areas into homogeneous regions. MP-regions is an NP-hard problem. Many of the existing work experience performance
+    degradation when solving MP-regions on large datasets. We propose SMP module to provide efficient and scalable approximate
+    solutions for MP-regions. It employs multiple phases to find an initial solution then optimize it using heuristic search.
+    Our experimental evaluation has shown the superiority of our technique against the state-of-the-art techniques in both
+    scalability and solution quality.
+  citations: []
