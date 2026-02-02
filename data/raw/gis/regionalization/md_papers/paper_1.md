@@ -1,11 +1,9 @@
 # The Max- p-Regions Problem
 
 ## Abstract
-
 In this paper, we introduce a new spatially constrained clustering problem called the max- p-regions problem. It involves the clustering of a set of geographic areas into the maximum number of homogeneous regions such that the value of a spatially extensive regional attribute is above a predefined threshold value. We formulate the max- p-regions problem as a mixed integer programming (MIP) problem, and propose a heuristic solution.
 
 ## 1 Introduction
-
 According to Fischer (1980), a homogeneous region consist of a set of spatially contiguous areas which show a high degree of similarity regarding a set of attributes; e.g., degree of diversity, per capita income, level of quality of life, etc. This type of region is different from a functional region in the sense that the latter consists of spatially contiguous areas with a high degree of interdependence; e.g., high levels of commuting flows or commercial trade between them.
 
 The problem of aggregating areas into homogeneous regions is referred to by a host of different names, including region-building (Byfuglien and Nordgard, 1973), conditional clustering (Lefkovitch, 1980), clustering with relational constraints (Ferligoj and Batagelj, 1982), constrained clustering (Legendre, 1987), contiguity constrained clustering (Murtagh, 1992), regional clustering (Maravalle and Simeone, 1995), contiguity constrained classification (Gordon, 1996), regionalization (Wise et al., 1997), or clustering under connectivity constraints (Hansen et al., 2003). The literature on this topic focuses on particular aspects of the problem such as strategies to ensure spatial contiguity of each region, ways to measure homogeneity, strategies to explore the solution space efficiently, and ways to check for solution feasibility.
@@ -14,7 +12,7 @@ From this basic problem (i.e., to aggregate areas into homogeneous regions) othe
 
 Although models for solving either the problem of basic homogeneous regions or the extended versions of this problem have been under development for the past four decades, the dramatic increase in the availability of highly disaggregated spatial data and computational resources provides the opportunity for regional scientists to explore new applications of spatial aggregation models. In this process, new challenges appear that need to be addressed with new formulations. One of those challenges is related to the definition of the number of homogeneous regions to be designed (the scale problem); many practitioners know that they need to aggregate areas into homogeneous regions but they do not know how many regions they should create.
 
-While there is a wide range of methods for finding an appropriate level of aggregation, choosing among these methods is complicated by a number of factors: (a) the performance of those methods is data dependent; (b) the choice of the number of regions is complicated due to a wide variety of methods available ; and, (c) the correct selection of the method requires a deep knowledge of the properties of each one of the available options. This situations has created a “barrier” for the use of the available spatial clustering techniques in practice.
+While there is a wide range of methods for finding an appropriate level of aggregation, choosing among these methods is complicated by a number of factors: (a) the performance of those methods is data dependent; (b) the choice of the number of regions is complicated due to a wide variety of methods available; and, (c) the correct selection of the method requires a deep knowledge of the properties of each one of the available options. This situations has created a “barrier” for the use of the available spatial clustering techniques in practice.
 
 Our experience with spatial aggregation models has shown us that in many empirical applications the researcher does not want to use spatial clustering as a tool for summarizing information or finding the real number of clusters in the data, but as a tool for designing suitable regions for analysis. In this scenario, although the researcher does not know how many regions (clusters) need to be designed, she may know a condition that must be satisfied by every region in order to make them suitable for the analysis. That information can then be used as a way to endogenize the number of regions.
 
@@ -27,61 +25,47 @@ One of the most promising uses of the max- p-regions model is the definition of 
 The remainder of the paper is organized as follows. A formal statement of the max- p-regions problem is formulated in the next section. A literature review is presented in Section 3. The exact formulation of the max-p-regions problem is introduced in Section 4. The heuristic algorithm for solving the max- p-regions problem, including some computational experience, is presented in Section 5. The article concludes with a summary and recommendations for future work.
 
 ## 2 Problem statement
+Areas:
+Let A ={A1, A2, ..., An} denote a set n =|A| areas.
 
-### Areas:
+Attributes:
+Let Aiy denote the attribute y of area Ai, where y∈ Y ={1, 2, ..., m} with m≥ 1; and li denote a spatially extensive attribute of area Ai.
 
-Let A = {A1, A2, ..., An} denote a set n = |A| areas.
+Relationship:
+Let d : A× A→ R+∪{ 0} be the dissimilarity between areas based on the set of attributes Y such that dij ≡ d(Ai, Aj) satisfies the conditions dij ≥ 0, dij = dij and dij = 0 for i, j = 1 , 2, . . . , n. Distance functions can also be utilized; i.e., dij can also satify the subadditivity, or triangle inequality, condition: dij≤ dik + dkj for i, j, k = 1, 2, . . . , n.
 
-### Attributes:
+Let W = (V, E) denote the contiguity graph associated with A such that vertices vi∈ V correspond to areas Ai∈ A and edges {vi, vj}∈ E if and only if areas Ai and Aj share a common border. For the max- p-regions model W must be a connected graph.
 
-Let Aiy denote the attribute y of area Ai, where y ∈ Y = {1, 2, ..., m} with m ≥ 1; and li denote a spatially extensive attribute of area Ai.
-
-### Relationship:
-
-Let d : A × A → R+ ∪ {0} be the dissimilarity between areas based on the set of attributes Y such that dij ≡ d(Ai, Aj) satisfies the conditions dij ≥ 0, dij = dji and dij = 0 for i, j = 1, 2, ..., n. Distance funtions can also be utilized; i.e., dij can also satisfy the subadditivity, or triangle inequality, condition: dij ≤ dik + dkj for i, j, k = 1, 2, ..., n.
-
-Let W = (V, E) denote the contiguity graph associated with A such that vertices vi ∈ V correspond to areas Ai ∈ A and edges {vi, vj} ∈ E if and only if areas Ai and Aj share a common border. For the max- p-regions model W must be a connected graph.
-
-### Feasible Partitions of A:
-
-Let Pp = {R1, R2, ..., Rp} denote a partition of areas A into p regions with 1 ≤ p ≤ n such that:
-
+Feasible Partitions of A:
+Let Pp ={R1, R2, ..., Rp} denote a partition of areas A into p regions with 1≤ p≤ n such that:
 |Rk| > 0 for k = 1, 2, ..., p;
-
-Rk ∩ Rk′ = ∅ for k, k′ = 1, 2, ..., p ∧ k ̸= k′; ⋃p k=1 Rk = A;
-
-∑_{Ai ∈ Rk} li ≥ threshold for k = 1, 2, ..., p, and threshold ∈ R+ ∪ {0} | 0 ≤ threshold ≤ ∑_{Ai ∈ A} li;
-
-W(Rk) is connected for k = 1, 2, ..., p.
+Rk∩ Rk′ =∅ for k, k′ = 1, 2, ..., p ∧ k̸= k′; ⋃p k=1 Rk = A;
+∑ Ai∈Rk li≥ threshold for k = 1, 2, ..., p, and threshold∈ R+∪{ 0}|0≤ threshold≤ ∑ Ai∈A li;
+W (Rk) is connected for k = 1, 2, ..., p.
 
 Let Π denote the set of all feasible partitions of A.
 
-### Evaluation criterion for a feasible partition Pp ∈ Π:
-
-h(Rk) = ∑_{ij: Ai, Aj ∈ Rk, i ≤ j} dij Heterogeneity of region k with Rk ∈ Pp;
-
-H(Pp) = ∑_{k=1}^p h(Rk) Total heterogeneity of partition Pp ∈ Π.
+Evaluation criterion for a feasible partition Pp∈ Π:
+h(Rk) = ∑ ij:Ai,Aj∈Rk,i≤j dij Heterogeneity of region k with Rk∈ Pp;
+H(Pp) = ∑p k=1 h(Rk) Total heterogeneity of partition Pp∈ Π.
 
 The max-p-regions problem may be formulated as:
+Determine P∗ p∈ Π such that |P∗ p| = max(|Pp| : Pp∈ Π), and
+∄Pp∈ Π : |Pp| =|P∗ p| ∧ H(Pp) < H (P∗ p)
 
-Determine P*_{p} ∈ Π such that |P*_{p}| = max(|Pp| : Pp ∈ Π), and
+Next we present a basic example to illustrate an optimal solution for the max-p-regions problem. The objective is (1) to find the maximum number of contiguous regions, p, needed to group the nine areas in such a way that each region contains at least 120 houses (i.e., threshold = 120); and (2) to find, within all solutions with p regions, the solution with the least amount of regional heterogeneity based on y.
 
-∄Pp ∈ Π : |Pp| = |P*_{p}| ∧ H(Pp) < H(P*_{p})
-
-Next we present a basic example to illustrate an optimal solution for the max-p-regions problem. [Figure 1 referenced in the original text.] The objective is (1) to find the maximum number of contiguous regions, p, needed to group the nine areas in such a way that each region contains at least 120 houses (i.e., threshold = 120); and (2) to find, within all solutions with p regions, the solution with the least amount of regional heterogeneity based on y.
-
-Table 1 in the original text presented the components of the evaluation criterion for the optimal partition, H(P*_{p}). According to the definition of the max- p-regions problem, this optimal solution (P*_{p}) implies the following in sequential order.
+According to the definition of the max- p-regions problem, this optimal solution ( P∗ p ) implies the following in sequential order.
 
 1. It is not possible to have more than two regions with at least 120 houses each.
 2. There is not another feasible solution with two regions with a total regional heterogeneity, H(Pp), lower than 672.6.
 
-[Figure 2 referenced in the original text.] Finally, both regions have more than 120 houses each: 148 houses in region R1 and 123 in region R2.
+The bold borders in the example outline the resulting regions. The regions capture the spatial patterns by aggregating areas with similar values for variable y. Finally, both regions have more than 120 houses each: 148 houses in region R1 and 123 in region R2.
 
 ## 3 Literature review
-
 In the literature, there are three types methods for designing homogeneous regions. The first type of method designs the regions in two stages (Openshaw, 1973; Fischer, 1980). The first of the two stages starts by applying a conventional clustering algorithm to the areas without taking into account the geographical location of the areas being aggregated. In this stage, the focus is placed on creating clusters, not regions, of areas that are homogeneous in terms of a set of attributes, regardless of geography. The second of the two stages defines regions as subsets of spatially contiguous areas assigned to the same cluster. With this method the number of resulting regions heavily depends on the spatial patterns of the attributes used for calculating intraregional homogeneity (Openshaw and Rao, 1995).
 
-The second type of method consists of constructing homogeneous regions by including the x and y coordinates of the centroids of the areas as two additional attributes in a conventional clustering algorithm (Webster and Burrough, 1972; Murray and Shyy, 2000). This is an indirect way to force geographically nearby areas to be assigned to the same cluster. In this case, the resulting regions will tend to be geographically compact and therefore spatially contiguous. Spatial contiguity in the final regional solution depends on the weight given to the geographical attributes (x and y coordinates) compared to the weights given to the other attributes (Wise et al., 1997). An increase in the weight of the geographic coordinate attributes in the clustering procedure will increase the chances of obtaining spatially contiguous regions; As a trade-off, this increase in the geographic distance weighting compared to the weighting of the other attributes will detract from meeting the objective of obtaining intraregional homogeneity for the other attributes. One of the main challenges when applying this strategy it to decide how geographical and non-geographical attributes will be combined and weighted (Webster and Burrough, 1972; Cliff et al., 1975; Perruchet, 1983).
+The second type of method consists of constructing homogeneous regions by including the x and y coordinates of the centroids of the areas as two additional attributes in a conventional clustering algorithm (Webster and Burrough, 1972; Murray and Shyy, 2000). This is an indirect way to force geographically nearby areas to be assigned to the same cluster. In this case, the resulting regions will tend to be geographically compact and therefore spatially contiguous. Spatial contiguity in the final regional solution depends on the weight given to the geographical attributes ( x and y coordinates) compared to the weights given to the other attributes (Wise et al., 1997). An increase in the weight of the geographic coordinate attributes in the clustering procedure will increase the chances of obtaining spatially contiguous regions; As a trade-off, this increase in the geographic distance weighting compared to the weighting of the other attributes will detract from meeting the objective of obtaining intraregional homogeneity for the other attributes. One of the main challenges when applying this strategy it to decide how geographical and non-geographical attributes will be combined and weighted (Webster and Burrough, 1972; Cliff et al., 1975; Perruchet, 1983).
 
 For this paper, the key problem with the first two types of methods is that they do not include a procedure for ensuring the spatial contiguity of the regions. In both cases, this condition must be revised a posteriori. Because of the simplicity of their formulations, a key strength of these types of methods lies in their ability to handle large numbers of areas.
 
@@ -90,285 +74,298 @@ A third type of method for clustering areas, our focus, guarantees spatial conti
 The use of one method or another is not an arbitrary decision. For those problems where the shape of the regions should be guided by the spatial distribution of the variables, the use of conventional clustering with x and y coordinates are not appropriate because they always tend to generate circular (compact) regions. Also, problems that do not require nested aggregations at different scales will not ensure optimality by using adapted hierarchical clustering algorithms because with these methods the solution at one scale is conditioned to the solutions obtained at lower scales (Bunge, 1966). The method proposed in this paper satisfies the contiguity constraint in two ways. First, in the exact formulation we design constraints that borrow concepts from graph partitioning. And second, for the solution method, we design an algorithm that constructs feasible solutions, based on the seeded regions strategies, which are iteratively modified while searching for improvements on the evaluation criterion.
 
 ## 4 The exact formulation of the max- p-regions model
-
-### Parameters:
-
-i, I = Index and set of areas, I = {1,···, n};
-
-k = index of potential regions, k = {1,···, n};
-
-c = index of contiguity order, c = {0,···, q}, with q = (n−1);
-
-wij = { 1, if areas i and j share a border, with i, j ∈ I and i ̸= j; 0, otherwise; }
-
-Ni = {j | wij = 1}, the set of areas that are adjacent to area i;
-
-dij = dissimilarity relationships between areas i and j, with i, j ∈ I and i < j;
-
-h = 1 + ⌊log(∑_i ∑_{j|j>i} dij)⌋, which is the number of digits of the floor function of ∑_i ∑_{j|j>i} dij, with i, j ∈ I;
-
-li = spatially extensive attribute value of area i, with i ∈ I;
-
+Parameters:
+i, I = Index and set of areas, I ={1,··· , n} ;
+k = index of potential regions, k ={1,··· , n} ;
+c = index of contiguity order, c ={0,··· , q} , with q = (n− 1);
+wij = { 1, if areas i and j share a border, with i, j∈ I and i̸= j 0, otherwise;
+Ni = {j|wij = 1} , the set of areas that are adjacent to area i;
+dij = dissimilarity relationships between areas i and j, with i, j∈ I and i < j ;
+h = 1 + ⌊log(∑ i ∑ j|j>i dij)⌋, which is the number of digits of the floor function of ∑ i ∑ j|j>i dij, with i, j∈ I;
+li = spatially extensive attribute value of area i, with i∈ I;
 threshold = minimum value for attribute l at regional scale.
 
-### Decision variables:
-
-tij = { 1, if areas i and j belong to the same region k, with i < j; 0, otherwise; }
-
-xkci = { 1, if areas i is assigned to region k in order c; 0, otherwise. }
+Decision variables:
+tij = { 1, if areas i and j belong to the same region k, with i < j 0, otherwise;
+xkc i = { 1, if areas i is assigned to region k in order c 0, otherwise.
 
 Minimize:
-
-Z = (− ∑_{k=1}^n ∑_{i=1}^n xk0i) * 10^h + ∑_{i} ∑_{j|j>i} dij tij (1)
+Z = ( − ∑n k=1 ∑n i=1 xk0 i ) ∗ 10h + ∑ i ∑ j|j>i dij tij
 
 Subject to:
+∑n i=1 xk0 i ≤ 1 ∀k = 1,··· , n
+∑n k=1 ∑q c=0 xkc i = 1 ∀i = 1,··· , n
+xkc i ≤ ∑ j∈Ni xk(c−1) j ∀i = 1,··· , n; ∀k = 1,··· , n; ∀c = 1,··· , q
+∑n i=1 ∑q c=0 xkc i li ≥ threshold ∗ ∑n i=1 xk0 i ∀k = 1,··· , n
+tij ≥ ∑q c=0 xkc i + ∑q c=0 xkc j − 1 ∀i, j = 1,··· , n|i < j ; ∀k = 1,··· , n
+xkc i ∈ { 0, 1} ∀ i = 1,··· , n; ∀k = 1,··· , n; ∀c = 0,··· , q
+tij ∈ { 0, 1} ∀ i, j = 1,··· , n|i < j
 
-∑_{i=1}^n xk0i ≤ 1 ∀ k = 1,··· , n (2)
+In this formulation potential regions are represented by an index k. We call them “potential regions” because we do not know a priori how many regions will be created. When a region k is created it starts from a “root” area i, which is an area assigned to region k in order zero (i.e., X k0 i ). Each region contains one and only one root area. The other areas are assigned to one root according to an ordering system that ensures that each area either is adjacent to the root area, or next to an area that is assigned to the same region with a smaller order number. The contiguity conditions in this model represent an extension of the ordered-area assignment conditions proposed by Cova and Church (2000), who developed such conditions to enforce contiguity in a site design problem.
 
-∑_{k=1}^n ∑_{c=0}^q xkci = 1 ∀ i = 1,··· , n (3)
+The MIP model is formulated as a minimization problem with an objective function that comprises two terms, one term that controls the number of regions, p, and a second term that controls the total heterogeneity, H(Pp). The first term is obtained by adding the number of areas designated as root areas (X k0 i ), and the second term adds the pairwise dissimilarities between areas assigned to the same region. Since the objective function is formulated as a minimization problem, we multiply the first term by minus one.
 
-xkci ≤ ∑_{j∈Ni} xk(c−1)j ∀ i = 1,··· , n; ∀ k = 1,··· , n; ∀ c = 1,··· , q (4)
-
-∑_{i=1}^n ∑_{c=0}^q xkci li ≥ threshold * ∑_{i=1}^n xk0i ∀ k = 1,··· , n (5)
-
-tij ≥ ∑_{c=0}^q xkci + ∑_{c=0}^q xkcj − 1 ∀ i, j = 1,··· , n | i < j ; ∀ k = 1,··· , n (6)
-
-xkci ∈ {0, 1} ∀ i = 1,··· , n; ∀ k = 1,··· , n; ∀ c = 0,··· , q (7)
-
-tij ∈ {0, 1} ∀ i, j = 1,··· , n | i < j (8)
-
-In this formulation potential regions are represented by an index k. We call them “potential regions” because we do not know a priori how many regions will be created. When a region k is created it starts from a “root” area i, which is an area assigned to region k in order zero (i.e., X k0i). Each region contains one and only one root area. The other areas are assigned to one root according to an ordering system that ensures that each area either is adjacent to the root area, or next to an area that is assigned to the same region with a smaller order number. The contiguity conditions in this model represent an extension of the ordered-area assignment conditions proposed by Cova and Church (2000), who developed such conditions to enforce contiguity in a site design problem.
-
-The MIP model is formulated as a minimization problem with an objective function that comprises two terms, one term that controls the number of regions, p, and a second term that controls the total heterogeneity, H(Pp). The first term is obtained by adding the number of areas designated as root areas (X k0i), and the second term adds the pairwise dissimilarities between areas assigned to the same region. Since the objective function is formulated as a minimization problem, we multiply the first term by minus one.
-
-These two terms are merged into one single value, but not in the usual way (i.e., by multiplying each term by a weight). Instead, we merge them in such a way that there is an implicit hierarchy where the number of p regions comes first than the goal of reducing total heterogeneity. We achieve this hierarchy by multiplying the first term by a scaling factor h = 1 + ⌊log(∑_i ∑_{j|j>i} dij)⌋. For p regions the objective functions starts at −p * 10^h. This value increases when we add the total heterogeneity, but h is big enough that, regardless the value of this heterogeneity, the objective function will never reach −(p − 1) * 10^h. This formulation has three implications:
-
+These two terms are merged into one single value, but not in the usual way (i.e., by multiplying each term by a weight). Instead, we merge them in such a way that there is an implicit hierarchy where the number of p regions comes first than the goal of reducing total heterogeneity. We achieve this hierarchy by multiplying the first term by a scaling factor h = 1 + ⌊log(∑ i ∑ j|j>i dij)⌋. For p regions the objective functions starts at −p ∗ 10h. This value increases when we add the total heterogeneity, but h is big enough that, regardless the value of this heterogeneity, the objective function will never reach −(p− 1)∗ 10h. This formulation has three implications:
 - If the algorithm finds a feasible solution with a higher value of p, the improvement in the objective function will always be big enough that this new solution will be preferred over any other solution with a smaller value of p.
 - For the same value of p, solutions with lower heterogeneity will be preferred over solutions with higher heterogeneity.
 - The third implication is derived from the two first, and it is that we force the model to compare only total heterogeneities between solutions with the same number of regions. Comparing heterogeneities between solutions with different number of regions would be an unfair comparison.
 
-Constraints (2) establish that a region k should not have more than one core area. A root area for a region has a defined order of zero (c = 0). Constraints (3) require that each area i be assigned to exactly one region k and one contiguity order c. Constraints (4) require that area i be assigned to region k at order c if and only if an area j exist, in the adjacent neighborhood of i, that is assigned to the same region k in order c − 1. Constraints (5) ensure that when a region is created, the value of the spatially extensive attribute in that region will be above the predefined threshold value. Constraints (6) select the pairwise dissimilarities that must be taken into account for calculating the total heterogeneity. Thus, the binary variable tij = 1 whenever areas i and j are assigned to the same region k, regardless of the order in which they are assigned. Finally, constraint (7) and (8) guarantee variable integrity.
+Constraints (2) establish that a region k should not have more than one core area. A root area for a region has a defined order of zero ( c = 0). Constraints (3) require that each area i be assigned to exactly one region k and one contiguity order c. Constraints (4) require that area i be assigned to region k at order c if and only if an area j exist, in the adjacent neighborhood of i, that is assigned to the same region k in order c− 1. Constraints (5) ensure that when a region is created, the value of the spatially extensive attribute in that region will be above the predefined threshold value. Constraints (6) select the pairwise dissimilarities that must be taken into account for calculating the total heterogeneity. Thus, the binary variable tij = 1 whenever areas i and j are assigned to the same region k, regardless of the order in which they are assigned. Finally, constraint (7) and (8) guarantee variable integrity.
 
-In this formulation we do not impose any constraint on the shape of the regions. Our formulation even allows for regions in the solution that can appear as concentric rings around, for example, a Central Business District. The MIP formulation of the max- p-regions model is computationally expensive. It has 3 n + (n−1)n^2 + n n^2−n / 2 constraints and (n−1)n^2 + n^2−n / 2 variables, which quickly make it intractable as the number of areas increases. However there are some options that can be considered to reduce the size of the problem:
+In this formulation we do not impose any constraint on the shape of the regions. Our formulation even allows for regions in the solution that can appear as concentric rings around, for example, a Central Business District.
 
-1. Each area i with li ≥ threshold can be assigned to a different region k by adding constraints of the type X k0i = 1.
+The MIP formulation of the max- p-regions model is computationally expensive. It has 3 n + (n− 1)n2 + n n2−n 2 constraints and (n− 1)n2 + n2−n 2 variables, which quickly make it intractable as the number of areas increases. However there are some options that can be considered to reduce the size of the problem:
+
+1. Each area i with li≥ threshold can be assigned to a different region k by adding constraints of the type X k0 i = 1.
 2. The upper limit of the indexes k and c can be reduced, because they were set for very extreme cases. Currently we do not have the decision rules to define how much the upper limits of k and c can be reduced without affecting optimality.
 3. It is clear that, for a given solution, the objective function will not be affected if we modify the index of the region, or the order of assignment, as long as the set of areas per region is not modified. This implies that, when using the branch and bound method, the optimal solution will exist in multiple branches of the solution tree. Thus, a Depth-first branching direction may reduce the solution time.
-4. If we take into account that any area can be the root of its region, then we can apply the “1 in 1” formulation proposed by Rosing and ReVelle (1986) within the context of flow capturing model. According to this formulation, a single area i can be arbitrarily assigned to one specific region without degrading the problem or the objective function. Thus, we can reduce computation time by adding the constraint X1,0_1 without affecting optimality.
+4. If we take into account that any area can be the root of its region, then we can apply the “1 in 1” formulation proposed by Rosing and ReVelle (1986) within the context of flow capturing model. According to this formulation, a single area i can be arbitrarily assigned to one specific region without degrading the problem or the objective function. Thus, we can reduce computation time by adding the constraint X1,0 1 without affecting optimality.
 
-To illustrate the complexity of the max- p-regions we solved nineteen problems with different number of areas (n) and threshold values (threshold). The attributes y, from which the dissimilarities dij are calculated, were simulated as spatial autoregressive (SAR) processes with a spatial autocorrelation parameter ρ = 0.8, mean = 0, and the rook criterion of contiguity for constructing the spatial weights. The spatially extensive attributes l where generated from a discrete uniform distribution between 10 and 15. Computational results show that only a few small problems can be solved to optimality with current MIP solvers; larger problems quickly become intractable, indicating the need for heuristic methods.
+To illustrate the complexity of the max- p-regions we solved nineteen problems with different number of areas (n) and threshold values (threshold). The attributes y, from which the dissimilarities dij are calculated, were simulated as spatial autoregressive (SAR) processes with a spatial autocorrelation parameter ρ = 0.8, mean = 0 , and the rook criterion of contiguity for constructing the spatial weights. The spatially extensive attributes l where generated from a discrete uniform distribution between 10 and 15. Only four problems were solved to optimality, and feasible solutions were obtained for six problems. For the other nine problems CPLEX did not find a feasible solution after four hours. It is clear that with the commonly available computational power we currently need to use heuristics to solve meaningfully large problems.
 
 ## 5 Heuristic solution methods
-
 In this section we propose a heuristic solution for the max- p-regions problem. The heuristic is presented in Pseudocode 1 and comprises two phases, a construction phase and a local search phase. The construction phase generates a set of feasible solutions, and the local search phase applies iterative modifications to those feasible solutions in order to improve the evaluation criterion. At the end, the heuristic returns the best solution found.
 
 Pseudocode 1: Max-p-regions
-
-A : Set of areas,  
-l : Spatially extensive attribute of areas,  
-d : Pairwise dissimilarities between areas,  
-W : Neighbourhoods,  
+```
+A : Set of areas,
+l : Spatially extensive attribute of areas,
+d : Pairwise dissimilarities between areas,
+W : Neighbourhoods,
 threshold : Constraint on attribute l at regional level.
 
-P_best_p = ∅, best partition.  
-het = ∞  
-Π = ∅, set of feasible partitions.  
-Ψ = ∅, set of partitions before enclaves assignment.  
+Pbestp = ∅, best partition.
+het = ∞
+Π = ∅, set of feasible partitions.
+Ψ = ∅, set of partitions before enclaves assignment.
 maxP = 0, maximum number of regions.
 
-Construction Phase:  
-for i = 1, 2,··· , maxitr do  
-{  
-ψ, ε, A′ = GrowRegions(A, l, d, W, threshold)  
-p = |ψ|, number of regions in partition ψ  
-if p > maxP then { Ψ = ψ; maxP = p }  
-if p = maxP then { Ψ = Ψ ∪ ψ }  
-if p < maxP then { pass }  
-}  
-for ψ in Ψ do { P_feasible = AssignEnclaves(ψ, Aa, ε, d, W); Π = Π ∪ P_feasible }
+Construction Phase:
+for i = 1, 2,··· , maxitr do
+{
+  ψ, ε, A′ = GrowRegions(A, l, d, W, threshold)
+  p = |ψ|, number of regions in partition ψ
+  if p > maxP then {Ψ = ψ; maxP = p}
+  if p = maxP then {Ψ = Ψ ∪ ψ}
+  if p < maxP then {pass}
+}
+for ψ in Ψ do
+{
+  Pf easible = AssignEnclaves(ψ, Aa, ε, d, W)
+  Π = Π ∪ Pf easible
+}
 
-Local Search Phase:  
-for P_feasible in Π do { P_current_p = LocalSearch(P_feasible); if H(P_current_p) < het then { het = H(P_current_p); P_best_p = P_current_p } }  
-return P_best_p
+Local Search Phase:
+for Pf easible in Π do
+{
+  Pcurrentp = LocalSearch(Pf easible)
+  if H(Pcurrentp) < het then {het = H(Pcurrentp); Pbestp = Pcurrentp}
+}
+return Pbestp
+```
 
 ### 5.1 Construction phase
-
-The construction of a feasible solution is divided in two phases: growing phase (see Pseudocode 2), and enclaves assignment (see Pseudocode 3).
-
-During the growing phase the algorithm selects at random an unassigned area, which is the “seed area” of a growing region. Then, neighbouring unassigned areas are added to the initial seed until the region reaches the minimum threshold value. Next, the algorithm selects a new seed area to start growing a new region. This process is repeated until it is not possible to grow new regions that satisfy the threshold value. Those areas that are not assigned to a region are known as “enclaves.” At the end of the growing phase, the algorithm finished with a set of partial solutions where each solution is composed by a set of growing regions and a set of enclave areas.
+The construction of a feasible solution is divided in two phases: growing phase (see Pseudocode 2), and enclaves assignment (see Pseudocode 3). During the growing phase the algorithm selects at random an unassigned area, which is the “seed area” of a growing region. Then, neighbouring unassigned areas are added to the initial seed until the region reaches the minimum threshold value. The algorithm selects a new seed area to start growing a new region. This process is repeated until it is not possible to grow new regions that satisfy the threshold value. Those areas that are not assigned to a region are known as “enclaves.” At the end of the growing phase, the algorithm finished with a set of partial solutions where each solution is composed by a set of growing regions and a set of enclave areas.
 
 The number of feasible growing regions may change from run to run. For this reason the algorithm repeats this procedure multiple times (maxitr) and keeps only those solutions where the number of growing regions is equal to the maximum number of regions obtained in prior iterations. Each partial solution is then passed to the process of enclaves assignment. In this phase each enclave area must be assigned to one neighbouring growing region according to a measure of similarity. Once all the partial solutions have passed through the enclave assignment process, the algorithm has a set of feasible solutions, all of them with the same number of regions.
 
 Pseudocode 2: GrowRegions
-
+```
 A, l, d, W, threshold
 
-Comment: Grow regions from initial seeds such that the value of attribute l in each region is above threshold.
+Comment: Grow regions from initial seeds such that the value of attribute l
+in each region is above threshold.
 
-Ψ = ∅, set of partitions before enclaves assignment.  
-ε = ∅, set of enclave areas.  
-Au = A, set of unassigned areas.  
+Ψ = ∅, set of partitions before enclaves assignment.
+ε = ∅, set of enclave areas.
+Au = A, set of unassigned areas.
 Aa = ∅, set of assigned areas.
 
-while Au ̸= ∅ do  
-{  
-Ak = select, at random, one area from Au.  
-Au = Au − {Ak}, remove area Ak from set Au.  
-Aa = Aa ∪ {Ak}, add area Ak to set Aa.  
-if lk ≥ threshold then { Rk = {Ak}, area Ak becomes a region by itself. Ψ = Ψ ∪ {Rk} }  
-if lk < threshold then  
-{  
-Rk = {Ak}, start a growing region seeded at area Ak.  
-N = neighbours(Ak) − Aa, set of neighbouring unassigned areas of Ak.  
-T = lk, value of attribute l in area Ak.  
-feasible = 1  
-while T < threshold do  
-{  
-if N ̸= ∅ then  
-{  
-Ai = area in N that minimizes the greedy adaptive function g(Ai) = ∑_{j∈Rk} dij  
-Rk = Rk ∪ {Ai}  
-N = (N − {Ai}) ∪ neighbours(Ai) − Aa  
-T = T + li  
-Au = Au − {Ai}  
-Aa = Aa ∪ {Ai}  
-}  
-if N = ∅ and T < threshold then  
-{  
-ε = ε ∪ Rk  
-feasible = 0  
-Au = Au ∪ Rk  
-Aa = Aa − Rk  
-break, leave the while loop.  
-}  
-}  
-if feasible = 1 then Ψ = Ψ ∪ {Rk}  
-}  
-}  
+while Au ≠ ∅ do
+{
+  Ak = select, at random, one area from Au.
+  Au = Au − {Ak}, remove area Ak from set Au.
+  Aa = Aa ∪ {Ak}, add area Ak to set Aa.
+  if lk ≥ threshold then {Rk = {Ak}, area Ak becomes a region by itself. Ψ = Ψ ∪ {Rk}}
+  if lk < threshold then
+  {
+    Rk = {Ak}, start a growing region seeded at area Ak.
+    N = neighbours(Ak) − Aa, set of neighbouring unassigned areas of Ak.
+    L = lk, value of attribute l in area Ak.
+    feasible = 1
+    while T < threshold do
+    {
+      if N ≠ ∅ then
+      {
+        Ai = area in N that minimizes the greedy adaptative function g(Ai) = ∑ j∈Rk dij
+        Rk = Rk ∪ {Ai}
+        N = (N − {Ai}) ∪ neighbours(Ai) − Aa
+        T = T + li
+        Au = Au − {Ai}
+        Aa = Aa ∪ {Ai}
+      }
+      if N = ∅ and T < threshold then
+      {
+        ε = ε ∪ Rk
+        feasible = 0
+        Au = Au ∪ Rk
+        Aa = Aa − Rk
+        break, leave the while loop.
+      }
+    }
+    if feasible = 1 then Ψ = Ψ ∪ {Rk}
+  }
+}
 return Ψ, ε, Aa
+```
 
 Pseudocode 3: AssignEnclaves
-
+```
 ψ, Aa, ε, d, W
 
 Comment: Assign each enclave in ε to one growing region in partition ψ.
 
-while ε ̸= ∅ do  
-{  
-Ai = select an area Ai in ε that shares a border with at least one area in Aa.  
-η = regions η ⊂ ψ that share border with area Ai.  
-Rk = region Rk ⊂ η that minimizes the greedy adaptive function g(Ai, Rk) = ∑_{j∈Rk} dij.  
-Rnew_k = Rk ∪ {Ai}  
-ψ = ψ − {Rk} ∪ {Rnew_k}, update region Rk in ψ.  
-Aa = Aa ∪ {Ai}, update set of assigned areas.  
-ε = ε − Ai, update set of enclaves.  
-}  
-P_feasible = ψ, at this point all the areas have been assigned to a region.  
-return P_feasible
+while ε ≠ ∅ do
+{
+  Ai = select an area Ai in ε that shares a border with at least one area in Aa.
+  η = regions η ⊂ ψ that share border with area Ai.
+  Rk = region Rk ⊂ η that minimizes the greedy adaptative function g(Ai, Rk) = ∑ j∈Rk dij.
+  Rnewk = Rk ∪ {Ai}
+  ψ = ψ − {Rk} ∪ {Rnewk}, update region Rk in ψ.
+  Aa = Aa ∪ {Ai}, update set of assigned areas.
+  ε = ε − Ai, update set of enclaves.
+}
+Pf easible = ψ, at this point all the areas have been assigned to a region.
+return Pf easible
+```
 
 ### 5.2 Local search phase
-
-Each one of these feasible solutions generated during the construction phase is then improved by applying a local search algorithm. The local search algorithm iteratively modifies the solution while seeking for improvements on the evaluation criterion. The set of new solutions that can be obtained from a current solution is known as the set of neighbouring solutions. There exist several ways to create this set: (a) moving one area from its region to a neighbouring region, (b) swapping areas between two regions, (c) merging two regions and splitting them into two new regions, or (d) combining two feasible solutions into a new different feasible solution using genetic algorithms operators. Regardless of the strategy for creating neighbouring solution, the condition is that each neighboring solution must generate a feasible solution. In this paper, we define a neighbouring solution as the new feasible solution obtained by moving one area from its current region (donor region) to another neighboring region (recipient region). This neighbouring function has been applied by Bozkaya et al. (2003), Openshaw and Rao (1995), Ricca and Simeone (2008), Blais et al. (2003), and Bong and Wang (2004) for different types of spatial clustering problems.
+Each one of these feasible solutions generated during the construction phase is then improved by applying a local search algorithm. The local search algorithm iteratively modifies the solution while seeking for improvements on the evaluation criterion. The set of new solutions that can be obtained from a current solution is known as the set of neighbouring solutions. There exist several ways to create this set: (a) moving one area from its regions to a neighbouring region, (b) swapping areas between two regions, (c) merging two regions and splitting them into two new regions, or (d) combining two feasible solutions into a new different feasible solution using genetic algorithms operators. Regardless of the strategy for creating neighbouring solution, the condition is that each neighboring solution must generate a feasible solution. In this paper, we define a neighbouring solution as the new feasible solution obtained by moving one area from its current region (donor region) to another neighboring region (recipient region). This neighbouring function has been applied by Bozkaya et al. (2003), Openshaw and Rao (1995), Ricca and Simeone (2008), Blais et al. (2003), and Bong and Wang (2004) for different types of spatial clustering problems.
 
 We consider three different local search algorithms with the aim of determining which one performs better for the max-p-regions problem: Simulated Annealing (Kirkpatrick et al., 1983), Tabu Search (Glover, 1977) and Greedy Algorithm.
 
 #### 5.2.1 Simulated annealing
-
-Simulated Annealing is described in Pseudocode 4. This algorithm starts from an initial feasible solution. Then, a neighbouring feasible solution is selected at random. If the neighbouring solution is better than the current solutions, then the move is accepted. If the neighbouring solution does not improve the current solution, then the transition to the new solution is allowed with an acceptance probability given by the Boltzmann’s equation, p = e^{−∆H/T}, where ∆H is the change in the evaluation criterion, and T is the current temperature. At each iteration the temperature T gradually decreases at a given cooling rate α. Thus, as the algorithm progresses probability of accepting a non-improving move approaches to zero. The algorithm stops when T reaches a predefined value ϵ. The key parameter in this algorithm is the cooling rate α.
+Simulated Annealing is described in Pseudocode 4. This algorithm starts from an initial feasible solution. Then, a neighbouring feasible solution is selected at random. If the neighbouring solution is better than the current solutions, then the move is accepted. If the neighbouring solution does not improve the current solution, then the transition to the new solution is allowed with an acceptance probability given by the Boltzmann’s equation, p = e−∆H/T , where ∆ H is the change in the evaluation criterion, and T is the current temperature. At each iteration the temperature T gradually decreases at a given cooling rate α. Thus, as the algorithm progresses probability of accepting a non-improving move approaches to zero. The algorithm stops when T reaches a predefined value ϵ. The key parameter in this algorithm is the cooling rate α.
 
 Pseudocode 4: Local Search: SimulatedAnnealing
+```
+Pf easible, T0, α, ϵ
 
-P_feasible, T0, α, ϵ
-
-P'_{p} = P_feasible, Best local optimum  
-P_current_{p} = P_feasible, Current solution  
+P′p = Pf easible, Best local optimum
+Pcurrentp = Pf easible, Current solution
 T = T0, Initial temperature
-
-while T ≥ ϵ do  
-{  
-Select at random a feasible neighbouring solution P_new_{p} of P_current_{p}  
-if H(P_new_{p}) < H(P'_{p}) then  
-{ P'_{p} = P_new_{p}; P_current_{p} = P_new_{p} }  
-else if e^{−∆/T} > random then { P_current_{p} = P_new_{p} }  
-T = α T  
-}  
-return (P'_{p})
+while T ≥ ϵ do
+{
+  Select at random a feasible neighbouring solution Pnewp of Pcurrentp
+  if H(Pnewp) < H(P′p) then
+  {
+    P′p = Pnewp
+    Pcurrentp = Pnewp
+  }
+  else if e−∆/T > random then
+    Pcurrentp = Pnewp
+  T = αT
+}
+return (P′p)
+```
 
 #### 5.2.2 Tabu search algorithm
-
 The Tabu search algorithm is presented in Pseudocode 5. This metaheuristic is provided with a good capacity of escaping from local optimal solution by allowing a temporal worsening of the evaluation criterion with the hope of discovering a new solution better that the best solution obtained so far. It starts from an initial feasible solution. From this point the algorithm moves to the best neighbouring solution even if this move causes a deterioration of the evaluation criterion (total heterogeneity). To prevent cycles, the reverse move is forbidden, or tabu, for a predefined number of iterations (lengthTabu). A tabu move is allowed only if the move yields a solution better than the best obtained so far (aspirational criterion). The algorithm stops when a total of convTabu iterations have been performed without improving the aspirational criterion. According to the literature, the most critical parameter in this heuristic is the length of the tabu list, lengthTabu.
 
 Pseudocode 5: Local Search: TabuSearch
+```
+Pf easible, lengthTabu, convTabu
 
-P_feasible, lengthTabu, convTabu
-
-P'_{p} = P_current_{p} = P_feasible  
-tabuList = {}  
+P′p = Pcurrentp = Pf easible
+tabuList = {}
 c = 1
-
-while c ≤ convTabu do  
-{  
-N = Set of feasible neighbors of P_current_{p}  
-if N = ∅ then { c = convTabu }  
-else  
-{  
-for P_new_{p} in N do  
-{  
-if P_new_{p} ∉ tabuList then  
-{  
-if H(P_new_{p}) < H(P'_{p}) then  
-{ P'_{p} = P_new_{p}; P_current_{p} = P_new_{p}; c = 1; N = {}; tabuList.add(P_new_{p}) }  
-else { P_current_{p} = P_new_{p}; c = c + 1; N = {} }  
-}  
-else  
-{  
-if H(P_new_{p}) < H(P'_{p}) then  
-{ P'_{p} = P_new_{p}; P_current_{p} = P_new_{p}; c = 1; N = {}; tabuList.add(P_new_{p}) }  
-else { N = N − P_new_{p}; tabuList.pop() }  
-}  
-}  
-}  
-}  
-return (P'_{p})
+while c ≤ convTabu do
+{
+  N = Set of feasible neighbors of Pcurrentp
+  if N = ∅ then c = convTabu
+  else
+  {
+    for Pnewp in N do
+    {
+      if Pnewp ∉ tabuList then
+      {
+        if H(Pnewp) < H(P′p) then
+        {
+          P′p = Pnewp
+          Pcurrentp = Pnewp
+          c = 1
+          N = {}
+          tabuList.add(Pnewp)
+        }
+        else
+        {
+          Pcurrentp = Pnewp
+          c = c + 1
+          N = {}
+        }
+      }
+      else
+      {
+        if H(Pnewp) < H(P′p) then
+        {
+          P′p = Pnewp
+          Pcurrentp = Pnewp
+          c = 1
+          N = {}
+          tabuList.add(Pnewp)
+        }
+        else
+        {
+          N = N − Pnewp
+          tabuList.pop()
+        }
+      }
+    }
+  }
+}
+return (P′p)
+```
 
 #### 5.2.3 Greedy algorithm
-
 The Greedy algorithm, described in Pseudocode 6, starts from an initial feasible solution, and selects a neighbouring solution at random. The neighbouring solution is allowed only if it improves the current solution. The algorithm stops when there is no neighbouring solution that improves the current solution. The Greedy algorithm is fast but it may easily get trapped into a local optimum.
 
 Pseudocode 6: Local Search: Greedy
+```
+Pf easible
 
-P_feasible
-
-P'_{p} = P_feasible  
+P′p = Pf easible
 flag = 1
-
-while flag do  
-{  
-N = Set of feasible neighbors of P'_{p} that improve the solution  
-if N ̸= ∅ then { P'_{p} = Randomly selects an element of N } else { flag = 0 }  
-}  
-return (P'_{p})
+while flag do
+{
+  N = Set of feasible neighbors of P′p that improve the solution
+  if N ≠ ∅ then P′p = Randomly selects an element of N
+  else flag = 0
+}
+return (P′p)
+```
 
 Two are the main challenges in the application of local search algorithms to the problem of spatial clustering: (a) to avoid getting trapped in a local optimal solution, and (b) to find feasible neighboring solutions efficiently. However, these techniques have been widely applied in other problems that impose spatial contiguity constraint. For example, simulated annealing has been applied in political districting by Browdy (1990), Macmillan and Pierce (1994), Macmillan (2001), and Ricca and Simeone (2008); in zone design by Openshaw and Rao (1995); and in police districting by D’amico et al. (2002). Tabu search has been applied in political districting by Bozkaya et al. (2003), Bong and Wang (2004), and Ricca and Simeone (2008); in zone design by Openshaw and Rao (1995); and in home care districting by Blais et al. (2003). And the greedy algorithm has been applied in constrained clustering by Bodin (1973), Fischer (1980), and Ferligoj and Batagelj (1982); in political districting by Nagel (1965), Liittschwager (1973), Moshman and Kokiko (1973), Horn (1995), Ricca and Simeone (2008), and Yamada (2009); and in zone design by Openshaw (1977a), and Openshaw and Rao (1995).
 
 ### 5.3 Computational experiments
-
 In this section we study the performance of the three local search algorithms presented above. The irregular lattices were obtained from the sample data sets available at the GeoDa Center for Geospatial Analysis and Computation. We used two different values for ρ, 0.6 and 0.9, in order to evaluate whether there is a change in the performance of the algorithms at different levels of spatial dependence.
+
+We used the following characteristics: regular lattices 20x20 (n = 400), 33x33 (n = 1,056), 55x56 (n = 3,080); Sacramento census tracks (n = 403); Colombian municipalities (n = 1,068); US census tracks (n = 3,085); neighbourhoods type rook; y SAR (ρ = 0.6) and SAR (ρ = 0.9); l Discrete Uniform [0,100]; threshold (TH) 100, 300, and 500.
+
+Table 4 presents the parameters we use for the local search algorithms. In both algorithms we use different values for the key parameters: in Simulated Annealing (SA) we use two different values for the cooling rate ( α), and in Tabu Search we use three different values for the length of the tabu list. This gives a total of six algorithms: Greedy, SA-0.9, SA-0.998, Tabu-10, Tabu-24, and Tabu-85. All the values for the parameters are based on previous experiments presented in Ríos-Mercado and Fernández (2009), Ricca and Simeone (2008), Bong and Wang (2004), Blais et al. (2003), Bozkaya et al. (2003), D’amico et al. (2002), Macmillan (2001), Openshaw and Rao (1995), Macmillan and Pierce (1994), and Browdy (1990).
 
 In order to make the results comparable, we generate an initial feasible solution at random for each combination of lattice, ρ, and threshold. Then, we run the six local search algorithm with the same starting solution. This process is repeated ten times with different starting solutions. Thus, we solve a total of 2,160 problems (6 lattices × 2 values of ρ × 3 Threshold values × 6 algorithms × 10 repetitions).
 
-Our results show that Tabu-85 reached the best known solution in the largest share of cases, followed by Tabu-24 and Tabu-10. Simulated Annealing and Greedy were significantly inferior in terms of frequency of reaching the best known solution. The larger the length of the tabu list, the higher the possibilities are to get the best solution. Longer tabu lists do not imply a significant change in the running times.
+Our results are presented in summary form. Each experiment reports: the number of times that each algorithm reached the best known solution; the average reduction of the evaluation criterion (total heterogeneity), calculated as [H(P initial) − H(P final)] / H(P initial), where H(P initial) is the total heterogeneity of the initial feasible solution, and H(P final) is the total heterogeneity at the end of the local search; and the average running times in seconds.
 
-A comparison of Simulated Annealing with Tabu Search shows that, on average, to get an additional reduction in the total heterogeneity using Tabu Search causes the running time to increase substantially. Depending on the context of the application, this trade-off can be very expensive.
+The results show that Tabu-85 reached the best known solution most frequently, followed by Tabu-24 and Tabu-10. The SA-0.998 and Greedy algorithms are significantly inferior, followed by SA-0.9. Our results suggest that the larger the length of the tabu list, the higher the possibilities are to get the best solution. It is also important to note that longer tabu lists do not imply a significant change in the running times.
+
+A comparison of Simulated Annealing with Tabu Search shows that, on average, to get an additional reduction of 0.73% in the total heterogeneity using Tabu Search causes the running time to an increase by a factor of 4.84. Depending on the context of the application, this trade-off can be very expensive.
 
 Contrary to our expectations, there is not a significant difference in the performance of the algorithms at different levels of spatial dependence; i.e., having clearer spatial patterns neither helps the algorithms to converge faster nor to reach a higher reduction of the initial objective function value. This finding implies that it is not necessary to consider the level of spatial dependence of the variables in y when calibrating the parameters of the algorithms.
 
-Differences between regular and irregular lattices have a significant impact on the evaluation criterion and solution times. For irregular lattices, we found a reduction in the capacity of the algorithms to reduce the evaluation criterion. However, the algorithms converged faster with irregular lattices when compared with regular lattices.
-
-Increasing the threshold value (TH) yields a reduction in running time for Tabu Search. This effect is the opposite for the other two algorithms: Simulated Annealing produces increases in running time, and the Greedy algorithm multiplies the average running time by a factor.
+Differences between regular and irregular lattices have a significant impact on the evaluation criterion and solution times. For irregular lattices, we found a 12.84% reduction in the capacity of the algorithms to reduce the evaluation criterion. However, the algorithms converged 8.77% faster with irregular lattices when compared with regular. Increasing the threshold value (TH) from 100 to 500 yields a 34.78% reduction in running time for Tabu Search. This effect is the opposite for the other two algorithms: Simulated Annealing produces increases in running time by an average of 84.45%, and the Greedy algorithm multiplies the average running time by a factor of 2.13.
 
 ## 6 Conclusions and future research
-
 In this paper we presented a new type of constrained clustering problem that we coined as the max- p-regions problem. This problem involves the aggregation of small areas into the maximum number of homogeneous regions such that the regional value of a spatially extensive attribute is above a minimum threshold value.
 
 There are many potential applications of our model. For example, the max-p can be used in the design of study regions that allow valid statistical inference in the presence of spatial heteroskedasticity such as in spatial epidemiology studies that require a fair comparison of rate estimates across regions. In addition, our approach can be explored as a way to control for spurious spatial autocorrelation while minimizing the aggregation bias.

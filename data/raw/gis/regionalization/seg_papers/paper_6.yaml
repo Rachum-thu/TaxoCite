@@ -1,5 +1,5 @@
 title: 'IMS: Incremental Max-P Regionalization With Statistical Constraints'
-abstract: 'Spatial regionalization is the process of grouping a set of spatial areas
+abstract: Spatial regionalization is the process of grouping a set of spatial areas
   into spatially contiguous and homogeneous regions. This paper introduces an Incremental
   Max-P regionalization with statistical constraints (IMS) problem; a regionalization
   process that supports enriched user-defined constraints based on statistical aggregate
@@ -16,9 +16,6 @@ abstract: 'Spatial regionalization is the process of grouping a set of spatial a
   with FaCT to further improve the solution quality of the IMS problem and the classical
   max-p regions problem. Our extensive experimental evaluation has demonstrated the
   effectiveness and scalability of our techniques on several real datasets.
-
-
-  Index Terms—Spatial, regionalization, max-P, aggregate.'
 abstract_is_verbatim: true
 segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical Constraints
 
@@ -46,9 +43,6 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   and scalability of our techniques on several real datasets.
 
 
-  Index Terms—Spatial, regionalization, max-P, aggregate.
-
-
   </block>
 
   ## Introduction
@@ -63,16 +57,16 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   water quality assessment [3], weather temperature classification [4], rainfall erosivity
   estimation [5], health data analysis [6], spatial crowdsourcing [7], [8], and constituency
   allocation [9]. A fundamental challenge in regionalization is determining the appropriate
-  spatial scale for the phenomenon under study. For example, as shown in Fig. 1, different
-  climate variables can exhibit distinct spatial patterns. Season-accumulated snowfall
-  shows strong coherence across large geographic units—aggregating at the state level
-  (≈50 regions) sufficiently captures regional variation. In contrast, the mean annual
-  temperature varies sharply at finer scales, necessitating county-level granularity
-  (≈3,000 regions) to resolve meaningful patterns. This spatial-scale mismatch underscores
-  the need for adaptive regionalization techniques that account for the intrinsic
-  heterogeneity of different attributes. However, most existing methods require users
-  to manually specify the number of regions, placing a burden on analysts to try multiple
-  values, which increases the computational cost and limits the query expressiveness.
+  spatial scale for the phenomenon under study. Different climate variables can exhibit
+  distinct spatial patterns. Season-accumulated snowfall shows strong coherence across
+  large geographic units—aggregating at the state level sufficiently captures regional
+  variation. In contrast, the mean annual temperature varies sharply at finer scales,
+  necessitating county-level granularity to resolve meaningful patterns. This spatial-scale
+  mismatch underscores the need for adaptive regionalization techniques that account
+  for the intrinsic heterogeneity of different attributes. However, most existing
+  methods require users to manually specify the number of regions, placing a burden
+  on analysts to try multiple values, which increases the computational cost and limits
+  the query expressiveness.
 
 
   The latest regionalization formulation, called the max-p-regions problem (or MP-regions),
@@ -84,21 +78,31 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   analyzing a pandemic like COVID-19 to designing sales territories, the ideal number
   of regions is unknown beforehand. Fixing the number of regions, p, in advance, as
   required by traditional clustering, imposes an arbitrary structure that can obscure
-  meaningful insights. The latest regionalization formulation maximizes p subject
-  to essential constraints such as spatial contiguity and minimum attribute thresholds;
-  minimizing intra-region heterogeneity is incorporated as a secondary objective.
+  meaningful insights. This focus on maximizing p is therefore not merely a technical
+  detail; it is the critical mechanism that drives a truly data-driven and objective
+  partitioning. By pushing p to its maximum possible value—subject to essential constraints
+  such as spatial contiguity and minimum attribute thresholds—the model is forced
+  to reveal the most granular and meaningful spatial structure inherent in the data.
+  It is fundamental to achieving the highest possible resolution for local pattern
+  discovery and ensuring the most equitable foundation for fair resource allocation.
+  The power of this approach is evidenced by its adoption in leading geospatial software,
+  including ESRI ArcGIS Pro [18] and PySAL [19]. As introduced in the MP-regions formulation
+  [10], maximizing the number of regions reveals fine-grained spatial structure but
+  does not, on its own, ensure meaningful partitions. To address this, minimizing
+  intra-region heterogeneity is incorporated as a secondary objective, promoting internally
+  coherent clusters with consistent characteristics. This further enhances analytical
+  robustness and guards against arbitrary groupings. In this two-fold framework, region
+  count drives the partition’s resolution, while homogeneity serves as a refinement
+  and tie-breaking criterion to select the most interpretable solution.
 
 
   However, the MP-regions problem has several limitations in both scalability and
   expressiveness. Currently, the state-of-the-art algorithms take 3-60 minutes to
   process a dataset with ∼3k areas, depending on the threshold value. As a result,
-  existing real applications, listed above, use relatively small data, ranging from
-  tens of areas [13], [15], [20] to only a few hundred [11], [12], [14], [16], [17].
-  It is explicitly stated in [16] that to use the MP-regions algorithms “one must
-  be willing to reduce the number of geographic units of analysis.” Such severe scalability
-  limitations prevent the existing MP-regions formulation from supporting a wide variety
-  of user-defined constraints that enable users to express flexible regionalization
-  queries for various applications.
+  existing real applications use relatively small data, ranging from tens of areas
+  to only a few hundred. Such severe scalability limitations prevent the existing
+  MP-regions formulation from supporting a wide variety of user-defined constraints
+  that enable users to express flexible regionalization queries for various applications.
 
 
   More fundamentally, the problem of expressiveness is a structural limitation of
@@ -131,12 +135,11 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
 
   The IMS problem is NP-hard (see Section IV), so finding an optimal solution is intractable.
-  An exact MIP solver [21], [22] fails to solve an instance with just 25 areas in
-  a reasonable time [23]. Even finding an approximate solution is challenging due
-  to: (1) non-monotonic constraints (e.g., AVG, VAR), where adding or removing an
-  area gives no guarantee of satisfying the constraint, and (2) the risk of forming
-  oversized regions, which contradicts the primary objective of maximizing the number
-  of regions, p.
+  An exact MIP solver fails to solve an instance with just 25 areas in a reasonable
+  time. Even finding an approximate solution is challenging due to: (1) non-monotonic
+  constraints (e.g., AVG, VAR), where adding or removing an area gives no guarantee
+  of satisfying the constraint, and (2) the risk of forming oversized regions, which
+  contradicts the primary objective of maximizing the number of regions, p.
 
 
   To address these challenges, we introduce FaCT, a three-phase algorithm for IMS.
@@ -168,12 +171,17 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   This paper is a major extension of our work in [25]. Firstly, we introduced the
   novel variance constraint with range operators, advancing regionalization expressiveness.
-  Secondly, the algorithm framework is modified to support global and local incremental
-  updates, enabling fast query revisions without full recomputation. The incremental
-  updates also allow users to reconfigure the scale of the regions efficiently, better
-  addressing the scaling issue. Thirdly, we integrate Iterated Greedy, which improves
-  both IMS and the widely used MP-regions formulation. This highlights the potential
-  of metaheuristics in regionalization and spatial analysis.
+  It also opens opportunities for improving related methods. The integration of variance
+  constraint poses substantial computational challenges due to its complexity, yet
+  it significantly enhances the expressiveness of regionalization, enabling a broader
+  spectrum of applications and analysis tasks. Secondly, the algorithm framework is
+  modified to support global and local incremental updates, enabling fast query revisions
+  without full recomputation. The incremental updates also allow users to reconfigure
+  the scale of the regions efficiently, better addressing the scaling issue, which
+  is a major concern of the regionalization problems and the core motivation for the
+  MP-regions problem. Thirdly, we integrate Iterated Greedy, which improves both IMS
+  and the widely used MP-regions formulation. This highlights the potential of metaheuristics
+  in regionalization and spatial analysis.
 
 
   Our experimental evaluation demonstrates the effectiveness of FaCT on real datasets.
@@ -200,8 +208,8 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   The rest of this paper is organized as follows. Section II presents the related
   work. Section III defines the problem and Section IV proves its NP-hardness. Our
   proposed solution is detailed in Section V, and its time and space complexity are
-  analyzed in Section VI. Section VII shows the incremental update and FaCT-IG. Section
-  IX shows the experimental evaluations and Section X concludes the paper.
+  analyzed in Section VI. Section IX shows the experimental evaluations and Section
+  X concludes the paper.
 
 
   </block>
@@ -282,21 +290,18 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   that is defined as “l ≤ f(s) ≤ u” or “f(s) ∈ [l, u]”. c is identified with a 4-tuple:
   (f, s, l, u), where f is an aggregate function, s is a spatially extensive attribute,
   l ∈ [−∞, ∞) is a number that represents a lower bound, and u ∈ (−∞, ∞] is a number
-  that represents an upper bound.
-
-
-  IMS allows f to be MIN, MAX, AVG, VAR, SUM, or COUNT that computes minimum, maximum,
-  average, variance, summation, and count aggregates, respectively, with the same
-  semantics as the SQL standards. Following standard definitions in the regionalization
-  literature [10], [52] and cartography [53], we define s as a spatially extensive
-  attribute (e.g., population, total income) that is additive and scales with the
-  size of the spatial unit. For example, the population value of a state is divided
-  over its cities, so the population is a spatially extensive attribute. In contrast,
-  spatially intensive attributes [53], such as temperature, are normalized or averaged
-  values that capture relative characteristics independent of area size. Examples
-  of s include the population, labor force, and households in each area. When l =
-  −∞, the range has an open-ended lower bound and the constraint becomes f(s) ≤ u.
-  Similarly, when u = ∞, it becomes f(s) ≥ l.
+  that represents an upper bound. IMS allows f to be MIN, MAX, AVG, VAR, SUM, or COUNT
+  that computes minimum, maximum, average, variance, summation, and count aggregates,
+  respectively, with the same semantics as the SQL standards. Following standard definitions
+  in the regionalization literature [10], [52] and cartography [53], we define s as
+  a spatially extensive attribute (e.g., population, total income) that is additive
+  and scales with the size of the spatial unit. For example, the population value
+  of a state is divided over its cities, so the population is a spatially extensive
+  attribute. In contrast, spatially intensive attributes [53], such as temperature,
+  are normalized or averaged values that capture relative characteristics independent
+  of area size. Examples of s include the population, labor force, and households
+  in each area. When l = −∞, the range has an open-ended lower bound and the constraint
+  becomes f(s) ≤ u. Similarly, when u = ∞, it becomes f(s) ≥ l.
 
 
   Definition III.2 (Region). A region R is a set of g areas: R = {a1, a2, ..., ag},
@@ -309,10 +314,9 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   Definition III.3 (Heterogeneity). Heterogeneity H(P) of a set of regions P is defined
   as:
 
-  H(P) = ∑ ∀R∈P ∑ ∀ai,aj∈R |di − dj| (1)
+  H(P) = ∑ ∀R∈P ∑ ∀ai, aj∈R |di − dj|
 
-
-  While (1) defines heterogeneity using a specific, widely accepted formulation from
+  While this defines heterogeneity using a specific, widely accepted formulation from
   the regionalization literature [10], [11], [13], [14], [15], [16], [52], our framework
   is not limited to this measure. The optimization of H(P) occurs during the flexible
   local search phase in Section V, which can easily accommodate alternative heterogeneity
@@ -323,7 +327,6 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   Input: Given: (1) A set of n areas: A = {a1, a2, ..., an}. (2) A set of user-defined
   constraints C = {c1, c2, ..., cm}.
-
 
   Output: (1) A set of regions P = {R1, R2, ..., Rp}, where 1 ≤ p ≤ n and each region
   Ri satisfies the below IMS constraints and objectives. (2) A set U0 = A − ⋃p i=1
@@ -378,7 +381,7 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   </block>
 
-  ## NP-hardness of IMS
+  ## NP-Hardness of IMS
 
   <block id="4">
 
@@ -454,26 +457,11 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
 
   Proof. If p = 1, i.e., P = {A}, the proposition is trivially true. If p > 1, as
-  all regions in P satisfy c, we have:
-
-  lavg ≤ Ri.AVG(savg) ≤ uavg, ∀ i, 1 ≤ i ≤ p (2)
-
-  where Ri.AVG(savg) represents the average value of attribute savg over areas in
-  region Ri. Let |Ri| denote the number of areas in region Ri. As P contains all areas,
-  we have:
-
-  ∑p i=1 |Ri| = n (3)
-
-  Also, by definition:
-
-  AVG(savg) × n = ∑p i=1 (|Ri| × Ri.AVG(savg)) (4)
-
-  AVG(savg) = (∑p i=1 (|Ri| × Ri.AVG(savg))) / n ≤ (∑p i=1 |Ri| uavg) / n = uavg (5)
-
-  AVG(savg) = (∑p i=1 (|Ri| × Ri.AVG(savg))) / n ≥ (∑p i=1 |Ri| lavg) / n = lavg (6)
-
-  Equations (5) and (6) ⇒ lavg ≤ AVG(savg) ≤ uavg. Hence, Theorem 2 is true, and the
-  proof is complete. □
+  all regions in P satisfy c, we have: lavg ≤ Ri.AVG(savg) ≤ uavg, ∀ i, 1 ≤ i ≤ p.
+  Let |Ri| denote the number of areas in region Ri. As P contains all areas, we have
+  ∑p i=1 |Ri| = n. Also, by definition: AVG(savg) × n = ∑p i=1 (|Ri| × Ri.AVG(savg)).
+  From these equations, it follows that lavg ≤ AVG(savg) ≤ uavg. Hence, Theorem 2
+  is true, and the proof is complete. □
 
 
   Theorem 3. For an area set A and an AVG constraint c = (AVG, savg, lavg, uavg),
@@ -496,14 +484,14 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
 
   (3) Similarly for MAX constraints, there are two cases of infeasibility: (a) If
-  MIN(smax) > umax or MAX(smax) < lmax, no area that satisfies the MAX constraint,
-  and there is no feasible solution. (b) Areas with smax > umax are infeasible areas
-  that must be filtered out to find a solution.
+  MIN(smax) > umax or MAX(smax) < lmax, no area satisfies the MAX constraint, and
+  there is no feasible solution. (b) Areas with smax > umax are infeasible areas that
+  must be filtered out to find a solution.
 
 
   (4) For SUM constraints, we compute the minimum and summation of all areas for ssum,
   MIN(ssum) and SUM(ssum), respectively. There are three cases of infeasibility: (a)
-  If MIN(ssum) > uSum, no region can have ssum within the range. (b) If SUM(ssum)
+  If MIN(ssum) > usum, no region can have ssum within the range. (b) If SUM(ssum)
   < lsum, even the trivial region containing all areas cannot have ssum within the
   range. (c) Areas with ssum > usum are infeasible and must be removed.
 
@@ -540,16 +528,15 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   while avoiding oversized regions that reduce p. To address these challenges, each
   constraint family is handled in a separate step. This design offers several benefits.
   First, each step focuses on one type of optimization, simplifying the problem. Second,
-  this step-wise design flexibly handles arbitrary constraint subsets (as discussed
-  in Section V-D). Third, the order of steps makes use of the mathematical properties
-  of different aggregate functions to increase the probability of producing a feasible
-  solution. It first filters areas using MIN/MAX/SUM to seed regions, then applies
-  AVG or VAR to grow them, and finally adjusts SUM/COUNT as needed. Fourth, separated
-  steps facilitate maximizing the value of p without violating previously satisfied
-  constraints. Consequently, our construction phase produces an initial partition
-  with near-optimal p for heterogeneity refine- ment. Fifth, the independence of each
-  step enables incremental updates, reusing unaffected results to reduce computation
-  (as discussed in Section VII). Although reducing the overall heterogeneity score
+  this step-wise design flexibly handles arbitrary constraint subsets. Third, the
+  order of steps makes use of the mathematical properties of different aggregate functions
+  to increase the probability of producing a feasible solution. It first filters areas
+  using MIN/MAX/SUM to seed regions, then applies AVG or VAR to grow them, and finally
+  adjusts SUM/COUNT as needed. Fourth, separated steps facilitate maximizing the value
+  of p, without violating previously satisfied constraints. Consequently, our construction
+  phase produces an initial partition with near-optimal p for heterogeneity refine­ment.
+  Fifth, the independence of each step enables incremental updates, reusing unaffected
+  results to reduce computation. Although reducing the overall heterogeneity score
   is an objective for the final solution, this phase does not optimize heterogeneity,
   which is handled later.
 
@@ -558,24 +545,26 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   partition, and we maintain the partition with the highest p value. Each iteration
   is divided into three steps. The first step handles extrema (MIN, MAX), the second
   step handles centrality (AVG, VAR), and the third step handles counting (SUM, COUNT).
-  For simplicity and without loss of generality, all constraints are assumed to apply
-  to the same attribute s.
+  Each step is detailed below. For simplicity and without loss of generality, all
+  constraints are assumed to apply to the same attribute s.
 
 
-  **Step 1: Filtering and Seeding:** This step handles extrema constraints, i.e.,
-  MIN and MAX constraints. They serve two purposes: (a) filtering out the infeasible
-  areas, and (b) specifying the set of seed areas. Infeasible areas are already excluded
-  during the feasibility phase (Section V-A). Seed areas are those meeting the bounds
-  of any MIN or MAX constraint. For instance, for two constraints c1 = (MIN, s1, l1,
-  u1) and c2 = (MAX, s2, l2, u2), any area with l1 ≤ s1 ≤ u1 or l2 ≤ s2 ≤ u2 is a
-  valid seed area. This generalizes to any number of MIN/MAX constraints.
+  #### Step 1: Filtering and Seeding
+
+  This step handles extrema constraints, i.e., MIN and MAX constraints. They serve
+  two purposes: (a) filtering out the infeasible areas, and (b) specifying the set
+  of seed areas. Infeasible areas are already excluded during the feasibility phase
+  (Section V-A). Seed areas are those meeting the bounds of any MIN or MAX constraint.
+  For instance, for two constraints c1 = (MIN, s1, l1, u1) and c2 = (MAX, s2, l2,
+  u2), any area with l1 ≤ s1 ≤ u1 or l2 ≤ s2 ≤ u2 is a valid seed area. This generalizes
+  to any number of MIN/MAX constraints.
 
 
   This step provides three levels of optimization through choosing a seed area that
   satisfies the bounds of only one constraint. First, it identifies seeds for any
   arbitrary combination of MIN/MAX constraints. When constraints span different attributes
   or have disjoint ranges, no area satisfies all. Handling constraints independently
-  increase seed flexibility. Second, the number of seed areas is an upper bound for
+  increases seed flexibility. Second, the number of seed areas is an upper bound for
   the number of regions p as each feasible region must contain at least one seed area
   for each constraint. Maximizing seed usage helps grow more regions and increases
   p. Third, it enables piggybacking the seed areas selection on the infeasible areas
@@ -587,14 +576,20 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   phase are performed in one pass over the n areas. Each area is validated against
   all MIN, MAX, and SUM constraints to be classified as either infeasible, valid,
   or seed area. The time complexity is O(m × n), where m is the number of constraints
-  and typically m ≪ n.
+  and typically m << n.
 
 
-  **Step 2: Region Growing:** The second step grows regions that satisfy the AVG constraint
-  c = (AVG, s, l, u) or the VAR constraint c = (VAR, s, l, u), without violating the
-  MIN/MAX constraints. This step is divided into three substeps for each constraint.
-  The first substep initializes a set of regions. The second substep assigns the unassigned
-  areas to the regions. The third substep combines regions to ensure each region satisfies
+  Remark 1. The time complexity of the feasibility phase and the Filtering and Seeding
+  is O(m × n).
+
+
+  #### Step 2: Region Growing
+
+  The second step grows regions that satisfy the AVG constraint c = (AVG, s, l, u)
+  or the VAR constraint c = (VAR, s, l, u), without violating the MIN/MAX constraints.
+  This step is divided into three substeps for each constraint. The first substep
+  initializes a set of regions. The second substep assigns the unassigned areas to
+  the regions. The third substep combines regions to ensure each region satisfies
   all constraints. We first detail each substep for AVG in Substep 2.1A to 2.3A and
   then for VAR in Substep 2.1V to 2.3V below.
 
@@ -610,7 +605,10 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   directly. As we want to maximize the number of output regions p, we make each area
   in unassigned_avg a separate region, and all new regions are added to a region list
   P. Then, we merge areas in unassigned_low and unassigned_high with their spatial
-  neighbors to compose regions that satisfy c. Algorithm 1 gives the merging procedure.
+  neighbors to compose regions that satisfy c.
+
+
+  Algorithm 1: Region Growing - Merging Areas.
 
 
   Algorithm 1 initiates each unassigned area as a temporary region R. While R does
@@ -636,8 +634,11 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   to merge one of a’s neighboring regions R and R’s neighbors with a and checks if
   c is satisfied for the newly merged region. If the merge limit is set to 0, the
   step is skipped; otherwise, the algorithm performs merging attempts up to the allowed
-  limit. Substep 2.3A merges neighboring regions to satisfy all MIN/MAX constraints.
-  Since each area in seeds satisfies only one MIN or MAX constraint, its region inherits
+  limit.
+
+
+  Substep 2.3A merges neighboring regions to satisfy all MIN/MAX constraints. Since
+  each area in seeds satisfies only one MIN or MAX constraint, its region inherits
   that single satisfaction. The algorithm scans the region list P and merges non-satisfying
   regions with neighbors that satisfy other constraints. This step preserves AVG constraint
   c since merging compliant regions keeps c valid. Thus, after Step 2, all regions
@@ -656,21 +657,17 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   values ∑s, and the sum of the squares of these values ∑s^2. The region’s variance
   can be computed as:
 
-  VAR(Ri) = ∑(sj − s̄)^2 / |Ri| = ∑s^2 / |Ri| − (∑s / |Ri|)^2 (7)
+  VAR(Ri) = ∑(sj − s̄)^2 / |Ri| = ∑s^2 / |Ri| − (∑s / |Ri|)^2.
 
-
-  By leveraging (7), we can deduce the potential change in a region’s variance attribute
+  By leveraging this, we can deduce the potential change in a region’s variance attribute
   value upon the addition of an area by simply adjusting ∑s and ∑s^2. Furthermore,
   this allows us to identify the permissible range of variance attribute values for
   areas that can be added to the region. If x symbolizes the variance attribute value
   of a potential area, the variance post its addition is represented as VAR(R′i),
   where |R′i| = |Ri| + 1. To make sure the new region satisfies the VAR constraint,
-  we have: l ≤ VAR(R′i) ≤ u (9)
-
-
-  Using (9), we can swiftly determine and store the acceptable variance attribute
-  value range for each region by finding the roots of the quadratic equations VAR(R′i)
-  = l and VAR(R′i) = u.
+  l ≤ VAR(R′i) ≤ u. Using this, we can swiftly determine and store the acceptable
+  variance attribute value range for each region by finding the roots of the quadratic
+  equations VAR(R′i) = l and VAR(R′i) = u.
 
 
   We then delve into three substeps for area verification and assignment: Similar
@@ -693,8 +690,7 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   the constraint due to differing means, a merge limit is imposed. This allows multiple
   merging attempts to reach feasibility. A similar heuristic is used when area reallocation
   or merging violates VAR. If infeasible regions remain, they are removed and their
-  areas gradually reassigned to neighbors based on the acceptable range defined in
-  (9).
+  areas gradually reassigned to neighbors based on the acceptable range defined above.
 
 
   Complexity analysis. The approach to compute AVG and VAR shares procedural similarities,
@@ -704,22 +700,26 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   2.1 and the first round of the Substep 2.2 iterate through all seed areas and each
   takes O(n) time. The second round of 2.2 iterates over unassigned areas, removing
   at least one per iteration or terminating early. The number of unassigned areas
-  is ≤ n, hence the worst-case total number of operations is ∑_{i=1}^n i = O(n^2).
-  Merges are bounded in number, and each takes constant time. Substep 2.3 iterates
-  through all regions once, thus taking maximum of O(n) time. Thus, Step 2 time complexity
-  is O(n) + O(n) + O(n^2) + O(n) = O(n^2).
+  is ≤ n, hence the worst-case total number of operations is ∑^n i=1 i = O(n^2). Merges
+  are bounded in number, and each takes constant time. Substep 2.3 iterates through
+  all regions once, thus taking maximum of O(n) time. Thus, Step 2 time complexity
+  is O(n^2).
 
 
-  **Step 3: Monotonic Adjustments:** Step 3 enforces SUM and COUNT constraints while
-  preserving previously satisfied ones. This step builds on MP-regions algorithms.
-  Since regions are first constructed for MIN, AVG, or VAR, further adjustments at
-  both area and region levels are required. As SUM and COUNT are monotonic, areas
-  can be added or removed to bring regions within bounds. For each violating region,
-  we first attempt area swaps with neighbors without breaking other constraints. Spatial
-  contiguity is preserved by checking the donor region remains connected after swaps.
-  If swapping fails, regions below bounds are merged, or areas are removed from those
-  above bounds. Finally, if no further changes are possible, infeasible regions are
-  removed and the partition is finalized.
+  Remark 2. The time complexity of Region Growing is O(n^2).
+
+
+  #### Step 3: Monotonic Adjustments
+
+  Step 3 enforces SUM and COUNT constraints while preserving previously satisfied
+  ones. This step builds on MP-regions algorithms. Since regions are first constructed
+  for MIN, AVG, or VAR, further adjustments at both area and region levels are required.
+  As SUM and COUNT are monotonic, areas can be added or removed to bring regions within
+  bounds. For each violating region, we first attempt area swaps with neighbors without
+  breaking other constraints. Spatial contiguity is preserved by checking the donor
+  region remains connected after swaps. If swapping fails, regions below bounds are
+  merged, or areas are removed from those above bounds. Finally, if no further changes
+  are possible, infeasible regions are removed and the partition is finalized.
 
 
   Complexity analysis. Each area is swapped at most once, as it remains valid in the
@@ -727,8 +727,10 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   regions in O(m) time. Checking donor region connectivity is O(n) in the worst case.
   As a result, the time complexity of swapping is O((2m + n) × n) = O(n^2). The area
   removal of regions that exceed the upper bounds and removing infeasible regions
-  takes one O(n) pass each. Thus, the overall time complexity is O(n^2) + O(n) + O(n)
-  = O(n^2).
+  takes one O(n) pass each. Thus, the overall time complexity is O(n^2).
+
+
+  Remark 3. The time complexity of Monotonic Adjustments is O(n^2).
 
 
   </block>
@@ -739,11 +741,11 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   The partition with the largest number of regions p is passed to the local search
   to reduce heterogeneity. This phase employs Tabu search [24], a meta-heuristic,
-  to minimize heterogeneity. This aligns with the two-phase regionalization design,
-  which separates construction and refinement for better tractability and quality.
-  In brief, Tabu search iteratively moves areas between neighboring regions while
-  preserving all constraints. It starts from the feasible partition from construction
-  and explores the best neighboring solution. Worse solution may be accepted to escape
+  to minimize heterogeneity. This aligns with the two-phase regionalization design
+  [10], [48], which separates construction and refinement for better tractability
+  and quality. In brief, Tabu search iteratively moves areas between neighboring regions
+  while preserving all constraints. It starts from the feasible partition from construction
+  and explores the best neighboring solution. Worse solutions may be accepted to escape
   local optima. Moves are recorded in a tabu list with fixed tenure to prevent cycling.
   When a move leads to a partition better than the best partition so far, the algorithm
   chooses this move even if the tabu list prohibits it. The search ends after a fixed
@@ -755,10 +757,14 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   based on its parameters and neighborhood computation. It allows up to n non-improving
   steps per cycle, resetting on improvement, resulting in a worst-case of O(α n) iterations,
   where α is the number of improving moves. Each iteration updates valid moves via
-  region connectivity checks on boundary areas, costing O(n × n) time. A move attempt
-  takes O(n) to compute the pair-wise dissimilarity in the worst case. So, the overall
-  time complexity is O(α n × (n^2 + n)) = O(α n^3). In practice, most improving moves
-  occur early, so the actual number of iterations is often much less than 2n.
+  region connectivity checks on boundary areas, costing O(n^2). A move attempt takes
+  O(n) to compute the pair-wise dissimilarity in the worst case. So, the overall time
+  complexity is O(α n × (n^2 + n)) = O(α n^3). In practice, most improving moves occur
+  early, so the actual number of iterations is often much less than 2n.
+
+
+  Remark 4. The time complexity of the Local Search phase is O(α n^3), where α is
+  the number of valid moves that improve the heterogeneity over the existing optimum.
 
 
   </block>
@@ -769,15 +775,14 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   While previous discussion assumes all constraint types, queries often contain only
   a subset. For example, a query could have only one AVG constraint, or one MIN constraint
-  and one COUNT constraint. This section outlines how FaCT handles such arbitrary
-  subset. FaCT treats missing constraints as having an infinite range (−∞, ∞), impacting
-  both feasibility and construction. Without MIN/MAX, feasibility skips filtering,
-  and Step 1 selects all areas as seed areas. If the AVG constraint is missing, the
-  Region Growing step adds all areas in seeds to unassigned_avg and then initializes
-  single-area regions. Areas not in seeds are then added to unassigned_avg and merged
-  to neighbor regions iteratively. If SUM/COUNT constraints are absent, Step 3 of
-  the construction phase is omitted. Thus, FaCT’s modular design enables flexible
-  handling of any constraint subset.
+  and one COUNT constraint. FaCT treats missing constraints as having an infinite
+  range (−∞, ∞), impacting both feasibility and construction. Without MIN/MAX, feasibility
+  skips filtering, and Step 1 selects all areas as seed areas. If the AVG constraint
+  is missing, the Region Growing step adds all areas in seeds to unassigned_avg and
+  then initializes single-area regions. Areas not in seeds are then added to unassigned_avg
+  and merged to neighbor regions iteratively. If SUM/COUNT constraints are absent,
+  Step 3 of the construction phase is omitted. Thus, FaCT’s modular design enables
+  flexible handling of any constraint subset.
 
 
   </block>
@@ -786,18 +791,19 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   <block id="10">
 
-  This section analyzes FaCT’s time and space complexity. The time complexity of the
-  feasibility and the three steps of the construction phases are O(n), O(n^2), and
-  O(n^2), respectively. Thus, the total time complexity of both phases is O(n^2).
-  The time complexity of the Local Search phase is O(α n^3), where α is the number
-  of improving moves in local search. Therefore, FaCT’s total worst-case time complexity
-  is O(α n^3). For space, storing n areas with m attributes (from m constraints) takes
-  O(m × n) space. Seed selection adds O(n), and region growing holds temporary regions
-  of up to O(n) areas. Each initialized region maintains m attributes and its areas.
-  The regions are disjoint, so the space taken by the region list is bounded by O(m
-  × n). The Monotonic Adjustments step and the Local Search phase update the region
-  list in place and do not require additional space. Thus, the overall space complexity
-  is O(m × n).
+  This section analyzes FaCT’s time and space complexity. According to Remarks 1,
+  2, and 3 in Section V-B, the time complexity of the feasibility and the three steps
+  of the construction phases are O(n), O(n^2), and O(n^2), respectively. Thus, the
+  total time complexity of both phases is O(n^2). According to Remark 4 in Section
+  V-C, the time complexity of the Local Search phase is O(α n^3). Therefore, FaCT’s
+  total worst-case time complexity is O(α n^3), where α is the number of improving
+  moves in local search. For space, storing n areas with m attributes (from m constraints)
+  takes O(m × n) space. Seed selection adds O(n), and region growing holds temporary
+  regions of up to O(n) areas. Each initialized region maintains m attributes and
+  its areas. The regions are disjoint, so the space taken by the region list is bounded
+  by O(m × n). The Monotonic Adjustments step and the Local Search phase updates the
+  region list in place and does not require additional space. Thus, the overall space
+  complexity is O(m × n).
 
 
   </block>
@@ -817,33 +823,33 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   and handle them with different strategies:
 
 
-  **Local Incremental Update:** Local incremental updates address changes in small
-  region subsets. Typical examples include administrative boundary changes, such as
-  county mergers or splits. In terms of the IMS formulation, there can be a dramatic
-  change in the population of certain areas, which will render the current partitioning
-  obsolete. However, such changes are typically local and confined to neighboring
-  areas. Inspired by the Iterated Greedy algorithm, we adopt a deconstruction-reconstruction
-  strategy. To be more specific, the incremental update for local changes is divided
-  into three steps: (1) Identify affected regions and their one-hop neighbors to form
-  connected components. (2) Deconstruct these components while leaving other regions
-  unchanged. (3) Reconstruct and merge updated regions with the unchanged partition.
-  This step includes reassigning leftover areas and validating the region list. The
-  partition statistics are reported to inform users if drastic changes affect update
-  quality. As demonstrated in Section IX, the time complexity of the FaCT algorithm
-  stands at O(α n^3). Consequently, FaCT’s performance is markedly enhanced when the
-  problem size is reduced by the local incremental update.
+  Local Incremental Update: Local incremental updates address changes in small region
+  subsets. Typical examples include administrative boundary changes, such as county
+  mergers or splits. In terms of the IMS formulation, there can be a dramatic change
+  in the population of certain areas, which will render the current partitioning obsolete.
+  However, such changes are typically local and confined to neighboring areas. Inspired
+  by the Iterated Greedy algorithm, we adopt a deconstruction-reconstruction strategy.
+  To be more specific, the incremental update for local changes is divided into three
+  steps: (1) Identify affected regions and their one-hop neighbors to form connected
+  components. (2) Deconstruct these components while leaving other regions unchanged.
+  (3) Reconstruct and merge updated regions with the unchanged partition. This step
+  includes reassigning leftover areas and validating the region list. The partition
+  statistics are reported to inform users if drastic changes affect update quality.
+  As demonstrated in Section VI, the time complexity of the FaCT algorithm stands
+  at O(α n^3). Consequently, FaCT’s performance is markedly enhanced when the problem
+  size is reduced by the local incremental update.
 
 
-  **Global Incremental Update:** This relates to significant alterations to one or
-  multiple constraints. These include adjusting thresholds or switching constraint
-  attributes, impacting all regions. Because of FaCT’s modular design, intermediate
-  results can be reused when only part of the constraints or attribute values change.
-  For example, if constraints include MIN, AVG, and SUM, users may later adjust SUM’s
-  threshold or attribute (e.g., from total to employed population). Step 2 results
-  can be reused in such cases. Since AVG computations are often a bottleneck, incremental
-  updates can significantly reduce computation, especially in online settings. FaCT
-  supports global updates via three steps: (1) Identify changed constraints by hashing
-  their definitions and attribute lists. (2) The results that can be reused are determined
+  Global Incremental Update: This relates to significant alterations to one or multiple
+  constraints. These include adjusting thresholds or switching constraint attributes,
+  impacting all regions. Because of FaCT’s modular design, intermediate results can
+  be reused when only part of the constraints or attribute values change. For example,
+  if constraints include MIN, AVG, and SUM, users may later adjust SUM’s threshold
+  or attribute (e.g., from total to employed population). Step 2 results can be reused
+  in such cases. Since AVG computations are often a bottleneck, incremental updates
+  can significantly reduce computation, especially in online settings. FaCT supports
+  global updates via three steps: (1) Identify changed constraints by hashing their
+  definitions and attribute lists. (2) The results that can be reused are determined
   by the unchanged constraints. (3) The partition is incrementally updated by only
   recomputing the required constraints. The performance comparisons with full recomputation
   are provided in Section IX-G.
@@ -857,41 +863,48 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   As discussed in the previous section, local incremental updates use deconstruction
   and reconstruction inspired by the Iterated Greedy (IG) algorithm. IG offers strong
-  performance despite its simplicity and is widely used in many domains. FaCT-IG builds
-  upon the FaCT heuristic algorithm. FaCT-IG starts with an initial solution, which
-  we obtain through the construction phase. Then it goes through iterations of partial
-  deconstructions and reconstructions.
+  performance despite its simplicity and is widely used in many domains. We further
+  extend this idea and explore the potential of utilizing IG to improve the result
+  quality.
 
 
-  **Deconstruction:** The deconstruction phase deconstructs the feasible solution
-  P* according to the disturbance intensity D. D ∈ [0, 1] determines to what extent
-  the algorithm partially deconstructs P*. In the IMS problem, we choose ⌈D * |P*|⌉
-  regions for deconstruction. We iteratively select areas at random and include their
-  regions and one-hop neighbors in a candidate set, reinforcing the greedy criterion.
-  This procedure repeats until the candidate set contains at least ⌈D * |P*|⌉ regions.
+  Algorithm 2: Iterated Greedy Framework.
+
+
+  FaCT-IG starts with an initial solution, which we obtain through the construction
+  phase. Then it goes through iterations of partial deconstructions and reconstructions.
+
+
+  Deconstruction: The deconstruction phase deconstructs the feasible solution P* according
+  to the disturbance intensity D. D ∈ [0, 1] determines to what extent the algorithm
+  partially deconstructs the P*. In the IMS problem, we choose ⌈D * |P*|⌉ regions
+  for deconstruction. We iteratively select areas at random and include their regions
+  and one-hop neighbors in a candidate set, reinforcing the greedy criterion. This
+  procedure repeats until the candidate set contains at least ⌈D * |P*|⌉ regions.
   Larger regions are more likely to be selected, preserving randomness while favoring
   size. In return, a larger number of areas provide higher flexibility in reconstructing
   more regions. Regions in the candidate set and their one-hop neighbors are then
-  deconstructed with their areas returned to set A_dec, and the unchanged regions
-  are restored in P_dec.
+  deconstructed with their areas returned to set Adec, and the unchanged regions are
+  restored in Pdec.
 
 
-  **Reconstruction and acceptance criteria:** Like the local incremental update, the
-  reconstruction phase applies the greedy construction to A_dec. The resulting regions
-  are merged with P_dec to form P_rec. To align with the MP-regions strategy, the
-  new result is accepted only if it improves over the current solution. If |P_rec|
-  > |P*|, P_rec becomes the new initial solution for the following iterations. There
-  are multiple ways to define the termination condition and the acceptance criteria.
-  For example, we can adapt the simulated annealing algorithm to allow the algorithm
-  to tolerate worse results at a certain probability and terminate when the iteration
-  converges.
+  Reconstruction and acceptance criteria: Like the local incremental update, the reconstruction
+  phase applies the greedy construction to Adec. The resulting regions are merged
+  with Pdec to form Prec. To align with the MP-regions strategy, the new result is
+  accepted only if it improves over the current solution. If |Prec| > |P*|, Prec becomes
+  the new initial solution for the following iterations. There are multiple ways to
+  define the termination condition and the acceptance criteria. For example, we can
+  adapt the simulated annealing algorithm to allow the algorithm to tolerate worse
+  results at a certain probability and terminate when the iteration converges.
 
 
   FaCT-IG is a metaheuristic search algorithm, and we build it upon the FaCT heuristic
   algorithm. As a result, its runtime is not strictly comparable with the FaCT algorithm
   and the MP-regions problem due to the difference in framework and the additional
   parameter tuning procedures. To be fair, we stop FaCT-IG if no p improvement occurs
-  for 20 iterations or if it reaches the same iteration limit as MP-regions.
+  for 20 iterations or if it reaches the same iteration limit as MP-regions. Experimental
+  evaluations of the efficiency and the effectiveness of the FaCT-IG algorithm are
+  given in Section IX-H.
 
 
   </block>
@@ -923,15 +936,20 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   of the USA, outlined as follows: (1) the Los Angeles City (denoted as 1k) which
   includes 1012 areas, (2) the Los Angeles County (denoted as 2k) which includes 2344
   areas, (3) Southern California (denoted as 4k) as identified by the Southern California
-  Association of Governments (SCAG) that includes 3947 areas, (4) the State of California
+  Association of Governments that includes 3947 areas, (4) the State of California
   (denoted as 8k) which includes 8049 areas, and (5) Five multi-state datasets with
   ∼ 10k to ∼ 50k areas. Our default dataset is 2k. Typical evaluation datasets in
-  the existing literature have between 300-3000 areas [10], [56], so our default dataset
-  size is comparable to the largest datasets in the literature. All datasets are joined
+  the existing literature have between 300-3000 areas, so our default dataset size
+  is comparable to the largest datasets in the literature. All datasets are joined
   with real attributes from the 2010 US census data about facts in each census tract.
-  All datasets share the same three spatial extensive attributes, and the dissimilarity
-  attribute is HOUSEHOLDS. POP16UP: population age ≥16; EMPLOYED: employed population;
-  TOTALPOP: total population. HOUSEHOLDS: household count (used for heterogeneity).
+  All datasets share the same three spatial extensive attributes, one per constraint
+  type, and the dissimilarity attribute is HOUSEHOLDS. POP16UP: population age ≥16;
+  EMPLOYED: employed population; TOTALPOP: total population. HOUSEHOLDS: household
+  count (used for heterogeneity). The evaluation attributes are selected based on
+  factors that influence the population growth rate [13], which makes the partitions
+  obtained through the experiments useful for studying population growth. The shapefiles
+  of the census tracts and the attribute tables are provided by the US Census Bureau
+  and SCAG and joined using the QGIS software.
 
 
   Experiments run on Java 14 with Intel Xeon W-2123 (3.60 GHz) and 20 GB RAM on Windows
@@ -939,9 +957,7 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   heterogeneity improvement, defined as the relative reduction in heterogeneity after
   local search. Our parameters include threshold range and dataset size. Unless mentioned
   otherwise, the default settings are: dataset = 2k, random area selection, AVG merge
-  limit = 3, Tabu list length = 10, and Tabu stopping = dataset size. The default
-  threshold ranges and attributes are chosen per constraint type. Due to space and
-  similar trends, we report one aggregate per constraint type.
+  limit = 3, Tabu list length = 10, and Tabu stopping = dataset size.
 
 
   </block>
@@ -958,17 +974,16 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   algorithm [10]. After filtering and seeding, it starts from seed areas and greedily
   adds adjacent areas until all constraints are satisfied.
 
-
-  - RandomPartition: This method randomly selects areas for filtering and assigns
+  - RandomPartition: This method randomly selects areas after filtering and assigns
   the rest in a constraint-aware manner. If the result is infeasible, it retries.
 
 
   To better distinguish our method from the baseline, we retain the default constraint
   settings and tighten the AVG constraint from [1.5k, 3.5k] to [2k, 4k], informed
   by the attribute distribution of the 2k dataset. FaCT outperforms both baselines,
-  producing 44 valid regions with only 161 unassigned areas in 5.366ms. In contrast,
-  GreedyPartition and RandomPartition yield only 2 and 1 regions, with thousands of
-  unassigned areas. GreedyPartition often stalls with small or fragmented regions,
+  producing 44 valid regions with only 161 unassigned areas in a small runtime. In
+  contrast, GreedyPartition and RandomPartition yield only 2 and 1 regions, with thousands
+  of unassigned areas. GreedyPartition often stalls with small or fragmented regions,
   while RandomPartition is fast but typically yields poor-quality results. FaCT’s
   constraint-aware design ensures both high quality and efficiency in generating spatially
   coherent partitions.
@@ -986,16 +1001,19 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   1) Merge Limit: This parameter constrains the number of merges in the AVG step.
   Larger merge limits reduce p and increase construction time. These two measures
-  trade off with the number of unassigned areas. For typical settings, merge limits
-  2-3 yield minimal unassigned areas with good p and runtime, while larger limits
-  sharply increase construction cost.
+  trade off with the number of unassigned areas. For tighter AVG thresholds, p improves
+  until a moderate merge limit, then declines. For wider ranges, unassigned areas
+  drop until a small merge limit, then rise. Tabu runtime often grows with the merge
+  limit. Thus, merge limits 2-3 yield minimal unassigned areas with good p and runtime,
+  while larger limits sharply increase construction cost.
 
 
   2) Tabu Tenure: We evaluate how Tabu Tenure affects H Score and search time under
   two constraint settings. Tabu Tenure defines how long a move is banned to avoid
-  cycling. A small tenure value is sufficient to enhance solution quality without
-  incurring excessive search time, as the solution space is limited due to the constraints
-  imposed.
+  cycling. Increasing tenure from 1 to 2 often boosts H Score and slightly reduces
+  search time. Further increases yield diminishing returns. These results suggest
+  that a small tenure value is sufficient to enhance solution quality without incurring
+  excessive search time, as the solution space is limited due to the constraints imposed.
 
 
   </block>
@@ -1006,41 +1024,54 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   This section studies the impact of different sets of constraints on regionalization
   performance. Sets of constraints vary in terms of: (1) set size, i.e., number of
-  constraints, (2) types of constraints, and (3) threshold ranges. We evaluate MIN,
-  AVG, VAR, SUM constraints and their combinations.
+  constraints, (2) types of constraints, and (3) threshold ranges. We evaluate sets
+  that include MIN, AVG, SUM constraints, and combinations thereof. MIN and MAX constraints
+  perform two roles: filtering infeasible areas and selecting seed areas, and both
+  depend on the range threshold [l, u]. Hence, we explore three cases: (a) ranges
+  with l = −∞, which shows the impact of u values on seed area selection, (b) ranges
+  with u = ∞, which shows the impact of l values on infeasible area filtration, and
+  (c) ranges with bounded values of l and u that show their simultaneous impact.
 
 
-  1) MIN Constraint: MIN and MAX constraints perform two roles: filtering infeasible
-  areas and selecting seed areas, and both depend on the range threshold [l, u]. Using
-  only the MIN constraint yields the highest p, bounded by the number of seed areas.
-  Larger u yields more seeds, fewer iterations, and lower runtime. Adding constraints
-  leads to fewer regions, as each may include multiple seed areas. The heterogeneity
-  score improvement increases when p increases.
+  MIN Constraint: Using only the MIN constraint yields the highest p, bounded by the
+  number of seed areas. Larger u yields more seeds, fewer iterations, and lower runtime.
+  Adding constraints leads to fewer regions, as each may include multiple seed areas.
+  With more seed areas, the initialized region becomes smaller, and the SUM constraint
+  takes more operations to satisfy. This causes the runtime of MS and MAS to increase
+  by a small amount, although the time for MIN and AVG decreases. Increasing u leads
+  to an increase in heterogeneity improvement due to higher p.
 
 
-  2) AVG Constraint: The average aggregate function is non-monotonic. Satisfying the
+  AVG Constraint: The average aggregate function is non-monotonic. Satisfying the
   constraint can be computationally heavy with certain ranges. We explore two cases:
-  ranges with fixed length and changing midpoints, and ranges with a fixed midpoint
-  but varying lengths. AVG sensitivity to range selection is significant. Very narrow
-  ranges leave many areas unassigned and limit region formation. Overly wide ranges
-  make most areas valid, reducing constraint effectiveness and forming large, less
-  meaningful regions. Intermediate range settings, such as those centered around the
-  mean with a span approximating one standard deviation, achieve a more favorable
+  (a) ranges with fixed length and changing midpoints, and (b) ranges with a fixed
+  midpoint but varying lengths. For midpoints near the attribute distribution density,
+  unassigned areas drop and runtime is moderate. Tight ranges near the mean can be
+  the hardest cases and dominate total runtime. Very narrow ranges leave many areas
+  unassigned and limit region formation. Overly wide ranges make most areas valid,
+  reducing constraint effectiveness and forming large, less meaningful regions. The
+  results suggest that intermediate range settings, such as those centered around
+  the mean with a span approximating one standard deviation, achieve a more favorable
   trade-off.
 
 
-  3) VAR Constraint: The variance constraint regulates the statistical dispersion
-  of regions. By adjusting the threshold values, users can guide how clustered or
-  dispersed attribute values become. We study ranges with l = −∞, u = ∞, and bounded
-  l and u. Higher u allows more scattered regions, making construction easier and
-  increasing p. Tight lower bounds increase runtime but can improve p at the cost
-  of increased computation.
+  VAR Constraint: The variance constraint is a non-monotonic constraint that regulates
+  the statistical dispersion of regions. By adjusting the threshold values, users
+  can guide how clustered or dispersed attribute values become. As u increases (i.e.,
+  allowing more dispersion), runtime drops and p increases for all constraint combinations.
+  Stricter lower bounds on variance activate more complex heuristics, increasing runtime
+  but potentially improving p. The ideal merge/attempt limit depends on the dataset
+  and attribute; lowering it can speed up runtime at the cost of quality.
 
 
-  4) SUM Constraint: SUM constraints are the only type used in existing MP-regions
-  solutions. FaCT matches MP-regions in p value under identical constraints and often
-  runs faster. For bounded threshold ranges, both p values and construction runtime
-  decrease when the lower bound l increases. Heterogeneity improves with range length.
+  SUM Constraint: SUM constraints are the only type of constraints used in existing
+  MP-regions solutions. With open upper bound [l, ∞), higher l lowers p, while runtime
+  remains stable for both methods. FaCT matches MP-regions in p value under identical
+  constraints but often runs in under half the time of MP-regions for certain thresholds.
+  FaCT also handles generic types of constraints which the competitor does not support.
+  For bounded threshold ranges, both p values and construction runtime decrease when
+  the lower bound l increases. Heterogeneity improves with range length as larger
+  l creates more constrained, smaller regions.
 
 
   </block>
@@ -1052,8 +1083,8 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   We tested four spatially extensive attributes in an AVG constraint, keeping other
   settings unchanged. Attribute choice greatly affects region count, heterogeneity,
   and unassigned areas. For example, POP16UP gave many low-heterogeneity regions,
-  but HOUSEHOLDS yielded only few high-heterogeneity ones, which highlights the role
-  of attribute distribution. Thus, choosing the right attribute is key to meaningful
+  but HOUSEHOLDS yielded only a few high-heterogeneity ones, which highlights the
+  role of attribute distribution. Thus, choosing the right attribute is key to meaningful
   and reliable results.
 
 
@@ -1063,12 +1094,17 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   <block id="19">
 
-  We evaluated FaCT’s scalability on datasets from 1k to 50k areas. When AVG is not
-  a bottleneck, runtime grows linearly for MIN and quadratically for others. FaCT
-  provides acceptable runtime for regionalization applications across all datasets.
-  When AVG is a challenging constraint (e.g., centered at dataset mean with tight
-  range), construction time increases significantly, but the algorithm still provides
-  solutions with comparable quality.
+  This section evaluates FaCT’s scalability. We tested various constraint combinations
+  on nine datasets using default thresholds. The dataset size of the 50k dataset is
+  far larger than typical datasets used in existing literature. As the AVG constraint
+  is identified as a clear performance bottleneck when the range is challenging, we
+  present results with AVG at its default range to assess scalability under normal
+  settings, then examine AVG with a harder range to study scalability in more extreme
+  cases. In normal settings, runtime grows roughly linearly for MIN and quadratically
+  for other constraints when AVG isn’t a bottleneck. For all datasets, FaCT provides
+  acceptable runtime for regionalization applications. For hard AVG settings, construction
+  time increases significantly, but FaCT still provides solutions with comparable
+  quality.
 
 
   </block>
@@ -1081,10 +1117,23 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
   of queries.
 
 
-  Local incremental updates are efficient: updating 10% of regions takes a small fraction
-  of full recomputation time and preserves result quality. Global incremental updates
-  reuse unaffected results to avoid recomputing bottleneck constraints; when successful,
-  construction time drops substantially while preserving p and unassigned area statistics.
+  Local incremental updates show strong performance. For the slowest case, updating
+  10% of regions takes a fraction of a second, and 50% takes a small number of seconds
+  over many iterations—much faster than full recomputation. For MP-regions, updating
+  10% to 50% takes only a small percentage of the full time while preserving result
+  quality. This update method reconstructs only nearby areas, reducing input size
+  and runtime. Across all datasets, local updates take under a second and maintain
+  high p values and low unassigned areas. Thus, FaCT efficiently handles small local
+  changes using incremental updates.
+
+
+  Global incremental updates focus on scenarios with changed constraints. Because
+  only construction changes in global updates, tabu search times are omitted. Validating
+  constraints and reloading previous results is efficient, taking less than a second
+  for typical datasets. When constraint changes require recomputation, runtime can
+  be similar to full computation. However, when changes allow avoiding recomputing
+  heavy constraints (e.g., AVG), runtime is significantly shorter. Result quality
+  (p value and unassigned areas) remains unchanged when reuse is possible.
 
 
   </block>
@@ -1093,13 +1142,19 @@ segmented_markdown: '# IMS: Incremental Max-P Regionalization With Statistical C
 
   <block id="21">
 
-  FaCT-IG applies Iterated Greedy to refine FaCT solutions. There is a clear link
-  between disturbance intensity, p value, and runtime. The highest p value occurs
-  when disturbance is 4% to 6%. Higher disturbance increases runtime and can decrease
-  p. With optimal disturbance, FaCT-IG achieves higher p values and is often more
-  efficient for monotonic constraints like SUM. For combinations involving AVG, FaCT-IG
-  can increase p but may also increase unassigned areas due to enclave assignment
-  interactions.
+  This section evaluates FaCT-IG performance in improving IMS results compared to
+  standard FaCT. We identify the best disturbance intensity for effective yet efficient
+  IG updates. Experiments show a clear link between disturbance intensity, p value,
+  and runtime. The highest p value often occurs when disturbance is 4% to 6%. Higher
+  disturbance increases runtime due to more deconstructed regions and larger input
+  sizes. Above 10%, p value drops while runtime continues to rise for all constraints.
+  With optimal disturbance set, FaCT-IG achieves higher p values and is often more
+  efficient. For the SUM-only case (MP-regions), FaCT-IG produces higher p than MP-regions
+  after many runs and is faster since it refines one initial solution instead of repeating
+  full constructions. For combinations involving AVG, FaCT-IG can increase p but may
+  also increase the number of unassigned areas due to difficulties in reassigning
+  enclaves after partial deconstruction. For monotonic constraints like SUM, FaCT-IG
+  consistently improves results without such drawbacks.
 
 
   </block>

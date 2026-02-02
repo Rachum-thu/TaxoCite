@@ -1,10 +1,10 @@
 # The Network-Max-P-Regions model
 
-## ABSTRACT
+## Abstract
 This paper introduces a new p-regions model called the Network-Max-P-Regions (NMPR) model. The NMPR is a regionalization model that aims to aggregate n areas into the maximum number of regions (max-p) that satisfy a threshold constraint and to minimize the heterogeneity while taking into account the influence of a street network. The exact formulation of the NMPR is presented, and a heuristic solution is proposed to effectively compute the near-optimized partitions in several simulation datasets and a case study in Wuhan, China.
 
 ## 1. Introduction
-With the introduction of the p-regions problem (Duque et al . 2011b), the use of mixed integer programming (MIP) for regionalization has increased in the max-p-regions model (Duque et al. 2012), the p-functional regions model (Kim et al. 2013), and the p-compact regions model (Li et al . 2014b). However, most models ignore transportation networks (Borgatti et al . 2009). In addition, streets constrain human activities (Wheeler 1973, Whitehand and Larkham 1992, Jiang and Claramunt 2004).
+With the introduction of the p-regions problem (Duque et al. 2011b), the use of mixed integer programming (MIP) for regionalization has increased in the max-p-regions model (Duque et al. 2012), the p-functional regions model (Kim et al. 2013), and the p-compact regions model (Li et al. 2014b). However, most models ignore transportation networks (Borgatti et al. 2009). In addition, streets constrain human activities (Wheeler 1973, Whitehand and Larkham 1992, Jiang and Claramunt 2004).
 
 This paper extends the max-p-regions model (Duque et al. 2012) to the Network-Max-P-Regions (NMPR) model. This is a regionalization model that aims to aggregate n areas into a maximum number of regions (max-p) such that (1) the resulting regions minimize a measure of intraregional heterogeneity, in terms of a set of areal attributes (e.g., slope, types of soil, types of land use, price); (2) the areas along streets can be grouped into ‘corridor regions,’ and other areas are grouped into ‘max-p regions;’ and (3) each region must satisfy the condition that the value of a spatially extensive areal attribute (e.g., population, households, size) exceeds a predefined threshold value.
 
@@ -17,65 +17,71 @@ Well-defined corridor regions are important in spatial planning. With proper lan
 The paper is structured as follows: Section 2 provides a literature review. The problem formation is established in Section 3. Section 4 explains the heuristic framework used to solve the problem. Section 5 illustrates the proposed approach using several simulated datasets and a case study in Wuhan City, China. The last section discusses the strengths and limitations of the proposed method and suggests future work.
 
 ## 2. Literature review
-Regionalization addresses the aggregation of spatial units (hereafter areas) into contiguous regions. It has been widely studied since the early 1960s, when electoral districting became a matter of quantitative modeling (Vickrey 1961, Nagel 1965, Bunge 1966, Aboolian et al . 2009). A few years later, the concept of spatial contiguity was applied to school districting (Clarke and Surkis 1968), sales territory alignment (Hess and Samuels 1971), health care districting (Thomas 1979), zone design (Openshaw 1977), and police patrol areas (Curtin et al . 2010), among others (see Duque et al . 2007 for a literature review of regionalization). Since the appearance of the p-regions problem as an MIP formulation of the regionalization problem (Duque et al. 2011b), research in this area has focused on proposing new exact formulations (Duque et al . 2012, Kim et al . 2013, Li et al . 2014b) and exploring new possibilities for solving large instances of this NP-hard problem using parallel computing (Laura et al . 2015). These regionalization algorithms are implemented in spatial analytical libraries, such as PySAL (https://pysal.readthedocs.io), and are integrated into GIS platforms (such as ArcGIS and QGIS) to assist researchers and practitioners in solving real-world spatial problems.
+Regionalization addresses the aggregation of spatial units (hereafter areas) into contiguous regions. It has been widely studied since the early 1960s, when electoral districting became a matter of quantitative modeling (Vickrey 1961, Nagel 1965, Bunge 1966, Aboolian et al. 2009). A few years later, the concept of spatial contiguity was applied to school districting (Clarke and Surkis 1968), sales territory alignment (Hess and Samuels 1971), health care districting (Thomas 1979), zone design (Openshaw 1977), and police patrol areas (Curtin et al. 2010), among others (see Duque et al. 2007 for a literature review of regionalization). Since the appearance of the p-regions problem as an MIP formulation of the regionalization problem (Duque et al. 2011b), research in this area has focused on proposing new exact formulations (Duque et al. 2012, Kim et al. 2013, Li et al. 2014b) and exploring new possibilities for solving large instances of this NP-hard problem using parallel computing (Laura et al. 2015). These regionalization algorithms are implemented in spatial analytical libraries, such as PySAL (https://pysal.readthedocs.io), and are integrated into GIS platforms (such as ArcGIS and QGIS) to assist researchers and practitioners in solving real-world spatial problems.
 
 The max-p-regions model (Duque et al. 2012) is the first MIP model to endogenize the number of regions. This is achieved by maximizing the number of homogeneous regions such that the value of a spatially extensive regional attribute (e.g., area, population, presence of a given type of facility) is above a predefined threshold value. Because intraregional homogeneity is an important characteristic in regionalization, maximizing the number of regions is a good condition to keep heterogeneity low (minimum aggregation bias).
 
-The use of road networks in regionalization serves two purposes: first, it defines neighboring relationships between areas (Zoltners and Sinha 1983). In this case, two areas are neighbors if there is a road that connects them. This representation allows the inclusion of natural obstacles, such as mountains, lakes, and rivers. Second, it quantifies the attractiveness between areas by measuring flows of people, vehicles or products. This method is useful in designing functional or compact regions (Kim et al . 2013).
+The use of road networks in regionalization serve two purposes: first, it defines neighboring relationships between areas (Zoltners and Sinha 1983). In this case, two areas are neighbors if there is a road that connects them. This representation allows the inclusion of natural obstacles, such as mountains, lakes, and rivers. Second, it quantifies the attractiveness between areas by measuring flows of people, vehicles or products. This method is useful in designing functional or compact regions (Kim et al. 2013).
 
 Our NMPR model proposes a novel way to incorporate road networks into regionalization problems. In our model, the road network exerts an influence on the shape of the regions by considering the position of the areas relative to the road network. Thus, areas closer to roads tend to group along the roads, forming what we call ‘corridor regions.’ A challenging condition in the design of this model is that corridor regions are a possibility rather than a requirement. Corridor regions occur when they do not degrade the intra-regional homogeneity. This implies that corridor regions will not appear everywhere along the road network but only where they are needed.
 
-The NMPR is an NP-hard problem, implying that the computational complexity increases rapidly with the number of areas. This characteristic precludes the use of exact optimization techniques in large instances of the problem and requires the use of heuristic methods. Because of its capacity to escape from local optimal solutions, the Tabu search algorithm (Bozkaya et al . 2003) has proved to be the best option when addressing regionalization problems. It has been applied in political districting by Bozkaya et al . (2003) and Ricca and Simeone (2008), in zone design by Openshaw and Rao (1995), in home care districting by Blais et al . (2003), and more recently for the max-p-regions problem (Duque et al . 2012) and the p-compact-regions (Li et al . 2014a).
+The NMPR is an NP-hard problem, implying that the computational complexity increases rapidly with the number of areas. This characteristic precludes the use of exact optimization techniques in large instances of the problem and requires the use of heuristic methods. Because of its capacity to escape from local optimal solutions, the Tabu search algorithm (Bozkaya et al. 2003) has proved to be the best option when addressing regionalization problems. It has been applied in political districting by Bozkaya et al. (2003) and Ricca and Simeone (2008), in zone design by Openshaw and Rao (1995), in home care districting by Blais et al. (2003), and more recently for the max-p-regions problem (Duque et al. 2012) and the p-compact-regions (Li et al. 2014a).
 
 ## 3. Problem formulation
-The NMPR model is formulated as a MIP model. It builds upon the max-p-regions model devised by Duque et al . (2012), which implies that (1) the number of final regions is endogenously defined, (2) the intraregional heterogeneity is minimized, and (3) each region is spatially contiguous.
+The NMPR model is formulated as a MIP model. It builds upon the max-p-regions model devised by Duque et al. (2012), which implies that (1) the number of final regions is endogenously defined, (2) the intraregional heterogeneity is minimized, and (3) each region is spatially contiguous.
 
 Parameters:
-I = set of areas; I = {1, ... , n};
+I = set of areas; I = 1, ..., n;
 i, j = indices used to represent areas; with i, j in I;
-k = index of potential regions; k = 1, ... , n;
-c = index of order for areas; c = 0, ... , q; with q = n/(C0 1());
-wij = 1, if areas i and j share a border; with i, j in I and i ≠ j; 0, otherwise
+k = index of potential regions; k = 1, ..., n;
+c = index of order for areas; c = 0, ..., q; with q = n/(C0 1) ;
+wij = 1, if areas i and j share a border; with i, j in I and i ≠ j;
+0, otherwise
 Ni = { j | wij = 1 }; the set of areas that are adjacent to area i;
 dij = dissimilarity of the relationships between areas i and j; with i, j in I and i < j; it is left to the practitioner to decide which dissimilarity function to use. In this paper, we use the squared Euclidean distance.
-h = 1 + log P_i P_j|j≠i dij ; which is the number of digits of the floor function of P_i P_j|j≠i dij; with i, j in I;
+h = 1 + log(sum_i sum_{j≠i} dij); which is the number of digits of the floor function of sum_i sum_{j≠i} dij; with i, j in I;
 li = spatially extensive attribute value of area i; with i in I;
 threshold = minimum value for attribute l at a regional scale;
-E, e = set and index of edges in an undirected network; E = {1, ... , m};
-vi = 1, if area i intersects an edge e in E; 0, otherwise
-Oi = { e in E } and it is the nearest edge to area i in E; for each area i, there is only one nearest edge e;
-si,Oi = spatial distance between area i and its closest edge e; Oi;
+E, e = set and index of edges in an undirected network; E = 1, ..., m;
+vi = 1, if area i intersects an edge e in E;
+0, otherwise
+Oi = { e in E } and it is the nearest edge to area i in I; for each area i, there is only one nearest edge e;
+si,Oi = spatial distance between area i in I and its closest edge Oi;
 
 Decision variables:
-tij = 1, if areas i and j belong to the same region k; with i < j; 0, otherwise
-xkc_i = 1, if area i is assigned to region k in order c; 0, otherwise
-ck = 1, if region k is a corridor region; 0, otherwise
-bk_ij = 1, if area i and j belong to the same corridor region k; with i < j; 0, otherwise
+tij = 1, if areas i and j belong to the same region k; with i < j;
+0, otherwise
+xkc_i = 1, if area i is assigned to region k in order c;
+0, otherwise
+ck = 1, if region k is a corridor region;
+0, otherwise
+bk_ij = 1, if areas i and j belong to the same corridor region k; with i < j;
+0, otherwise
 
 Minimize:
-z = - sum_{k=1}^n sum_{i=1}^n xk0_i * 10^h + sum_i sum_{j|j≠i} dij tij - sum_i sum_{j|j≠i} dij f(si,Oi, sj,Oj) sum_{k=0}^n bk_ij
+z = - sum_{k=1}^n sum_{i=1}^n xk0_i * 10^h + sum_i sum_{j≠i} dij tij - sum_i sum_{j≠i} dij f(s_i, O_i; s_j, O_j) sum_{k=0}^n bk_ij
 
 Subject to:
-sum_{i=1}^n xk0_i <= 1, for k = 1, ... , n; (2)
-sum_{k=1}^n sum_{c=0}^q xkc_i = 1, for i = 1, ... , n; (3)
-xkc_i <= sum_{j in Ni} xk,c-1_j, for i = 1, ... , n; k = 1, ... , n; c = 1, ... , q; (4)
-sum_{i=1}^n sum_{c=0}^q xkc_i li >= threshold * sum_{i=1}^n xk0_i, for k = 1, ... , n; (5)
-tij >= sum_{c=0}^q xkc_i + sum_{c=0}^q xkc_j - 1, for i, j = 1, ... , n, i<j; k = 1, ... , n; (6)
-xkc_i in {0,1}; for i = 1, ... , n; k = 1, ... , n; c = 0, ... , q; (7)
-tij in {0,1}; for i, j = 1, ... , n, i<j; (8)
-sum_{i=1}^n sum_{c=0}^q xkc_i vi >= ck, for k = 1, ... , n; (9)
-3 bk_ij <= sum_{c=0}^q xkc_i + sum_{c=0}^q xkc_j + ck, for i, j = 1, ... , n, i<j; k = 1, ... , n; (10)
-bk_ij >= sum_{c=0}^q xkc_i + sum_{c=0}^q xkc_j + ck - 2, for i, j = 1, ... , n, i<j; k = 1, ... , n; (11)
-ck in {0,1}; for k = 1, ... , n; (12)
-bk_ij in {0,1}; for i, j = 1, ... , n, i<j; k = 1, ... , n. (13)
+sum_{i=1}^n xk0_i ≤ 1,  for all k = 1, ..., n;
+sum_{k=1}^n sum_{c=0}^q xkc_i = 1,  for all i = 1, ..., n;
+xkc_i ≤ sum_{j in Ni} xk(c-1)_j, for all i = 1, ..., n; k = 1, ..., n; c = 1, ..., q;
+sum_{i=1}^n sum_{c=0}^q xkc_i li ≥ threshold * sum_{i=1}^n xk0_i, for all k = 1, ..., n;
+tij ≥ sum_{c=0}^q xkc_i + sum_{c=0}^q xkc_j - 1, for all i, j = 1, ..., n with i<j; k = 1, ..., n;
+xkc_i in {0,1};
+tij in {0,1}, for all i, j with i<j;
+sum_{i=1}^n sum_{c=0}^q xkc_i vi ≥ ck, for all k = 1, ..., n;
+3 bk_ij ≤ sum_{c=0}^q xkc_i + sum_{c=0}^q xkc_j + ck, for all i, j with i<j; k = 1, ..., n;
+bk_ij ≥ sum_{c=0}^q xkc_i + sum_{c=0}^q xkc_j + ck - 2, for all i, j with i<j; k = 1, ..., n;
+ck in {0,1}, for all k = 1, ..., n;
+bk_ij in {0,1}, for all i, j with i<j; k = 1, ..., n.
 
-Objective function has three terms combined in such a way that term I dominates terms II and III. This is achieved by multiplying term I by a scaling factor 10^h, with h = 1 + log P_i P_j|j≠i dij. When terms I, II, and III are added as a single value (-I + II - III), this scaling factor moves the term I to the left so that it is not combined with terms II and III. This strategy was first applied by Duque et al . (2012) in the max-p-regions model.
+Objective function has three terms combined in such a way that term I dominates terms II and III. This is achieved by multiplying term I by a scaling factor 10^h, with h = 1 + log(sum_i sum_{j≠i} dij). When terms I, II, and III are added as a single value (-I+II-III), this scaling factor moves term I to the left so that it is not combined with terms II and III. This strategy was first applied by Duque et al. (2012) in the max-p-regions model.
 
 Term I represents the number of regions calculated as the sum of root areas (i.e., the area assigned at order equal to zero, xk0_i). To maximize the number of regions, term I is multiplied by −1 so that the greater the number of regions, the lower the objective function. Term II adds dissimilarity between areas assigned to the same region (i.e., tij = 1). For this, practitioners can use either distance or dissimilarity functions in a univariate or multivariate context. Finally, term III represents an incentive to create corridor regions by subtracting a portion of the intraregional heterogeneity of the corridor region from term II. The portion to be subtracted is determined by a factor f with the following structure:
 
-f(si,Oi, sj,Oj) = MaxDisc - MaxDisc/MaxDist * (si,Oi + sj,Oj)
+f(s_i, O_i; s_j, O_j) = MaxDisc - MaxDisc/MaxDist * (s_i,O_i + s_j,O_j),
 
-where MaxDisc is the maximum discount to be applied to dij. The maximum discount occurs when both areas i and j are very close to a road (i.e., si,Oi + sj,Oj → 0). This MaxDisc decreases as the distance between i or j and the road increases (i.e., si,Oi + sj,Oj → ∞). MaxDist indicates the threshold distance beyond which the discount becomes negative, which discourages the appearance of corridor regions far from roads.
+where MaxDisc is the maximum discount to be applied to dij. The maximum discount occurs when both areas i and j are very close to a road (i.e., s_i,O_i + s_j,O_j → 0). This MaxDisc decreases as the distance between i or j and the road increases (i.e., s_i,O_i + s_j,O_j → ∞). MaxDist indicates the threshold distance beyond which the discount becomes negative, which discourages the appearance of corridor regions far from roads.
 
 Note that areas closer to the roads have a greater incentive to become corridor areas because the discount is higher. The discount function can have other functional forms depending on the research question.
 
@@ -83,56 +89,126 @@ Solutions with a higher number of regions are always preferred, and for a given 
 
 The NMPR adds the following constraints to the original max-p-regions model. Constraint (9) allows a region k to become a corridor region if at least one of its areas intersects an edge of the network. A link bk_ij indicates that both areas i and j belong to a corridor region k. However, because of the form of the discount function, the activation of link bk_ij can imply both a decrease in the objective function (when the areas are close to a road, i.e., a positive discount function), or an increase in the objective function (when the areas are far from a road, i.e., a negative discount function). Because all the bk_ij links between areas belonging to a corridor region are activated, a region is declared a corridor region when the total effects of the discount function lead to a positive value of the third term in the objective function. Constraints (10) and (11) activate all the bk_ij links between areas belonging to the region, but they act in different situations: constraint (10) controls the appearance of bk_ij links with a positive discount value by requiring that bk_ij links are only accepted when both areas belong to a corridor region. In contrast, constraint (11) forces the opening of those bk_ij links with a negative discount value; it mandates that these bk_ij links be opened when areas i and j are assigned to the same corridor region. Finally, constraints (12) and (13) impose variable integrity.
 
-To illustrate how the NMPR model works, examples of the max-p-regions and the NMPR models are provided in the original text. The presence of the road in the NMPR model has a direct effect on the shape of the regions. The NMPR model places a corridor region along segments of the road network in areas. The other regions are max-p-regions.
+To illustrate how the NMPR model works, examples of the max-p-regions and the NMPR models are provided in the text. Note the differences in the configuration of the regions; the presence of the road in the NMPR model has a direct effect on the shape of the regions. The NMPR model places a corridor region along two segments of the road network in areas 0, 4, 5, and 6. The other three regions are max-p-regions.
 
-Computational experiments with GUROBI on instances with different sizes and thresholds illustrate the complexity of this NP-hard problem and the convenience of using heuristic approaches to solve large instances.
+Computational experiments with the exact formulation show the complexity of this NP-hard problem and the convenience of using heuristic approaches to solve large instances.
 
 ## 4. Heuristic solution
-In this section, we present a heuristic solution for solving the NMPR model. We followed a classical heuristic approach for solving regionalization problems, extending the algorithm to solve the Max-p problem (Duque et al . 2012). First, we generated a large amount of initial feasible solutions, and second, we performed a local search by modifying a subset of initial solutions with the goal of improving the objective function.
+In this section, we present a heuristic solution for solving the NMPR model. We followed a classical heuristic approach for solving regionalization problems, extending the algorithm to solve the Max-p problem (Duque et al. 2012). First, we generated a large amount of initial feasible solutions, and second, we performed a local search by modifying a subset of initial solutions with the goal of improving the objective function.
 
 ### 4.1. Initial feasible solution
-This stage generates a large number of initial feasible solutions at random with different numbers of corridor regions and max-p regions. The procedure consists of four steps: area filtering, adaptive region formation, partition ranking and filtering, and enclaving.
+This stage generates a large number of initial feasible solutions at random with different numbers of corridor regions and max-p regions. Pseudocode 1 presents the steps for generating initial feasible solutions. It consists of four steps: area filtering, adaptive region formation, partition ranking and filtering, and enclaving.
 
 Area filtering
 In this phase, the areas become regions by themselves when li ≥ threshold. If an area intersects the road network, it is categorized as a corridor region; otherwise, it becomes a max-p region.
 
 Adaptive region formation
-This phase builds upon the seeded regions strategy first proposed by Vickrey (1961), which is widely used in the context of regionalization (Thoreson and Liittschwager 1967, Openshaw 1977, Rossiter and Johnston 1981, Duque et al. 2012). This method selects an area at random and grows a region around it. The algorithm starts with areas that intersect the road network to generate corridor regions. During the growing process, a region can change from a corridor to a max-p region if this benefits the objective function. This phase is completed when it is not possible to grow new feasible regions. The remaining unassigned areas are called ‘enclaves’ (Duque et al . 2012).
+This phase builds upon the seeded regions strategy first proposed by Vickrey (1961), which is widely used in the context of regionalization (Thoreson and Liittschwager 1967, Openshaw 1977, Rossiter and Johnston 1981, Duque et al. 2012). This method selects an area at random and grows a region around it. The algorithm starts with areas that intersect the road network to generate corridor regions. During the growing process, a region can change from a corridor to a max-p region if this benefits the objective function. This phase is completed when it is not possible to grow new feasible regions. The remaining unassigned areas are called ‘enclaves’ (Duque et al. 2012).
 
 Partition ranking and filtering
 At this point, the method has yielded n partial solutions. Each partial solution generates a given number of regions. This stage creates a set P of partial solutions with the maximum number of regions (the other partial solutions are discarded).
 
 Enclaving
-This stage takes each partial solution in P and transforms it to a feasible solution by assigning the enclave (unassigned) areas to an existing region. This process is based on the greedy-based assignation process, AssignEnclaves, devised by Duque et al . (2012). As with the max-p-regions model, the random component in this stage (specifically in the Adaptive region formation step) is a key feature to guarantee proper exploration of the solution space. Because the number of regions (p) is determined in this stage, it is important to generate a large number of initial feasible solutions to increase the possibility of finding a large number of regions.
+This stage takes each partial solution in P and transforms it to a feasible solution by assigning the enclave (unassigned) areas to an existing region. This process is based on the greedy-based assignation process, AssignEnclaves, devised by Duque et al. (2012). As with the max-p-regions model, the random component in this stage (specifically in the Adaptive region formation step) is a key feature to guarantee proper exploration of the solution space. Because the number of regions (p) is determined in this stage, it is important to generate a large number of initial feasible solutions to increase the possibility of finding a large number of regions.
+
+Pseudocode 1. Generate initial feasible solutions.
+
+1 P = {} Candidate partition set  
+2 for i = 1 to n:  
+3   P = Initialize a partition P with areas G.  
+4   SU = empty list; unsigned areas  
+5   SE = empty list; enclaved areas  
+6   Area filtering:  
+7     for each gi in G do:  
+8       if ati ≥ threshold:  
+9         ek = the nearest edge to Ii  
+10        Rk = create a corridor region if ek intersects with gi,  
+11        if not, create a max-p region  
+12        add gi to Rk  
+13      else:  
+14        add gi to SU  
+15  Adaptive region formation:  
+16    while SU ≠ ∅:  
+17      g = randomly select an area from SU, starting from those areas that intersect with the network N  
+18      Ri = Initialize a new region for P, with the seed area g  
+19      add g to Ri, remove g from SU  
+20      while lR < threshold:  
+21        if Ri don’t have neighbor areas:  
+22          break;  
+23        g' = Ri.popMinNeighborArea();  
+24        add g' to Ri, remove g' from SU;  
+25      if aR < threshold:  
+26        remove Ri from P  
+27        add all areas in Ri to SE  
+28    P.setEnclavedAreas(SE)  
+29    P.add(P)  
+30  Partition ranking and filtering:  
+31    max = P.maxNumRegions()  
+32    P = P.filterByNumRegions(max)  
+33  Enclaving:  
+34    for each P in P do:  
+35      enclave(P, P.getEnclavedAreas())
 
 ### 4.2. Local search
-The local search algorithm iteratively modifies an initial feasible solution by moving areas from one region to a neighboring region. This type of move was first applied by Nagel (1965) and is widely utilized in the literature. Duque et al . (2007) summarized other types of moves.
+The local search algorithm iteratively modifies an initial feasible solution by moving areas from one region to a neighboring region. This type of move was first applied by Nagel (1965) and is widely utilized in the literature. Duque et al. (2007) summarized other types of moves.
 
 To guarantee a good exploration of the solution space, we provide the local search with the following features: first, the candidate areas that move between regions are selected at random. Second, we use a local Tabu search that allows temporary worsening of the objective function as a strategy to escape from local optimal solutions. When an area is swapped from one region to another, the area–region relationship is altered; a corridor region could become a max-p region or vice versa. Finally, a unique feature of the Tabu search within the context of the NMPR problem regards local movements that modify a region intersecting the road network; these force the algorithm to evaluate the objective function under two scenarios, corridor and max-p regions, for both the donor and the recipient regions.
 
-The Tabu search procedure maintains the best solution Sb and the current solution Sc. Candidate moves contain all moves that will not break the spatial contiguity constraints. These moves are computed using the inner border areas across all regions in the partition. Sd is the temporary best solution from applying a move, and it is chosen if it is not in the Tabu list and if it is better than Sc. convTabu and tabuLength are the two Tabu search parameters used to control the stop condition and the length of the Tabu list.
+Pseudocode 2 presents the Tabu search procedure. Sb and Sc represent the best solution and the current solution. The candidate moves contain all the moves that will not break the spatial contiguity constraints. These moves are computed using the inner border areas across all regions in the partition. Sd is the temporary best solution from applying a move, and it is chosen if it is not in the Tabu list and if it is better than Sc. This is the design of Tabu search to avoid local entrapments as much as possible. convTabu and tabuLength are the two Tabu search parameters used to control the stop condition and the length of the Tabu list.
+
+Pseudocode 2. Tabu search procedure.
+
+1 Sb, Sc = the current solution  
+2 int c = 0  
+3 P = {} Tabu solution set  
+4 while c ≤ convTabu:  
+5   Sd = ∅;  
+6   while true:  
+7     move = select a random move  
+8     if move = ∅:  
+9       break  
+10    Sn = apply the move to Sc, and remove the move from candidate moves  
+11    if Sn = ∅:  
+12      continue  
+13    if tabuList.contains(Sn):  
+14      continue  
+15    if Sn.betterThan(Sc):  
+16      Sd = Sn  
+17      break;  
+18    if Sd = ∅:  
+19      break  
+20   if Sd.betterThan(Sb):  
+21     Sb = Sd  
+22   Sc = Sd  
+23   Sc.updateCandidateMoves()  
+24   tabuList.add(Sd)  
+25   if |tabuList| > tabuLength:  
+26     remove the first element from tabuList  
+27 return Sb
 
 ## 5. Experiments
 This section analyzes the two network-related parameters, MaxDisc and MaxDist. The solution quality is also validated through randomized experiments. A real-world example is then given to show the model’s scalability. The algorithms were implemented in Java and tested on a machine with an i7-4710HQ Intel CPU and 16G DDR3 memory.
 
 ### 5.1. Parameter analysis
-The simulated areas were retrieved from sample data in the ClusterPy library for regionalization research (Duque et al . 2011a). The data include three datasets with different numbers of areas (n = 529, n = 1024, and n = 2025). The attribute value for each area is generated using a spatial autoregressive process with ρ = 0.9. The attribute for the threshold constraint follows a uniform distribution of [10, 15] (https://code.google.com/p/clusterpy/). A network dataset with 16 edges was designed over the grid areas.
+The simulated areas were retrieved from sample data in the ClusterPy library for regionalization research (Duque et al. 2011a). The data include three datasets with different numbers of areas (n = 529, n = 1024, and n = 2025). The attribute value for each area is generated using a spatial autoregressive process with ρ = 0.9. The attribute for the threshold constraint follows a uniform distribution of [10, 15] (https://code.google.com/p/clusterpy/). A network dataset with 16 edges was designed over the grid areas.
 
-One heuristic solution example for the dataset with n = 1024 used parameters: threshold = 500, number of initial solutions = 10,000, TABU length = 85, MaxDisc = 0.3 and MaxDist = 10. Corridor regions are marked in dark grey.
+One heuristic solution for the dataset with n = 1024 used the following parameters: threshold = 500, number of initial solutions = 10,000, TABU length = 85, MaxDisc = 0.3 and MaxDist = 10. Corridor regions are marked in dark grey in the original visualization.
 
-To quantitatively assess how MAX_DIST and MAX_DISC affect the results, two measures are proposed: the number of corridor regions, Nc, and the average corridor region compactness, C̄. These are defined as follows:
+To quantitatively assess how MAX_DIST and MAX_DISC affect the results, two measures are proposed: the number of corridor regions, Nc, and the average corridor region compactness, C_bar. These are defined as follows:
 
-C̄ = (1/Nc) sum_{R in Rc} cR
+C_bar = (sum_{R in Rc} c_R) / Nc,
 
-where Rc is the set of corridor regions of the partition and cR = (sum_{j in R} si,Oi / NR - smin) / (smax - smin) is the compactness of a particular corridor region. cR is a standard measure with the range [0, 1]. smin and smax are the minimum and maximum values of all the area-closest-edge distances.
+where Rc is the set of corridor regions of the partition and c_R = (sum_{j in R} s_{i,O_i}/N_R - s_min) / (s_max - s_min) is the compactness of a particular corridor region. c_R is a standard measure with the range [0, 1]. s_min and s_max are the minimum and maximum values of all the area-closest-edge distances.
 
 A series of experiments was performed on a dataset with n = 529 to evaluate the impacts of MAX_DIST and MAX_DISC. The other parameters were set as follows: threshold = 110, number of initial solutions = 10,000, and TABU length = 85.
 
-Results emphasize that MAX_DIST has major effects. For a given value of MAX_DISC, both C̄ and Nc increase with MAX_DIST. As MAX_DIST grows, the discount function has a positive sign over a greater portion of the map, which implies a reduction in the objective function via the third term. Thus, the capacity for constructing corridor regions is higher. The speed of growth slows as MAX_DIST approaches a threshold and then stabilizes. This indicates that the measure has reached a threshold where no further benefit can be gained through the third term with larger values of MAX_DIST. The same rationale applies to the compactness measure: small MAX_DIST values force the corridor regions to be very close to the road (i.e., they become more elongated). Conversely, larger MAX_DIST values force areas far from the road to become part of a corridor region. Again, there is a certain point after which MAX_DIST produces no more benefits in terms of the objective function value.
+The experiments emphasize that MAX_DIST has major effects. For a given value of MAX_DISC, both C_bar and Nc increase with MAX_DIST. As MAX_DIST grows, the discount function has a positive sign over a greater portion of the map, which implies a reduction in the objective function via the third term. Thus, the capacity for constructing corridor regions is higher. The speed of growth slows as MAX_DIST approaches a certain value and then stabilizes. This indicates that the measure has reached a threshold where no further benefit can be gained through the third term with larger values of MAX_DIST. The same rationale applies to the compactness measure: small MAX_DIST values force the corridor regions to be very close to the road (i.e., they become more elongated). Conversely, larger MAX_DIST values force areas far from the road to become part of a corridor region. Again, there is a certain point after which MAX_DIST produces no more benefits in terms of the objective function value.
 
 MAX_DISC does not differ significantly for a given value of MAX_DIST but remains relatively stable. This suggests that in real applications, what matters is how far from the road we extend the premium for corridor regions (i.e., MAX_DIST). Given the linearity of the discount function, it is straightforward for practitioners to relate MAX_DIST to the parameters in domain-specific problems.
 
-To illustrate the solution quality of the heuristic algorithm: for the same parameters, 1000 random solutions were generated (not improved by the heuristic algorithm). Then, 20 heuristic solutions were generated and compared with those random solutions. Because the number of regions dominates other terms in the objective value function, the random solutions and the heuristic solutions were generated for a fixed number of regions k. The histogram of the 1000 random solutions showed that the objective values of the heuristic solutions are clear outliers of low values against the histogram, which shows that the quality of the heuristic is reasonable.
+The following experiment is conducted to illustrate the solution quality of the heuristic algorithm. For the same parameters of the problem shown earlier, 1000 random solutions are generated (not improved by the heuristic algorithm). Then, 20 heuristic solutions are generated and compared with those random solutions. Because the number of regions dominates other terms in the objective value function, the random solutions and the heuristic solutions are generated for a fixed number of regions k. This is achieved by generating as many random solutions as possible until 1000 random solutions are produced with the number of regions equal to k, and the same process is repeated to produce the 20 heuristic solutions.
+
+The histogram of the objective values for the random solutions shows that the objective values of the heuristic solutions are clear outliers of low values against the histogram, which shows that the quality of the heuristic is reasonable.
 
 ### 5.2. Case study: Wuhan (China)
 Wuhan is a rapidly growing city and is the largest city in central China. Its modernization process is reflected by the expansion of the street network. By 2014, the total road length had reached 14,520 kilometers, with a road density of 180.85 kilometers per 100 square kilometers. By integrating these networks into the regionalization process, the NMPR formulation has practical implications because the development of the urban street network in Wuhan has led to greater accessibility among areas and rapid development along the streets.
@@ -150,4 +226,4 @@ The MAX_DIST parameter in the objective function affects the formation and featu
 
 This study assumes a homogeneous network and only considers geometric network properties. Future work could investigate stricter formulations for the network. For example, an additional restriction could be that edges in a corridor region must be a connected subnetwork. In addition, the street structure contains rich semantic information, including rank, capacity, and traffic load. These attributes can be integrated into the objective function.
 
-This paper establishes a framework for network regionalization problems. The network structure is incorporated into the exact formulation without sacrificing its rigor, while the heuristic algorithms provide an efficient method for regional growth testing and solution optimization. Both the formulation and the heuristic can be transferred to other optimization problems. This would greatly facilitate the regionalization applications.
+This paper establishes a framework for network regionalization problems. The network structure is incorporated into the exact formulation without sacrificing its rigor, while the heuristic algorithms provide an efficient method for regional growth testing and solution optimization. Both the formulation and the heuristic can be transferred to other optimization problems. This would greatly facilitate regionalization applications.

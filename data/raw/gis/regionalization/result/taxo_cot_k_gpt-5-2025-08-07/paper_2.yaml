@@ -67,7 +67,11 @@
   - 2
   - 11
   "intent_labels":
-  - []
+  - - "Problem Formulation"
+    - "Research Gap"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Research Gap"
   - []
   "topic_labels":
   - []
@@ -77,11 +81,11 @@
   - 2
   - 12
   "intent_labels":
-  - - "Prior Methods"
+  - - "Problem Formulation"
     - "Research Gap"
     - "Prior Methods"
     - "Prior Methods"
-    - "Prior Methods"
+    - "Research Gap"
   - []
   "topic_labels":
   - []
@@ -92,11 +96,11 @@
   - 6
   - 12
   "intent_labels":
-  - - "Domain Overview"
-    - "Domain Overview"
+  - - "Problem Formulation"
+    - "Problem Formulation"
     - "Prior Methods"
-    - "Domain Overview"
-    - "Prior Methods"
+    - "Problem Formulation"
+    - "Problem Formulation"
   - []
   - []
   "topic_labels":
@@ -107,35 +111,27 @@
   "block_ids":
   - 2
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[18, 40, 51]"
   "block_ids":
   - 2
   "intent_labels":
-  - - "Research Gap"
-    - "Research Gap"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Research Gap"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[12]"
   "block_ids":
   - 2
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-  "topic_labels":
   - []
+  "topic_labels":
+  - - "Exact optimization models"
+    - "Other Intent"
+    - "Other Intent"
+    - "Exact optimization models"
+    - "Other Intent"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 2
@@ -162,11 +158,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Heuristic concentration and model reduction"
-    - "Alternative names"
-    - "Heuristic concentration and model reduction"
-    - "Heuristic concentration and model reduction"
-    - "Heuristic concentration and model reduction"
+  - []
 - "unique_context_marker": "[9]"
   "block_ids":
   - 2
@@ -187,11 +179,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Compactness-driven location–allocation approaches"
-    - "p-regions formulations"
-    - "Heuristic models with explicit contiguity"
-    - "p-regions formulations"
-    - "Heuristic models with explicit contiguity"
+  - []
 - "unique_context_marker": "[48]"
   "block_ids":
   - 2
@@ -208,10 +196,18 @@
   - 4
   - 12
   "intent_labels":
-  - []
+  - - "Problem Formulation"
+    - "Problem Formulation"
+    - "Problem Formulation"
+    - "Problem Formulation"
+    - "Problem Formulation"
   - []
   "topic_labels":
-  - []
+  - - "p-regions formulations"
+    - "p-regions formulations"
+    - "p-regions formulations"
+    - "p-regions formulations"
+    - "p-regions formulations"
   - []
 - "unique_context_marker": "[8, 9, 14, 33–35, 53]"
   "block_ids":
@@ -242,23 +238,15 @@
   - 6
   - 8
   "intent_labels":
-  - []
   - - "Domain Overview"
     - "Background"
-    - "Other Intent"
-    - "Other Intent"
     - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+  - []
   "topic_labels":
-  - - "Heuristic models with explicit contiguity"
-    - "Heuristic models with explicit contiguity"
-    - "Heuristic models with explicit contiguity"
-    - "Heuristic models with explicit contiguity"
-    - "Heuristic models with explicit contiguity"
-  - - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
+  - []
+  - []
 - "unique_context_marker": "[45]"
   "block_ids":
   - 6
@@ -267,43 +255,31 @@
   - []
   - []
   "topic_labels":
-  - - "Heuristic models with explicit contiguity"
-    - "Local search with area swaps and metaheuristics"
-    - "Heuristic models with explicit contiguity"
-    - "Heuristic models with explicit contiguity"
-    - "Heuristic models with explicit contiguity"
-  - - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
+  - []
+  - []
 - "unique_context_marker": "[8, 9, 14, 34, 35, 53]"
   "block_ids":
   - 7
   "intent_labels":
   - []
   "topic_labels":
-  - - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
+  - []
 - "unique_context_marker": "[8, 9, 14]"
   "block_ids":
   - 7
   "intent_labels":
   - []
   "topic_labels":
-  - - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
-    - "Local search with area swaps and metaheuristics"
+  - []
 - "unique_context_marker": "[53]"
   "block_ids":
   - 7
   "intent_labels":
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - []
 - "unique_context_marker": "[31]"
@@ -319,45 +295,33 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
+  - []
 - "unique_context_marker": "[19]"
   "block_ids":
   - 9
   "intent_labels":
   - []
   "topic_labels":
-  - - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
-    - "Alternative names"
+  - []
 - "unique_context_marker": "[2]"
   "block_ids":
   - 10
   "intent_labels":
   - []
   "topic_labels":
-  - - "Algorithms without explicit spatial contiguity constraint"
+  - - "Compactness-driven location–allocation approaches"
     - "Compactness-driven location–allocation approaches"
+    - "Algorithms without explicit spatial contiguity constraint"
     - "Compactness-driven location–allocation approaches"
-    - "Compactness-driven location–allocation approaches"
-    - "Compactness-driven location–allocation approaches"
+    - "Other Intent"
 - "unique_context_marker": "[43]"
   "block_ids":
   - 10
   "intent_labels":
-  - - "Result Comparison"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Result Comparison"
-    - "Prior Methods"
+  - []
   "topic_labels":
-  - - "Algorithms without explicit spatial contiguity constraint"
+  - - "Compactness-driven location–allocation approaches"
     - "Compactness-driven location–allocation approaches"
+    - "Algorithms without explicit spatial contiguity constraint"
     - "Compactness-driven location–allocation approaches"
-    - "Compactness-driven location–allocation approaches"
-    - "Compactness-driven location–allocation approaches"
+    - "Other Intent"

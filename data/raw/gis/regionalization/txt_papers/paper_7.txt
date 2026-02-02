@@ -1,1665 +1,474 @@
-The 𝑝-Innovation Ecosystems problem
-Daniel E. Restrepo 1,2, Juan C. Duque 2, , and Richard Church 3
-1 Department of Mathematics. The University of Texas at Austin. TX, USA.
-2 Research in Spatial Economics (RiSE) Group. Universidad EAFIT. Colombia.
-3 Department of Geography,University of California, Santa Barbara, USA.
-Correspondence: jduquec1@eaﬁt.edu.co. Carrera 49, 7 Sur-50. Department of Mathematical Sciences. Universidad
-EAFIT. 050022, Medellín, Antioquia, Colombia.
-August 2, 2020
-Abstract
-In this paper, we propose a spatially constrained clustering problem belonging to the
-family of 𝑝-regions problems. Our formulation is motivated by the recent developments of
-economic complexity on the evolution of the economic output through key interactions among
-industries within economic regions. The objective of this model consists in aggregating a
-set of geographic areas into a prescribed number of regions (so-called innovation ecosystems)
-such that the resulting regions preserve the most relevant interactions among industries. We
-formulate the 𝑝-Innovation Ecosystems model as a mixed-integer programming (MIP) problem
-and propose a heuristic solution approach. We explore a case involving the municipalities
-of Colombia to illustrate how such a model can be applied and used for policy and regional
-development.
-Keywords: Regions design - Innovation ecosystems - Product Space - Complexity.
-funding: This document was completed with support from the World Bank, Contract Ref.: 1029-000001, in addition to support
-from the PEAK Urban programme, supported by UKRIs Global Challenge Research Fund, Grant Ref.: ES/P011055/1
-Acknowledgments: The authors are grateful for the support with the Apolo supercomputer resources and the team at EAFIT,
-specially to Sebastián Patiño. We are also grateful to Vanessa Echeverri for her constant support during the last stage of this project.
-The usual disclaimer applies.
-Conﬂicts of Interest: The authors declare no conﬂict of interest.
-1
-The 𝒑-Innovation Ecosystems problem.
-1 Introduction
-Since the seminal papers of Robert Solow, the mainstream analyses of economic growth have had
-aggregate growth models (Solow, 1957; Solow, 1956) as its principal workhorse. Abstract quantities
-such as technological progress or positive externalities, like spillovers or scale eﬀects, usually play
-a central role in classical growth theory since they are, at last, the primary mechanisms that
-encourage ﬁrms productivity and, therefore, generate economic growth. Nevertheless, given that
-the aggregative models address the interaction between diﬀerent goods as a black box, they cannot
-endogenize the positive externalities that come from the strategic production of complementary
-goods; like the scale eﬀects or the spillover eﬀects mentioned above ( Hidalgo et al., 2007).
-Regardless of the approach (aggregative or not), the general consensus is that the diversiﬁcation
-of the productive structure (i.e., selective innovation) stands out as a fundamental goal to foster
-economic growth. Thus, many theoretical eﬀorts have been directed to understand and identify
-suitable environments for innovation such as cities or industrial clusters (see e.g. Krugman, 1991).
-Classic examples of such ideas within the context of urban economics are the so-called Jacobs’
-externalities (Jacobs, 2016) and the agglomeration and location externalities of the New Economic
-Geography (NEG). The approaches of Jacobs and the NEG intended to provide a more detailed study
-of the positive eﬀects of industrial interaction, advocating for the diversiﬁcation of the production
-and the division of labor as concomitant processes that boost innovation opportunities.
-Understanding the relatedness structure among economic activities thus becomes a key part of
-the analysis of diversiﬁcation and agglomeration of ﬁrms. Several studies following the pioneering
-ideas introduced by Hausmann and Hidalgo have found in network theory a suitable framework to
-understand the impacts of the productive structure of countries and regions on their diversiﬁcation
-patterns ( Hidalgo et al. , 2007; Neﬀke et al. , 2011; Hausmann and Hidalgo , 2011; Hausmann
-et al. , 2014). Hidalgo et al. (2007) introduced the Product Space (PS), an undirected network
-capturing the relatedness structure of the tradable goods of the world market. This network
-revealed a core-periphery distribution, where the more complex goods ,i.e., the ones requiring more
-know-how, are highly connected whereas goods requiring fewer know-how and skills are more
-likely to be leaves of the graph. Complex goods are present in countries with a diverse export
-basket and according to Hidalgo et al. (2007) and Hausmann and Hidalgo (2011) arise naturally by
-the interaction of existing industries. Therefore, enhancing the production of complex goods and
-fostering industrial interactions that lead to their emergence are natural policy goals to pursue. In
-fact, Hausmann et al. (2014) shows that the amount of complexity reached by a country is a strong
-predictor of its economic growth.
-However, geographic, institutional and historical factors such as distance among ﬁrms, topography,
-administrative borders, diﬀerential taxes among states, productivity, labor availability and so forth
-are important constraints that may preclude the formation of optimal industrial clusters, i.e., the
-2
-idiosyncratic factors of the territory can encourage the agglomeration of industries producing
-peripheral, or less valuable, industries in terms of the PS. This clustering process, although
-suboptimal, ends up reinforcing itself by the impact of the agglomeration economies that, despite
-all the possible drawbacks like congestion or elevated factor costs, leads the ﬁrms to locate close to
-each other (Diodato et al., 2018 and Rosenthal and Strange, 2004). On top of that, empirical studies
-have shown that the predictions of NEG (Martin and Sunley, 1996) are not robust and that the eﬀects
-of Jacobs externalities are (at most) inconclusive ( De Groot et al. , 2016). It can be argued that the
-lack of conclusive empirical validation of the aforementioned theories is partially explained by the
-trade-oﬀ between diversity and similarity (see Neﬀke et al., 2011): labor, knowledge, and know-how
-diﬀuse easily among similar ﬁrms, but only the interaction between ﬁrms distinct enough can induce
-the generation of new ideas. More precisely, this idea (taken from cognitive theory) explain how a
-non-directed diversiﬁcation can either lead to big dissimilarities among ﬁrms (cognitive distance)
-hampering interaction or lead to an excessive overlapping of skills amounting to cognitive lock-in
-(Neﬀke et al. , 2011). In the case of regions, this trade-oﬀ can be put in terms of capacity of a
-region to incorporate technologies or knowledge from other region (absorptive capacity) ( Jung and
-López-Bazo, 2017). This concept has turned out to be useful to explain disparities in productivity
-levels among economic regions and, analogously, to explain the cognitive lock-in among ﬁrms. It
-has been noticed that some kinds of poverty traps are generated when regions with low absorptive
-capacity cluster together. This obeys the fact that the beneﬁts of the investments directed to
-accumulate knowledge within the region are not maximized due to the lack of absorptive capacity
-of the surrounding regions (see e.g. Caragliu and Nijkamp, 2016).
-Summing up, we face a setting in which (1) there are (quantiﬁable) target interactions among
-ﬁrms that enhance the innovation processes, (2) these key interactions could be hindered or neglected
-by incompatible local industrial policies inherent to the regional divisions, (3) these regional
-divisions are structural and, in most of the cases, unmodiﬁable, and (4) it is not sustainable or
-impossible to relocate ﬁrms from one region to another. With this scenario in mind, in this
-article we propose a quantitative model, the 𝑝-Innovation Ecosystems ( 𝑝-IE) model, with three
-main goals in mind: ﬁrst, to identify the most relevant interactions among existing industries
-in the country; second, to identify feasible sets of target goods that can improve the economic
-complexity of the country; and third, to ﬁnd optimal regional conﬁgurations (formed by spatially
-contiguous administrative units) that maximizes the most relevant interactions among the key
-industries (according to the previous two elements of the model) within each region. Thus, the
-𝑝-IE model is intended to enable policymakers to apply suitable regional industrial policies that
-foster innovation processes according to the productive structure of each region. Roughly speaking,
-in terms of the literature of economic complexity, the 𝑝-IE model seeks to design regions that
-improve the local cohesiveness of the regional productive structure according to its position in the
-PS and, simultaneously, looks for an optimal diﬀusion branching into the most complex neighboring
-industries in the PS.
-The 𝑝-IE model is formulated as a mixed-integer programming (MIP) model that belongs to
-the family of the 𝑝-regions models devised by Duque et al. (2011). In brief, the 𝑝-IE involves
-the aggregation of 𝑛 areas into 𝑝 spatially contiguous regions that (1) maximizes the number of
-3
-links (𝑙, 𝑚) in the PS for which industries 𝑙 and 𝑚 are within the same region; and (2) identiﬁes
-strategic relationships between industries within regions that maximizes the probability of activating
-innovation processes that allow the region to “jump” to more complex neighboring nodes in the
-PS. Since the 𝑝-IE model is related to a family of problems that are classiﬁed as computationally
-non-deterministic polynomial-time hard (NP-hard) ( Cliﬀ et al. , 1975; Keane, 1975), we propose a
-heuristic solution to eﬀectively compute a near-optimal, if not optimal solution.
-From a practical point of view, this approach oﬀers a new way to study the role of regions
-within countries (e.g., states in United States, departments in Colombia, autonomous communities
-in Spain, etc.) either as boosters or as obstructions for the key industrial interactions that lead to the
-improvement of the complexity of the country. More precisely, the existence of regions may aﬀect
-the evolution of the productive structure in two ways: on the one hand, regional borders between two
-industries may impair their interaction (as nodes in the PS) diminishing the positive externalities
-predicted from classical economic theory; on the other hand, the incentives generated by the local
-administrations could shape the innovation processes of diﬀerent regions in rather distinct ways
-enhancing some industrial interactions and discouraging others.
-The rest of the paper is presented as follows: Section 2 contains a literature review with the
-main conceptual elements upon which our model is built up. Section 3 contains a step-by-step
-construction of the model, the exact formulation, and some illustrative examples. Section 4 presents
-the heuristic method to solve large instances of this model. Section 5 presents a case of study for
-Colombia. Finally, Section 6 presents our conclusions and possible future research lines.
-2 Literature review
-The main ideas of this paper are built upon three theoretical bases: (1) complexity theory of
-Hausmann and Hidalgo, (2) evolutionary economics, and (3) the family of 𝑝-regions models. This
-section is basically devoted to discussing the features of these three theories that are relevant for our
-work.
-Hausmann and Hidalgo present in Hausmann and Hidalgo (2011) their theory based upon two
-main principles: (1) products are the combination of capabilities (of all sorts: inputs, technology,
-know-how, institutions), and (2) a country can produce a product if and only if it has all the required
-capabilities to produce the product. Since capabilities are not observable they are determined a
-posteriori based on two main consequences of their assumptions: (a) the diversity of the products
-manufactured by a country is related to the diversity and number of capabilities in the country, so
-that, more capabilities lead to more products; (b) the ubiquity of a product (how many countries
-produce that product) is a measure of the number of capabilities required by the product.
-Although capabilities are quite reminiscent of a general input in the standard production theory in
-economics, it is important to point out that Hausmann and Hidalgo use them in a more instrumental
-way. That is, the function that turns capabilities into products is binary (a characteristic function),
-4
-i.e., it only determines whether the product is produced or not given the availability of the required
-capabilities within the country (see Hausmann and Hidalgo , 2011). Their approach in Hausmann
-and Hidalgo, 2011 is also blind with respect to the intensity of the factors, i.e., it only captures the
-requirement of a factor and not the amount or the way in which the factor is required for production.
-Hence, their assignation function that relates capabilities with products cannot be thought of as a
-production function but as a vector of characteristics of each existent good in the global economy
-(more related to the international trade theory of Heckscher-Ohlin-Vanek, (see Hausmann et al. ,
-2019).
-The practical work of Hausmann and Hidalgo is divided into two main blocks, complexity
-theory and relatedness theory, both underpinned by the concept of capabilities. The concept of
-economic complexity is derived from a recursive analysis on the duality between diversity (number
-of exports of a country) and ubiquity (number of countries exporting a product). Diversity per
-se is not a good measure of the amount of capabilities a country has, since the types of products
-exported among countries may have substantially diﬀerent capability requirements depending on
-the productive characteristics of the exporter. The amount of capabilities required by any product
-is correlated with the scarcity of the product, i.e., if a product requires a lot of rare capabilities only
-few countries would be able to produce it. Thus, the interplay of these two concepts, diversity and
-ubiquity, can determine (as a posterior measure) the amount and the type of existing capabilities
-within the countries and required by the products. Also, this method helps to determine the degree
-of complexity embodied in a product. The exact recursive procedure proposed in Hausmann et al.
-(2014) will be further discussed in Section 3.1.
-It is important to note that the economic complexity of a country is determined by the complexity
-of the products produced by the country. With this in mind, and according to the ﬁndings in
-Hausmann et al. (2014), complex products can be regarded as target products that may be reached
-(produced) by a country in order to improve its overall complexity and, therefore, its economic
-growth. The question of how these complex goods can be reached by speciﬁc countries is addressed
-from the relatedness theory that corresponds to the dynamic component of Hausmann and Hidalgo’s
-theory. The dynamic component of Hausmann and Hidalgo’s theory appears in Hidalgo et al. (2007)
-when they seek to understand how countries diversify over time (which, in their terms, is equivalent
-to accumulating capabilities). They do this with using network theory (the PS): where the nodes are
-products and the strength of the link is determined by the number of capabilities shared by them,
-i.e., the link between two products is high if they require a similar set of capabilities to be produced.
-As such, measuring the relatedness between two goods requires using an observable quantity that
-captures the capabilities overlapping among goods. However, there is still not a clear consensus on
-which is the optimal way to measure the relatedness among a set of products. In fact, the study of
-the structure of relatedness of products within countries and geographic units is still an open ﬁeld of
-research in economic geography, mostly in evolutionary economic theory (see Neﬀke and Henning,
-2013; Boschma, 2017).
-For the sake of brevity and since it is the only one to be used in our applications; we consider only
-the PS approach proposed in Hidalgo et al. (2007). Similar constructions of networks measuring
-5
-the structure of the relatedness of geographic areas can be found in Neﬀke et al. (2011), OClery
-et al. (2019), and Diodato et al. (2018). All these approaches are designed so that they measure the
-co-occurrence (co-production, co-exportation) of goods within the same geographic unit weighted
-by some quantity (e.g. input requirements, total output) that reﬂects the extent to which speciﬁc
-economic activities are carried out inside each geographic unit. Explicitly, in Hidalgo et al. (2007)
-it is proposed a more agnostic or outcome-based approach. Using world trade data, they measure
-the relatedness using the Revealed Comparative Advantage (RCA) index ( Balassa, 1964, see also
-Section 3.1). Based on this index, the PS is deﬁned as the network of available goods in the world
-economy with links weighted by the probability of having a comparative advantage among each
-pair of goods (see Hidalgo et al. , 2007). Thus, if the weighted links which deﬁne the network are
-regarded as probabilities to “jump’ between the nodes that join them, then the PS not only describes
-the present output of the country but the actual constraints that face the country to diversify towards
-other goods in the network. In fact, if we think the position of a country on the PS as the set of
-products in which it has RCA greater or equal to one, then the innovation dynamics of the countries
-can be analyzed as diﬀusion processes on the PS ( Hidalgo et al. , 2007; Alshamsi et al. , 2018;
-O’Clery et al. , 2018]).
-Based on their theoretical framework, moving in the PS requires acquiring missing capabilities
-that combined with the existing ones allows a country to produce a new product and, therefore,
-move to more complex products in the PS. Thus, the interaction between industries with similar (but
-not equal) sets of capabilities plays an important role in the acquisition of new capabilities required
-to produce complex products and move towards better positions in the PS.
-Together, the complexity embodied in the products and the relatedness structure of the economic
-output of the countries provides a tractable framework for longstanding ideas of evolutionary
-economic theory. Theories like the process of creative destruction proposed by Schumpeter in
-Schumpeter (1939) can be underpinned quantitatively by the path-dependency inherent to the
-dynamics on the PS. More explicitly, the evolution led by the natural forces of the economy or the
-diﬀusion of the RCA, in terms of the PS, have two main implications: the disappearance of old
-industries poorly connected in the PS with the local industry and the appearance of new industries
-naturally associated, according to the PS, with the local industry. This issue regarding the selective
-evolution of the economic output has been studied empirically in the context of countries ( Hidalgo
-et al., 2007; Hausmann and Hidalgo , 2011; Hausmann et al. , 2014), economic regions ( Hausmann
-and Neﬀke, 2019; Neﬀke et al., 2011) and cities (OClery et al., 2019; Hausmann et al., 2019) showing
-that this phenomenon is transversal to any geographic unit in which industry clustering is admissible.
-A remarkable empirical work that sheds light on how the process of creative destruction takes
-place in a geographic (regional) framework is presented in Neﬀke et al. (2011). In this work they
-study the evolution of the economic output within 70 industrial regions in Sweden along a period of
-roughly 30 years (1969-2002). In this work, they measure the evolution of the economic cohesion
-of the Swedish regions over time. As a measure of cohesion, they use the average of the closeness
-(in the PS) of each product to the existing portfolio in the region. Intuitively a region is cohesive
-if there are no incentives for moving, i.e., if the industries within the region are more related
-6
-among them rather than with industries belonging to other regions. In Neﬀke et al. (2011) they
-ﬁnd that the cohesiveness of the regions has a signiﬁcant tendency to increase through the years
-following a process or creative destruction. This work provides a solid conﬁrmation of an idea
-already hinted by many other studies in complexity theory ( Bustos et al., 2012; OClery et al., 2019;
-Diodato et al., 2018): there is a tendency of the geographical clusters (cities, regions, metropolitan
-areas) to reproduce the industrial clusters suggested by the PS. In principle, these two types of
-clusters (geographic and industrial) may disagree because of historical, geographic, cultural or
-political reasons that encouraged certain types of ﬁrms to establish in the region generating an
-initial endowment of productive activities that shaped the evolution of the economic landscape of
-the region in the subsequent history. Also, for methodological reasons, it is worth recalling that
-by construction the PS, at least the one built upon world trade data, captures industrial clusters
-independently from spatial features of countries and regions.
-Another important implication that can be inferred from the works previously discussed is that
-certain policies that seek to boost local economies by restructuring the economic landscape (such
-as ﬁrm relocation or selective innovation) may be misleading and may have structural issues due
-to the lack of closeness to the existing portfolio of the target region. In terms of the work of
-Neﬀke et al. (2011), for example, the introduction of economic activities weakly linked to existing
-industries of the region have a higher conditional probability to fail and exit the region. In light of the
-contributions of complexity theory and evolutionary economics it seems plausible to take advantage
-of the information encoded in the PS to foster a selective improvement of the productivity (or, more
-precisely, complexity) as long as the strategy to follow harmonizes with the natural constraints
-imposed by the topology of the PS. In this order of ideas, and following the arguments presented in
-the introduction, we opted in this paper for a strategy that involves the design of industrial regions
-that foster the creation and development of industrial ecosystems. These regions are intended to
-be spaces in which the interaction among industries is fostered by suitable public policies so that
-the capabilities required to create new and more complex goods appear naturally according to the
-dynamics of the PS. This is, the so-called industrial or innovation ecosystems (see also O’Clery
-et al., 2018).
-There is a wide and broad literature about regional planning and region designing (see e.g.
-Fischer, 1980; Duque et al. , 2007); this area has focused in giving objective criteria to deﬁne
-suitable regionalizations that help in the implementation of speciﬁc public policies. The main
-idea of this approach consists of decomposing global policy objectives that are applied into big
-geographic units into local tasks in speciﬁc regions which integrates in a harmonic way and ﬁnally
-promotes the achievement of the policy goal ( Fischer, 1980).
-Among the formulations for this problem are linear optimization models (Garﬁnkel and Nemhauser,
-1970; Zoltners and Sinha , 1983), mixed-integer programming ( Duque et al. , 2011) and nonlinear
-models ( Macmillan and Pierce , 1994), and the use of techniques such as implicit enumeration
-of feasible solutions ( Garﬁnkel and Nemhauser , 1970) and column generation ( Mehrotra et al. ,
-1998). In particular, our model follows the lines of Duque et al. (2011) which is formulated a
-mixed integer programming (MIP) problem, called the 𝑝-regions, for aggregating 𝑛 areas into
-7
-𝑝 spatially contiguous regions, using three diﬀerent strategies to ensure continuity. One of the
-main advantages of the 𝑝-regions type models is their ﬂexibility to incorporate spatial contiguity
-without adding constraints on the shape of the resulting regions. This, in turn, allows them to
-capture a diverse range of spatial patter (compact, elongated, among others). For example, based
-on the 𝑝-regions model there have been diﬀerent MIP formulation by adding additional features,
-such as maximizing the number of regions being added ( Duque et al. , 2012), generating 𝑝 regions
-while maximizing their compactness ( Li et al. , 2014), deﬁning 𝑝-functional regions ( Kim et al. ,
-2015), among others. Such formulations ensure that we can obtain an optimal solution. However,
-they are computationally intensive to solve and sometimes it is better to use heuristic approaches
-for resolving large problem instances. A good heuristic should be capable of solving a problem
-of region delineation, within a shorter amount of computation time, with the goal of identifying
-feasible solutions as close as possible to the optimum ( Duque et al., 2007).
-In this work, we take advantage of the versatility and robustness of the economic complexity
-theory of Hausmann and Hidalgo and embed it into a region designing model. Thus, we propose
-to draw a conceptually and theoretical link between these two subjects providing a new model with
-a solid economic foundation to the 𝑝-regions family, based on Hausmann and Hidalgo’s theory
-and evolutionary economics. This also allows us to incorporate new elements into Hausmann and
-Hidalgo’s theory such as the role of the regions in the innovation process followed by the countries
-on the PS. Also, a proved relationship between the regional division of a country and its economic
-growth will open the possibilities for developing new economic-based models to allow policymakers
-to: (1) identify how far is the actual regional conﬁguration of its economy from the optimal one
-that would potentially foster economic growth, and (2) design industrial regions, or intraregional
-agreements between administrative units, to minimize the boundary eﬀects and ease the interaction
-among the key regions to promote the generation of innovation ecosystems.
-3 The model
-In this section we present the elements and the step-by-step assembling of the objective function of
-the 𝑝-IE model. For the sake of clarity, we divide this section in 4 parts. The ﬁrst part provides
-an explanation of the inputs of the model: elements of the PS (economic) and spatial elements
-(geography); also, it shows how these elements are systematically incorporated into the objective
-function. The second part provides a summarized statement of the optimization problem. Part three
-contains the ﬁnal expression that will be maximized. Finally, in part four we illustrate the properties
-of the solution of the p-IE model by means of some suitable toy examples.
-3.1 Conceptual framework
-Complexity theory, in this work, plays the role of giving a quantitative framework to the process of
-identifying key industries. There are two types of key industries: (1) the ones that already exist and
-whose interaction is central in the given economy, and (2) complex industries that are yet to appear
-in the economy of interest. Our measurement tool in this case is the Product Space (PS), which
-8
-describes the relatedness structure between all the goods in the world (or in another macrogeographic
-reference, e.g. a continent, a set of countries, etc.) and therefore provides information about classes
-of key industries.
-Mathematically, we will view the PS together with the complexity theory as a weighted network
-of products, where the weight in the nodes gives a measure of the relevance of each good (1 the
-most relevant and 0 the least relevant) and the weight in the edges gives a normalized notion of
-association between any pair of goods. It is important to stress the fact that even if we consider
-a weighted network built upon Hausmann and Hidalgo’s theory ( Hausmann et al. , 2014; Hidalgo
-et al., 2007), any network with the properties speciﬁed above would work for our purposes.
-3.1.1 First term: relatedness structure and key industrial links
-The PS proposed in ( Hausmann et al. , 2014) measures the relatedness by means of the Revealed
-Comparative Advantage (RCA) index introduced by Balassa ( Balassa, 1964) which is given by
-RCA𝑐,𝑝 =
-𝑥𝑐 𝑝/∑
-𝑝 𝑥𝑐 𝑝
-∑
-𝑐 𝑥𝑐 𝑝/∑
-𝑐,𝑝 𝑥𝑐 𝑝
-Where 𝑥𝑐 𝑝 is the amount of the good 𝑝 exported by the country 𝑐 and the sums runs over all the
-possible goods a countries. Given these indices for each good and each country, Hausmann et al.
-(2014) deﬁnes the degree of relatedness between goods 𝑘 and 𝑙 as:
-𝑦𝑙𝑚 = min{ P(RCA𝑚,𝑝 > 1| RCA𝑙,𝑝 > 1), P(RCA𝑙,𝑝 > 1| RCA𝑚,𝑝 > 1)} (1)
-That is, the minimum of the conditional probability of obtaining RCA in a good given that the
-country already has RCA in the other good (the minimum is taken so that the weight is undirected).
-Hence, the PS is deﬁned as the undirected network (see Figure 1a) of available goods in the
-world economy with links weighted by the numbers 𝑦𝑙𝑚 whenever these weights exceed a certain
-threshold (see Hausmann et al., 2014, or Section 5 for a brief discussion about the determination of
-the threshold).
-Following the ideas of Hausmann et al. (2014) we can assess the overall production of a country
-from its position on the PS. The idea consists in determining the set of goods in which the country
-has revealed a comparative advantage, i.e., RCA greater than 1. We regard this set as the initial
-position of the country on the graph (on the PS) and we will denote it by 𝐼𝐺 (Initial goods),
-analogously we denote by 𝐼 𝐿 the set of initial links induced in the PS by 𝐼𝐺 , i.e., the links of the
-PS connecting nodes belonging to 𝐼𝐺 (see Figure 1b).
-9
-251471213681115182120199413PS 1617
-10
-(a) Layout of the PS of an abstract economy with 21
-goods.
-2
-5
-14712
-13
-68
-1115
-18
-21
-20
-19
-9
-41
-3
-PS
- 16
-17
-10
-(b) Available (blue) goods in the economy 𝐼𝐺
-determine the position of the country on the PS.
-Figure 1: The ﬁrst part shows the PS faced by the economy, whilst the second part shows in blue the goods
-in which the economy has comparative advantage.
-Recalling the ideas discussed in the literature review about the role of regions in the formation
-of clusters and on the diﬀusion on the PS, we introduce geography in this model by means of two
-eﬀects: boundary eﬀect and distance decay. Since production and, subsequently, spillover eﬀects
-measured by the Hausmann and Hidalgo’s theory takes place in very concrete spatial units, we
-incorporate the boundary eﬀect by measuring the interaction between industries which have an
-active presence within the same region. These measures are derived from two spatial inputs: the
-division of the country (or the general spatial framework of reference) into areas (see Figure 2a) and
-the frequency matrix 𝑓 = ( 𝑓𝑙𝑖) of the industries among the areas (see Figure 2b) (value of exports
-in this case, since we follow Hausmann et al., 2014).
-1234567891011121314151617181920
-(a) Country with 20 areas.
- (b) Distribution matrix 𝑓 = ( 𝑓𝑙 𝑗) for an economy
-with 22 industries ( 𝑙 = 1, · · · , 22) and 20 areas ( 𝑗 =
-1, · · · , 20).
-Figure 2: The ﬁrst part depicts the geographic distribution of the 20 areas in which each area is given by a
-square of side length 1. The second part shows the distribution of 22 industries in the country. Notice that
-we omit the columns corresponding to the industries 1 and 2 since the country do not produce any of them.
-10
-From the geographic distribution of the ﬁrms we compute the relative relevance of area i
-producing good l (that is the share of an area in the total production, computed from Figure 2b)
-𝑟𝑖𝑙 = 𝑓𝑖𝑙∑
-𝑖 𝑓𝑖𝑙
-(2)
-We also incorporate a distance decay factor that penalizes the interaction of industries located far
-away one from the other. This geographic eﬀect is justiﬁed theoretically in Hausmann and Hidalgo
-(2011) by the strong eﬀect of distance in the, arguably, more important capability: knowledge. We
-propose a decay function 𝑓 : [0, ∞) ↦→ [− 1, 1] of the form
-𝑓 (𝑥) = 1 − 2
-( 𝑥
-𝑀
-) 𝛼
-, (3)
-where 𝑀 is the maximal distance between two areas in the country and 𝛼 is the distance decay
-parameter. Notice that 𝑓 (0) = 1 and that 𝑓 (𝑀) = −1. The parameter 𝛼 determines how fast the
-decay function becomes negative, decaying faster when 𝛼 is greater than 1 and slower whenever 𝛼
-approaches to 0 (see Section 3.4 and Section 5 for general rules to establish the value of 𝛼). Thus,
-we capture the interaction between the goods 𝑙 and 𝑚 produced in the areas 𝑖 and 𝑗, respectively,
-using the following expression
-𝑡𝑙𝑚,𝑘
-𝑖 𝑗 𝑟𝑙𝑖𝑟𝑚 𝑗 𝑓 (𝑑𝑖 𝑗), (4)
-where 𝑑𝑖 𝑗 is the distance between area 𝑖 and 𝑗, 𝑡𝑙𝑚,𝑘
-𝑖 𝑗 is an indicator function that is 1 whenever
-𝑖 and 𝑗 produce goods 𝑙 and 𝑚, respectively, and both belong to the same region 𝑘 (see Figure 3).
-Hence, in a setting with 𝑛 areas and 𝑝 < 𝑛 regions, the ﬁrst term of our objective function would
-have the form
-𝐹𝑇 (𝑆 𝑝) =
-𝑝∑
-𝑘=1
-𝑛∑
-𝑖=1
-𝑛∑
-𝑗=𝑖
-∑
-(𝑙,𝑚 )∈ 𝐿𝐼
-𝑡𝑙𝑚,𝑘
-𝑖 𝑗 𝑟𝑙𝑖𝑟𝑚 𝑗 𝑓 (𝑑𝑖 𝑗) (5)
-where 𝑆 𝑝 is any partition of the 𝑛 areas into 𝑝 regions which in turn determine the value of the
-variables 𝑡𝑙𝑚,𝑘
-𝑖 𝑗 .
-We stress the relevance of two features in the structure of the ﬁrst term of the objective. First,
-notice that we require the inverse function of the distance 𝑓 to assign negative values to penalize
-long distances with negative values (see Section 3.4 for a further discussion). Second, we capture
-the interaction among areas in a multiplicative way to neglect all the cases in which at least one
-of the intensities is 0. This idea and the role of the indicator functions 𝑡𝑙𝑚,𝑘
-𝑖 𝑗 are fully explained in
-Figure 3. We describe ﬁve possible scenarios of interaction: the ﬁrst one, in which both, areas 𝑖
-and 𝑗, produce two industries linked in the PS ( 𝑙 and 𝑚), yielding 2 self-interactions within each
-area (𝑟𝑙𝑖𝑟𝑚𝑖 and 𝑟𝑙 𝑗𝑟𝑚 𝑗) and two unidirectional interactions between industries 𝑙 and 𝑚 across areas
-(𝑟𝑙𝑖𝑟𝑚 𝑗 and 𝑟𝑚𝑖𝑟𝑙 𝑗 ); the second scenario exhibits one loop interaction within area i between industries
-𝑙 and 𝑚 (𝑟𝑙𝑖𝑟𝑚𝑖) and the interaction between industry 𝑙 in area 𝑗 and industry 𝑚 in area 𝑖 (𝑟𝑚𝑖𝑟𝑙 𝑗 ); the
-third scenario presents one unidirectional interaction; scenarios four and ﬁve show that neither the
-presence of only one industry in one region nor the presence of the same industry in several areas
-do not yield any interaction, respectively.
-11
-tlm,kij=1 tlm,kii=1 
-Figure 3: Fixing a region 𝑘, the indicator functions 𝑡𝑙𝑚,𝑘
-𝑖 𝑗 capture the self-interactions within areas (loops)
-and the interaction between pairs of areas (𝑖, 𝑗 ) ) (arrows) producing linked goods (𝑙, 𝑚) in the PS.
-3.1.2 Second term: complexity and target products
-While the ﬁrst component enhances the interaction among the goods that already exist in the
-economy, the second component is designed to maximize the probability to reach new products in
-the PS that are not yet produced by the country. The construction of this second part relies in two
-basic principles: (1) nodes with a bigger weight (more complex) are more desirable for the economy
-and (2) the pairwise interaction of products with high association to a third non-existent good in the
-economy increases the probability of the arising of this new good, whenever the interaction is given
-within the same region. More generally, the problem addressed by the second term of the objective
-functions lies in the general framework of a directed complex contagion problem, i.e., a diﬀusion
-process on the PS in which the process can diﬀuse from several nodes to others depending on their
-complexity. Such models predict a nonlinear diﬀusion, more explicitly, the probability of reaching
-a new node turns out to be proportional to a power of the association with the ﬁrst order neighbors
-(see Alshamsi et al. , 2018). Nonetheless, in Alshamsi et al. (2018) the contagion power for the PS
-was found to be conveniently close to 1 (1.03, more precisely), enabling us to consider the sum of
-pairwise interactions. Notice also that the study of contagion as a pairwise interaction of nodes is
-quite reminiscent to the basic concept of clustering by triplets on networks (see e.g. the deﬁnition
-of the clustering coeﬃcient in Barabási et al. , 2016). For our subsequent analysis we introduce the
-notation 𝐿𝑣 for the set of (undirected links) of neighbors of 𝑣 in the PS. Notice that two nodes linked
-in 𝐿𝑣 may not (but usually are) linked in the PS.
-Since the non-existent goods may be far away from the set 𝐼𝐺 in the PS, we restrict our analysis
-to products that can be reached after one step of diﬀusion, trying to simplify the study of more
-12
-complex dynamics. Also, since this component of the objective function is intended to improve the
-complexity, then we deﬁne the target goods as the ones that are more complex than at least one of
-their neighbors in the PS already produced by the country. Further, the spatial nature of this model
-allows us to only consider complex goods whose arising requires the interaction of two or more
-industries, i.e., we discard leaves of the network. We depict thoroughly these processes in Figure
-4a. This set of nodes in the graph constitutes the set of target goods denoted by 𝑇𝐺 . Although
-many complexity measures would work for our purposes, we want to stress that its introduction in
-this model is motivated by the deﬁnition of the Economic Complexity Index (ECI) introduced in
-Hausmann et al. (2014). In our case of study (see Section 5), we use a normalized version in the
-unit interval of this index as a measure of complexity.
-2
-5
-14712
-13
-68
-1115
-18
-21
-20
-19
-9
-41
-3
-PS
- 16
-17
-10
-(a) First order neighbors of 𝐼𝐺 .
-2
-5
-14712
-13
-68
-1115
-18
-21
-20
-19
-9
-41
-3PS 16
-17
-10 (b) Selection of the target goods 𝑇𝐺 .
-25
-14712
-13
-68
-1115
-18
-21
-20
-19
-9
-41
-3PS 16
-17
-10
-c2=0.3c3=0.5c5=0.4c11=0.8c7=0.6c4=0.2c16=0.4c14=0.4c12=0.9c13=0.3c18=0.6c21=0.5c20=0.4c19=0.7c6=0.6c9=0.4c8=0.5c7=0.5
-c17=0.2y8,6=0.7y8,10=0.6y12,11=0.9
-(c) Final input network.
-GIGTGPSLILLBDiscarded linksLvDiscarded nodes (d) Nomenclature.
-Figure 4: The ﬁrst three parts depict how the target nodes ( 𝑇𝐺 ) are chosen. In Figure 4a we select the ﬁrst
-order neighbors of the blue nodes 𝐼𝐺 . In Figure 4b we discard the higher order neighbors (nodes 1 and 15),
-the leaves of the network that do not require spatial interaction to be produced (node 16), and the green nodes
-that do not improve the complexity of the system (node 2). Figure 4c depicts the ﬁnal version of the PS and
-Figure 4d summarizes the nomenclature used in for this selection process.
-13
-Thus, arguing as in the formulation of the ﬁrst part we have that the second component should
-have the form
-𝑆𝑇 (𝑆 𝑝) =
-𝑝∑
-𝑘=1
-∑
-𝑣∈𝑇𝐺
-𝑛∑
-𝑖=1
-𝑛∑
-𝑗=1
-∑
-(𝑙,𝑚 )∈ 𝐿 𝑣
-𝑡𝑙𝑚,𝑘
-𝑖 𝑗 (𝑦𝑙𝑣 𝑟𝑙𝑖 + 𝑦𝑚𝑣𝑟𝑚 𝑗) 𝑓 (𝑑𝑖 𝑗)𝑐𝑣 (6)
-where 𝑐𝑣 is the complexity of the good 𝑣 ∈ 𝑇𝐺 , 𝑦𝑙𝑣 is the weight of the link between the goods
-𝑙 and 𝑣 in the PS (equation ( 1)).
-3.1.3 Assembling the objective function
-So far, we have set up both components of our objective function without specifying the interplay
-between them. By construction, the ﬁrst term enables us to capitalize the key industrial interactions
-already formed by the natural economic forces of the country of interest. Since the second term
-tries to reach as many complex goods as possible it has the tendency to group multiple areas and
-create big regions while introducing volatility into the model. Thus, the ﬁrst term plays the role
-of guaranteeing a reasonable size and shape of the economic regions so that key interactions are
-preserved, whereas the second term is intended to “perturb” or modify the conﬁgurations suggested
-by the ﬁrst term in order to maximize the complexity without making abrupt changes in regional
-conﬁgurations. Hence, the next step consists in ﬁnding suitable weights in order to guarantee the
-predominance of the ﬁrst term over the second one.
-Notice that the terms in equations ( 5) and ( 6) are bounded from above by 2. Hence, in order to
-bound this term, it is necessary to determine which is the maximum number of ways to assign 𝑛
-areas into 𝑝 regions.
-This problem can be phrased in terms of a maximization problem. Let 𝑧𝑖 be the number of areas
-in the region 𝑖. From Figure 3 we have that each area can interact with all the areas, including itself.
-So, if we count the number of interactions we have that the ﬁrst area can interact with 𝑧𝑖 areas, the
-second with 𝑧𝑖 − 1 and so forth. Thus, we face the constrained optimization problem
-Maximize 1
-2
-𝑝∑
-𝑖=1
-𝑧𝑖 (𝑍𝑖 − 1),
-s.t.
-𝑝∑
-𝑖=1
-𝑧𝑖 = 𝑝,
-𝑧𝑖 ≥ 1.
-In here, the objective function measures the number of interactions between all areas in each
-region, i.e., the number of 𝑡𝑙𝑚,𝑘
-𝑖 𝑗 that can be 1 assuming that all goods are produced in all the areas
-and that two areas can be joined in only one region (where this latter restriction will be guaranteed by
-the constraints of the model). A direct computation shows us that the solution of this maximization
-problem 𝑛
-2𝑝(𝑛−𝑝) . Thus, the ﬁrst component of the objective function is bounded from above by
-14
-𝑛
-2𝑝(𝑛−𝑝) | 𝐼 𝐿| , where | 𝐼 𝐿| is the number of elements in 𝐼 𝐿. A similar reasoning applied to the second
-term shows that this term is bounded from above by ℎ = 𝑛
-2𝑝 (𝑛 − 𝑝) ∑
-𝑣∈𝑇𝐺 | 𝐿𝑣 |(| 𝐿𝑣 | − 1).
-Hence, a possible factor that guarantees the dominance of the ﬁrst term of the objective function
-over the second term would be 𝑊 = 101+⌊log(ℎ)⌋ (where ⌊·⌋ is the standard ﬂoor function.) We can
-also normalize the weights setting 𝑊1 = 𝑊
-𝑊+1 and 𝑊2 = 1 − 𝑊1. Finally, given a 𝑝-regionalization
-𝑆 𝑝 (or partition of 𝑛 areas into 𝑝 regions) we deﬁne the objective function of the 𝑝-IE by
-𝑍 (𝑆 𝑝) = 𝑊1𝐹𝑇 (𝑆 𝑝) + 𝑊2𝑆𝑇 (𝑆 𝑝) (7)
-3.2 Problem statement
-Let 𝐼 = { 1, · · · , 𝑛} be the set of areas of a country with 𝑛 areas and let 𝑝 ∈ { 2, · · · , 𝑛 − 1} be the
-prescribed number of regions. Let Π be the set of feasible 𝑝-regionalizations given by contiguous
-partitions of 𝐼, i.e., collections of areas the form 𝑃𝑝 = { 𝑅1, · · · , 𝑅 𝑝} such that
-• 𝑅 ≠ ∅ for 𝑅 ∈ 𝑃𝑝
-• 𝑅 ∩ 𝑅′ = ∅ for any pair of distinct elements 𝑅, 𝑅′ ∈ 𝑃𝑝.
-• ∪
-𝑅∈𝑃 𝑝 𝑅 = 𝐼.
-• Each region 𝑅 ∈ 𝑃𝑝 is connected.
-The 𝑝-IE problem may be formulated as:
-Determine 𝑃∗
-𝑝 ∈ Π such that: 𝑍 (𝑃∗
-𝑝) ≥ 𝑍 (𝑃𝑝), ∀𝑃𝑝 ∈ Π.
-3.3 The exact formulation of the 𝑝-Innovation Ecosystems problem
-Now we are in position to formulate the exact model.
-Parameters:
-* The geography:
-𝐴 = set of areas, 𝐴 = { 1, · · · , 𝑛} ;
-𝑖, 𝑗 = the indices used to refer to speciﬁc areas, where 𝑖, 𝑗 ∈ 𝐴;
-𝑛𝑖 𝑗 =
-{ 1, if areas 𝑖 and 𝑗 share a border, with 𝑖 ≠ 𝑗;
-0, otherwise;
-𝑁𝑖 =
-{
-𝑗 | 𝑛𝑖 𝑗 = 1
-}
-, the set of areas that are adjacent to area 𝑖;
-𝑑𝑖 𝑗 = the distance between areas 𝑖 and 𝑗, where 𝑖 < 𝑗 ;
-𝑓 = a decreasing function in the distance between areas 𝑖 and 𝑗 with range [−1, 1];
-𝑘, 𝐾 = the index and set of regions, 𝐾 = { 1, · · · , 𝑝 } ;
-𝑜 = the index used to refer to the contiguity order, 𝑜 ∈ { 0, · · · , 𝑞} , with 𝑞 := 𝑛 − 𝑝.
-15
-* The Product Space :
-𝑃𝑆 = any instance of the Product Space (PS) ;
-𝑔, 𝐺 = the index and set of goods/nodes in 𝑃𝑆;
-𝑙, 𝑚, 𝑣 = the indices used to refer to speciﬁc goods, where 𝑙, 𝑚, 𝑣 ∈ 𝐺;
-𝑐𝑣 = the complexity of good 𝑣 ;
-𝐿, { 𝑙, 𝑚 } = the set 𝐿 in which each element { 𝑙, 𝑚 } indicates a link connecting goods
-𝑙 ∈ 𝐺 and 𝑚 ∈ 𝐺 in 𝑃𝑆;
-𝑦𝑙𝑚 = the weight in the PS between the goods 𝑙 and 𝑚;
-𝐼𝐺 = set of available goods for the country under study, which are connected in the PS
-given certain threshold in the weights of the links;
-𝑇𝐺 = set of goods/nodes 𝑔 ∈ 𝐺 that the country under study deﬁnes as target
-goods. 𝐺𝑇 ⊆ 𝐺 (see equation 6). The set 𝑇𝐺 satisﬁes the following properties:
-𝑇𝐺 ∩ 𝐼𝐺 = ∅;
-𝑇𝐺 ∪ 𝐼𝐺 ⊆ 𝐺;
-each good in 𝑇𝐺 is a ﬁrst order neighbor of, at least, two goods in 𝐼𝐺 ;
-i.e., for each good 𝑙 ∈ 𝑇𝐺 there are links 𝑙, 𝑚 in 𝑃𝑆 such that 𝑚 ∈ 𝐼𝐺 ;
-each good 𝑣 in 𝑇𝐺 , has a 𝑐𝑣 that is greater than the minimal complexity of
-their neighboring goods in 𝐼𝐺 (there is an improvement in the complexity) ;
-𝐼 𝐿 = the set of links { 𝑙, 𝑚 } , such that 𝑙 ∈ 𝐼𝐺 and 𝑚 ∈ 𝐼𝐺 . 𝐼 𝐿 ⊆ 𝐿;
-𝐿𝐵 = the set of links { 𝑙, 𝑚 } , such that 𝑙 ∈ 𝐼𝐺 and 𝑚 ∈ 𝑇𝐺 . 𝐿𝐵 ⊆ 𝐿;
-𝐿𝑣 = the set of links (𝑙, 𝑚) with the pairwise connections between the
-goods 𝑙, 𝑚 ∈ 𝐼𝐺 such that both are connected in the PS to 𝑣 ∈ 𝑇𝐺 .
-These links are not of the same nature as the links in the PS .
-* The relationship between the geography and the Product Space :
-𝑟𝑙𝑖 = The relative relevance of the area 𝑖 producing the good 𝑙, see equation ( 2).
-𝑏𝑙𝑖 =
-{ 1, if 𝑟𝑙,𝑖 > 0
-0, otherwise.
-* Instrumental parameters:
-ℎ = ℎ = 𝑛
-2𝑝 (𝑛 − 𝑝) ∑
-𝑣∈𝑇𝐺 | 𝐿𝑣 |(| 𝐿𝑣 | − 1),
-𝑊 = 101+⌊log(ℎ)⌋ ,
-𝑊1 = 1+𝑊
-𝑊 ,
-𝑊2 = 1 − 𝑊1.
-Decision variables:
-16
-𝑡𝑙𝑚,𝑘
-𝑖 𝑗 =
- 
-
-1, if areas 𝑖 and 𝑗 belong to region 𝑘, area 𝑖 produces good 𝑙
-and area 𝑗 produces good 𝑚
-0, otherwise.
-𝑥 𝑘𝑜
-𝑖 =
-{ 1, if areas 𝑖 is assigned to region 𝑘 in order 𝑜
-0, otherwise.
-Maximize:
-𝑍 =𝑊1
-𝑝∑
-𝑘=1
-𝑛∑
-𝑖=1
-𝑛∑
-𝑗=𝑖
-∑
-{ 𝑙,𝑚 }∈ 𝐿𝐼
-𝑡𝑙𝑚,𝑘
-𝑖 𝑗
-( 𝑟𝑙𝑖𝑟𝑚 𝑗 𝑦𝑙𝑚
-) 𝑓 ( 𝑑𝑖 𝑗
-) +
-𝑊2
-𝑝∑
-𝑘=1
-∑
-𝑣∈𝐺𝑇
-𝑛∑
-𝑖=1
-𝑛∑
-𝑗=𝑖
-∑
-{ 𝑙,𝑚 }∈ 𝐿 (𝐿 𝑣 )
-𝑡𝑙𝑚,𝑘
-𝑖 𝑗
-( 𝑦𝑙𝑣 𝑟𝑙𝑖 + 𝑦𝑚𝑣𝑟𝑚 𝑗
-) 𝑐𝑣 𝑓 ( 𝑑𝑖 𝑗
-) .
-(8)
-Subject to:
-𝑛∑
-𝑖=1
-𝑥 𝑘0
-𝑖 = 1 ∀𝑘 = 1, · · · , 𝑝, (9)
-𝑝∑
-𝑘=1
-𝑞∑
-𝑜=0
-𝑥 𝑘𝑜
-𝑖 = 1 ∀𝑖 = 1, · · · , 𝑛, (10)
-𝑥 𝑘𝑜
-𝑖 ≤
-∑
-𝑗 ∈𝑁𝑖
-𝑥 𝑘 (𝑜−1)
-𝑗 ∀𝑖 = 1, · · · , 𝑛; ∀𝑘 = 1, · · · , 𝑝; ∀𝑜 = 1, · · · , 𝑞, (11)
-2𝑡𝑙𝑚,𝑘
-𝑖 𝑗 ≤
-𝑞∑
-𝑜=0
-𝑥 𝑘𝑜
-𝑖 𝑏𝑙𝑖 +
-𝑞∑
-𝑜=0
-𝑥 𝑘𝑜
-𝑗 𝑏𝑚 𝑗 ∀𝑖, 𝑗 = 1, · · · , 𝑛; ∀𝑘 = 1, · · · , 𝑝; ∀{ 𝑙, 𝑚 } ∈ 𝐿𝐼 ∪ 𝐿𝑣, (12)
-𝑡𝑙𝑚,𝑘
-𝑖 𝑗 ≥
-𝑞∑
-𝑜=0
-𝑥 𝑘𝑜
-𝑖 𝑏𝑙𝑖 +
-𝑞∑
-𝑜=0
-𝑥 𝑘𝑜
-𝑗 𝑏𝑚 𝑗−1 ∀𝑖, 𝑗 = 1, · · · , 𝑛; ∀𝑘 = 1, · · · , 𝑝; ∀{ 𝑙, 𝑚 } ∈ 𝐿𝐼 ∪𝐿𝑣; 𝑓 (𝑑𝑖 𝑗) < 0,
-(13)
-𝑥 𝑘𝑜
-𝑖 ∈ { 0, 1} ∀𝑖 = 1, · · · , 𝑛; ∀𝑘 = 1, · · · , 𝑝; ∀𝑜 = 0, · · · , 𝑞, (14)
-𝑡𝑙𝑚,𝑘
-𝑖 𝑗 ∈ { 0, 1} ∀𝑖, 𝑗 = 1, · · · , 𝑛; ∀𝑘 = 1, · · · , 𝑝; ∀{ 𝑙, 𝑚 } ∈ 𝐿𝐼 ∪ 𝐿𝑣. (15)
-17
-Constraints ( 9), ( 10) and ( 11) guarantee the connectedness of each deﬁned region. These
-conditions represent an extension of the ordered area assignment conditions proposed by Cova and
-Church (2000) ( see also Martin and Sunley, 1996). More precisely, equation (9) forces the model to
-assign only one area per region with order 0, equation ( 10) implies that each area must be assigned
-with some order to some region, and equation ( 11) preserves the order of the assignment of the
-areas to the regions, i.e., guarantees that an area is assigned to a region with order o only if there is
-another neighboring area belonging to the same region assigned with order o-1.
-Restrictions ( 12) and ( 13) provide the interaction between the regionalization ( 𝑥 𝑘𝑜
-𝑖 ) and the
-interaction in the product space ( 𝑡𝑙𝑚,𝑘
-𝑖 𝑗 ). Equation ( 13) bounds the decision variables 𝑡𝑙𝑚,𝑘
-𝑖 𝑗 so that
-the model is allowed to activate them (and increase the value of the OF) when the interaction
-between the goods 𝑙 and 𝑚 produced in the areas 𝑖 and 𝑗 (respectively) occurs within the same
-region 𝑘 ∈ { 1, · · · , 𝑝 } , i.e., this restriction generates the trade-oﬀ in the model that guarantees
-that only the most important links of the product space are preserved. On the other hand, we use
-equation (13) to force the model to activate all the variables 𝑡𝑙𝑚,𝑘
-𝑖 𝑗 whenever areas 𝑖 and 𝑗 are within
-the same region and their interaction is penalized by the distance decay function 𝑓 so that the OF
-has to pay eﬀectively for the generation of large regions. This restriction prevents the model in
-producing degenerate solutions, i.e., one massive region and 𝑝 − 1 small regions. Controlling the
-size of the regions through the distance decay allows us to formulate the model for any geography
-without the risk of having empty feasible sets (infeasibilities). Finally, equations ( 14) and ( 15) are
-integer conditions on the decision variables.
-3.4 Examples
-We present two examples to illustrate how our model works. In the ﬁrst example we show the
-behavior of the ﬁrst term of the OF, whereas the second shows the inﬂuence of the second term on
-the solution: explicitly, how the second term of the OF breaks ties in a solution reached by the ﬁrst
-term, seeking to maximize complexity. In both cases, we will take as distances between areas the
-Euclidean distance between the centers of the regions.
-18
-5
-14
-13
-6
-11
-18
-21
-20
-19
-4
-3
-Figure 5: PS for example 1. This is the PS of the country described in Figure 2. It contains 4 clusters of
-industries perfectly separated and omits industries 9, 10 and 17 which are isolated.
-We will take 𝛼, i.e., the decaying parameter of the function 𝑓 in equation (3), such that it gives
-zero value to the radius of the region in the scenario in which all of them have the same number of
-areas 𝑛
-𝑝 . Thus, since the geography in these toy examples is given by square areas in rectangular
-grids (see Figure 6b and Figure 7c) we will take 𝑅𝑎𝑣 =
-√
-𝑛
-𝑝 as the radius of an average region.
-Therefore, we have that 𝛼 = 𝑙𝑛 (2)
-𝑙𝑛
+SMP: Scalable Max-P Regionalization
+Hussah Alrashid Yongyi Liu Amr Magdy
+Department of Computer Science and Engineering
+University of California, Riverside
+Riverside, USA
+{halra004, yliu786}@ucr.edu, amr@cs.ucr.edu
+ABSTRACT
+MP-regions is an NP-hard problem that groups spatial areas to
+produce a maximum number of regions by enforcing a user-defined
+constraint at the regional level. Existing approximate algorithms
+for MP-regions do not scale for large datasets due to their high
+computational cost. This paper introduces SMP; a scalable tech-
+nique to support MP-regions on large datasets. SMP works on two
+stages. The first stage finds an initial solution through randomized
+search, and the second stage improves this solution through effi-
+cient heuristic search. SMP optimizes the region building efficiency
+and quality by tuning the randomized area selection to trade-off
+runtime with region homogeneity. The experimental evaluation
+shows the superiority of our technique to support an order of mag-
+nitude larger datasets efficiently compared to the state-of-the-art
+techniques while producing high-quality solutions.
+CCS CONCEPTS
+•Information systems → Geographic information systems.
+KEYWORDS
+Max p-regions, Regionalization, Spatial clustering
+ACM Reference Format:
+Hussah Alrashid Yongyi Liu Amr Magdy. 2022. SMP:
+Scalable Max-P Regionalization. In The 30th International Conference on
+Advances in Geographic Information Systems (SIGSPATIAL ’22), November
+1–4, 2022, Seattle, W A, USA. ACM, New York, NY, USA, 4 pages. https:
+//doi.org/10.1145/3557915.3561011
+1 INTRODUCTION
+Regionalization is the process of clustering a set of spatial poly-
+gons into spatially contiguous regions that meet user-defined con-
+straints [10]. An example of regionalization is clustering cities in
+California into regions so that each region has at least 30K COVID-
+19 infections. The traditional problem formulations [8, 10, 21] put
+a major hurdle on users to input the number of regions p. Such
+a hurdle introduced the challenging “spatial scale problem”, as
+users fail to determine the appropriate spatial scale according to
+the underlying data. A new formulation, called max-p-regions (or
+This work is partially supported by the National Science Foundation, USA, under
+grants IIS-1849971, SES-1831615, and CNS-2031418.
+Permission to make digital or hard copies of part or all of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for third-party components of this work must be honored.
+For all other uses, contact the owner/author(s).
+SIGSPATIAL ’22, November 1–4, 2022, Seattle, W A, USA
+© 2022 Copyright held by the owner/author(s).
+ACM ISBN 978-1-4503-9529-8/22/11.
+https://doi.org/10.1145/3557915.3561011
+MP-regions for short), has recently addressed the spatial scale prob-
+lem [7] and became popular in different applications. Instead of
+forcing users to input p, the MP-regions automatically discovers
+the appropriate value of p based on a user-defined constraint on a
+certain attribute. This gives the user more tractable and flexible ex-
+pressiveness. However, it suffers from severe scalability limitations
+and cannot support even moderate-sized datasets.
+MP-regions is an NP-hard problem, therefore, finding an exact
+solution is prohibitively expensive and impractical in real applica-
+tions. Besides, existing approximate algorithms support relatively
+small datasets. For ∼3,000 US counties, the proposed techniques
+in [7, 30] consume from 2.5 minutes up to several hours, depend-
+ing on the underlying constraints, for each single regionalization
+query. In fact, real applications already use datasets that are an
+order of magnitude larger than this dataset. Therefore, such ineffi-
+cient time makes existing techniques incapable of supporting many
+real-world applications. For example, such limitation is crystal clear
+when MP-regions is applied to reduce the uncertainty of American
+Community Survey data [ 29], which help determine how more
+than $675 billion in USA federal and state funds are distributed
+each year [4] and is heavily used by community organizations, gov-
+ernmental agencies, social scientists in various disciplines [ 5]. It
+is explicitly stated in [29] that “Using the algorithm (meaning MP-
+regions) requires a tradeoff that is not appropriate in all situations
+or for all audiences - one must be willing to reduce the number of
+geographic units of analysis. ” Similar examples repeat in studying
+neighborhoods [23, 30] and studying regional poverty [9]. This scal-
+ability limitation urges the need to build scalable regionalization
+algorithms to support large-sized data.
+This paper proposes SMP; a system-level module that scales up
+MP-regions on large spatial datasets. SMP employs a two-phase
+approximate search. In the first phase, it employs novel heuristics
+to find an initial solution efficiently. Existing regionalization tech-
+niques grow as many randomized regions as possible in the first
+phase. This produces a large number of enclave areas as randomiza-
+tion cause enclave areas to remain unassigned. On the other hand,
+SMP is designed to reduce the number of enclaves and maximize
+the number of regions. It builds the initial regions with minimal
+inter-regional gaps by selecting new borders based on a criterion of
+spatial compactness. In the second phase, SMP optimizes existing
+heuristics to improve the initial solution. This approximate search
+avoids exhaustive exploration of the search space, so it efficiently
+supports large datasets that are not currently supported.
+Our experiments on real datasets show significant improvements
+in regionalization scalability and quality by saving up to 97% of
+query time compared to existing competitors. The rest of the pa-
+per is organized as follows. Section 2 discusses the related work.
+Section 3 formulates the MP-regions problem. Section 4 introduces
+SIGSPATIAL ’22, November 1–4, 2022, Seattle, WA, USA Hussah Alrashid Yongyi Liu Amr Magdy
+our proposed technique. Finally, Section 5 provides experimental
+evaluation and Section 6 concludes the paper.
+2 RELATED WORK
+The regionalization literature studies various problems under spa-
+tial clustering [13, 20] and spatial graph partitioning [6, 32]. The
+latter is related to regionalization as spatial polygons can be mod-
+eled as a node-attributed spatial neighborhood graph, and regional-
+ization can be expressed as a graph partitioning problem. However,
+the different objectives and constraints on the output sub-graphs
+make existing spatial graph partitioning techniques inapplicable
+for regionalization problems. The most related problems to our
+work are the p-regions [
+2, 8, 14, 16–19, 31] and the max-p-regions
+(MP-regions) [1, 7, 9, 11, 22, 25–30]. The p-regions problem is re-
+lated in the sense that the MP-regions problem is a successor that
+overcomes its limitations. There is an existing literature on the
+p-regions problem that ranges from building compact regions [2, 16–
+18], network-constrained regionalization [31], and functional re-
+gions delimitation [14, 15]. Despite this literature, the fundamental
+change in MP-regions compared to p-regions makes it inapplicable
+to adopt existing p-regions techniques.
+The literature on MP-regions [ 7] is more related to our work.
+MP-regions has variations with a single constraint [7, 28, 30], mul-
+tiple constraints [11], and network-aware regionalization [27], in
+addition to a variety of applications that are built on top of them [1,
+9, 22, 25, 26, 29]. Existing techniques build variations of the same
+framework, which is also used in our proposed technique in spirit.
+This framework first builds a set of regions as an initial solution,
+then uses a heuristic search to improve the solution quality and find
+a final approximate solution. The differences among these different
+techniques are in the way of performing the two steps, includ-
+ing different heuristics to build the initial regions, different types
+of heuristic search, processing optimizations of different steps, or
+the underlying spatial space, e.g., Euclidean space versus network-
+constrained space. Distinguished from all existing work, our work
+is the first to build an efficient technique that addresses the scal-
+ability issue of MP-regions. Our technique significantly beats all
+existing techniques in different performance measures and is able
+to support an order of magnitude larger datasets.
+3 PROBLEM DEFINITION
+This section provides a formal definition for the MP-regions prob-
+lem. The problem input is a set of spatial areas𝐴 = {𝑎0, 𝑎1, 𝑎2, .., 𝑎𝑛 }.
+Each area 𝑎𝑖 is defined with four attributes: 𝑎𝑖=(𝑖, 𝑏𝑖, 𝑠𝑖, 𝑑𝑖), where 𝑖
+is the area identifier, 𝑏𝑖 is an arbitrary spatial polygon that defines
+the area’s spatial boundaries,𝑠𝑖 is a spatially extensive attribute,
+and 𝑑𝑖 is a dissimilarity attribute. A spatially extensive attribute 𝑠𝑖
+of an area is an attribute whose value is divided over the smaller
+sub-areas when the area is fragmented. For example, thepopulation
+value of a county is divided over its cities, so the population is a
+spatially extensive attribute. This is the opposite of spatially inten-
+sive attributes, such as temperature, that are not divided when the
+spatial area is fragmented. The dissimilarity attribute 𝑑𝑖 is used in
+computing output regions’ heterogeneity. The MP-regions problem
+is defined as follows:
+Input: (1) A set of 𝑛 areas: 𝐴 = {𝑎0, 𝑎1, 𝑎2, ..., 𝑎𝑛 }. All the areas
+in 𝐴 are spatially contiguous and form a single spatially connected
+component. (2) A threshold 𝑇 . (3) An objective function 𝐻.
+Output: A set of regions 𝑅 = {𝑟1, 𝑟2, ..., 𝑟𝑝 } of size 𝑝, where each
+region 𝑟𝑖 is a non-empty set of spatially continuous areas satisfying
+the below constraints and objectives.
+Constraints:
+• 1 ≤ 𝑝 ≤ 𝑛
+• | 𝑟𝑖 | ≥ 1, ∀𝑟𝑖 ∈ 𝑅
+• 𝑟𝑖 ∩ 𝑟 𝑗 = ∅, ∀𝑟𝑖, 𝑟𝑗 ∈ 𝑅 ∧ 𝑖 ≠ 𝑗
+• Ð𝑝
+𝑖=1 𝑟𝑖 = 𝐴, ∀𝑟𝑖 ∈ 𝑅
+•
 (
-𝑀
-𝑅𝑎𝑣
-) .
-For the ﬁrst example we suppose a country with geography and production described in Figure
-2 and, therefore, we have the decaying parameter 𝛼 = 0.7564. Consider also the PS depicted in
-Figure 5. Notice that the PS given in Figure 5 is a subset of the PS presented in the Figure 1,
-although some links are removed or added so that we obtained 4 disconnected clusters on the graph.
-Also notice that in this case the graph is entirely exhausted by the set 𝐼𝐺 , equivalently, there are
-no target goods. Hence, the weights of the vertices are irrelevant for the objective function. From
-the conveniently designed distribution of industries on the array, there are ﬁve spatial clusters of
-industries where each one of those corresponds to one of the four connected components of the PS
-in the Figure 5. Thus, for p=5 the 𝑝-IE model ﬁnds an optimal solution of the form presented in
-Figure 6a.
-19
-ଵ=1, ଶ=0, OF= 2.53263141234567891011121314151617181920
-(a) Optimal region assignation.
-514136111821201943 22 (b) Industrial interaction per region.
-Figure 6: This ﬁgure summarizes the output of the optimization for this example. The ﬁve shaded areas in
-the ﬁrst part correspond to the optimal regions, while the color of the links in the second part indicates the
-regions in which such interactions take place.
-In the second example we illustrate the eﬀect of the second term. We assume a simpler scenario
-where the country has nine areas with a corresponding decaying factor given by 𝛼 = 2.4094 and
-faces a PS as the depicted by Figure 7b. In this case we assume that the country produces four
-goods as labeled in Figure 7a so that in the purple areas goods 3 and 4 are produced with the same
-intensity, goods 5 and 6 are produced with the same intensity in the green areas and good 11 is
-produced in the white area. We assume that the links in the PS, particularly the one between goods
-5 and 11 and the one between goods 3 and 11 are equal. Under this scenario, as we saw in the
-previous example, the purple and green regions should be preserved by the ﬁrst term of the objective
-function. Our attention is focused now in how the white area in the middle is assigned to one of the
-two regions. Notice that the interaction between goods 5 and 11 pursues the arising of good 7 that
-is more complex than good 2. Thus, we expect that a solution of the 𝑝-IE model with 𝑝 = 2 should
-assign good 11 to the green region, which eﬀectively happens as we can see in the Figure 7c.
-20
-3
-527
-11c11=0.8c7=0.6c12=0.9
-4
-6
-(a) PS example 2.
- (b) Spatial distribution of the industries in example 2.
-ଵ=0.99900099, ଶ=0.000999, OF= 1.2347314
-(c) Optimal region assignation.
-Figure 7: This ﬁgure summarizes example 2. In Figure 7a we have the PS for this economy with 5 available
-nodes and two targets with their respective complexity. Figure 7b shows the spatial distribution of the
-available goods (3,4,5,6,11) which we assume are equally produced and divided into two spatial clusters: the
-one in which 3 and 4 interact (purple) and the one in which 5 and 6 interact (green). Figure 7c presents the
-optimal solution for example 2, depicting how the area containing 11 is assigned to the cluster generated by
-5 and 6 enhancing the arising of 7 (in red).
-4 The heuristic
-In this section, we address the computational complexity of the 𝑝-IE problem by designing a
-heuristic solution. The use of heuristic methods has been a recurrent alternative within the family
-of the 𝑝-regions models ( Rosenthal and Strange , 2004; De Groot et al. , 2016; Laura et al. , 2015;
-She et al. , 2017). Regardless whether it is a 𝑝-regions or a Max- 𝑝-regions problem the structure
-of a heuristic for region design consists of two main blocks, (1) generate a set of initial feasible
-solutions and (2) take the best initial feasible solution and improve it by using a local search process
-21
-based on tabu search, simulated annealing, greedy algorithm, among others (Rosenthal and Strange,
-2004;Duque et al., 2007). Computational experiments made by Rosenthal and Strange (2004) show
-that the tabu search performs signiﬁcantly better within the family of the 𝑝-regions problems. The
-use of tabu search on an initial feasible solution is a practice that dates back to the nineties with the
-seminal contribution by Opeshaw and Rao ( Openshaw and Rao, 1995).
-Algorithm 4.1 presents the heuristic for the 𝑝-IE problem. The construction phase is inspired on
-the “growing regions” strategy ﬁrst proposed by Vickrey (1961), which generates an initial feasible
-solution in two steps: (1) select a set of p areas, which are called “seed” areas, and (2) starts assigning
-neighboring unassigned areas until all areas are assigned to a region (i.e., a region “grows” around
-each initial seed). There exist many variants of both steps; in our case, we select the initial seeds
-using the 𝑘-means++ algorithm proposed by Arthur and Vassilvitskii (2006), which seeks a good,
-spread out, location of the initial seeds. The 𝑘-means++ has a probabilistic component that allows
-exploring diﬀerent sets of initial seeds. Each seed area becomes a growing region around which
-the rest of the areas are assigned. For the second step, the algorithm identiﬁes the bordering areas
-(unassigned areas that share a border with a growing region) and selects the one with the minimum
-distance to its neighboring growing region. The distance between a bordering area 𝑖 and a growing
-region GR is calculated as the sum of squared diﬀerences of the vector of exports 𝑟𝑙𝑖 and the average
-vector of exports of the areas already assigned to the growing region GR (see equation ( 16)).
-𝑑𝑖𝐺 𝑅 =
-∑
-𝑙
-(𝑟𝑙𝑖 − avg(𝑟𝑙𝐺 𝑅)) 2. (16)
-Each time an area is assigned to a region it is necessary to update the set of neighboring
-unassigned areas and the process repeats until all areas are assigned to a region. Since the
-construction of an initial feasible solution is a fast process, we generate multiple initial feasible
-solutions (maxitr) and choose the one that maximizes the objective function 𝑍 (·) . The best solution,
-𝑃best
-𝑝 , is then passed to the next block, the local search.
-The second block, the local search, uses a tabu search algorithm ( Glover, 1977; Glover, 1989
-and Glover, 1990), which has shown good performance in spatial aggregation models ( Rosenthal
-and Strange, 2004; Openshaw and Rao, 1995). Given a feasible solution, the neighboring solutions,
-𝑁 𝑠, are obtained by moving bordering areas (i.e., areas that share a border with a neighboring
-region) to neighboring regions, one at a time, while preserving feasibility. The tabu search explores
-these neighboring solutions seeking improvements in the objective function 𝑍 (·) . One key aspect
-of the tabu search is that it allows for a possible worsening of the objective function as a strategy
-for escaping from local optima with the hope that it will lead to an even better solution. The
-search stops after a predeﬁned number of non-improving moves ( convTabu). Although there exist
-multiple variants of this algorithm we decided to use the simplest version because the local search
-is computationally intensive and previous literature in the area of spatial clustering did not ﬁnd
-clear advantages of using more sophisticated version of the tabu search algorithm ( Rosenthal and
-22
-Strange, 2004; Openshaw and Rao, 1995).
-Algorithm 4.1: The-p-innovation-ecosystems(
-𝐴 : Set of areas,
-𝑝 : Number of regions,
-𝑚𝑎𝑥𝑖𝑡𝑟 : Number of initial feasible solutions to generate,
-𝑟𝑙𝑖 : Production of good 𝑙 in area 𝑖,
-𝑙𝑒𝑛𝑔𝑡ℎ𝑇 𝑎𝑏𝑢 : Length of the tabu list,
-𝑐𝑜𝑛𝑣𝑇 𝑎𝑏𝑢 : Number of non-improving moves before stop.)
-Comment: Aggregate 𝑛 areas into 𝑝 spatially contiguous regions such that
-𝑍 (𝑆 𝑝) is maximized.
-𝑃𝑏𝑒𝑠𝑡
-𝑝 = ∅, best partition.
-Construction Phase: Grow regions from seed areas
-for 𝑖 = 1, 2, · · · , 𝑚𝑎𝑥𝑖𝑡𝑟
-do
- 
-
-𝑠𝑒𝑒𝑑𝑠 = k-means++(𝐴, 𝑝, 𝑟 𝑙𝑖 , 𝑊)
-𝑆 𝑝 = GrowRegions(𝑠𝑒𝑒𝑑𝑠, 𝐴, 𝑟 𝑙𝑖 , 𝑊)
-if 𝑍 (𝑆 𝑝) > 𝑍 (𝑃𝑏𝑒𝑠𝑡
-𝑝 )
-then
-{ 𝑃𝑏𝑒𝑠𝑡
-𝑝 = 𝑆 𝑝
-Local Search Phase: Tabu search
-𝑃∗
-𝑝 = 𝑃𝑏𝑒𝑠𝑡
-𝑝 ; 𝑃𝑐𝑢𝑟𝑟 𝑒𝑛𝑡
-𝑝 = 𝑃𝑏𝑒𝑠𝑡
-𝑝 ; 𝑡𝑎𝑏𝑢𝐿𝑖𝑠𝑡 = {} ; 𝑐 = 1
-while 𝑐 ≤ 𝑐𝑜𝑛𝑣𝑇 𝑎𝑏𝑢
-do
- 
-
-𝑁 𝑠 = Set of feasible neighboring solutions of 𝑃𝑐𝑢𝑟𝑟 𝑒𝑛𝑡
-𝑝
-if 𝑁 𝑠 = ∅
-then
-{ 𝑐 = 𝑐𝑜𝑛𝑣𝑇 𝑎𝑏𝑢
-else
- 
-
-for 𝑃𝑛𝑒𝑤
-𝑝 in 𝑁 𝑠
-do
- 
-
-if 𝑃𝑛𝑒𝑤
-𝑝 ∉ 𝑡𝑎𝑏𝑢𝐿𝑖𝑠𝑡
-then
- 
-
-if 𝑍 (𝑃𝑛𝑒𝑤
-𝑝 ) < 𝑍 (𝑃∗
-𝑝)
-then
- 
-
-𝑃∗
-𝑝 = 𝑃𝑛𝑒𝑤
-𝑝
-𝑃𝑐𝑢𝑟𝑟 𝑒𝑛𝑡
-𝑝 = 𝑃𝑛𝑒𝑤
-𝑝
-𝑐 = 1
-𝑁 𝑠 = {}
-𝑡𝑎𝑏𝑢𝐿𝑖𝑠𝑡.𝑎𝑑𝑑 (𝑃𝑛𝑒𝑤
-𝑝 )
-else
- 
-
-𝑃𝑐𝑢𝑟𝑟 𝑒𝑛𝑡
-𝑝 = 𝑃𝑛𝑒𝑤
-𝑝
-𝑐𝑜𝑛𝑣𝑇 𝑎𝑏𝑢 = 𝑐𝑜𝑛𝑣𝑇 𝑎𝑏𝑢 + 1
-𝑁 𝑠 = {}
-else
- 
-
-if 𝑍 (𝑃𝑛𝑒𝑤
-𝑝 ) < 𝑍 (𝑃∗
-𝑝)
-then
- 
-
-𝑃∗
-𝑝 = 𝑃𝑛𝑒𝑤
-𝑝
-𝑃𝑐𝑢𝑟𝑟 𝑒𝑛𝑡
-𝑝 = 𝑃𝑛𝑒𝑤
-𝑝
-𝑐 = 1
-𝑁 𝑠 = {}
-𝑡𝑎𝑏𝑢𝐿𝑖𝑠𝑡.𝑎𝑑𝑑 (𝑃𝑛𝑒𝑤
-𝑝 )
-else
-{ 𝑁 𝑠 = 𝑁 𝑠 − 𝑃𝑛𝑒𝑤
-𝑝
-𝑡𝑎𝑏𝑢𝐿𝑖𝑠𝑡.𝑝𝑜 𝑝 ()
-return (𝑃)∗
-𝑝
-23
-To illustrate the way in which each block of the tabu search contributes to ﬁnding a good solution
-we present the result obtained for the example in Figure 6 which aggregates twenty areas into ﬁve
-regions with an optimal objective function 𝑍 = 2.5327. To test each component (construct initial
-feasible solutions and local search), we ran the tabu search twice with diﬀerent conﬁgurations: the
-ﬁrst test was based upon generating 500 initial feasible solutions with the hope of ﬁnding a very
-good initial solution before moving to the local search. In the second test only two initial feasible
-solutions were generated. This second test relies on local search to improve the initial solution
-as much as possible (hopefully to reach the optimum). In both cases, we stopped the tabu search
-after ten non-improving moves ( convTabu=10). Figure 8 shows the results of both conﬁgurations.
-When we explore 500 initial feasible solutions (Figure 8a) the algorithm ﬁnds a solution that takes
-only four iterations of the local search to ﬁnd the optimal solution (plus ten non-improving moves
-for convergence). When we generate only 2 initial feasible solutions (Figure 8b) the solution that
-enters the local search is considerably further from the global optima compared to the previous
-conﬁguration. In this case, the local search process requires thirteen iterations to ﬁnd the optimal
-solution (plus ten non-improving moves for convergence). Note also how the local search process
-escapes a local optimal between iterations 8 and 13 in Figure 8b.
-(a) 500 initial feasible solutions.
- (b) 2 initial feasible solutions.
-Figure 8: Performance of Tabu Search under two diﬀerent conﬁgurations, in Figure 8a with a high number
-of initial feasible solutions, and in Figure 8a with a low number of initial feasible solutions.
-5 Case of study
-As an application of the 𝑝-IE model we address the problem of ﬁnding optimal industrial ecosystems
-for Colombia.
-5.1 Data
-PS data
-24
-We developed a version of the PS using trade data from the Centre dÉtudes Prospectives et
-d’Informatio Internationales (CEPII), which contains data for 128 countries, for the time period
-1995 to 2010 and includes observations of 1,240 products classiﬁed under the nomenclature of the
-Harmonized System at the 4 digit level (HS4). We computed the weights of the network using
-equation (1). Following the lines of Hidalgo et al. (2007) we opt for a threshold of 0.55 to deﬁne the
-PS, although there is a range of possible thresholds that would work for our purposes. Also, since
-our dataset diﬀers from the one used for the computations in Hidalgo et al. (2007), we provide in
-Figure 9 the respective analysis and diagnostics to justify why this election is still reasonable in our
-case. In our case, we select a PS with 708 nodes that includes the basket of exports of Colombia.
-Another important diﬀerence is that we have higher average degree centrality (6.823 vs 4 of the PS
-in Krugman (1991)). In our case, there are 100 nodes outside of the giant component. Nevertheless,
-all of them are in little components with negligible size. Thus, the connectivity and sparseness
-properties are basically preserved by the giant component and we can restrict our analysis to the
-latter one.
-For a better visualization of our version of the PS and for the subsequent descriptive analysis
-of our results we identiﬁed 7 main clusters on the graph using the standard Louvain Modularity
-algorithm (Blondel et al., 2008). These clusters contain 92.92% of the nodes of the giant component.
-We can also identify the position of Colombia on the PS by detecting the set of nodes in which
-Colombia has RCA greater than 1. We summarize this information in Figure 10. Colombia reveals
-comparative advantage in 217 goods and 187 belongs to the giant component of the PS.
-25
-(a) Number of nodes in the PS vs value of the Threshold.
-(b) Average degree of centrality in the PS vs value of the
-Threshold.
-(c) Sparseness of the PS vs value of the Threshold.
- (d) Description of the PS when a threshold
-of 0.55 is used.
-Figure 9: We present how the network is becoming more informative as we increase the threshold. This is
-reﬂected in how the number of nodes in Figure 4a decays slowly, while the degree centrality in Figure 4b
-and the sparseness in Figure 4c decrease rapidly. With a threshold of 0.55 we have a signiﬁcant number of
-nodes (708), most of them in the giant component and with small components of a negligible size (2 nodes
-in average) as it is showed in Figure 4d.
-26
-(a) Location of Colombia on the PS.
- (b) Share of Colombian nodes in the PS.
-Figure 10: In the ﬁrst part we depict the communities detected with the Louvains method in the giant
-component of the PS and we mark in black, on top of them, the nodes in which Colombia reveal comparative
-advantage. The color code of the communities and the share of Colombia in each one of them is summarized
-in the second part. The order in which the communities are listed corresponds with their relative size
-compared with the giant component of the PS.
-Geography data
-The georeferenced data required to compute the interactions between industry areas is obtained
-from the open source information in Datlas tool of Bancoldex. This dataset contains the exports
-per industry in HS4 and per municipality for the years 2008-2017. We use this export data
-for the year 2014 to compute the distribution matrix (analogous to the one depicted in Figure
-2b) and the subsequent parameters required for the 𝑝-IE model. Since several municipalities
-in Colombia have a very incipient or nonexistent industry, we found zero exports for 591 out
-of 1120 municipalities. We overcome this issue by merging municipalities with zero exports with
-neighboring municipalities with positive exports in at least one industry. We deﬁned these new areas
-by implementing the Max- 𝑝 Regions algorithm ( Duque et al. , 2012), using exports as the decision
-variable. This algorithm merges municipalities into an optimal number of spatially continuous areas,
-following a queen adjacency criterion, so that the distance between municipalities is minimized.
-The distance function is deﬁned as the Euclidean diﬀerence of the coordinates of the centroids of
-the municipalities plus the diﬀerence of the department ID of each municipality (the departments
-in Colombia are regional divisions similar to the states in USA). This distance is chosen such that
-the resulting regions are compact and prefer to remain within the same department (see Figure 11),
-preserving geographic cohesion. Finally note that the Max- 𝑝 Regions algorithm creates new areas
-27
-such that only one of the member municipalities have positive exports.
-(a) Municipalities with positive exports.
- (b) Areas obtained after applying the Max-p regions
-model.
-Figure 11: The ﬁrst part shows the map of Colombia divided in 1,120 municipalities, where 529 of them
-(marked in blue) have positive exports in some industry. Second part depicts the regions obtained after
-applying the Max- 𝑝 Regions algorithm to the ﬁrst part.
-The distance matrix (𝑑𝑖 𝑗) is computed as the Euclidean distance between the centroids of the
-resulting 529 areas. We determined the decay parameter similarly to the case of the examples in
-Section 3.4. In the same manner as that case we will take the parameter such that the distance
-decaying function 𝑓 vanishes at the radius of an average region of size 𝑛
-𝑝 . However, since the
-geography in this case is less rigid, we assume that the optimal regions could resemble more a circle
-than a square. Hence, we will take 𝑅𝑎𝑣 =
-√
-𝑛
-𝜋 𝑝 as the radius of an average region and 𝑀 = 1, 382.2
-km. Therefore, we have that 𝛼 = ln(2)
-ln
-(
-𝑀
-𝑅𝑎𝑣
-) .
-28
-Results
-We solved the 𝑝-IE model using our heuristic for a range of values of 𝑝 between 10 and 90
-as depicted in Figure 12. Since the heuristic algorithm (at least in the ﬁrst stage) behaves like a
-clustering algorithm we opted for a simple application of the Elbow method to select a ﬁrst candidate
-for the optimal number of regions. From this analysis we determined 40 as our ﬁrst candidate.
-10 20 30 40 50 60 70 80 90
-Number of regions
-34
-36
-38
-40
-42
-44Objective function
-45.10076
-40.42202
-37.87147
-36.42967
-35.29056
-34.05681
-33.35032
-Clusterpy
-(a) OF vs Number of regions.
-20 30 40 50 60 70 80 90
-Number of regions
-0.4
-0.3
-0.2
-0.1
-First diff. OF
--0.46787
--0.25506
--0.14418
--0.11391
--0.06169
--0.03532
-Clusterpy (b) First diﬀerence OF vs Number of regions.
-Figure 12: In the ﬁrst part we show how the optimal value of the objective function behaves in the number
-of regions and depicts how the slope starts to ﬂatten signiﬁcantly for big values of 𝑝. In part two we depict
-the behavior of the objective function, detecting that the biggest variation in the slope occurs at 𝑝=40.
-However, the solution corresponding to 𝑝=40 has 15 singletons (regions constituted by one
-area). Diﬀerent implementations of our model for smaller scenarios suggest that when the number
-of regions is high, the model has the tendency to isolate areas with less valuable interactions turning
-them into singletons so that the most valuable interactions are preserved within the bigger regions.
-This and several discussions with policy makers willing to implement this model in the Colombian
-case made us opt for a regional division without singletons so that we proposed to reduce the number
-of regions such that each singleton is incorporated into a bigger region. For this reason, we propose
-the model for Colombia with 𝑝=25. For this value of 𝑝 we have a decaying power 𝛼 = 0.20041 and
-a conﬁguration as depicted by Figure 13. We classify these regions according to their share in the
-total amount of exports of Colombia during 2014. We chose this classiﬁcation to be consistent with
-the metrics of localization and of the PS that were based upon the export data. Table 1 provides
-an initial description of the geographic characteristics of the regions and the corresponding export
-share for each one of them.
-29
-Figure 13: This ﬁgure depicts the solution for p=25 classifying the resultant regions with colors and labels.
-We label them in decreasing order with respect to their share in the total exports of Colombia in 2014 (see
-Table 1).
-In Table 2 we summarize some relevant properties of the regions from the perspective of the
-Hausmann and Hidalgo’s theory. The ﬁrst two metrics correspond to a measure of the size of
-the subgraph spanned by each region within the PS. The column of industries shows how many
-industries of the giant component of the PS are produced in the region. The second column
-corresponds to the sparseness of each subgraph (see Barabási et al., 2016), i.e., for a region with 𝑁
-industries and 𝐿 links among these industries its sparseness is given by 2𝐿
-𝑁 (𝑁−1) .
-This also provides a sort of measure of the extent of interaction among key industries inside the
-region. The third metric indicates the relevance of the goods produced within the region as stepping
-stones in the PS. We compute the fraction of shortest paths between any pair of nodes passing
-through the nodes of the region, i.e., the group betweeness centrality for these nodes (see Brandes,
-2001). This measure gauges the extent in which goods produced in the region are determinant
-in the diﬀusion processes on the PS. The fourth column is a weighted average of the normalized
-complexities of the goods produced within the region. More explicitly, for a region 𝑅 producing
-the set of goods 𝑃 (a subset of the PS) we consider the complexity measure
-𝐶𝑃 =
-∑
-𝑖∈𝑅
-∑
-𝑙∈𝑃
-𝑟𝑖𝑙 𝑐𝑙 (17)
-30
-Region ID Export
-share
-Number
-of areas
-Area
-(𝐾𝑚 2)
-0 19.123% 48 54,760
-1 19.049% 28 4,958
-2 18.565% 102 85,578
-3 10.650% 16 7,095
-4 6.619% 40 102,746
-5 6.173% 36 13,755
-6 3.895% 8 2,774
-7 3.894% 3 1,298
-8 2.309% 21 70,797
-9 2.136% 58 369,591
-10 1.787% 4 33,649
-11 1.679% 13 9,673
-12 0.896% 5 7,349
-13 0.828% 23 74,130
-14 0.714% 4 1,627
-15 0.430% 18 9,394
-16 0.417% 11 10,406
-17 0.306% 29 10,762
-18 0.208% 10 5,051
-19 0.207% 3 4,199
-20 0.066% 20 8,430
-21 0.026% 6 687
-22 0.013% 14 14,621
-23 0.008% 5 1,166
-24 0.002% 4 11,152
-Table 1: Summary of some initial characteristics of the resultant regions.
-31
-Region ID Number of
-industries
-Sparseness Betweenness
-centrality
-Complexity
-1 73 7.116% 0.40138 1.322
-2 88 6.792% 0.44730 15.509
-3 89 6.639% 0.44676 13.757
-4 80 7.184% 0.44494 9.441
-5 78 7.426% 0.43160 2.699
-6 57 8.521% 0.28186 0.580
-7 57 10.338% 0.24048 0.386
-8 78 6.993% 0.43553 3.465
-9 43 6.755% 0.29255 0.161
-10 38 10.242% 0.33938 0.189
-11 25 8.333% 0.24083 0.073
-12 21 5.714% 0.09762 0.170
-13 41 13.537% 0.19502 0.046
-14 21 16.190% 0.14960 0.020
-15 74 6.479% 0.37626 0.974
-16 30 7.586% 0.21120 0.151
-17 40 7.692% 0.24234 0.239
-18 47 7.031% 0.31164 0.076
-19 20 8.421% 0.26320 0.095
-20 1 100.000% 1.00000 0.002
-21 55 8.350% 0.34788 0.186
-22 11 5.455% 0.09763 0.008
-23 5 10.000% 0.06123 0.001
-24 31 7.957% 0.29851 0.068
-25 5 0.000% 0.04698 0.006
-Table 2: Summary of some attributes computed for each region for the solution corresponding to 𝑝=25.
-32
-We want to point out that some strange features of this solution are a direct consequence of the
-Colombian export structure. For example, the large region 10 is formed by 58 areas where 10 of of
-the municipalities make up 70% of its size in PS; this reﬂects the absence of exports (or signiﬁcant
-exports) in this part of the country and precludes us to deﬁne ﬁner divisions. Another example
-is given by region 20. This region only exports one good in which Colombia has a comparative
-advantage (coﬀee beans), though this good has small betweness centrality and complexity values.
-These two radical cases show the main reasons that could force the model to deviate from expected
-solutions: gathering areas into macro-regions or deﬁning regions specialized in goods with low
-complexity.
-Analysis of regions 1 and 3
-We conclude our analysis of the output with a comparison between region 1 and region 3. We
-choose these two for two reasons (1) both have a relatively similar size in Km 2; (2) the exports
-structure of both regions are distinct enough so that we can exemplify with them two types of
-regions in Colombia: regions following a diversiﬁcation strategy (region 3) and regions specialized
-in agriculture or extractive economic activities (region 1).
-In Figure 14 and Figure 15 we provide a thorough description of region 1 and region 3 that may
-be useful for policy making if we regard them as innovation ecosystems. We provide a detailed
-account of the exports of each region in the form of tree diagrams in part (c) of each ﬁgure. These
-diagrams are classiﬁed according to the communities identiﬁed and described in Figure 10b. It is
-worth noting that these communities do not follow any standard industrial classiﬁcation, but are
-completely determined with clustering methods (Louvain algorithm). Thus, it is possible to have
-industries which do not seem to belong to the corresponding productive sector. The size of the
-boxes within each category are weighted by the betweness centrality (BC) of the industry as a node
-in the PS. As discussed before, the BC tells us how central a node is in the diﬀusion of a country on
-the PS. Actually, we may think of them as stepping-stones in the process of reaching more valuable
-or complex nodes. Thus, since region 1 and region 3 are intended to foster innovation processes
-over the short and long run, policy makers should focus not only on the complex goods, but in those
-which are essential to move towards them.
-Region 1 is specialized in the reﬁnement of petroleum and contributes 18% of the 44% of the
-share of the petroleum in Colombian exports. Even more dramatically, the origin of this export
-is concentrated in one city into region 1 (Barrancabermeja) which has one of the most important
-reﬁneries of the country. On top of this, after taking the subset of goods that belong to the PS with
-the prescribed threshold (which excludes the petroleum) we see that region 1 is still specialized in
-the production of commodities such as melons and tomatoes (see Figure 14c). In contrast, region
-3 has relatively strong industries contributing signiﬁcantly in the production of complex goods
-(reaction & catalytic products, acrylic polymers, other rubber products, etc.) combined with the
-production of commodities (in the rural parts of the region) such as fermented milk, cheese and so
-forth (see Figure 15c).
-33
-The graphic information provided in parts (b) and (c) of Figure 14 and Figure 15 enables us to
-give a more detailed answer to the issue of determining the current situation of the region. In fact,
-from Table 2 we already know the average complexity, the number of industries and how central
-the goods of each region on average are. From Figure 14 and Figure 15 we can explain in what
-sense region 3 is more complex and more central (on average) than region 1. Since the boxes in
-the tree diagrams in Figure 14c and Figure 15c also contain information about the complexity of
-goods normalized between 0 and 1 (Comp) and the share of the country in total exports of each
-good of the country during that year (Sh), we can easily observe that products in region 3 account
-for both a large share of exports and a high complexity (in contrast with region 1). On top of this,
-the network of available and target goods rendered in part (b) of Figure 14 and Figure 15 allow us to
-see how likely existing industries will thrive. For example, we point out that in region 3 the clusters
-of Clothing and fabrics and Chemicals are bigger and better connected than in region 1. This is of
-particular interest in terms of complexity since the cluster of Chemicals in each region contains (in
-average) more complex goods than the other clusters.
-Finally, we present prospective strategies of innovation for each region. Our implementation of
-the 𝑝-IE model ﬁnds 25 target nodes for Colombia. All 25 targets are described in Table 3 together
-with their respective complexity values and the probability of each of the two regions explored to
-introduce these new goods in their economy. These probabilities are computed as a weighted sum
-of the following type
-Prob Reg 𝑗 (𝑣) =
-∑
-𝑖∈𝑅 𝑗
-∑
-𝑙∈𝑃 𝑟𝑖𝑙 𝑦𝑙𝑣
-∑
-𝑙∈𝑃 𝑦𝑙𝑣
-. (18)
-where v is the target good, 𝑅 𝑗 is the set of areas forming the region 𝑗 (for 𝑗=1,2). This
-computation is a linearized and continuous version of the formula proposed by Alshamsi et al.
-(2018). Since our computations use as inputs shares of the regions with respect to the total
-production of the country, these probabilities must be understood in a relative way, i.e., how likely
-a region is to develop comparative advantage in a good with respect to another. We notice that
-region 3 has a positive probability to branch into all 25 products, whereas region 1 only exhibits 21
-products with positive probability. We can illustrate how to use this information with two simple
-examples. Combining parts (b) and (c) of Figure 14 and Figure 15 with Table 3 we notice that
-region 3 has a considerably higher probability of developing comparative advantage in the last 4
-goods listed in Table 3 because all of them are highly related to goods that are intensively produced
-by region 3 and that belong to the cluster of Clothing and fabrics which is highly connected in this
-region. On the other hand, the most complex target good (fork-Lifts) has a considerably higher
-probability to be produced in region 3 compared with region 1. This diﬀerence underscores the fact
-that region 3 produces a signiﬁcantly higher share of the products in the cluster of Metals related to
-forklifts in the PS as we can see in Figure 15b and Figure 15c, respectively.
-34
-Name Complexity Prob Reg1 Prob Reg3
-Fork-Lifts 0.76808 0.095% 14.164%
-Lubricating Products 0.74126 0.070% 7.620%
-Transmissions 0.72552 0.101% 4.427%
-Electrical Lighting & Signalling Equipment 0.70289 0.129% 6.088%
-Vehicle Parts 0.69214 0.130% 4.803%
-Large Flat-Rolled Iron 0.68408 2.518% 4.728%
-Rock Wool 0.68167 1.619% 3.608%
-Lifting Machinery 0.67676 2.320% 0.310%
-Traﬃc Signals 0.67154 0.104% 2.662%
-Iron Springs 0.67059 0.149% 3.452%
-Locomotive Parts 0.66780 1.946% 4.356%
-Rubber Pipes 0.65993 0.129% 5.466%
-Engine Parts 0.64322 0.153% 3.529%
-Metal Insulating Fittings 0.63526 0.245% 9.380%
-Electric Motor Parts 0.62512 0.119% 3.983%
-Glass Fibers 0.60791 0.001% 0.017%
-Whey 0.58710 0.000% 14.066%
-Electrical Insulators 0.58070 0.000% 4.167%
-Letterstock 0.53960 0.000% 7.697%
-Bovine Meat 0.50841 0.000% 17.160%
-Tulles & Net Fabric 0.34832 0.719% 8.273%
-Other Non-Knit Clothing Accessories 0.32376 0.054% 15.447%
-Other Synthetic Fabrics 0.32241 0.376% 27.458%
-Cotton Sewing Thread 0.31512 0.102% 26.012%
-Textile Scraps 0.29533 0.602% 60.167%
-Table 3: Target industries for the solution ranked by complexity. In here Complexity stands for the
-standardized complexity index of the goods (17), Prob Reg 1 and Prob Reg3 are the probabilities of region
-1 and region 3 to produce such goods, respectively, computed using ( 18). All 25 have a positive probability
-to appear in region 3, nonetheless there are four industries that do not have any related activities in region 1
-and correspond to the zeroes in the third column.
-35
-(a) Map of region 1.
-Engine Parts
-Cellulose Fibers PaperElectrical Lighting & Signalli...
-Vehicle Parts
-Knit Sweaters
-Aqueous Paints
-Light Rubberized Knitted Fabric
-Other Coloring MatterLifting Machinery
-Knit T-shirts
-Paper Containers
-Other Rubber Products
-Raw Plastic Sheeting
-Glass Fibers
-Transmissions
-Rubber Pipes
-Lubricating Products
-Iron Springs
-Knit Men's Undergarments
-Textile Scraps
-Plastic Pipes
-Glues
-Metal Insulating Fittings
-Large Flat-Rolled Iron
-Knit Men's Shirts
-Knit Babies' Garments
-Non-Knit Women's Suits
-Toilet Paper
-Confectionery Sugar
-Knit Women's Suits
-Other Synthetic Fabrics
-Knit Women's Shirts
-Other Plastic Sheetings
-Non-Knit Men's Suits
-Fork-Lifts
-Electric Motor Parts
-Acrylic Polymers
-Glaziers Putty
-Other Non-Knit Clothing Access...
-Tulles & Net Fabric
-Knit Women's Undergarmnets
-Other Plastic ProductsLocomotive Parts
-Shaped Paper
-Cotton Sewing Thread
-Traffic Signals
-Plastic Lids
-Rock Wool (b) Location of region 1 in the PS.
-(c) Exports of region 1 per cluster.
-Figure 14: Figure 14a depicts the geographic location and the areas that form region 1, Figure 14b depicts
-in green the target goods of region 1. All the other nodes correspond to available goods in the region colored
-according to the nomenclature established in Figure 14b. The box diagram depicted in Figure 14cto the
-betweenness centrality of the nodes in the PS and each box also contains the share of the region in that
-activity with respect to the national value (Sh) and the respective normalized complexity index (Comp).
-36
-(a) Map of region 1.
-Paper ContainersOther Vegetables
-Raw Plastic Sheeting
-Nonaqueous PaintsOther Edible Preparations
-Silicone
-Chocolate
-Transmissions
-Paper Labels
-Reaction & Catalytic Products
-Lubricating Products
-Iron Springs
-Jams Plastic Pipes
-Glues
-Concentrated Milk
-Knit Women's ShirtsKnit Men's Undergarments
-Knit Women's Coats
-Amino-resins
-Non-Knit Men's Suits
-Glaziers Putty
-Knit Women's Suits
-Labels
-Tulles & Net Fabric Lifting Machinery
-Locomotive PartsPlastic Building MaterialsFlavored Water
-Perfume Plants
-Other Processed Fruits & Nuts
-Wood CarpentryKnit Men's Suits
-Perfumes
-Citrus
-Particle Board
-Soap
-Non-Knit Women's Coats Rubber Pipes
-Knit Socks & Hosiery
-Metal Insulating FittingsKnit Babies' GarmentsNon-Knit Women's Suits
-Other Processed Vegetables
-Leather Apparel
-Bovine Meat
-Other Printed Material
-Electrical Insulators
-Baked Goods
-Letterstock
-Electrical Lighting & Signalli...
-Vehicle Parts
-Pasta
-Light Rubberized Knitted Fabric
-Whey
-Other Coloring Matter
-Knit T-shirts
-Cosmetic Products
-Cellulose Fibers Paper
-Knit Sweaters
-GrapesOther Knit Garments
-Butter
-Shaving Products
-Tropical Fruits
-Textile Scraps
-Glass Fibers
-Knit Men's Shirts
-Toilet Paper
-Cleaning Products
-Cheese
-Other Plastic Sheetings
-Facial Tissue
-Acrylic Polymers
-Shaped Paper
-Traffic Signals
-Fermented Milk ProductsRock Wool
-Engine Parts
-Other Knit Clothing Accessories
-Sauces & Seasonings
-Knit Activewear
-Aqueous Paints
-Plastic Wash Basins
-Plastic Housewares
-Paper Notebooks
-Large Flat-Rolled Iron
-Other Synthetic Fabrics
-Other Leather Articles
-Fork-Lifts
-Electric Motor Parts
-Other Non-Knit Clothing Access...Knit Women's Undergarmnets
-Other Plastic Products
-Other Rubber Products
-Cotton Sewing Thread
-Plastic Lids
-Hair Products (b) Location of region 1 in the PS.
-(c) Exports of region 1 per cluster.
-Figure 15: This ﬁgure is analogous to Figure 14. We want to stress the fact that the PS of region 1 depicted
-by Figure 15b is a strict subset of the one depicted in Figure 14b. In particular, region 3 has a larger set of
-available and target nodes. Also, it is important to notice the change in the composition of the tree map in
-Figure 15c with respect to the one in Figure 15c.
-37
-6 Conclusions
-In this paper we introduced a new member of the𝑝-regions clustering methods called the𝑝-Innovation
-Ecosystems (p-IE) model. This model adds a new layer of complexity into the set of 𝑝-regions
-models incorporating an underlying network structure that captures possible interactions between
-agents within the geographic areas. The main application (and motivation) of the model is the study
-of the evolution of the economic output based on recent developments of economic complexity and
-evolutionary economic theory. More precisely, this model consists in the aggregation of n areas into
-p spatially contiguous regions that (1) maximizes the number of relevant interactions among the
-industries within the same region; and (2) identify strategic relationships between industries within
-regions that maximize the probability of activating innovation processes that allow the region to
-jump to more complex relevant goods yet to appear in the economy. Formally, the 𝑝-IE model was
-formulated as MIP problem with a corresponding heuristic solution. From the economic point of
-view, we introduced this model as an application and extension of the theory of Hausmann and
-Hidalgo (done at the level of countries) to the study of the industrial evolution at regional levels.
-From the perspective of policy development, we introduced several metrics as well as suggested
-how they might be applied in conjunction with the 𝑝-IE model. This approach will help policy
-makers diagnose and assess the actual performance of the economic regions and the potential
-performance of each of the regionalizations proposed by the model. We introduced these ideas
-in a case of study for the municipalities of Colombia and were able to identify 25 innovation
-ecosystems, which we ranked according to their contribution to the total exports of Colombia. We
-found a positive association between the complexity of these regions, their level of exports and
-the growth of their level of exports. Also, a further analysis applied to the ﬁrst and third regions
-(according to our classiﬁcation) showed how to obtain inputs that would help the policy makers
-design policies to exploit the current situation of the regions (amount of production) and to enhance
-the production of key industries in the innovation process (with high betweenness centrality) so that
-the target industries (with a high complexity) arise within the regions.
-As it is formulated, the p-IE model can be implemented to other clustering problems as long
-as the situation can be described in terms of two inputs: (1) distribution of areas inside a region
-which contain agents or attributes of some sort, (2) a network structure that relates the agents or
-attributes identifying the most important attributes or agents and the key interactions among them.
-We suggest two alternative applications of this model. First, given an input-output matrix (of
-money transfers among industries) we could use the model to produce optimal regions so that the
-policy maker can identify the supply chains, preserve them within the resulting regions and design
-strategies to complete the chains inside the regions. Second, we can think in a scenario involving
-a network of amenities in a city (such as hospitals, schools, museums, gas stations, etc.) and the
-commuting ﬂows or connectivity ﬂows weighting the links among them. In this case, it would
-be possible to apply the model to divide the city into optimal zones in which a citizen could ﬁnd
-well-connected and complementary sets of amenities. The model also could be used to identify
-the lacking amenities within each zone and measure the extent to which a given zone is not yet
-self-contained or self-suﬃcient. This kind of exercise would be a relevant contribution to solve
-38
-mobility issues and to promote the use of non-motorized transport methods.
-Our approach in this paper is static by nature; therefore, its usefulness may vary when the
-underlying economic and network structure change. Furthermore, since the main application of this
-model is intended to enhance the economic growth and the innovation through the implementation
-of local policies, it is necessary to better understand the behavior of the model in dynamic scenarios;
-namely, when many target goods are reached and a new regionalization is required to guarantee
-the optimality of the solution, or when the aims of the policy makers are directed to a speciﬁc set
-of industries rather than the ones dictated by the economic complexity. This extension is the main
-topic of a forthcoming paper.
-References
-Alshamsi, A., Pinheiro, F. L., and Hidalgo, C. A. (2018). Optimal diversiﬁcation strategies in the
-networks of related products and of related research areas. Nature communications, 9(1):1–7.
-Arthur, D. and Vassilvitskii, S. (2006). k-means++: The advantages of careful seeding. Technical
-report, Stanford.
-Balassa, B. (1964). The purchasing-power parity doctrine: a reappraisal. Journal of political
-Economy, 72(6):584–596.
-Barabási, A.-L. et al. (2016). Network science. Cambridge university press.
-Blondel, V . D., Guillaume, J.-L., Lambiotte, R., and Lefebvre, E. (2008). Fast unfolding of
-communities in large networks. Journal of statistical mechanics: theory and experiment ,
-2008(10):P10008.
-Boschma, R. (2017). Relatedness as driver of regional diversiﬁcation: A research agenda. Regional
-Studies, 51(3):351–364.
-Brandes, U. (2001). A faster algorithm for betweenness centrality. Journal of mathematical
-sociology, 25(2):163–177.
-Bustos, S., Gomez, C., Hausmann, R., and Hidalgo, C. A. (2012). The dynamics of nestedness
-predicts the evolution of industrial ecosystems. PloS one, 7(11):e49393.
-Caragliu, A. and Nijkamp, P . (2016). Space and knowledge spillovers in european regions: the
-impact of diﬀerent forms of proximity on spatial knowledge diﬀusion. Journal of Economic
-Geography, 16(3):749–774.
-Cliﬀ, A. D., Haggett, P ., Ord, J. K., Bassett, K. A., Davies, R., Bassett, K. L., et al. (1975). Elements
-of Spatial Structure: A Quantative Approach , volume 6. Cambridge University Press.
-39
-Cova, T. J. and Church, R. L. (2000). Contiguity constraints for single-region site search problems.
-Geographical Analysis, 32(4):306–329.
-De Groot, H. L., Poot, J., and Smit, M. J. (2016). Which agglomeration externalities matter most
-and why? Journal of Economic Surveys , 30(4):756–782.
-Diodato, D., Neﬀke, F., and OClery, N. (2018). Why do industries coagglomerate? how marshallian
-externalities diﬀer by industry and have evolved over time. Journal of Urban Economics ,
-106:1–26.
-Duque, J. C., Anselin, L., and Rey, S. J. (2012). The max-p-regions problem. Journal of Regional
-Science, 52(3):397–419.
-Duque, J. C., Church, R. L., and Middleton, R. S. (2011). The p-regions problem. p-. Geographical
-Analysis, 43(1):104–126.
-Duque, J. C., Ramos, R., and Suriñach, J. (2007). Supervised regionalization methods: A survey.
-International Regional Science Review , 30(3):195–220.
-Fischer, M. M. (1980). Regional taxonomy: a comparison of some hierarchic and non-hierarchic
-strategies. Regional Science and Urban Economics , 10(4):503–537.
-Garﬁnkel, R. S. and Nemhauser, G. L. (1970). Optimal political districting by implicit enumeration
-techniques. Management Science, 16(8):B–495.
-Glover, F. (1977). Heuristics for integer programming using surrogate constraints. Decision
-sciences, 8(1):156–166.
-Glover, F. (1989). Tabu searchpart i. ORSA Journal on computing , 1(3):190–206.
-Glover, F. (1990). Tabu searchpart ii. ORSA Journal on computing , 2(1):4–32.
-Hausmann, R., Hidalgo, C., Stock, D., and Yildirim, M. A. (2019). Implied comparative advantage.
-Hausmann, R. and Hidalgo, C. A. (2011). The network structure of economic output. Journal of
-Economic Growth, 16(4):309–342.
-Hausmann, R., Hidalgo, C. A., Bustos, S., Coscia, M., Simoes, A., and Yildirim, M. A. (2014). The
-atlas of economic complexity: Mapping paths to prosperity . Mit Press.
-Hausmann, R. and Neﬀke, F. M. (2019). The workforce of pioneer plants: The role of worker
-mobility in the diﬀusion of industries. Research Policy, 48(3):628–648.
-Hidalgo, C. A., Klinger, B., Barabási, A.-L., and Hausmann, R. (2007). The product space conditions
-the development of nations. Science, 317(5837):482–487.
-Jacobs, J. (2016). The economy of cities . Vintage.
-40
-Jung, J. and López-Bazo, E. (2017). Factor accumulation, externalities, and absorptive capacity in
-regional growth: evidence from europe. Journal of Regional Science , 57(2):266–289.
-Keane, M. (1975). The size of the region-building problem. Environment and Planning A ,
-7(5):575–577.
-Kim, H., Chun, Y ., and Kim, K. (2015). Delimitation of functional regions using ap-regions problem
-approach. International Regional Science Review , 38(3):235–263.
-Krugman, P . (1991). Increasing returns and economic geography. Journal of political economy ,
-99(3):483–499.
-Laura, J., Li, W., Rey, S. J., and Anselin, L. (2015). Parallelization of a regionalization
-heuristic in distributed computing platforms–a case study of parallel-p-compact-regions problem.
-International Journal of Geographical Information Science , 29(4):536–555.
-Li, W., Church, R. L., and Goodchild, M. F. (2014). The p-compact-regions problem. Geographical
-Analysis, 46(3):250–273.
-Macmillan, W. and Pierce, T. (1994). Optimization modelling in a gis framework: the problem of
-political redistricting. Spatial analysis and GIS , pages 221–246.
-Martin, R. and Sunley, P . (1996). Paul krugman’s geographical economics and its implications for
-regional development theory: a critical assessment. Economic geography, 72(3):259–292.
-Mehrotra, A., Johnson, E. L., and Nemhauser, G. L. (1998). An optimization based heuristic for
-political districting. Management Science, 44(8):1100–1114.
-Neﬀke, F. and Henning, M. (2013). Skill relatedness and ﬁrm diversiﬁcation. Strategic Management
-Journal, 34(3):297–316.
-Neﬀke, F., Henning, M., and Boschma, R. (2011). How do regions diversify over time? industry
-relatedness and the development of new growth paths in regions. Economic geography ,
-87(3):237–265.
-O’Clery, N., Yildirim, M. A., and Hausmann, R. (2018). Productive ecosystems and the arrow of
-development. arXiv preprint arXiv:1807.03374.
-Openshaw, S. and Rao, L. (1995). Algorithms for reengineering 1991 census geography.
-Environment and planning A , 27(3):425–446.
-OClery, N., Curiel, R. P ., and Lora, E. (2019). Commuting times and the mobilisation of skills in
-emergent cities. Applied Network Science, 4(1):118.
-Rosenthal, S. S. and Strange, W. C. (2004). Evidence on the nature and sources of agglomeration
-economies. In Handbook of regional and urban economics, volume 4, pages 2119–2171. Elsevier.
-Schumpeter, J. A. (1939). Business cycles, volume 1. McGraw-Hill New Y ork.
-41
-She, B., Duque, J. C., and Y e, X. (2017). The network-max-p-regions model. International Journal
-of Geographical Information Science, 31(5):962–981.
-Solow, R. M. (1956). A contribution to the theory of economic growth. The quarterly journal of
-economics, 70(1):65–94.
-Solow, R. M. (1957). Technical change and the aggregate production function. The review of
-Economics and Statistics, pages 312–320.
-Vickrey, W. (1961). On the prevention of gerrymandering. Political Science Quarterly ,
-76(1):105–110.
-Zoltners, A. A. and Sinha, P . (1983). Sales territory alignment: A review and model. Management
-Science, 29(11):1237–1256.
-42
+∑︁
+∀𝑎𝑖 𝑗 ∈𝑟𝑖
+𝑠𝑖 𝑗) ≥ 𝑇 , ∀𝑟𝑖 ∈ 𝑅 (1)
+Objectives:
+• Maximizing 𝑝.
+• Minimizing the total heterogeneity 𝐻 (𝑅) in dissimilarity
+attributes belonging to the same region.
+In this paper, 𝐻 (𝑅) is defined as follows:
+𝐻 (𝑅) =
+∑︁
+∀𝑟𝑖 ∈𝑅
+∑︁
+∀𝑎𝑖 𝑗,𝑎𝑖𝑘 ∈𝑟𝑖
+|𝑑𝑖 𝑗 − 𝑑𝑖𝑘 | (2)
+The first two constraints impose that the output has at least one
+region (𝑝 ≥ 1), and each region has at least one area (|𝑟𝑖 | ≥ 1). The
+third and fourth constraints ensure that each area is assigned to
+exactly one region, so the regions are both disjoint and covering
+all input areas. The last constraint ensures that each region has a
+total value of the spatially extensive attribute 𝑠 equals to at least
+the input threshold 𝑇 , e.g., total population of each region ≥ 𝑇 .
+The objectives are two-fold. The first objective is maximizing
+the number of output regions 𝑝. This is the main objective of MP-
+regions problems, and it is prioritized over the second objective.
+This objective allows to eliminate the number of regions as a user-
+input, which addresses a major limitation in the previous region-
+alization problems. The second objective favors output regions to
+be as homogeneous as possible, measured as a function of a dis-
+similarity attribute. This attribute is not necessarily to be a spatial
+attribute. For example, a social scientist might need to produce
+regions that are homogeneous in average income level.
+4 SCALABLE MAX-P REGIONALIZATION
+(SMP)
+This section presents SMP; which builds on a prevalent two-stage
+framework to address NP-hard problems, finding an initial solution
+and then improving it. SMP consists of three phases: region growing
+phase, region gluing phase, and optimization phase.
+The region growing phase efficiently builds a set of initial regions
+with a maximum size over multiple iterations. The region gluing
+phase finalizes building the initial regions by assigning any remain-
+ing areas that do not belong to any region. Finally, the optimization
+phase improves the quality of the solution.
+The main observation of our technique is that all existing tech-
+niques generate a large number of enclave areas while growing
+initial regions. These enclaves are scattered all over the space, so
+SMP: Scalable Max-P Regionalization SIGSPATIAL ’22, November 1–4, 2022, Seattle, WA, USA
+they leave gaps between regions but cannot form regions them-
+selves. SMP employs a layered growing technique that increases the
+number of initial regions through optimizing the area selection
+criteria for this objective while maintaining an efficient runtime.
+The layered growing technique changes the criteria of choosing the
+seed areas and the criteria of growing the regions from total ran-
+domness to constrained randomness. Existing techniques select a
+random seed area every time they grow a new region. Then, the
+region grows based on the spatial neighbors of this seed area. The
+criteria of selecting a total random seed for every region does not
+give any guarantee about the relative spatial distribution of regions.
+So, on average, it scatters regions all around the space and leaves
+a large number of enclaves in between. In state-of-the-art region
+growing, Figure 1a, six enclave areas are scattered in the space,
+leaving gaps between the two grown regions. The layered-growth
+instead groups these enclaves in one part of the space, enabling
+to grow three regions instead of two and reduces the number of
+enclaves as depicted in Figure 1b.
+Region Growing Phase. At the beginning of the phase, the seed
+for the first region 𝑟1 is chosen at random. Then all the neighbor
+areas of 𝑟1 are stored in a queue 𝑞𝑟1. While growing 𝑟1, we add
+the first unassigned area from 𝑞𝑟1 to the region and update 𝑞𝑟1
+accordingly. This ensures that the unassigned neighbor areas of 𝑟1
+are processed and added to the region layer by layer, which leads to
+a compact region shape that reduces the probability of forming gaps
+between 𝑟1 and other regions to be grown later. If there exists no
+unassigned neighbor areas but the total extensive attribute of 𝑟1 is
+still below the threshold, then all the areas are marked as enclaves.
+Once the region reaches the threshold, it is added to the list of
+regions and a new region starts growing. After the first region,
+for all subsequent regions, the seed area is chosen from the direct
+neighbor areas of existing regions. For region 𝑟𝑖+1, the seed area
+is the first unassigned area from the last grown region 𝑟𝑖’s queue
+𝑞𝑟𝑖 . If all the areas in 𝑞𝑟𝑖 are assigned, then the algorithm turns to
+𝑞𝑟𝑖 −1, 𝑞𝑟𝑖 −2, up to 𝑞𝑟1. This phase is repeated MI times to produce
+different initial solutions, and the solution with the largest number
+of regions p is kept for further processing.
+Region Gluing Phase. The initial solution produced by the
+region growing phase might include enclave areas that are not
+assigned to any region. The region gluing phase assigns enclave
+areas to existing regions. To do this, we iterate over the list of
+enclave areas. For each enclave area, we list their neighbor areas
+from the spatial neighborhood graph, and in turn we list their
+neighbor regions. If it has no neighbor regions, we skip it in this
+step, and it is picked up again when at least one of its neighbors
+is assigned to a region. If it has one neighbor region, it is assigned
+to that region. If it has multiple neighbor regions, it is assigned to
+the region that gives the lowest heterogeneity value increase. We
+repeat this process until assigning all the enclaves.
+Optimization Phase. The optimization phase optimizes the
+heterogeneity value H(R) of the initial solution. We use a heuristic
+search technique based on a modified simulated annealing (MSA)
+algorithm [30]. The technique moves areas from a region to another
+neighbor region so that the H(R) value is improved. The original
+simulated annealing algorithm [7] generates a set of movable areas
+by identifying all the areas that could be moved from one region
+(donor region) to the neighboring regions (recipient regions). The
+(a) State-of-the-art regions
+ (b) Layered-growth regions
+Figure 1: Layered-growth impact on the number of regions
+algorithm then selects an area to move randomly without violating
+the input constraints. The move is accepted if it improves the H(R)
+value of the current solution. Otherwise, the move is accepted with
+a probability calculated using the Boltzmann’s equation:e-Δ H/TM
+where -Δ H represents the heterogeneity variation on both donor re-
+gion and recipient region, and TM represents the temperature. The
+temperature TM is decreased at each iteration at a fixed cooling rate
+PH until TM reaches a predefined value. The MSA algorithm [30]
+reduces the overhead of recomputing valid moves and introduces a
+tabu list, similar to tabu search [12], to prevent search cycles.
+An area is considered movable if it satisfies two conditions: (1) the
+donor region’s threshold remains aboveT after removing the area,
+(2) The area is not an articulation area (i.e. moving the area does
+not break the spatial contiguity of the donor region). Enforcing the
+second condition involves identifying the articulation areas which
+is a computational bottleneck. To solve this, we employ Tarjan’s
+algorithm [
+24] to find all the articulation areas in a single graph
+traversal.
+5 EXPERIMENTAL EV ALUATION
+This section provides an experimental evaluation for SMP.
+Experimental Setup. We evaluate our proposed technique SMP
+against two alternatives: (1) state-of-the-art technique for MP-
+regions problem [30], denoted as MP, (2) An optimized version
+of MP, denoted as MP*, that uses a set instead of a list to maintain
+the regions’ unassigned neighbors while growing the regions. We
+use three performance measures: runtime as a measure for scalabil-
+ity, number of regions 𝑝 and heterogeneity as measures for solution
+quality. We use the dataset size (DS) to evaluate the performance
+with the following values: ≈ 10, 20, 30, 35, 40, 50, 60, 70 (×103) areas.
+The maximum iterations for the region growing phase MI is set to
+40, the threshold T is set to 250 ×106, and the number of iterations
+in the optimization phase NI is set to 50. The length of the tabu
+list (LI), the temperature of computing the Boltzmann’s probability
+(TM), and its cooling rate ( PH), are set to 100, 1, and 0.9, respec-
+tively, extending the optimal values from [7]. All the experiments
+are based on Java 14 implementation and run on Ubuntu 16.04 with
+a quad-core 3.5GHz processor and 128GB of memory.
+Evaluation datasets. We evaluate all techniques on the TIGER
+Line shape files for (i) the census tracts of the US states, and (II) the
+county subdivisions [3]. In our experiment, we define the spatially
+extensive attribute over the A W ATERattribute that represents the
+water area. The dissimilarity attribute is defined over the ALAND
+attribute that represents the land area. The county subdivisions
+dataset includes 35
+×103 areas. For the census tracts dataset, the
+SIGSPATIAL ’22, November 1–4, 2022, Seattle, WA, USA Hussah Alrashid Yongyi Liu Amr Magdy
+ 0
+ 200
+ 400
+ 600
+ 800
+ 1000
+ 1200
+ 1400
+10 20 30 35 40 50 60 70
+Time (seconds)
+Dataset Size (thousand)
+SMP MP MP*
+(a) Dataset Size ( DS)
+Figure 2: Runtime scalability varying DS values
+ 0
+ 2000
+ 4000
+ 6000
+ 8000
+ 10000
+ 12000
+ 14000
+10 20 30 35 40 50 60 70
+p
+Dataset Size (thousand)
+SMP MP MP*
+(a) Impact on 𝑝
+ 0
+ 1x1012
+ 2x1012
+ 3x1012
+ 4x1012
+ 5x1012
+ 6x1012
+ 7x1012
+10 20 30 35 40 50 60 70
+H(R)
+Dataset Size (thousand)
+SMP MP MP* (b) Impact on the Heterogeneity
+Figure 3: Solution quality varying DS values
+shape files of different neighboring states are merged together to
+form seven datasets of increasing sizes ranging from 10 ×103 to
+70×103 areas.
+Performance Evaluation. Figure 2a shows thatSMP have linear
+runtime scalability with increasing dataset size ranging 0.9 to 54
+seconds. While on the other hand, MP encounters an exponentially
+increasing runtime ranging from 22 to 1297 seconds. MP* is faster
+than MP with a runtime ranging from 2 to 53 seconds but is still
+slower than SMP. Our technique is 10 to 29 times faster than MP
+for the largest dataset. The speedup ratio increases with dataset
+sizes. The changes introduced in SMP, either in the region growing
+phase or the optimization phase, are the dominating factors in
+speeding up the processing. Figure 3 shows that increasing DS
+increases both 𝑝 (Figure 3a) and the heterogeneity (Figure 3b) for
+all alternatives. Since larger datasets have more areas, using the
+same default threshold value leads to growing more regions that
+adds to the heterogeneity score.SMP generates 26-370 regions more
+than MP and MP*. SMP has a significantly lower heterogeneity
+than the other competitors. The better 𝑝 value of SMP comes from
+growing the regions with small inter-regional gaps, which leads
+to smaller number of scattered enclaves and increases the number
+of regions. Dividing the same dataset into more regions leads to
+reducing the heterogeneity due to having a fewer number of area
+pairs that contribute to computing the heterogeneity.
+6 CONCLUSIONS
+This paper addresses the scalability issue of MP-regions. MP-regions
+is a regionalization problem that clusters spatial areas into homo-
+geneous regions. MP-regions is an NP-hard problem. Many of the
+existing work experience performance degradation when solving
+MP-regions on large datasets. We propose SMP module to provide
+efficient and scalable approximate solutions for MP-regions. It em-
+ploys multiple phases to find an initial solution then optimize it
+using heuristic search. Our experimental evaluation has shown the
+superiority of our technique against the state-of-the-art techniques
+in both scalability and solution quality.
+REFERENCES
+[1] Daniel Arribas-Bel and Charles R Schmidt. 2013. Self-Organizing Maps and the
+US Urban Spatial Structure. EPB 40 (2013), 362–371.
+[2] Subhodip Biswas, Fanglan Chen, Zhiqian Chen, Andreea Sistrunk, Nathan Self,
+Chang-Tien Lu, and Naren Ramakrishnan. 2019. REGAL: A Regionalization
+Framework for School Boundaries. In SIGSPATIAL. 544–547.
+[3] U.S. Census Bureau. 2019. TIGER/Line Shapefile, 2016, Series
+Information for the Current Census Tract State-based Shapefile.
+https://catalog.data.gov/dataset/tiger-line-shapefile-2016-series-information-
+for-the-current-census-tract-state-based-shapefile.
+[4] U.S. Census Bureau. 2021. About the American Community Survey.
+https://www.census.gov/programs-surveys/acs/about.html.
+[5] U.S. Census Bureau. 2021. ACS Data Stories–Stats in Action!
+https://www.census.gov/programs-surveys/acs/about/acs-data-stories.html.
+[6] David Combe, Christine Largeron, Elöd Egyed-Zsigmond, and Mathias Géry. 2012.
+Combining Relations and Text in Scientific Network Clustering. In ASONAM.
+1248–1253.
+[7] Juan C Duque, Luc Anselin, and Sergio J Rey. 2012. The Max-P-Regions Problem.
+JRS 52 (2012), 397–419.
+[8] Juan C Duque, Richard L Church, and Richard S Middleton. 2011. The P-Regions
+Problem. Geographical Analysis 43 (2011), 104–126.
+[9] Juan C Duque, Jorge E Patino, Luis A Ruiz, and Josep E Pardo-Pascual. 2015.
+Measuring Intra-urban Poverty Using Land Cover and Texture Metrics Derived
+from Remote Sensing Data. LUP 135 (2015), 11–21.
+[10] Juan Carlos Duque, Raúl Ramos, and Jordi Suriñach. 2007. Supervised Regional-
+ization Methods: A Survey. IRSR 30 (2007), 195–220.
+[11] David C Folch and Seth E Spielman. 2014. Identifying Regions Based On Flexible
+User-defined Constraints. IJGIS 28 (2014), 164–184.
+[12] Fred Glover. 1989. Tabu Search—Part I. ORSA 1 (1989), 190–206.
+[13] Diansheng Guo. 2008. Regionalization with Dynamically Constrained Agglomer-
+ative Clustering and Partitioning (REDCAP). IJGIS 22 (2008), 801–823.
+[14] Hyun Kim, Yongwan Chun, and Kamyoung Kim. 2015. Delimitation of Functional
+Regions Using a P-Regions Problem Approach. IRSR 38 (2015), 235–263.
+[15] Kamyoung Kim, Yongwan Chun, and Hyun Kim. 2017. p-Functional Clusters
+Location Problem for Detecting Spatial Clusters with Covering Approach. Geo-
+graphical Analysis 49 (2017), 101–121.
+[16] Jason Laura, Wenwen Li, Sergio J Rey, and Luc Anselin. 2015. Parallelization of a
+Regionalization Heuristic in Distributed Computing Platforms–a Case Study of
+Parallel-P-Compact-Regions Problem. IJGIS 29 (2015), 536–555.
+[17]
+Wenwen Li, Richard L Church, and Michael F Goodchild. 2014. An Extend-
+able Heuristic Framework to Solve the P-Compact-Regions Problem for Urban
+Economic Modeling. CEUS 43 (2014), 1–13.
+[18] Wenwen Li, Richard L Church, and Michael F Goodchild. 2014. The p-Compact-
+Regions Problem. Geographical Analysis 46 (2014), 250–273.
+[19] Yongyi Liu, Ahmed R. Mahmood, Amr Magdy, and Sergio Rey. 2022. PRUC:
+P-Regions with User-Defined Constraint. In VLDB. 491–503.
+[20] Maurizio Maravalle and Bruno Simeone. 1995. A Spanning Tree Heuristic for
+Regional Clustering. CSTM 24 (1995), 625–639.
+[21] Stan Openshaw. 1977. Optimal Zoning Systems for Spatial Interaction Models.
+EPA 9 (1977), 169–184.
+[22] Jorge E Patino, Juan C Duque, Josep E Pardo-Pascual, and Luis A Ruiz. 2014.
+Using Remote Sensing to Assess the Relationship Between Crime and the Urban
+Layout. Applied Geography 55 (2014), 48–60.
+[23] Ate Poorthuis. 2018. How to Draw a Neighborhood? The Potential of Big Data,
+Regionalization, and Community Detection for Understanding the Heterogeneous
+Nature of Urban Neighborhoods. Geographical Analysis 50, 2 (2018), 182–203.
+[24] Tarjan R. 1971. Depth-first Search and Linear Graph Algorithms. SICOM 1 (1971),
+114–121.
+[25] Sergio J Rey, Luc Anselin, David C Folch, Daniel Arribas-Bel, Myrna L Sas-
+tré Gutiérrez, and Lindsey Interlante. 2011. Measuring Spatial Dynamics in
+Metropolitan Areas. EDQ 25 (2011), 54–64.
+[26] Sergio J Rey and Myrna L Sastré-Gutiérrez. 2010. Interregional Inequality Dy-
+namics in Mexico. SEA 5 (2010), 277–298.
+[27] Bing She, Juan C Duque, and Xinyue Ye. 2017. The Network-Max-P-Regions
+Model. IJGIS 31 (2017), 962–981.
+[28] V. Sindhu. 2018. Exploring Parallel Efficiency and Synergy for Max-P Region
+Problem Using Python. Master’s thesis. Georgia State University.
+[29] Seth E Spielman and David C Folch. 2015. Reducing Uncertainty in the American
+Community Survey through Data-driven Regionalization. PloS ONE 10 (2015),
+e0115626.
+[30] Ran Wei, Sergio Rey, and Elijah Knaap. 2020. Efficient Regionalization for Spatially
+Explicit Neighborhood Delineation. IJGIS 35 (2020), 1–17.
+[31] Xinyue Ye, Bing She, and Samuel Benya. 2018. Exploring Regionalization in the
+Network Urban Space. JGSA 2 (2018), 4.
+[32] Yang Zhou, Hong Cheng, and Jeffrey Xu Yu. 2009. Graph Clustering Based on
+Structural/Attribute Similarities. VLDB 2 (2009), 718–729.

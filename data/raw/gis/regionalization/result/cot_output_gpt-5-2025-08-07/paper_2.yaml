@@ -5,54 +5,54 @@
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[24, 56]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[54, 55]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[55]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[3, 4, 6, 8, 9, 34, 35]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[15, 17]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Problem Formulation"
+  - "Prior Methods"
   "topic_labels":
   - "p-regions formulations"
 - "unique_context_marker": "[3, 4]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Top-down divisive edge-removal methods"
 - "unique_context_marker": "[3, 4, 8, 9, 14, 16, 27, 34]"
@@ -61,13 +61,13 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 2
   - 11
   "intent_labels":
-  - "Research Gap"
+  - "Problem Formulation"
   - "Problem Formulation"
   "topic_labels":
   - "Exact optimization models"
@@ -115,13 +115,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Exact optimization models"
+  - "Other Intent"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 2
   - 9
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
   - "Top-down divisive edge-removal methods"
@@ -131,7 +131,7 @@
   - 2
   - 9
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
   - "Top-down divisive edge-removal methods"
@@ -142,19 +142,19 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Heuristic concentration and model reduction"
+  - "Other Intent"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Bottom-up seeded agglomeration"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Bottom-up seeded agglomeration"
 - "unique_context_marker": "[33]"
@@ -163,7 +163,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Heuristic models with explicit contiguity"
+  - "Other Intent"
 - "unique_context_marker": "[48]"
   "block_ids":
   - 2
@@ -180,7 +180,7 @@
   - "Prospective Application"
   "topic_labels":
   - "p-regions formulations"
-  - "Contiguity-aware graph embeddings with attribute and interaction signals"
+  - "Other Intent"
 - "unique_context_marker": "[8, 9, 14, 33–35, 53]"
   "block_ids":
   - 6
@@ -204,17 +204,17 @@
   - "Prospective Application"
   "topic_labels":
   - "Bottom-up seeded agglomeration"
-  - "Enriched aggregate constraints"
+  - "Other Intent"
 - "unique_context_marker": "[50]"
   "block_ids":
   - 6
   - 8
   "intent_labels":
+  - "Other Intent"
   - "Domain Overview"
-  - "Problem Formulation"
   "topic_labels":
-  - "Heuristic models with explicit contiguity"
-  - "Alternative names"
+  - "Other Intent"
+  - "Other Intent"
 - "unique_context_marker": "[45]"
   "block_ids":
   - 6
@@ -223,8 +223,8 @@
   - "Algorithm/Principle Adoption"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Local search with area swaps and metaheuristics"
-  - "Local search with area swaps and metaheuristics"
+  - "Other Intent"
+  - "Other Intent"
 - "unique_context_marker": "[8, 9, 14, 34, 35, 53]"
   "block_ids":
   - 7
@@ -236,7 +236,7 @@
   "block_ids":
   - 7
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Local search with area swaps and metaheuristics"
 - "unique_context_marker": "[53]"
@@ -259,14 +259,14 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 9
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "[2]"
   "block_ids":
   - 10
@@ -278,6 +278,6 @@
   "block_ids":
   - 10
   "intent_labels":
-  - "Prior Methods"
+  - "Result Comparison"
   "topic_labels":
   - "Compactness-driven location–allocation approaches"

@@ -1,5 +1,5 @@
 title: 'EMP: Max-P Regionalization with Enriched Constraints'
-abstract: 'Abstract—Spatial regionalization is the process of grouping a set of spatial
+abstract: Abstract—Spatial regionalization is the process of grouping a set of spatial
   areas into spatially contiguous and homogeneous regions. This paper introduces an
   enriched max-p-regions (EMP) problem; a regionalization process that allows enriched
   user-defined constraints based on SQL aggregate functions. In addition to enabling
@@ -7,21 +7,14 @@ abstract: 'Abstract—Spatial regionalization is the process of grouping a set o
   to significantly push the expressiveness and effectiveness of the existing regionalization
   literature. The EMP problem is NP-hard and significantly enriches the existing regionalization
   problems. Such a major enrichment introduces several challenges in both feasibility
-  and scalability. To address these challenges, we propose the FaCT algorithm, a three-phase
-  greedy approach that finds a feasible set of spatial regions that satisfy EMP constraints
-  while supporting large datasets compared to the existing literature. Our extensive
-  experimental evaluation has demonstrated the effectiveness and scalability of our
-  techniques on several real datasets.
-
-
-  Index Terms—spatial, regionalization, max-p, aggregate'
+  and scalability. To address these challenges, we propose the Fa CT algorithm, a
+  three-phase greedy approach that finds a feasible set of spatial regions that satisfy
+  EMP constraints while supporting large datasets compared to the existing literature.
+  Our extensive experimental evaluation has demonstrated the effectiveness and scalability
+  of our techniques on several real datasets.
 abstract_is_verbatim: true
 segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
-
-  ## Abstract
-
-  <block id="0">
 
   Abstract—Spatial regionalization is the process of grouping a set of spatial areas
   into spatially contiguous and homogeneous regions. This paper introduces an enriched
@@ -31,21 +24,20 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   push the expressiveness and effectiveness of the existing regionalization literature.
   The EMP problem is NP-hard and significantly enriches the existing regionalization
   problems. Such a major enrichment introduces several challenges in both feasibility
-  and scalability. To address these challenges, we propose the FaCT algorithm, a three-phase
-  greedy approach that finds a feasible set of spatial regions that satisfy EMP constraints
-  while supporting large datasets compared to the existing literature. Our extensive
-  experimental evaluation has demonstrated the effectiveness and scalability of our
-  techniques on several real datasets.
+  and scalability. To address these challenges, we propose the Fa CT algorithm, a
+  three-phase greedy approach that finds a feasible set of spatial regions that satisfy
+  EMP constraints while supporting large datasets compared to the existing literature.
+  Our extensive experimental evaluation has demonstrated the effectiveness and scalability
+  of our techniques on several real datasets.
 
 
   Index Terms—spatial, regionalization, max-p, aggregate
 
 
-  </block>
-
   ## I. INTRODUCTION
 
-  <block id="1">
+  <block id="0">
+
 
   Regionalization is the process of clustering a set of areas into spatially contiguous
   and homogeneous regions. Unlike traditional clustering of multi-dimensional points,
@@ -143,7 +135,7 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   contradicts the objective of maximizing p.
 
 
-  To address these challenges, we introduce FaCT, a three-phase algorithm to solve
+  To address these challenges, we introduce Fa CT, a three-phase algorithm to solve
   the EMP problem. The first phase derives theoretical bounds to verify the feasibility
   of finding a solution given the user-defined constraints. In addition, in the case
   of infeasibility, it enables the user to potentially alter input data to satisfy
@@ -156,18 +148,18 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   the p to its theoretical upper bound. (b) The input and output of each step are
   designed exquisitely to reduce the search space for the following steps and mitigate
   the conflicts introduced by the different mathematical properties of different constraints.
-  (c) The steps are independent of each other, enabling FaCT to construct feasible
+  (c) The steps are independent of each other, enabling Fa CT to construct feasible
   solutions progressively and handle any arbitrary combinations of constraint types
   effectively and efficiently. (d) The algorithm provides multiple parameter tuning
   options so that the users can choose the best aggregate strategy according to the
   use case and the characteristic of the dataset. (e) The algorithm supports datasets
   with multiple connected components, while the MP-regions formulation supports only
-  a single connected component. The third phase of FaCT performs a local search adapting
+  a single connected component. The third phase of Fa CT performs a local search adapting
   the Tabu search [23] and swaps areas between regions to improve the overall heterogeneity
   of the regions.
 
 
-  Our experimental evaluation demonstrates the effectiveness of FaCT on real datasets.
+  Our experimental evaluation demonstrates the effectiveness of Fa CT on real datasets.
   We evaluate the impact of different threshold ranges, different combinations of
   constraints, and the scalability to process datasets. Our contributions are summarized
   as follows:
@@ -177,7 +169,7 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   - We prove the NP-hardness of the EMP problem.
 
-  - We propose FaCT; a three-phase greedy algorithm that provides approximate solutions
+  - We propose Fa CT; a three-phase greedy algorithm that provides approximate solutions
   for the EMP problem.
 
   - We perform an extensive experimental evaluation that shows the effectiveness of
@@ -195,7 +187,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ## II. RELATED WORK
 
-  <block id="2">
+  <block id="1">
+
 
   The regionalization problem originates from the demand for aggregating homogeneous
   regions in the analytical tasks performed by social scientists and statisticians
@@ -252,7 +245,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ## III. PROBLEM DEFINITION
 
-  <block id="3">
+  <block id="2">
+
 
   This section formally defines the enriched max-p regions (EMP) problem. Let A =
   {a1, a2, ..., an} denote the set of areas. Each area ai is defined by four attributes:
@@ -281,7 +275,7 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   Definition III.2 (Region). A region R is a set of g areas: R = {a1, a2, ..., ag},
   such that: (1) g ≥ 1, i.e., R contains at least one area. (2) Areas in R are spatially
-  contiguous, i.e., ∀ ai, aj ∈ R, ∃ a sequence of areas (ak,...,al) s.t. both (ai,
+  contiguous, i.e., ∀ai, aj ∈ R, ∃ a sequence of areas (ak,...,al) s.t. both (ai,
   ak) and (al, aj) are spatial neighbors, and every two consecutive areas in the sequence
   are spatial neighbors.
 
@@ -289,7 +283,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   Definition III.3 (Heterogeneity). Heterogeneity H(P) of a set of regions P is defined
   as:
 
-  H(P) = ∑_{∀ R∈ P} ∑_{∀ ai,aj ∈ R} |di − dj| (1)
+
+  H(P) = ∑∀ R∈P ∑∀ ai,aj ∈ R |di − dj|
 
 
   This definition of H is popular in the MP-regions literature, so it is recognized
@@ -297,22 +292,22 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   our work can support alternative definitions, such as improving spatial compactness
   or balancing multiple criteria. The reason is that our second phase, which is based
   on Tabu search as discussed in Section V, can deal with different optimization functions.
-  EMP Problem. The EMP problem is defined as follows:
 
+
+  EMP Problem. The EMP problem is defined as follows:
 
   Input: Given: (1) A set of n areas: A = {a1, a2, ..., an}. (2) A set of user-defined
   constraints C = {c1, c2, ..., cm}.
 
-
   Output: (1) A set of regions P = {R1, R2, ..., Rp}, where 1 ≤ p ≤ n and each region
-  Ri satisfies the below EMP constraints and objectives. (2) A set U0 = A − ⋃_{i=1}^{p}
+  Ri satisfies the below EMP constraints and objectives. (2) A set U0 = A − ⋃p i=1
   Ri, i.e., U0 contains all areas that are not assigned to any feasible region Ri,
   ∀1 ≤ i ≤ p. Areas in U0 may not be spatially contiguous.
 
 
   EMP Constraints:
 
-  - Ri ∩ Rj = ∅, ∀ Ri, Rj ∈ P ∧ i ≠ j
+  - Ri ∩ Rj = ∅, ∀Ri, Rj ∈ P ∧ i ≠ j
 
   - Ri satisfies all constraints cj ∈ C, ∀ 1 ≤ i ≤ p, 1 ≤ j ≤ m
 
@@ -356,7 +351,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ## IV. NP-HARDNESS OF EMP
 
-  <block id="4">
+  <block id="3">
+
 
   This section proves the NP-hardness of the EMP problem. The NP-hardness of the EMP
   problem follows the results that the MP-regions problem is NP-hard [1], [2], [15].
@@ -372,7 +368,7 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   Proof. Let X = (A, t) be an instance of the MP-regions problem. We construct an
   instance Y = (A′, C) of the EMP problem as follows: (1) For each area ai ∈ X.A,
-  add to Y.A′ an area a′_i = {i, bi, S′_i, di}, S′_i = {si}. (2) Let C = {(SUM, S′[0],
+  add to Y.A′ an area a′i = {i, bi, S′i, di}, S′i = {si}. (2) Let C = {(SUM, S′[0],
   t, ∞)}. (3) Let the number of regions p equal k. This reduction is of polynomial
   time of O(n) where n is the number of areas in A. Therefore, an algorithm that decides
   on the instance Y of the EMP problem decides on the instance X of the MP-regions
@@ -384,9 +380,10 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ## V. PROPOSED SOLUTION
 
-  <block id="5">
+  <block id="4">
 
-  This section presents FaCT, a three-phase algorithm that finds a feasible solution
+
+  This section presents Fa CT, a three-phase algorithm that finds a feasible solution
   for an instance of the EMP problem with low overall heterogeneity. The first phase
   is a feasibility phase that verifies the existence of any feasible solution given
   the user-defined constraints. The second phase is a construction phase that constructs
@@ -403,7 +400,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ### A. Feasibility Phase
 
-  <block id="6">
+  <block id="5">
+
 
   The EMP problem deals with arbitrary combinations of constraints on different attributes.
   The goal of the feasibility phase is to signal the user at an early stage for: (1)
@@ -420,88 +418,97 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   flexibility to analyze a wide variety of datasets and constraints.
 
 
-  Given a set of user-defined constraints C = {(MIN, s_min, l_min, u_min), (MAX, s_max,
-  l_max, u_max), (AVG, s_avg, l_avg, u_avg), (SUM, s_sum, l_sum, u_sum), (COUNT, s_count,
-  l_count, u_count)}, we check the feasibility of applying each type of constraint
-  as follows:
+  Given a set of user-defined constraints C = {(MIN, smin, lmin, umin), (MAX, smax,
+  lmax, umax), (AVG, savg, lavg, uavg), (SUM, ssum, lsum, usum), (COUNT, scount, lcount,
+  ucount)}, we check the feasibility of applying each type of constraint as follows:
 
 
-  (1) For AVG constraints, we compute the average value AVG(s_avg) of attribute s_avg
-  over all areas. If AVG(s_avg) < l_avg or AVG(s_avg) > u_avg, we infer that there
-  exists no partition where all regions satisfy the AVG constraint without removing
-  any area. This is justified by Theorem 3 below.
+  (1) For AVG constraints, we compute the average value AVG(savg) of attribute savg
+  over all areas. If AVG(savg) < lavg or AVG(savg) > uavg, we infer that there exists
+  no partition where all regions satisfy the AVG constraint without removing any area.
+  This is justified by Theorem 3 below.
 
 
-  Theorem 2. If ∃ P = {R1, R2, ..., Rp} so that every region Ri ∈ P satisfies c =
-  (AVG, s_avg, l_avg, u_avg) and P contains all areas in a set A, then the average
-  value AVG(s_avg) of s_avg over all areas of A satisfies c, i.e., l_avg ≤ AVG(s_avg)
-  ≤ u_avg.
+  Theorem 2. If ∃P = {R1, R2, ..., Rp} so that every region Ri ∈ P satisfies c = (AVG,
+  savg, lavg, uavg) and P contains all areas in a set A, then the average value AVG(savg)
+  of savg over all areas of A satisfies c, i.e., lavg ≤ AVG(savg) ≤ uavg.
 
 
   Proof. If p = 1, i.e., P = {A}, the proposition is trivially true. If p > 1, as
   all regions in P satisfy c, we have:
 
-  l_avg ≤ Ri.AVG(s_avg) ≤ u_avg, ∀i, 1 ≤ i ≤ p (2)
 
-  where Ri.AVG(s_avg) represents the average value of attribute s_avg over areas in
+  lavg ≤ Ri.AVG(savg) ≤ uavg, ∀i, 1 ≤ i ≤ p
+
+
+  where Ri.AVG(savg) represents the average value of attribute savg over areas in
   region Ri. Let |Ri| denote the number of areas in region Ri. As P contains all areas,
   we have:
 
-  ∑_{i=1}^{p} |Ri| = n (3)
+
+  ∑p i=1 |Ri| = n
+
 
   Also, by definition:
 
-  AVG(s_avg) × n = ∑_{i=1}^{p} (|Ri| × Ri.AVG) (4)
 
-  AVG(s_avg) = (∑_{i=1}^{p} (|Ri| × Ri.AVG)) / n ≤ (∑_{i=1}^{p} |Ri| u_avg) / n =
-  u_avg (5)
-
-  AVG(s_avg) = (∑_{i=1}^{p} (|Ri| × Ri.AVG)) / n ≥ (∑_{i=1}^{p} |Ri| l_avg) / n =
-  l_avg (6)
-
-  Equations 5 and 6 ⇒ l_avg ≤ AVG(s_avg) ≤ u_avg. Hence, Theorem 2 is true, and the
-  proof is complete.
+  AVG(savg) × n = ∑p i=1 (|Ri| × Ri.AVG)
 
 
-  Theorem 3. For an areas set A and an AVG constraint c = (AVG, s_avg, l_avg, u_avg),
-  if the average value of s_avg over A, AVG(s_avg), does not satisfy c, i.e., AVG(s_avg)
-  < l_avg or AVG(s_avg) > u_avg, then ∄ P = {R1, R2, ..., Rp} such that P partitions
-  all areas in A and Ri ∈ P satisfies c, ∀1 ≤ i ≤ p.
+  Then:
+
+
+  AVG(savg) = (∑p i=1 (|Ri| × Ri.AVG)) / n ≤ (∑p i=1 |Ri| uavg) / n = uavg
+
+
+  and
+
+
+  AVG(savg) = (∑p i=1 (|Ri| × Ri.AVG)) / n ≥ (∑p i=1 |Ri| lavg) / n = lavg
+
+
+  Hence, lavg ≤ AVG(savg) ≤ uavg. Theorem 2 is true, and the proof is complete.
+
+
+  Theorem 3. For an areas set A and an AVG constraint c = (AVG, savg, lavg, uavg),
+  if the average value of savg over A, AVG(savg), does not satisfy c, i.e., AVG(savg)
+  < lavg or AVG(savg) > uavg, then ∄P = {R1, R2, ..., Rp} such that P partitions all
+  areas in A and Ri ∈ P satisfies c, ∀1 ≤ i ≤ p.
 
 
   Theorem 3 is proved by proving its contrapositive Theorem 2.
 
 
   (2) For MIN constraints, we compute the minimum and maximum values over all areas
-  for attribute s_min, MIN(s_min) and MAX(s_min), respectively. Two different cases
-  could cause infeasibility: (a) If MAX(s_min) < l_min or MIN(s_min) > u_min, then
-  there is no area that satisfies the MIN constraint and no valid regions can be constructed,
-  so there is no feasible solution. (b) If MIN(s_min) < l_min < MAX(s_min), all areas
-  with s_min < l_min are invalid areas that cannot be part of any valid region, so
-  they must be filtered out to build a feasible solution. Therefore, there is room
-  to find a feasible solution after removing invalid areas.
+  for attribute smin, MIN(smin) and MAX(smin), respectively. Two different cases could
+  cause infeasibility: (a) If MAX(smin) < lmin or MIN(smin) > umin, then there is
+  no area that satisfies the MIN constraint and no valid regions can be constructed,
+  so there is no feasible solution. (b) If MIN(smin) < lmin < MAX(smin), all areas
+  with smin < lmin are invalid areas that cannot be part of any valid region, so they
+  must be filtered out to build a feasible solution. Therefore, there is room to find
+  a feasible solution after removing invalid areas.
 
 
   (3) Similarly for MAX constraints, there are two cases of infeasibility: (a) If
-  MIN(s_max) > u_max or MAX(s_max) < l_max, there is no area that satisfies the MAX
-  constraint, and there is no feasible solution. (b) Areas with s_max > u_max are
-  invalid areas that must be filtered out to find a solution.
+  MIN(smax) > umax or MAX(smax) < lmax, there is no area that satisfies the MAX constraint,
+  and there is no feasible solution. (b) Areas with smax > umax are invalid areas
+  that must be filtered out to find a solution.
 
 
-  (4) For SUM constraints, we compute the minimum and summation of all areas for s_sum,
-  MIN(s_sum) and SUM(s_sum), respectively. There are three cases of infeasibility:
-  (a) If MIN(s_sum) > u_sum, no region can have s_sum within the range. (b) If SUM(s_sum)
-  < l_sum, even the trivial region containing all areas cannot have s_sum within the
-  range. (c) Areas with s_sum > u_sum are invalid and must be removed.
+  (4) For SUM constraints, we compute the minimum and summation of all areas for ssum,
+  MIN(ssum) and SUM(ssum), respectively. There are three cases of infeasibility: (a)
+  If MIN(ssum) > usum, no region can have ssum within the range. (b) If SUM(ssum)
+  < lsum, even the trivial region containing all areas cannot have ssum within the
+  range. (c) Areas with ssum > usum are invalid and must be removed.
 
 
-  (5) For COUNT constraints, if the number of areas n < l_count, there is no feasible
-  solution as a region containing all areas cannot meet the lower bound l_count.
+  (5) For COUNT constraints, if the number of areas n < lcount, there is no feasible
+  solution as a region containing all areas cannot meet the lower bound lcount.
 
 
   The feasibility phase iterates through the area set and computes the needed attribute
   aggregates for all constraints in a single pass. This pass is enough to filter out
-  invalid areas, that have s_min < l_min, s_max > u_max, or s_sum > u_sum, to eliminate
+  invalid areas, that have smin < lmin, smax > umax, or ssum > usum, to eliminate
   potential invalid regions. However, the feasibility pass is not enough to filter
   out invalid areas for the AVG constraint. This is performed during the following
   construction phase while imposing AVG constraints. All invalid areas are filtered
@@ -513,7 +520,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ### B. Construction Phase
 
-  <block id="7">
+  <block id="6">
+
 
   The construction phase greedily constructs a feasible solution that: (a) satisfies
   all user-defined constraints, (b) maximizes the number of regions p, and (c) minimizes
@@ -547,11 +555,14 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   is divided into three steps. The first step satisfies extrema constraints (MIN and
   MAX constraints), the second step satisfies centrality constraints (AVG constraints),
   and the third step satisfies counting constraints (SUM and COUNT constraints). We
-  detail each step below. For simplicity and without loss of generality, we assume
-  that all constraints are imposed on the same attribute s.
+  detail each step below. The area set in Figure 1a is used as a running example to
+  illustrate different steps of the construction. For simplicity and without loss
+  of generality, we assume that all constraints are imposed on the same attribute
+  s.
 
 
   #### Step 1: Filtering and Seeding
+
 
   The first step satisfies extrema constraints, i.e., MIN and MAX constraints. These
   two constraints have two functionalities: (a) filtering out the invalid areas, and
@@ -590,6 +601,7 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   #### Step 2: Region Growing
 
+
   The second step grows regions that satisfy the AVG constraint c = (AVG, s, l, u),
   without violating the MIN/MAX constraints. This step is divided into three substeps.
   The first substep initializes a set of regions. The second substep assigns the unassigned
@@ -608,91 +620,15 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   in region initialization directly. As we want to maximize the number of output regions
   p, we make each area in unassigned_avg a separate region, and all new regions are
   added to a region list P. Then, we merge areas in unassigned_low and unassigned_high
-  with their spatial neighbors to compose regions that satisfy c.
+  with their spatial neighbors to compose regions that satisfy c. Algorithm 1 gives
+  the merging procedure.
 
 
-  Algorithm 1 gives the merging procedure.
-
-
-  ```text
-
-  Algorithm 1: Region Growing - Merging Areas
-
-  Input: c = (AVG, s, l, u), unassigned_low, unassigned_high, P
-
-  Output: unassigned_low, unassigned_high, P
-
-  1 removed_areas ← ∅
-
-  2 u_areas ← unassigned_low ∪ unassigned_high
-
-  3 foreach area a ∈ u_areas do
-
-  4    Create a temporary region R with R.id = -1;
-
-  5    R.addArea(a);
-
-  6    updated = true;
-
-  7    neighbor_areas = R.getNeighbors();
-
-  8    while updated do
-
-  9       updated = false;
-
-  10      if l ≤ R.getAverage() ≤ u then
-
-  11         R.updateId(P.size() + 1);
-
-  12         P.add(R);
-
-  13         removed_areas.addAll(R.areas);
-
-  14      end
-
-  15      else
-
-  16         foreach area an in neighbor_areas do
-
-  17            if an is not assigned to any region then
-
-  18               if (R.getAverage() < l AND an.s > u)
-
-  19                  OR ((R.getAverage() > u AND an.s < l)) then
-
-  20                  R.addArea(an);
-
-  21                  updated = true;
-
-  22                  break;
-
-  23               end
-
-  24            end
-
-  25         end
-
-  26      end
-
-  27   end
-
-  28 end
-
-  29 unassigned_low.removeAll(removed_areas);
-
-  30 unassigned_high.removeAll(removed_areas);
-
-  31 return unassigned_low, unassigned_high, P;
-
-  ```
-
-
-  Algorithm 1 initiates each unassigned area as a temporary region R (Lines 4 to 6).
-  While R does not satisfy the constraint c’s bounds, the algorithm tries to add a
-  neighbor area an that moves R’s overall average of attribute s towards c’s range
-  (Lines 16 to 21). Once R satisfies c, it is added to the region list P (Lines 10
-  to 12). If R’s neighbors are exhausted and cannot form a valid region, the whole
-  procedure is reverted, and areas of R remain unassigned.
+  Algorithm 1 initiates each unassigned area as a temporary region R. While R does
+  not satisfy the constraint c’s bounds, the algorithm tries to add a neighbor area
+  an that moves R’s overall average of attribute s towards c’s range. Once R satisfies
+  c, it is added to the region list P. If R’s neighbors are exhausted and cannot form
+  a valid region, the whole procedure is reverted, and areas of R remain unassigned.
 
 
   Substep 2.2 tries to assign all remaining unassigned areas, either seed areas or
@@ -730,7 +666,7 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   2.2 iterates through the unassigned area set for multiple iterations. In each iteration,
   at least one area is removed from the unassigned area set or otherwise no update
   is made and the loop breaks. The number of unassigned areas is ≤ n, hence the worst-case
-  total number of operations is ∑_{i=1}^{n} i = O(n^2). The merge operations are bounded
+  total number of operations is ∑n i=1 i = O(n^2). The merge operations are bounded
   by a constant number and each operation takes constant time to update the attribute
   values and append the area list. Substep 2.3 iterates through all regions once,
   thus taking maximum of O(n) time. Thus, Step 2 time complexity is O(n) + O(n) +
@@ -741,6 +677,7 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
 
   #### Step 3: Monotonic Adjustments
+
 
   Step 3 satisfies SUM and COUNT constraints while maintaining the constraints that
   have been satisfied in the previous steps. The SUM constraint is used in the MP-regions
@@ -776,7 +713,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ### C. Local Search Phase
 
-  <block id="8">
+  <block id="7">
+
 
   The partition with the largest number of regions p is forwarded from the construction
   phase to the local search phase to optimize the overall regions’ heterogeneity.
@@ -801,35 +739,36 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   Complexity analysis. The Tabu search is an incomplete algorithm, so we derive a
   complexity approximation based on the parameters and the problem-specific neighborhood
   computation. Tabu search performs n iterations without heterogeneity improvement
-  and the counter resets on improvement, so the total number of iterations is O(αn)
-  in the worst case, where α is the number of moves that beat the existing optimal
+  and the counter resets on improvement, so the total number of iterations is O(α
+  n) in the worst case, where α is the number of moves that beat the existing optimal
   heterogeneity score. In each iteration, we update the valid moves using a region
   connectivity check for each boundary area in the region updated by the previous
   move, which takes O(n × n) time in the worst case. A move attempt takes O(n) to
   compute the pair-wise dissimilarity in the worst case. So, the overall time complexity
-  is O(αn × (n^2 + n)) = O(αn^3). Experimentally, the moves that improve heterogeneity
+  is O(α n × (n^2 + n)) = O(α n^3). Experimentally, the moves that improve heterogeneity
   happen at an early stage of the local search, causing the total number of iterations
   much smaller than 2n.
 
 
-  Remark 4. The time complexity of the Local Search phase is O(αn^3), where α is the
-  number of valid moves that improve the heterogeneity over the existing optimum.
+  Remark 4. The time complexity of the Local Search phase is O(α n^3), where α is
+  the number of valid moves that improve the heterogeneity over the existing optimum.
 
 
   </block>
 
   ### D. Handling Arbitrary Sets of Constraints
 
-  <block id="9">
+  <block id="8">
+
 
   Our discussion so far assumes the incoming query contains all types of constraints.
   However, it is common to have a subset of these constraints. For example, a query
   could have only one AVG constraint, or one MIN constraint and one COUNT constraint.
-  This section discusses how the FaCT algorithm handles queries with an arbitrary
+  This section discusses how the Fa CT algorithm handles queries with an arbitrary
   subset of constraints.
 
 
-  The FaCT algorithm handles absent constraints as they exist with an infinite range
+  The Fa CT algorithm handles absent constraints as they exist with an infinite range
   (−∞, ∞), which affects both the feasibility and the construction phases. If a MIN/MAX
   constraint type is absent, the feasibility phase does not remove any invalid areas
   under MIN/MAX, and Step 1 of the construction phase selects all areas as the seed
@@ -837,7 +776,7 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   in seeds to unassigned_avg and then initializes single-area regions. Areas not in
   seeds are then added to unassigned_avg and merged to neighbor regions iteratively.
   If SUM/COUNT constraints are absent, Step 3 of the construction phase is omitted.
-  Therefore, designing the FaCT algorithm with independent steps enables it to effectively
+  Therefore, designing the Fa CT algorithm with independent steps enables it to effectively
   handle queries with any subset of constraints.
 
 
@@ -845,16 +784,17 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ## VI. COMPLEXITY ANALYSIS
 
-  <block id="10">
+  <block id="9">
 
-  This section analyzes the time and space complexity of the FaCT algorithm. According
+
+  This section analyzes the time and space complexity of the Fa CT algorithm. According
   to Remarks 1, 2, and 3 in Section V-B, the time complexity of the feasibility and
   the three steps of the construction phases are O(n), O(n^2), and O(n^2), respectively.
   Thus, the total time complexity of both phases is O(n^2). According to Remark 4
-  in Section V-C, the time complexity of the Local Search phase is O(αn^3). This gives
-  the overall worst-case time complexity of FaCT as O(αn^3), where α is the total
-  number of moves that improves the existing optimal heterogeneity in the local search
-  process.
+  in Section V-C, the time complexity of the Local Search phase is O(α n^3). This
+  gives the overall worst-case time complexity of Fa CT as O(α n^3), where α is the
+  total number of moves that improves the existing optimal heterogeneity in the local
+  search process.
 
 
   For space complexity, the area set takes O(m × n) space to store the n areas, each
@@ -871,22 +811,24 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ## VII. EXPERIMENT EVALUATION
 
-  <block id="11">
+  <block id="10">
+
 
   This section presents an extensive experimental evaluation of our proposed work
   to address the EMP problem. The code and data for reproducing the results presented
   in this section are publicly available [27]. The rest of the section introduces
   the experimental setup (Section VII-A), studies the impact of different constraints
   types and threshold ranges on the performance (Section VII-B), shows the scalability
-  of the FaCT algorithm (Section VII-C), and summarizes the experimental results (Section
-  VII-D).
+  of the Fa CT algorithm (Section VII-C), and summarizes the experimental results
+  (Section VII-D).
 
 
   </block>
 
   ### A. Experimental Setup
 
-  <block id="12">
+  <block id="11">
+
 
   EMP is a novel problem in the literature, so there is no direct competitor to compare
   our techniques against. In addition, due to the major enrichment EMP introduces
@@ -909,17 +851,19 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   tract.
 
 
-  All datasets share the same three spatial extensive attributes: POP16UP (population
-  with age sixteen or above), EMPLOYED (the employed population), and TOTALPOP (the
-  total population). The dissimilarity attribute is HOUSEHOLDS. The evaluation attributes
+  All datasets share the same three spatial extensive attributes, one per constraint
+  type, and the dissimilarity attribute is HOUSEHOLDS. POP16UP attribute represents
+  the population with age sixteen or above. EMPLOYED attribute refers to the employed
+  population. TOTALPOP is the total population. HOUSEHOLDS is the number of households
+  in each area, and it is used to measure region heterogeneity. The evaluation attributes
   are selected based on factors that influence the population growth rate [21], which
   makes the partitions obtained through the experiments useful for studying population
   growth. The shapefiles of the census tracts and the attribute tables are provided
   by the US Census Bureau [9] and SCAG [37] and joined using the QGIS software [42].
 
 
-  All experiments are based on Java 14 implementations using an Intel Xeon W-2123(3.60
-  GHz) and 20GB RAM allocated under Windows 10. We use three performance measures:
+  All experiments are based on Java 14 implementations using an Intel Xeon W-2123
+  (3.60 GHz) and 20GB RAM allocated under Windows 10. We use three performance measures:
   the runtime for both construction and local search phases, the answer set size p,
   and improvement in regions’ heterogeneity, defined as the ratio of the absolute
   difference between the heterogeneity score before and after the local search phase
@@ -927,7 +871,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   range and dataset size. Unless mentioned otherwise, the default dataset is 2k, area
   pickup criteria are random, the AVG merge limit is three, the length of the tabu
   list equals ten, and the maximum number of moves without improvement for Tabu search
-  equals the dataset size. For space limitation and similarity of results on aggregates
+  equals the dataset size. The default threshold ranges and attributes are selected
+  for each constraint type. For space limitation and similarity of results on aggregates
   of the same type, we present results for one aggregate function in each constraint
   type.
 
@@ -936,17 +881,21 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ### B. Impact of Constraints Types
 
-  <block id="13">
+  <block id="12">
+
 
   This section studies the impact of different sets of constraints on regionalization
   performance. Sets of constraints vary in terms of: (1) set size, i.e., number of
-  constraints, (2) types of constraints, and (3) threshold ranges. We denote MIN constraints
-  as M, combinations of MIN and AVG constraints as MA, combinations of MIN and SUM
-  constraints as MS, combinations of MIN, AVG, and SUM constraints as MAS. Time of
-  local search is denoted as Tabu.
+  constraints, (2) types of constraints, and (3) threshold ranges. Sections VII-B1,
+  VII-B2 and VII-B3 evaluate sets that include MIN, AVG, and SUM constraints, respectively.
+  MIN constraints are denoted as M, combinations of MIN and AVG constraints are denoted
+  as MA, combinations of MIN and SUM constraints are denoted as MS, combinations of
+  MIN, AVG, and SUM constraints are denoted as MAS. Time of local search is denoted
+  as Tabu.
 
 
-  #### 1) MIN Constraint:
+  #### 1) MIN Constraint
+
 
   This section evaluates regionalization queries with MIN constraints, c = (MIN, s,
   l, u), in combination with other constraint types. MIN and MAX constraints perform
@@ -980,19 +929,22 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   Ranges with bounded l and u. When the range length increases, the p value increases
   because fewer areas are filtered out and more regions are initialized. As a result,
   both total and construction time increase due to larger search space. However, there
-  is no clear trend for the Tabu search time. For a range with a fixed length and
-  shifted midpoint to a higher value, both construction time and local search time
-  decrease. For larger values, the area set is chopped into small connected components
-  but the number of seed areas is relatively stable. As a result, Steps 2 and 3 of
-  the construction phase terminate faster and reduce runtime. The p value depends
-  on the correlation between attributes of MIN and AVG constraints. If they are not
-  correlated, then the p value strictly decreases for larger midpoint values. When
-  they are correlated, p might increase or decrease, depending on the correlation.
-  In all cases, the heterogeneity improvement increases when p increases, by up to
-  11.3% in this case.
+  is no clear trend for the Tabu search time.
 
 
-  #### 2) AVG Constraint:
+  For a range with a fixed length and shifted midpoint to a higher value, both construction
+  time and local search time decrease. For larger values, the area set is chopped
+  into small connected components but the number of seed areas is relatively stable.
+  As a result, Steps 2 and 3 of the construction phase terminate faster and reduce
+  runtime. The p value depends on the correlation between attributes of MIN and AVG
+  constraints. If they are not correlated, then the p value strictly decreases for
+  larger midpoint values. When they are correlated, p might increase or decrease,
+  depending on the correlation. In all cases, the heterogeneity improvement increases
+  when p increases, by up to 11.3% in this case.
+
+
+  #### 2) AVG Constraint
+
 
   The average aggregate function is non-monotonic. Satisfying the constraint can be
   computationally heavy with certain ranges. To illustrate this, we explore two cases:
@@ -1002,93 +954,102 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   Ranges with fixed range length. In this experiment, the length of the AVG range
   is fixed to be 2k and the midpoint shifts from 1k to 4.5k, with the step size =
-  0.5k. The AVG attribute distribution of areas is positively skewed with most values
-  below 4k and several outliers up to 6149. When the midpoint is set between 1k and
-  2.5k, about half of the areas lie within the given range and it is relatively easy
-  to combine areas whose value is outside the range. As a result, the number of unassigned
-  areas is reduced to 0 when the midpoint increases to 2k and 2.5k but the runtime
-  is below 3.2s. The ranges are also flexible for the Tabu search phase, with the
-  heterogeneity score improved by up to 30.1%. When the range is set to be 3k ± 1k,
-  more than half of the areas lie below l but it is possible to combine them with
-  one of the outliers whose attribute value is well above the upper bound. As an area
-  is assigned, the newly formed region may lead to the possibility of assigning the
-  neighbor areas. Hence the enclave assignment process continues for multiple iterations
-  until no further update can be made. As a result, it takes a much longer time, but
-  the percentage of unassigned areas is reduced significantly to 9%. When the midpoint
-  is further increased above 3.5k, it is too hard for the algorithm to form feasible
-  regions as almost all areas fall below the lower bound of the range. As a result,
-  most areas remain unassigned and the construction time becomes much shorter as the
-  algorithm quickly finds that no further changes can be made. When the midpoint is
-  above 3k, there are limited feasible moves for the Tabu search because the AVG constraint
-  is too tight. As a result, the Tabu search time is negligible and the heterogeneity
-  improvements are below 0.4%.
+  0.5k. We focus on the performance of the AVG constraint to exclude the impact of
+  other constraints. The distribution of the AVG attribute value of the areas in the
+  default dataset is positively skewed. The AVG attribute values of most of the areas
+  are below 4k, but there are several outliers with values up to 6149. When the midpoint
+  is set to be 1k to 2.5k, about half of the areas lie within the given range and
+  it is also relatively easy to combine areas whose value is outside the range. As
+  a result, the number of unassigned areas is reduced to 0 when the midpoint increases
+  to 2k and 2.5k but the runtime is below 3.2s. The ranges are also flexible for the
+  Tabu search phase, with the heterogeneity score improved by up to 30.1%. When the
+  range is set to be 3k ± 1k, more than half of the areas lie below l but it is possible
+  to combine them with one of the outliers whose attribute value is well above the
+  upper bound. In addition, as an area is assigned, the newly formed region may lead
+  to the possibility of assigning the neighbor areas. Hence the enclave assignment
+  process continues for multiple iterations until no further update can be made. As
+  a result, it takes a much longer time, but the percentage of unassigned areas is
+  reduced significantly to 9%. When the midpoint is further increased to above 3.5k,
+  it is too hard for the algorithm to form feasible regions as almost all areas fall
+  below the lower bound of the range. As a result, most areas remain unassigned and
+  the construction time becomes much shorter as the algorithm quickly finds that no
+  further changes can be made. When the midpoint is above 3k, there are limited feasible
+  moves for the Tabu search because the AVG constraint is too tight. As a result,
+  the Tabu search time is negligible and the heterogeneity improvements are below
+  0.4%.
 
 
-  Ranges with fixed midpoint. Setting the midpoint to 3k, which is the most challenging
-  setting, and altering the length of the range shows that the p values increase with
-  longer ranges, but the runtime depends on the range length. Different range lengths
-  affect the runtime significantly, while different constraint combinations with the
-  same range have much less impact on the construction time. When the range is 3k
-  ± 0.5k, the range is so tight that the algorithm quickly finds no possible enclave
-  assignment, so the AVG step terminates early. However, 60% of the areas remain unassigned.
-  The range 3k ± 1k is the most challenging case and the runtime dominates the other
-  constraints. However, the reduction in the number of unassigned areas is also significant
-  for all constraint combinations. When the range is further enlarged, most of the
-  areas lie within the range and it is much easier to assign the enclaves without
-  merging. Thus, the time is much shorter, and all areas are assigned as well. The
-  final heterogeneity score also reduces when the range is enlarged due to the reduction
-  in region sizes. The heterogeneity improvement increases up to 21.8% because larger
-  ranges provide more potential moves for the local search.
+  Ranges with fixed midpoint. Based on the observation from the previous experiment,
+  we set the midpoint to be 3k, which is the most challenging setting for the algorithm,
+  and alter the length of the range. Combinations with the other constraints are also
+  included to demonstrate how the AVG constraint can bottleneck the performance in
+  special cases. The p values for different constraint combinations show increasing
+  p values with longer ranges, but the runtime depends on the range length. Different
+  range lengths affect the runtime significantly, while different constraint combinations
+  with the same range have much less impact on the construction time. This is because
+  the runtime of the AVG step dominates the total runtime of the construction phase.
+  When the range is 3k ± 0.5k, the range is so tight that the algorithm quickly finds
+  no possible enclaves assignment, so the AVG step terminates early. However, 60%
+  of the areas remain unassigned. The range 3k ± 1k is the most challenging case and
+  the runtime dominates the other constraints. However, the reduction in the number
+  of unassigned areas is also significant for all constraint combinations. When the
+  range is further enlarged, most of the areas lie within the range and it is much
+  easier to assign the enclaves without merging. Thus, the time is much shorter, and
+  all areas are assigned as well. The final heterogeneity score also reduces when
+  the range is enlarged due to the reduction in region sizes. The heterogeneity improvement
+  increases to up to 21.8% because when the range is enlarged, it becomes easier to
+  find a valid move for the local search.
 
 
-  #### 3) SUM Constraint:
+  #### 3) SUM Constraint
+
 
   SUM constraints are the only type of constraints that are used in existing state-of-the-art
   solutions for the max-p regions (MP-regions) problem. We compare with them, denoted
-  as MP, using a single SUM constraint with an open upper bound, i.e., [l, ∞). The
-  p value decreases with increasing lower bound l while runtime does not increase
-  as much for both MP-regions and FaCT. FaCT gives comparable p value to MP-regions
-  when the constraints are set to be the same. The construction time is slightly higher
-  due to the overhead introduced by steps that validate the feasibility of the query
-  and handle the other constraints. However, due to shorter tabu search time, the
-  overall runtime of EMP is less than half of the runtime for the MP-regions when
-  u = 30k or 40k. In addition, the FaCT algorithm handles generic types of constraints,
-  which are not supported by the competitor. The heterogeneity score increases when
-  l increases, by up to 72.6% for both MP-regions and the single constraint S, 13.8%
-  for MS, and less than 1% for AS and MAS due to the effect of AVG constraint. Increasing
-  the region’s size provides local search with more potential moves, hence it better
-  improves overall heterogeneity. For bounded threshold ranges, both p values and
-  construction runtime decrease when the lower bound l increases and the trend is
-  similar to u = ∞. The heterogeneity score increases by up to 30.4% for S, 6.9% for
-  MS, 3.76% for AS, and 2.49% for MAS, with increasing range length due to the larger
-  region size. However, the unassigned areas could reach up to 25.1% when u is bounded
-  for MS, AS, and MAS. This is because areas are removed so that each region does
-  not exceed u. FaCT reports output statistics to users so they are equipped with
-  information about the impact of different threshold ranges on the given dataset,
-  and are able to tune query parameters insightfully.
+  as MP, using a single SUM constraint with an open upper bound, i.e., [l, ∞). At
+  u = ∞, the p value decreases with increasing lower bound l while runtime does not
+  increase as much for both MP-regions and Fa CT. Our Fa CT algorithm gives comparable
+  p value to MP-regions when the constraints are set to be the same. The construction
+  time is slightly higher due to the overhead introduced by steps that validate the
+  feasibility of the query and handle the other constraints. However, due to shorter
+  tabu search time, the overall runtime of EMP is less than half of the runtime for
+  the MP-regions when u = 30k or 40k. In addition, the Fa CT algorithm handles generic
+  types of constraints, which are not supported by the competitor. The heterogeneity
+  score increases when l increases, by up to 72.6% for both MP-regions and the single
+  constraint S, 13.8% for MS, and less than 1% for AS and MAS due to the effect of
+  AVG constraint. Increasing the region’s size provides local search with more potential
+  moves, hence it better improves overall heterogeneity. For bounded threshold ranges,
+  both p values and construction runtime decrease when the lower bound l increases
+  and the trend is similar to u = ∞. The heterogeneity score increases with increasing
+  range length due to the larger region size. However, the unassigned areas could
+  reach up to 25.1% when u is bounded for MS, AS, and MAS. This is because areas are
+  removed so that each region does not exceed u. Fa CT algorithm reports output statistics
+  to users so they are equipped with information about the impact of different threshold
+  ranges on the given dataset, and are able to tune query parameters insightfully.
 
 
   </block>
 
   ### C. FaCT Scalability
 
-  <block id="14">
+  <block id="13">
 
-  This section discusses the scalability of the FaCT algorithm. We run the algorithm
+
+  This section discusses the scalability of the Fa CT algorithm. We run the algorithm
   for different constraint combinations with the default threshold values on the nine
   evaluation datasets. The dataset size of the 50k dataset is 17 times the largest
   dataset used in the existing literature of regionalization [15], [52]. As the AVG
   constraint is identified as a clear performance bottleneck when the range is set
   to be 3k ± 1k, our discussion contains two parts. The first part shows the results
   for the constraint combinations with the AVG set to be default range to show the
-  scalability of FaCT in normal cases, while in the second part we focus on constraint
+  scalability of Fa CT in normal cases, while in the second part we focus on constraint
   combinations including AVG with range 3k ± 1k to see how the computation of the
   AVG constraint scales in extreme cases.
 
 
   When the AVG constraint is not the bottleneck, the runtime increases linearly with
   the input size for M and quadratically for the other constraints. For all datasets,
-  FaCT provides a very acceptable runtime for regionalization applications.
+  Fa CT provides a very acceptable runtime for regionalization applications.
 
 
   When the range of the AVG is set to be 3k ± 1k, AVG constraints increase the construction
@@ -1107,11 +1068,12 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ### D. Summary Of Results
 
-  <block id="15">
+  <block id="14">
 
-  All experiments show that the FaCT algorithm can efficiently produce feasible solutions
+
+  All experiments show that the Fa CT algorithm can efficiently produce feasible solutions
   of high quality in a few seconds for the vast majority of the cases. In addition,
-  the FaCT algorithm supports relatively large datasets that serve all existing applications.
+  the Fa CT algorithm supports relatively large datasets that serve all existing applications.
   When more areas are filtered or fewer seed areas are identified by the extrema constraints,
   both p and the runtime tend to decrease. The behavior of the centrality constraint
   depends on the range specified and the distribution of the attributes. However,
@@ -1124,7 +1086,8 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
 
   ## VIII. CONCLUSION
 
-  <block id="16">
+  <block id="15">
+
 
   This paper introduces an enriched max-p (EMP) regionalization problem that extends
   the existing regionalization problems with SQL-inspired user-defined constraints.
@@ -1132,13 +1095,13 @@ segmented_markdown: '# EMP: Max-P Regionalization with Enriched Constraints
   the user-defined constraints. The EMP problem enables enriched types of constraints
   that support SQL-inspired aggregate functions, MIN, MAX, AVG, SUM, and COUNT, with
   range operators. We prove the NP-hardness of the EMP problem. To tackle this problem,
-  we propose FaCT; a three-phase algorithm that finds an approximate solution with
+  we propose Fa CT; a three-phase algorithm that finds an approximate solution with
   a maximum number of regions and minimum overall heterogeneity. The first phase checks
   the feasibility of finding a solution given the input constraints. It also provides
   users with insightful information to tune their input and enable flexible exploration
   for various datasets. The second phase constructs an initial solution, and the third
   phase further optimizes it to provide a final solution. We have empirically demonstrated
-  the capability of FaCT to provide efficient and effective performance on various
+  the capability of Fa CT to provide efficient and effective performance on various
   real datasets.
 
 

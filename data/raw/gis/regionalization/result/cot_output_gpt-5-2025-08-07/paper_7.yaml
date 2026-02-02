@@ -1,480 +1,167 @@
 "citations":
-- "unique_context_marker": "(Solow, 1957; Solow, 1956)"
+- "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Problem Formulation"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Hidalgo et al., 2007)"
+  - "Problem formulations and objectives"
+- "unique_context_marker": "[8, 10, 21]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Problem Formulation"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see e.g. Krugman, 1991)"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Jacobs, 2016)"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Hidalgo et al., 2007; Neffke et al., 2011; Hausmann and Hidalgo, 2011; Hausmann et al., 2014)"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Hidalgo et al. (2007)"
+  - "p-regions formulations"
+- "unique_context_marker": "[7]"
   "block_ids":
   - 1
   - 2
-  - 10
+  - 7
+  - 9
   "intent_labels":
-  - "Domain Overview"
+  - "Problem Formulation"
+  - "Prior Methods"
   - "Algorithm/Principle Adoption"
   - "Hyperparameter Utilization"
   "topic_labels":
-  - "Alternative names"
-  - "Alternative names"
-  - "Alternative names"
-- "unique_context_marker": "Hausmann and Hidalgo (2011)"
-  "block_ids":
-  - 1
-  - 2
-  - 4
-  "intent_labels":
-  - "Domain Overview"
-  - "Domain Overview"
-  - "Problem Formulation"
-  "topic_labels":
-  - "Alternative names"
-  - "Alternative names"
-  - "Alternative names"
-- "unique_context_marker": "Hausmann et al. (2014)"
-  "block_ids":
-  - 1
-  - 2
-  - 4
-  "intent_labels":
-  - "Domain Overview"
-  - "Algorithm/Principle Adoption"
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
-  - "Alternative names"
-  - "Alternative names"
-- "unique_context_marker": "Diodato et al., 2018"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Rosenthal and Strange, 2004"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Martin and Sunley, 1996)"
+  - "max-p regions formulations"
+  - "max-p regions formulations"
+  - "Local search with area swaps and metaheuristics"
+  - "Local search with area swaps and metaheuristics"
+- "unique_context_marker": "[7, 30]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(De Groot et al., 2016)"
+  - "Heuristic models with explicit contiguity"
+- "unique_context_marker": "[ 29]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Prospective Application"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see Neffke et al., 2011)"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Neffke et al., 2011)"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Jung and López-Bazo, 2017)"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see e.g. Caragliu and Nijkamp, 2016)"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Duque et al. (2011)"
-  "block_ids":
-  - 1
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "p-regions formulations"
-  - "p-regions formulations"
-- "unique_context_marker": "(Cliff et al., 1975; Keane, 1975)"
+  - "Other Intent"
+- "unique_context_marker": "[4]"
   "block_ids":
   - 1
   "intent_labels":
   - "Importance of Problem"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see Hausmann and Hidalgo, 2011)"
+  - "Other Intent"
+- "unique_context_marker": "[ 5]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prospective Application"
+  "topic_labels":
+  - "Other Intent"
+- "unique_context_marker": "[13, 20]"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Hausmann and Hidalgo, 2011"
+  - "Other Intent"
+- "unique_context_marker": "[6, 32]"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see Hausmann et al., 2019)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see Neffke and Henning, 2013; Boschma, 2017)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Research Gap"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Neffke et al. (2011)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "OClery et al. (2019)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Diodato et al. (2018)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Balassa, 1964, see also Section 3.1)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see Hidalgo et al., 2007)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Hidalgo et al., 2007; Alshamsi et al., 2018; O’Clery et al., 2018)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Schumpeter (1939)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Hidalgo et al., 2007; Hausmann and Hidalgo, 2011; Hausmann et al., 2014)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Hausmann and Neffke, 2019; Neffke et al., 2011)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(OClery et al., 2019; Hausmann et al., 2019)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Bustos et al., 2012; OClery et al., 2019; Diodato et al., 2018)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see also O’Clery et al., 2018)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see e.g. Fischer, 1980; Duque et al., 2007)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Fischer, 1980)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Garfin kel and Nemhauser, 1970; Zoltners and Sinha, 1983)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Exact optimization models"
-- "unique_context_marker": "(Duque et al., 2011)"
+  - "Other Intent"
+- "unique_context_marker": "[2, 8, 14, 16–19, 31]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
   - "p-regions formulations"
-- "unique_context_marker": "(Macmillan and Pierce, 1994)"
+- "unique_context_marker": "[1, 7, 9, 11, 22, 25–30]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
-  "topic_labels":
-  - "Exact optimization models"
-- "unique_context_marker": "(Garfin kel and Nemhauser, 1970)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Exact optimization models"
-- "unique_context_marker": "(Mehrotra et al., 1998)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Exact optimization models"
-- "unique_context_marker": "(Duque et al., 2012)"
-  "block_ids":
-  - 2
-  - 10
-  "intent_labels":
-  - "Prior Methods"
-  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "max-p regions formulations"
+- "unique_context_marker": "[2, 16–18]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "p-regions formulations"
+- "unique_context_marker": "[31]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "p-regions formulations"
+- "unique_context_marker": "[14, 15]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "p-regions formulations"
+- "unique_context_marker": "[7, 28, 30]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
   - "max-p regions formulations"
-- "unique_context_marker": "(Li et al., 2014)"
+- "unique_context_marker": "[11]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "p-regions formulations"
-- "unique_context_marker": "(Kim et al., 2015)"
+  - "Enriched aggregate constraints"
+- "unique_context_marker": "[27]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "p-regions formulations"
-- "unique_context_marker": "(Duque et al., 2007)"
+  - "max-p regions formulations"
+- "unique_context_marker": "[1, 9, 22, 25, 26, 29]"
   "block_ids":
   - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Heuristic models with explicit contiguity"
-- "unique_context_marker": "(Hausmann et al., 2014; Hidalgo et al., 2007)"
-  "block_ids":
-  - 4
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Hausmann et al., 2014)"
-  "block_ids":
-  - 4
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Balassa, 1964)"
-  "block_ids":
-  - 4
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see Alshamsi et al., 2018)"
-  "block_ids":
-  - 4
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Alshamsi et al. (2018)"
-  "block_ids":
-  - 4
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see e.g. the definition of the clustering coefficient in Barabási et al., 2016)"
-  "block_ids":
-  - 4
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(2000)"
+  - "Other Intent"
+- "unique_context_marker": "[30]"
   "block_ids":
-  - 6
+  - 7
+  - 9
   "intent_labels":
   - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Order-based core assignment models"
-- "unique_context_marker": "(see also Martin and Sunley, 1996)"
-  "block_ids":
-  - 6
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Order-based core assignment models"
-- "unique_context_marker": "(Rosenthal and Strange, 2004; De Groot et al., 2016; Laura et al., 2015; She et al., 2017)"
-  "block_ids":
-  - 8
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Heuristic models with explicit contiguity"
-- "unique_context_marker": "(Rosenthal and Strange, 2004; Duque et al., 2007)"
-  "block_ids":
-  - 8
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "Rosenthal and Strange (2004)"
-  "block_ids":
-  - 8
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "(Openshaw and Rao, 1995)"
-  "block_ids":
-  - 8
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "Vickrey (1961)"
-  "block_ids":
-  - 8
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Bottom-up seeded agglomeration"
-- "unique_context_marker": "Arthur and Vassilvitskii (2006)"
-  "block_ids":
-  - 8
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Compactness-driven location–allocation approaches"
-- "unique_context_marker": "(Glover, 1977; Glover, 1989 and Glover, 1990)"
-  "block_ids":
-  - 8
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "(Rosenthal and Strange, 2004; Openshaw and Rao, 1995)"
-  "block_ids":
-  - 8
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "Krugman (1991)"
-  "block_ids":
-  - 10
-  "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Blondel et al., 2008)"
+  - "Local search with area swaps and metaheuristics"
+  - "Bottom-up seeded agglomeration"
+- "unique_context_marker": "[12]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Local search with area swaps and metaheuristics"
+- "unique_context_marker": "[24]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Other Intent"
+- "unique_context_marker": "[3]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Benchmark Utilization"
   "topic_labels":
-  - "Algorithms without explicit spatial contiguity constraint"
-- "unique_context_marker": "(2018)"
-  "block_ids":
-  - 11
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "Hausmann and Hidalgo"
-  "block_ids":
-  - 12
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Alternative names"
+  - "Other Intent"

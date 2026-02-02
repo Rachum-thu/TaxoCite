@@ -56,25 +56,25 @@ blocks:
     of the proposed method and suggests future work.'
   citations:
   - marker: (Duque et al . 2011b)
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: p-regions formulations
   - marker: (Duque et al. 2012)
-    intent_label: Model/Architecture Adoption
+    intent_label: Domain Overview
     topic_label: max-p regions formulations
   - marker: (Kim et al. 2013)
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: p-regions formulations
   - marker: (Li et al . 2014b)
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: p-regions formulations
   - marker: (Borgatti et al . 2009)
     intent_label: Research Gap
     topic_label: Problem formulations and objectives
   - marker: (Wheeler 1973, Whitehand and Larkham 1992, Jiang and Claramunt 2004)
-    intent_label: Domain Overview
+    intent_label: Importance of Problem
     topic_label: Problem formulations and objectives
   - marker: (Jiang and Jia 2011)
-    intent_label: Domain Overview
+    intent_label: Importance of Problem
     topic_label: Problem formulations and objectives
 - block_id: 2
   content: 'Regionalization addresses the aggregation of spatial units (hereafter areas) into contiguous regions. It has been
@@ -127,22 +127,22 @@ blocks:
     intent_label: Domain Overview
     topic_label: regionalization
   - marker: (Clarke and Surkis 1968)
-    intent_label: Domain Overview
+    intent_label: Prospective Application
     topic_label: regionalization
   - marker: (Hess and Samuels 1971)
-    intent_label: Domain Overview
+    intent_label: Prospective Application
     topic_label: regionalization
   - marker: (Thomas 1979)
-    intent_label: Domain Overview
+    intent_label: Prospective Application
     topic_label: regionalization
   - marker: (Openshaw 1977)
-    intent_label: Domain Overview
+    intent_label: Prospective Application
     topic_label: regionalization
   - marker: (Curtin et al . 2010)
-    intent_label: Domain Overview
+    intent_label: Prospective Application
     topic_label: regionalization
   - marker: (see Duque et al . 2007 for a literature review of regionalization)
-    intent_label: Domain Overview
+    intent_label: Prospective Application
     topic_label: regionalization
   - marker: (Duque et al. 2011b)
     intent_label: Prior Methods
@@ -154,13 +154,13 @@ blocks:
     intent_label: Prior Methods
     topic_label: Exact optimization models
   - marker: (Zoltners and Sinha 1983)
-    intent_label: Prior Methods
-    topic_label: Exact optimization models
+    intent_label: Importance of Problem
+    topic_label: Problem formulations and objectives
   - marker: (Kim et al . 2013)
-    intent_label: Prior Methods
-    topic_label: Exact optimization models
+    intent_label: Importance of Problem
+    topic_label: Problem formulations and objectives
   - marker: (Bozkaya et al . 2003)
-    intent_label: Prior Methods
+    intent_label: Algorithm/Principle Adoption
     topic_label: Local search with area swaps and metaheuristics
   - marker: (2003)
     intent_label: Prior Methods
@@ -406,7 +406,7 @@ blocks:
     stop condition and the length of the Tabu list.'
   citations:
   - marker: (1965)
-    intent_label: Algorithm/Principle Adoption
+    intent_label: Prior Methods
     topic_label: Local search with area swaps and metaheuristics
   - marker: (2007)
     intent_label: Prior Methods

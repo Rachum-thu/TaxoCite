@@ -1,141 +1,139 @@
 "citations":
-- "unique_context_marker": "(Duque et al . 2011b)"
+- "unique_context_marker": "(Duque et al. 2011b)"
   "block_ids":
   - 1
+  - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Problem Formulation"
+  - "Problem Formulation"
   "topic_labels":
+  - "p-regions formulations"
   - "p-regions formulations"
 - "unique_context_marker": "(Duque et al. 2012)"
   "block_ids":
   - 1
   - 2
+  - 4
+  - 5
   "intent_labels":
   - "Model/Architecture Adoption"
-  - "Prior Methods"
+  - "Problem Formulation"
+  - "Algorithm/Principle Adoption"
+  - "Problem Formulation"
   "topic_labels":
   - "max-p regions formulations"
   - "max-p regions formulations"
+  - "max-p regions formulations"
+  - "Bottom-up seeded agglomeration"
 - "unique_context_marker": "(Kim et al. 2013)"
   "block_ids":
   - 1
+  - 2
   "intent_labels":
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
   - "p-regions formulations"
-- "unique_context_marker": "(Li et al . 2014b)"
+  - "Exact optimization models"
+- "unique_context_marker": "(Li et al. 2014b)"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
   - "p-regions formulations"
-- "unique_context_marker": "(Borgatti et al . 2009)"
+- "unique_context_marker": "(Borgatti et al. 2009)"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "(Wheeler 1973, Whitehand and Larkham 1992, Jiang and Claramunt 2004)"
   "block_ids":
   - 1
   "intent_labels":
   - "Importance of Problem"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "(Jiang and Jia 2011)"
   "block_ids":
   - 1
   "intent_labels":
   - "Importance of Problem"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Vickrey 1961, Nagel 1965, Bunge 1966, Aboolian et al . 2009)"
+  - "Other Intent"
+- "unique_context_marker": "(Vickrey 1961, Nagel 1965, Bunge 1966, Aboolian et al. 2009)"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "(Clarke and Surkis 1968)"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "(Hess and Samuels 1971)"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "(Thomas 1979)"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
 - "unique_context_marker": "(Openshaw 1977)"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Curtin et al . 2010)"
+  - "Other Intent"
+- "unique_context_marker": "(Curtin et al. 2010)"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(see Duque et al . 2007 for a literature review of regionalization)"
+  - "Other Intent"
+- "unique_context_marker": "(see Duque et al. 2007 for a literature review of regionalization)"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Duque et al. 2011b)"
+  - "Other Intent"
+- "unique_context_marker": "(Duque et al. 2012, Kim et al. 2013, Li et al. 2014b)"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Exact optimization models"
+- "unique_context_marker": "(Laura et al. 2015)"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Other Intent"
+- "unique_context_marker": "(Zoltners and Sinha 1983)"
   "block_ids":
   - 2
   "intent_labels":
   - "Problem Formulation"
   "topic_labels":
-  - "p-regions formulations"
-- "unique_context_marker": "(Duque et al . 2012, Kim et al . 2013, Li et al . 2014b)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Exact optimization models"
-- "unique_context_marker": "(Laura et al . 2015)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Exact optimization models"
-- "unique_context_marker": "(Zoltners and Sinha 1983)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Alternative names"
-- "unique_context_marker": "(Kim et al . 2013)"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Compactness-driven location–allocation approaches"
-- "unique_context_marker": "(Bozkaya et al . 2003)"
+  - "Other Intent"
+- "unique_context_marker": "(Bozkaya et al. 2003)"
   "block_ids":
   - 2
   "intent_labels":
@@ -163,34 +161,24 @@
   - "Prior Methods"
   "topic_labels":
   - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "(Duque et al . 2012)"
-  "block_ids":
-  - 2
-  - 4
-  - 5
-  "intent_labels":
-  - "Prior Methods"
-  - "Algorithm/Principle Adoption"
-  - "Problem Formulation"
-  "topic_labels":
-  - "Local search with area swaps and metaheuristics"
-  - "Local search with area swaps and metaheuristics"
-  - "Heuristic models with explicit contiguity"
-- "unique_context_marker": "(Li et al . 2014a)"
+- "unique_context_marker": "(Li et al. 2014a)"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
   - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "(2012)"
+- "unique_context_marker": "Duque et al. (2012)"
   "block_ids":
   - 3
+  - 5
   "intent_labels":
   - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "max-p regions formulations"
-- "unique_context_marker": "(2000)"
+  - "Bottom-up seeded agglomeration"
+- "unique_context_marker": "Cova and Church (2000)"
   "block_ids":
   - 3
   "intent_labels":
@@ -211,31 +199,24 @@
   - "Prior Methods"
   "topic_labels":
   - "Bottom-up seeded agglomeration"
-- "unique_context_marker": "Duque et al . (2012)"
-  "block_ids":
-  - 5
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Heuristic models with explicit contiguity"
-- "unique_context_marker": "(1965)"
-  "block_ids":
-  - 6
-  "intent_labels":
-  - "Algorithm/Principle Adoption"
-  "topic_labels":
-  - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "(2007)"
+- "unique_context_marker": "Nagel (1965)"
   "block_ids":
   - 6
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
   - "Local search with area swaps and metaheuristics"
-- "unique_context_marker": "(Duque et al . 2011a)"
+- "unique_context_marker": "Duque et al. (2007)"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Local search with area swaps and metaheuristics"
+- "unique_context_marker": "(Duque et al. 2011a)"
   "block_ids":
   - 8
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Alternative names"
+  - "Other Intent"
