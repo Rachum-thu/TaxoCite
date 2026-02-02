@@ -74,28 +74,28 @@ blocks:
     topic_label: Intermolecular interaction modulation
   - marker: '[3]'
     intent_label: Domain Overview
-    topic_label: Intermolecular interaction modulation
+    topic_label: Other Intent
   - marker: '[4]'
     intent_label: Domain Overview
-    topic_label: Intermolecular interaction modulation
+    topic_label: Other Intent
   - marker: '[5]'
     intent_label: Domain Overview
-    topic_label: Intermolecular interaction modulation
+    topic_label: Other Intent
   - marker: '[6]'
     intent_label: Domain Overview
-    topic_label: Intermolecular interaction modulation
+    topic_label: Other Intent
   - marker: '[7]'
     intent_label: Research Gap
-    topic_label: Intermolecular interaction modulation
+    topic_label: Other Intent
   - marker: '[8]'
     intent_label: Domain Overview
-    topic_label: Crystal and aggregate engineering strategies
+    topic_label: Intermolecular interaction modulation
   - marker: '[9]'
     intent_label: Prior Methods
     topic_label: Crystal and aggregate engineering strategies
   - marker: '[10]'
     intent_label: Research Gap
-    topic_label: Crystal and aggregate engineering strategies
+    topic_label: Applications and engineering strategies
   - marker: '[11]'
     intent_label: Prior Methods
     topic_label: Crystal and aggregate engineering strategies
@@ -110,22 +110,22 @@ blocks:
     topic_label: Crystal and aggregate engineering strategies
   - marker: '[15]'
     intent_label: Domain Overview
-    topic_label: Crystal and aggregate engineering strategies
+    topic_label: Applications and engineering strategies
   - marker: '[16]'
     intent_label: Domain Overview
-    topic_label: Crystal and aggregate engineering strategies
+    topic_label: Other Intent
   - marker: '[17]'
     intent_label: Research Gap
-    topic_label: Crystal and aggregate engineering strategies
+    topic_label: Applications and engineering strategies
   - marker: '[18]'
     intent_label: Domain Overview
     topic_label: Intermolecular interaction modulation
   - marker: '[19]'
     intent_label: Domain Overview
-    topic_label: Restriction of intramolecular motion (RIM)
+    topic_label: Intersystem crossing engineering (SOC and ΔEST)
   - marker: '[20]'
     intent_label: Prospective Application
-    topic_label: Photodynamic therapy and theranostics
+    topic_label: Applications and engineering strategies
   - marker: '[21]'
     intent_label: Prospective Application
     topic_label: Photodynamic therapy and theranostics
@@ -336,13 +336,13 @@ blocks:
   citations:
   - marker: '[26]'
     intent_label: Domain Overview
-    topic_label: Transformation
+    topic_label: Other Intent
   - marker: '[27]'
     intent_label: Prior Methods
-    topic_label: Crystal and aggregate engineering strategies
+    topic_label: Other Intent
   - marker: '[24]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Crystal and aggregate engineering strategies
+    topic_label: Other Intent
   - marker: '[28]'
     intent_label: Research Gap
     topic_label: Activation
@@ -357,7 +357,7 @@ blocks:
     topic_label: Optoelectronic emitters and devices
   - marker: '[32]'
     intent_label: Prospective Application
-    topic_label: Optoelectronic emitters and devices
+    topic_label: Applications and engineering strategies
   - marker: '[19b,33]'
     intent_label: Domain Overview
     topic_label: Aggregation-induced generation of reactive oxygen species (AIG-ROS)
@@ -369,7 +369,7 @@ blocks:
     topic_label: Aggregation-induced generation of reactive oxygen species (AIG-ROS)
   - marker: '[36]'
     intent_label: Prospective Application
-    topic_label: Photodynamic therapy and theranostics
+    topic_label: Applications and engineering strategies
 - block_id: 2
   content: We developed an efficient multicomponent polymerization to in situ generate functional heteroaromatic hyperbranched
     polyelectrolytes using readily accessible internal diynes and low-cost, commercially available arylnitriles, NaSbF6, and
