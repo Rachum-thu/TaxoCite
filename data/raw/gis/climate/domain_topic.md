@@ -1,88 +1,106 @@
 # climate
 
-## Energy and Electricity Systems
-**Description:** Low-carbon power integration, grid operation, and emissions reduction using machine learning.
+## Data types and structures
+**Description:** Core modalities capturing atmospheric information for analysis and modeling.
 
-### Renewable forecasting and integration
-**Description:** Improve supply and demand predictions to manage variability and plan deployments.
+### Time series representations
+**Description:** Sequential observations at individual sites with one or multiple meteorological variables.
 
-### Grid optimization and flexible demand
-**Description:** Accelerate scheduling, control, and decentralized demand response for reliable, low-emission operations.
+### Gridded spatio-temporal fields
+**Description:** Multi-level global or regional arrays on latitude–longitude grids evolving over time.
 
-## Transportation
-**Description:** Data-driven strategies to reduce travel emissions across modes and logistics.
+### Climate text corpora
+**Description:** Documents and reports enabling topic, sentiment, and policy analyses in climate discourse.
 
-### Demand modeling and freight consolidation
-**Description:** Infer mobility patterns, optimize routes, and bundle shipments to cut mileage.
+## Modeling approaches and paradigms
+**Description:** High-level strategies framing how future states are predicted from data.
 
-### Electrification and charging systems
-**Description:** Model charging behavior, site infrastructure, and enable vehicle-to-grid services.
+### Direct forecasting
+**Description:** One-step prediction for fixed horizons using only current conditions as input.
 
-## Built Environment & Urban Systems
-**Description:** Efficiency and planning for buildings and cities with data-centric approaches.
+### Continuous lead-time conditioning
+**Description:** Lead time provided as an input to generate forecasts at arbitrary horizons.
 
-### Building energy modeling and diagnostics
-**Description:** Forecast consumption, disaggregate loads, and detect faults for HVAC and devices.
+### Iterative dynamics forecasting
+**Description:** Short-interval rollouts predicting state changes to extend to long horizons.
 
-### Urban-scale energy mapping and smart city data
-**Description:** Use remote sensing and heterogeneous sensors to guide planning and operations.
+## Architecture families for climate modeling
+**Description:** Principal neural model classes tailored to spatio-temporal and textual climate data.
 
-## Industrial Systems & Materials
-**Description:** Manufacturing decarbonization via optimization, control, and novel material discovery.
+### Recurrent networks and ConvLSTM
+**Description:** Sequence models capturing temporal dependencies, often with convolution for spatial structure.
 
-### Supply chains and production efficiency
-**Description:** Forecast demand, reduce overproduction, and optimize logistics and maintenance.
+### Transformers for climate modeling
+**Description:** Attention-based architectures modeling long-range spatio-temporal dependencies across variables.
 
-### Low-carbon materials and process chemistries
-**Description:** Design greener cement, steel, catalysts, and ammonia pathways using data.
+### Graph neural networks for Earth systems
+**Description:** Message-passing over learned or geodesic meshes to encode spatial relations and dynamics.
 
-## Land Use: Farms & Forests
-**Description:** Agriculture and forestry applications to reduce emissions and enhance sequestration.
+### Generative models: GANs and diffusion
+**Description:** Probabilistic generators for sharp sequences, ensembles, or residual refinement of fields.
 
-### Precision agriculture and emissions monitoring
-**Description:** Deploy sensing and robotics for targeted inputs, yields, and greenhouse-gas tracking.
+## Learning and training strategies
+**Description:** Techniques for efficient pretraining, adaptation, and constraint-aware optimization.
 
-### Forest carbon, deforestation, and fire risk management
-**Description:** Estimate biomass, detect land cover change, and anticipate wildfire hazards.
+### Supervised pretraining and finetuning of foundation models
+**Description:** Large models trained on reanalysis, then adapted to diverse downstream tasks.
 
-## Climate Interventions: CDR and Solar Geoengineering
-**Description:** Negative emissions and reflectivity approaches, emphasizing modeling and monitoring.
+### Self- and semi-supervised learning for climate
+**Description:** Masked reconstruction and pseudo-labeling leverage unlabeled data for representations.
 
-### Direct air capture and geological storage
-**Description:** Optimize sorbents, site selection, reservoir simulation, and leak detection.
+### Federated learning and privacy-preserving training
+**Description:** Collaborative optimization across institutions without exchanging sensitive raw data.
 
-### Aerosol design and control strategies
-**Description:** Evaluate particle properties, uncertainty, and feedback control for interventions.
+### Physics-informed objectives and constraints
+**Description:** Loss designs embedding latitude weighting, pressure weighting, or governing equations.
 
-## Climate Prediction and Data-Driven Modeling
-**Description:** Learning-based methods for weather–climate understanding across scales and tasks.
+## Forecasting and simulation tasks
+**Description:** Core predictive targets across temporal ranges and spatial scales.
 
-### Spatio-temporal forecasting and nowcasting
-**Description:** Predict short-to-medium-range states using radar, satellites, and reanalyses.
+### Short- to medium-range global prediction
+**Description:** Multi-day forecasts of atmospheric variables on global or regional grids.
 
-### Downscaling, bias correction, and data assimilation
-**Description:** Enhance resolution, correct systematic errors, and integrate observations.
+### Precipitation nowcasting
+**Description:** Minute-to-hour prediction of rainfall fields from radar and satellite sequences.
 
-### Foundation models and generative architectures
-**Description:** Pre-train transformers, graphs, GANs, and diffusion for multi-task inference.
+### Subseasonal-to-seasonal and climate projection
+**Description:** Weeks-to-months forecasting and long-term trend simulation for planning and risk.
 
-## Societal Impacts, Adaptation, and Education
-**Description:** Applications supporting resilience of ecosystems, infrastructure, and communities.
+## Post-processing and enhancement tasks
+**Description:** Methods improving resolution, realism, and interpretability of model outputs.
 
-### Ecosystems and infrastructure resilience
-**Description:** Monitor biodiversity, map risks, and prioritize maintenance for critical assets.
+### Downscaling and super-resolution
+**Description:** Increasing spatial detail of coarse outputs while preserving physical consistency.
 
-### Food security, health, and disaster response
-**Description:** Forecast yields, assess exposure, and process crisis data for rapid action.
+### Bias correction and calibration
+**Description:** Adjusting systematic errors to align predictions with observational distributions.
 
-## Governance, Policy, Markets, and Finance
-**Description:** Decision-support for institutions through modeling, evaluation, incentives, and financial analysis.
+### Weather pattern detection and understanding
+**Description:** Identifying phenomena like cyclones, rivers, or oscillations for process insight.
 
-### Policy analysis and integrated assessment
-**Description:** Augment scenario modeling, uncertainty analysis, and causal evaluation of interventions.
+## Uncertainty and inference strategies
+**Description:** Approaches to quantify, reduce, and manage prediction uncertainty.
 
-### Market design and carbon pricing
-**Description:** Predict permit prices, design auctions, and assess distributional impacts.
+### Multi-interval ensembling via randomized rollouts
+**Description:** Averaging diverse interval combinations to stabilize long-horizon forecasts.
 
-### Climate finance and risk analytics
-**Description:** Extract disclosures, quantify exposures, and forecast climate-linked financial risks.
+### Probabilistic forecasting with diffusion or variational objectives
+**Description:** Learning distributions to sample multiple plausible future scenarios.
+
+### Multi-step training to mitigate error accumulation
+**Description:** Finetuning with rolled-out objectives to reduce compounding prediction errors.
+
+## Challenges and future directions
+**Description:** Outstanding issues guiding research toward reliable, general, and responsible models.
+
+### Multimodal integration across heterogeneous resolutions
+**Description:** Fusing radar, satellite, text, and reanalysis with differing scales and cadences.
+
+### Interpretability and causal reasoning in learned models
+**Description:** Explaining decisions and aligning attributions with physical mechanisms.
+
+### Robust generalization under non-stationary climate
+**Description:** Maintaining skill under shifting baselines and extreme event distributions.
+
+### Privacy, communication costs, and on-device adaptation
+**Description:** Balancing data protection, bandwidth limits, and local continual learning.
