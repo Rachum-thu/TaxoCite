@@ -4,9 +4,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - null
   "topic_labels":
-  - "Spatio-temporal forecasting and nowcasting"
+  - null
 - "title": "FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators"
   "unique_context_marker": "[2]"
   "block_ids": []
@@ -36,7 +36,7 @@
   - 1
   - 5
   "intent_labels":
-  - "Result Comparison"
+  - null
   - "Result Comparison"
   "topic_labels":
   - "Foundation models and generative architectures"
@@ -89,7 +89,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - null
   "topic_labels":
   - null
 - "title": "Neural General Circulation Models for Weather and Climate"
@@ -98,17 +98,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - null
   - "Research Gap"
   "topic_labels":
-  - null
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
 - "title": "WeatherBench 2: A benchmark for the next generation of data-driven global weather models"
   "unique_context_marker": "[17]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - null
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "A Practical Probabilistic Benchmark for AI Weather Models"
@@ -128,7 +128,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
 - "title": "Continuous Ensemble Weather Forecasting with Diffusion models"
   "unique_context_marker": "[21]"
   "block_ids": []
@@ -142,13 +142,13 @@
   - 3
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - null
   - "Research Gap"
-  - "Prior Methods"
+  - "Research Gap"
   - "Result Comparison"
   "topic_labels":
-  - null
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
   - null
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "Denoising Diffusion Probabilistic Models"
@@ -156,7 +156,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - null
   "topic_labels":
   - "Foundation models and generative architectures"
 - "title": "Strictly Proper Scoring Rules, Prediction, and Estimation"
@@ -164,16 +164,16 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Spatio-temporal forecasting and nowcasting"
 - "title": "Numerical techniques for global atmospheric models"
   "unique_context_marker": "[25]"
   "block_ids":
   - 1
   - 5
   "intent_labels":
-  - "Research Gap"
+  - null
   - "Domain Overview"
   "topic_labels":
   - null
@@ -183,7 +183,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - null
   "topic_labels":
   - "Foundation models and generative architectures"
 - "title": "Learning mesh-based simulation with graph networks"
@@ -191,7 +191,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - null
   "topic_labels":
   - "Foundation models and generative architectures"
 - "title": "Scaling laws for neural language models"
@@ -200,7 +200,7 @@
   - 1
   - 4
   "intent_labels":
-  - "Research Gap"
+  - null
   - "Domain Overview"
   "topic_labels":
   - null
@@ -210,7 +210,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Result Comparison"
+  - null
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "Stochastic Parametrization and Model Uncertainty"
@@ -226,7 +226,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - null
 - "title": "Neural Operators with Localized Integral and Differential Kernels"
@@ -234,7 +234,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - null
 - "title": "A ConvNet for the 2020s"
@@ -273,7 +273,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Foundation models and generative architectures"
 - "title": "The Llama 3 Herd of Models"
@@ -281,7 +281,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Foundation models and generative architectures"
 - "title": "The ERA5 global reanalysis"

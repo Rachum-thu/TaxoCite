@@ -176,7 +176,7 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   While it is common to evaluate ERA5-trained AI models against ERA5 reanalysis, and
   HRES against its own analysis at lead time 0 (HRES-fc0) [8, 9, 30] (see Methods),
   this approach can complicate comparisons due to different horizontal resolution:
-  ERA5 has a resolution of 0.25◦, whereas HRES operates at 0.1◦. To assess the sensitivity
+  ERA5 has a resolution of 0.25°, whereas HRES operates at 0.1°. To assess the sensitivity
   of our findings to the choice of different reference datasets, we also evaluate
   operational versions of GraphCast and Pangu-Weather against HRES on a common test
   dataset of record-breaking events identified using HRES-fc0 as observational ground
@@ -195,7 +195,7 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
 
   </block>
 
-  ## AI models underestimate intensities of records
+  ### AI models underestimate intensities of records
 
   <block id="3">
 
@@ -289,7 +289,7 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
 
   Our findings consistently show that current AI models underperform HRES in forecasting
   record-breaking events. They tend to underpredict heat and wind speed records, and
-  overpredict cold records, with greater forecast biases the larger the record margin.
+  over-predict cold records, with greater forecast biases the larger the record margin.
   This strongly suggests a systematic extrapolation problem in these models.
 
 
@@ -372,14 +372,14 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   For the definition of records we use the ECMWF’s ERA5 reanalysis data [1] from 1979–2017
   with daily observations at 00, 06, 12, and 18 UTC time. This dataset coincides with
   the training data of almost all AI models considered in this paper. The time points
-  in this training data are denoted by Ttrain. The ERA5 data is available on a 0.25◦
-  × 0.25◦ latitude-longitude grid. Throughout the paper we only consider data over
+  in this training data are denoted by Ttrain. The ERA5 data is available on a 0.25°
+  × 0.25° latitude-longitude grid. Throughout the paper we only consider data over
   land. We use the land-sea mask from the ERA5 and follow ECMWF [2] by defining a
   grid cell as land if more than 50% of the cell is covered by land; otherwise it
   is considered as sea. We exclude the Antarctic region (grid cells with latitude
-  in the range (−60◦, −90◦]) due to aberrant behavior exhibited by some AI models
+  in the range (−60°, −90°]) due to aberrant behavior exhibited by some AI models
   in this region, and denote the remaining set of land grid cells (244,450 grid cells
-  in total) from the ERA5 dataset by G0.25◦.
+  in total) from the ERA5 dataset by G0.25°.
 
 
   We use forecasts from the state-of-the-art AI models GraphCast [3], Pangu-Weather
@@ -396,7 +396,7 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   while the latter was used in an operational setting without fine-tuning.
 
 
-  As ground truth for the AI models we use ERA5 data with locations in G0.25◦ in the
+  As ground truth for the AI models we use ERA5 data with locations in G0.25° in the
   test period. For HRES and the operational AI models we use HRES-fc0 as ground truth.
   Using these two different datasets to evaluate the forecasts against is the standard
   approach in the literature of AI weather models to avoid unfair comparisons [3–5].
@@ -413,23 +413,26 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   record in the ERA5 data Ttrain in the training period of the AI models from 1979–2017.
   We specify whether we consider records in the positive direction (e.g., heat records)
   or the negative direction (e.g., cold records) by superscripts max or min, respectively.
-  A record rx,max_{s,m} of variable x is defined locally per grid cell s ∈ G0.25◦
+  A record rx,max_{s,m} of variable x is defined locally per grid cell s ∈ G0.25°
   and per month m ∈ {January, . . . , December}. More precisely, we define
 
+
   rx,max_{s,m} = max_{t∈Ttrain; t∈m} x_{s,t},
+
 
   where x_{s,t} is the value of variable x at location s and time t, and t ∈ m indicates
   that only time points in month m are considered.
 
 
-  We define the set Rx,max ⊆ G0.25◦ × Ttest of record-breaking events of variable
+  We define the set Rx,max ⊆ G0.25° × Ttest of record-breaking events of variable
   x consisting of location-time pairs encoding where and when the event occurred.
   The test period Ttest contains all time points at 00 and 12 UTC in the test year,
   i.e., the year 2018 or 2020 in our analyses. We denote by m(t) the month corresponding
   to a time t ∈ Ttest, so that x_{s,t} > r^{x,max}_{s,m(t)} means that observation
   x_{s,t} exceeds its respective monthly historical record. With this we have
 
-  Rx,max = {(s, t) ∈ G0.25◦ × Ttest : x_{s,t} > r^{x,max}_{s,m(t)} }.
+
+  Rx,max = {(s, t) ∈ G0.25° × Ttest : x_{s,t} > r^{x,max}_{s,m(t)}}.
 
 
   We do not evaluate forecasts initiated at 06 and 18 UTC since the HRES forecasts
@@ -470,15 +473,14 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   where a test predictor is far away from the distribution of the training predictors.
   In high-dimensional predictor spaces, it is not trivial to mathematically describe
   such points. One way of framing extrapolation is to require that the predictor is
-  outside of the convex hull (blue line in Fig. 4) formed by the training data. [7]
-  argue that with this definition of training domain it is in fact very likely that
-  test points need extrapolation. However, convex hulls are computationally prohibitive
-  in high dimensions since the number of facets grows rapidly with the dimension.
-  Our record dataset therefore considers a stronger yet simpler definition, namely
-  all points where at least one test variable is beyond its univariate training range.
-  In Fig. 4 this corresponds to all test points outside of the green rectangle. All
-  events in the record set Rx,max in Equation (2) satisfy this strong definition of
-  out-of-distribution samples.
+  outside of the convex hull formed by the training data. [7] argue that with this
+  definition of training domain it is in fact very likely that test points need extrapolation.
+  However, convex hulls are computationally prohibitive in high dimensions since the
+  number of facets grows rapidly with the dimension. Our record dataset therefore
+  considers a stronger yet simpler definition, namely all points where at least one
+  test variable is beyond its univariate training range. In Fig. 4 this corresponds
+  to all test points outside of the green rectangle. All events in the record set
+  Rx,max in Equation (2) satisfy this strong definition of out-of-distribution samples.
 
 
   </block>
@@ -491,23 +493,28 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   variable x of interest (e.g., 2-meter temperature T2m) the RMSE on a subset of location-initialization
   pairs for lead time τ is defined as
 
-  RMSE_I(τ) = sqrt( (1 / sum_{(s,t0)∈I} ω_s ) * sum_{(s,t0)∈I} ω_s ( \hat{x}^τ_{s,t0}
-  - x_{s,t0+τ} )^2 ),
+
+  RMSE_I(τ) = sqrt( (1 / Σ_{(s,t0)∈I} ω_s) * Σ_{(s,t0)∈I} ω_s (x̂_{s,t0}^τ − x_{s,t0+τ})^2
+  ),
+
 
   where
 
-  - G0.25◦ is the set of locations/grid cells,
+  - G0.25° is the set of locations/grid cells,
 
-  - I ⊆ G0.25◦ × Ttest is the set of location-initialization pairs of interest,
+  - I ⊆ G0.25° × Ttest is the set of location-initialization pairs of interest,
 
-  - \hat{x}^τ_{s,t0} is a forecast of variable x with lead time τ at location s ∈
-  G0.25◦ and initialization time t0 ∈ T, and x_{s,t0+τ} is the corresponding ground
-  truth,
+  - x̂_{s,t0}^τ is a forecast of variable x with lead time τ at location s ∈ G0.25°
+  and initialization time t0 ∈ T, and x_{s,t0+τ} is the corresponding ground truth,
 
   - ω_s is the latitude-based weight chosen as the one used in [3]
 
-  ω_s = { cos(θ_lat(s)) sin(θ_0.25◦/2), if |θ_lat(s)| < π/2; sin^2(θ_0.25◦/4), if
-  |θ_lat(s)| = π/2 }, with θ_a as the radian associated with degree a.
+
+  ω_s = { cos(θ_lat(s)) sin(θ_0.25°/2), if |θ_lat(s)| < π/2; sin^2(θ_0.25°/4), if
+  |θ_lat(s)| = π/2 },
+
+
+  with θ_a as the radian associated with degree a.
 
 
   Our definition of RMSE is more general than the conventional one [6] in the sense
@@ -518,24 +525,26 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
 
 
   In the computation of RMSE on record-breaking events such as shown in Fig. 1, we
-  choose the set I in the following way. Recall the set Rx,max ⊆ G0.25◦ × Ttest of
-  location-time pairs of all records in a given time period (e.g., the year 2020).
-  We choose all location-initialization pairs such that the target of the forecasting
-  with lead time τ corresponds to a record, i.e.,
+  choose the set I in Equation (3) in the following way. Recall the set Rx,max ⊆ G0.25°
+  × Ttest of location-time pairs of all records in a given time period (e.g., the
+  year 2020). We choose all location-initialization pairs such that the target of
+  the forecasting with lead time τ corresponds to a record, i.e.,
 
-  I_τ = {(s, t0) ∈ G0.25◦ × Ttest : (s, t0 + τ) ∈ Rx,max }.
+
+  I_τ = {(s, t0) ∈ G0.25° × Ttest : (s, t0 + τ) ∈ Rx,max}.
+
 
   The corresponding RMSE_I(τ) is the error of a model made in forecasting records
   with lead time τ.
 
 
-  To construct a confidence interval for the RMSE_I(τ), we assume that the central
-  limit theorem holds for the weighted square errors. Then by the Delta method, we
-  obtain the asymptotic distribution of RMSE_I(τ) and construct approximate normal
-  confidence intervals. Alternatively, bootstrap can be used to construct the confidence
-  bands [8]. We tried the non-parametric bootstrap with 1000 resamplings, which yielded
-  similar confidence bands to the normal ones. For the sake of computational feasibility,
-  we use the above normal confidence levels throughout the paper.
+  To construct a confidence interval for the RMSE_I(τ) in Equation (3), we assume
+  that the central limit theorem holds for the weighted square errors. Then by the
+  Delta method, we obtain the asymptotic distribution of RMSE_I(τ) and construct approximate
+  normal confidence intervals. Alternatively, bootstrap can be used to construct the
+  confidence bands. We tried the non-parametric bootstrap with 1000 resamplings, which
+  yielded similar confidence bands to the normal ones. For the sake of computational
+  feasibility, we use the above normal confidence levels throughout the paper.
 
 
   </block>
@@ -547,11 +556,12 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   To complement RMSE and investigate whether a forecasting model under- or overpredicts
   the ground truth, we consider the latitude-weighted forecast bias
 
-  FB_I(τ) = (1 / sum_{(s,t0)∈I} ω_s) * sum_{(s,t0)∈I} ω_s ( \hat{x}^τ_{s,t0} - x_{s,t0+τ}
-  ).
 
-  Confidence intervals for the forecast bias are computed in the same way as for RMSE
-  based on asymptotic normality.
+  FB_I(τ) = (1 / Σ_{(s,t0)∈I} ω_s) * Σ_{(s,t0)∈I} ω_s (x̂_{s,t0}^τ − x_{s,t0+τ}).
+
+
+  where the notation is the same as in Equation (3). Confidence intervals for the
+  forecast bias are computed in the same way as for RMSE based on asymptotic normality.
 
 
   </block>
@@ -569,42 +579,49 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   for such cases since they account for both false positives and false negatives.
 
 
-  For a set I ⊆ G0.25◦ × Ttest of location-initialization pairs of interest, we compute
+  For a set I ⊆ G0.25° × Ttest of location-initialization pairs of interest, we compute
   the precision and recall for variable x at lead time τ as (we set r_{s,m} = r^{x,max}_{s,m}
   to simplify notation)
 
 
-  Precision_I(τ) = sum_{(s,t0)∈I} 1{ \hat{x}^τ_{s,t0} > r_{s,m(t0+τ)} } 1{ x_{s,t0+τ}
-  > r_{s,m(t0+τ)} } / sum_{(s,t0)∈I} 1{ \hat{x}^τ_{s,t0} > r_{s,m(t0+τ)} },
+  Precision_I(τ) = (Σ_{(s,t0)∈I} 1{x̂_{s,t0}^τ > r_{s,m(t0+τ)}} 1{x_{s,t0+τ} > r_{s,m(t0+τ)}})
+  / (Σ_{(s,t0)∈I} 1{x̂_{s,t0}^τ > r_{s,m(t0+τ)}}),
 
 
-  Recall_I(τ) = sum_{(s,t0)∈I} 1{ \hat{x}^τ_{s,t0} > r_{s,m(t0+τ)} } 1{ x_{s,t0+τ}
-  > r_{s,m(t0+τ)} } / sum_{(s,t0)∈I} 1{ x_{s,t0+τ} > r_{s,m(t0+τ)} }.
+  and
 
 
-  As above m(t0 + τ) is the month corresponding to time t0 + τ.
+  Recall_I(τ) = (Σ_{(s,t0)∈I} 1{x̂_{s,t0}^τ > r_{s,m(t0+τ)}} 1{x_{s,t0+τ} > r_{s,m(t0+τ)}})
+  / (Σ_{(s,t0)∈I} 1{x_{s,t0+τ} > r_{s,m(t0+τ)}}),
+
+
+  where x̂_{s,t0}^τ denotes a forecast of variable x at location s initialized at
+  time t0 with lead time τ, and x_{s,t0+τ} is the corresponding ground truth. As above
+  m(t0 + τ) is the month corresponding to time t0 + τ.
 
 
   In order to produce a precision-recall curve from a deterministic forecast, following
   [3], we introduce a common “gain” parameter to define scaled forecasts by
 
+
   scaled forecast = forecast + gain × forecast std. deviation.
 
+
   Using these scaled forecasts in the precision and recall formulae instead of only
-  \hat{x}^τ_{s,t0} and varying the gain parameter in a suitable range ([−1.5, 1.5]
-  in our case) yields a precision-recall curve. The scaling allows the study of different
+  x̂_{s,t0}^τ and varying the gain parameter in a suitable range ([−1.5, 1.5] in our
+  case) yields a precision-recall curve. The scaling allows the study of different
   trade-offs between false positives and false negatives, and using a common gain
-  parameter enables averaging over all spatial locations s ∈ G0.25◦.
+  parameter enables averaging over all spatial locations s ∈ G0.25°.
 
 
   Our parameterization of the scaled forecasts is slightly different from the one
   in [3], but it is theoretically more justified. Indeed, for a probabilistic forecast
-  from a location-scale family, the scaled forecast corresponds to choosing the same
-  quantile of the forecast distribution at all locations. For each variable x, each
-  location s ∈ G0.25◦, each month m and each lead time τ we estimate the forecast
-  standard deviations in the scaled forecast from forecasts in the year 2020 for the
-  different models. We assume that this standard deviation is constant for time points
-  in the same month so that we have enough data for the estimation.
+  from a location-scale family, the formula corresponds to choosing the same quantile
+  of the forecast distribution at all locations. For each variable x, each location
+  s ∈ G0.25°, each month m and each lead time τ we estimate the forecast standard
+  deviations in the scaling from forecasts in the year 2020 for the different models.
+  We assume that this standard deviation is constant for time points in the same month
+  so that we have enough data for the estimation.
 
 
   </block>
@@ -616,16 +633,15 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   In order to compute the correlation between the different model forecasts and ground
   truths, we define suitable functions indicating whether the corresponding record
   is exceeded. Fix a lead time τ and, for instance, consider the variable x with max-records
-  abbreviated by r_{s,m} = r^{x,max}_{s,m}. For a forecast \hat{x}^τ_{s,t} from some
-  model define for each time point t0 ∈ Ttest the indicator 1{\hat{x}^τ_{s,t0} > r_{s,m(t0+τ)}}
-  that takes value 1 if \hat{x}^τ_{s,t0} exceeds the record r_{s,m(t0+τ)} and 0 otherwise.
+  abbreviated by r_{s,m} = r^{x,max}_{s,m}. For a forecast x̂_{s,t}^τ from some model
+  define for each time point t0 ∈ Ttest the indicator 1{x̂_{s,t0}^τ > r_{s,m(t0+τ)}}
+  that takes value 1 if x̂_{s,t0}^τ exceeds the record r_{s,m(t0+τ)} and 0 otherwise.
   We can now compute the correlation between these indicators, indexed by all t0 +
-  τ ∈ Ttest and s ∈ G0.25◦, for two different forecast models. Similarly, for a ground
+  τ ∈ Ttest and s ∈ G0.25°, for two different forecast models. Similarly, for a ground
   truth (either ERA5 or HRES-fc0) we define for each time point t0 + τ ∈ Ttest the
   indicator 1{x_{s,t0+τ} > r_{s,m(t0+τ)}}. We then compute correlations of these ground
   truths with the forecast indicators, and between forecast indicators from different
-  models. The resulting correlation matrix is shown for the ERA5-trained AI models
-  in Fig. 3g–i, and for the operational AI models in Supplementary Fig. 17g–i.
+  models.
 
 
   </block>
@@ -636,9 +652,9 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
 
   In the theory of forecast evaluation, the forecaster’s dilemma [9] shows that computing
   an evaluation score only on a subset of observations can incentivize sub-optimal
-  forecasts. Such conditioning appears in the RMSE defined above if the set I depends
+  forecasts. Such conditioning appears in the RMSE defined in (3) if the set I depends
   on the observations, as, for instance, in the case of record-breaking events defined
-  earlier. This metric should therefore not be used as the sole evaluation criterion,
+  in (4). This metric should therefore not be used as the sole evaluation criterion,
   but rather in combination with others. We therefore also report the overall RMSE
   on all events in Fig. 1, Supplementary Figs. 14 and 22, which show that all methods
   yield errors on a comparable scale and do not appear to artificially hedge forecasts
@@ -647,21 +663,21 @@ segmented_markdown: '# Numerical models outperform AI weather forecasts of recor
   (Fig. 3d–f and Supplementary Fig. 17d–f).
 
 
-  Computing the RMSE on a subset of extreme observations is common in the literature
-  of AI weather forecasts [3, 8, 10]. Another approach that avoids the forecaster’s
-  dilemma completely is to condition on the forecasts instead of the observations
-  [11]. We follow this approach to compare the operational version of GraphCast with
-  HRES. We choose as the set of record-breaking events all location-initialization
-  pairs such that forecasts with lead time τ from both GraphCast operational and HRES
-  exceed the training record. For max-records of variable x, for instance, this yields
-  an index set
+  Another approach that avoids the forecaster’s dilemma completely is to condition
+  on the forecasts instead of the observations [11]. We follow this approach to compare
+  the operational version of GraphCast with HRES. We choose as the set of record-breaking
+  events in (2) all location-initialization pairs such that forecasts with lead time
+  τ from both GraphCast operational and HRES exceed the training record. For max-records
+  of variable x, for instance, this yields an index set
 
-  I_τ = { (s, t0) ∈ G0.25◦ × Ttest : \hat{x}^{HRES,τ}_{s,t0} > r_{s,m(t0+τ)}, \hat{x}^{GraphCast,τ}_{s,t0}
-  > r_{s,m(t0+τ)} },
 
-  to be used in the RMSE. The results (Supplementary Fig. 20) look qualitatively similar
-  to those from conditioning on the observations, except that we have a much smaller
-  set of events that are jointly forecasted to be record-breaking by both models compared
-  to the original record dataset.
+  I_τ = {(s, t0) ∈ G0.25° × Ttest : x̂_{s,t0}^{HRES,τ} > r_{s,m(t0+τ)}, x̂_{s,t0}^{GraphCast,τ}
+  > r_{s,m(t0+τ)}},
+
+
+  to be used in the RMSE in (3). The results (Supplementary Fig. 20) look qualitatively
+  similar to those from conditioning on the observations, except that we have a much
+  smaller set of events that are jointly forecasted to be record-breaking by both
+  models compared to the original record dataset.
 
   </block>'

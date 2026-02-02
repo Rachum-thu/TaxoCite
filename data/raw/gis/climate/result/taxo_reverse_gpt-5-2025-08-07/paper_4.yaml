@@ -4,7 +4,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - null
 - "title": "The rise of data-driven weather forecasting: A first statistical assessment of machine learning-based weather forecasts in an operational-like context"
@@ -12,7 +12,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "Accurate medium-range global weather forecasting with 3d neural networks"
@@ -34,7 +34,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "Physics-informed neural networks (pinns) for fluid mechanics: A review"
@@ -135,7 +135,7 @@
   - 11
   "intent_labels":
   - "Prior Methods"
-  - "Result Comparison"
+  - "Prior Methods"
   "topic_labels":
   - "Foundation models and generative architectures"
   - "Spatio-temporal forecasting and nowcasting"
@@ -178,14 +178,14 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Spatio-temporal forecasting and nowcasting"
+  - null
 - "title": "The era5 global reanalysis"
   "unique_context_marker": "[22]"
   "block_ids":
   - 1
   - 9
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Resource Utilization"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
@@ -209,7 +209,7 @@
   - 6
   - 11
   "intent_labels":
-  - "Resource Utilization"
+  - "Algorithm/Principle Adoption"
   - "Resource Utilization"
   "topic_labels":
   - null
@@ -219,7 +219,7 @@
   "block_ids":
   - 11
   "intent_labels":
-  - "Result Comparison"
+  - "Prior Methods"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "A unified pyramid recurrent network for video frame interpolation"
@@ -231,8 +231,8 @@
   - "Setting/Protocal Adoption"
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Spatio-temporal forecasting and nowcasting"
-  - "Spatio-temporal forecasting and nowcasting"
+  - "Downscaling, bias correction, and data assimilation"
+  - "Downscaling, bias correction, and data assimilation"
 - "title": "Flavr: Flow-agnostic video representations for fast frame interpolation"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -242,8 +242,8 @@
   - "Setting/Protocal Adoption"
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Spatio-temporal forecasting and nowcasting"
-  - "Spatio-temporal forecasting and nowcasting"
+  - "Downscaling, bias correction, and data assimilation"
+  - "Downscaling, bias correction, and data assimilation"
 - "title": "Forecasting global weather with graph neural networks"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -326,7 +326,7 @@
   "block_ids":
   - 7
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - null
 - "title": "Physics-informed neural operator for learning partial differential equations"
@@ -355,7 +355,7 @@
   - "Result Comparison"
   "topic_labels":
   - null
-  - "Foundation models and generative architectures"
+  - null
 - "title": "A pattern recognition approach to understanding the multi-layer perception"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -385,7 +385,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - null
 - "title": "Ofaf-convlstm: an optical flow attention fusion-convlstm model for precipitation nowcasting"
@@ -419,7 +419,7 @@
   - 9
   - 11
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
@@ -447,7 +447,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - null
   "topic_labels":
   - null
 - "title": "Physics-informed neural network method for solving one-dimensional advection equation using pytorch"
@@ -488,7 +488,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "Pred-bench: Benchmarking spatio-temporal prediction across diverse disciplines"
@@ -496,7 +496,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "Towards a self-contained data-driven global weather forecasting framework"
@@ -527,7 +527,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Spatio-temporal forecasting and nowcasting"
+  - null
 - "title": "A review of recurrent neural networks: Lstm cells and network architectures"
   "unique_context_marker": "[60]"
   "block_ids":
@@ -535,7 +535,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Spatio-temporal forecasting and nowcasting"
+  - null
 - "title": "A spine segmentation method under an arbitrary field of view based on 3d swin transformer"
   "unique_context_marker": "[61]"
   "block_ids":

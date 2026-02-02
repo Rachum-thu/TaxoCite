@@ -12,23 +12,23 @@
     - "Problem Formulation"
     - "Problem Formulation"
     - "Problem Formulation"
-  - - "Problem Formulation"
-    - "Problem Formulation"
-    - "Problem Formulation"
-    - "Problem Formulation"
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
     - "Other Intent"
+    - "Other Intent"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - []
-  - - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
     - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
 - "title": "Accurate medium-range global weather forecasting with 3D neural networks"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -57,16 +57,12 @@
   "block_ids":
   - 2
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - - "Climate Prediction and Data-Driven Modeling"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Climate Prediction and Data-Driven Modeling"
+    - "Climate Prediction and Data-Driven Modeling"
     - "Climate Prediction and Data-Driven Modeling"
 - "title": "Adaptive fourier neural operators: Efficient token mixers for transformers"
   "unique_context_marker": "[5]"
@@ -77,11 +73,7 @@
   - []
   - []
   "topic_labels":
-  - - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
   - []
 - "title": "Joint air quality and weather prediction based on multi-adversarial spatiotemporal networks"
   "unique_context_marker": "[6]"
@@ -100,11 +92,7 @@
   - []
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
   - []
 - "title": "The ERA5 global reanalysis"
   "unique_context_marker": "[8]"
@@ -148,16 +136,12 @@
   - 2
   - 6
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
+  - - "Climate Prediction and Data-Driven Modeling"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Climate Prediction and Data-Driven Modeling"
     - "Spatio-temporal forecasting and nowcasting"
     - "Climate Prediction and Data-Driven Modeling"
   - - "Downscaling, bias correction, and data assimilation"
@@ -170,7 +154,11 @@
   "block_ids":
   - 2
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -195,11 +183,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "Fourier neural operator for parametric partial differential equations"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -207,11 +191,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "Physics-informed neural operator for learning partial differential equations"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -235,11 +215,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "Climate downscaling using YNet: A deep convolutional network with skip connections and fusion"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -261,32 +237,24 @@
   "block_ids":
   - 2
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - - "Climate Prediction and Data-Driven Modeling"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Climate Prediction and Data-Driven Modeling"
+    - "Climate Prediction and Data-Driven Modeling"
     - "Climate Prediction and Data-Driven Modeling"
 - "title": "Learning differential operators for interpretable time series modeling"
   "unique_context_marker": "[23]"
   "block_ids":
   - 2
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - - "Climate Prediction and Data-Driven Modeling"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Climate Prediction and Data-Driven Modeling"
+    - "Climate Prediction and Data-Driven Modeling"
     - "Climate Prediction and Data-Driven Modeling"
 - "title": "ClimaX: A foundation model for weather and climate"
   "unique_context_marker": "[24]"
@@ -298,11 +266,7 @@
   - []
   "topic_labels":
   - []
-  - - "Foundation models and generative architectures"
-    - "Foundation models and generative architectures"
-    - "Foundation models and generative architectures"
-    - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "ClimateLearn: Benchmarking Machine Learning for Weather and Climate Modeling"
   "unique_context_marker": "[25]"
   "block_ids":
@@ -342,11 +306,7 @@
   - []
   "topic_labels":
   - []
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
   - []
 - "title": "Gencast: Diffusion-based ensemble forecasting for medium-range weather"
   "unique_context_marker": "[29]"
@@ -365,11 +325,7 @@
   - 10
   "intent_labels":
   - []
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   - []
   - []
   "topic_labels":
@@ -378,9 +334,9 @@
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
-  - - "Spatio-temporal forecasting and nowcasting"
+  - - "Climate Prediction and Data-Driven Modeling"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Climate Prediction and Data-Driven Modeling"
     - "Spatio-temporal forecasting and nowcasting"
     - "Climate Prediction and Data-Driven Modeling"
   - - "Downscaling, bias correction, and data assimilation"
@@ -445,9 +401,9 @@
   - 2
   "intent_labels":
   - - "Domain Overview"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
     - "Domain Overview"
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
@@ -462,11 +418,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "Improving data-driven global weather prediction using deep convolutional neural networks on a cubed sphere"
   "unique_context_marker": "[38]"
   "block_ids":
@@ -474,11 +426,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "Interpretable weather forecasting for worldwide stations with a unified deep model"
   "unique_context_marker": "[39]"
   "block_ids":
@@ -489,11 +437,7 @@
   - []
   "topic_labels":
   - []
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "Connecting the dots: Multivariate time series forecasting with graph neural networks"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -507,7 +451,11 @@
   "block_ids":
   - 2
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"

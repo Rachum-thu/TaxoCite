@@ -6,31 +6,23 @@
   - 4
   - 10
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   - []
   - []
   "topic_labels":
-  - []
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
   - []
   - []
 - "title": "ECMWF activities for improved hurricane forecasts"
   "unique_context_marker": "[2]"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - []
-  "topic_labels":
-  - []
-- "title": "Recent progress and outlook for the ECMWF integrated forecasting system"
-  "unique_context_marker": "[3]"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - []
-  "topic_labels":
-  - []
-- "title": "Can deep learning beat numerical weather prediction?"
-  "unique_context_marker": "[4]"
   "block_ids":
   - 1
   "intent_labels":
@@ -39,6 +31,34 @@
     - "Domain Overview"
     - "Domain Overview"
     - "Domain Overview"
+  "topic_labels":
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+- "title": "Recent progress and outlook for the ECMWF integrated forecasting system"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+  "topic_labels":
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+- "title": "Can deep learning beat numerical weather prediction?"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - []
   "topic_labels":
   - []
 - "title": "Weatherbench: a benchmark data set for data-driven weather forecasting"
@@ -47,11 +67,7 @@
   - 1
   - 10
   "intent_labels":
-  - - "Domain Overview"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   - - "Metrics Utilization"
     - "Metrics Utilization"
     - "Metrics Utilization"
@@ -82,7 +98,11 @@
     - "Downscaling, bias correction, and data assimilation"
     - "Downscaling, bias correction, and data assimilation"
     - "Downscaling, bias correction, and data assimilation"
-  - []
+  - - "Downscaling, bias correction, and data assimilation"
+    - "Downscaling, bias correction, and data assimilation"
+    - "Downscaling, bias correction, and data assimilation"
+    - "Downscaling, bias correction, and data assimilation"
+    - "Downscaling, bias correction, and data assimilation"
 - "title": "Data-driven medium-range weather prediction with a resnet pretrained on climate simulations: A new model for weatherbench"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -108,11 +128,7 @@
   - []
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
   - []
 - "title": "Deep residual learning for image recognition"
   "unique_context_marker": "[11]"
@@ -122,10 +138,10 @@
   - []
   "topic_labels":
   - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
     - "Foundation models and generative architectures"
-    - "Foundation models and generative architectures"
-    - "Foundation models and generative architectures"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "Fourcastnet: A global data-driven high-resolution weather model using adaptive fourier neural operators"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -178,8 +194,8 @@
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
     - "Downscaling, bias correction, and data assimilation"
   - []
 - "title": "Accurate medium-range global weather forecasting with 3d neural networks"
@@ -194,18 +210,14 @@
   - []
   - []
   - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   - []
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
   - []
   - []
   - - "Spatio-temporal forecasting and nowcasting"
@@ -229,11 +241,7 @@
   - []
   - []
   - []
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -270,11 +278,7 @@
   "block_ids":
   - 6
   "intent_labels":
-  - - "Prior Methods"
-    - "Model/Architecture Adoption"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Model/Architecture Adoption"
+  - []
   "topic_labels":
   - []
 - "title": "A convolutional neural network cascade for face detection"
@@ -282,11 +286,7 @@
   "block_ids":
   - 6
   "intent_labels":
-  - - "Prior Methods"
-    - "Model/Architecture Adoption"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Model/Architecture Adoption"
+  - []
   "topic_labels":
   - []
 - "title": "Videomae: Masked autoencoders are data-efficient learners for self-supervised video pre-training"
@@ -294,13 +294,13 @@
   "block_ids":
   - 7
   "intent_labels":
-  - - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-  "topic_labels":
   - []
+  "topic_labels":
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "Layer Normalization"
   "unique_context_marker": "[23]"
   "block_ids":
@@ -308,7 +308,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "Swin transformer: Hierarchical vision transformer using shifted windows"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -338,13 +342,13 @@
   "block_ids":
   - 7
   "intent_labels":
-  - - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-  "topic_labels":
   - []
+  "topic_labels":
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "Group Normalization"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -352,7 +356,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "Sigmoid-weighted linear units for neural network function approximation in reinforcement learning"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -360,7 +368,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "Searching for Activation Functions"
   "unique_context_marker": "[30]"
   "block_ids":
@@ -368,15 +380,27 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "Deconvolutional networks"
   "unique_context_marker": "[31]"
   "block_ids":
   - 7
   "intent_labels":
-  - []
+  - - "Model/Architecture Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Model/Architecture Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
-  - []
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "Automatic differentiation in pytorch"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -454,19 +478,23 @@
   "block_ids":
   - 9
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Importance of Problem"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "Stochastic representation of model uncertainties in the ECMWF ensemble prediction system"
   "unique_context_marker": "[39]"
   "block_ids":
   - 9
   "intent_labels":
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - []
 - "title": "Ensemble forecasting"
@@ -474,7 +502,11 @@
   "block_ids":
   - 9
   "intent_labels":
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - []
 - "title": "Dropout as a bayesian approximation: Representing model uncertainty in deep learning"
@@ -482,7 +514,11 @@
   "block_ids":
   - 9
   "intent_labels":
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -510,17 +546,9 @@
   "block_ids":
   - 10
   "intent_labels":
-  - - "Metrics Utilization"
-    - "Metrics Utilization"
-    - "Metrics Utilization"
-    - "Metrics Utilization"
-    - "Metrics Utilization"
+  - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "Why should ensemble spread match the rmse of the ensemble mean?"
   "unique_context_marker": "[45]"
   "block_ids":
@@ -534,35 +562,31 @@
   "block_ids":
   - 14
   "intent_labels":
-  - - "Research Gap"
-    - "Research Gap"
-    - "Research Gap"
-    - "Research Gap"
-    - "Research Gap"
-  "topic_labels":
   - []
+  "topic_labels":
+  - - "Downscaling, bias correction, and data assimilation"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
 - "title": "A multivariate balanced initial ensemble generation approach for an atmospheric general circulation model"
   "unique_context_marker": "[47]"
   "block_ids":
   - 14
   "intent_labels":
-  - - "Research Gap"
-    - "Research Gap"
-    - "Research Gap"
-    - "Research Gap"
-    - "Research Gap"
-  "topic_labels":
   - []
+  "topic_labels":
+  - - "Downscaling, bias correction, and data assimilation"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
 - "title": "Subseasonal to seasonal prediction project: bridging the gap between weather and climate"
   "unique_context_marker": "[48]"
   "block_ids":
   - 14
   "intent_labels":
-  - - "Importance of Problem"
-    - "Importance of Problem"
-    - "Importance of Problem"
-    - "Importance of Problem"
-    - "Importance of Problem"
+  - []
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"

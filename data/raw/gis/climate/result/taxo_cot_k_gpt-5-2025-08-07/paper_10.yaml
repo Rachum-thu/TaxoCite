@@ -11,11 +11,7 @@
   - 2
   - 12
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Result Comparison"
-    - "Prior Methods"
+  - []
   - []
   - []
   "topic_labels":
@@ -35,7 +31,11 @@
   "topic_labels":
   - []
   - []
-  - []
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "Fengwu: Pushing the skillful global medium-range weather forecast beyond 10 days lead"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -55,14 +55,18 @@
     - "Result Comparison"
     - "Result Comparison"
     - "Result Comparison"
-    - "Result Comparison"
+    - "Prior Methods"
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
-  - []
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "FuXi: A cascade machine learning forecasting system for 15-day global weather forecast"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -86,7 +90,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Food security, health, and disaster response"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Food security, health, and disaster response"
+    - "Food security, health, and disaster response"
+    - "Food security, health, and disaster response"
 - "title": "An image is worth 16x16 words: Transformers for image recognition at scale"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -133,9 +141,9 @@
   "topic_labels":
   - - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "The ERA5 global reanalysis"
   "unique_context_marker": "[15]"
   "block_ids":
@@ -147,9 +155,9 @@
   "topic_labels":
   - - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
+    - "Spatio-temporal forecasting and nowcasting"
   - []
 - "title": "Improving subseasonal forecasting in the western us with machine learning"
   "unique_context_marker": "[16]"
@@ -196,20 +204,12 @@
     - "Result Comparison"
     - "Result Comparison"
     - "Result Comparison"
-    - "Result Comparison"
+    - "Prior Methods"
   - []
   "topic_labels":
   - []
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Foundation models and generative architectures"
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
+  - []
 - "title": "Uvim: A unified modeling approach for vision with learned guiding codes"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -225,11 +225,7 @@
   - 2
   - 12
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Result Comparison"
-    - "Prior Methods"
+  - []
   - []
   - []
   "topic_labels":
@@ -276,17 +272,33 @@
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
-  - []
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "Progress in subseasonal to seasonal prediction through a joint weather and climate community effort"
   "unique_context_marker": "[28]"
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
-  - []
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "Subseasonalclimateusa: a dataset for subseasonal forecasting and benchmarking"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -318,13 +330,21 @@
   - []
   - []
   "topic_labels":
-  - []
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
-  - []
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "ClimaX: A foundation model for weather and climate"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -343,11 +363,7 @@
   - 2
   - 12
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Result Comparison"
-    - "Prior Methods"
+  - []
   - []
   - []
   "topic_labels":
@@ -375,13 +391,13 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-  "topic_labels":
   - []
+  "topic_labels":
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "Gencast: Diffusion-based ensemble forecasting for medium-range weather"
   "unique_context_marker": "[37]"
   "block_ids":
@@ -394,7 +410,7 @@
     - "Result Comparison"
     - "Result Comparison"
     - "Result Comparison"
-    - "Result Comparison"
+    - "Prior Methods"
   - []
   "topic_labels":
   - []
@@ -417,9 +433,9 @@
   "topic_labels":
   - - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "WeatherBench 2: A benchmark for the next generation of data-driven global weather models"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -431,9 +447,9 @@
   "topic_labels":
   - - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
+    - "Downscaling, bias correction, and data assimilation"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
+    - "Spatio-temporal forecasting and nowcasting"
   - []
 - "title": "Generating diverse high-fidelity images with vq-vae-2"
   "unique_context_marker": "[41]"
@@ -490,7 +506,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "The subseasonal to seasonal (s2s) prediction project database"
   "unique_context_marker": "[48]"
   "block_ids":
@@ -498,7 +518,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
 - "title": "The modelling infrastructure of the Integrated Forecasting System: Recent advances and future challenges"
   "unique_context_marker": "[49]"
   "block_ids":
@@ -522,7 +546,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Food security, health, and disaster response"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Food security, health, and disaster response"
+    - "Food security, health, and disaster response"
+    - "Food security, health, and disaster response"
 - "title": "Advances in the application and utility of subseasonal-to-seasonal predictions"
   "unique_context_marker": "[52]"
   "block_ids":
@@ -530,7 +558,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Food security, health, and disaster response"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Food security, health, and disaster response"
+    - "Food security, health, and disaster response"
+    - "Food security, health, and disaster response"
 - "title": "The met office global coupled model 2.0 (gc2) configuration"
   "unique_context_marker": "[53]"
   "block_ids":

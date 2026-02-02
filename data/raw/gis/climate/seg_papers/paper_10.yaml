@@ -1,30 +1,52 @@
 title: 'OmniCast: A Masked Latent Diffusion Model for Weather Forecasting Across Time
   Scales'
-abstract: Accurate weather forecasting across time scales is critical for anticipating
-  and mitigating the impacts of climate change. Recent data-driven methods based on
-  deep learning have achieved significant success in the medium range, but struggle
-  at longer subseasonal-to-seasonal (S2S) horizons due to error accumulation in their
-  autoregressive approach. In this work, we propose OmniCast, a scalable and skillful
-  probabilistic model that unifies weather forecasting across timescales. OmniCast
-  consists of two components, a V AE model that encodes raw weather data into a continuous,
-  lower-dimensional latent space, and a diffusion-based transformer model that generates
-  a sequence of future latent tokens given the initial conditioning tokens. During
-  training, we mask random future tokens and train the transformer to estimate their
-  distribution given conditioning and visible tokens using a per-token diffusion head.
-  During inference, the transformer generates the full sequence of future tokens by
-  iteratively unmasking random subsets of tokens. This joint sampling across space
-  and time mitigates compounding errors from autoregressive approaches. The low-dimensional
-  latent space enables modeling long sequences of future latent states, allowing the
-  transformer to learn weather dynamics beyond initial conditions. OmniCast performs
-  competitively with leading probabilistic methods at the medium-range timescale while
-  being 10 × to 20× faster, and achieves state-of-the-art performance at the subseasonal-to-seasonal
-  scale across accuracy, physics-based, and probabilistic metrics. Furthermore, we
-  demonstrate that OmniCast can generate stable rollouts up to 100 years ahead. Code
-  and model checkpoints are available at https://github.com/tung-nd/omnicast.
-abstract_is_verbatim: true
-segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
+abstract: 'Accurate weather forecasting across time scales is critical for anticipating
+  and
 
-  Weather Forecasting Across Time Scales
+  mitigating the impacts of climate change. Recent data-driven methods based on
+
+  deep learning have achieved signiﬁcant success in the medium range, but struggle
+
+  at longer subseasonal-to-seasonal (S2S) horizons due to error accumulation in
+
+  their autoregressive approach. In this work, we propose OmniCast, a scalable
+
+  and skillful probabilistic model that uniﬁes weather forecasting across timescales.
+
+  OmniCast consists of two components, a V AE model that encodes raw weather
+
+  data into a continuous, lower-dimensional latent space, and a diffusion-based
+
+  transformer model that generates a sequence of future latent tokens given the initial
+
+  conditioning tokens. During training, we mask random future tokens and train
+
+  the transformer to estimate their distribution given conditioning and visible tokens
+
+  using a per-token diffusion head. During inference, the transformer generates the
+
+  full sequence of future tokens by iteratively unmasking random subsets of tokens.
+
+  This joint sampling across space and time mitigates compounding errors from
+
+  autoregressive approaches. The low-dimensional latent space enables modeling
+
+  long sequences of future latent states, allowing the transformer to learn weather
+
+  dynamics beyond initial conditions. OmniCast performs competitively with leading
+
+  probabilistic methods at the medium-range timescale while being 10 → to 20 →
+
+  faster, and achieves state-of-the-art performance at the subseasonal-to-seasonal
+
+  scale across accuracy, physics-based, and probabilistic metrics. Furthermore, we
+
+  demonstrate that OmniCast can generate stable rollouts up to 100 years ahead.
+
+  Code and model checkpoints are available at https://github.com/tung-nd/omnicast.'
+abstract_is_verbatim: true
+segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for Weather Forecasting
+  Across Time Scales
 
 
   ## Abstract
@@ -32,26 +54,48 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="0">
 
   Accurate weather forecasting across time scales is critical for anticipating and
-  mitigating the impacts of climate change. Recent data-driven methods based on deep
-  learning have achieved significant success in the medium range, but struggle at
-  longer subseasonal-to-seasonal (S2S) horizons due to error accumulation in their
-  autoregressive approach. In this work, we propose OmniCast, a scalable and skillful
-  probabilistic model that unifies weather forecasting across timescales. OmniCast
-  consists of two components, a V AE model that encodes raw weather data into a continuous,
-  lower-dimensional latent space, and a diffusion-based transformer model that generates
-  a sequence of future latent tokens given the initial conditioning tokens. During
-  training, we mask random future tokens and train the transformer to estimate their
-  distribution given conditioning and visible tokens using a per-token diffusion head.
-  During inference, the transformer generates the full sequence of future tokens by
-  iteratively unmasking random subsets of tokens. This joint sampling across space
-  and time mitigates compounding errors from autoregressive approaches. The low-dimensional
-  latent space enables modeling long sequences of future latent states, allowing the
-  transformer to learn weather dynamics beyond initial conditions. OmniCast performs
-  competitively with leading probabilistic methods at the medium-range timescale while
-  being 10 × to 20× faster, and achieves state-of-the-art performance at the subseasonal-to-seasonal
+
+  mitigating the impacts of climate change. Recent data-driven methods based on
+
+  deep learning have achieved signiﬁcant success in the medium range, but struggle
+
+  at longer subseasonal-to-seasonal (S2S) horizons due to error accumulation in
+
+  their autoregressive approach. In this work, we propose OmniCast, a scalable
+
+  and skillful probabilistic model that uniﬁes weather forecasting across timescales.
+
+  OmniCast consists of two components, a V AE model that encodes raw weather
+
+  data into a continuous, lower-dimensional latent space, and a diffusion-based
+
+  transformer model that generates a sequence of future latent tokens given the initial
+
+  conditioning tokens. During training, we mask random future tokens and train
+
+  the transformer to estimate their distribution given conditioning and visible tokens
+
+  using a per-token diffusion head. During inference, the transformer generates the
+
+  full sequence of future tokens by iteratively unmasking random subsets of tokens.
+
+  This joint sampling across space and time mitigates compounding errors from
+
+  autoregressive approaches. The low-dimensional latent space enables modeling
+
+  long sequences of future latent states, allowing the transformer to learn weather
+
+  dynamics beyond initial conditions. OmniCast performs competitively with leading
+
+  probabilistic methods at the medium-range timescale while being 10 → to 20 →
+
+  faster, and achieves state-of-the-art performance at the subseasonal-to-seasonal
+
   scale across accuracy, physics-based, and probabilistic metrics. Furthermore, we
-  demonstrate that OmniCast can generate stable rollouts up to 100 years ahead. Code
-  and model checkpoints are available at https://github.com/tung-nd/omnicast.
+
+  demonstrate that OmniCast can generate stable rollouts up to 100 years ahead.
+
+  Code and model checkpoints are available at https://github.com/tung-nd/omnicast.
 
 
   </block>
@@ -61,78 +105,165 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="1">
 
   Accurate weather forecasting across time scales is essential for anticipating extreme
-  events, managing resources, and mitigating the impacts of climate change. While
-  medium-range forecasting, which encompasses predictions up to approximately two
-  weeks, has seen remarkable progress with both numerical and data-driven approaches,
-  extending prediction skill beyond this horizon remains a significant challenge.
-  Subseasonal-to-seasonal (S2S) forecasting, which aims to predict atmospheric conditions
-  from two to six weeks ahead, represents this next frontier. This timescale bridges
-  the gap between short-term weather forecasts and longer-term climate projections,
-  enabling more informed decision-making for extreme weather events such as droughts,
-  floods, and heatwaves [51, 36, 52, 8].
+  events, managing
 
+  resources, and mitigating the impacts of climate change. While medium-range forecasting,
+  which
+
+  encompasses predictions up to approximately two weeks, has seen remarkable progress
+  with both
+
+  numerical and data-driven approaches, extending prediction skill beyond this horizon
+  remains a
+
+  signiﬁcant challenge. Subseasonal-to-seasonal (S2S) forecasting, which aims to predict
+  atmospheric
+
+  conditions from two to six weeks ahead, represents this next frontier. This timescale
+  bridges the gap
+
+  between short-term weather forecasts and longer-term climate projections, enabling
+  more informed
+
+  decision-making for extreme weather events such as droughts, ﬂoods, and heatwaves
+  [ 51, 36, 52, 8].
 
   S2S prediction is particularly challenging due to the interplay between atmospheric
-  initial conditions, essential for short-term and medium-range forecasting, and boundary
-  conditions dominating seasonal and climate predictions [ 27, 28]. Traditional numerical
-  weather prediction (NWP) models, built upon solving differential equations of fluid
-  dynamics and thermodynamics, have been instrumental in advancing S2S weather prediction
-  [36, 47, 48]. However, numerical methods incur substantial computational costs due
-  to the complexity of integrating large systems of differential equations, particularly
-  at fine spatial and temporal resolutions. This computational bottleneck also constrains
+  initial conditions,
+
+  essential for short-term and medium-range forecasting, and boundary conditions dominating
+  seasonal
+
+  and climate predictions [ 27, 28]. Traditional numerical weather prediction (NWP)
+  models, built
+
+  upon solving differential equations of ﬂuid dynamics and thermodynamics, have been
+  instrumental
+
+  in advancing S2S weather prediction [ 36, 47, 48]. However, numerical methods incur
+  substantial
+
+  computational costs due to the complexity of integrating large systems of differential
+  equations,
+
+  particularly at ﬁne spatial and temporal resolutions. This computational bottleneck
+  also constrains
+
   the ensemble size of ensemble systems, which is crucial for achieving accurate S2S
   predictions.
 
-
   To overcome the challenges of NWP systems, there has been a growing interest in
-  data-driven approaches based on deep learning for weather forecasting [10, 43, 50].
-  These approaches involve training deep neural networks on historical datasets, such
-  as ERA5 [ 14, 15, 39, 40], to learn the underlying weather patterns. Once trained,
-  they can produce forecasts in seconds compared to the hours required by NWP models.
-  Recent deep learning methods such as PanguWeather [ 2], Graphcast [22], and Stormer
-  [ 33] have also shown superior accuracy in medium-range weather forecasting, surpassing
-  operational IFS [ 49], the state-of-the-art NWP system. However, their application
-  to the S2S timescale has been limited [31]. One possible explanation for this limitation
-  is the rapid error compounding in their autoregressive designs, in which a model
-  learns to forecast the future weather state at a small interval and iteratively
-  feeds its prediction back as input to achieve longer-horizon forecasts. Even though
-  previous works have proposed multi-step finetuning to mitigate this issue, back-propagation
-  through a large number of forward passes required for S2S timescales is computationally
-  prohibitive. Moreover, training a neural network to forecast at a small interval
-  only allows the model to learn the initial conditions problem, ignoring boundary
-  conditions that are critical for prediction at S2S timescales.
+  data-driven
 
+  approaches based on deep learning for weather forecasting [ 10, 43, 50]. These approaches
+  involve
+
+  training deep neural networks on historical datasets, such as ERA5 [ 14, 15, 39,
+  40], to learn the
+
+  underlying weather patterns. Once trained, they can produce forecasts in seconds
+  compared to
+
+  the hours required by NWP models. Recent deep learning methods such as PanguWeather
+  [ 2],
+
+  Graphcast [ 22], and Stormer [ 33] have also shown superior accuracy in medium-range
+  weather
+
+  forecasting, surpassing operational IFS [ 49], the state-of-the-art NWP system.
+  However, their
+
+  application to the S2S timescale has been limited [ 31]. One possible explanation
+  for this limitation is
+
+  the rapid error compounding in their autoregressive designs, in which a model learns
+  to forecast the
+
+  future weather state at a small interval and iteratively feeds its prediction back
+  as input to achieve
+
+  longer-horizon forecasts. Even though previous works have proposed multi-step ﬁnetuning
+  to mitigate
+
+  this issue, back-propagation through a large number of forward passes required for
+  S2S timescales
+
+  is computationally prohibitive. Moreover, training a neural network to forecast
+  at a small interval
+
+  only allows the model to learn the initial conditions problem, ignoring boundary
+  conditions that are
+
+  critical for prediction at S2S timescales.
 
   In this work, we propose OmniCast, a novel latent diffusion model for skillful probabilistic
-  weather forecasting across time scales. OmniCast follows a two-stage training process.
-  In the first stage, we train a V AE model [19] that compresses raw weather data
-  into a continuous, lower-dimensional latent space. In the second stage, we train
-  a transformer to model the distribution of a sequence of future latent tokens given
-  the initial conditioning tokens using a masked generative framework [3, 55]. Specifically,
-  during training, we randomly mask a subset of future tokens, and task the transformer
+  weather
+
+  forecasting across time scales. OmniCast follows a two-stage training process. In
+  the ﬁrst stage,
+
+  we train a V AE model [19] that compresses raw weather data into a continuous, lower-dimensional
+
+  latent space. In the second stage, we train a transformer to model the distribution
+  of a sequence of
+
+  future latent tokens given the initial conditioning tokens using a masked generative
+  framework [ 3, 55].
+
+  Speciﬁcally, during training, we randomly mask a subset of future tokens, and task
+  the transformer
+
   to unmask these tokens based on the conditioning tokens and the visible tokens.
-  Since the latent tokens lie in a continuous space, we use a small diffusion network
-  on top of the transformer model to estimate the per-token distribution of unmasked
-  tokens. In addition to the diffusion loss, we apply a mean-squared error (MSE) objective
-  to enforce the model to accurately predict the first few latent frames deterministically.
-  After training, OmniCast generates forecasts for the full sequence of future tokens
-  through an iterative process. In each iteration, the model selects a subset of future
-  tokens to unmask given the conditioning tokens and previously unmasked tokens, continuing
-  this process until all future tokens are generated. The unmasking operation involves
-  sampling from the diffusion model, with the number and positions of tokens selected
-  to unmask in each iteration determined by a predefined schedule and unmasking order.
-  This joint generation of future tokens across time and space significantly mitigates
-  the compounding errors issue of an autoregressive approach. Furthermore, training
-  on the full sequence of future frames enables OmniCast to address both initial condition
+  Since the latent
+
+  tokens lie in a continuous space, we use a small diffusion network on top of the
+  transformer model to
+
+  estimate the per-token distribution of unmasked tokens. In addition to the diffusion
+  loss, we apply a
+
+  mean-squared error (MSE) objective to enforce the model to accurately predict the
+  ﬁrst few latent
+
+  frames deterministically. After training, OmniCast generates forecasts for the full
+  sequence of future
+
+  tokens through an iterative process. In each iteration, the model selects a subset
+  of future tokens
+
+  to unmask given the conditioning tokens and previously unmasked tokens, continuing
+  this process
+
+  until all future tokens are generated. The unmasking operation involves sampling
+  from the diffusion
+
+  model, with the number and positions of tokens selected to unmask in each iteration
+  determined by a
+
+  predeﬁned schedule and unmasking order. This joint generation of future tokens across
+  time and space
+
+  signiﬁcantly mitigates the compounding errors issue of an autoregressive approach.
+  Furthermore,
+
+  training on the full sequence of future frames enables OmniCast to address both
+  initial condition
+
   problems and boundary condition challenges, which are critical for S2S prediction.
 
+  We evaluate OmniCast on ChaosBench [ 31], a recent benchmark for subseasonal-to-seasonal
+  predic-
 
-  We evaluate OmniCast on ChaosBench [31], a recent benchmark for subseasonal-to-seasonal
-  prediction. OmniCast achieves state-of-the-art performance on key atmospheric variables
-  across various accuracy, physics-based, and probabilistic metrics. Additionally,
-  we carefully study the impact of different design choices, including the auxiliary
-  MSE loss, training sequence lengths, unmasking order, and diffusion sampling temperature,
-  on the forecasting performance of OmniCast.
+  tion. OmniCast achieves state-of-the-art performance on key atmospheric variables
+  across various
+
+  accuracy, physics-based, and probabilistic metrics. Additionally, we carefully study
+  the impact of
+
+  different design choices, including the auxiliary MSE loss, training sequence lengths,
+  unmasking
+
+  order, and diffusion sampling temperature, on the forecasting performance of OmniCast.
 
 
   </block>
@@ -142,34 +273,75 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="2">
 
   Data-driven weather forecasting Deep learning has become a promising approach in
-  the field of weather forecasting. Recent advancements with powerful architectures
-  have achieved significant successes, providing faster inference and superior forecasting
-  accuracy compared to IFS, the gold-standard numerical weather prediction system.
-  Notable methods include FourCastNet [35], which utilizes an adaptive neural operator
-  architecture; Keisler [17]’s, GraphCast [22], and AIFS [ 24], which leverage graph
-  neural networks; and a series of transformer-based models such as PanguWeather [2],
-  Stormer [33], and others [32, 6, 4, 7]. Beyond deterministic predictions, the field
-  has increasingly focused on probabilistic forecasting to better account for forecast
-  uncertainty. Common approaches involve integrating existing architectures with generative
-  frameworks, including diffusion models [37, 30], normalizing flows [7], and latent
-  variable models [34]. Others explore ensemble predictions through initial condition
-  perturbations, exemplified by methods like AIFS-CRPS [24] and NeuralGCM [20].
+  the ﬁeld of
+
+  weather forecasting. Recent advancements with powerful architectures have achieved
+  signiﬁcant
+
+  successes, providing faster inference and superior forecasting accuracy compared
+  to IFS, the gold-
+
+  standard numerical weather prediction system. Notable methods include FourCastNet
+  [ 35], which
+
+  utilizes an adaptive neural operator architecture; Keisler [17]’s, GraphCast [ 22],
+  and AIFS [ 24],
+
+  which leverage graph neural networks; and a series of transformer-based models such
+  as Pan-
+
+  guWeather [2], Stormer [ 33], and others [ 32, 6, 4, 7]. Beyond deterministic predictions,
+  the ﬁeld has
+
+  increasingly focused on probabilistic forecasting to better account for forecast
+  uncertainty. Common
+
+  approaches involve integrating existing architectures with generative frameworks,
+  including diffusion
+
+  models [37, 30], normalizing ﬂows [ 7], and latent variable models [ 34]. Others
+  explore ensemble
+
+  predictions through initial condition perturbations, exempliﬁed by methods like
+  AIFS-CRPS [ 24] and
+
+  NeuralGCM [20].
 
 
   Data-driven S2S prediction Recent benchmarks have emerged to evaluate data-driven
-  methods at S2S timescales. While many focus on regional forecasts such as the US
-  [16, 29], ChaosBench [31] offers a comprehensive framework for global S2S prediction,
-  providing extensive numerical baselines and physics-based metrics. A key finding
-  from ChaosBench shows that state-of-the-art deep learning methods struggle to extend
-  to S2S timescales. These methods predominantly rely on autoregressive approaches
-  that generate predictions iteratively at short time intervals, leading to error
-  accumulation with increasing lead times. While multi-step finetuning helps mitigate
-  this issue for medium-range forecasts, it becomes computationally prohibitive for
-  S2S predictions due to the extensive number of required forward passes. Moreover,
-  training models with short time intervals fails to capture boundary conditions essential
-  for long-term weather patterns. While Fuxi-S2S [5] was proposed for S2S prediction,
-  it focuses on forecasting daily averaged statistics, which fundamentally alters
-  the underlying weather dynamics and makes it inapplicable to forecasting at instantaneous
+  methods at
+
+  S2S timescales. While many focus on regional forecasts such as the US [ 16, 29],
+  ChaosBench [31]
+
+  offers a comprehensive framework for global S2S prediction, providing extensive
+  numerical baselines
+
+  and physics-based metrics. A key ﬁnding from ChaosBench shows that state-of-the-art
+  deep learning
+
+  methods struggle to extend to S2S timescales. These methods predominantly rely on
+  autoregressive
+
+  approaches that generate predictions iteratively at short time intervals, leading
+  to error accumulation
+
+  with increasing lead times. While multi-step ﬁnetuning helps mitigate this issue
+  for medium-range
+
+  forecasts, it becomes computationally prohibitive for S2S predictions due to the
+  extensive number
+
+  of required forward passes. Moreover, training models with short time intervals
+  fails to capture
+
+  boundary conditions essential for long-term weather patterns. While Fuxi-S2S [ 5]
+  was proposed for
+
+  S2S prediction, it focuses on forecasting daily averaged statistics, which fundamentally
+  alters the
+
+  underlying weather dynamics and makes it inapplicable to forecasting at instantaneous
   time steps.
 
 
@@ -186,19 +358,37 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
 
   <block id="4">
 
-  The goal of weather forecasting is to forecast future weather conditions XT ∈R V×H×W
-  based on initial conditions X0 ∈R V×H×W , where T represents the target lead time,
-  V denotes the number of input and output physical variables (e.g., temperature and
-  geopotential), and H×W corresponds to the spatial resolution of the data, determined
-  by the density of the global grid. In subseasonal-to-seasonal (S2S) forecasting,
-  we focus on lead times ranging from 2 to 6 weeks. Autoregressive modeling is a dominant
-  paradigm in data-driven weather forecasting, where a model iteratively produces
-  forecasts Xδt at a short interval δt to reach the target lead time T . In this work,
-  we propose an alternative approach: training a generative model to estimate the
-  distribution of the entire sequence of future weather states X1:T given initial
-  conditions X0. This approach mitigates error accumulation and enables the model
-  to learn both initial and boundary condition dynamics by considering the complete
-  sequence of weather states.
+  The goal of weather forecasting is to forecast future weather conditions XT ↑ RV
+  →H→W based on
+
+  initial conditions X0 ↑ RV →H→W , where T represents the target lead time, V denotes
+  the number of
+
+  input and output physical variables (e.g., temperature and geopotential), and H
+  → W corresponds
+
+  to the spatial resolution of the data, determined by the density of the global grid.
+  In subseasonal-
+
+  to-seasonal (S2S) forecasting, we focus on lead times ranging from 2 to 6 weeks.
+  Autoregressive
+
+  modeling is a dominant paradigm in data-driven weather forecasting, where a model
+  iteratively
+
+  produces forecasts Xωt at a short interval ωt to reach the target lead time T .
+  In this work, we propose
+
+  an alternative approach: training a generative model to estimate the distribution
+  of the entire sequence
+
+  of future weather states X1:T given initial conditions X0. This approach mitigates
+  error accumulation
+
+  and enables the model to learn both initial and boundary condition dynamics by considering
+  the
+
+  complete sequence of weather states.
 
 
   </block>
@@ -207,24 +397,49 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
 
   <block id="5">
 
-  Masked generative modeling is an efficient and powerful approach for image and video
-  generation in computer vision [3, 55, 25]. In this framework, visual data X1:T ∈R
-  T×V×H×W (T= 1 for images) is first embedded by a V AE encoder into a sequence of
-  tokens x∈R N×D , where N represents the length of the flattened token sequence.
-  During training, we apply a binary mask to randomly select a subset of tokens to
-  be predicted, creating a corrupted sequence. We then train a transformer model to
-  recover the original tokens at masked positions based on both the visible tokens
-  and any additional conditioning information such as initial frames. For generation,
-  the framework employs an iterative decoding process that starts with a fully masked
-  sequence of future tokens. In each iteration, the model predicts a random subset
-  of masked tokens in parallel, where the number and positions of the unmasked tokens
-  follow a predefined schedule and order. This process continues until all tokens
-  are unmasked, at which point the generated tokens are decoded back to the original
-  domain through a V AE decoder. This framework offers key advantages for weather
-  forecasting: it allows the model to capture long-range dependencies across the entire
-  sequence while avoiding the error accumulation typical in autoregressive approaches,
-  and the iterative refinement process enables the model to maintain consistency across
-  both spatial and temporal dimensions.
+  Masked generative modeling is an efﬁcient and powerful approach for image and video
+  generation in
+
+  computer vision [3, 55, 25]. In this framework, visual data X1:T ↑ RT →V →H→W (T
+  =1 for images)
+
+  is ﬁrst embedded by a V AE encoder into a sequence of tokens x ↑ RN →D , where N
+  represents
+
+  the length of the ﬂattened token sequence. During training, we apply a binary mask
+  to randomly
+
+  select a subset of tokens to be predicted, creating a corrupted sequence. We then
+  train a transformer
+
+  model to recover the original tokens at masked positions based on both the visible
+  tokens and any
+
+  additional conditioning information such as initial frames. For generation, the
+  framework employs an
+
+  iterative decoding process that starts with a fully masked sequence of future tokens.
+  In each iteration,
+
+  the model predicts a random subset of masked tokens in parallel, where the number
+  and positions
+
+  of the unmasked tokens follow a predeﬁned schedule and order. This process continues
+  until all
+
+  tokens are unmasked, at which point the generated tokens are decoded back to the
+  original domain
+
+  through a V AE decoder. This framework offers key advantages for weather forecasting:
+  it allows
+
+  the model to capture long-range dependencies across the entire sequence while avoiding
+  the error
+
+  accumulation typical in autoregressive approaches, and the iterative reﬁnement process
+  enables the
+
+  model to maintain consistency across both spatial and temporal dimensions.
 
 
   </block>
@@ -234,40 +449,84 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="6">
 
   In the masked generative modeling framework, a common practice is to embed the raw
-  visual data into a discrete latent space and train the transformer model using a
-  cross-entropy objective. However, this approach relies on vector-quantized V AE
-  models [45], which are sensitive to gradient approximation strategies [41, 38, 21]
-  and typically achieve lower reconstruction quality than continuous-valued V AEs.
-  Recent works [44, 26] have demonstrated that discretization can be eliminated by
-  directly modeling the per-token probability distribution in a continuous latent
-  space. In this work, we adopt diffusion models for continuous distribution modeling.
+  visual data into
 
+  a discrete latent space and train the transformer model using a cross-entropy objective.
+  However, this
 
-  Given data x∈R D and its conditioning information z∈R D, we model the conditional
-  distribution p(x|z) using a diffusion process that gradually transforms a Gaussian
-  prior into the target distribution.
+  approach relies on vector-quantized V AE models [45], which are sensitive to gradient
+  approximation
 
+  strategies [41, 38, 21] and typically achieve lower reconstruction quality than
+  continuous-valued
+
+  V AEs. Recent works [44, 26] have demonstrated that discretization can be eliminated
+  by directly
+
+  modeling the per-token probability distribution in a continuous latent space. In
+  this work, we adopt
+
+  diffusion models for continuous distribution modeling.
+
+  Given data x ↑ RD and its conditioning information z ↑ RD , we model the conditional
+  distribution
+
+  p(x | z) using a diffusion process that gradually transforms a Gaussian prior into
+  the target distribution.
 
   The forward diffusion process progressively adds Gaussian noise to the data x following:
 
-  xs = √αs x + √1−α s ϵ,
+  xs = ↓ ϑ sx +
 
-  where s indicates the diffusion step, αs determines the noise schedule, and ϵ∼ N(0,I)
-  represents Gaussian noise. The reverse process employs a denoising network ϵθ(xs,
-  s, z) parameterized by θ to predict the noise component from the noisy input xs
-  and condition z:
+  ↓
 
-  Ldiff(θ) = E ϵ,x [ ∥ϵθ(xs, s, z)−ϵ∥ 2 ].
+  1 ↔ ϑ sε, (1)
 
-  At inference time, conditional sampling begins with a random Gaussian noise xS ∼
-  N(0,I) and iteratively applies the reverse diffusion process:
+  where s indicates the diffusion step, ϑ s determines the noise schedule, and ε ↗N
+  (0, I) represents
 
-  xs−1 = 1√αs [ xs − 1−α s√1−¯αs ϵθ(xs, s, z) ] + τ σ s δ,
+  Gaussian noise. The reverse process employs a denoising network εε (xs,s ,z ) parameterized
+  by ϖ to
 
-  where ¯αs = ∏s k=1 αk, δ∼ N(0,I) and σs controls the magnitude of noise added at
-  each step. This iterative process generates samples from the learned conditional
-  distribution pθ(x|z). Following [26], we additionally scale the noise σsδ by the
-  temperature τ that controls the sample diversity from the diffusion model.
+  predict the noise component from the noisy input xs and condition z:
+
+  Ldiff(ϖ)= Eϑ,x
+
+  [
+
+  ↘εε (xs,s ,z ) ↔ ε↘2]
+
+  . (2)
+
+  At inference time, conditional sampling begins with a random Gaussian noise xS ↗N
+  (0, I) and
+
+  iteratively applies the reverse diffusion process:
+
+  xs↑1 = 1↓ ϑ s
+
+  (
+
+  xs ↔ 1 ↔ ϑ s↓ 1 ↔ ¯ϑ s
+
+  εε (xs,s ,z )
+
+  )
+
+  + ϱς sω, (3)
+
+  where ¯ϑ s = ∏s
+
+  k=1 ϑ k, ω ↗N (0, I) and ςs controls the magnitude of noise added at each step.
+  This
+
+  iterative process generates samples from the learned conditional distribution pε
+  (x | z). Following [26],
+
+  we additionally scale the noise ςsω by the temperature ϱ that controls the sample
+  diversity from the
+
+  diffusion model.
 
 
   </block>
@@ -277,10 +536,16 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="7">
 
   We present OmniCast, a novel method for subseasonal-to-seasonal prediction. Similar
-  to previous works in video generation, OmniCast consists of two components: a V
-  AE model that compresses the raw weather data into a lower-dimensional space, and
-  a masked generative transformer model in this latent space. We present the two components
-  and their key design choices in this section.
+  to previous
+
+  works in video generation, OmniCast consists of two components: a V AE model that
+  compresses the
+
+  raw weather data into a lower-dimensional space, and a masked generative transformer
+  model in this
+
+  latent space. We present the two components and their key design choices in this
+  section.
 
 
   </block>
@@ -289,28 +554,54 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
 
   <block id="8">
 
-  A V AE encoder embeds a weather state X∈R V×H×W into a map of h×w latent tokens,
-  where h < H and w < W . In vector-quantized V AEs, each entry in the latent map
-  is an integer index from a fixed-size vocabulary, representing a discrete latent
-  space. While this discretization is widely adopted in computer vision due to its
-  compatibility with cross-entropy training and straightforward sampling from softmax
-  distributions, it presents significant challenges for weather data. Unlike RGB images
-  with three channels, weather states can contain hundreds of physical variables,
-  resulting in an extreme compression requirement. For instance, consider compressing
-  weather data with 100 variables (32 bits per value) by a factor of 4 in each spatial
-  dimension, using a vocabulary size of 213 = 8192 (13 bits per latent token). This
-  results in a compression ratio of (32×100×H×W)/(13×(H/4)×(W/4)) ≈ 3938. Such aggressive
-  compression leads to substantial reconstruction errors, ultimately degrading the
-  performance of the second-stage generative modeling.
+  A V AE encoder embeds a weather state X ↑ RV →H→W into a map of h → w latent tokens,
+  where
 
+  h<H and w<W . In vector-quantized V AEs, each entry in the latent map is an integer
+  index from a
+
+  ﬁxed-size vocabulary, representing a discrete latent space. While this discretization
+  is widely adopted
+
+  in computer vision due to its compatibility with cross-entropy training and straightforward
+  sampling
+
+  from softmax distributions, it presents signiﬁcant challenges for weather data.
+  Unlike RGB images
+
+  with three channels, weather states can contain hundreds of physical variables,
+  resulting in an extreme
+
+  compression requirement. For instance, consider compressing weather data with 100
+  variables (32 bits
+
+  per value) by a factor of 4 in each spatial dimension, using a vocabulary size of
+  213 = 8192 (13 bits
+
+  per latent token). This results in a compression ratio of (32→100→H →W )/(13→(H/4)→(W/4))
+  ≃
+
+  3938. Such aggressive compression leads to substantial reconstruction errors, ultimately
+  degrading
+
+  the performance of the second-stage generative modeling.
 
   Therefore, we adopt a continuous V AE model for OmniCast, where each token in the
-  h×w latent map is a continuous vector of D dimensions. With D= 16, for example,
-  the compression ratio becomes (32×100×H×W)/(32×16×(H/4)×(W/4)) = 100, substantially
-  lower than the discrete approach. While it is also possible to compress a sequence
-  of weather states X1:T ∈R T×V×H×W in both temporal and spatial dimensions, our preliminary
-  experiments showed no clear benefits from temporal compression, leading us to adopt
-  per-frame embedding.
+  h→ w latent map
+
+  is a continuous vector of D dimensions. With D = 16, for example, the compression
+  ratio becomes
+
+  (32 → 100 → H → W )/(32 → 16 → (H/4) → (W/4)) = 100 , substantially lower than the
+  discrete
+
+  approach. While it is also possible to compress a sequence of weather states X1:T
+  ↑ RT →V →H→W in
+
+  both temporal and spatial dimensions, our preliminary experiments showed no clear
+  beneﬁts from
+
+  temporal compression, leading us to adopt per-frame embedding.
 
 
   </block>
@@ -320,62 +611,148 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="9">
 
   After training the V AE, we embed the initial condition into a sequence of tokens
-  c = (c1, c2, . . . , ch×w). Similarly, each future weather state is embedded into
-  a sequence of tokens, which are concatenated to form the complete sequence of future
-  tokens x = (x1, x2, . . . , xN), where N = T×h×w represents the total number of
-  future tokens. Each latent token is a continuous vector of dimension D. Our generative
-  modeling objective is to estimate the conditional distribution p(x|c) from the training
-  data.
+  c =
 
+  (c1,c 2,...,c h→w). Similarly, each future weather state is embedded into a sequence
+  of tokens,
 
-  We achieve this using a masked generative framework. During training, we sample
-  a binary mask m = [mi]N i=1 ∼ pU and replace tokens xi with a learnable, continuous
-  [MASK] token where mi = 1, creating a corrupted sequence x = m(x). The generative
-  objective is to estimate the distribution of masked tokens conditioned on the visible
-  and conditioning tokens:
+  which are concatenated to form the complete sequence of future tokens x =( x1,x
+  2,...,x N ), where
 
-  Lgen(θ) = E m∼pU [ ∑ is.t.mi=1 −log pθ(xi | c, x) ].
+  N = T → h → w represents the total number of future tokens. Each latent token is
+  a continuous
+
+  vector of dimension D. Our generative modeling objective is to estimate the conditional
+  distribution
+
+  p(x | c) from the training data.
+
+  We achieve this using a masked generative framework, as illustrated in Figure 1.
+  During training,
+
+  we sample a binary mask m =[ mi]N
+
+  i=1 ↗ pU and replace tokens xi with a learnable, continuous
+
+  [MASK] token where mi =1 , creating a corrupted sequence x = m(x). The generative
+  objective is
+
+  to estimate the distribution of masked tokens conditioned on the visible and conditioning
+  tokens:
+
+  Lgen(ϖ)= E
+
+  m↓pU
+
+  [ ∑
+
+  i s.t. mi =1
+
+  ↔ log pε (xi | c, x)
+
+  ]
+
+  . (4)
 
   The model processes the input by concatenating the conditioning tokens c with the
-  corrupted future tokens x, adding positional encodings to the embedded sequence,
-  and passing it through a bi-directional transformer backbone to obtain vectors zi
-  for each masked position. Given these vectors, the per-token objective log pθ(xi
-  | c, x) in Equation 4 simplifies to log pθ(xi | zi). To model this continuous distribution,
-  we employ a diffusion model where zi serves as conditional information for a denoising
-  network – implemented as a small MLP on top of the transformer. We train the denoising
-  network and the transformer backbone jointly using the diffusion loss specified
-  in Equation 2. Conceptually, this diffusion objective encourages the model to produce
-  representations zi that facilitate effective denoising.
+  corrupted future
 
+  tokens x, adding positional encodings to the embedded sequence, and passing it through
+  a bi-
+
+  directional transformer backbone to obtain vectors zi for each masked position.
+  Given these vectors,
+
+  the per-token objective log pε (xi | c, x) in Equation 4 simpliﬁes to log pε (xi
+  | zi). To model this
+
+  continuous distribution, we employ a diffusion model where zi serves as conditional
+  information
+
+  for a denoising network – implemented as a small MLP on top of the transformer (Figure
+  2). We
+
+  train the denoising network and the transformer backbone jointly using the diffusion
+  loss speciﬁed in
+
+  Equation 2. Conceptually, this diffusion objective encourages the model to produce
+  representations
+
+  zi that facilitate effective denoising.
 
   Auxiliary deterministic objective To encourage accurate predictions of near-term
-  future tokens, we incorporate an auxiliary mean-squared error loss in the latent
-  space. We implement this through a separate MLP head that produces deterministic
-  predictions x̂i from zi, training it jointly with the transformer backbone. Since
-  weather dynamics become increasingly chaotic beyond day 10, making deterministic
-  predictions progressively less meaningful, we apply this loss only to the first
-  10 future frames. Furthermore, we employ an exponentially decreasing weighting scheme
-  to emphasize the importance of accurate predictions for earlier frames. The deterministic
-  objective is thus:
+  future tokens,
 
-  Ldeter(θ) = E m∼pU [ ∑ mi=1 w(i) ||xi − x̂i||2 2 ].
+  we incorporate an auxiliary mean-squared error loss in the latent space. We implement
+  this through
 
-  The complete training objective combines both losses: L(θ) = Lgen(θ) + Ldeter(θ).
+  a separate MLP head that produces deterministic predictions ˆxi from zi, training
+  it jointly with the
 
+  transformer backbone. Since weather dynamics become increasingly chaotic beyond
+  day 10, making
 
-  Sampling from OmniCast At inference time, we generate samples from p(x|c) through
-  an iterative decoding process, starting from a sequence of fully masked future tokens.
-  Each iteration consists of three steps: first, the transformer backbone processes
-  the conditioning tokens and corrupted future tokens to produce vectors zi for each
-  masked position; second, a subset of masked positions is randomly selected according
-  to a predefined schedule for unmasking; third, for each selected position, the diffusion
-  model generates token xi by conditioning on zi and performing a fixed number of
-  diffusion steps. This process iterates until all future tokens are revealed, at
-  which point the V AE decoder maps the generated tokens back to the weather domain.
-  To generate an ensemble of forecasts, we simply replicate the initial tokens and
-  perform independent sampling for each copy. Four hyperparameters affect the sampling
-  procedure: the number of unmasking iterations, the unmasking order, the number of
-  diffusion steps, and the diffusion temperature.
+  deterministic predictions progressively less meaningful, we apply this loss only
+  to the ﬁrst 10 future
+
+  frames. Furthermore, we employ an exponentially decreasing weighting scheme to emphasize
+  the
+
+  importance of accurate predictions for earlier frames. The deterministic objective
+  is thus:
+
+  Ldeter(ω)= E
+
+  m→pU
+
+  [ ∑
+
+  mi =1
+
+  w(i)||xi → ˆxi||2
+
+  2
+
+  ]
+
+  . (5)
+
+  Appendix A.2 presents the details of this objective. The complete training objective
+  combines both
+
+  losses: L(ϖ)= Lgen(ϖ)+ Ldeter(ϖ).
+
+  Sampling from OmniCast At inference time, we generate samples from p(x | c) through
+  an iterative
+
+  decoding process, starting from a sequence of fully masked future tokens. Each iteration
+  consists
+
+  of three steps: ﬁrst, the transformer backbone processes the conditioning tokens
+  and corrupted
+
+  future tokens to produce vectors zi for each masked position; second, a subset of
+  masked positions
+
+  is randomly selected according to a predeﬁned schedule for unmasking; third, for
+  each selected
+
+  position, the diffusion model generates token xi by conditioning on zi and performing
+  a ﬁxed number
+
+  of diffusion steps. This process iterates until all future tokens are revealed,
+  at which point the
+
+  V AE decoder maps the generated tokens back to the weather domain. To generate an
+  ensemble of
+
+  forecasts, we simply replicate the initial tokens and perform independent sampling
+  for each copy. Four
+
+  hyperparameters affect the sampling procedure: the number of unmasking iterations,
+  the unmasking
+
+  order, the number of diffusion steps, and the diffusion temperature.
 
 
   </block>
@@ -385,34 +762,71 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="10">
 
   Architectural details For the transformer backbone, we adopt the encoder-decoder
-  architecture from Masked Autoencoder (MAE) [ 13]. The model processes an input sequence
-  in two stages: first, the encoder processes the conditioning and visible tokens;
-  second, the encoded sequence is augmented with learnable [MASK] tokens at appropriate
-  positions and passed through the decoder to produce zi for each position i. Both
-  the encoder and decoder are bidirectional, employing full attention. Before feeding
-  to either the encoder or decoder, we add the input sequences with positional embeddings
-  that combine two components: temporal embeddings to distinguish different frames,
-  and spatial embeddings to differentiate tokens within each frame. The encoder and
-  decoder follow the Transformer [46] implementation in ViT [9], each having 16 layers
-  with 16 attention heads, a hidden dimension of 1024, and a dropout rate of 0.1.
+  architecture
 
+  from Masked Autoencoder (MAE) [ 13]. The model processes an input sequence in two
+  stages:
 
-  Mask sampling During training, we sample a masking ratio γ ∼ U[0.5,1.0] and generate
-  a corresponding binary mask m, where γ = 0.75 indicates that 75% of entries in m
-  are 1. For inference, we start with full masking (γ = 1.0) and gradually reduce
-  it to 0.0 following a cosine schedule [3]. We set the number of unmasking iterations
-  to match the number of future weather states T by default. We employ random masking
-  orders across both spatial and temporal dimensions for training and inference.
+  ﬁrst, the encoder processes the conditioning and visible tokens; second, the encoded
+  sequence is
 
+  augmented with learnable [MASK] tokens at appropriate positions and passed through
+  the decoder
+
+  to produce zi for each position i. Both the encoder and decoder are bidirectional,
+  employing full
+
+  attention. Before feeding to either the encoder or decoder, we add the input sequences
+  with positional
+
+  embeddings that combine two components: temporal embeddings to distinguish different
+  frames, and
+
+  spatial embeddings to differentiate tokens within each frame. The encoder and decoder
+  follow the
+
+  Transformer [46] implementation in ViT [ 9], each having 16 layers with 16 attention
+  heads, a hidden
+
+  dimension of 1024, and a dropout rate of 0.1.
+
+  Mask sampling During training, we sample a masking ratio φ ↗U [0.5, 1.0] and generate
+  a
+
+  corresponding binary mask m, where φ =0 .75 indicates that 75% of entries in m are
+  1. For
+
+  inference, we start with full masking ( φ =1 .0) and gradually reduce it to 0.0
+  following a cosine
+
+  schedule [3]. We set the number of unmasking iterations to match the number of future
+  weather states
+
+  T by default. We employ random masking orders across both spatial and temporal dimensions
+  for
+
+  training and inference.
 
   Diffusion loss details We use a linear noise schedule with 1000 steps at training
-  time that are resampled to 100 steps at inference. The denoising network ϵθ is implemented
-  as a small MLP following Li et al. [26]. Specifically, the network consists of six
-  residual blocks, each comprising a LayerNorm (LN), a linear layer, a SiLU activation,
-  and another linear layer, with a residual connection around the block. Each block
-  maintains a width of 2048 channels. The network takes the vector zi from the transformer
-  as conditioning information, which is combined with the time embedding of the diffusion
-  steps through adaptive layer normalization (AdaLN) in each block’s LN layers.
+  time that are
+
+  resampled to 100 steps at inference. The denoising network εε is implemented as
+  a small MLP
+
+  following Li et al. [26]. Speciﬁcally, the network consists of six residual blocks,
+  each comprising a
+
+  LayerNorm (LN), a linear layer, a SiLU activation, and another linear layer, with
+  a residual connection
+
+  around the block. Each block maintains a width of 2048 channels. The network takes
+  the vector zi
+
+  from the transformer as conditioning information, which is combined with the time
+  embedding of the
+
+  diffusion step s through adaptive layer normalization (AdaLN) in each block’s LN
+  layers.
 
 
   </block>
@@ -422,20 +836,43 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="11">
 
   We compare OmniCast with state-of-the-art deep learning and numerical methods on
-  both medium-range and S2S time scales, using WeatherBench2 [40] (WB2) and ChaosBench
-  [31] as benchmarks, respectively, and conduct extensive ablation studies to assess
-  the contribution of each component in OmniCast. We further test the stability of
-  OmniCast up to 100 years ahead. Across both tasks, we train and evaluate OmniCast
-  on 69 variables from the ERA5 reanalysis dataset [15], including four surface-level
-  variables – 2-meter temperature (T2m), 10-meter U and V wind components (U10, V10),
-  and mean sea-level pressure (MSLP), as well as five atmospheric variables – geopotential
-  (Z), temperature (T), U and V wind components, and specific humidity (Q), each at
-  13 pressure levels {50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000}
-  hPa. For medium-range forecasting, we use native 0.25◦ resolution (721×1440 grids)
-  and follow WB2 to train on years 1979–2018, validate on 2019, and test on 2020 using
-  initial conditions at 00UTC and 12UTC. For S2S prediction, we downsample the data
-  to 1.40625◦ (128×256 grids) and follow ChaosBench to train on 1979–2020, validate
-  on 2021, and test on 2022 using 00UTC initializations.
+  both medium-
+
+  range and S2S time scales, using WeatherBench2 [ 40] (WB2) and ChaosBench [ 31]
+  as benchmarks,
+
+  respectively, and conduct extensive ablation studies to assess the contribution
+  of each component in
+
+  OmniCast. We further test the stability of OmniCast up to 100 years ahead in Appendix
+  B.5.
+
+  Across both tasks, we train and evaluate OmniCast on 69 variables from the ERA5
+  reanalysis
+
+  dataset [15], including four surface-level variables – 2-meter temperature (T2m),
+  10-meter U and
+
+  V wind components (U10, V10), and mean sea-level pressure (MSLP), as well as ﬁve
+  atmospheric
+
+  variables – geopotential (Z), temperature (T), U and V wind components, and speciﬁc
+  humidity (Q),
+
+  each at 13 pressure levels {50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850,
+  925, 1000} hPa.
+
+  For medium-range forecasting, we use native 0.25↔ resolution (721 → 1440 grids)
+  and follow WB2
+
+  to train on years 1979–2018, validate on 2019, and test on 2020 using initial conditions
+  at 00UTC
+
+  and 12UTC. For S2S prediction, we downsample the data to 1.40625↔ (128 → 256 grids)
+  and follow
+
+  ChaosBench to train on 1979–2020, validate on 2021, and test on 2022 using 00UTC
+  initializations.
 
 
   </block>
@@ -445,52 +882,110 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="12">
 
   Training and inference details We train a V AE that embeds each weather state of
-  shape 69×128×256 into a latent map of shape 1024×8×16, reducing spatial dimensions
-  by a factor of 16. The architectural details and training process of the V AE are
-  described in Appendix A.1. We train OmniCast to forecast a sequence of T = 44 future
-  weather states at 24hr intervals, covering lead times from 1 to 44 days. Each training
-  example consists of 45×8×16 = 5760 latent tokens, including the initial condition.
-  During inference, we generate the complete future sequence in 44 iterations (1 iteration
-  per frame) using a diffusion temperature of τ = 1.3. We produce an ensemble of 50
-  forecast sequences for each initial condition.
+  shape 69 →
 
+  128 → 256 into a latent map of shape 1024 → 8 → 16, reducing spatial dimensions
+  by a factor of
+
+  16. The architectural details and training process of the V AE are described in
+  Appendix A.1. We
+
+  train OmniCast to forecast a sequence of T = 44 future weather states at 24hr intervals,
+  covering
+
+  lead times from 1 to 44 days. Each training example consists of 45 → 8 → 16 = 5760
+  latent tokens,
+
+  including the initial condition. During inference, we generate the complete future
+  sequence in 44
+
+  iterations (1 iteration per frame) using a diffusion temperature of ϱ =1 .3. We
+  produce an ensemble
+
+  of 50 forecast sequences for each initial condition.
 
   Baselines We compare OmniCast with PanguWeather (PW) [2] and GraphCast (GC) [22],
-  two leading open-sourced deep learning methods, and ensemble systems of four numerical
-  models from different national agencies: UKMO-ENS (UK) [ 53], NCEP-ENS (US) [42],
-  CMA-ENS (China) [54], and ECMWF-ENS (Europe) [11]. We refer to ChaosBench for details
-  about these baselines. Following ChaosBench, we report results on T850, Z500, and
-  Q700 at lead times from 1 to 44 days. We additionally compare OmniCast with ClimaX
-  [32] and Stormer [33] in Appendix B.2. We do not compare against Fuxi-S2S [5] as
-  Fuxi-S2S forecasts daily average values from past daily averages, making it incomparable
-  with OmniCast and the rest of the methods, which perform point-in-time weather forecasting
-  based on an initial condition. We are also not able to run Gencast [37] and NeuralGCM
-  [20] for S2S due to their significant computational demands.
+  two leading
 
+  open-sourced deep learning methods, and ensemble systems of four numerical models
+  from different
 
-  Results At shorter lead times, OmniCast shows slightly worse performance on RMSE
-  and SSIM than other baselines, which is expected since we train OmniCast to model
-  a full sequence of future weather states rather than optimizing for short- and medium-range
-  predictions. However, OmniCast’s relative performance improves with increasing lead
-  time, ultimately matching ECMWF-ENS as one of the top two performing methods beyond
-  day 10. Notably, OmniCast demonstrates the lowest bias among all baselines, maintaining
-  near-zero bias across all three target variables.
+  national agencies: UKMO-ENS (UK) [ 53], NCEP-ENS (US) [ 42], CMA-ENS (China) [ 54],
+  and
 
+  ECMWF-ENS (Europe) [11]. We refer to ChaosBench for details about these baselines.
+  Following
+
+  ChaosBench, we report results on T850, Z500, and Q700 at lead times from 1 to 44
+  days. We
+
+  additionally compare OmniCast with ClimaX [ 32] and Stormer [ 33] in Appendix B.2.
+  We do not
+
+  compare against Fuxi-S2S [ 5] as Fuxi-S2S forecasts daily average values from past
+  daily averages,
+
+  making it incomparable with OmniCast and the rest of the methods, which perform
+  point-in-time
+
+  weather forecasting based on an initial condition. We are also not able to run Gencast
+  [ 37] and
+
+  NeuralGCM [20] for S2S due to their signiﬁcant computational demands.
+
+  Results Figure 4 compares different methods on three deterministic metrics: Root
+  Mean-Squared
+
+  Error (RMSE), Absolute Bias (ABS BIAS), and Multi-scale Structural Similarity (SSIM).
+  At shorter
+
+  lead times, OmniCast shows slightly worse performance on RMSE and SSIM than other
+  baselines,
+
+  which is expected since we train OmniCast to model a full sequence of future weather
+  states rather
+
+  than optimizing for short- and medium-range predictions. However, OmniCast’s relative
+  performance
+
+  improves with increasing lead time, ultimately matching ECMWF-ENS as one of the
+  top two
+
+  performing methods beyond day 10. Notably, OmniCast demonstrates the lowest bias
+  among all
+
+  baselines, maintaining near-zero bias across all three target variables.
 
   Physical consistency also plays a crucial role in S2S prediction, particularly for
-  ensemble systems. We evaluate this aspect using two physics-based metrics: Spectral
-  Divergence (SDIV) and Spectral Residual (SRES), which measure how closely the power
-  spectra of predictions match those of ground-truths. OmniCast achieves substantially
-  better physical consistency than other deep learning methods, and often outperforms
-  all baselines on these metrics. These results demonstrate how OmniCast effectively
-  preserves signals across the frequency spectrum.
+  ensemble systems.
 
+  We evaluate this aspect using two physics-based metrics: Spectral Divergence (SDIV)
+  and Spectral
+
+  Residual (SRES), which measure how closely the power spectra of predictions match
+  those of
+
+  ground-truths. As shown in Figure 5, OmniCast achieves substantially better physical
+  consistency
+
+  than other deep learning methods, and often outperforms all baselines on these metrics.
+  These results
+
+  demonstrate how OmniCast effectively preserves signals across the frequency spectrum.
 
   Finally, we compare OmniCast with the four numerical ensemble systems on two probabilistic
-  metrics: Continuous Ranked Probability Score (CRPS) and Spread/Skill Ratio (SSR)
-  (closer to 1 is better). OmniCast and ECMWF-ENS are the two leading methods across
-  variables and lead times. Similar to deterministic results, OmniCast performs worse
-  than ECMWF-ENS at shorter lead times but outperforms this baseline beyond day 15.
+  metrics:
+
+  Continuous Ranked Probability Score (CRPS) and Spread/Skill Ratio (SSR) (closer
+  to 1 is better).
+
+  Figure 6 shows that OmniCast and ECMWF-ENS are the two leading methods across variables
+  and
+
+  lead times. Similar to deterministic results, OmniCast performs worse than ECMWF-ENS
+  at shorter
+
+  lead times but outperforms this baseline beyond day 15.
 
 
   </block>
@@ -500,57 +995,117 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="13">
 
   In addition to its strong performance on the S2S task, we demonstrate that OmniCast
-  also performs competitively at the medium-range timescale. We train a V AE model
-  with a spatial downsampling ratio of 16, compressing each weather state of shape
-  69×721×1440 into a latent representation of size 256×45×90. We then train OmniCast
-  to predict two steps ahead at 12-hour intervals, following the setup of Gencast
-  [37]. During inference, we use autoregressive sampling, recursively feeding the
-  most recent predicted frame as the new initial condition until the target lead time
-  is reached. We generate forecasts using a single sampling iteration per frame with
-  a diffusion temperature τ = 1.0, and produce an ensemble of 50 members.
+  also performs
 
+  competitively at the medium-range timescale. We train a V AE model with a spatial
+  downsampling
 
-  We compare OmniCast against Gencast [37], a leading deep learning method for probabilistic
-  forecasting, and IFS-ENS [23], the gold-standard numerical ensemble system. Following
-  WeatherBench2, we use ensemble RMSE, CRPS, and spread-skill ratio (SSR) as evaluation
-  metrics. OmniCast performs comparably with IFS-ENS across all variables and metrics,
-  and is only slightly behind Gencast. These results indicate that OmniCast achieves
-  strong performance across both medium-range and S2S timescales.
+  ratio of 16, compressing each weather state of shape 69 → 721 → 1440 into a latent
+  representation of
+
+  size 256 → 45 → 90. We then train OmniCast to predict two steps ahead at 12-hour
+  intervals, following
+
+  the setup of Gencast [ 37]. During inference, we use autoregressive sampling, recursively
+  feeding
+
+  the most recent predicted frame as the new initial condition until the target lead
+  time is reached. We
+
+  generate forecasts using a single sampling iteration per frame with a diffusion
+  temperature ϱ =1 .0,
+
+  and produce an ensemble of 50 members.
+
+  We compare OmniCast against Gencast [ 37], a leading deep learning method for probabilistic
+  fore-
+
+  casting, and IFS-ENS [23], the gold-standard numerical ensemble system. Following
+  WeatherBench2,
+
+  we use ensemble RMSE, CRPS, and spread-skill ratio (SSR) as evaluation metrics.
+  As shown in
+
+  Figure 7, OmniCast performs comparably with IFS-ENS across all variables and metrics,
+  and is only
+
+  slightly behind Gencast. These results indicate that OmniCast achieves strong performance
+  across
+
+  both medium-range and S2S timescales.
 
 
   </block>
 
-  ### 5.3 Efficiency of OmniCast
+  ### 5.3 Efﬁciency of OmniCast
 
   <block id="14">
 
-  Beyond its strong empirical performance, OmniCast offers substantial efficiency
-  gains over existing methods. We trained OmniCast for 4 days using 32 NVIDIA A100
-  GPUs. In comparison, Gencast requires 5 days of training on 32 TPUv5e devices –
-  hardware significantly more powerful than A100s, and NeuralGCM [20] requires 10
-  days on 128 TPUv5e devices. Additionally, Gencast employs a two-stage training pipeline,
-  first pretraining on 1.0◦ resolution and then finetuning on 0.25◦, while we trained
+  Beyond its strong empirical perfor-
+
+  mance, OmniCast offers substantial
+
+  efﬁciency gains over existing meth-
+
+  ods. We trained OmniCast for 4 days
+
+  using 32 NVIDIA A100 GPUs. In
+
+  comparison, Gencast requires 5 days
+
+  of training on 32 TPUv5e devices –
+
+  hardware signiﬁcantly more powerful
+
+  than A100s, and NeuralGCM [ 20] re-
+
+  quires 10 days on 128 TPUv5e de-
+
+  vices. Additionally, Gencast employs
+
+  a two-stage training pipeline, ﬁrst pre-
+
+  training on 1.0↔ resolution and then
+
+  ﬁnetuning on 0.25↔, while we trained
+
   OmniCast in a single stage.
 
-
   At inference time, OmniCast is orders of magnitude faster than Gencast, NeuralGCM,
-  and IFS-ENS. At 0.25◦ resolution, Gencast requires 480 seconds on TPUv5, whereas
-  OmniCast achieves the same forecast in just 29 seconds on an A100. At 1.0◦, OmniCast
-  completes inference in only 11 seconds, compared to 224 seconds for Gencast on the
-  same hardware. These results highlight the scalability and practicality of OmniCast
-  for operational forecasting.
+  and IFS-ENS.
 
+  At 0.25↔ resolution, Gencast requires 480 seconds on TPUv5, whereas OmniCast
 
-  The efficiency of OmniCast stems from two key architectural innovations. First,
-  OmniCast operates in a much lower-dimensional latent space (45×90 latent grid vs
-  721×1440 original grid), significantly reducing the computational cost of training
-  and inference. Second, OmniCast employs a highly efficient sampling mechanism. Unlike
-  Gencast, which performs 50 full forward passes through the entire network for 50
-  diffusion steps, OmniCast requires only a single forward pass through the transformer
-  backbone. The subsequent diffusion steps involve only lightweight forward passes
+  achieves the same forecast in just 29 seconds on an A100. At 1.0↔, OmniCast completes
+  inference in
+
+  only 11 seconds, compared to 224 seconds for Gencast on the same hardware. These
+  results highlight
+
+  the scalability and practicality of OmniCast for operational forecasting.
+
+  The efﬁciency of OmniCast stems from two key architectural innovations. First, OmniCast
+  operates in
+
+  a much lower-dimensional latent space ( 45 → 90 latent grid vs 721 → 1440 original
+  grid), signiﬁcantly
+
+  reducing the computational cost of training and inference. Second, OmniCast employs
+  a highly
+
+  efﬁcient sampling mechanism. Unlike Gencast, which performs 50 full forward passes
+  through
+
+  the entire network for 50 diffusion steps, OmniCast requires only a single forward
+  pass through
+
+  the transformer backbone. The subsequent diffusion steps involve only lightweight
+  forward passes
+
   through a compact MLP diffusion head, resulting in orders-of-magnitude lower inference
-  time. Together, these design choices enable OmniCast to deliver fast and scalable
-  forecasts.
+  time.
+
+  Together, these design choices enable OmniCast to deliver fast and scalable forecasts.
 
 
   </block>
@@ -559,51 +1114,101 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
 
   <block id="15">
 
-  We analyze four key factors that influence OmniCast’s performance: the auxiliary
-  deterministic objective, training sequence length T, unmasking order during sampling,
-  and diffusion sampling temperature τ. We present results for T850 on RMSE, CRPS,
-  and SSR. We additionally study the impact of IC perturbations in Appendix B.3.
+  We analyze four key factors that inﬂuence OmniCast’s performance: the auxiliary
+  deterministic
 
+  objective, training sequence length T , unmasking order during sampling, and diffusion
+  sampling
+
+  temperature ϱ. We present results for T850 on RMSE, CRPS, and SSR. We additionally
+  study the
+
+  impact of IC perturbations in Appendix B.3.
 
   Impact of the deterministic objective Figure 9a demonstrates the important role
-  of the deterministic loss in OmniCast’s performance. Removing the MSE objective
-  (No-MSE) degrades both RMSE and CRPS scores, with particularly noticeable impact
-  at short lead times. However, naively applying MSE to all future frames (MSE-All-Frames)
-  also proves counterproductive, as it forces deterministic predictions even for S2S
-  timescales where weather systems become inherently chaotic. Our approach of applying
-  MSE only to the first 10 frames achieves the best RMSE and CRPS scores across medium-range
-  and S2S timescales.
+  of the deterministic
 
+  loss in OmniCast’s performance. Removing the MSE objective (No-MSE) degrades both
+  RMSE and
+
+  CRPS scores, with particularly noticeable impact at short lead times. However, naively
+  applying
+
+  MSE to all future frames (MSE-All-Frames) also proves counterproductive, as it forces
+  deterministic
+
+  predictions even for S2S timescales where weather systems become inherently chaotic.
+  Our approach
+
+  of applying MSE only to the ﬁrst 10 frames achieves the best RMSE and CRPS scores
+  across
+
+  medium-range and S2S timescales.
 
   Impact of training sequence length In the main S2S experiment, we train OmniCast
-  to generate 44 future weather states at 24 hour intervals. One could alternatively
-  train the model on shorter sequences and/or smaller intervals, then apply multiple
-  roll-outs during inference to reach longer horizons. Models trained on shorter sequences
-  or smaller intervals excel at short- and medium-range forecasting but underperform
-  at S2S timescales. This trade-off emerges because shorter sequences allow models
-  to specialize in near-term predictions, leading to better performance at shorter
-  lead times. However, these models suffer from error accumulation at longer horizons,
+  to generate
+
+  44 future weather states at 24 hour intervals. One could alternatively train the
+  model on shorter
+
+  sequences and/or smaller intervals, then apply multiple roll-outs during inference
+  to reach longer
+
+  horizons. Figure 9b shows that models trained on shorter sequences or smaller intervals
+  excel at short-
+
+  and medium-range forecasting but underperform at S2S timescales. This trade-off
+  emerges because
+
+  shorter sequences allow models to specialize in near-term predictions, leading to
+  better performance
+
+  at shorter lead times. However, these models suffer from error accumulation at longer
+  horizons,
+
   ultimately performing worse than the model trained on full sequences.
 
-
   Impact of unmasking orders While our approach randomly masks tokens across both
-  space and time during training, one may try more structured masking strategies at
-  inference. We evaluate two such alternatives: an autoregressive strategy that unmasks
-  entire frames sequentially, and a random framewise approach that unmasks complete
-  frames in random order. Our fully randomized strategy achieves the best SSR scores,
-  while both alternatives produce under-dispersive ensembles. The superior performance
-  of the fully randomized approach stems from its introduction of additional randomness
-  through the unmasking order, generating more diverse ensemble forecasts. This greater
-  diversity consequently leads to better performance across other metrics.
+  space and
 
+  time during training, one may try more structured masking strategies at inference.
+  We evaluate two
 
-  Impact of diffusion sampling temperature Higher values of the temperature τ produce
-  more diverse forecasts. Setting τ < 1 produces under-dispersive ensembles, degrading
-  performance across other metrics. Increasing τ boosts sample diversity, improving
-  SSR scores and overall better performance. However, pushing τ too high (e.g., τ
-  = 1.5) causes samples to deviate from the mean prediction, compromising RMSE and
-  CRPS performance. We identify τ = 1.3 as the optimal value, providing the best balance
-  between ensemble diversity and forecast quality, which we adopt for our main experiments.
+  such alternatives: an autoregressive strategy that unmasks entire frames sequentially,
+  and a random
+
+  framewise approach that unmasks complete frames in random order. Figure 9c shows
+  that our fully
+
+  randomized strategy achieves the best SSR scores, while both alternatives produce
+  under-dispersive
+
+  ensembles. The superior performance of the fully randomized approach stems from
+  its introduction
+
+  of additional randomness through the unmasking order, generating more diverse ensemble
+  forecasts.
+
+  This greater diversity consequently leads to better performance across other metrics.
+
+  Impact of diffusion sampling temperature Higher values of the temperature ϱ produce
+  more
+
+  diverse forecasts. Figure 9d demonstrates this empirically. Setting ϱ< 1 produces
+  under-dispersive
+
+  ensembles, degrading performance across other metrics. Increasing ϱ boosts sample
+  diversity,
+
+  improving SSR scores and overall better performance. However, pushing ϱ too high
+  (e.g., ϱ =1 .5)
+
+  causes samples to deviate from the mean prediction, compromising RMSE and CRPS performance.
+
+  We identify ϱ =1 .3 as the optimal value, providing the best balance between ensemble
+  diversity and
+
+  forecast quality, which we adopt for our main experiments.
 
 
   </block>
@@ -613,14 +1218,26 @@ segmented_markdown: '# OmniCast: A Masked Latent Diffusion Model for
   <block id="16">
 
   We present OmniCast, a novel latent diffusion model for S2S prediction. By combining
-  the masked generative framework with a diffusion objective, our approach enables
-  direct modeling of long sequences of future weather states while avoiding error
-  accumulation inherent in autoregressive methods. OmniCast achieves state-of-the-art
-  performance in deterministic and probabilistic metrics while maintaining exceptional
-  physical consistency. In medium-range forecasting, OmniCast performs competitively
-  with existing methods while being significantly more efficient. Future work could
-  study the fundamental trade-off between V AE reconstruction quality and transformer
-  modeling capacity, and explore more sophisticated generative frameworks to enhance
-  the diffusion objective.
+  the masked
+
+  generative framework with a diffusion objective, our approach enables direct modeling
+  of long
+
+  sequences of future weather states while avoiding error accumulation inherent in
+  autoregressive meth-
+
+  ods. OmniCast achieves state-of-the-art performance in deterministic and probabilistic
+  metrics while
+
+  maintaining exceptional physical consistency. In medium-range forecasting, OmniCast
+  performs
+
+  competitively with existing methods while being signiﬁcantly more efﬁcient. Future
+  work could study
+
+  the fundamental trade-off between V AE reconstruction quality and transformer modeling
+  capacity,
+
+  and explore more sophisticated generative frameworks to enhance the diffusion objective.
 
   </block>'

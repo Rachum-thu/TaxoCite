@@ -47,7 +47,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   </block>
 
-  ## Introduction
+  ## 1 Introduction
 
   <block id="1">
 
@@ -81,7 +81,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   To address this challenge, we propose WeatherGFT, a physics-AI hybrid model capable
   of simulating weather changes on fine-grained time scales through a set of partial
   differential equations (PDEs) [50]. WeatherGFT consists of an encoder, multiple
-  stacked HybridBlocks and a decoder. As the core of our model, HybridBlock contains
+  stackedHybridBlocks and a decoder. As the core of our model, HybridBlock contains
   two branches: One utilizes PDE kernels to conduct physical evolution over small
   time scales, while the other employs neural networks to learn unresolved atmospheric
   processes and perform bias correction on the physical evolution. These two branches
@@ -126,7 +126,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   </block>
 
-  ## Related Work
+  ## 2 Related Work
 
   <block id="2">
 
@@ -177,7 +177,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   </block>
 
-  ## Method
+  ## 3 Method
 
   <block id="3">
 
@@ -191,7 +191,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   Weather forecasting aims to predict future weather states Xt given current weather
   states X0:
 
-  Fθ(X0) = P (Xt|X0)
+  Fθ(X0) = P (Xt|X0) (1)
 
   where θ represents the parameters of the model and t denotes the lead time. The
   weather state X ∈ RC×H×W consists of C atmospheric variables across different pressure
@@ -202,8 +202,8 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   Assuming that the time resolution of the dataset is tdata, the lead time t for data-driven
   models can only be equal to or greater than tdata, because these models are trained
   using data pairs (X0, Xt) sampled from the dataset. Consequently, black-box AI models
-  [32, 3, 33, 7, 20, 19, 15] are unable to forecast at finer lead times such as 1/2
-  tdata, indicating a lack of temporal generalization ability.
+  [32, 3, 33, 7, 20, 19, 15] are unable to forecast at finer lead times such as 1
+  2 tdata, indicating a lack of temporal generalization ability.
 
 
   </block>
@@ -212,36 +212,37 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   <block id="5">
 
-  Our model consists of an encoder to patchify the weather states into tokens [52],
-  multiple (specifically, 24) stacked HybridBlocks to perform weather evolution via
-  PDE modeling, and a decoder to generate predictions under specific lead-time conditions.
+  As shown in Figure 2, our model consists of an encoder to patchify the weather states
+  into tokens [52], multiple (specifically, 24) stacked HybridBlocks to preform weather
+  evolution via PDE modeling, and a decoder to generate predictions under specific
+  lead-time conditions.
 
 
   Specifically, to enable our model to generalize at a finer-grained temporal resolution,
   we employ PDEs to model the evolution at a finer time scale:
 
-  Xts = K(X0), where ts = 1/m tdata, m ∈ Z+
+  Xts = K(X0), where ts = 1 m tdata, m ∈ Z+ (2)
 
   We simulate the physical evolution from X0 to Xts through a uniquely designed PDE
   kernel (details in Section 3.3), where ts is much smaller than the time resolution
   tdata of the dataset, allowing model to capture fine-grained weather changes. By
-  stacking PDE kernels K, the longer evolution can be achieved like Xtdata = Km ...
-  K2 K1 X0. In this paper, we set m to 12, that is, ts = 1/12 tdata.
+  stacking PDE kernels K, the longer evolution can be achieved like Xtdata = Km .
+  . . K2 K1 X0. In this paper, we set m to 12, that is, ts = 1 12 tdata.
 
 
   To mitigate the issue of error accumulation as the number of evolutionary steps
   increases, we introduce a parallel Attention Block [52] that performs bias correction
   for every 3 iterations of K. Additionally, a learnable router initialized as 0.5
-  : 0.5, is employed to adaptively fuse features from PDE kernels and the Attention
+  : 0 .5, is employed to adaptively fuse features from PDE kernels and the Attention
   Block. We encapsulate three PDE kernels K and one parallel Attention Block within
-  a HybridBlock, whose evolution time is tblock = 3 × ts = 1/4 tdata.
+  a HybridBlock, whose evolution time is tblock = 3 × ts = 1 4 tdata.
 
 
   Our model can not only forecast at lead times equal to or greater than tdata, but
-  also generalize to finer-grained time scale such as 1/2 tdata even in the absence
+  also generalize to finer-grained time scale such as 1 2 tdata even in the absence
   of corresponding training data pairs. This is achieved by modeling the physical
-  evolution of tblock = 1/4 tdata, rather than simply learning from data pairs (X0,
-  Xtdata) sampled from the dataset. Notably, these generalized finer-grained predictions
+  evolution of tblock = 1 4 tdata, rather than simply learning from data pairs (X0,
+  Xtdata ) sampled from the dataset. Notably, these generalized finer-grained predictions
   of our model outperform temporal interpolation on multiple metrics, emphasizing
   the advantages of fine-grained physical evolution over black-box models.
 
@@ -252,61 +253,79 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   <block id="6">
 
-  We employ a set of five PDEs including the motion equation, the continuous equation
-  and others to establish a closed system, which simulate the physical evolution of
-  5 essential atmospheric variables: u (latitude-direction wind), v (longitude-direction
+  We employ a set of five PDEs (7-11) including the motion equation, the continuous
+  equation and others to establish a closed system, which simulate the physical evolution
+  of 5 essential atmospheric variables: u (latitude-direction wind), v (longitude-direction
   wind), z (geopotential), q (humidity), T (temperature). The partial derivative of
   each atmospheric variable with respect to time can be separated mathematically (details
-  in Appendix A), denotes as SPDE, which takes current weather state as input and
+  in Appendix A), denotes as SP DE, which takes current weather state as input and
   produces the derivative of each variable with respect to time. We define PDE kernel
   K as the evolution of the variables over a short period of time ts, as demonstrated
   in Equation 3.
 
+  SP DE(X) =
 
-  SPDE(X) =
+  { ∂u ∂t = Su(u, v, z, q, T)16
 
-  {
+  ∂v ∂t = Sv(u, v, z, q, T)16
 
-  ∂u/∂t = Su(u, v, z, q, T)
+  ∂z ∂t = Sz(u, v, z, q, T)21
 
-  ∂v/∂t = Sv(u, v, z, q, T)
+  ∂q ∂t = Sq(u, v, z, q, T)23
 
-  ∂z/∂t = Sz(u, v, z, q, T)
+  ∂T ∂t = ST(u, v, z, q, T)18
 
-  ∂q/∂t = Sq(u, v, z, q, T)
+  ,
 
-  ∂T/∂t = ST(u, v, z, q, T)
+  PDE KernelK(X) = SP DE(X)ts + X
 
-  },
+  wherets = 1 12tdata
 
-  PDE Kernel K(X) = SPDE(X) ts + X
-
-  where ts = 1/12 tdata
-
-
-  Calculating SPDE requires the use of differential and integral operations. For example,
-  for temperature T, its derivative with respect to time is shown in Equation 4. In
-  order to efficiently calculate SPDE and enable loss backward [25], we designed a
-  fast implementation of differentiation and integration through convolution and matrix
-  multiplication respectively. Equation 5 presents the implementation of the differential
-  and integral of X in the x direction (latitude direction).
+  (3)
 
 
-  ∂T/∂t = −L ∂z/∂p w − ∂z/∂p w / cp − u ∂T/∂x − v ∂T/∂y − w ∂T/∂p, where w = −∫ (∂u/∂x
-  + ∂v/∂y) dp
+  Calculating SP DE requires the use of differential and integral operations. For
+  example, for temperature T , its derivative with respect to time is shown in Equation
+  4. In order to efficiently calculate SP DE and enable loss backward [25], we designed
+  a fast implementation of differentiation and integration through convolution and
+  matrix multiplication respectively. Equation 5 presents the implementation of the
+  differential and integral of X in the x direction (latitude direction).
 
 
-  dX/dx = 1/12 Conv(X, Kx)
+  ∂T ∂t = −L ∂z ∂p w − ∂z ∂p w cp − u ∂T ∂x − v ∂T ∂y − w ∂T ∂p , where w = − Z [
+  ∂u ∂x + ∂v ∂y ] dp (4)
 
-  ∫ X dx = XMx, Kx = [[0 0 0 0 0],[0 0 0 0 0],[1 −8 0 8 −1],[0 0 0 0 0],[0 0 0 0 0]],
-  Mx ∈ RW×W
+
+  { dX dx = 1 12Conv(X, Kx)
+
+  R Xdx = XMx , Kx =
+
+  [ 0 0 0 0 0
+
+  0 0 0 0 0
+
+  1 −8 0 8 −1
+
+  0 0 0 0 0
+
+  0 0 0 0 0 ] , Mx =
+
+  [ 1 1 · · · 1 1
+
+  0 1 · · · 1 1
+
+  ... ... ... ... ...
+
+  0 0 · · · 1 1
+
+  0 0 · · · 0 1 ] ∈ RW×W (5)
 
 
   Similarly, Ky and My can be constructed to perform differential and integral operations
   in the y direction (longitude direction). For differential and integral operations
   in the p direction (pressure level direction), we first reshape X ∈ RC×H×W to 3D
-  space X3D ∈ R C/P ×P ×H×W based on the variables’ pressure layers, and then implement
-  corresponding operations through Kp and Mp.
+  space X3D ∈ R C P ×P ×H×W based on the variables’ pressure layers, and then implement
+  corresponding operations throughKp and Mp.
 
 
   </block>
@@ -320,7 +339,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   of PDE kernel K. Secondly, it utilizes the PDE kernel K to guide the neural networks
   to learn the physical evolution of a specific time step. The structure of HybridBlock
   consists of three PDE kernels K and one parallel Attention Block. Consequently,
-  the time step corresponding to a HybridBlock is tblock = 3 × ts = 1/4 tdata.
+  the time step corresponding to a Hybrid-Block is tblock = 3 × ts = 1 4 tdata.
 
 
   HybridBlock has two branches, one is physics and the other is AI. The neural networks
@@ -332,7 +351,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   In the router, the features XN obtained from the neural networks and the features
   XP derived from the PDE kernels are initially linearly fused along the feature dimension
-  D, with the learnable factor r initialized as 0.5 : 0.5. Subsequently, the preliminary
+  D, with the learnable factor r initialized as 0.5 : 0 .5. Subsequently, the preliminary
   fused features will go through an Multilayer Perceptron [40] layer containing a
   ReLU [36] activation function to accomplish nonlinear feature fusion.
 
@@ -344,19 +363,17 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   <block id="8">
 
   HybridBlock provides the smallest time scale of model evolution, which is tblock
-  = 1/4 tdata. Through L × HybridBlocks, we can predict the weather at a lead time
-  of L/4 tdata. To enable the model to generalize its prediction capabilities to finer-grained
+  = 1 4 tdata. Through L× HybridBlocks, we can predict the weather at a lead time
+  of L 4 tdata. To enable the model to generalize its prediction capabilities to finer-grained
   time scales, we design a lead time conditional decoder to generate forecasts varying
   lead times from the output of the corresponding HybridBlock.
 
 
-  In order to promote the expression of the condition, we embed the lead time t into
+  In order to promote the expression of the condition, we embed the lead timet into
   a high-dimensional vector temb through learnable Fourier embedding [48], as shown
   in Equation 6.
 
-
-  temb = sin(π · t · W) ⊕ cos(π · t · W) ⊕ t, where t is lead time
-
+  temb = sin(π · t · W ) ⊕ cos(π · t · W ) ⊕ t, where t is lead time (6)
 
   where W is a learnable vector of size 16, and ⊕ denotes concatenation. Furthermore,
   temb will be concatenated with the output of HybridBlock and input to the decoder
@@ -371,8 +388,8 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   <block id="9">
 
   For dataset like ERA5 [22] or WeatherBench [47], their time resolution is tdata
-  = 1h. We set the time step of the PDE kernel to ts = 1/12 tdata = 300s. Consequently,
-  the time step of each HybridBlock is tblock = 3 × ts = 900s, equivalent to 15 minutes.
+  = 1h. We set the time step of the PDE kernel to ts = 1 12 tdata = 300s. Consequently,
+  the time step of each HybridBlock is tblock = 3 ×ts = 900s, equivalent to 15 minutes.
   By cascading 24 HybridBlocks, model can generate forecasts at a lead time of 24
   × 15min = 6h. To encourage the model to learn evolution for different lead times
   and generalize forecasting to finer-grained time scales, during training, we not
@@ -384,17 +401,16 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   During inference, we can take the output of the second HybridBlock and pass it through
   the decoder with corresponding temb to get 2 × 15min = 30min forecasts, which are
-  not present in the dataset. We provide a comprehensive demonstration showcasing
-  the accuracy of these generalized prediction results for time scales smaller than
-  the dataset’s time resolution.
+  not present in the dataset. In the Section 4.3, we provide a comprehensive demonstration
+  showcasing the accuracy of these generalized prediction results for time scales
+  smaller than the dataset’s time resolution.
 
 
   </block>
 
-  ## Experiment
+  ## 4 Experiment
 
   <block id="10">
-
 
   Through the design of HybridBlock mixed with physics & AI and the multi-lead time
   training method, our model is capable of simultaneously conducting short-term forecasting
@@ -438,7 +454,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   Baseline Methods. We compare WeatherGFT with four forecast approaches: FourCastNet
   [32] uses AFNO [16] networks to simulate the nonlinear relationship between weather
-  variables, Keisler [29] models global atmospheric data through GNN, ClimODE [53]
+  variables, Keisler [29] models global atmospheric data through GNN, ClimODE[53]
   adds ordinary differential equations (ODE) [26] to the neural networks, and ECMWF-IFS
   [46] is a physical dynamic model.
 
@@ -473,13 +489,13 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   and surface wind speed (u10) is significantly better than other models. The geopotential
   of the 500hpa pressure layer (z500) is a crucial weather variable in weather forecasting,
   as it reflects atmospheric circulation [45], subtropical high-pressure systems [34],
-  and other significant phenomena. Due to the modeling of geopotential in the PDE,
-  z500 prediction of our model outperforms the physical dynamic model ECMWF-IFS.
+  and other significant phenomena. Due to the modeling of geopotential in the PDE
+  21, z500 prediction of our model outperforms the physical dynamic model ECMWF-IFS.
 
 
-  From the visualization, our model is more accurate in predicting the subtropical
-  high. In addition, the prediction error of our model at the lead time of 6-hour
-  is significantly smaller than that of the physical dynamic model ECMWF-IFS.
+  From visualization, our model is more accurate in predicting the subtropical high.
+  In addition, the prediction error of our model at the lead time of 6-hour is significantly
+  smaller than that of the physical dynamic model ECMWF-IFS.
 
 
   </block>
@@ -512,10 +528,10 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   regions of moderate rainfall, i.e., CSI@1.5.
 
 
-  The visualization reveals that when using frame interpolation to obtain 30-minute
-  predictions, there is blurring occurring at different scales, resulting in the loss
-  of extreme values. Our model, which incorporates physical constraints, provides
-  clearer predictions retaining extreme values without the need for frame interpolation.
+  Visualization reveals that when using frame interpolation to obtain 30-minute predictions,
+  there is blurring occurring at different scales, resulting in the loss of extreme
+  values. Our model, which incorporates physical constraints, provides clearer predictions
+  retaining extreme values without the need for frame interpolation.
 
 
   </block>
@@ -532,18 +548,17 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   a) The physical weight of the vast majority of HybridBlocks is significantly higher
   than the weight of AI, which shows that in the process of simulating time evolution,
   the PDE kernel plays a more important role, while the Attention Block only plays
-  a supportive correction role.
-
-  b) The physical weight gradually decreases while the weight of AI increases throughout
-  each hour (dataset time resolution). This aligns with our underlying motivation,
-  which acknowledges that errors may accumulate over time in the physics-based evolution.
-  Consequently, a greater emphasis on AI corrections becomes necessary to compensate
-  for these accumulated errors.
+  a supportive correction role. b) The physical weight gradually decreases while the
+  weight of AI increases throughout each hour (dataset time resolution). This aligns
+  with our underlying motivation, which acknowledges that errors may accumulate over
+  time in the physics-based evolution. Consequently, a greater emphasis on AI corrections
+  becomes necessary to compensate for these accumulated errors.
 
 
   By averaging the 4 × 6 HybridBlocks into 4 time steps, the average weight every
-  15-minute shows the above two conclusions more clearly. To summarize, physics plays
-  the main evolutionary role in the model, while AI plays a dynamic corrective role.
+  15-minute is obtained, which shows the above two conclusions more clearly. To summarize,
+  physics plays the main evolutionary role in the model, while AI plays an dynamic
+  corrective role.
 
 
   </block>
@@ -576,7 +591,7 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
 
   </block>
 
-  ## Conclusion
+  ## 5 Conclusion
 
   <block id="16">
 
@@ -597,8 +612,8 @@ segmented_markdown: '# Generalizing Weather Forecast to Fine-grained Temporal Sc
   The main limitation of our model is that only five important atmospheric equations
   are currently considered, which is still far from fully modeling the atmospheric
   motion process. Another limitation of this paper is that the experiments have been
-  conducted solely at a spatial resolution of 128×256. As part of our future work,
-  we plan to extend our experiments to higher resolutions such as 721 × 1440 to assess
+  conducted solely at a spatial resolution of128×256. As part of our future work,
+  we plan to extend our experiments to higher resolutions such as721 × 1440 to assess
   the model’s performance under different settings. Additionally, while the minimum
   evolution time scale of our model is 15 minutes, we were unable to evaluate 15-minute
   generalized predictions due to the absence of corresponding validation data at that

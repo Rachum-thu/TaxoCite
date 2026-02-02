@@ -4,11 +4,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
+  - []
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -103,8 +99,8 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Foundation models and generative architectures"
-    - "Climate Prediction and Data-Driven Modeling"
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -155,18 +151,14 @@
   - 11
   "intent_labels":
   - []
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-  "topic_labels":
   - []
+  "topic_labels":
   - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "A survey of methods for explaining black box models"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -210,8 +202,8 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
     - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -236,7 +228,7 @@
   - - "Spatio-temporal forecasting and nowcasting"
     - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
     - "Foundation models and generative architectures"
 - "title": "An investigation on joint data assimilation of a radar network and ground-based profiling platforms for forecasting convective storms"
   "unique_context_marker": "[24]"
@@ -253,12 +245,12 @@
   - []
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
     - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
-  - - "Foundation models and generative architectures"
-    - "Climate Prediction and Data-Driven Modeling"
+    - "Foundation models and generative architectures"
+  - - "Spatio-temporal forecasting and nowcasting"
+    - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -267,17 +259,9 @@
   "block_ids":
   - 11
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
-  - - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
 - "title": "A unified pyramid recurrent network for video frame interpolation"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -287,16 +271,8 @@
   - []
   - []
   "topic_labels":
-  - - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-  - - "Downscaling, bias correction, and data assimilation"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
+  - []
 - "title": "Flavr: Flow-agnostic video representations for fast frame interpolation"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -306,16 +282,8 @@
   - []
   - []
   "topic_labels":
-  - - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-  - - "Downscaling, bias correction, and data assimilation"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Downscaling, bias correction, and data assimilation"
-    - "Spatio-temporal forecasting and nowcasting"
+  - []
+  - []
 - "title": "Forecasting global weather with graph neural networks"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -410,12 +378,16 @@
   "block_ids":
   - 7
   "intent_labels":
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
 - "title": "Physics-informed neural operator for learning partial differential equations"
   "unique_context_marker": "[37]"
@@ -451,7 +423,11 @@
     - "Foundation models and generative architectures"
     - "Foundation models and generative architectures"
     - "Foundation models and generative architectures"
-  - []
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
 - "title": "A pattern recognition approach to understanding the multi-layer perception"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -460,9 +436,9 @@
   - []
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
 - "title": "Preciplstm: A meteorological spatiotemporal lstm for precipitation nowcasting"
   "unique_context_marker": "[41]"
@@ -480,8 +456,8 @@
   - []
   "topic_labels":
   - - "Foundation models and generative architectures"
-    - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
     - "Foundation models and generative architectures"
 - "title": "Scaling transformer neural networks for skillful and reliable medium-range weather forecasting"
@@ -489,11 +465,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
+  - []
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -567,7 +539,11 @@
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -583,7 +559,7 @@
   "topic_labels":
   - - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
 - "title": "Attention is all you need"
@@ -595,8 +571,12 @@
   - []
   - []
   "topic_labels":
-  - []
   - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
+  - - "Spatio-temporal forecasting and nowcasting"
     - "Foundation models and generative architectures"
     - "Foundation models and generative architectures"
     - "Foundation models and generative architectures"
@@ -667,8 +647,8 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
     - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -679,8 +659,8 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Spatio-temporal forecasting and nowcasting"
-    - "Spatio-temporal forecasting and nowcasting"
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
     - "Foundation models and generative architectures"
     - "Spatio-temporal forecasting and nowcasting"
     - "Spatio-temporal forecasting and nowcasting"
@@ -691,7 +671,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Foundation models and generative architectures"
+    - "Spatio-temporal forecasting and nowcasting"
+    - "Foundation models and generative architectures"
 - "title": "Graph neural networks: A review of methods and applications"
   "unique_context_marker": "[62]"
   "block_ids":

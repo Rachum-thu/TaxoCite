@@ -1,7 +1,7 @@
 title: Physics-Guided Learning of Meteorological Dynamics for Weather Downscaling
   and Forecasting
-abstract: 'Weather forecasting is essential but remains computationally intensive
-  and physically incomplete in traditional numerical weather prediction (NWP) methods.
+abstract: Weather forecasting is essential but remains computationally intensive and
+  physically incomplete in traditional numerical weather prediction (NWP) methods.
   Deep learning (DL) models offer efficiency and accuracy but often ignore physical
   laws, limiting interpretability and generalization. We propose PhyDL-NWP, a physics-guided
   deep learning framework that integrates physical equations with latent force parameterization
@@ -12,17 +12,6 @@ abstract: 'Weather forecasting is essential but remains computationally intensiv
   models with minimal overhead, achieving up to 170× faster inference with only 55K
   parameters. Experiments show that PhyDL-NWP improves both forecasting performance
   and physical consistency.
-
-
-  CCS Concepts
-
-  •Applied computing → Physical sciences and engineering ; • Computing methodologies
-  → Machine learning.
-
-
-  Keywords
-
-  Physics; Learning; Weather; Prediction; Parameterization'
 abstract_is_verbatim: true
 segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for Weather
   Downscaling and Forecasting
@@ -44,17 +33,6 @@ segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for We
   models with minimal overhead, achieving up to 170× faster inference with only 55K
   parameters. Experiments show that PhyDL-NWP improves both forecasting performance
   and physical consistency.
-
-
-  CCS Concepts
-
-  •Applied computing → Physical sciences and engineering ; • Computing methodologies
-  → Machine learning.
-
-
-  Keywords
-
-  Physics; Learning; Weather; Prediction; Parameterization
 
 
   </block>
@@ -195,7 +173,7 @@ segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for We
 
   We study a spatiotemporal weather dataset, denoted as
 
-  u = [u1 (x, y, t), . . . , uh (x, y, t)]. (1)
+  u = [u1(x, y, t), . . . , uh(x, y, t)]. (1)
 
   Using the physics expression, this dataset comprises h distinct weather variable
   fields (such as temperature and pressure), each related to specific input coordinates
@@ -232,10 +210,10 @@ segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for We
   parameterization to fit the weather data. A typical partial differential equation
   (PDE) with parametrization terms has the following form:
 
-  ∂u/∂t = Qπ(x, y, t) + Φ(u)Ξ = Qπ(x, y, t) + ∑_{i=1}^{p} φ_i(u) ξ_i, (2)
+  ∂u/∂t = Qπ(x, y, t) + Φ(u)Ξ = Qπ(x, y, t) + ∑_{i=1}^p φ_i(u) ξ_i, (2)
 
   where p denotes the number of PDE terms in the equation, each φ_i(u) ∈ [1, u, ∂u/∂x,
-  ∂u/∂y, ∂^2 u/∂x^2, ..., u ∂u/∂x, ...] denotes a PDE term in the equation (see examples
+  ∂u/∂y, ∂^2u/∂x^2, ..., u ∂u/∂x, ...] denotes a PDE term in the equation (see examples
   in Sec. 4.3), with the set of ξ_i as the coefficients. Qπ(x, y, t) denotes the latent
   force modeled by a neural network that cannot be represented by Φ(u) explicitly,
   as a supplement to missing variables unavailable in the weather dataset, such as
@@ -277,9 +255,10 @@ segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for We
 
   where
 
-  Ldata = 1/(nmT) ∑_{x,y,t} || fθ − u ||_2^2, (4)
+  Ldata = 1/(nmT) ∑_{x,y,t} ||fθ − u||_2^2, (4)
 
-  Lphy = 1/(n′ m′ T′) ∑_{x′,y′,t′} || ∂fθ/∂t − Φ(fθ) Ξ − Qπ ||_2^2. (5)
+  Lphy = 1/(n′m′T′) ∑_{x′,y′,t′} || ∂fθ/∂t − Φ(fθ)Ξ − Qπ ||_2^2. (5)
+
 
   Here, data loss measures how well fθ approximates u on the weather data, and physical
   loss measures how well the learned equation fits the weather data. The two regularization
@@ -317,13 +296,13 @@ segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for We
 
   where
 
-  Ldata(ω) = 1/(n m r · q) ∑_{i=s+1}^{T−r} || gω([Y]_{i−s}^{i}) − [Y]_{i+1}^{i+r}
+  Ldata(ω) = 1/(nmr·q(T−r)) ∑_{i=s+1}^{T−r} || gω([Y]_{i−s}^{i}) − [Y]_{i+1}^{i+r}
   ||_2^2, (7)
 
-  Lphy(ω) = 1/(n m r · q) ∑_{i=s+1}^{T−r} || ∂ gω([Y]_{i−s}^{i})/∂t − p ||_2^2, (8)
+  Lphy(ω) = 1/(nmr·q(T−r)) ∑_{i=s+1}^{T−r} || ∂gω([Y]_{i−s}^{i})/∂t − p ||_2^2, (8)
 
-  with q = T−r−s−1, p = Φ(gω([Y]_{i−s}^{i})) Ξ + Qπ. Note that θ, Ξ, and π are already
-  learned during the downscaling beforehand. α, β, σ1, σ2 are all hyperparameters
+  with q = T − r − s − 1, p = Φ(gω([Y]_{i−s}^{i})) Ξ + Qπ. Note that θ, Ξ, and π are
+  already learned during the downscaling beforehand. α, β, σ1, σ2 are all hyperparameters
   to balance the different loss terms. As long as the downscaling model fθ is accurate,
   the recovered physics offers a globally consistent constraint that enhances the
   generalization of gω without adding substantial model complexity. The size of the
@@ -402,11 +381,10 @@ segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for We
   Meteorological Bureau. Ningbo and Ningxia cover two different terrains and climate
   types in 0.25 degrees resolution, while WeatherBench covers the global weather in
   5.625 degrees resolution. On each grid in both datasets, we select the most important
-  observational weather information for evaluation. See more details in Appendix A.1.
-  We perform multiple experiments based on the length of future prediction, ranging
-  from one hour to seven days. Due to the GPU memory limitation, we use the eight
-  weather variables of only ten hours in the past to predict all eight weather variables
-  in the future.
+  observational weather information for evaluation. We perform multiple experiments
+  based on the length of future prediction, ranging from one hour to seven days. Due
+  to the GPU memory limitation, we use the eight weather variables of only ten hours
+  in the past to predict all eight weather variables in the future.
 
 
   There are five kinds of baseline models in comparison, including: (1) Physics-based
@@ -414,25 +392,24 @@ segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for We
   [7]; (3) Vision models: ConvLSTM [33], FourcastNet [28] based on AFNO [5], ClimaX
   [24]; (4) Spatio-temporal graph models: MTGNN [40], MegaCRN [11], GraphCast [14].
   Some baseline models are slightly modified to adapt to the multi-step prediction
-  setting and/or specific modeling resolution, with details described in the Appendix
-  A.2.4. Besides deep learning models, we also compare these models with the Numerical
-  Weather Prediction (NWP) results provided by ECMWF IFS and the Physics-Informed
-  Neural Network (PINN) [30] based on the PDEs learned by PhyDL-NWP. We denote the
-  baseline models as BaseModels and incorporate them with PhyDL-NWP as BaseModels+.
+  setting and/or specific modeling resolution. Besides deep learning models, we also
+  compare these models with the Numerical Weather Prediction (NWP) results provided
+  by ECMWF IFS and the Physics-Informed Neural Network (PINN) [30] based on the PDEs
+  learned by PhyDL-NWP. We denote the baseline models as BaseModels and incorporate
+  them with PhyDL-NWP as BaseModels+.
 
 
   #### 4.2.1 Regional Weather Forecasting
 
-  In particular, the result of regional forecasting details with seven days are reported,
-  as it represents the model’s capability of long-term medium-range regional weather
-  prediction. The vanilla PINN does not seem to be effective, while the improvement
-  provided by PhyDL-NWP is consistently significant. For Ningbo dataset, the overall
-  improvement on the average of all weather variables is up to 7.18% over RMSE and
-  14.0% over ACC; for Ningxia dataset, the overall improvement on that is up to 5.48%
-  over RMSE and 18.8% over ACC. All the results are statistically significant. Furthermore,
-  we find that NWP is good in ACC, while being the worst in RMSE. Deep learning models,
-  on the other hand, greatly outperform NWP in RMSE, showing great advantage in modeling
-  capacity.
+  The result of regional forecasting details with seven days represents the model’s
+  capability of long-term medium-range regional weather prediction. The vanilla PINN
+  does not seem to be effective, while the improvement provided by PhyDL-NWP is consistently
+  significant. For Ningbo dataset, the overall improvement on the average of all weather
+  variables is up to 7.18% over RMSE and 14.0% over ACC; for Ningxia dataset, the
+  overall improvement on that is up to 5.48% over RMSE and 18.8% over ACC. All the
+  results are statistically significant. Furthermore, we find that NWP is good in
+  ACC, while being the worst in RMSE. Deep learning models, on the other hand, greatly
+  outperform NWP in RMSE, showing great advantage in modeling capacity.
 
 
   To understand the holistic properties of PhyDL-NWP, we conduct detailed analyses
@@ -443,20 +420,20 @@ segmented_markdown: '# Physics-Guided Learning of Meteorological Dynamics for We
   range, which highlights its unique advantages of guiding models for long-term forecasting.
 
 
-  In addition, based on AFNO from FourcastNet, PhyDL-NWP clearly improves the performance
-  of the existing deep model, making the forecasting results closer to the ground
-  truth. Specifically, “Total precipitation” is not a typical physical quantity and
-  is hard to predict due to lack of effective physical equation. While the vanilla
-  AFNO performs poorly, AFNO+ provides information about which local areas receive
-  concentrated rainfall. This effectively demonstrated the success of our implemented
-  parameterization strategy with the latent force model.
+  In addition, based on AFNO from FourcastNet, forecasting comparison shows that PhyDL-NWP
+  clearly improves the performance of the existing deep model, making the forecasting
+  results closer to the ground truth. Specifically, “Total precipitation” is not a
+  typical physical quantity and is hard to predict due to lack of effective physical
+  equation. While the vanilla AFNO is poor, AFNO+ provides information about which
+  local areas receive concentrated rainfall. This effectively demonstrates the success
+  of our implemented parameterization strategy with the latent force model.
 
 
   #### 4.2.2 Global Weather Forecasting
 
   Besides regional weather forecasting, we also test PhyDL-NWP on the global weather
   forecasting task, which is the benchmark for a lot of recent works. In comparison,
-  PhyDL-NWP shows substantial improvements over baseline models in the coarser-granular
+  PhyDL-NWP shows a lot more improvements over baseline models in the coarser-granular
   WeatherBench dataset, with statistically significant improvement over RMSE. It is
   also worth noting that, even for the state-of-the-art GraphCast model, there is
   still an improvement. Moreover, PhyDL-NWP module is extremely light-weighted and

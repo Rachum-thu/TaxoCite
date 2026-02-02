@@ -52,7 +52,7 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
 
   </block>
 
-  ## Introduction
+  ## 1 Introduction
 
   <block id="1">
 
@@ -71,8 +71,8 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   of several subgrid processes, coarse representation of local geographical features,
   incapacity to utilize sources of observational data (e.g., weather stations, radar,
   satellites) in an automated manner, and substantial demand for computing resources
-  [ 2, 39, 40, 64]. These deficiencies combined with the expanding availability of
-  petabyte-scale climate data [ 18, 19, 50] and lowering compute requirements of machine
+  [2, 39, 40, 64]. These deficiencies combined with the expanding availability of
+  petabyte-scale climate data [18, 19, 50] and lowering compute requirements of machine
   learning (ML) models in recent years have motivated researchers from both the climate
   science and artificial intelligence (AI) communities to investigate the application
   of ML-based methods in weather and climate modeling [7, 14, 35, 36, 44, 47, 59,
@@ -81,14 +81,14 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
 
   In spite of this growing interest, the improvements have been marred by the lack
   of practically grounded data benchmarks, open-source model implementations, and
-  transparency in evaluation. For example, many papers in weather forecasting [ 4,
-  8, 17, 22, 37, 54, 65, 75, 80, 86, 87, 90], climate projection [ 84], and climate
-  downscaling [ 1, 41, 49, 68, 70, 82] choose to benchmark on different geographical
+  transparency in evaluation. For example, many papers in weather forecasting [4,
+  8, 17, 22, 37, 54, 65, 75, 80, 86, 87, 90], climate projection [84], and climate
+  downscaling [1, 41, 49, 68, 70, 82] choose to benchmark on different geographical
   regions, temporal ranges, evaluation metrics, and data augmentation strategies.
   These inconsistencies can confound the source of reported improvements and promotes
   a culture of irreproducible scientific practices [34]. Recently, there have been
   some leaderboard benchmarks, such as WeatherBench [63], ClimateBench [84], and FloodNet
-  [ 61], that propose datasets and baselines for specific tasks in climate science,
+  [61], that propose datasets and baselines for specific tasks in climate science,
   but a holistic software ecosystem that encompasses the entire data, modeling, and
   evaluation pipeline across several tasks is lacking.
 
@@ -96,7 +96,7 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   To bridge this gap, we propose ClimateLearn, an open-source, user-friendly PyTorch
   library for data-driven climate science. To the best of our knowledge, it is the
   first software package to provide end-to-end ML pipelines for weather and climate
-  modeling. ClimateLearn supports data pre-processing utilities, implements popular
+  modeling. ClimateLearn supports data preprocessing utilities, implements popular
   deep learning models along with traditional baseline methods, and enables easy quantification
   and visualization of data and model predictions for fundamental tasks in climate
   science, including weather forecasting, downscaling, and climate projections. One
@@ -128,19 +128,19 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
 
   </block>
 
-  ## Related work
+  ## 2 Related work
 
   <block id="2">
 
   Recent works have proposed benchmark datasets for weather and climate modeling problems.
   Prominently, Rasp et al. [63] proposed WeatherBench, a dataset for weather forecasting
-  based on ERA5, followed by an extension called WeatherBench Probability [ 21], which
+  based on ERA5, followed by an extension called WeatherBench Probability [21], which
   adds support for probabilistic forecasting. Mouatadid et al. [48] extend similar
   benchmarks to the subseasonal to seasonal timescale. For precipitation events such
-  as rain specifically, there are prior datasets such as RainBench [ 15] and IowaRain
-  [73]. There exist datasets such as ExtremeWeather [ 60], FloodNet [ 61], EarthNet
-  [ 66], DroughtED [ 45] and ClimateNet [ 56] for detection and localization of extreme
-  weather events, and NADBenchmarks [ 58] for natural disasters related tasks. Cachay
+  as rain specifically, there are prior datasets such as RainBench [15] and IowaRain
+  [73]. There exist datasets such as ExtremeWeather [60], FloodNet [61], EarthNet
+  [66], DroughtED [45] and ClimateNet [56] for detection and localization of extreme
+  weather events, and NADBenchmarks [58] for natural disasters related tasks. Cachay
   et al. [9] recently proposed ClimART, a benchmark dataset for emulating atmospheric
   radiative transfer in weather and climate models. For identifying long-term, globally-averaged
   trends in climate, Watson-Parris et al. [84] proposed ClimateBench, a dataset for
@@ -156,12 +156,12 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   benchmarking experiments.
 
 
-  Beyond plain datasets, libraries such as Scikit-downscale [ 24], CCdownscaling [
-  55], and CMIP6-Downscaling [10] provide tools for post-processing of climate model
-  outputs via statistical, non-deep-learning downscaling, or mapping low-resolution
-  gridded, image-like inputs to high-resolution gridded outputs. In a slightly different
-  approach, pyESD focuses on downscaling from gridded climate data to specific weather
-  stations [ 6]. Pyrocast [ 79] proposes an integrated ML pipeline to forecast Pyrocumulonimbus
+  Beyond plain datasets, libraries such as Scikit-downscale [24], CCdownscaling [55],
+  and CMIP6-Downscaling [10] provide tools for post-processing of climate model outputs
+  via statistical, non-deep-learning downscaling, or mapping low-resolution gridded,
+  image-like inputs to high-resolution gridded outputs. In a slightly different approach,
+  pyESD focuses on downscaling from gridded climate data to specific weather stations
+  [6]. Pyrocast [79] proposes an integrated ML pipeline to forecast Pyrocumulonimbus
   (PyroCb) Clouds. Many of these works supply only individual components of an ML
   pipeline but do not always have an API for loading climate data into a ML-ready
   format, or standard model implementations and evaluation protocols across multiple
@@ -172,7 +172,7 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
 
   </block>
 
-  ## Key Components of ClimateLearn
+  ## 3 Key Components of ClimateLearn
 
   <block id="3">
 
@@ -190,13 +190,13 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   <block id="4">
 
   Weather forecasting is the task of predicting the weather at a future time step
-  t + t given the weather conditions at the current step t and optionally steps preceding
+  t + Δt given the weather conditions at the current step t and optionally steps preceding
   t. A ML model receives an input of shape C × H × W and predicts an output of shape
   C'' × H × W. C and C'' denote the number of input and output channels, respectively,
   which contain variables such as geopotential, temperature, and humidity. H and W
   denote the spatial coverage and resolution of each channel, which depend on the
   region studied and how densely we grid it. In our benchmarking, we focus on forecasting
-  all gird points globally, but ClimateLearn can be easily extended to regional forecasting.
+  all grid points globally, but ClimateLearn can be easily extended to regional forecasting.
 
 
   Downscaling Due to their high computational cost, existing climate models often
@@ -212,11 +212,11 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
 
   Climate projection aims to obtain long-term predictions of the climate under different
   forcings, e.g., greenhouse gas emissions. We provide support to download data from
-  ClimateBench [ 84], a recent benchmark designed for testing ML models for climate
+  ClimateBench [84], a recent benchmark designed for testing ML models for climate
   projections. Here, the task is to predict the annual mean distributions of 4 climate
   variables: surface temperature, diurnal temperature range, precipitation, and the
   90th percentile of precipitation, given four anthropogenic forcing factors: carbon
-  dioxide (CO 2), sulfur dioxide (SO 2), black carbon (BC), and methane (CH 4).
+  dioxide (CO2), sulfur dioxide (SO2), black carbon (BC), and methane (CH4).
 
 
   </block>
@@ -226,59 +226,59 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   <block id="5">
 
   ERA5 is a commonly-used data source for training and benchmarking data-driven forecasting
-  and downscaling methods [ 4, 38, 49, 52, 54, 63, 62]. It is maintained by the European
-  Center for Medium-Range Weather Forecasting (ECMWF) [ 29]. ERA5 is a reanalysis
-  dataset that provides the best guess of the state of the atmosphere and land-surface
-  variables at any point in time by combining multiple sources of observational data
-  with the forecasts of the current state-of-the-art forecasting model known as the
-  Integrated Forecasting System (IFS) [ 85]. In its raw format, ERA5 contains hourly
-  data from 1979 to the current time on a 0.25 grid of the Earth’s sphere, with different
-  climate variables at 37 different pressure levels plus the Earth’s surface. This
-  corresponds to nearly 400,000 data points with a resolution of 721 × 1440. As this
-  data is too big for most deep learning models, ClimateLearn also supports downloading
-  a smaller version of ERA5 from WeatherBench [ 63], which uses a subset of ERA5 climate
-  variables and regrids the raw data to lower resolutions.
+  and downscaling methods [4, 38, 49, 52, 54, 63, 62]. It is maintained by the European
+  Center for Medium-Range Weather Forecasting (ECMWF) [29]. ERA5 is a reanalysis dataset
+  that provides the best guess of the state of the atmosphere and land-surface variables
+  at any point in time by combining multiple sources of observational data with the
+  forecasts of the current state-of-the-art forecasting model known as the Integrated
+  Forecasting System (IFS) [85]. In its raw format, ERA5 contains hourly data from
+  1979 to the current time on a 0.25° grid of the Earth’s sphere, with different climate
+  variables at 37 different pressure levels plus the Earth’s surface. This corresponds
+  to nearly 400,000 data points with a resolution of 721 × 1440. As this data is too
+  big for most deep learning models, ClimateLearn also supports downloading a smaller
+  version of ERA5 from WeatherBench [63], which uses a subset of ERA5 climate variables
+  and regrids the raw data to lower resolutions.
 
 
   Extreme-ERA5 is a subset of ERA5 that we have constructed to evaluate forecasting
   performance in extreme weather situations. Specifically, we consider “simple extreme”
-  events [ 83, 5], i.e., weather events that have individual climate variables exceeding
+  events [83, 5], i.e., weather events that have individual climate variables exceeding
   critical values locally. Heat waves and cold spells are examples of extreme events
   that can be quantitatively captured by extreme localized surface-level temperatures
   over prolonged days. To mimic real-world scenarios, we calculate thresholds for
   each pixel of the grid using the 5th and 95th percentile of the 7-day localized
-  mean surface temperature over the training period ( 1979-2015). We then select a
+  mean surface temperature over the training period (1979-2015). We then select a
   subset of pixels from all the available pixels in the testing set (2017-18) that
   had a 7-day localized mean surface temperature beyond these thresholds. We refer
   to Appendix B.2.2 for more details.
 
 
   CMIP6 is a collection of simulated data from the Coupled Model Intercomparison Project
-  Phase 6 (CMIP6) [ 19], an international effort across different climate modeling
+  Phase 6 (CMIP6) [19], an international effort across different climate modeling
   groups to compare and evaluate their global climate models. While the main goal
   of CMIP6 is to improve the understanding of Earth’s climate systems, the data from
   their experimental runs is freely accessible online. CMIP6 data covers a wide range
   of climate variables, including temperature and precipitation, from hundreds of
   climate models, providing a rich source of data. For our forecasting experiments,
-  we specifically use the ouputs of CMIP6’s MPI-ESM1.2-HR model, as it contains similar
+  we specifically use the outputs of CMIP6’s MPI-ESM1.2-HR model, as it contains similar
   climate variables to those represented in ERA5 and was also considered in previous
   works for pretraining deep learning models [62]. MPI-ESM1.2-HR provides data from
-  1850 to 2015 with a temporal resolution of 6 hours and spatial resolution of 1 .
+  1850 to 2015 with a temporal resolution of 6 hours and spatial resolution of 1°.
   Since this again corresponds to a grid that is too big for most deep learning models,
   we provide lower resolution versions of this dataset for training and evaluation.
   Besides, we also perform experiments with ClimateBench, which contains data on a
   range of future emissions scenarios based on simulations by the Norwegian Earth
-  System Model [ 71], another member of CMIP6. We refer to Appendix B.2.3 for time
+  System Model [71], another member of CMIP6. We refer to Appendix B.2.3 for time
   ranges and more details of the experiments.
 
 
   PRISM is a dataset of various observed atmospheric variables like precipitation
   and temperature over the conterminous United States at varying spatial and temporal
   resolutions from 1895 to present day. It is maintained by the PRISM Climate Group
-  at Oregon State University [ 57]. At the highest publicly available resolution,
-  PRISM contains daily data on a grid of 4 km by 4 km cells (approximately 0.03 ),
-  which corresponds to a matrix of shape 621 × 1405. For the same reason we regrid
-  ERA5 and CMIP6, we also provide a regridded version of raw PRISM data to 0.75 resolution.
+  at Oregon State University [57]. At the highest publicly available resolution, PRISM
+  contains daily data on a grid of 4 km by 4 km cells (approximately 0.03°), which
+  corresponds to a matrix of shape 621 × 1405. For the same reason we regrid ERA5
+  and CMIP6, we also provide a regridded version of raw PRISM data to 0.75° resolution.
 
 
   </block>
@@ -304,13 +304,12 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   as a 3D matrix, where latitude, longitude, and the variables form the height, width,
   and channels, respectively. Hence, convolutional neural networks (CNNs) are commonly
   used for forecasting and downscaling, which can be viewed as instances of the image-to-image
-  translation problem [ 17, 30, 49, 62, 68, 72, 75, 80, 81, 86, 87]. ClimateLearn
-  supports ResNet [ 27] and U-Net [ 69]—two prominent variants of the commonly used
-  CNN architectures. Additionally, ClimateLearn supports Vision Transformer (ViT)
-  [4, 20, 52], a class of models that represent images as a sequence of pixel patches.
-  ClimateLearn also supports loading benchmark models from the literature such as
-  Rasp and Thuerey [62] in a single line of code and is built so that custom models
-  can be added easily.
+  translation problem [17, 30, 49, 62, 68, 72, 75, 80, 81, 86, 87]. ClimateLearn supports
+  ResNet [27] and U-Net [69]—two prominent variants of the commonly used CNN architectures.
+  Additionally, ClimateLearn supports Vision Transformer (ViT) [4, 20, 52], a class
+  of models that represent images as a sequence of pixel patches. ClimateLearn also
+  supports loading benchmark models from the literature such as Rasp and Thuerey [62]
+  in a single line of code and is built so that custom models can be added easily.
 
 
   </block>
@@ -337,9 +336,9 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
 
 
   Climate projection metrics In addition to the standard RMSE metric, we provide two
-  metrics suggested by ClimateBench: Normalized spatial root mean square error (NRMSE
-  s) and Normalized global root mean square error (NRMSE g ). We refer to Appendix
-  B.4 for more details.
+  metrics suggested by ClimateBench: Normalized spatial root mean square error (NRMSE_s)
+  and Normalized global root mean square error (NRMSE_g). We refer to Appendix B.4
+  for more details.
 
 
   Visualization Besides these quantitative evaluation procedures, ClimateLearn also
@@ -356,7 +355,7 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
 
   </block>
 
-  ## Benchmark Evaluation via ClimateLearn
+  ## 4 Benchmark Evaluation via ClimateLearn
 
   <block id="8">
 
@@ -382,18 +381,18 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   Task We consider the task of forecasting the geopotential at 500hPa (Z500), temperature
   at 850hPa (T850), and temperature at 2 meters from the ground (T2m) at five different
   lead times: 6 hours, and {1, 3, 5, 10} days. Z500 and T850 are often used for benchmarking
-  in previous works [ 4, 38, 52, 54, 62, 63], while the surface variable T2m is relevant
+  in previous works [4, 38, 52, 54, 62, 63], while the surface variable T2m is relevant
   to human activities.
 
 
-  Baselines We consider ResNet [ 27], U-Net [ 69], and ViT [ 16] which are three common
+  Baselines We consider ResNet [27], U-Net [69], and ViT [16] which are three common
   deep learning architectures in computer vision. We provide the architectural details
   of these networks in Appendix B.1. We perform direct forecasting, where we train
   one neural network for each lead time. In addition, we compare the deep learning
   methods with climatology, persistence, and IFS [85].
 
 
-  Data We use ERA5 [ 29] at 5.625 for training and evaluation, which is equivalent
+  Data We use ERA5 [29] at 5.625° for training and evaluation, which is equivalent
   to having a 32 × 64 grid for each climate variable. The input variables to the deep
   learning models include geopotential, temperature, zonal and meridional wind, relative
   humidity, and specific humidity at 7 pressure levels (50, 250, 500, 600, 700, 850,
@@ -401,13 +400,13 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   radiation, and finally 3 constant fields: the land-sea mask, orography, and the
   latitude, which together constitute 49 input variables. For non-constant variables,
   we use data at 3 timesteps t, t − 6h, and t − 12h to predict the weather at t +
-  t, resulting in 46 × 3 + 3 = 141 input channels. Each channel is standardized to
+  Δt, resulting in 46 × 3 + 3 = 141 input channels. Each channel is standardized to
   have a mean of 0 and a standard deviation of 1. The training period is from 1979
   to 2015, validation in 2016, and test in 2017 and 2018.
 
 
   Training and evaluation We use latitude-weighted mean squared error as the loss
-  function. We use AdamW optimizer [ 42] with a learning rate of 5 × 10−4 and weight
+  function. We use AdamW optimizer [42] with a learning rate of 5 × 10−4 and weight
   decay of 1 × 10−5, a linear warmup schedule for 5 epochs, followed by cosine-annealing
   for 45 epochs. We train for 50 epochs with 128 batch size, and use early stopping
   with a patience of 5 epochs. We use latitude-weighted root mean squared error (RMSE)
@@ -420,8 +419,8 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   deep learning model on most tasks in both metrics. We hypothesize that while being
   more powerful than ResNet in general, U-Net tends to perform better when trained
   on high-resolution data [69], and ViT often suffers from overfitting when trained
-  from scratch [ 28, 52]. Our reported performance of ResNet closely matches that
-  of previous work [62].
+  from scratch [28, 52]. Our reported performance of ResNet closely matches that of
+  previous work [62].
 
 
   #### 4.1.1 Should we perform direct, continuous, or iterative forecasting?
@@ -451,26 +450,26 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   10-day forecasting. ResNet-iter performs the worst in the three approaches, which
   achieves a reasonable performance at 6-hour lead time, but the prediction error
   accumulates exponentially at longer horizons. This was also observed in previous
-  works [ 52, 63]. We believe this issue can be mitigated by multi-step training [54],
+  works [52, 63]. We believe this issue can be mitigated by multi-step training [54],
   which we leave as future work.
 
 
   #### 4.1.2 Extreme weather prediction
 
-  Despite the surface-level temperature being an outlier, we observe that deep learning
-  and persistence perform better on Extreme-ERA5 than ERA5 for all different lead
-  times. Climatology performs worse on Extreme-ERA5, which is expected since predicting
-  the mean of the target distribution is not a good strategy for outlier data. The
-  persistence performance indicates that the variation between the input and output
-  values is comparatively less for extreme weather conditions. We hypothesize that,
-  although the marginal distribution p(y) of the subset data is extreme, the conditional
-  distribution p(y|x) which we are trying to model is not extreme. Thus, we are not
-  experiencing any drop in performance on such a subset. While from a ML standpoint,
-  it might seem necessary to evaluate the models for cases where the conditional distribution
-  is extreme for any input variable, such a dataset might not qualify under the well-known
-  categories of extreme events. Future studies for constructing extreme datasets could
-  try targeting extreme events such as floods, which are usually caused by high amounts
-  of precipitation under a short period of time [76].
+  Despite the surface-level temperature being an outlier, deep learning and persistence
+  perform better on Extreme-ERA5 than ERA5 for all different lead times. Climatology
+  performs worse on Extreme-ERA5, which is expected since predicting the mean of the
+  target distribution is not a good strategy for outlier data. The persistence performance
+  indicates that the variation between the input and output values is comparatively
+  less for extreme weather conditions. We hypothesize that, although the marginal
+  distribution p(y) of the subset data is extreme, the conditional distribution p(y|x)
+  which we are trying to model is not extreme. Thus, we are not experiencing any drop
+  in performance on such a subset. While from a ML standpoint, it might seem necessary
+  to evaluate the models for cases where the conditional distribution is extreme for
+  any input variable, such a dataset might not qualify under the well-known categories
+  of extreme events. Future studies for constructing extreme datasets could try targeting
+  extreme events such as floods, which are usually caused by high amounts of precipitation
+  under a short period of time [76].
 
 
   #### 4.1.3 Data robustness of deep learning models
@@ -484,14 +483,15 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   and 2013-14 as training, validation, and testing years respectively.
 
 
-  We find that all methods achieve better evaluation scores if the training and testing
-  splits come from the same dataset, but cross-dataset performance is not far behind,
-  highlighting the robustness of the models across distributional shifts. We see a
-  similar trend for different models across different lead times, which we refer to
-  Appendix C.3 for more details. We also conducted an experiment where the years 1850-1978
-  are included in training for CMIP6. The results show that for all models across
-  almost all lead times, training on CMIP6 leads to even better performance on ERA5
-  than training on ERA5. For exact numbers and setup refer to Appendix C.3.
+  The results show that all methods achieve better evaluation scores if the training
+  and testing splits come from the same dataset, but cross-dataset performance is
+  not far behind, highlighting the robustness of the models across distributional
+  shifts. We see a similar trend for different models across different lead times,
+  which we refer to Appendix C.3 for more details. We also conducted an experiment
+  where the years 1850-1978 are included in training for CMIP6. The results show that
+  for all models across almost all lead times, training on CMIP6 leads to even better
+  performance on ERA5 than training on ERA5. For exact numbers and setup refer to
+  Appendix C.3.
 
 
   </block>
@@ -501,12 +501,12 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   <block id="10">
 
   Task and data We consider two settings for downscaling. In the first setting, we
-  downscale 5.625 ERA5 data to 2.8125 ERA5, both at a global scale and hourly intervals.
+  downscale 5.625° ERA5 data to 2.8125° ERA5, both at a global scale and hourly intervals.
   The input and target variables are the same as used in Section 4.1. In the second
-  setting, we consider downscaling 2.8125 ERA5 data over the conterminous United States
-  to 0.75 PRISM data over the same region at daily intervals. This is equivalent to
-  downscaling a reanalysis/simulated dataset to an observational dataset, similar
-  to previous papers [ 25, 68, 78]. The cropped ERA5 data has shape 9 × 21 while the
+  setting, we consider downscaling 2.8125° ERA5 data over the conterminous United
+  States to 0.75° PRISM data over the same region at daily intervals. This is equivalent
+  to downscaling a reanalysis/simulated dataset to an observational dataset, similar
+  to previous papers [25, 68, 78]. The cropped ERA5 data has shape 9 × 21 while the
   regridded PRISM data is padded with zeros to the shape 32 × 64. The only input and
   output variable is daily max T2m, which is normalized to have 0 mean and 1 standard
   deviation. The training period is from 1981 to 2015, validation is in 2016, and
@@ -525,18 +525,17 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   not have data over the oceans. See Appendix B.4 for further details.
 
 
-  Benchmark results In the first setting, all methods achieve relatively low errors.
-  The deep learning models outperformed both interpolation methods significantly on
-  RMSE, but tend to overestimate the target variables, leading to negative mean bias.
-  In the second setting—where the input and output come from two different datasets—the
-  performance of all baselines drops. Nonetheless, the deep learning models again
-  outperform the baseline methods on RMSE and exhibit negative mean bias, but also
-  achieve higher Pearson’s correlation coefficients.
+  Benchmark results The deep learning models outperformed both interpolation methods
+  significantly on RMSE in the first setting, but tend to overestimate the target
+  variables, leading to negative mean bias. In the second setting—where the input
+  and output come from two different datasets—the performance of all baselines drops.
+  Nonetheless, the deep learning models again outperform the baseline methods on RMSE
+  and exhibit negative mean bias, but also achieve higher Pearson’s correlation coefficients.
 
 
   </block>
 
-  ## Additional experiments
+  ## 5 Additional experiments
 
   <block id="11">
 
@@ -549,11 +548,10 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
 
   We develop ClimateLearn as a long-term sustainable project that allows easy extension
   to new models, tasks, and datasets by us and others (via open-source). To demonstrate
-  this, we added ClimaX [52] and FourCastNet [ 54] as two state-of-the-art deep learning
-  models for weather forecasting to ClimateLearn. We benchmark these two methods against
-  ResNet and IFS. While ClimaX follows IFS closely and even surpasses this strong
-  baseline at the 10-day lead time, FourCastNet performs poorly on low-resolution
-  data.
+  this, we added ClimaX [52] and FourCastNet [54] as two state-of-the-art deep learning
+  models for weather forecasting to ClimateLearn. The benchmarking shows ClimaX follows
+  IFS closely and even surpasses this strong baseline at the 10-day lead time, while
+  FourCastNet performs poorly on low-resolution data.
 
 
   </block>
@@ -570,12 +568,12 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   instances of the same ResNet architecture using different seeds and averaging the
   predictions of these instances to get the final prediction. We evaluate these two
   baselines using RMSE, ACC, and the probabilistic metrics CRPS and Spread-skill ratio
-  introduced in [ 21]. We compare the two baselines in this task.
+  introduced in [21]. Results compare the two baselines in this task.
 
 
   </block>
 
-  ## Conclusion
+  ## 6 Conclusion
 
   <block id="14">
 
@@ -585,27 +583,33 @@ segmented_markdown: '# ClimateLearn: Benchmarking Machine Learning for Weather a
   communities. Our objective is to provide a standardized benchmarking platform for
   evaluating ML innovations in climate science, which currently suffer from challenges
   in standardization, accessibility, and reproducibility. ClimateLearn provides users
-  access to all essential components of end-to-end ML pipeline, including data pre-processing
+  access to all essential components of end-to-end ML pipeline, including data preprocessing
   utilities, ML model implementations, and rigorous evaluations via metrics and visualizations.
   We use the flexible and modular design of ClimateLearn to design and perform diverse
   experiments comparing deep learning methods with relevant baselines on our supported
   tasks.
 
 
-  Limitations and Future Work In this work, we highlighted key features of the ClimateLearn
-  library, encompassing datasets, tasks, models, and evaluations. However, we acknowledge
-  that there are numerous avenues to enhance the comprehensiveness of our library
-  in each of these dimensions. One such avenue involves integrating regional datasets
-  and expanding the catalog of available data sources. On the modeling side, we plan
-  to develop efficient implementations for training ensembles in service of critical
-  uncertainty quantification efforts. In future iterations of our library, we will
-  also integrate a hub of large-scale pretrained neural networks specifically designed
-  for weather and climate applications [4, 38, 52, 54]. Once integrated, these pretrained
-  models will be further customizable through fine-tuning, enabling straightforward
-  adaptation to downstream tasks. Furthermore, we plan to incorporate support for
-  physics-informed neural networks and other hybrid baselines that amalgamate physical
-  models with machine learning methods, which will allow users to leverage the strengths
-  of both paradigms. Ultimately, our overarching objective is to establish ClimateLearn
-  as a trustworthy AI development tool for weather and climate applications.
+  </block>
+
+  ### Limitations and Future Work
+
+  <block id="15">
+
+  In this work, we highlighted key features of the ClimateLearn library, encompassing
+  datasets, tasks, models, and evaluations. However, we acknowledge that there are
+  numerous avenues to enhance the comprehensiveness of our library in each of these
+  dimensions. One such avenue involves integrating regional datasets and expanding
+  the catalog of available data sources. On the modeling side, we plan to develop
+  efficient implementations for training ensembles in service of critical uncertainty
+  quantification efforts. In future iterations of our library, we will also integrate
+  a hub of large-scale pretrained neural networks specifically designed for weather
+  and climate applications [4, 38, 52, 54]. Once integrated, these pretrained models
+  will be further customizable through fine-tuning, enabling straightforward adaptation
+  to downstream tasks. Furthermore, we plan to incorporate support for physics-informed
+  neural networks and other hybrid baselines that amalgamate physical models with
+  machine learning methods, which will allow users to leverage the strengths of both
+  paradigms. Ultimately, our overarching objective is to establish ClimateLearn as
+  a trustworthy AI development tool for weather and climate applications.
 
   </block>'

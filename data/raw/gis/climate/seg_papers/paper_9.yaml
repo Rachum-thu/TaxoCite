@@ -12,435 +12,648 @@ abstract: In recent years, machine learning has established itself as a powerful
   lower errors than comparable deterministic models, with the added benefit of accurately
   capturing forecast uncertainty.
 abstract_is_verbatim: true
-segmented_markdown: "# Probabilistic Weather Forecasting with Hierarchical Graph Neural\
-  \ Networks\n\n## Abstract\n<block id=\"0\">\nIn recent years, machine learning has\
-  \ established itself as a powerful tool for high-resolution weather forecasting.\
-  \ While most current machine learning models focus on deterministic forecasts, accurately\
-  \ capturing the uncertainty in the chaotic weather system calls for probabilistic\
-  \ modeling. We propose a probabilistic weather forecasting model called Graph-EFM,\
-  \ combining a flexible latent-variable formulation with the successful graph-based\
-  \ forecasting framework. The use of a hierarchical graph construction allows for\
-  \ efficient sampling of spatially coherent forecasts. Requiring only a single forward\
-  \ pass per time step, Graph-EFM allows for fast generation of arbitrarily large\
-  \ ensembles. We experiment with the model on both global and limited area forecasting.\
-  \ Ensemble forecasts from Graph-EFM achieve equivalent or lower errors than comparable\
-  \ deterministic models, with the added benefit of accurately capturing forecast\
-  \ uncertainty.\n\n</block>\n## 1 Introduction\n<block id=\"1\">\nForecasting the\
-  \ dynamics of Earth’s atmosphere is a scientific problem of utmost importance. Society\
-  \ is dependent on fast and informative weather forecasts for planning in areas such\
-  \ as transportation and agriculture and for balancing the energy system [3]. Especially\
-  \ important is the use of forecasts to issue warnings for extreme weather events\
-  \ [1]. Recent advances in Machine-Learning-based Weather Prediction (MLWP) have\
-  \ enabled models that produce accurate forecasts in a fraction of the time of traditional\
-  \ physics-based systems [37, 4, 23]. So far these developments have largely been\
-  \ focused on deterministic modeling. However, forecasting only one likely weather\
-  \ scenario ignores the many uncertainties in predicting future weather.\n\nWeather\
-  \ is a chaotic system, resulting in high forecast uncertainty [52]. This uncertainty\
-  \ comes from both imperfect representations of initial states and inaccurate descriptions\
-  \ of the function mapping from one time step to the next [26]. Accurately modeling\
-  \ this uncertainty significantly increases the value of weather forecasts. Such\
-  \ uncertainty can be communicated to end-users to improve decision making or be\
-  \ used in downstream products, for example to compute a distribution over solar\
-  \ power generation. Capturing the full forecast uncertainty requires us to predict\
-  \ not just a single likely state trajectory, but a collection of possible future\
-  \ weather states. Due to the complexity and dimensionality of the weather system\
-  \ the feasible way to achieve this is by generating samples from a modeled distribution.\
-  \ Such ensemble forecasting is today performed using physics-based methods, where\
-  \ a number of ensemble members are simulated as samples from this distribution.\
-  \ The computational cost of this is however massive, often limiting the spatial\
-  \ resolution or size of the ensemble [3].\n\nMLWP is a promising approach for addressing\
-  \ this limitation and enabling large ensemble forecasts. However, for the ensemble\
-  \ to add value the machine learning model needs to accurately represent the distribution.\
-  \ Initial attempts at MLWP ensemble forecasting either rely on ad-hoc initial state\
-  \ perturbations [10, 37, 4] or have not been scaled to spatial resolutions of interest\
-  \ [19]. Also diffusion models [18] have been applied to the problem, but sampling\
-  \ forecasts from these is computationally expensive and can be prohibitively slow\
-  \ [39]. We propose a Graph-based Ensemble Forecasting Model (Graph-EFM), enabling\
-  \ efficient sampling of ensemble members with only one forward-pass per time step.\
-  \ The method builds on graph-based MLWP [20, 23], which is a flexible framework\
-  \ that can be adapted to different geometries and state grid representations [24].\
-  \ By combining a latent-variable formulation with a hierarchical Graph Neural Network\
-  \ (GNN) the distribution is modeled in a lower-dimensional space and sampled forecasts\
-  \ are spatially coherent.\n\nMLWP models are typically trained for and evaluated\
-  \ on global weather forecasting [40, 23, 4]. Another common forecasting setup in\
-  \ practice is the use of Limited Area Models (LAMs) to produce high-resolution regional\
-  \ forecasts [11]. Such LAMs are for example used by local weather services in order\
-  \ to provide forecasts tailored to the geographical properties and societal needs\
-  \ of the region [38, 44, 7, 32]. These high-resolution models are also invaluable\
-  \ to various industrial sectors, including energy forecasters, who rely on precise\
-  \ weather predictions to manage supply and demand. This motivates research into\
-  \ also constructing MLWP LAMs, which brings new challenges related to the high resolution\
-  \ and boundary conditions of the limited area. In this work we experiment not just\
-  \ with global forecasting, but consider also how probabilistic LAMs can be trained\
-  \ to produce forecasts for the Nordic region.\n\nOur main contributions are: 1)\
-  \ We develop a hierarchical GNN framework for both deterministic and probabilistic\
-  \ MLWP. The hierarchical construction encourages spatially coherent fields in forecasts.\
-  \ 2) We use this framework to define the probabilistic weather forecasting model\
-  \ Graph-EFM, capable of efficient sampling of arbitrarily large ensemble forecasts.\
-  \ 3) We develop a training method targeting both forecast quality and ensemble calibration.\
-  \ 4) We experiment with both global forecasting on 1.5° resolution and a novel limited-area\
-  \ modeling task at 10 km resolution.\n\n</block>\n## 2 Related Work\n<block id=\"\
-  2\">\nDeterministic MLWP Multiple machine learning methods have been successfully\
-  \ applied to large-scale weather forecasting. These include graph-based models [20,\
-  \ 23, 24], transformers [4, 8, 10, 33, 25, 34] and neural operators [37, 5]. While\
-  \ large neural network models learn weather dynamics purely from data, there are\
-  \ also parallel developments in building hybrid physics-MLWP models [22, 50].\n\n\
-  Ensembles from perturbations Most existing methods for MLWP ensemble forecasting\
-  \ follow closely the physics-based methods, where initial states and model parameters\
-  \ are perturbed to create ensemble diversity. A number of MLWP works create ensembles\
-  \ by ad-hoc perturbing initial states with random noise [10, 37, 4, 16, 6]. More\
-  \ informed perturbations have been re-used from physics based ensembles [39, 6]\
-  \ and created based on model-informed singular vectors [43]. Others try to perturb\
-  \ the forecast model itself, rolling out ensemble members using different neural\
-  \ network parameters [51, 43]. Such multi-model approaches require training, or\
-  \ at least fine-tuning, a pre-defined number of MLWP models. Graubner et al. [16]\
-  \ use the SWAG method [30] to allow for constructing multi-model ensembles of arbitrary\
-  \ size.\n\nGenerative modeling Probabilistic machine learning approaches aim to\
-  \ directly learn generative models producing ensemble members. Similar to our approach,\
-  \ the SwinVRNN model [19] uses a latent variable formulation, but combined with\
-  \ a Swin Transformer architecture [29]. SwinVRNN is developed for global forecasting\
-  \ at 5° resolution and scales poorly to higher spatial resolutions. Also building\
-  \ on the graph-based framework, Price et al. [39] train a diffusion model [18, 46]\
-  \ to sample each time step. Their Gencast model produces ensemble forecasts of 0.25°\
-  \ global data with 12 h time steps. Diffusion models produce realistic-looking samples,\
-  \ but typically require solving an ordinary differential equation involving multiple\
-  \ passes through the neural network to sample each time step. For GenCast, this\
-  \ results in a sampling time of 8 minutes for a single 15 day forecast on a TPUv5\
-  \ device [39]. Other works use diffusion models to increase the size of physics-based\
-  \ ensembles [27] or stochastically downscale deterministic forecasts [9, 31].\n\n\
-  Hierarchical GNNs Motivated by capturing multiple spatial scales, hierarchical GNNs\
-  \ have been used for modeling general partial differential equations [14, 28]. The\
-  \ overall hierarchical framework shares much of its structure with the popular U-Net\
-  \ architecture [41] for computer vision tasks, but extended to a general graph setting.\n\
-  \n</block>\n## 3 Background\n<block id=\"3\">\n\n</block>\n### 3.1 Problem Definition\n\
-  <block id=\"4\">\nThe weather forecasting problem can be summarized as mapping from\
-  \ a set of initial states X−1:0 = (X−1, X0) to the sequence of future states X1:T\
-  \ = (X1, . . . , XT ). A table of notation is provided in appendix A. Each weather\
-  \ state Xt ∈ RN×dx here contains dx variables modeled at N different locations.\
-  \ Geospatial data is often represented as regular grids, in which case these locations\
-  \ correspond to the grid cells. The dx variables can include both atmospheric variables,\
-  \ modeled at multiple vertical levels, and surface variables. As is common in MLWP\
-  \ we assume the initial states to consist of two time steps, which allows for capturing\
-  \ first-order state dynamics. To produce a forecast, a set of forcing inputs F1:T\
-  \ are also available. These contain known quantities, such as the time of day. There\
-  \ are also static features associated with the grid cells, such as the orography,\
-  \ which we here consider part of the forcing.\n\nMany variables impact the chaotic\
-  \ weather system, all of which are not fully captured in initial states represented\
-  \ on finite grids. This induces forecast uncertainty, which we view as a distribution\
-  \ p(X1:T |X−1:0, F1:T). In deterministic forecasting we seek a model that minimizes\
-  \ the Mean Squared Error (MSE) to the future weather states [23, 33, 34]. This is\
-  \ equivalent to modeling only the mean of the distribution. In probabilistic forecasting\
-  \ we instead aim to model the full distribution. Note that we here specifically\
-  \ model the conditional distribution p(X1:T |X−1:0, F1:T), rather than p(X1:T |F1:T).\
-  \ Hence we do not marginalize over uncertainty in initial states.\n\n</block>\n\
-  ### 3.2 Graph-based Weather Forecasting\n<block id=\"5\">\nGraph-based MLWP models\
-  \ use an autoregressive mapping ˆXt = f(Xt−2:t−1, Ft) consisting of a sequence of\
-  \ GNNs [20, 23, 24]. Starting from the initial states, this mapping can be iteratively\
-  \ applied to roll out a full forecast X1:T. Central to the graph-based framework\
-  \ is the idea of mapping from the original N grid locations to a mesh graph GM =\
-  \ (VM, EM). In the graph-context we refer to the grid locations as a set VG of grid\
-  \ nodes. By choosing |VM| < |VG| = N it becomes efficient to perform the majority\
-  \ of computations on the mesh. Such a mesh graph can also be tailored to the forecasting\
-  \ setting, for example to respect the spherical geometry in global forecasting [20].\
-  \ The mapping f realizes a single-step prediction by passing Xt−2:t−1 and Ft through\
-  \ a series of GNN layers. In sequence, these layers: 1) map grid inputs to representations\
-  \ on the mesh graph; 2) perform a number of processing steps on the mesh; 3) map\
-  \ back to the grid to produce the prediction for Xt. Steps 1 and 3 use bipartite\
-  \ graphs GG2M = (VG ∪ VM, EG2M) and GM2G = (VG ∪ VM, EM2G) with edges connecting\
-  \ the grid and mesh nodes. The GNN layers in each step compute updates for node\
-  \ representations H ∈ R|V|×dz and edge representations E ∈ R|E|×dz in the graphs.\
-  \ For simplicity all representation vectors have dimensionality dz.\n\nInteraction\
-  \ Networks The specific GNN layers used in previous works are Interaction Networks\
-  \ [2, 23]. The layers in these networks pass messages from a set of sender nodes\
-  \ along directed graph edges to a set of receiver nodes. Based on these messages\
-  \ the edge and receiver node representations are then updated. For a graph G = (V,\
-  \ E) let eα→β ∈ Rdz be the row of E corresponding to the edge (α, β) ∈ E. Let HS\
-  \ be the matrix with rows containing sender node representations and HR the corresponding\
-  \ matrix for receiver nodes. Interaction Networks then implement the representation\
-  \ update HR, E ← GNN(G, HS, E, HR) as\n\n˜eα→β ← MLP(eα→β, HSα, HRβ)  \neα→β ← eα→β\
-  \ + ˜eα→β  \nHRβ ← HRβ + MLP(HRβ, Σα∈Ne(β) ˜eα→β)\n\nwhere Ne(β) = {α : (α, β) ∈\
-  \ E} are the incoming neighbors of node β. Parameters in Multi-Layer Perceptrons\
-  \ (MLPs) are shared across nodes and edges in the graph, but not between GNN layers.\n\
-  \nGlobal mesh graphs Keisler [20] proposed to construct a mesh graph for global\
-  \ MLWP as an icosahedral grid covering the globe. This approach was extended in\
-  \ the GraphCast model [23] by introducing a multi-scale mesh graph with edges of\
-  \ varying length. Such multi-scale edges are capable of propagating information\
-  \ and capturing statistical dependencies both locally and over long distances in\
-  \ the graph. The multi-scale mesh graph is created by sequentially splitting the\
-  \ faces of an icosahedron into a sequence of graphs GL, . . . , G1 with node sets\
-  \ satisfying VL ⊂ · · · ⊂ V1 by construction. The original icosahedron GL has the\
-  \ longest edges EL, stretching far across the globe, whereas the final graph G1\
-  \ has short edges E1 only connecting nodes locally. The final multi-scale mesh graph\
-  \ is constructed as GMS = (V1, EL ∪ · · · ∪ E1), taking the nodes from the final\
-  \ graph but connecting these using edges of all different lengths [23].\n\n</block>\n\
-  ## 4 Weather Forecasting with Hierarchical Graph Neural Networks\n<block id=\"6\"\
-  >\nTwo great challenges in weather forecasting is to accurately capture processes\
-  \ unfolding over different spatial scales and modeling the uncertainty in the chaotic\
-  \ system [52]. To tackle these challenges, we propose to construct a hierarchical\
-  \ mesh graph, working with different length scales at each level in the hierarchy.\
-  \ We use a sequence G1, . . . , GL of graphs as the different levels in the hierarchy,\
-  \ additionally adding connections between the nodes of adjacent levels. This construction\
-  \ is also highly suitable as a basis for building probabilistic forecasting models,\
-  \ as discussed below. See figs. 12 and 14 in the appendix for illustrations of how\
-  \ this differs from the multi-scale graph.\n\nThere are multiple benefits to such\
-  \ a hierarchical mesh construction for MLWP. By keeping the graphs at different\
-  \ levels separate, we can define GNN layers with independent parametrizations at\
-  \ each level. This adds flexibility by allowing the model to learn different representation\
-  \ updates for edges of different spatial scales. A hierarchical mesh graph also\
-  \ offers a natural, spatially-aware dimensionality reduction, as the state in the\
-  \ grid is encoded into a few nodes at the top level. Such a representation can capture\
-  \ the general structure of each weather state, with finer details added as this\
-  \ is propagated down through the hierarchy. We leverage this property to construct\
-  \ a probabilistic model by imposing a distribution over these lower-dimensional\
-  \ representations at the top level. This allows for efficiently drawing spatially\
-  \ coherent samples from the distribution of future weather states.\n\n</block>\n\
-  ### 4.1 Hierarchical Graph\n<block id=\"7\">\nOur hierarchical mesh graph consists\
-  \ of L graph levels G1, . . . , GL with Gl = (Vl, El). Only level 1 of the hierarchy\
-  \ is connected to the grid, so we re-define GG2M = (VG ∪ V1, EG2M) and GM2G = (VG\
-  \ ∪ V1, EM2G). The number of nodes |Vl| decreases with the level l. The smallest\
-  \ set of nodes are found at the top level L.\n\nTo pass information between the\
-  \ levels of the hierarchy we introduce additional graphs connecting the different\
-  \ levels. Let Gl,l+1 = (Vl ∪ Vl+1, El,l+1) be a graph containing directed edges\
-  \ from mesh level l to level l + 1. We make use of a graph sequence G1,2, . . .\
-  \ , GL−1,L to propagate information up through the hierarchy and similarly a sequence\
-  \ GL,L−1, . . . , G2,1 in the downward direction. The exact layout of nodes and\
-  \ edges at and in-between levels are design choices that should be tailored to the\
-  \ specific forecasting setting. Examples for global and limited-area forecasting\
-  \ are given in section 5.\n\n</block>\n### 4.2 Graph-FM: Deterministic Forecasting\n\
-  <block id=\"8\">\nThe hierarchical graph allows for defining GNN layers both on\
-  \ and in-between the different levels. By sequentially updating node and edge representations\
-  \ at different levels in the hierarchy, information can be propagated up from the\
-  \ grid to the different levels. As these levels have edges of different lengths,\
-  \ the processing at each level happens on different spatial scales. Note that this\
-  \ differs from the multi-scale graph approach, where information processing over\
-  \ all different spatial scales happen in the same GNN layer [23]. As a step towards\
-  \ our probabilistic model, we define an alternative deterministic Graph-based Forecasting\
-  \ Model Graph-FM, operating on the hierarchical graph.\n\nIn Graph-FM one processing\
-  \ step on the mesh graph is defined as a complete sweep through the hierarchy. GNNs\
-  \ are applied sequentially to the inter-level and intra-level graphs in the order\
-  \ G1, G1,2, G2, . . . , GL−1,L, GL, updating edge and node representations at the\
-  \ different levels. Processing steps going up the hierarchy are alternated with\
-  \ similar steps going down from level L to 1. The single step mapping f consists\
-  \ of multiple such sweeps up and down (see appendix C.2).\n\n</block>\n### 4.3 Graph-EFM:\
-  \ Probabilistic Forecasting\n<block id=\"9\">\nTo capture the uncertainty in the\
-  \ chaotic weather system we next aim to construct a probabilistic model from the\
-  \ ground up to capture the full distribution p(X1:T |X−1:0, F1:T). We start by assuming\
-  \ the weather system to satisfy a second-order Markov assumption, decomposing p(X1:T\
-  \ |X−1:0, F1:T) = ∏T t=1 p(Xt|Xt−2:t−1, Ft). (2)\n\nFactoring the distribution over\
-  \ time steps allows us to work with forecasts of varying length. Specifying the\
-  \ model for single-step prediction avoids having to learn separate parameters for\
-  \ different lead times. Next, we seek a flexible, but computationally efficient\
-  \ parametrization for the distribution p(Xt|Xt−2:t−1, Ft). This can be achieved\
-  \ by introducing a latent random variable Zt, and letting\n\np(Xt|Xt−2:t−1, Ft)\
-  \ = ∫ p(Xt|Zt, Xt−2:t−1, Ft) p(Zt|Xt−2:t−1, Ft) dZt. (3)\n\nHere the stochasticity\
-  \ in Zt should capture the uncertainty over Xt at each time step. The corresponding\
-  \ graphical model is shown in fig. 2. We impose a spatial structure over the latent\
-  \ variable by letting Zt be |VL| × dz matrix-valued, with each row a dz-dimensional\
-  \ vector associated with one node in the top level GL of the mesh graph.\n\nThe\
-  \ single-step model consists of two components, a latent map p(Zt|Xt−2:t−1, Ft)\
-  \ and predictor p(Xt|Zt, Xt−2:t−1, Ft). The latent map is parametrized using GNNs,\
-  \ mapping the conditioning variables to parameters of a Gaussian distribution. We\
-  \ consider the predictor to be concentrated around its mean, and realize p(Xt|Zt,\
-  \ Xt−2:t−1, Ft) as a deterministic mapping of a similar form as Graph-FM. By sampling\
-  \ Zt and passing this through the predictor we can draw a sample of Xt from eq.\
-  \ (3). This sample can then be conditioned on at the next time step, continuing\
-  \ this sampling process to roll out a forecast following eq. (2). This forecast\
-  \ constitutes one ensemble member, and the process can be repeated to sample an\
-  \ ensemble of arbitrary size. We call our Graph-based Ensemble Forecasting Model\
-  \ Graph-EFM. Full details about the model are given in appendix C.\n\nLatent map\
-  \ We let the latent map be an isotropic Gaussian\n\np(Zt|Xt−2:t−1, Ft) = ∏α∈VL N(Ztα\
-  \ | µZ(Xt−2:t−1, Ft)α, I) (4)\n\nwith the mean as a function of the conditioning\
-  \ variables. The variance is fixed, imposing a fixed scale for the learned latent\
-  \ space. The mean function µZ consists of a sequence of GNNs. These take the inputs\
-  \ at the grid, propagate representations up through the hierarchical mesh graph,\
-  \ and finally predicts the mean of Ztα at each node α at level L. In appendix L.2\
-  \ we verify empirically the importance of using the latent map over a static distribution\
-  \ for Zt.\n\nPredictor The predictor is a deterministic mapping\n\nˆXt = g(Zt, Xt−2:t−1,\
-  \ Ft) = Xt−1 + ˜g(Zt, Xt−2:t−1, Ft). (5)\n\nWith the small time steps used in MLWP,\
-  \ Xt does not change dramatically in a single step. We thus follow the common practice\
-  \ of including a skip connection to the previous state [23, 5, 19]. The predictor\
-  \ takes both inputs Xt−2:t−1, Ft at the grid and Zt at the top of the mesh graph.\
-  \ To incorporate both we design g similar to Graph-FM, performing sweeps up and\
-  \ down through the mesh hierarchy. At the top of the hierarchy Zt is added to node\
-  \ representations HL through the residual connections in the GNN layers. A sampled\
-  \ value of Zt then affects the prediction ˆXt through the downward sweep. While\
-  \ multiple such sweeps are possible, we found one to be sufficient in practice.\n\
-  \nSpatial dependencies We want each sample of Xt to contain spatially coherent atmospheric\
-  \ fields. One approach would be to impose spatial dependencies in the joint distribution\
-  \ over Zt. However, learning and sampling from such a distribution typically comes\
-  \ with computational challenges [19]. Instead, we impose spatial dependencies by\
-  \ integrating the latent variable formulation with the hierarchical graph. We argue\
-  \ that as the independent components of Zt are propagated down through the mesh\
-  \ graph, gradually increasing the spatial resolution, spatial dependencies are introduced\
-  \ by the model in the GNN layers. The hierarchical graph is key to this property,\
-  \ as the stochasticity in Zt is necessarily spread out over the forecast region,\
-  \ rather than only affecting the output locally.\n\n</block>\n### 4.4 Training Objective\n\
-  <block id=\"10\">\nDeterministic forecasting models can be straightforwardly trained\
-  \ by minimizing a weighted MSE [23] or Negative Log-Likelihood (NLL) loss [8] for\
-  \ rolled out forecasts. To train Graph-EFM we instead leverage the fact that the\
-  \ single-step model has a structure similar to a (conditional) Variational AutoEncoder\
-  \ (VAE) [21, 45], allowing us to use a variational objective. We introduce a variational\
-  \ approximation q(Zt|Xt−2:t−1, Xt, Ft) at each time step, approximating the true\
-  \ posterior p(Zt|Xt−2:t−1, Xt, Ft) over Zt. This variational distribution is parametrized\
-  \ in a similar way as the latent map, with GNN layers mapping to a Gaussian over\
-  \ Zt. Note however that q also depends on Xt, since it approximates the posterior.\
-  \ Using q, we can then define\n\nLVar(Xt−2:t−1, Xt, Ft) = λKL DKL(q(Zt|Xt−2:t−1,\
-  \ Xt, Ft) || p(Zt|Xt−2:t−1, Ft)) − Eq(Zt|Xt−2:t−1,Xt,Ft)[Σα∈VG Σj=1..dx log N(Xtα,j\
-  \ | g(Zt, Xt−2:t−1, Ft)α,j, σα,j^2)]\n\nwhich is equal to the (negative) Evidence\
-  \ Lower Bound (ELBO) when the weighting is λKL = 1. While the predictor g is a deterministic\
-  \ mapping, we introduce a Gaussian likelihood in eq. (6) to get a well-defined learning\
-  \ problem. This setup corresponds to the common practice in VAEs of assuming Gaussian\
-  \ observation noise, but not adding this to samples from the model [42]. The standard\
-  \ deviation σα,j can either be a second output from the predictor or manually chosen\
-  \ (see appendix D for details). As with deterministic models [23, 20, 8, 34], we\
-  \ found it crucial to fine-tune on rolled out forecasts of multiple time steps.\
-  \ This improves stability and performance for longer lead times. In the final fine-tuning\
-  \ we include also a Continuous Ranked Probability Score (CRPS) loss term LCRPS [15,\
-  \ 22]. The full objective function is then L = LVar + λCRPS LCRPS, with λCRPS a\
-  \ weighting hyperparameter. Including this CRPS loss improves the calibration of\
-  \ ensemble forecasts.\n\n</block>\n### 4.5 Improved GNN Layers: Propagation Networks\n\
-  <block id=\"11\">\nIn Graph-EFM there is a large amount of information that needs\
-  \ to be propagated between the grid and Zt. However, the Interaction Network GNNs\
-  \ are biased towards keeping old representations of receiver nodes, rather than\
-  \ updating this with new information from incoming edges. Note in eq. (1) that if\
-  \ the MLPs are initialized to give outputs close to 0, there will be no change to\
-  \ eα→β and HRβ. In practice the model has a hard time learning to propagate useful\
-  \ information up from the grid to Zt. Even when trained purely as an auto-encoder\
-  \ (λKL = 0), Zt easily ends up being ignored. To remedy this we propose an alternative\
-  \ GNN formulation that we call Propagation Network.\n\nFor MLPs initialized with\
-  \ outputs close to 0, Propagation Networks reduce to averaging the values of neighboring\
-  \ nodes. This encourages the propagation of information from HS to HR by construction.\
-  \ Propagation Networks were found to perform better also in the deterministic model\
-  \ (see comparison in appendix L.1), so we employ these in both Graph-FM and Graph-EFM.\n\
-  \n</block>\n## 5 Experiments\n<block id=\"12\">\nTo evaluate our models we conduct\
-  \ experiments on both global and limited area forecasting. The models are implemented\
-  \ in PyTorch and trained on 8 A100 80 GB GPUs in a data-parallel configuration.\
-  \ Training takes 700–1400 total GPU-hours for the global models, and around half\
-  \ of that for the limited area models. The computational demands prevent us from\
-  \ re-training multiple models for statistical analysis. Once trained, sampling from\
-  \ Graph-EFM is highly efficient. Using batched sampling on a single GPU, 80 ensemble\
-  \ members are produced in 200 s (2.5 s per member) for global forecasting.\n\nMetrics\
-  \ We measure the skill of deterministic models by Root Mean Squared Error (RMSE).\
-  \ For probabilistic models we compute the RMSE for the ensemble mean. Good skill\
-  \ in terms of RMSE is however not enough for ensemble forecasts, where we want to\
-  \ capture the full distribution. For these we also assess the ensemble calibration\
-  \ by computing the Spread-Skill-Ratio (SpSkR). Calibrated uncertainty corresponds\
-  \ to SpSkR ≈ 1 [13]. We additionally use CRPS to measure how well the marginal distributions\
-  \ of the model matches the data. For deterministic models the CRPS reduces to Mean\
-  \ Absolute Error (MAE). Complete definitions of all metrics are given in appendix\
-  \ E.\n\nModels Achieving a fair comparisons of the actual machine learning methodology\
-  \ in MLWP is challenging due to models using different spatial resolution, variables\
-  \ and initial states. We here train an illustrative set of models on the same data\
-  \ and with comparable training setups. Our full Graph-EFM model is compared to:\
-  \ 1) Graph-EFM (ms), a version of Graph-EFM using a multi-scale mesh graph instead\
-  \ of the hierarchical one. 2) Graph-FM, our deterministic model using the hierarchical\
-  \ graph. 3) GraphCast*, a reimplementation of GraphCast [23], adapted and trained\
-  \ on our datasets. 4) GraphCast*+SWAG, a multi-model ensemble created by applying\
-  \ Stochastic Weight Averaging Gaussian (SWAG) [30] to GraphCast*. Inspired by Graubner\
-  \ et al. [16], this represents a simple way to augment a deterministic model to\
-  \ perform ensemble forecasting. Further details about the baseline models are given\
-  \ in appendix C.5. For ensemble models we sample 80 members for the global experiments\
-  \ and 100 members for limited area forecasting. In appendix L.3 we investigate the\
-  \ impact of ensemble size on the evaluation. We find that improvements in metric\
-  \ values quickly saturate when increasing the ensemble size. This shows that sampling\
-  \ even more members would have negligible impact on the results of our experiments.\n\
-  \n</block>\n### 5.1 Global Forecasting with ERA5\n<block id=\"13\">\nData and graphs\
-  \ We experiment on global weather forecasting up to 10 days with 6 h time steps.\
-  \ The dataset used for training and evaluation is a 1.5° version of the global ERA5\
-  \ reanalysis [17], provided through the WeatherBench 2 benchmark [40]. The models\
-  \ forecast dx = 83 different variables in total, including both surface-level variables\
-  \ and atmospheric variables at 13 different pressure levels. We use the years 1959–2017\
-  \ for training, 2018–2019 for validation and 2020 as a test set. Forecasts are always\
-  \ started from initial conditions taken directly from ERA5, both during training\
-  \ and evaluation. For global forecasting we use the graph generation process from\
-  \ GraphCast [23]. The multi-scale graph GMS is created by refining the icosahedron\
-  \ 4 times. The hierarchical graph contains 4 levels of such icosahedral grids. More\
-  \ details on the global experiments are given in appendix H.\n\nResults As the models\
-  \ forecast many different variables we present only a selection of results in the\
-  \ main paper. Metric values for geopotential (z500) and 2 m temperature (2t) are\
-  \ listed in table 1 and results for mean sea level pressure (msl) plotted in fig.\
-  \ 3. Line plots for all metrics and a large number of variables are given in appendix\
-  \ J.1. In the appendix we also show comparisons to additional models from the literature,\
-  \ trained on different data, as well as the physics-based IFS-ENS model [12]. The\
-  \ ensemble mean from Graph-EFM often shows improvements in RMSE over the deterministic\
-  \ models, especially for longer lead times. Across the ensemble models, Graph-EFM\
-  \ achieves lower CRPS values, better capturing the distribution of the weather data.\
-  \ Without any perturbations to initial states Graph-EFM reaches a SpSkR close to\
-  \ 1. We note that GraphCast*+SWAG does not produce useful ensemble forecasts, as\
-  \ these are poorly calibrated and in general do not lead to improved forecast errors.\
-  \ Examples for other variables are given in appendix J.2.\n\nExtreme weather case\
-  \ study An important use case for ensemble forecasting is modeling extreme weather\
-  \ events. While higher resolutions than 1.5° are generally desirable for accurately\
-  \ capturing such extremes, we conduct one case study on using Graph-EFM for forecasting\
-  \ hurricane Laura. The full case study with visualized forecasts is available in\
-  \ appendix F. For this example we show that there exists ensemble members accurately\
-  \ predicting the landfall location of the hurricane at 7 days lead time, while the\
-  \ deterministic models still show no sign of the hurricane in the region. Closer\
-  \ to the landfall event the ensemble forecast from Graph-EFM indicates uncertainties\
-  \ associated with the landfall location and wind intensity. This demonstrates the\
-  \ added value of a probabilistic forecasting model.\n\n</block>\n### 5.2 Limited\
-  \ Area Modeling with MEPS Data\n<block id=\"14\">\nIn LAMs weather forecasts are\
-  \ produced for a bounded region of the globe. LAM forecasting allows for higher\
-  \ resolution modeling and regionally tailored model configurations [11], properties\
-  \ that can be inherited by MLWP models by training on LAM data. To model weather\
-  \ over a limited domain, boundary conditions need to be taken into account. In physics-based\
-  \ LAMs these are typically given by a global forecast [38, 44, 7, 32]. We adapt\
-  \ a similar approach for MLWP LAMs, by taking boundary conditions as additional\
-  \ forcing along the boundary of the forecast area. The problem of LAM forecasting\
-  \ is thus about simulating physics not just based on the initial state, but also\
-  \ consistent with these boundary inputs. In the models we introduce Nb additional\
-  \ grid nodes along the area boundary, for the boundary forcing Bt ∈ RNb×dx. Boundary\
-  \ forcing Bt is always fed together with Xt to the model. Grid nodes on the boundary\
-  \ and within the area are treated identically by the GNN layers. We perform this\
-  \ adaptation to all models in our experiment.\n\nData and graphs We experiment with\
-  \ a dataset containing 6069 forecasts from the MetCoOp Ensemble Prediction System\
-  \ (MEPS) LAM. Training on forecasts, the goal is here to learn a fast surrogate\
-  \ model for MEPS. We use forecasts started during April 2021 – Jun 2022 for training\
-  \ and validation, and forecasts from July 2022 – March 2023 as a test set. The data\
-  \ is laid out in a 238 × 268 grid with spatial resolution 10 km, covering the Nordic\
-  \ region. This dataset contains in total dx = 17 weather variables, some repeated\
-  \ on multiple vertical levels. Forecasts are rolled out with 3 h time steps up to\
-  \ lead time 57 h. In this experiment we take also the boundary forcing directly\
-  \ from the MEPS dataset. We define the boundary as the outermost 10 grid positions.\
-  \ Using the same dataset for the area and boundary allows us to investigate the\
-  \ modeling choices in a controlled experimental setup. In an operational scenario\
-  \ the boundary forcing would instead come from a re-gridded global forecast. In\
-  \ the LAM setting we define our graphs as regular quadrilateral meshes covering\
-  \ the MEPS forecasting area, but with far fewer nodes than the original grid. The\
-  \ graph hierarchy G1, . . . , GL is created by constructing such meshes at different\
-  \ resolutions. By placing each node in Gl at the center of 3 × 3 nodes in Gl−1,\
-  \ we can merge 4 such graph levels to create GMS. In the hierarchical graph we instead\
-  \ introduce edges from each node in Gl to the 3 × 3 nodes in the level below. More\
-  \ details about the MEPS data and experiment can be found in appendix I.\n\nResults\
-  \ A selection of metrics are shown in table 2 and full results given in appendix\
-  \ K. At these shorter lead times there is no clear benefit of probabilistic modeling\
-  \ in terms of RMSE. Still, as exemplified by the standard-deviation plotted in fig.\
-  \ 5, probabilistic modeling provides useful information about the forecast uncertainty.\
-  \ Comparing the ensemble members in fig. 5 highlights the improved spatial coherency\
-  \ of the hierarchical graph in Graph-EFM. In contrast, the Graph-EFM (ms) forecast\
-  \ looks patchy and lacks physically intuitive features. There are also clear visual\
-  \ artifacts, that can be traced to the multi-scale graph structure. We discuss this\
-  \ more in-depth in appendix G. In the LAM setting all models are under-dispersed,\
-  \ with SpSkR < 1. One explanation for this is that the boundary forcing constrains\
-  \ the space of plausible forecasts, hindering the ensemble spread.\n\n</block>\n\
-  ## 6 Discussion\n<block id=\"15\">\nIn this paper we have explored MLWP ensemble\
-  \ weather forecasting using graph-based latent variable models. Our Graph-EFM model\
-  \ is capable of efficiently producing accurate ensemble forecasts. This paves the\
-  \ way for large-scale MLWP ensemble forecasting both in operational use and research\
-  \ settings. In appendix B we further discuss the societal impact of this research.\
-  \ With this work we hope to emphasize that MLWP models are not just deterministic\
-  \ mappings, but parametrize distributions of weather states. It follows that ensemble\
-  \ forecasting should not be achieved by perturbing models, but by directly modeling\
-  \ the distribution of interest.\n\nLimitations The training process comes with some\
-  \ complications in terms of choosing a training schedule and hyperparameters λKL\
-  \ and λCRPS. While the CRPS fine-tuning is an important training step, we have found\
-  \ that choosing a too high λCRPS can introduce visual artifacts, especially for\
-  \ the Graph-EFM (ms) model (see appendix G). While Graph-EFM produces diverse and\
-  \ physically plausible ensemble members, the forecasts still suffer from some of\
-  \ the blurriness common to deterministic models [23, 40]. We here trade off some\
-  \ of the visual fidelity achieved for example by diffusion models [39] for more\
-  \ efficient sampling of ensemble members.\n\nFuture work Interesting avenues for\
-  \ future work include learning probabilistic weather models based on other types\
-  \ of autoencoders [48, 49], or by directly optimizing scoring rules [36, 22]. Another\
-  \ approach for achieving efficient ensemble forecasting is to explore techniques\
-  \ for speeding up diffusion model sampling [47].\n</block>"
+segmented_markdown: '# Probabilistic Weather Forecasting with Hierarchical Graph Neural
+  Networks
+
+
+  ## Abstract
+
+  <block id="0">
+
+  In recent years, machine learning has established itself as a powerful tool for
+  high-resolution weather forecasting. While most current machine learning models
+  focus on deterministic forecasts, accurately capturing the uncertainty in the chaotic
+  weather system calls for probabilistic modeling. We propose a probabilistic weather
+  forecasting model called Graph-EFM, combining a flexible latent-variable formulation
+  with the successful graph-based forecasting framework. The use of a hierarchical
+  graph construction allows for efficient sampling of spatially coherent forecasts.
+  Requiring only a single forward pass per time step, Graph-EFM allows for fast generation
+  of arbitrarily large ensembles. We experiment with the model on both global and
+  limited area forecasting. Ensemble forecasts from Graph-EFM achieve equivalent or
+  lower errors than comparable deterministic models, with the added benefit of accurately
+  capturing forecast uncertainty.
+
+
+  </block>
+
+  ## 1 Introduction
+
+  <block id="1">
+
+  Forecasting the dynamics of Earth’s atmosphere is a scientific problem of utmost
+  importance. Society is dependent on fast and informative weather forecasts for planning
+  in areas such as transportation and agriculture and for balancing the energy system
+  [ 3]. Especially important is the use of forecasts to issue warnings for extreme
+  weather events [ 1]. Recent advances in Machine-Learning-based Weather Prediction
+  (MLWP) have enabled models that produce accurate forecasts in a fraction of the
+  time of traditional physics-based systems [ 37, 4, 23]. So far these developments
+  have largely been focused on deterministic modeling. However, forecasting only one
+  likely weather scenario ignores the many uncertainties in predicting future weather.
+
+
+  Weather is a chaotic system, resulting in high forecast uncertainty [ 52]. This
+  uncertainty comes from both imperfect representations of initial states and inaccurate
+  descriptions of the function mapping from one time step to the next [ 26]. Accurately
+  modeling this uncertainty significantly increases the value of weather forecasts.
+  Such uncertainty can be communicated to end-users to improve decision making or
+  be used in downstream products, for example to compute a distribution over solar
+  power generation. Capturing the full forecast uncertainty requires us to predict
+  not just a single likely state trajectory, but a collection of possible future weather
+  states. Due to the complexity and dimensionality of the weather system the feasible
+  way to achieve this is by generating samples from a modeled distribution. Such ensemble
+  forecasting is today performed using physics-based methods, where a number of ensemble
+  members are simulated as samples from this distribution. The computational cost
+  of this is however massive, often limiting the spatial resolution or size of the
+  ensemble [3].
+
+
+  MLWP is a promising approach for addressing this limitation and enabling large ensemble
+  forecasts. However, for the ensemble to add value the machine learning model needs
+  to accurately represent the distribution. Initial attempts at MLWP ensemble forecasting
+  either rely on ad-hoc initial state perturbations [10, 37, 4] or have not been scaled
+  to spatial resolutions of interest [ 19]. Also diffusion models [18] have been applied
+  to the problem, but sampling forecasts from these is computationally expensive and
+  can be prohibitively slow [ 39]. We propose a Graph-based Ensemble Forecasting Model
+  (Graph-EFM), enabling efficient sampling of ensemble members with only one forward-pass
+  per time step. The method builds on graph-based MLWP [ 20, 23], which is a flexible
+  framework that can be adapted to different geometries and state grid representations
+  [ 24]. By combining a latent-variable formulation with a hierarchical Graph Neural
+  Network (GNN) the distribution is modeled in a lower-dimensional space and sampled
+  forecasts are spatially coherent.
+
+
+  MLWP models are typically trained for and evaluated on global weather forecasting
+  [ 40, 23, 4]. Another common forecasting setup in practice is the use of Limited
+  Area Models (LAMs) to produce high-resolution regional forecasts [ 11]. Such LAMs
+  are for example used by local weather services in order to provide forecasts tailored
+  to the geographical properties and societal needs of the region [38, 44, 7, 32].
+  These high-resolution models are also invaluable to various industrial sectors,
+  including energy forecasters, who rely on precise weather predictions to manage
+  supply and demand. This motivates research into also constructing MLWP LAMs, which
+  brings new challenges related to the high resolution and boundary conditions of
+  the limited area. In this work we experiment not just with global forecasting, but
+  consider also how probabilistic LAMs can be trained to produce forecasts for the
+  Nordic region.
+
+
+  Our main contributions are: 1) We develop a hierarchical GNN framework for both
+  deterministic and probabilistic MLWP. The hierarchical construction encourages spatially
+  coherent fields in forecasts. 2) We use this framework to define the probabilistic
+  weather forecasting model Graph-EFM, capable of efficient sampling of arbitrarily
+  large ensemble forecasts. 3) We develop a training method targeting both forecast
+  quality and ensemble calibration. 4) We experiment with both global forecasting
+  on 1.5° resolution and a novel limited-area modeling task at 10 km resolution.
+
+
+  </block>
+
+  ## 2 Related Work
+
+  <block id="2">
+
+  Deterministic MLWP Multiple machine learning methods have been successfully applied
+  to large-scale weather forecasting. These include graph-based models [ 20, 23, 24],
+  transformers [4, 8, 10, 33, 25, 34] and neural operators [ 37, 5]. While large neural
+  network models learn weather dynamics purely from data, there are also parallel
+  developments in building hybrid physics-MLWP models [22, 50].
+
+
+  Ensembles from perturbations Most existing methods for MLWP ensemble forecasting
+  follow closely the physics-based methods, where initial states and model parameters
+  are perturbed to create ensemble diversity. A number of MLWP works create ensembles
+  by ad-hoc perturbing initial states with random noise [ 10, 37, 4, 16, 6]. More
+  informed perturbations have been re-used from physics based ensembles [ 39, 6] and
+  created based on model-informed singular vectors [ 43]. Others try to perturb the
+  forecast model itself, rolling out ensemble members using different neural network
+  parameters [51, 43]. Such multi-model approaches require training, or at least fine-tuning,
+  a pre-defined number of MLWP models. Graubner et al. [16] use the SWAG method [30]
+  to allow for constructing multi-model ensembles of arbitrary size.
+
+
+  Generative modeling Probabilistic machine learning approaches aim to directly learn
+  generative models producing ensemble members. Similar to our approach, the SwinVRNN
+  model [ 19] uses a latent variable formulation, but combined with a Swin Transformer
+  architecture [ 29]. SwinVRNN is developed for global forecasting at 5 ° resolution
+  and scales poorly to higher spatial resolutions. Also building on the graph-based
+  framework, Price et al. [39] train a diffusion model [ 18, 46] to sample each time
+  step. Their Gencast model produces ensemble forecasts of 0.25 ° global data with
+  12 h time steps. Diffusion models produce realistic-looking samples, but typically
+  require solving an ordinary differential equation involving multiple passes through
+  the neural network to sample each time step. For GenCast, this results in a sampling
+  time of 8 minutes for a single 15 day forecast on a TPUv5 device [39]. Other works
+  use diffusion models to increase the size of physics-based ensembles [ 27] or stochastically
+  downscale deterministic forecasts [9, 31].
+
+
+  Hierarchical GNNs Motivated by capturing multiple spatial scales, hierarchical GNNs
+  have been used for modeling general partial differential equations [ 14, 28]. The
+  overall hierarchical framework shares much of its structure with the popular U-Net
+  architecture [ 41] for computer vision tasks, but extended to a general graph setting.
+
+
+  </block>
+
+  ## 3 Background
+
+  <block id="3">
+
+
+  </block>
+
+  ### 3.1 Problem Definition
+
+  <block id="4">
+
+  The weather forecasting problem can be summarized as mapping from a set of initial
+  states X→1:0 =( X→1,X 0) to the sequence of future states X1:T =( X1,⊿⊿⊿,XT ). A
+  table of notation is provided in appendix A. Each weather state Xt → RN ↑dx here
+  contains dx variables modeled at N different locations. Geospatial data is often
+  represented as regular grids, in which case these locations correspond to the grid
+  cells. The dx variables can include both atmospheric variables, modeled at multiple
+  vertical levels, and surface variables. As is common in MLWP we assume the initial
+  states to consist of two time steps, which allows for capturing first-order state
+  dynamics. To produce a forecast, a set of forcing inputs F 1:T are also available.
+  These contain known quantities, such as the time of day. There are also static features
+  associated with the grid cells, such as the orography, which we here consider part
+  of the forcing.
+
+
+  Many variables impact the chaotic weather system, all of which are not fully captured
+  in initial states represented on finite grids. This induces forecast uncertainty,
+  which we view as a distribution p ( X1:T |X→1:0,F 1:T ). In deterministic forecasting
+  we seek a model that minimizes the Mean Squared Error (MSE) to the future weather
+  states [ 23, 33, 34]. This is equivalent to modeling only the mean of the distribution.
+  In probabilistic forecasting we instead aim to model the full distribution. Note
+  that we here specifically model the conditional distribution p ( X1:T |X→1:0,F 1:T
+  ), rather than p ( X1:T ⏐⏐F 1:T ). Hence we do not marginalize over uncertainty
+  in initial states.
+
+
+  </block>
+
+  ### 3.2 Graph-based Weather Forecasting
+
+  <block id="5">
+
+  Graph-based MLWP models use an autoregressive mapping ˆXt = f (Xt→2:t→1,F t) consisting
+  of a sequence of GNNs [ 20, 23, 24]. Starting from the initial states, this mapping
+  can be iteratively applied to roll out a full forecast X1:T . Central to the graph-based
+  framework is the idea of mapping from the original N grid locations to a mesh graph
+  GM =( VM, EM ). In the graph-context we refer to the grid locations as a set VG
+  of grid nodes. By choosing |VM| < |VG| = N it becomes efficient to perform the majority
+  of computations on the mesh. Such a mesh graph can also be tailored to the forecasting
+  setting, for example to respect the spherical geometry in global forecasting [ 20].
+  The mapping f realizes a single-step prediction by passing Xt→2:t→1 and F t through
+  a series of GNN layers. In sequence, these layers: 1) map grid inputs to representations
+  on the mesh graph; 2) perform a number of processing steps on the mesh; 3) map back
+  to the grid to produce the prediction for Xt. Steps 1 and 3 use bipartite graphs
+  GG2M =( VG ↑V 1, EG2M) and GM2G =( VG ↑V 1, EM2G) with edges connecting the grid
+  and mesh nodes. The GNN layers in each step compute updates for node representations
+  H → R|V|↑dz and edge representations E → R|E|↑dz in the graphs. For simplicity all
+  representation vectors have dimensionality dz.
+
+
+  Interaction Networks The specific GNN layers used in previous works are Interaction
+  Networks [2, 23]. The layers in these networks pass messages from a set of sender
+  nodes along directed graph edges to a set of receiver nodes. Based on these messages
+  the edge and receiver node representations are then updated. For a graph G =( V,
+  E) let eω↓ ε → Rdz be the row of E corresponding to the edge (ω, ε) →E . Let HS
+  be the matrix with rows containing sender node representations and HR the corresponding
+  matrix for receiver nodes. Interaction Networks then implement the representation
+  update HR,E ↓ GNN(G,H S ,E ,H R) as
+
+
+  where Ne(ε)= {ω :( ω, ε) →E } are the incoming neighbors of node ε. Parameters in
+  Multi-Layer Perceptrons (MLPs) are shared across nodes and edges in the graph, but
+  not between GNN layers.
+
+
+  Global mesh graphs Keisler [20] proposed to construct a mesh graph for global MLWP
+  as an icosahedral grid covering the globe. This approach was extended in the GraphCast
+  model [ 23] by introducing a multi-scale mesh graph with edges of varying length.
+  Such multi-scale edges are capable of propagating information and capturing statistical
+  dependencies both locally and over long distances in the graph. The multi-scale
+  mesh graph is created by sequentially splitting the faces of an icosahedron into
+  a sequence of graphs GL,⊿⊿⊿,G1 with node sets satisfying VL ↔· · ·↔V 1 by construction.
+  The original icosahedron GL has the longest edges EL, stretching far across the
+  globe, whereas the final graph G1 has short edges E1 only connecting nodes locally.
+  The final multi-scale mesh graph is constructed as GMS =( V1, EL ↑···↑E 1), taking
+  the nodes from the final graph but connecting these using edges of all different
+  lengths [23].
+
+
+  </block>
+
+  ## 4 Weather Forecasting with Hierarchical Graph Neural Networks
+
+  <block id="6">
+
+  Two great challenges in weather forecasting is to accurately capture processes unfolding
+  over different spatial scales and modeling the uncertainty in the chaotic system
+  [ 52]. To tackle these challenges, we propose to construct a hierarchical mesh graph,
+  working with different length scales at each level in the hierarchy. We use a sequence
+  G1,⊿⊿⊿,GL of graphs as the different levels in the hierarchy, additionally adding
+  connections between the nodes of adjacent levels. This construction is also highly
+  suitable as a basis for building probabilistic forecasting models, as discussed
+  below. Figure 1 shows an overview of the hierarchical mesh used in our model. See
+  figs. 12 and 14 in the appendix for illustrations of how this differs from the multi-scale
+  graph.
+
+
+  There are multiple benefits to such a hierarchical mesh construction for MLWP. By
+  keeping the graphs at different levels separate, we can define GNN layers with independent
+  parametrizations at each level. This adds flexibility by allowing the model to learn
+  different representation updates for edges of different spatial scales. A hierarchical
+  mesh graph also offers a natural, spatially-aware dimensionality reduction, as the
+  state in the grid is encoded into a few nodes at the top level. Such a representation
+  can capture the general structure of each weather state, with finer details added
+  as this is propagated down through the hierarchy. We leverage this property to construct
+  a probabilistic model by imposing a distribution over these lower-dimensional representations
+  at the top level. This allows for efficiently drawing spatially coherent samples
+  from the distribution of future weather states.
+
+
+  </block>
+
+  ### 4.1 Hierarchical Graph
+
+  <block id="7">
+
+  Our hierarchical mesh graph consists of L graph levels G1,⊿⊿⊿,GL with Gl =( Vl,
+  El). Only level 1 of the hierarchy is connected to the grid, so we re-define GG2M
+  =( VG ↑V 1, EG2M) and GM2G =( VG ↑V 1, EM2G). The number of nodes |Vl| decreases
+  with the level l. The smallest set of nodes are found at the top level L.
+
+
+  To pass information between the levels of the hierarchy we introduce additional
+  graphs connecting the different levels. Let Gl,l+1 =( Vl ↑V l+1, El,l+1) be a graph
+  containing directed edges from mesh level l to level l +1 . We make use of a graph
+  sequence G1,2,⊿⊿⊿,GL→1,L to propagate information up through the hierarchy and similarly
+  a sequence GL,L→1,⊿⊿⊿,G2,1 in the downward direction. The exact layout of nodes
+  and edges at and in-between levels are design choices that should be tailored to
+  the specific forecasting setting. Examples for global and limited-area forecasting
+  are given in section 5.
+
+
+  </block>
+
+  ### 4.2 Graph-FM: Deterministic Forecasting
+
+  <block id="8">
+
+  The hierarchical graph allows for defining GNN layers both on and in-between the
+  different levels. By sequentially updating node and edge representations at different
+  levels in the hierarchy, information can be propagated up from the grid to the different
+  levels. As these levels have edges of different lengths, the processing at each
+  level happens on different spatial scales. Note that this differs from the multi-scale
+  graph approach, where information processing over all different spatial scales happen
+  in the same GNN layer [ 23]. As a step towards our probabilistic model, we define
+  an alternative deterministic Graph-based Forecasting Model Graph-FM1, operating
+  on the hierarchical graph.
+
+
+  In Graph-FM one processing step on the mesh graph is defined as a complete sweep
+  through the hierarchy. GNNs are applied sequentially to the inter-level and intra-level
+  graphs in the order G1, G1,2, G2,⊿⊿⊿,GL→1,L, GL, updating edge and node representations
+  at the different levels. Processing steps going up the hierarchy are alternated
+  with similar steps going down from level L to 1. The single step mapping f consists
+  of multiple such sweeps up and down (see appendix C.2).
+
+
+  </block>
+
+  ### 4.3 Graph-EFM: Probabilistic Forecasting
+
+  <block id="9">
+
+  To capture the uncertainty in the chaotic weather system we next aim to construct
+  a probabilistic model from the ground up to capture the full distribution p ( X1:T
+  |X→1:0,F 1:T ). We start by assuming the weather system to satisfy a second-order
+  Markov assumption, decomposing
+
+
+  p ( X1:T |X→1:0,F 1:T ) = ∏T t=1p ( Xt⏐⏐Xt→2:t→1,F t) (2)
+
+
+  Factoring the distribution over time steps allows us to work with forecasts of varying
+  length. Specifying the model for single-step prediction avoids having to learn separate
+  parameters for different lead times. Next, we seek a flexible, but computationally
+  efficient parametrization for the distribution p ( Xt⏐⏐Xt→2:t→1,F t). This can be
+  achieved by introducing a latent random variable Zt, and letting
+
+
+  p ( Xt⏐⏐Xt→2:t→1,F t) = ∫ p ( Xt|Zt,X t→2:t→1,F t) p ( Zt⏐⏐Xt→2:t→1,F t) dZt (3)
+
+
+  Here the stochasticity in Zt should capture the uncertainty over Xt at each time
+  step. The corresponding graphical model is shown in fig. 2. We impose a spatial
+  structure over the latent variable by letting Zt be |VL|↗ dz matrix-valued, with
+  each row a dz -dimensional vector associated with one node in the top level GL of
+  the mesh graph.
+
+
+  The single-step model consists of two components, a latent map p ( Zt⏐⏐Xt→2:t→1,F
+  t) and predictor p ( Xt|Zt,X t→2:t→1,F t). The latent map is parametrized using
+  GNNs, mapping the conditioning variables to parameters of a Gaussian distribution.
+  We consider the predictor to be concentrated around its mean, and realize p ( Xt|Zt,X
+  t→2:t→1,F t) as a deterministic mapping of a similar form as Graph-FM. By sampling
+  Zt and passing this through the predictor we can draw a sample of Xt from eq. (3).
+  This sample can then be conditioned on at the next time step, continuing this sampling
+  process to roll out a forecast following eq. (2). This forecast constitutes one
+  ensemble member, and the process can be repeated to sample an ensemble of arbitrary
+  size. We call our Graph-based Ensemble Forecasting Model Graph-EFM. Full details
+  about the model are given in appendix C.
+
+
+  Latent map We let the latent map be an isotropic Gaussian
+
+
+  p ( Zt⏐⏐Xt→2:t→1,F t) = ∏ ω↔VL N ( Zt ω ⏐⏐µZ ( Xt→2:t→1,F t) ω ,I ) (4)
+
+
+  with the mean as a function of the conditioning variables. The variance is fixed,
+  imposing a fixed scale for the learned latent space. The mean function µZ consists
+  of a sequence of GNNs. These take the inputs at the grid, propagate representations
+  up through the hierarchical mesh graph, and finally predicts the mean of Zt ω at
+  each node ω at level L. In appendix L.2 we verify empirically the importance of
+  using the latent map over a static distribution for Zt.
+
+
+  Predictor The predictor is a deterministic mapping
+
+
+  ˆXt = g ( Zt,X t→2:t→1,F t) = Xt→1 +˜g ( Zt,X t→2:t→1,F t) (5)
+
+
+  With the small time steps used in MLWP, Xt does not change dramatically in a single
+  step. We thus follow the common practice of including a skip connection to the previous
+  state [ 23, 5, 19]. The predictor takes both inputs Xt→2:t→1,F t at the grid and
+  Zt at the top of the mesh graph. To incorporate both we design g similar to Graph-FM,
+  performing sweeps up and down through the mesh hierarchy. At the top of the hierarchy
+  Zt is added to node representations HL through the residual connections in the GNN
+  layers. A sampled value of Zt then affects the prediction ˆXt through the downward
+  sweep. While multiple such sweeps are possible, we found one to be sufficient in
+  practice.
+
+
+  Spatial dependencies We want each sample of Xt to contain spatially coherent atmospheric
+  fields. One approach would be to impose spatial dependencies in the joint distribution
+  over Zt. However, learning and sampling from such a distribution typically comes
+  with computational challenges [ 19]. Instead, we impose spatial dependencies by
+  integrating the latent variable formulation with the hierarchical graph. We argue
+  that as the independent components of Zt are propagated down through the mesh graph,
+  gradually increasing the spatial resolution, spatial dependencies are introduced
+  by the model in the GNN layers. The hierarchical graph is key to this property,
+  as the stochasticity in Zt is necessarily spread out over the forecast region, rather
+  than only affecting the output locally.
+
+
+  </block>
+
+  ### 4.4 Training Objective
+
+  <block id="10">
+
+  Deterministic forecasting models can be straightforwardly trained by minimizing
+  a weighted MSE [ 23] or Negative Log-Likelihood (NLL) loss [ 8] for rolled out forecasts.
+  To train Graph-EFM we instead leverage the fact that the single-step model has a
+  structure similar to a (conditional) VAE [21, 45], allowing us to use a variational
+  objective. We introduce a variational approximation q ( Zt⏐⏐Xt→2:t→1,X t,F t) at
+  each time step, approximating the true posterior p ( Zt⏐⏐Xt→2:t→1,X t,F t) over
+  Zt. This variational distribution is parametrized in a similar way as the latent
+  map, with GNN layers mapping to a Gaussian over Zt. Note however that q also depends
+  on Xt, since it approximates the posterior. Using q, we can then define
+
+
+  LV ar ( Xt→2:t→1,X t,F t) = ϑKLDKL ( q ( Zt⏐⏐Xt→2:t→1,X t,F t)p ( Zt⏐⏐Xt→2:t→1,F
+  t)) ↘Eq(Zt |Xt→2:t→1 ,Xt ,F t ) [∑ ω↔VG ∑dx j=1 log N ( Xt ω,j ⏐⏐⏐g ( Zt,X t→2:t→1,F
+  t) ω,j ,ϖ 2 ω,j )] (6)
+
+
+  which is equal to the (negative) Evidence Lower Bound (ELBO) when the weighting
+  is ϑKL =1. While the predictor g is a deterministic mapping, we introduce a Gaussian
+  likelihood in eq. (6) to get a well-defined learning problem. This setup corresponds
+  to the common practice in VAEs of assuming Gaussian observation noise, but not adding
+  this to samples from the model [ 42]. The standard deviation ϖω,j can either be
+  a second output from the predictor or manually chosen (see appendix D for details).
+  As with deterministic models [ 23, 20, 8, 34], we found it crucial to fine-tune
+  on rolled out forecasts of multiple time steps. This improves stability and performance
+  for longer lead times. In the final fine-tuning we include also a Continuous Ranked
+  Probability Score (CRPS) loss term LCRPS [15, 22]. The full objective function is
+  then L = LV ar+ ϑCRPSLCRPS, with ϑCRPS a weighting hyperparameter. Including this
+  CRPS loss improves the calibration of ensemble forecasts.
+
+
+  </block>
+
+  ### 4.5 Improved GNN Layers: Propagation Networks
+
+  <block id="11">
+
+  In Graph-EFM there is a large amount of information that needs to be propagated
+  between the grid and Zt. However, the Interaction Network GNNs are biased towards
+  keeping old representations of receiver nodes, rather than updating this with new
+  information from incoming edges. Note in eq. (1) that if the MLPs are initialized
+  to give outputs close to 0, there will be no change to eω↓ ε and HR ε . In practice
+  the model has a hard time learning to propagate useful information up from the grid
+  to Zt. Even when trained purely as an auto-encoder ( ϑKL =0 ), Zt easily ends up
+  being ignored. To remedy this we propose an alternative GNN formulation that we
+  call Propagation Network, defined by
+
+
+  For MLPs initialized with outputs close to 0, Propagation Networks reduce to averaging
+  the values of neighboring nodes. This encourages the propagation of information
+  from HS to HR by construction. Propagation Networks were found to perform better
+  also in the deterministic model (see comparison in appendix L.1), so we employ these
+  in both Graph-FM and Graph-EFM.
+
+
+  </block>
+
+  ## 5 Experiments
+
+  <block id="12">
+
+  To evaluate our models we conduct experiments on both global and limited area forecasting.
+  The models are implemented in PyTorch and trained on 8 A100 80 GB GPUs in a data-parallel
+  configuration. Training takes 700–1400 total GPU-hours for the global models, and
+  around half of that for the limited area models. The computational demands prevent
+  us from re-training multiple models for statistical analysis. Once trained, sampling
+  from Graph-EFM is highly efficient. Using batched sampling on a single GPU, 80 ensemble
+  members are produced in 200 s (2.5 s per member) for global forecasting.
+
+
+  Metrics We measure the skill of deterministic models by Root Mean Squared Error
+  (RMSE). For probabilistic models we compute the RMSE for the ensemble mean. Good
+  skill in terms of RMSE is however not enough for ensemble forecasts, where we want
+  to capture the full distribution. For these we also assess the ensemble calibration
+  by computing the Spread-Skill-Ratio (SpSkR). Calibrated uncertainty corresponds
+  to SpSkR ≃ 1 [13]. We additionally use CRPS to measure how well the marginal distributions
+  of the model matches the data. For deterministic models the CRPS reduces to Mean
+  Absolute Error (MAE). Complete definitions of all metrics are given in appendix
+  E.
+
+
+  Models Achieving a fair comparisons of the actual machine learning methodology in
+  MLWP is challenging due to models using different spatial resolution, variables
+  and initial states. We here train an illustrative set of models on the same data
+  and with comparable training setups. Our full Graph-EFM model is compared to: 1)
+  Graph-EFM (ms), a version of Graph-EFM using a multi-scale mesh graph instead of
+  the hierarchical one. 2) Graph-FM, our deterministic model using the hierarchical
+  graph. 3) GraphCast*, a reimplementation of GraphCast [ 23], adapted and trained
+  on our datasets. 4) GraphCast*+SWAG, a multi-model ensemble created by applying
+  Stochastic Weight Averaging Gaussian (SWAG) [30] to GraphCast*. Inspired by Graubner
+  et al. [16], this represents a simple way to augment a deterministic model to perform
+  ensemble forecasting. Further details about the baseline models are given in appendix
+  C.5. For ensemble models we sample 80 members for the global experiments and 100
+  members for limited area forecasting. In appendix L.3 we investigate the impact
+  of ensemble size on the evaluation. We find that improvements in metric values quickly
+  saturate when increasing the ensemble size. This shows that sampling even more members
+  would have negligible impact on the results of our experiments.
+
+
+  </block>
+
+  ### 5.1 Global Forecasting with ERA5
+
+  <block id="13">
+
+  Data and graphs We experiment on global weather forecasting up to 10 days with 6h
+  time steps. The dataset used for training and evaluation is a 1.5 ° version of the
+  global ERA5 reanalysis provided through the WeatherBench 2 benchmark [ 40]. The
+  models forecast dx = 83 different variables in total, including both surface-level
+  variables and atmospheric variables at 13 different pressure levels. We use the
+  years 1959–2017 for training, 2018–2019 for validation and 2020 as a test set. Forecasts
+  are always started from initial conditions taken directly from ERA5, both during
+  training and evaluation. For global forecasting we use the graph generation process
+  from GraphCast [ 23]. The multi-scale graph GMS is created by refining the icosahedron
+  4 times. The hierarchical graph contains 4 levels of such icosahedral grids. More
+  details on the global experiments are given in appendix H.
+
+
+  Results As the models forecast many different variables we present only a selection
+  of results in the main paper. Metric values for geopotential ( z500) and 2 m temperature
+  ( 2t) are listed in table 1 and results for mean sea level pressure ( msl) plotted
+  in fig. 3. Line plots for all metrics and a large number of variables are given
+  in appendix J.1. In the appendix we also show comparisons to additional models from
+  the literature, trained on different data, as well as the physics-based IFS-ENS
+  model [ 12]. The ensemble mean from Graph-EFM often shows improvements in RMSE over
+  the deterministic models, especially for longer lead times. Across the ensemble
+  models, Graph-EFM achieves lower CRPS values, better capturing the distribution
+  of the weather data. Without any perturbations to initial states Graph-EFM reaches
+  a SpSkR close to 1. We note that GraphCast*+SWAG does not produce useful ensemble
+  forecasts, as these are poorly calibrated and in general do not lead to improved
+  forecast errors. Examples for other variables are given in appendix J.2.
+
+
+  Extreme weather case study An important use case for ensemble forecasting is modeling
+  extreme weather events. While higher resolutions than 1.5 ° are generally desirable
+  for accurately capturing such extremes, we conduct one case study on using Graph-EFM
+  for forecasting hurricane Laura. The full case study with visualized forecasts is
+  available in appendix F. For this example we show that there exists ensemble members
+  accurately predicting the landfall location of the hurricane at 7 days lead time,
+  while the deterministic models still show no sign of the hurricane in the region.
+  Closer to the landfall event the ensemble forecast from Graph-EFM indicates uncertainties
+  associated with the landfall location and wind intensity. This demonstrates the
+  added value of a probabilistic forecasting model.
+
+
+  </block>
+
+  ### 5.2 Limited Area Modeling with MEPS Data
+
+  <block id="14">
+
+  In LAMs weather forecasts are produced for a bounded region of the globe. LAM forecasting
+  allows for higher resolution modeling and regionally tailored model configurations
+  [ 11], properties that can be inherited by MLWP models by training on LAM data.
+  To model weather over a limited domain, boundary conditions need to be taken into
+  account. In physics-based LAMs these are typically given by a global forecast [
+  38, 44, 7, 32]. We adapt a similar approach for MLWP LAMs, by taking boundary conditions
+  as additional forcing along the boundary of the forecast area. The problem of LAM
+  forecasting is thus about simulating physics not just based on the initial state,
+  but also consistent with these boundary inputs. In the models we introduce Nb additional
+  grid nodes along the area boundary, for the boundary forcing Bt → RNb ↑dx . Boundary
+  forcing Bt is always fed together with Xt to the model. Grid nodes on the boundary
+  and within the area are treated identically by the GNN layers. We perform this adaptation
+  to all models in our experiment.
+
+
+  Data and graphs We experiment with a dataset containing 6069 forecasts from the
+  MetCoOp Ensemble Prediction System (MEPS) LAM. Training on forecasts, the goal is
+  here to learn a fast surrogate model for MEPS. We use forecasts started during April
+  2021 – Jun 2022 for training and validation, and forecasts from July 2022 – March
+  2023 as a test set. The data is laid out in a 238 ↗ 268 grid with spatial resolution
+  10 km, covering the Nordic region. This dataset contains in total dx = 17 weather
+  variables, some repeated on multiple vertical levels. Forecasts are rolled out with
+  3h time steps up to lead time 57 h. In this experiment we take also the boundary
+  forcing directly from the MEPS dataset. We define the boundary as the outermost
+  10 grid positions. Using the same dataset for the area and boundary allows us to
+  investigate the modeling choices in a controlled experimental setup. In an operational
+  scenario the boundary forcing would instead come from a re-gridded global forecast.
+  In the LAM setting we define our graphs as regular quadrilateral meshes covering
+  the MEPS forecasting area, but with far fewer nodes than the original grid. The
+  graph hierarchy G1,⊿⊿⊿,GL is created by constructing such meshes at different resolutions.
+  By placing each node in Gl at the center of 3 ↗ 3 nodes in Gl→1, we can merge 4
+  such graph levels to create GMS. In the hierarchical graph we instead introduce
+  edges from each node in Gl to the 3 ↗ 3 nodes in the level below. More details about
+  the MEPS data and experiment can be found in appendix I.
+
+
+  Results A selection of metrics are shown in table 2 and full results given in appendix
+  K. At these shorter lead times there is no clear benefit of probabilistic modeling
+  in terms of RMSE. Still, as exemplified by the standard-deviation plotted in fig.
+  5, probabilistic modeling provides useful information about the forecast uncertainty.
+  Comparing the ensemble members in fig. 5 highlights the improved spatial coherency
+  of the hierarchical graph in Graph-EFM. In contrast, the Graph-EFM (ms) forecast
+  looks patchy and lacks physically intuitive features. There are also clear visual
+  artifacts, that can be traced to the multi-scale graph structure. We discuss this
+  more in-depth in appendix G. In the LAM setting all models are under-dispersed,
+  with SpSkR < 1. One explanation for this is that the boundary forcing constrains
+  the space of plausible forecasts, hindering the ensemble spread.
+
+
+  </block>
+
+  ## 6 Discussion
+
+  <block id="15">
+
+  In this paper we have explored MLWP ensemble weather forecasting using graph-based
+  latent variable models. Our Graph-EFM model is capable of efficiently producing
+  accurate ensemble forecasts. This paves the way for large-scale MLWP ensemble forecasting
+  both in operational use and research settings. In appendix B we further discuss
+  the societal impact of this research. With this work we hope to emphasize that MLWP
+  models are not just deterministic mappings, but parametrize distributions of weather
+  states. It follows that ensemble forecasting should not be achieved by perturbing
+  models, but by directly modeling the distribution of interest.
+
+
+  </block>
+
+  ### Limitations
+
+  <block id="16">
+
+  The training process comes with some complications in terms of choosing a training
+  schedule and hyperparameters ϑKL and ϑCRPS. While the CRPS fine-tuning is an important
+  training step, we have found that choosing a too high ϑCRPS can introduce visual
+  artifacts, especially for the Graph-EFM (ms) model (see appendix G). While Graph-EFM
+  produces diverse and physically plausible ensemble members, the forecasts still
+  suffer from some of the blurriness common to deterministic models [ 23, 40]. We
+  here trade off some of the visual fidelity achieved for example by diffusion models
+  [39] for more efficient sampling of ensemble members.
+
+
+  </block>
+
+  ### Future work
+
+  <block id="17">
+
+  Interesting avenues for future work include learning probabilistic weather models
+  based on other types of autoencoders [ 48, 49], or by directly optimizing scoring
+  rules [ 36, 22]. Another approach for achieving efficient ensemble forecasting is
+  to explore techniques for speeding up diffusion model sampling [47].
+
+  </block>'

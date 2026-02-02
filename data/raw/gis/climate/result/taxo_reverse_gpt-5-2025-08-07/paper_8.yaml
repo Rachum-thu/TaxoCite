@@ -14,13 +14,13 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - null
+  - "Downscaling, bias correction, and data assimilation"
 - "title": "The quiet revolution of numerical weather prediction"
   "unique_context_marker": "[3]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Pangu-weather: A 3d high-resolution model for fast and accurate global weather forecast"
@@ -33,14 +33,14 @@
   - 14
   "intent_labels":
   - "Research Gap"
-  - "Prior Methods"
+  - "Domain Overview"
   - "Model/Architecture Adoption"
-  - "Setting/Protocal Adoption"
+  - "Problem Formulation"
   - "Prior Methods"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
-  - null
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Foundation models and generative architectures"
   - "Spatio-temporal forecasting and nowcasting"
   - "Foundation models and generative architectures"
 - "title": "Internal variability plays a dominant role in global climate projections of temperature and precipitation extremes"
@@ -48,7 +48,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Domain Overview"
+  - "Setting/Protocal Adoption"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "pyESDv1.0.1: An open-source Python framework for empirical-statistical downscaling of climate information"
@@ -56,9 +56,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
-  - "Downscaling, bias correction, and data assimilation"
+  - "Other Topic"
 - "title": "Machine Learning in Weather Prediction and Climate Analyses—Applications and Perspectives"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -88,15 +88,15 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
-  - "Downscaling, bias correction, and data assimilation"
+  - "Other Topic"
 - "title": "CliMetLab"
   "unique_context_marker": "[11]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - null
 - "title": "Potential for surprising heat and drought events in wheat-producing regions of USA and China"
@@ -112,7 +112,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Machine Learning for numerical weather and climate modelling: a review"
@@ -176,7 +176,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - null
+  - "Foundation models and generative architectures"
 - "title": "WeatherBench Probability: A benchmark dataset for probabilistic medium-range weather forecasting along with deep learning baseline models"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -209,9 +209,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
-  - "Downscaling, bias correction, and data assimilation"
+  - "Other Topic"
 - "title": "Statistical downscaling of climate scenarios over Scandinavia"
   "unique_context_marker": "[25]"
   "block_ids":
@@ -241,7 +241,7 @@
   "block_ids":
   - 9
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "The ERA5 global reanalysis"
@@ -251,7 +251,7 @@
   - 5
   - 9
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
@@ -323,11 +323,11 @@
   - 9
   - 14
   "intent_labels":
-  - "Prior Methods"
-  - "Setting/Protocal Adoption"
+  - "Domain Overview"
+  - "Problem Formulation"
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
   - "Spatio-temporal forecasting and nowcasting"
   - "Foundation models and generative architectures"
 - "title": "An evaluation of ERA5 precipitation for climate monitoring"
@@ -337,7 +337,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - null
+  - "Downscaling, bias correction, and data assimilation"
 - "title": "Regional climate research: Needs and Opportunities"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -345,7 +345,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - null
+  - "Downscaling, bias correction, and data assimilation"
 - "title": "Climate Downscaling Using YNet: A Deep Convolutional Network with Skip Connections and Fusion"
   "unique_context_marker": "[41]"
   "block_ids":
@@ -418,11 +418,11 @@
   - 6
   "intent_labels":
   - "Research Gap"
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
   - "Downscaling, bias correction, and data assimilation"
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
   - null
 - "title": "NASA Earthdata: Open Access for Open Science"
   "unique_context_marker": "[50]"
@@ -437,7 +437,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "ClimaX: A foundation model for weather and climate"
@@ -449,14 +449,14 @@
   - 12
   - 14
   "intent_labels":
-  - "Prior Methods"
-  - "Model/Architecture Adoption"
   - "Domain Overview"
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Result Comparison"
   - "Prior Methods"
   "topic_labels":
-  - null
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Foundation models and generative architectures"
   - "Spatio-temporal forecasting and nowcasting"
   - "Spatio-temporal forecasting and nowcasting"
   - "Foundation models and generative architectures"
@@ -475,13 +475,13 @@
   - 14
   "intent_labels":
   - "Research Gap"
-  - "Prior Methods"
-  - "Setting/Protocal Adoption"
+  - "Domain Overview"
+  - "Problem Formulation"
   - "Result Comparison"
   - "Prior Methods"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
   - "Spatio-temporal forecasting and nowcasting"
   - "Spatio-temporal forecasting and nowcasting"
   - "Foundation models and generative architectures"
@@ -490,9 +490,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
-  - "Downscaling, bias correction, and data assimilation"
+  - "Other Topic"
 - "title": "ClimateNet: an expert-labeled open dataset and deep learning architecture for enabling high-precision analyses of extreme weather"
   "unique_context_marker": "[56]"
   "block_ids":
@@ -508,7 +508,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - null
+  - "Downscaling, bias correction, and data assimilation"
 - "title": "NADBenchmarks–a compilation of benchmark datasets for machine learning tasks related to natural disasters"
   "unique_context_marker": "[58]"
   "block_ids":
@@ -542,7 +542,7 @@
   - "Research Gap"
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Food security, health, and disaster response"
   - "Food security, health, and disaster response"
 - "title": "Data-Driven Medium-Range Weather Prediction With a ResNet Pretrained on Climate Simulations: A New Model for WeatherBench"
   "unique_context_marker": "[62]"
@@ -551,12 +551,12 @@
   - 6
   - 9
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Model/Architecture Adoption"
   - "Result Comparison"
   "topic_labels":
-  - "Foundation models and generative architectures"
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
+  - "Spatio-temporal forecasting and nowcasting"
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "WeatherBench: A Benchmark Data Set for Data-Driven Weather Forecasting"
   "unique_context_marker": "[63]"
@@ -569,9 +569,9 @@
   - "Research Gap"
   - "Prior Methods"
   - "Resource Utilization"
-  - "Domain Overview"
+  - "Result Comparison"
   "topic_labels":
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
   - "Spatio-temporal forecasting and nowcasting"
   - "Spatio-temporal forecasting and nowcasting"
   - "Spatio-temporal forecasting and nowcasting"
@@ -582,7 +582,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - null
+  - "Downscaling, bias correction, and data assimilation"
 - "title": "Skilful precipitation nowcasting using deep generative models of radar"
   "unique_context_marker": "[65]"
   "block_ids":
@@ -690,7 +690,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - null
+  - "Spatio-temporal forecasting and nowcasting"
 - "title": "A contemporary review on drought modeling using machine learning approaches"
   "unique_context_marker": "[77]"
   "block_ids":
@@ -712,7 +712,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "Spatio-temporal weather forecasting and attention mechanism on convolutional LSTMs"
@@ -747,7 +747,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Domain Overview"
+  - "Setting/Protocal Adoption"
   "topic_labels":
   - "Spatio-temporal forecasting and nowcasting"
 - "title": "ClimateBench v1.0: A Benchmark for Data-Driven Climate Projections"
@@ -759,9 +759,9 @@
   "intent_labels":
   - "Research Gap"
   - "Prior Methods"
-  - "Benchmark Utilization"
+  - "Resource Utilization"
   "topic_labels":
-  - null
+  - "Climate Prediction and Data-Driven Modeling"
   - "Climate Prediction and Data-Driven Modeling"
   - "Climate Prediction and Data-Driven Modeling"
 - "title": "The modelling infrastructure of the Integrated Forecasting System: Recent advances and future challenges"
