@@ -1,0 +1,262 @@
+title: 'LIT-4-RSVQA: LIGHTWEIGHT TRANSFORMER-BASED VISUAL QUESTION ANSWERING IN REMOTE
+  SENSING'
+abstract: 'Visual question answering ( VQA) methods in remote sensing (RS) aim to
+  answer natural language questions with respect to an RS image. Most of the existing
+  methods require a large amount of computational resources, which limits their application
+  in operational scenarios in RS. To address this issue, in this paper we present
+  an effective lightweight transformer-based VQA in RS (LiT-4-RSVQA) architecture
+  for efficient and accurate VQA in RS. Our architecture consists of: i) a lightweight
+  text encoder module; ii) a lightweight image encoder module; iii) a fusion module;
+  and iv) a classification module. The experimental results obtained on a VQA benchmark
+  dataset demonstrate that our proposed LiT-4-RSVQA architecture provides accurate
+  VQA results while significantly reducing the computational requirements on the executing
+  hardware. Our code is publicly available at https://git.tu-berlin.de/rsim/lit4rsvqa.
+
+
+  Index Terms— visual question answering, natural language processing, lightweight
+  transformer, remote sensing.'
+abstract_is_verbatim: true
+segmented_markdown: '# LIT-4-RSVQA: LIGHTWEIGHT TRANSFORMER-BASED VISUAL QUESTION
+  ANSWERING IN REMOTE SENSING
+
+
+  ## ABSTRACT
+
+  <block id="0">
+
+  Visual question answering ( VQA) methods in remote sensing (RS) aim to answer natural
+  language questions with respect to an RS image. Most of the existing methods require
+  a large amount of computational resources, which limits their application in operational
+  scenarios in RS. To address this issue, in this paper we present an effective lightweight
+  transformer-based VQA in RS (LiT-4-RSVQA) architecture for efficient and accurate
+  VQA in RS. Our architecture consists of: i) a lightweight text encoder module; ii)
+  a lightweight image encoder module; iii) a fusion module; and iv) a classification
+  module. The experimental results obtained on a VQA benchmark dataset demonstrate
+  that our proposed LiT-4-RSVQA architecture provides accurate VQA results while significantly
+  reducing the computational requirements on the executing hardware. Our code is publicly
+  available at https://git.tu-berlin.de/rsim/lit4rsvqa.
+
+
+  Index Terms— visual question answering, natural language processing, lightweight
+  transformer, remote sensing.
+
+
+  </block>
+
+  ## 1. INTRODUCTION
+
+  <block id="1">
+
+  As a result of the increased volume of remote sensing ( RS) image archives and the
+  amount of information that can be extracted from them, the development of visual
+  question answering (VQA) methods has recently become an important research topic
+  in RS. In the task of VQA in RS, the user asks a question to a system in natural
+  language concerning the content of RS images. During the last years, several VQA
+  methods have been presented in RS. As an example, [1] defines the VQA task in RS
+  as a classification problem. In this work, a ResNet-152 model is employed to extract
+  features from RS images, while skip-thought vectors are used to extract features
+  from the text data. Then, the multi-modal features obtained through point-wise multiplication
+  are classified using a multi-layer perceptron ( MLP) as classification head. In
+  [1], the first large-scale VQA benchmark dataset for RS based on low- and high-resolution
+  RS images and OpenStreetMap data is also introduced. In the VQA method presented
+  in [2], the recurrent neural network (RNN) based skip-thought vectors model for
+  text feature extraction used in [1] is replaced with the attention-based bidirectional
+  encoder representations from transformers (BERT) [3]. For the feature fusion, [2]
+  uses multi-modal tucker fusion for VQA (MUTAN), which enables a richer and more
+  meaningful interaction between features compared to a simple point-wise operation.
+  In [4], a multi-modal transformer-based VisualBERT fusion (VBFusion) architecture
+  is proposed. VBFusion uses a ResNet-152 architecture as a region proposal system
+  and a VisualBERT [5] model to learn the joint representation of image and text modalities
+  instead of simply combining modality-specific representations. A similar approach
+  is employed in [6], utilizing multi-modal BERT (MMBERT) [7]. This method also uses
+  a ResNet-152 as a feature encoder. Instead of different regions of the input image,
+  the backbone extracts five input representations at different resolutions and combines
+  image and text features with a shallow MMBERT encoder. A comprehensive review of
+  the current state-of-the-art of image-language models in RS is presented in [8].
+
+
+  All of the above-mentioned architectures provide good VQA accuracies. However, they
+  are associated with high computational complexity and parameter count ( PC), and
+  thus have limited capability to be applied for operational VQA applications in RS.
+  As an example, VBFusion has a PC of 277 million and requires about 184 billion floating
+  point operations (FLOPs) per forward pass. To overcome these limitations, in this
+  paper, we investigate the effectiveness of lightweight transformer-based models
+  for VQA problems in RS that require few parameters and are thus associated with
+  low computational requirements.
+
+
+  </block>
+
+  ## 2. LIGHTWEIGHT TRANSFORMER-BASED MODELS FOR VQA
+
+  <block id="2">
+
+  Given a triplet (I, Q, A) of an image, question, and answer, a VQA system provides
+  the answer A given the image I and the question Q as the input. In line with the
+  RS literature, we consider VQA in RS as a classification problem, where A is one
+  of nA predefined cases. In this paper, we study lightweight models for VQA in RS.
+  To this end, we introduce the lightweight transformer-based VQA in RS (LiT-4-RSVQA)
+  architecture that consists of four modules: i) a lightweight encoder module for
+  the text modality; ii) a lightweight encoder module for the image modality; iii)
+  a fusion module; and iv) a classification module (see Fig. 1). In detail, the text
+  encoder module is realized as one lightweight transformer (BERTTINY), while the
+  image encoder module is comprised of one of three lightweight image transformers:
+  i) data-efficient vision transformer (Deit Tiny) [9]; ii) mobile vision transformer
+  ( MobileViT-S) [10]; or iii) cross-covariance image transformer (XCiT Nano) [11].
+  We select these models based on their proven success from the literature and investigate
+  their effectiveness in VQA in RS. To the best of our knowledge, they are introduced
+  for the first time in VQA problems in RS. We combine BERTTINY with one of the above-mentioned
+  image encoders, resulting in three VQA model configurations.
+
+
+  In general, text and image transformers are trained using multi-head self-attention
+  (MSA), which is a mechanism that enables the model to focus on different parts (tokens)
+  of an input sequence. Attention computes scores between each pair of input tokens
+  through matrix multiplications and softmax operations, resulting in weights determining
+  how much attention should be given to each token. The attention weights are utilized
+  to prioritize relevant parts of the input, enabling the model to focus on the most
+  essential tokens. The attention operation [12] can be defined as:
+
+  Attention(Q, K, V ) = Softmax ( Q K^T / sqrt(d) ) V, (1)
+
+  where Q, K, and V are query, key, and value, respectively. For self-attention, they
+  are defined as Q = XWQ, K = XWK and V = XWV, where WQ, WK and WV are linear projection
+  matrices, and X is a sequence of d-dimensional embeddings of the input. For normalization,
+  the attention weights QK^T are scaled by the square root of the embedding dimension
+  d. To facilitate more diverse features, attention is computed in A parallel attention
+  heads. L transformer block layers are stacked to create a transformer network [12],
+  [13].
+
+
+  To obtain representations for the text modality, we utilize BERTTINY [14], which
+  is a distilled version of BERT [3]. BERTTINY uses the same general architecture
+  as BERT but with fewer layers L, attention heads A, and a smaller embedding dimension
+  d. It uses MSA and a feed-forward network (FFN) to extract features from text tokens
+  of the question input Q. BERTTINY is pre-trained using a three-step method: 1) a
+  large teacher model with more layers, attention heads, and larger embedding dimension
+  is trained using masked language modeling (MLM) and next sentence objectives; 2)
+  BERTTINY is pre-trained with MLM; 3) BERTTINY is additionally pre-trained using
+  knowledge distillation of the large teacher model from the first step. During the
+  last step, the student model BERTTINY learns from the soft labels produced by the
+  teacher model.
+
+
+  For the image feature extraction, Deit Tiny [9] uses MSA and a FFN. It extracts
+  token embeddings from I by splitting the image into patches following [13]. Similar
+  to BERTTINY, it uses a reduced number of attention heads A and a smaller embedding
+  dimension d to reduce the number of parameters and increase the throughput of the
+  model.
+
+
+  MobileViT-S [10] uses n × n and point-wise convolutions to encode local information
+  about a pixel and project the information into a higher dimensional space. The resulting
+  tensors are reshaped (unfolded) into non-overlapping patches (tokens) similar to
+  [13], and attention is applied to the tokens to model long-range interactions. Afterwards,
+  the tokens are reshaped into their original tensor dimensions (folding), which is
+  possible as the previous unfolding operation keeps the pixel and patch order intact.
+  This restores the original pixel location and allows for all pixels to encode information
+  about all other pixels without the need for a large number of tokens in the attention
+  operation. Combined with dimensionality-reducing MobileNet-blocks, the unfolding-attention-folding
+  operations reduce the latency and the number of parameters.
+
+
+  XCiT Nano [11] changes the order of matrix operations in MSA and thus greatly reduces
+  the cost of the attention operation. This cross-covariance attention (XCA) between
+  keys and queries is calculated between channels instead of tokens, significantly
+  reducing the number of calculations required. XCA [11] can be defined as:
+
+  AttentionXC(Q, K, V ) = V Softmax ( K^T Q / τ ), (2)
+
+  where K̂ and Q̂ are the normalized K and Q, respectively, and τ is a learnable temperature
+  parameter. As this change removes explicit communication between patches, a block
+  of convolutions, batch-norm, and non-linearity is added after each XCA block to
+  re-introduce information exchange. For further detailed information on the considered
+  models, we refer the reader to their respective papers mentioned above.
+
+
+  The feature fusion module consists of two linear projections and a modality combination.
+  The projections map the two modalities with dimensions dt and dv into a common dimension
+  df, where dt and dv denote the dimensions of the flattened output of the text and
+  image encoder modules, respectively. The value of dv differs depending on the used
+  lightweight transformer. The projected features are then element-wise multiplied
+  as in [1]. The classification module is defined as an MLP projection head. After
+  training of the proposed architecture, the VQA system can be used to generate an
+  answer A for a given input image I based on a natural language question Q.
+
+
+  </block>
+
+  ## 3. EXPERIMENTAL RESULTS
+
+  <block id="3">
+
+  The experiments were conducted on the RSVQAxBEN benchmark dataset [15], which contains
+  almost 15 million image/question/answer triplets extracted from the BigEarthNet-S2
+  dataset [16]. The questions provided in this dataset are about: i) the presence
+  of one or more specific land use/land cover ( LULC) classes, where the answers are
+  associated to “Yes/No” (called Yes/No); and ii) the type of the LULC classes, where
+  the answers are one or more LULC class names (called LULC). In this paper, we used
+  all available Sentinel-2 bands with 10 m and 20 m spatial resolution included in
+  the BigEarthNet-S2 dataset, as suggested in [4]. We restricted the model output
+  to the nA = 1,000 most frequent answers. We use the train/validation/test split
+  as proposed in [15].
+
+
+  In the experiments, we analyze our results between each other and compare them with
+  those obtained from: i) VBFusion [4]; and ii) Deit3 Base + BERTTINY (DBBT), which
+  is a VQA model that exploits the large transformer Deit3 Base [9] as image encoder
+  and BERTTINY as a text encoder. Each model (except VBFusion, for which we used the
+  same implementation proposed in [4]) is evaluated under two training regimes: i)
+  the image encoder is pre-trained for 100 epochs on BigEarthNet-S2, and fine-tuned
+  for additional ten epochs on the RSVQAxBEN dataset [15]; and ii) the full VQA network
+  is trained in an end-to-end fashion for ten epochs. In both cases, the text encoders
+  use pre-trained weights from Huggingface [17]. Both training regimes use a linear-warmup-cosine-annuling
+  learning rate schedule with a learning rate of 5 × 10−4 after 10,000 warm-up steps
+  with batch size and dropout set to 512 and 0.25, respectively. All models are trained
+  on a single A100 GPU with matrix multiplication precision set to “medium” in Pytorch
+  1.13.1. To evaluate the results, the models are compared in terms of their: i) accuracy
+  on the two question types Yes/No and LULC; ii) overall accuracy (OA), which is the
+  micro average of all answer classes; iii) average accuracy (AA), which is the macro
+  average of the two aforementioned question types; iv) parameter count (PC); and
+  v) floating point operations (FLOPs).
+
+
+  From the experiments, one can see that all models within our LiT-4-RSVQA architecture
+  provide competitive accuracies with significantly reduced computational complexity
+  compared to both baseline models. Among the models in LiT-4-RSVQA, the configuration
+  with pre-trained XCiT Nano achieves the highest accuracy with less than one-tenth
+  of the number of parameters and one-seventh of the computational effort measured
+  in FLOPs compared to DBBT. With an AA of 64.61 %, it is almost 9 % better than VBFusion
+  [4] and more than 2.5 % better than DBBT. However, it is worth noting that XCiT
+  Nano performs worst of all compared configurations when trained end-to-end. In terms
+  of FLOPs, the Deit Tiny-based configuration demands the fewest computational resources.
+  It uses less than 10 % of the FLOPs in comparison with the DBBT and more than 600
+  times fewer FLOPs when compared with VBFusion. However, the accuracy of this model
+  is higher in all evaluated metrics than the respective DBBT model and VBFusion.
+  In addition, one can observe that: i) models with pre-trained image encoders perform
+  better than end-to-end trained networks; and ii) better-performing pre-trained models
+  do not correspond to better-performing end-to-end trained models, highlighting the
+  advantage of using a pre-trained image encoder.
+
+
+  </block>
+
+  ## 4. CONCLUSION
+
+  <block id="4">
+
+  In this paper, we have studied efficient transformer-based models in the framework
+  of VQA in RS. In particular, we have introduced the LiT-4-RSVQA architecture. Our
+  architecture is based on lightweight transformer encoder modules, a feature fusion
+  module, and a classification module. Specifically, BERTTINY is used as a lightweight
+  text encoder, and Deit Tiny, MobileViT-S, and XCiT Nano are considered as lightweight
+  image encoders. Experimental results show that the investigated models can achieve
+  high accuracy in the task of VQA for RS while having significantly fewer parameters
+  and, therefore, lower computational requirements than larger models. We would like
+  to note that our architecture is not limited to the considered lightweight models.
+  As future works, we plan to: i) investigate different encoder models and on-board
+  processing with field-programmable gate arrays (FPGAs) and application-specific
+  integrated circuits (ASICs); and ii) develop a library to simplify the development
+  of VQA models in RS.
+
+  </block>'

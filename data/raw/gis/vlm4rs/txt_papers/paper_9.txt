@@ -1,0 +1,2352 @@
+SkyEyeGPT: Unifying Remote Sensing Vision-Language Tasks via Instruction
+Tuning with Large Language Model
+Yang Zhan1 , Zhitong Xiong2 , Yuan Yuan1
+1iOPEN, Northwestern Polytechnical University, Xi’an, China
+2Technical University of Munich (TUM), Munich, Germany
+{zhanyangnwpu, xiongzhitong, y.yuan1.ieee}@gmail.com
+Abstract
+Large language models (LLMs) have recently been
+extended to the vision-language realm, obtaining
+impressive general multi-modal capabilities. How-
+ever, the exploration of multi-modal large language
+models (MLLMs) for remote sensing (RS) data is
+still in its infancy, and the performance is not satis-
+factory. In this work, we introduce SkyEyeGPT, a
+unified multi-modal large language model specifi-
+cally designed for RS vision-language understand-
+ing. To this end, we meticulously curate an
+RS multi-modal instruction tuning dataset, includ-
+ing single-task and multi-task conversation instruc-
+tions. After manual verification, we obtain a high-
+quality RS instruction-following dataset with 968k
+samples. Our research demonstrates that with a
+simple yet effective design, SkyEyeGPT works sur-
+prisingly well on considerably different tasks with-
+out the need for extra encoding modules. Specifi-
+cally, after projecting RS visual features to the lan-
+guage domain via an alignment layer, they are fed
+jointly with task-specific instructions into an LLM-
+based RS decoder to predict answers for RS open-
+ended tasks. In addition, we design a two-stage tun-
+ing method to enhance instruction-following and
+multi-turn dialogue ability at different granulari-
+ties. Experiments on 8 datasets for RS vision-
+language tasks demonstrate SkyEyeGPT’s superi-
+ority in image-level and region-level tasks, such
+as captioning and visual grounding. In particu-
+lar, SkyEyeGPT exhibits encouraging results com-
+pared to GPT-4V in some qualitative tests. The on-
+line demo, code, and dataset will be released.
+1 Introduction
+With the rapid advancement of Large Language Models
+(LLMs), Vision-Language Models (VLMs) like Shikra[Chen
+et al., 2023b] and MiniGPT-v2[Chen et al., 2023a] have pro-
+foundly changed the landscape of Multi-modal Large Lan-
+guage Models (MLLMs). These models exhibit a remarkable
+ability to engage in fluent vision-language conversations with
+humans and have generated new state-of-the-art (SoTA) on
+multi-granularity vision-language tasks [Zhan et al., 2023b].
+RSVQA-LR
+UCM-Captions
+RSICD
+Sydney-Captions
+RSVQA-HR
+test 1
+RSVQA-HR
+test 2
+DIOR-RSVG
+RSVG
+test
+RSVG
+val
+CapERA
+Single-image coarse-level
+Single-image region-level
+Multi-image coarse-level
+SkyEyeGPT
+RSGPT
+MiniGPT-v2
+Shikra
+MiniGPT-4
+SOTA  Specialist
+23.8
+37.6
+65.2
+79.0
+23.6
+37.2
+64.4
+78.0
+27.0
+16.0
+38.0
+60.0
+52.2
+84.0
+49.0
+80.0 50.6
+82.0
+35.6
+71.2
+89.0
+71.0
+55.2
+39.417.8
+7.8
+70.0
+54.4
+38.8
+7.6
+92.0
+72.6
+53.2
+33.8
+14.4
+Figure 1: The performance of SkyEyeGPT on a broad range of RS
+vision-language tasks compared with existing models.
+LLaV A[Liu et al., 2023] has achieved great success in con-
+structing instruction-following data to fine-tune the model,
+bringing new possibilities to the field of MLLMs. Despite
+these strides, it is crucial to note that the triumph of gener-
+alized MLLMs has not seamlessly extended to remote sens-
+ing (RS) vision-language tasks due to inherent differences be-
+tween the natural and remote sensing domains.
+Recently, there has been significant attention on remote
+sensing vision-language tasks [Yuan et al., 2023a] of diverse
+granularity levels, including RS image captioning [Hoxha et
+al., 2023], RS visual question answering (VQA) [Yuan et al.,
+2023b], RS visual grounding [Zhan et al., 2023a], and UA V
+video captioning [Bashmal et al. , 2023 ]. Although efforts
+have been made to explore large vision-language models for
+remote sensing, it remains an emerging field with many chal-
+lenges. The pioneering work, RSGPT [Bashmal et al., 2023]
+is designed to address RS image captioning and VQA tasks
+using LLMs. However, it lacks the capability for multi-task
+conversation. RSGPT needs to train task-specific models on
+different datasets to solve tasks independently, which greatly
+limits its open-ended task capability.
+Toward an open generalist framework that seamlessly com-
+bines the advantages of LLMs with remote sensing tasks,
+we introduce SkyEyeGPT, a unified model capable of han-
+dling open-ended RS vision-language tasks. The input and
+output of each task are represented in natural language, in-
+arXiv:2401.09712v1  [cs.CV]  18 Jan 2024
+Describe the video frame image in detail.
+The scene features a large body of water, with 
+several boats filled with people rowing in 
+unison and forming lines.  Some of the boats 
+are carrying flags, and the participants can be 
+seen wearing uniforms.  There is a parking lot 
+and several buildings near the shore, possibly 
+serving as a viewing area for the race.  In the 
+top-left corner, there is a truck and a car 
+parked next to each other, suggesting that 
+they might have been used to transport 
+equipment or spectators to the event.
+[vqa] what is the event of this video frame image?
+boating
+[caption] Provide a concise depiction of this 
+video frame image.
+people are rowing in boats on a river 
+surrounded by buildings
+UserUser
+UserUser
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+SkyEyeGPT
+SkyEyeGPT
+SkyEyeGPT
+SkyEyeGPT
+[identify] This {<62><50><81><69>} is
+two tennis courts
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+SkyEyeGPT
+SkyEyeGPT
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Classify the image within one of the given 
+classes: sports field, forest, river, parking lot, 
+overpass, baseball diamond, freeway, agricultural, 
+chaparral, beach, buildings, intersection, dense 
+residential, sparse residential, medium residential, 
+airplane, tenniscourt, mobile home park, golf 
+course, storage tanks, runway, harbor. Answer it 
+using the above category word or phrase.
+two tennis courts with a baseball field 
+in the background
+[vqa] How many tennis courts are there?
+UserUser
+2
+[caption] Write a short description for 
+the image.UserUser
+sports field
+SkyEyeGPT
+SkyEyeGPT
+Describe this image in detail
+New chat (First round)
+SkyEyeGPT
+SkyEyeGPT
+UserUser
+UserUser
+This is a high-resolution aerial image 
+showing a baseball field on the left 
+side of the image with two baseball 
+fields, and two tennis courts on the 
+right side of the image, there's a large 
+grassy area surrounded by trees.
+[refer] where can I locate the 
+baseball field at the top?UserUser
+SkyEyeGPT
+SkyEyeGPT
+[detection] the two brown 
+baseball fieldsUserUser
+SkyEyeGPT
+SkyEyeGPT
+New chat (First round)
+ New chat (Second round)
+Figure 2: Remote Sensing Multimodal Conversational Interactions Facilitated by SkyEyeGPT. The demonstration showcases
+SkyEyeGPT engaging in multi-task dialogues and completing various RS multi-modal tasks such as detailed image description, visual ground-
+ing, phrase grounding, VQA, image captioning, referring expression generation, scene classification, and UA V video captioning.
+cluding bounding box coordinates. The SkyEyeGPT’s ar-
+chitecture consists of a visual encoder, an alignment layer,
+and an LLM-based decoder for RS open-ended tasks. We
+do not design any extra encoder or external plugin modules,
+making SkyEyeGPT a unified and efficient model, and also
+simple to train and deploy. Recent studies [Liu et al., 2023]
+have demonstrated the impressive results achieved by train-
+ing MLLMs via instruction tuning, to connect LLMs and vi-
+sion. Instruction tuning in the multi-modal domain of remote
+sensing is still underexplored. The challenge is the lack of
+large-scale RS multimodal instruction-following data.
+To foster the research of RS VLMs, we meticulously cu-
+rate an RS vision-language instruction-following dataset with
+968k training samples, namely SkyEye-968k. Our instruc-
+tions consist of the reorganization of public data and a few
+generated data. To guarantee correctness, data is manually
+verified and selected by our team members. We involve hu-
+mans in the loop to ensure the high quality of the conversa-
+tion instruction. The SkyEye-968k is divided into single-task
+image-text instruction and multi-task conversation instruc-
+tion. We set task-specific identifiers for different tasks to im-
+prove the ability of SkyEyeGPT on various specific tasks. To
+further explore multi-turn multi-task dialogue capabilities, we
+design a two-stage tuning that utilizes single-task and multi-
+task conversation instructions in two stages, respectively.
+Experiments on 8 remote sensing vision-language datasets
+demonstrate SkyEyeGPT’s superiority, as shown in Figure 1.
+To further investigate whether SkyEyeGPT possesses good
+instruction-following ability, we compare it with MiniGPT-
+4, Shikra, MiniGPT-v2, and GPT-4V . We provide several
+real conversations with users and comparisons in Figure 2,
+Figure 4, and Figure 5. Surprisingly, SkyEyeGPT, trained
+on our SkyEye-968k, shows results comparable to or even
+better than GPT-4V and can provide a more comprehen-
+sive and detailed understanding of remote sensing images.
+To demonstrate the effectiveness of the simple SkyEyeGPT
+structure, we conduct extensive and adequate ablation studies
+with more detailed results in the supplementary materials.
+Our contributions can be summarized as follows:
+• Unified RS vision-language instruction dataset, SkyEye-
+968k. One challenge is the lack of instruction data for
+RS multi-modal large language model. We create high-
+quality instruction-following data, including single-task
+and multi-task conversation instruction.
+• RS multi-modal large language model. We develop
+SkyEyeGPT, which unifies RS vision-language tasks
+and breaks new ground in enabling the unified model-
+ing of RS vision and LLM.
+• Superior performance. SkyEyeGPT achieves competi-
+tive performance on the image-level and region-level RS
+vision-language tasks. Specially, it has shown encourag-
+ing results in some tests, compared with GPT-4V .
+• Open source SkyEyeGPT for real-world applications.
+We release the following assets to the public commu-
+nity for applications in real-world scenarios: an on-
+line RS multi-modal chatbot, the model checkpoint, the
+instruction-following dataset, and the codebase.
+2 Related Work
+2.1 Remote Sensing Vision-Language Tasks
+Recently, there has been significant attention on multi-modal
+tasks in remote sensing vision-language understanding [Yuan
+et al., 2023a]. Traditional image-level tasks, such as RS im-
+age captioning and RS VQA, have made significant progress
+[Yuan et al. , 2023b ]. Emerging region-level and spatio-
+temporal tasks, such as RSVG [Zhan et al. , 2023a ] and
+UA V video captioning [Bashmal et al. , 2023 ], have raised
+novel challenges and garnered increasing interest. Despite
+the availability of numerous state-of-the-art methods capa-
+ble of performing these tasks [Xiong et al., 2022], they are
+typically trained on a specific dataset to perform a specific
+task. This work primarily focuses on unifying the diverse RS
+vision-language tasks.
+2.2 LLMs for Vision-Language
+With the rise of advanced LLMs, ChatGPT [OpenAI, 2022],
+LLaMA [Touvron et al., 2023a], GPT-4 [OpenAI, 2023], and
+Vicuna [Chiang et al., 2023 ] have shown remarkable abili-
+ties in various language tasks. BLIP-2 [Li et al., 2023] ex-
+tends LLMs into the realm of multimodal by connecting the
+frozen LLM with a visual encoder via Q-Former. Some ap-
+proaches employ the simplest linear layer as a mediator to
+link LLMs and visual encoders, achieving notable success,
+such as LLaV A [Liu et al. , 2023 ], MiniGPT-4 [Zhu et al. ,
+2023]. Recent contributions from VisionLLM [Wang et al.,
+2023], Shikra [Chen et al., 2023b], and MiniGPT-v2 [Chen
+et al., 2023a] further substantiate that spatial coordinates in
+visual grounding tasks can be effectively handled in language
+form by LLM. These approaches showcase the potential and
+versatility of LLM for seamless integration of vision and lan-
+guage modalities. The application and research on general-
+ized MLLMs in RS have been comparatively limited. RS-
+GPT [Hu et al., 2023] was the first attempt, but it could only
+handle coarse-grained tasks of image-text and doesn’t support
+open-ended multi-tasks and multi-task conversations.
+2.3 Vision-Language Instruction Tuning
+The purpose of instruction tuning is to enhance the in-
+struction following ability of the model. Drawing inspira-
+tion from LLMs in instruction tuning, LLaV A [Liu et al. ,
+2023] fine-tunes the model based on synthetic multi-modal
+instruction-following data. Instruct-BLIP [Dai et al., 2023]
+collects a larger set of instruction data, resulting in improved
+performance for BLIP. These methods primarily focus on
+image-level coarse-grained tasks, and cannot effectively ad-
+dress fine-grained perception challenges. Recent Vision-
+LLM [Wang et al., 2023], Shikra [Chen et al., 2023b], and
+MiniGPT-v2 [Chen et al., 2023a] further utilize instruction-
+following data to tackle fine-grained visual perception tasks
+such as visual grounding, region caption, and object detec-
+tion. These methods demonstrate the potential of instruc-
+tion tuning strategies to mine the LLM’s ability to under-
+stand and respond to multi-grained multi-modal instructions.
+Our method aims to provide a unified framework for handling
+open-ended RS vision-language tasks and develop multi-task
+conversational capability via instruction tuning.
+3 Method of SkyEyeGPT
+3.1 Overall Architecture
+As depicted in Figure 3, SkyEyeGPT consists of a visual en-
+coder, an alignment layer, and an LLM-based decoder for
+Visual Embeddings
+< x1 >…< xi >…< xL >
+Generated
+Answer Xa :
+EVA
+CLIP FvZv
+Xinstruct
+Example: <Img>RS Image Features</Img> [caption] Briefly describe this image.
+Task-specific 
+RS Instruction
+Alignment
+Layer LoRALoRA LoRALoRALLM-based Decoder for 
+RS Open-Ended Tasks
+Figure 3: The overall framework of the proposed SkyEyeGPT.
+RS open-ended tasks. More detailed comparisons of existing
+MLLMs are presented in the supplementary materials.
+Visual Encoder. The pre-trained vision transformer, EV A-
+CLIP [Fang et al., 2023], is employed as the visual encoder.
+The parameters are frozen during our training. Given an input
+RS image I ∈ RH×W ×3, H and W represent the height and
+width, respectively. Initially, the resolution of remote sensing
+images is standardized to 448×448. Subsequently, we apply
+the EV A model to segment the image into patches and extract
+image embeddings Zv ∈ RN ×D from these patches, where
+N is the number of patches and D is the hidden dimension.
+The UA V video features are formed by the concatenation of
+features from multiple frame images.
+Alignment Layer. We consider a linear layer to bridge
+the modality gap, aligning RS visual features from the vi-
+sual encoder with the language features from advanced LLM.
+The input resolution is crucial for accurately understanding
+detailed RS image-text representations. However, the high
+resolution of 448 × 448 will generate an excessive number of
+patches N, which reduces the efficiency of processing con-
+textual input in the LLM and is highly resource-demanding.
+Therefore, we opt not to directly project the RS image em-
+beddings into the linear layer. A simple yet effective method
+[Chen et al., 2023a] is adopted to directly concatenate four
+adjacent visual tokens to reduce the number of patches by
+four times. The linear layer converts the visual tokens Z
+′
+v ∈
+R
+N
+4 ×(4×D) into embeddings Fv ∈ R
+N
+4 ×d in the language
+space, where d is the hidden dimension size of LLM.
+LLM-based Decoder for RS Open-Ended Tasks. We
+choose open-sourced LLaMA2-chat [Touvron et al., 2023b]
+as our language model, which is a decoder-only LLM. Our
+decoder takes a sequence of visual tokens Fv and language
+instructions as input, generating task-specific answers. We
+acknowledge the existence of more sophisticated (but ex-
+pensive) methods for connecting remote sensing images and
+language, such as Q-former in BLIP-2 [Li et al., 2023 ], or
+other encoders like RemoteCLIP pre-trained on remote sens-
+ing data. We explore potentially more efficient or sophisti-
+cated architectures for SkyEyeGPT in ablation experiments.
+3.2 Unified RS Vision-Language Instruction
+While acquiring instruction fine-tuning datasets in the general
+domain is straightforward, there are no equivalent datasets in
+the remote sensing domain. To address this gap, a unified RS
+vision-language instruction data, SkyEye-968k, is carefully
+planned and specifically tailored for the RS vision-language
+large model. Our instruction data with 968k training samples
+consists of the reorganization of public data and a few gener-
+ated data verified manually. Details are summarized in Table
+Task Data Source Samples
+Image
+Captioning
+RSICD[Luet al., 2018] 43.7k
+RSITMD[Yuanet al., 2022b] 21.5k
+UCM-Captions[Quet al., 2016] 8.4k
+Sydney-Captions[Quet al., 2016] 2.5k
+NWPU-Captions[Chenget al., 2022] 126.0k
+Video
+Captioning CapERA[Bashmalet al., 2023] 7.4k
+Visual
+Question
+Answering
+ERA-VQA (Ours) 1.5k
+RSIVQA[Zhenget al., 2022] 17.7k
+RSVQA-LR[Lobryet al., 2020] 57.2k
+RSVQA-HR[Lobryet al., 2020] 625.3k
+Visual
+Grounding
+RSVG[Sunet al., 2022] 5.5k
+DIOR-RSVG[Zhanet al., 2023a] 27.0k
+Phrase
+Grounding RSPG (Ours) 6.8k
+Multi-task
+Conversation
+DOTA-Conversa∗ (Ours) 1.4k
+DIOR-Conversa∗ (Ours) 14.7k
+UCM-Conversa∗ (Ours) 1.7k
+Sydney-Conversa∗ (Ours) 0.5k
+Table 1: Details on the training samples used for the RS vision-
+language instruction. The asterisk indicates that this data is only
+used in the second stage.
+1. We ensure that no images from the validation or test sets
+appear in the instructions, thus eliminating the risk of data
+leakage. The SkyEye-968k dataset is divided into two parts:
+Single-task Image-text Instruction.
+• Captioning task. Specifically, we integrate five RS
+image captioning (RSICD, RSITMD, UCM-Captions,
+Sydney-Captions, and NWPU-Captions) and one UA V
+video captioning dataset (see Table 1).
+• VQA task. We integrate three public RS VQA datasets
+(RSIVQA, RSVQA-LR, and RSVQA-HR). The ERA-
+VQA dataset is generated based on the event recognition
+in aerial videos (ERA) dataset [Mou et al., 2020]. Take
+frame images and questions about the event theme as
+input.
+• Grounding task. We integrate two public RS visual
+grounding datasets (RSVG and DIOR-RSVG). Follow-
+ing the method of generating object parsing and ground-
+ing instructions [Chen et al., 2023a], we created an RS
+phrase grounding dataset (RSPG). With RS images and
+phrases as input, the output target bounding box can be
+either single or multiple.
+Multi-task Conversation Instruction. Single-task in-
+struction focuses only on high-quality aligned image-text data
+to improve SkyEyeGPT’s performance on each specific task.
+After the first stage of tuning, when engaging in multiple
+rounds of conversations with the user, the model may strug-
+gle to handle subsequent tasks effectively as the context be-
+comes more complex. To transform SkyEyeGPT into a pro-
+ficient chatbot, we must focus on how to enhance its multi-
+task conversation capabilities, ensuring a good and seamless
+user experience. To tackle this challenge, we create the RS
+multi-task conversation instruction by mixing or reorganizing
+datasets from different tasks.
+Specifically, we mix the corresponding captioning and
+VQA datasets to get UCM-Conversa and Sydney-Conversa
+[INST] <Img> RS Image Features </Img> [Task Identifier] Instruction [/INST]
+Conversation input template of SkyEyeGPT:
+Task 1: RS Image Captioning
+[caption] Briefly describe this image.
+[caption] Summarize this image in a few words.
+Task 2: UAV Video Captioning
+[caption] Provide a concise depiction of this video frame image.
+[caption] Could you use a few words to describe what you perceive in the   
+        video frame image?
+Task 3: RS Visual Question Answering
+[vqa] {question sample}
+[vqa] based on the image, respond to this question with a short answer:  
+ {question sample}
+Task 4: RS Visual Grounding
+[refer] from this image, tell me the location of {RS referring expression sample}
+[refer] where can I locate the {RS referring expression sample} ?
+Task 5: RS Phrase Grounding
+[detection] {RS phrase sample}
+Table 2: Conversation input template and instruction examples (ran-
+domly chosen examples) for each task.
+instruction. Using the DIOR-RSVG dataset and DIOR
+dataset [Li et al. , 2020 ], we construct DIOR-Conversa in-
+struction which contains visual grounding, phrase ground-
+ing, and referring expression generation tasks. Similarly, we
+leverage RSIVQA and the DOTA object detection dataset
+[Xia et al., 2018] to build a conversation instruction, DOTA-
+Conversa, that includes VQA and phrase grounding tasks. To
+guarantee correctness, data is manually verified and selected
+by our team members. We involve humans in the loop to en-
+sure the high quality of the instruction.
+3.3 Instruction Tuning
+The model is trained to follow a series of task-specific instruc-
+tions on the RS multi-modal instruction-following data. The
+input template and instruction examples for SkyeyeGPT are
+illustrated in Table 2. To achieve an effective SkyEyeGPT,
+we design a two-stage instruction tuning approach.
+Input and Output Template. We build a variety of task
+inputs, following the conversation input template in Table
+2. We introduce task-specific identifiers, such as “[caption],
+[vqa], [refer]”. This design achieves the unification of RS
+vision-language tasks while allowing the model to flexibly
+produce task-specific outputs. The answer or response, i.e.,
+the model output, follows after the [/INST]. The input or out-
+put of region-level tasks requires bounding boxes of objects.
+We represent the coordinates in the natural language form
+{<x1><y1><x2><y2>}. Specifically, ( x1, y1) and ( x2,
+y2) denote the coordinates of the top-left and bottom-right
+corners of the box, respectively. The coordinate values are
+normalized, multiplied by 100, and rounded to integers.
+Stage 1: Remote Sensing Image-Text Alignment. This
+stage trains the model using the single-task image-text in-
+struction. This helps SkyEyeGPT build remote sensing fine-
+grained knowledge of multi-tasking. Treat each sample as a
+single-round conversation Xc = ( Xinstruct, Xa). For the
+given RS image features Fv, connect it with the instruction
+tokens Xinstruct from the text modality. This concatenated
+input is then fed into the LLM. SkyEyeGPT generates the
+answer Xa with a length of L. Maximizing the likelihood
+Method Open-Ended BLEU-1 BLEU-2 BLEU-3 BLEU-4 METEOR ROUGE L CIDEr
+Specialist Models: representative or SoTA methods with results reported in the literature
+SAA[Luet al., 2020] ✗ 79.62 74.01 69.09 64.77 38.59 69.42 294.51
+Post-processing[Hoxhaet al., 2023] ✗ 79.73 72.98 67.44 62.62 40.80 74.06 309.64
+Generalist Models: results of our own experimental runs (except RSGPT)
+MiniGPT-4[Zhuet al., 2023] ✓ 30.90 27.55 22.23 18.10 33.36 41.37 0.03
+Shikra[Chenet al., 2023b] ✓ 81.16 58.94 43.26 33.98 32.56 56.73 56.69
+MiniGPT-v2[Chenet al., 2023a] ✓ 81.10 60.27 45.10 36.16 32.41 56.57 60.66
+RSGPT[Huet al., 2023] ✗ 86.12 79.14 72.31 65.74 42.21 78.34 333.23
+SkyEyeGPTsingle ✗ 92.03 85.66 80.63 76.76 46.24 80.10 220.99
+SkyEyeGPTone−stage ✓ 90.58 83.97 78.52 74.41 45.10 77.41 220.36
+SkyEyeGPT ✓ 90.71 85.69 81.56 78.41 46.24 79.49 236.75
+Table 3: Comparisons with Generalist and Specialist models on UCM-captions dataset for RS image captioning task.
+Method Open-Ended BLEU-1 BLEU-2 BLEU-3 BLEU-4 METEOR ROUGE L CIDEr
+Specialist Models: representative or SoTA methods with results reported in the literature
+CapERA[Bashmalet al., 2023] ✗ 50.43 37.26 29.24 22.90 21.16 43.90 60.42
+Generalist Models: results of our own experimental runs
+MiniGPT-4[Zhuet al., 2023] ✓ 25.20 22.98 18.57 14.98 30.40 33.71 0.05
+Shikra[Chenet al., 2023b] ✓ 79.11 60.57 46.29 37.29 32.06 56.47 26.16
+MiniGPT-v2[Chenet al., 2023a] ✓ 81.82 63.62 49.31 39.93 32.61 57.25 56.47
+SkyEyeGPTsingle ✗ 80.40 68.52 58.59 51.49 34.08 63.31 90.92
+SkyEyeGPTone−stage ✓ 75.74 64.64 55.62 49.20 31.82 61.49 85.11
+SkyEyeGPT ✓ 80.13 69.04 59.56 52.74 33.97 63.67 91.90
+Table 4: Comparisons with Generalist and Specialist models on CapERA dataset for aerial video captioning task.
+function that is defined as follows:
+L = logP (Xa | Fv, Xinstruct; θ)
+=
+LX
+i=1
+logP (xi | Fv, Xinstruct, Xa,<i; θ) , (1)
+where P and θ are the conditional probability and the train-
+able parameters, and Xa,<i is the answer tokens preceding
+the current prediction tokens xi.
+Stage 2: Multi-task Conversation Fine-tuning. This
+stage uses the multi-task conversation instruction to better an-
+swer questions for multiple rounds and multiple tasks, en-
+abling SkyEyeGPT to generate more natural and convinc-
+ing outputs in multi-task conversations. The multi-task con-
+versation is represented as a list Xc = ( X 1
+instruct, X 1
+a, ...,
+X n
+instruct, X n
+a ), where X n
+instruct is the instruction for n-th
+turn. Similarly, the objective function is as follows:
+L = logP (Xa | Fv, Xinstruct; θ)
+=
+LX
+i=1
+logP (xi | Fv, Xinstruct,<i, Xa,<i; θ) , (2)
+where Xinstruct,<i is the instruction tokens in all turns before
+the current prediction tokens xi. Therefore, the instructions
+and answers from previous rounds serve as references for the
+current task’s response.
+In the above two stages, we employ the Low-Rank Adap-
+tation (LoRA) method to fine-tune the alignment layer and
+LLM, as shown in Figure 3. This approach can fine-tune the
+model with limited resources and promote alignment between
+the two modalities of remote sensing vision and language.
+4 Experiments
+4.1 Experimental Details
+The parameters of the linear layer and LLM are initialized
+from MiniGPT-v2’s checkpoint [Chen et al., 2023a]. In the
+first stage, we finetune our SkyEyeGPT end-to-end for 35
+epochs on the single-task image-text instruction. In the sec-
+ond stage, we add the multi-task conversation instruction and
+reduced the sampling ratio of single-task instruction to train
+5 epochs of SkyEyeGPT. Our setting is the same for the two
+training stages. The AdamW is used as the optimizer. We set
+the batch size to 1 with 10−5 learning rate and a cosine learn-
+ing rate scheduler. To control overfitting, we apply a weight
+decay of 0.05. The rank in LoRA is 64. All training is con-
+ducted on four NVIDIA 3090 GPUs.
+4.2 Remote Sensing Multi-modal Chatbot
+As shown in Figure 2, we have developed a demonstration
+of a remote sensing multi-modal chatbot, showcasing the
+vision-language understanding and conversational capabili-
+ties of SkyEyeGPT. We also provide several real conversa-
+tions with users or comparisons in Figure 4, Figure 5, and
+supplementary materials. Surprisingly, SkyEyeGPT, trained
+on our RS instruction-following dataset, demonstrates results
+comparable to or even better than GPT-4V .
+4.3 Main Results
+We conduct experiments on four representative tasks: RS im-
+age captioning, UA V video captioning, RS visual question
+answering, and RS visual grounding. Specialist models are
+designed for specific tasks, and we only report a few lat-
+est SoTA methods. Generalist models can perform various
+vision-language tasks.
+Counting the exact number of ships and cars in this picture 
+would be challenging. However, at a glance, it appears that 
+the number of boats in the marina may be greater than the 
+number of cars visible in the parking lots. 
+a wide river with some plants 
+on the banks while a highway 
+passed by
+SkyEyeGPT
+SkyEyeGPT
+(a)
+Two white airplanes are parked 
+at the airport
+[vqa] Is there a moving ship in this 
+picture?
+(b) (c)
+[refer] where can I locate the 
+gray overpass on the right?UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Shikra
+Shikra
+MiniGPT-v2
+MiniGPT-v2
+UserUser
+UserUser
+[caption] briefly describe the image
+SkyEyeGPT
+SkyEyeGPT
+UserUser
+UserUser
+[caption] Can you briefly explain 
+what you see in the image?
+a bridge is over a river with 
+some green trees and buildings 
+in two sides of the river
+UserUser
+UserUser
+[caption] Summarize this image in a 
+few words.
+[refer] where is the red 
+car next to a grey car?UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Shikra
+Shikra
+MiniGPT-v2
+MiniGPT-v2
+SkyEyeGPT
+SkyEyeGPT
+UserUser
+UserUser
+ [vqa] Are there less ships than cars 
+in this picture?
+UserUser
+UserUser
+Yes.
+No.
+No.
+ ……
+MiniGPT-v2
+MiniGPT-v2
+GPT-4V
+GPT-4V
+Shikra
+Shikra
+SkyEyeGPT
+SkyEyeGPT
+Yes.
+No.
+No.
+ Yes.
+MiniGPT-v2
+MiniGPT-v2
+GPT-4V
+GPT-4V
+Shikra
+Shikra
+SkyEyeGPT
+SkyEyeGPT
+Figure 4: Some testing samples of captioning, grounding, and VQA. SkyEyeGPT has demonstrated impressive performance.
+RS Captioning: Image caption is crucial for assessing the
+quality of the alignment between RS vision and language. For
+this task, the model generates a description based on the user-
+input RS image and instruction. As shown in Tables 3 and
+4, we achieved the best performance in most of the metrics
+except for CIDEr on the UCM-caption and achieved SoTA
+results on the CapERA dataset for aerial video captioning.
+MiniGPT-4 generates longer captions with rich details, so it is
+difficult for existing captioning evaluation metrics to provide
+accurate evaluation, especially CIDEr. RSGPT achieves high
+CIDEr scores due to its fine-tuning on each dataset to produce
+results with similar lengths. We employ a novel ChatGPT-
+based evaluation method in the supplementary material.
+Figures 4 (a) and 5 show some qualitative results for im-
+age caption and comparison for the detailed description, re-
+spectively. The first sentence is an overview of the images,
+while MiniGPT-4, Shikra, and MiniGPT-v2 are limited to ten-
+nis courts only, whereas SkyEyeGPT and GPT-4V describe
+it better as a sports field or court. Both MiniGPT-4 and
+MiniGPT-v2 exhibit errors in descriptions, whereas Shikra
+excels in referential dialogue and is not suitable for detailed
+description. GPT-4V performs admirably, but it ignores the
+buildings at the top left of the image and the parking lot at the
+bottom, which SkyEyeGPT accurately describes.
+RS Visual Grounding: The model receives an RS image
+and a referring expression, then outputs the bounding box re-
+ferring to the target object. Quantitative results for the test set
+of DIOR-RSVG and the validation and test sets of RSVG are
+provided in Table 5. The RSVG dataset requires the model to
+have a stronger numerical geospatial relations understanding.
+Our testing has shown that Shikra has poor robustness, per-
+Method RSVG DIOR-RSVG
+val test test
+Specialist Models: representative or SoTA methods with results
+FAOA[Yanget al., 2019] 30.06 30.15 67.21
+ReSC[Yanget al., 2020] 53.96 51.18 72.71
+LBYL-Net[Huanget al., 2021] 31.64 32.19 73.78
+GeoVG[Sunet al., 2022] 58.20 59.40 /
+MGVLF[Zhanet al., 2023a] / / 76.78
+Generalist Models: results of our own experimental runs
+Shikra[Chenet al., 2023b] 2.16 1.87 26.08
+MiniGPT-v2[Chenet al., 2023a] 48.63 45.48 80.47
+SkyEyeGPTsingle 70.02 69.68 87.64
+SkyEyeGPTone−stage 67.49 66.98 86.24
+SkyEyeGPT 69.19 70.50 88.59
+Table 5: Comparisons with Generalist and Specialist models on
+RSVG and DIOR-RSVG datasets for RS visual grounding task.
+forming poorly outside of the training set domain, and cannot
+be used on the more challenging RSVG dataset. SkyEyeGPT
+outperforms the SoTA specialist models by about 10%. Fig-
+ure 4 (b) displays test examples from NWPU and DOTA im-
+ages, indicating that SkyEyeGPT has good robustness and
+precise localization ability for small objects.
+RS VQA: Table 6 shows the results of our RSVQA eval-
+uation. RSGPT separately fine-tuned on the RSVQA dataset
+yields high performance. Our average accuracy is 8% lower
+than RSGPT. Moreover, the images in RSVQA belong to
+satellite imagery in our SkyEye-968k, while other RS images
+belong to aerial images. The image modality difference of
+RSVQA leads to performance loss. Addressing the modal-
+ity difference problem of RS images from different sources
+is a key focus of our future work. Figure 4 (c) presents test
+Method Open-
+Ended
+RSVQA-LR Test Set RSVQA-HR Test Set 2
+Presence Comparison Rural/Urban Average Acc Presence Comparison Average Acc
+Specialist Models: representative or SoTA methods with results reported in the literature
+EasyToHard[Yuanet al., 2022a] ✗ 90.66 87.49 91.67 89.94 87.97 87.68 87.83
+SHRNet[Zhanget al., 2023] ✗ 91.03 90.48 94.00 91.84 89.81 89.44 89.63
+Generalist Models: results of our own experimental runs (except RSGPT)
+MiniGPT-4[Zhuet al., 2023] ✓ 43.86 57.55 62.00 54.47 50.43 52.60 51.52
+Shikra[Chenet al., 2023b] ✓ 46.47 60.31 63.62 56.80 57.28 56.63 57.00
+MiniGPT-v2[Chenet al., 2023a] ✓ 49.85 63.09 59.00 57.31 66.34 59.40 62.87
+RSGPT[Huet al., 2023] ✗ 91.17 91.70 94.00 92.29 89.87 89.68 89.78
+SkyEyeGPTsingle ✗ 90.23 90.46 84.00 88.23 87.50 86.24 86.87
+SkyEyeGPTone−stage ✓ 87.20 88.46 68.00 81.22 80.00 80.26 80.13
+SkyEyeGPT ✓ 88.93 88.63 75.00 84.19 83.50 80.28 81.89
+Table 6: Results on RSVQA-LR test set and RSVQA-HR test set 2. Comparison of VQA results by Generalist and Specialist baselines.
+User：Describe this image in detail.
+SkyEyeGPT：This is an aerial image depicting a sports field in the center of the image, 
+there are eight tennis courts arranged neatly with several trees surrounding them, and a 
+swimming pool located nearby to the left of the tennis courts, there is a large parking lot 
+with several vehicles , and on the right side of the image, there is a road with some 
+greenery and a few buildings on the left top of the image.
+GPT-4V：This is an aerial image of a recreational facility with various sports courts. There are multiple tennis courts in two distinct colors: green 
+and blue, with some having red playing areas. There is also a large swimming pool in the center, surrounded by buildings that could be changing 
+rooms or clubhouses. Adjacent to the pool is a smaller, possibly a children's pool. The area is surrounded by green spaces with trees and some open 
+grassy areas. To the right side, there is a highway or a major road with vehicles, indicating the facility is located near a roadway.
+Shikra：An aerial view of a tennis resort with several courts.
+MiniGPT -v2：The image depicts a lush green tennis court , with multiple tennis courts spread out across the scene. There are at least 15 tennis 
+courts visible in various positions around the area, some of which are located closer to each other and others farther apart. The co urts are situated on 
+a hill, providing an elevated view of the entire area.
+In addition to the tennis courts, there are several cars parked around the area, indicating that it is a popular location for recreational activities. A few 
+people can be seen scattered throughout the scene, possibly enjoying their time on the courts or observing the game from the sidelines.
+User：
+MiniGPT-4：This image shows an aerial view of a tennis court and surrounding area. 
+The court is surrounded by trees and has several tennis players on it. There are also 
+several other courts in the background. The area is surrounded by a fence  and there are 
+several parking spaces nearby. The overall view is of a well maintained tennis facility.
+Figure 5: Detailed description results on RS images with complex scenes demonstrate the comparable and encouraging remote sensing visual
+understanding capability of SkyEyeGPT compared to GPT-4V .
+samples from DOTA images, where SkyEyeGPT and GPT-
+4V have impressive performance. We provide more detailed
+results in the supplementary materials, including the results
+for Sydney-caption, RSICD, and RSVQA-HR test set 1.
+4.4 Ablation Studies
+In this section, we analyze the impact of key components
+and hyperparameters of SkyEyeGPT in detail. To explore
+the impact of SkyEyeGPT’s multi-task learning and two-
+stage instruction tuning approach, we develop two variants
+(SkyEyeGPTsingle and SkyEyeGPT one−stage) to compare
+single-task tuning and one-stage instruction tuning. single
+indicates that the model is trained separately on each task and
+lacks open-ended task ability. As shown in Tables 3-6, except
+for the VQA task where the model without open-ended task
+ability is significantly better than SkyEyeGPT, their perfor-
+mance is comparable in other tasks, indicating a balance be-
+tween SkyEyeGPT’s accuracy and generalization. The model
+trained with the multi-task conversation instruction in the sec-
+ond stage can significantly improve performance on various
+tasks. To demonstrate that our alignment layer is sufficient to
+align RS visual and textual features, we design three variants:
+(a) w/o Linear Layer, (b) + Multiple Linear Layers, and (c)
++ Q-Former. We also compare the impact with and without
+task identifiers. We set different ranks in LoRA to explore
+the impact on the results. We provide more detailed ablation
+experiments and results in the supplementary material.
+5 Conclusion
+In this work, we introduce SkyEyeGPT, a unified open
+MLLM tailored specifically for remote sensing. We con-
+struct an RS multi-modal instruction-following dataset, in-
+cluding single-task and multi-task conversation instruction.
+We design a two-stage tuning method to develop the model’s
+multi-task and multi-round conversational ability. Task-
+specific identifiers are set to facilitate a unified treatment
+of open-ended tasks. The effectiveness and superiority of
+SkyEyeGPT are validated on a range of different granular-
+ity tasks. SkyEyeGPT achieves the new SoTA accuracy on
+many tasks and provides an exceptional remote sensing multi-
+modal chatting experience. This work represents a signifi-
+cant advancement in the remote sensing multi-modal domain,
+offering a versatile and high-performing solution for open-
+ended tasks in a unified framework via LLM.
+Appendices
+In the supplementary material, we provide detailed structural
+comparisons of existing MLLMs, instructions of various re-
+mote sensing multi-modal tasks, more quantitative results,
+more ablation studies of SkyEyeGPT, and more qualitative
+results.
+A Architecture Comparison of MLLMs
+We extract the description of the structure of existing SoTA
+visual-language multi-modal large language models from the
+original literature, as follows:
+MiniGPT-4 [Zhu et al. , 2023 ]: It utilizes an advanced
+large language model (LLM), Vicuna, which is built upon
+LLaMA. In terms of visual perception, we employ the same
+pre-trained vision components of BLIP-2 that consist of a
+ViT-G/14 from EV A-CLIP and a Q-Former network. We tar-
+get to bridge the gap between the visual encoder and LLM
+using a linear projection layer.
+LLaV A[Liu et al., 2023]: We choose LLaMA as our LLM.
+For an input image, we consider the pre-trained CLIP visual
+encoder ViT-L/14, which provides the visual feature. We con-
+sider a simple linear layer to connect image features into the
+word embedding space.
+Shikra [Chen et al., 2023b]: We selected the pre-trained
+ViT-L/14 of CLIP as visual encoder and Vicuna-7/13B as our
+LLM. We use one fully connected layer to map the ViT’s out-
+put embedding V to V’ for modal alignment and correct input
+dimension of LLM.
+MiniGPT-v2[Chen et al., 2023a]: It consists of three com-
+ponents: a visual backbone, a linear projection layer, and a
+large language model. MiniGPT-v2 adapts the EV A ViT as
+our visual backbone model backbone. MiniGPT-v2 adopts
+the open-sourced LLaMA2-chat (7B) as the language model
+backbone.
+u-LLaV A [Xu et al. , 2023 ]: To align representations
+among different modalities, the projector-based structure is
+adopted in this work: the pre-trained CLIP ViT-L/14 and a
+visual projector are combined to encode image inputs, while
+the LLaMA2 is employed as the cognitive module. The vi-
+sion projector for representation alignment and the hidden
+state projector for segmentation are two MLPs with channels
+of [1024, 4096] and [256, 4096, 4096].
+RSGPT [Hu et al. , 2023 ]: Off-the-shelf frozen pre-
+trained image encoders (EV A-G) and large language mod-
+els (vicuna7b, vicuna13b) form the foundation of the model.
+Following InstructBLIP, an instruction-aware Query Trans-
+former (Q-Former) is inserted between them to enhance the
+alignment representation of visual features and textual fea-
+tures. Furthermore, a linear layer is introduced to project
+the output features of the Q-Former into the input features
+of LLM.
+We have sorted out the key structures and summarized
+them in Table 7. All models employ ViT as their visual
+encoder, and the pre-trained models are sourced from either
+CLIP [Radford et al., 2021] or EV A[Fang et al., 2023]. There
+are two types of connection between the vision feature and
+LLM, one follows InstructBLIP [Dai et al., 2023] which uti-
+lizes a Q-former and a linear layer, and the other employs
+only a linear layer. The LLM used in these models is chosen
+from the current most advanced open-source LLM. The vi-
+sual encoder is all frozen during training, and the non-frozen
+components are mainly divided into linear layers and LLM.
+B Instructions
+Instructions for RS image captioning. The list of instruc-
+tions for RS image captioning which briefly describes the RS
+image content is shown in Table 8. They present the same
+meaning with natural language variance.
+• Briefly describe this image.
+• Provide a concise depiction of this image.
+• Present a short description of this image.
+• Summarize this image in a few words.
+• A short image caption:
+• A short image description:
+• A photo of
+• An image that shows
+• Write a short description for the image.
+• Write a description for the photo.
+• Provide a description of what is presented in the photo.
+• Briefly describe the content of the image.
+• Can you briefly explain what you see in the image?
+• Could you use a few words to describe what you perceive in 
+the photo?
+• Please provide a short depiction of the picture.
+• Using language, provide a short account of the image.
+• Use a few words to illustrate what is happening in the picture.
+Table 8: The list of instructions for RS image captioning.
+Instructions for RS visual grounding. The list of instruc-
+tions for RS visual grounding which localizes the spatial lo-
+cation of the RS object is shown in Table 9. They present the
+same meaning with natural language variance.
+Model Visual encoder Connection of multimodal LLM Non-frozen Components
+MiniGPT-4 ViT-G/14 (EV A-CLIP) a Q-Former + a linear layer Vicuna linear layer
+LLaV A ViT-L/14 (CLIP) a linear layer LLaMA stage1: linear layer
+stage2: linear layer & LLM
+Shikra ViT-L/14 (CLIP) a fully connected layer Vicuna-7/13B fully connected layer & LLM
+MiniGPT-v2 ViT (EV A-CLIP) a linear layer LLaMA2 linear layer & LLM
+u-LLaV A ViT-L/14 (CLIP) a linear layer LLaMA2 linear layer & LLM
+RSGPT ViT-G (EV A) a Q-Former + a linear layer Vicuna-7/13B Q-Former & linear layer
+SkyEyeGPT ViT-G (EV A-CLIP) a linear layer LLaMA2 linear layer & LLM (LoRA)
+Table 7: Detailed architecture comparison of existing SoTA MLLMs.
+• {RS referring expression}
+• give me the location of {RS referring expression}
+• where is {RS referring expression} ?
+• from this image, tell me the location of {RS referring expression}
+• the location of {RS referring expression} is
+• could you tell me the location for {RS referring expression} ?
+• where can I locate the {RS referring expression} ?
+Table 9: The list of instructions for RS visual grounding.
+Instructions for RS VQA. The list of instructions for RS
+VQA is shown in Table 10.
+• {RS question}
+• Based on the image, respond to this question with a short 
+answer: {RS question}
+Table 10: The list of instructions for RS VQA.
+C Additional Results
+RS VQA: We present the remote sensing VQA results for
+the RSVQA-HR test set 1 dataset, as shown in Table 11. The
+overall result trend is similar to Table 6 of the main paper.
+The model SkyEyeGPT single trained separately on the re-
+mote sensing VQA task outperforms the open-ended model,
+likely due to modality differences between satellite imagery
+in the RSVQA dataset and aerial imagery in other tasks. Shar-
+ing the same visual encoder across different modalities can
+lead to a performance loss for SkyEyeGPT. How to address
+this issue will be the focus of our next research work.
+RS Captioning: Experimental results for evaluating
+remote sensing image captioning on Sydney-caption and
+RSICD datasets are provided in Tables 13 and 14. We achieve
+the best results on both the UCM-caption (Table 3 of the main
+paper), Sydney-caption, and RSICD datasets. Even though
+all other metrics are optimal, CIDEr consistently performs
+worse than RSGPT. Through analysis, we find that our model
+tends to generate captions with different lengths or captions
+with richer semantics compared to the ground truth. Exist-
+ing caption evaluation metrics struggle to provide accurate
+assessments, especially CIDEr.
+A novel evaluation method based on ChatGPT for re-
+mote sensing image captioning. To solve this issue, we uti-
+lize ChatGPT to determine whether the generated captions
+cover all visual objects and relations in the ground truth.
+We use ChatGPT to determine whether the generated cap-
+tion is capable of being an alternative caption of the ground
+truth. For the Sydney-caption dataset, we randomly choose
+one ground-truth caption and treat it as the reference caption.
+We apply the following two prompts to perform the evalua-
+tion. The evaluation results of ChatGPT are shown in Table
+12.
+Prompt 1: There is one remote sensing image caption1
+‘ground-truth caption’, and there is another remote sensing
+image caption2 ‘generated caption’. Does remote sensing im-
+age caption2 cover all the objects and visual relations shown
+in remote sensing image caption1? Only answer yes or no
+without any explanation.
+Prompt 2: There is one remote sensing image caption1
+‘ground-truth caption’, and there is another remote sensing
+image caption2 ‘generated caption’. Based on remote sens-
+ing image caption1 and your understanding, do you think re-
+mote sensing image caption2 can be used as another caption?
+Only answer yes or no without any explanation.
+Method Accuracy 1 Accuracy 2
+MiniGPT-4 31.03% 46.55%
+Shirka 25.86% 43.10%
+MiniGPT-v2 18.97% 32.76%
+SkyEyeGPT 51.72% 56.90%
+Table 12: Sydney-caption evaluation using ChatGPT.
+The experimental results indicate that the captions gener-
+ated by SkyEyeGPT are closer to the real visual objects and
+relations. The success accuracy of SkyEyeGPT is 51.72%
+and 56.90%, which is significantly higher than other methods.
+According to the traditional evaluation metrics in Table 13,
+MiniGPT-4 is the worst and MiniGPT-v2 is the best. From the
+results of GhatGPT, MiniGPT-4 is the best and MiniGPT-v2
+is the worst. Therefore, it is necessary to rethink the evalua-
+tion method of the captioning task. Evaluating the captioning
+task based on ChatGPT may be a novel and more reasonable
+approach.
+Method Open-
+Ended
+RSVQA-HR Test Set 1
+Presence Comparison Average Accuracy
+Specialist Models: representative or SoTA methods with results reported in the literature
+EasyToHard[Yuanet al., 2022a] ✗ 91.39 89.75 90.57
+SHRNet[Zhanget al., 2023] ✗ 92.45 91.68 92.07
+Generalist Models: results of our own experimental runs (except RSGPT)
+MiniGPT-4[Zhuet al., 2023] ✓ 52.91 54.76 53.84
+Shikra[Chenet al., 2023b] ✓ 58.85 57.40 58.13
+MiniGPT-v2[Chenet al., 2023a] ✓ 64.80 59.17 61.98
+RSGPT[Hu et al., 2023] ✗ 91.86 92.15 92.00
+SkyEyeGPTsingle ✗ 87.59 88.63 88.11
+SkyEyeGPTone−stage ✓ 83.19 83.92 83.56
+SkyEyeGPT ✓ 84.95 85.63 85.29
+Table 11: Results on RSVQA-HR test set 1. Comparison of VQA results by Generalist and Specialist baselines.
+Method Open-Ended BLEU-1 BLEU-2 BLEU-3 BLEU-4 METEOR ROUGE L CIDEr
+Specialist Models: representative or SoTA methods with results reported in the literature
+SAA[Luet al., 2020] ✗ 68.82 60.73 52.94 45.39 30.49 58.20 170.52
+Post-processing[Hoxhaet al., 2023] ✗ 78.37 69.85 63.22 57.17 39.49 71.06 255.53
+Generalist Models: results of our own experimental runs (except RSGPT)
+MiniGPT-4[Zhuet al., 2023] ✓ 29.53 25.85 20.27 16.38 32.02 42.73 0.07
+Shikra[Chenet al., 2023b] ✓ 77.52 53.19 36.98 27.82 29.42 53.27 26.79
+MiniGPT-v2[Chenet al., 2023a] ✓ 77.35 55.81 40.58 32.31 29.92 52.13 33.78
+RSGPT[Huet al., 2023] ✗ 82.26 75.28 68.57 62.23 41.37 74.77 273.08
+SkyEyeGPTsingle ✗ 90.89 83.76 78.32 74.15 44.73 75.62 191.46
+SkyEyeGPTone−stage ✓ 91.62 85.33 80.48 76.75 45.61 77.81 173.98
+SkyEyeGPT ✓ 91.85 85.64 80.88 77.40 46.62 77.74 181.06
+Table 13: Comparisons with Generalist and Specialist models on Sydney-captions dataset for RS image captioning task.
+Method Open-Ended BLEU-1 BLEU-2 BLEU-3 BLEU-4 METEOR ROUGE L CIDEr
+Specialist Models: representative or SoTA methods with results reported in the literature
+SAA[Luet al., 2020] ✗ 59.35 45.11 35.29 28.08 26.11 49.57 132.35
+Post-processing[Hoxhaet al., 2023] ✗ 62.90 45.99 35.68 28.68 25.30 47.34 75.56
+Generalist Models: results of our own experimental runs (except RSGPT)
+MiniGPT-4[Zhuet al., 2023] ✓ 33.98 31.80 25.83 20.60 33.21 40.72 0.09
+Shikra[Chenet al., 2023b] ✓ 82.61 62.51 45.18 34.58 30.26 53.55 19.89
+MiniGPT-v2[Chenet al., 2023a] ✓ 83.10 64.55 47.83 37.28 30.21 54.00 52.41
+RSGPT[Huet al., 2023] ✗ 70.32 54.23 44.02 36.83 30.10 53.34 102.94
+SkyEyeGPTsingle ✗ 87.33 77.70 68.90 61.99 36.23 63.54 89.37
+SkyEyeGPTone−stage ✓ 83.14 74.29 66.04 59.60 34.49 62.86 82.94
+SkyEyeGPT ✓ 86.71 76.66 67.31 59.99 35.35 62.63 83.65
+Table 14: Comparisons with Generalist and Specialist models on RSICD dataset for RS image captioning task.
+D Additional Ablation Studies
+Vision-Language Alignment Layer. To demonstrate that
+our vision-language alignment layer is sufficient to align re-
+mote sensing visual and textual features, we design three vari-
+ants: (a) removing the linear layer directly, (b) using multiple
+linear layers (two or three) instead of one linear layer, and
+(c) using a Q-Former instead of one linear layer. All vari-
+ants are trained the same way. The result is as shown in Ta-
+ble 15. None of the variants performed very well, with the
+(c) SkyEyeGPT + Q-Former is closest to SkyEyeGPT. This
+shows that under the training of our SkyEye-958k instruc-
+tion, a single linear layer is sufficient to align remote sensing
+visual features with LLM.
+Task Identifier. In order to study the impact of task iden-
+tifiers on the results, we conducted an ablation experiment,
+and the results are shown in Table 15. SkyEyeGPT w/o Task
+Identifier indicates that the task identifier in all instructions is
+removed for training. The results on four tasks validate the
+clear advantages of adding task identifiers. Task identifier is
+conducive to improving the efficiency of multi-task learning
+and improving SkyEyeGPT’s performance on each task.
+Low-Rank Adaptation (LoRA). In order to study the ef-
+fect of the rank of LoRA on the results, we set different ranks
+for experiments. The results are shown in Table 16. With
+the increase of rank, the model performance first increases
+and then decreases. The model performance is best when the
+rank is 64.
+rank UCM-caption CapERA DIOR-RSVG RSVQA-LR
+16 71.66 35.17 43.22 45.71
+32 112.50 44.28 56.48 60.42
+64 236.75 91.90 88.59 84.19
+96 123.55 56.13 61.27 64.39
+128 64.88 33.64 41.91 42.11
+Table 16: Ablation on the rank of LoRA.
+E More Qualitative Analysis
+We provide additional qualitative results from SkyEyeGPT in
+Figures 6, 7, 8, 9, 10, 11, and 12.
+Model UCM-caption CapERA DIOR-RSVG RSVQA-LR
+(a) SkyEyeGPT w/o Linear Layer 38.35 29.91 47.12 42.67
+(b) SkyEyeGPT + 2 Linear Layers 167.92 55.35 66.21 51.88
+(b) SkyEyeGPT + 3 Linear Layers 90.22 40.77 52.78 43.11
+(c) SkyEyeGPT + Q-Former 181.39 71.68 63.59 58.66
+SkyEyeGPT 236.75 91.90 88.59 84.19
+SkyEyeGPT w/o Task Identifier 208.46 84.15 79.04 80.28
+Table 15: Ablation on designs of the vision-language alignment layer and task identifier.
+Remote Sensing Visual Grounding on RSVG
+SkyEyeGPT
+SkyEyeGPT
+[refer] the ground track field 
+is on the upper right of the 
+small baseball fieldUserUser
+SkyEyeGPT
+SkyEyeGPT
+[refer] the huge golf field in 
+the middleUserUser
+{<27><21><84><90>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] the white tiny 
+airplaneUserUser
+SkyEyeGPT
+SkyEyeGPT
+[refer] Where is a vehicle at 
+the bottomUserUser
+{<56><91><67><95>}
+Remote Sensing Visual Grounding on DIOR-RSVG
+{<23><12><80><40>}
+{<42><58><46><63>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] a baseball field on the 
+lower rightUserUser
+SkyEyeGPT
+SkyEyeGPT
+[refer] Where is a ground 
+track field on the upper rightUserUser
+{<49><8><97><51>}
+{<75><69><98><85>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] a vehicle on the top
+UserUser
+{<42><27><45><31>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] Where is a windmill in 
+the middleUserUser
+{<45><39><50><51>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] Where is a basketball 
+court on the rightUserUser
+{<64><37><85><72>}
+[refer] a storage tank on the 
+leftUserUser
+SkyEyeGPT
+SkyEyeGPT
+{<19><43><32><51>}
+[refer] the harbor on the 
+upper leftUserUser
+SkyEyeGPT
+SkyEyeGPT
+{<12><0><48><13>}
+[refer] a small bridge in the 
+middleUserUser
+SkyEyeGPT
+SkyEyeGPT
+{<43><36><58><52>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] Where is the expressway 
+service area on the leftUserUser
+{<7><15><60><72>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] Where is a ship on the 
+rightUserUser
+{<70><49><83><55>}
+[refer] the stadium is on the 
+upper right of the ground 
+track field on the leftUserUser
+SkyEyeGPT
+SkyEyeGPT
+{<26><18><36><40>}
+[refer] the stadium is on the 
+upper right of the ground 
+track field on the leftUser
+SkyEyeGPT
+{<26><18><36><40>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] find a ground track field on the westernmost 
+side. there is a parking lot that is about 8472 square 
+meters, located approximately 402 meters north of the 
+ground track field. there is a baseball field that is about 
+7940 square meters, located approximately 354 meters 
+east of the ground track field.
+UserUser
+{<22><30><27><35>}
+[refer]  the largest roundabout on the southernmost 
+side. UserUser
+SkyEyeGPT
+SkyEyeGPT
+{<54><36><60><42>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] search a bridge that is about 87 meters long. 
+there is a parking lot that is about 1554 square meters, 
+located approximately 77 meters northwest of the 
+bridge. there is a building that is about 1629 square 
+meters, located approximately 229 meters west of the 
+bridge. 
+UserUser
+{<41><50><46><57>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] search a tennis court that is about 2279 square 
+meters on the southernmost side. there is a ground 
+track field, located approximately 22 meters north of 
+the tennis court. there is a baseball field that is about 
+10857 square meters, located approximately 84 meters 
+northeast of the tennis court.
+UserUser
+{<52><80><76><94>}
+SkyEyeGPT
+SkyEyeGPT
+[refer] find a storage tank that is about 508 square 
+meters on the westernmost side. there is a building 
+that is about 865 square meters, located approximately 
+230 meters east of the storage tank.
+UserUser
+{<24><15><27><18>}
+[refer] find a bridge that is about 156 meters long on 
+the southernmost side, and it is located approximately 
+31 meters north of a woods. 
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+{<16><64><34><69>}
+[refer] a roundabout that is about 950 square meters on 
+the westernmost side. UserUser
+SkyEyeGPT
+SkyEyeGPT
+{<40><58><49><64>}
+[refer] a baseball field that is about 11174 square 
+meters on the westernmost side. UserUser
+SkyEyeGPT
+SkyEyeGPT
+{<26><54><31><58>}
+Figure 6: Visualization results of remote sensing visual grounding by SkyEyeGPT.
+Remote Sensing Phrase Grounding
+[detection] The three airplanes
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+<p>The three airplanes</p> {<31><69><48><87>}
+<delim>{<62><35><79><50>}<delim>{<41><16><61><30>} 
+[detection] The two Expressway service areas
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+<p>the two expressway service areas</p> 
+{<13><7><24><18>}<delim>{<90><78><96><85>}
+[detection] The four baseball fields
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+<p>The four baseball fields</p> {<52><83><67><98>}
+<delim>{<81><84><96><95>}<delim>{<37><84><50><94>}
+<delim>{<1><83><16><94>} 
+[detection] Airplanes
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+<p>two airplanes</p> {<9><51><50><82>}<delim>
+{<53><47><97><78>}
+<p>a runway</p> {<0><1><100><86>}
+[detection] Airplanes
+User
+SkyEyeGPT
+<p>two airplanes</p> {<9><51><50><82>}<delim>
+{<53><47><97><78>}
+<p>a runway</p> {<0><1><100><86>}
+[detection] Baseball fields
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+<p>Baseball fields</p> {<60><23><95><58>}
+<delim>{<1><21><34><54>}
+[detection] Vehicles
+User
+SkyEyeGPT
+<p>Vehicles</p>{<15><64><27><70>}<delim>
+{<53><64><67><71>}<delim>{<28><40><37><44>}<delim>
+{<66><36><75><40>}<delim>{<75><40><80><44>}
+[detection] two Expressway service areas
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+<p>two Expressway service areas</p> 
+{<12><15><49><70>}<delim>{<63><28><95><62>}
+SkyEyeGPT
+SkyEyeGPT
+[detection] two windmills
+UserUser
+<p>two windmills</p> {<64><29><85><45>}
+<delim>{<21><79><37><89>}
+SkyEyeGPT
+SkyEyeGPT
+[detection] the two vehicles 
+UserUser
+<p>the two vehicles</p> 
+{<61><35><69><48>}<delim>{<27><23><33><28>}
+[detection] three windmills 
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+<p>three windmills</p> {<13><27><26><38>}<delim>
+{<85><63><95><70>}<delim>{<25><60><34><68>}
+SkyEyeGPT
+SkyEyeGPT
+[detection] The baseball fields
+UserUser
+<p>The baseball fields</p> {<4><18><39><52>}<delim>
+{<60><66><79><86>}<delim>{<41><2><63><24>}<delim>
+{<57><2><63><13>}
+[detection] the two overpasses
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+<p>the two overpasses</p> {<24><30><68><71>}
+<delim>{<23><29><50><71>}
+Figure 7: Visualization results of remote sensing phrase grounding by SkyEyeGPT.
+Remote Sensing Image Captioning
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+the residential area is 
+surrounded by some trees
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+this is a part of ocean 
+with deep green water
+a sparse building with a lawn 
+and trees surrounded is in the 
+sparse residential area
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+buildings with white roofs 
+and parking lots beside them
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+there are a piece of 
+farmland
+a bridge is on a river with 
+many trees near it
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+the intersection is surrounded 
+by many houses and trees
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+two straight freeways 
+parallel to each other and 
+some plants beside them
+ a meadow with some green 
+bushes and small white bunkers 
+while some highway beside
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+there are four airplanes 
+parked at the airport
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+SkyEyeGPT
+SkyEyeGPT
+[caption] briefly describe the 
+imageUserUser
+many boats are at the port 
+and the water is deep blue
+two parallel straight runways 
+with white marking lines on 
+while a lawn beside
+Figure 8: Visualization results of remote sensing image captioning by SkyEyeGPT.
+UAV Aerial Video Captioning
+SkyEyeGPT
+SkyEyeGPT
+baseball field and soccer field 
+surrounded by buildings and trees
+SkyEyeGPT
+SkyEyeGPT
+three people are playing basketball 
+on a basketball court
+SkyEyeGPT
+SkyEyeGPT
+two people are rowing a boat on a 
+river in front of a castle
+SkyEyeGPT
+SkyEyeGPT
+group of people gathered in front 
+of a stage with lights
+SkyEyeGPT
+SkyEyeGPT
+concert stage surrounded by fans 
+in front of parking lots
+SkyEyeGPT
+SkyEyeGPT
+tower crane on top of a building in 
+a large urban area
+SkyEyeGPT
+SkyEyeGPT
+person rides bicycle along paved 
+road surrounded by farmland
+SkyEyeGPT
+SkyEyeGPT
+firefighters are trying to put out a fire 
+that is burning on the roof of a building
+SkyEyeGPT
+SkyEyeGPT
+people are playing basketball in a yard 
+surrounded by trees and surrounded 
+by a house
+SkyEyeGPT
+SkyEyeGPT
+there is a person rowing on a boat 
+in the river
+SkyEyeGPT
+SkyEyeGPT
+three cars are racing on the snow
+SkyEyeGPT
+SkyEyeGPT
+people are singing on a stage with 
+lights and in front of them is a band
+SkyEyeGPT
+SkyEyeGPT
+police officers are trying to restrain 
+a man who is resisting arrest
+SkyEyeGPT
+SkyEyeGPT
+people are riding bicycles on a 
+road surrounded by green grass
+SkyEyeGPT
+SkyEyeGPT
+firefighters try to extinguish a small fire 
+in a building with thick white smoke
+SkyEyeGPT
+SkyEyeGPT
+two harvesters are in a field of 
+wheat
+SkyEyeGPT
+SkyEyeGPT
+flood in an area with several 
+buildings and parking lots
+SkyEyeGPT
+SkyEyeGPT
+small building is on fire with thick black 
+smoke rising from it and around it are 
+several cars and buildings
+SkyEyeGPT
+SkyEyeGPT
+two people are cycling through a 
+treelined mountain
+SkyEyeGPT
+SkyEyeGPT
+landslide in a mountain area with 
+trees
+SkyEyeGPT
+SkyEyeGPT
+farmland is being plowed by a 
+machine
+SkyEyeGPT
+SkyEyeGPT
+torrent of mud flows down a hill 
+surrounded by houses and trees
+SkyEyeGPT
+SkyEyeGPT
+torrent of mud flows down a 
+mountain
+SkyEyeGPT
+SkyEyeGPT
+people are having a party in an 
+outdoor area with a pool and a terrace
+SkyEyeGPT
+SkyEyeGPT
+people walk down a street holding 
+signs and banners
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+SkyEyeGPT
+SkyEyeGPT
+baseball field surrounded by trees and 
+a stadium for spectators
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+SkyEyeGPT
+SkyEyeGPT
+group of people are gathered 
+around a cake
+SkyEyeGPT
+SkyEyeGPT
+many buildings were destroyed
+SkyEyeGPT
+SkyEyeGPT
+cultivating farmland with 
+cultivator machine
+SkyEyeGPT
+SkyEyeGPT
+people are running on a treelined road
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+[caption] briefly describe the video frame image
+UserUser
+[caption] briefly describe the video frame image
+User
+Figure 9: Visualization results of UA V aerial video captioningby SkyEyeGPT.
+Remote Sensing Visual Question Answering on RSVQA-LR
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is it a rural or an urban 
+areaUserUser
+urban
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is there a grass area?
+UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is there a road?
+UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is a large road present?
+UserUser
+no
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there less 
+buildings than farmlands?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there more commercial 
+buildings than roads?UserUser
+no
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is the number of meadows equal 
+to the number of residential buildings?UserUser
+no
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is a commercial building 
+present?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is a water area present?
+UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there more grass areas 
+than rectangular buildings?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there more buildings 
+than roads?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is there a meadow on the 
+left of a water area?UserUser
+yes
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is a residential building 
+present in the image?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is the number of water areas 
+equal to the number of buildings?UserUser
+no
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there less water 
+areas than roads?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is there a forest?
+UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is a circular building 
+present?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there less water areas 
+than medium roads?UserUser
+yes
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there less buildings 
+than water areas?UserUser
+no
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there less commercial 
+buildings than water areas?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is there a parking?
+UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is there a circular grass 
+area?UserUser
+no
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Are there more roads 
+than water areas?UserUser
+yes
+SkyEyeGPT
+SkyEyeGPT
+[vqa] Is the number of water areas 
+equal to the number of roads?UserUser
+no
+Figure 10: Visualization results of remote sensing visual question answering by SkyEyeGPT.
+SkyEyeGPT
+SkyEyeGPT
+[identify] this 
+{<9><47><89><52>} isUserUser
+SkyEyeGPT
+SkyEyeGPT
+[identify] what object is in this 
+location {<25><19><90><92>}UserUser
+this is a golf course 
+Remote Sensing Referring Expression Generation
+the bridge
+SkyEyeGPT
+SkyEyeGPT
+[identify] this 
+{<42><27><45><33>} isUserUser
+a black car 
+SkyEyeGPT
+SkyEyeGPT
+[identify] {<40><44><55><60>}
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+[identify] identify the object 
+present at this location 
+{<52><27><80><61>}UserUser
+the tennis court which 
+is to the right of another
+a white spherical 
+building
+SkyEyeGPT
+SkyEyeGPT
+[identify] {<30><62><51><68>}
+UserUser
+a white truck 
+[identify] the object in 
+{<82><2><94><19>} is UserUser
+SkyEyeGPT
+SkyEyeGPT
+a black boat on the 
+green water
+[identify] what is it in 
+{<82><70><97><85>}UserUser
+SkyEyeGPT
+SkyEyeGPT
+the baseball field on the 
+right side of the image
+[identify] the object in 
+{<36><4><61><29>} isUserUser
+SkyEyeGPT
+SkyEyeGPT
+an airplane with white 
+and blue color is parked
+[identify] what object is in this 
+location {<59><55><78><74>}UserUser
+SkyEyeGPT
+SkyEyeGPT
+the baseball field on the 
+right is larger than the 
+one on the left
+SkyEyeGPT
+SkyEyeGPT
+[identify] this 
+{<8><0><48><13>} isUserUser
+a pier with boats
+SkyEyeGPT
+SkyEyeGPT
+[identify] what object is in this 
+location {<5><7><88><50>}UserUser
+a large oval track field
+Figure 11: Visualization results of remote sensing referring expression generation by SkyEyeGPT.
+Medium Residential
+Remote Sensing Scene CLassification On AID
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Storage Tanks
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Medium Residential
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Church
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Stadium
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+River
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Commercial
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Industrial
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Desert
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Park
+UserUser
+UserUser
+SkyEyeGPT
+SkyEyeGPT
+Resort
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+[vqa] Classify the image within one of 
+the given classes: Storage Tanks,  
+Medium Residential, Playground, 
+Church, Stadium, River, Commercial, 
+Industrial, Square, Sparse Residential, 
+Desert, Viaduct, Baseball Field, Bare 
+Land, Forest, Railway Station, 
+Parking, Airport, Mountain, Park, 
+Resort, School, Dense Residential, 
+Port, Meadow, Farmland,  Center, 
+Bridge, Beach, Pond. Answer it using 
+the above category word or phrase.
+UserUser
+UserUser
+[vqa] ……
+SkyEyeGPT
+SkyEyeGPT
+Industrial
+UserUser
+UserUser
+[vqa] ……
+SkyEyeGPT
+SkyEyeGPT
+Stadium
+UserUser
+UserUser
+[vqa] ……
+SkyEyeGPT
+SkyEyeGPT
+UserUser
+UserUser
+[vqa] ……
+SkyEyeGPT
+SkyEyeGPT
+Forest
+UserUser
+UserUser
+[vqa] ……
+SkyEyeGPT
+SkyEyeGPT
+Commercial
+Figure 12: Visualization results of remote sensing scene classification by SkyEyeGPT.
+References
+[Bashmal et al., 2023] Laila Bashmal, Yakoub Bazi, Mo-
+hamad Mahmoud Al Rahhal, Mansour Zuair, and Farid
+Melgani. Capera: Captioning events in aerial videos. Re-
+mote Sensing, 15(8), 2023.
+[Chen et al., 2023a] Jun Chen, Deyao Zhu, Xiaoqian Shen,
+Xiang Li, Zechun Liu, Pengchuan Zhang, Raghuraman
+Krishnamoorthi, Vikas Chandra, Yunyang Xiong, and Mo-
+hamed Elhoseiny. Minigpt-v2: large language model as a
+unified interface for vision-language multi-task learning.
+arXiv preprint arXiv:2310.09478, 2023.
+[Chen et al., 2023b] Keqin Chen, Zhao Zhang, Weili Zeng,
+Richong Zhang, Feng Zhu, and Rui Zhao. Shikra:
+Unleashing multimodal llm’s referential dialogue magic.
+arXiv preprint arXiv:2306.15195, 2023.
+[Cheng et al., 2022] Qimin Cheng, Haiyan Huang, Yuan Xu,
+Yuzhuo Zhou, Huanying Li, and Zhongyuan Wang. Nwpu-
+captions dataset and mlca-net for remote sensing image
+captioning. IEEE Transactions on Geoscience and Remote
+Sensing, 60:1–19, 2022.
+[Chiang et al., 2023] Wei-Lin Chiang, Zhuohan Li, Zi Lin,
+Ying Sheng, Zhanghao Wu, Hao Zhang, Lianmin Zheng,
+Siyuan Zhuang, Yonghao Zhuang, Joseph E Gonzalez,
+et al. Vicuna: An open-source chatbot impressing gpt-4
+with 90%* chatgpt quality. See https://vicuna. lmsys. org
+(accessed 14 April 2023), 2023.
+[Dai et al., 2023] Wenliang Dai, Junnan Li, Dongxu Li, An-
+thony Meng Huat Tiong, Junqi Zhao, Weisheng Wang,
+Boyang Li, Pascale Fung, and Steven Hoi. Instructblip:
+Towards general-purpose vision-language models with in-
+struction tuning. arXiv preprint arXiv:2305.06500, 2023.
+[Fang et al., 2023] Yuxin Fang, Wen Wang, Binhui Xie,
+Quan Sun, Ledell Wu, Xinggang Wang, Tiejun Huang,
+Xinlong Wang, and Yue Cao. Eva: Exploring the limits of
+masked visual representation learning at scale. InProceed-
+ings of the IEEE/CVF Conference on Computer Vision and
+Pattern Recognition (CVPR) , pages 19358–19369, June
+2023.
+[Hoxha et al., 2023] Genc Hoxha, Giacomo Scuccato, and
+Farid Melgani. Improving image captioning systems with
+postprocessing strategies. IEEE Transactions on Geo-
+science and Remote Sensing, 61:1–13, 2023.
+[Hu et al., 2023] Yuan Hu, Jianlong Yuan, Congcong Wen,
+Xiaonan Lu, and Xiang Li. Rsgpt: A remote sensing
+vision language model and benchmark. arXiv preprint
+arXiv:2307.15266, 2023.
+[Huang et al., 2021] Binbin Huang, Dongze Lian, Weixin
+Luo, and Shenghua Gao. Look before you leap: Learn-
+ing landmark features for one-stage visual grounding. In
+Proceedings of the IEEE/CVF Conference on Computer
+Vision and Pattern Recognition (CVPR) , pages 16888–
+16897, June 2021.
+[Li et al., 2020] Ke Li, Gang Wan, Gong Cheng, Liqiu
+Meng, and Junwei Han. Object detection in optical remote
+sensing images: A survey and a new benchmark. ISPRS
+journal of photogrammetry and remote sensing, 159:296–
+307, 2020.
+[Li et al., 2023] Junnan Li, Dongxu Li, Silvio Savarese, and
+Steven Hoi. Blip-2: Bootstrapping language-image pre-
+training with frozen image encoders and large language
+models. arXiv preprint arXiv:2301.12597, 2023.
+[Liu et al., 2023] Haotian Liu, Chunyuan Li, Qingyang Wu,
+and Yong Jae Lee. Visual instruction tuning. In NeurIPS,
+2023.
+[Lobry et al., 2020] Sylvain Lobry, Diego Marcos, Jesse
+Murray, and Devis Tuia. Rsvqa: Visual question answer-
+ing for remote sensing data. IEEE Transactions on Geo-
+science and Remote Sensing, 58(12):8555–8566, 2020.
+[Lu et al., 2018] Xiaoqiang Lu, Binqiang Wang, Xiangtao
+Zheng, and Xuelong Li. Exploring models and data for
+remote sensing image caption generation. IEEE Trans-
+actions on Geoscience and Remote Sensing , 56(4):2183–
+2195, 2018.
+[Lu et al., 2020] Xiaoqiang Lu, Binqiang Wang, and Xiang-
+tao Zheng. Sound active attention framework for remote
+sensing image captioning. IEEE Transactions on Geo-
+science and Remote Sensing, 58(3):1985–2000, 2020.
+[Mou et al., 2020] Lichao Mou, Yuansheng Hua, Pu Jin, and
+Xiao Xiang Zhu. Era: A data set and deep learning bench-
+mark for event recognition in aerial videos [software and
+data sets]. IEEE Geoscience and Remote Sensing Maga-
+zine, 8(4):125–133, 2020.
+[OpenAI, 2022] OpenAI. Chatgpt. https://openai.com/blog/
+chatgpt, 2022.
+[OpenAI, 2023] OpenAI. Gpt-4 technical report. arXiv,
+2023.
+[Qu et al., 2016] Bo Qu, Xuelong Li, Dacheng Tao, and Xi-
+aoqiang Lu. Deep semantic understanding of high reso-
+lution remote sensing image. In 2016 International Con-
+ference on Computer, Information and Telecommunication
+Systems (CITS), pages 1–5, 2016.
+[Radford et al., 2021] Alec Radford, Jong Wook Kim, Chris
+Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agar-
+wal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack
+Clark, et al. Learning transferable visual models from nat-
+ural language supervision. In International conference on
+machine learning, pages 8748–8763, 2021.
+[Sun et al., 2022] Yuxi Sun, Shanshan Feng, Xutao Li, Yun-
+ming Ye, Jian Kang, and Xu Huang. Visual grounding in
+remote sensing images. In Proceedings of the 30th ACM
+International Conference on Multimedia, pages 404–412,
+2022.
+[Touvron et al., 2023a] Hugo Touvron, Thibaut Lavril, Gau-
+tier Izacard, Xavier Martinet, Marie-Anne Lachaux, Tim-
+oth´ee Lacroix, Baptiste Rozi`ere, Naman Goyal, Eric Ham-
+bro, Faisal Azhar, Aurelien Rodriguez, Armand Joulin,
+Edouard Grave, and Guillaume Lample. Llama: Open
+and efficient foundation language models. arXiv preprint
+arXiv:2302.13971, 2023.
+[Touvron et al., 2023b] Hugo Touvron, Louis Martin, Kevin
+Stone, Peter Albert, Amjad Almahairi, Yasmine Babaei,
+Nikolay Bashlykov, Soumya Batra, Prajjwal Bhargava,
+Shruti Bhosale, et al. Llama 2: Open foundation and
+fine-tuned chat models. arXiv preprint arXiv:2307.09288,
+2023.
+[Wang et al., 2023] Wenhai Wang, Zhe Chen, Xiaokang
+Chen, Jiannan Wu, Xizhou Zhu, Gang Zeng, Ping Luo,
+Tong Lu, Jie Zhou, Yu Qiao, et al. Visionllm: Large
+language model is also an open-ended decoder for vision-
+centric tasks. arXiv preprint arXiv:2305.11175, 2023.
+[Xia et al., 2018] Gui-Song Xia, Xiang Bai, Jian Ding, Zhen
+Zhu, Serge Belongie, Jiebo Luo, Mihai Datcu, Marcello
+Pelillo, and Liangpei Zhang. Dota: A large-scale dataset
+for object detection in aerial images. In Proceedings of the
+IEEE conference on computer vision and pattern recogni-
+tion, pages 3974–3983, 2018.
+[Xiong et al., 2022] Zhitong Xiong, Fahong Zhang,
+Yi Wang, Yilei Shi, and Xiao Xiang Zhu. Earthnets:
+Empowering AI in earth observation. arXiv preprint
+arXiv:2210.04936, 2022.
+[Xu et al., 2023] Jinjin Xu, Liwu Xu, Yuzhe Yang, Xiang Li,
+Yanchun Xie, Yi-Jie Huang, and Yaqian Li. u-llava: Uni-
+fying multi-modal tasks via large language model. arXiv
+preprint arXiv:2311.05348, 2023.
+[Yang et al., 2019] Zhengyuan Yang, Boqing Gong, Liwei
+Wang, Wenbing Huang, Dong Yu, and Jiebo Luo. A fast
+and accurate one-stage approach to visual grounding. In
+Proceedings of the IEEE/CVF International Conference
+on Computer Vision, pages 4683–4693, 2019.
+[Yang et al., 2020] Zhengyuan Yang, Tianlang Chen, Liwei
+Wang, and Jiebo Luo. Improving one-stage visual ground-
+ing by recursive sub-query construction. In Computer
+Vision–ECCV 2020: 16th European Conference, Glasgow,
+UK, August 23–28, 2020, Proceedings, Part XIV 16, pages
+387–404, 2020.
+[Yuan et al., 2022a] Zhenghang Yuan, Lichao Mou,
+Qi Wang, and Xiao Xiang Zhu. From easy to hard:
+Learning language-guided curriculum for visual question
+answering on remote sensing data. IEEE Transactions on
+Geoscience and Remote Sensing, 60:1–11, 2022.
+[Yuan et al., 2022b] Zhiqiang Yuan, Wenkai Zhang, Kun Fu,
+Xuan Li, Chubo Deng, Hongqi Wang, and Xian Sun. Ex-
+ploring a fine-grained multiscale method for cross-modal
+remote sensing image retrieval. IEEE Transactions on
+Geoscience and Remote Sensing, 60:1–19, 2022.
+[Yuan et al., 2023a] Yuan Yuan, Yang Zhan, and Zhitong
+Xiong. Parameter-efficient transfer learning for remote
+sensing image–text retrieval. IEEE Transactions on Geo-
+science and Remote Sensing, 61:1–14, 2023.
+[Yuan et al., 2023b] Zhenghang Yuan, Lichao Mou, and
+Xiao Xiang Zhu. Overcoming language bias in remote
+sensing visual question answering via adversarial training.
+In IGARSS 2023 - 2023 IEEE International Geoscience
+and Remote Sensing Symposium, pages 2235–2238, 2023.
+[Zhan et al., 2023a] Yang Zhan, Zhitong Xiong, and Yuan
+Yuan. Rsvg: Exploring data and models for visual ground-
+ing on remote sensing data. IEEE Transactions on Geo-
+science and Remote Sensing, 61:1–13, 2023.
+[Zhan et al., 2023b] Yang Zhan, Yuan Yuan, and Zhitong
+Xiong. Mono3dvg: 3d visual grounding in monocular im-
+ages. arXiv preprint arXiv:2312.08022, 2023.
+[Zhang et al., 2023] Zixiao Zhang, Licheng Jiao, Lingling
+Li, Xu Liu, Puhua Chen, Fang Liu, Yuxuan Li, and
+Zhicheng Guo. A spatial hierarchical reasoning network
+for remote sensing visual question answering. IEEE
+Transactions on Geoscience and Remote Sensing , 61:1–
+15, 2023.
+[Zheng et al., 2022] Xiangtao Zheng, Binqiang Wang,
+Xingqian Du, and Xiaoqiang Lu. Mutual attention
+inception network for remote sensing visual question
+answering. IEEE Transactions on Geoscience and Remote
+Sensing, 60:1–14, 2022.
+[Zhu et al., 2023] Deyao Zhu, Jun Chen, Xiaoqian Shen, Xi-
+ang Li, and Mohamed Elhoseiny. Minigpt-4: Enhancing
+vision-language understanding with advanced large lan-
+guage models. arXiv preprint arXiv:2304.10592, 2023.

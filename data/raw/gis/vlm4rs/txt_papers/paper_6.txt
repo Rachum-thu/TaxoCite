@@ -1,0 +1,554 @@
+GEOREASON: ALIGNING THINKING AND
+ANSWERING IN REMOTE SENSING
+VISION-LANGUAGE MODELS VIA LOGICAL
+CONSISTENCY REINFORCEMENT LEARNING
+Wenshuai Li1,2,3† , Xiantai Xiang 1,2,3† , Zixiao Wen 1,2,3 , Guangyao Zhou 1,2,3 , Ben Niu 1,2‡
+Feng Wang1,2, Lijia Huang 1,2,3 , Qiantong Wang 1,2, Yuxin Hu 1,2,3
+1Aerospace Information Research Institute, Chinese Academy of Sciences
+2Key Laboratory of Target Cognition and Application Technology, Chinese Academy of Sciences
+3University of Chinese Academy of Sciences
+Code: https://github.com/canlanqianyan/GeoReason
+Abstract—The evolution of Remote Sensing Vision-Language
+Models(RS-VLMs) emphasizes the importance of transitioning
+from perception-centric recognition toward high-level deductive
+reasoning to enhance cognitive reliability in complex spatial tasks.
+However, current models often suffer from logical hallucinations,
+where correct answers are derived from flawed reasoning chains
+or rely on positional shortcuts rather than spatial logic. This
+decoupling undermines reliability in strategic spatial decision-
+making. To address this, we present GeoReason, a framework
+designed to synchronize internal thinking with final decisions.
+We first construct GeoReason-Bench, a logic-driven dataset con-
+taining 4,000 reasoning trajectories synthesized from geometric
+primitives and expert knowledge. We then formulate a two-
+stage training strategy: (1) Supervised Knowledge Initialization
+to equip the model with reasoning syntax and domain expertise,
+and (2) Consistency-Aware Reinforcement Learning to refine
+deductive reliability. This second stage integrates a novel Logical
+Consistency Reward, which penalizes logical drift via an option
+permutation strategy to anchor decisions in verifiable reasoning
+traces. Experimental results demonstrate that our framework
+significantly enhances the cognitive reliability and interpretability
+of RS-VLMs, achieving state-of-the-art performance compared to
+other advanced methods.
+Index Terms—RS-VLMs, Deductive Reasoning, Logical Con-
+sistency
+I. INTRODUCTION
+Large foundation models have enabled Remote Sensing
+Vision-Language Models (RS-VLMs) to transition from tra-
+ditional perception tasks including classification, detection,
+and segmentation toward comprehensive and interactive scene
+interpretation [1–4]. Despite substantial success in tasks such
+as object identification [5–7] and basic visual question an-
+swering (VQA) [8], current models encounter critical bottle-
+necks in complex cognitive scenarios [9]. As illustrated in
+Fig. 1(a)(b), perception-centric models are prone to visual
+† The authors contribute equally to this work‡ Corresponding author
+(a) Perception-centric RS-VLM
+Question:
+How many airplanes are visible in 
+the image?
+<answer>There are 3 airplanes.</answer>
+Surface-level Perception
+Low Answer Accuracy
+ Hallucinations
+(b) CoT-augmented RS-VLM
+Question:
+How many airplanes are visible in the image?
+<think>The first airplane is located at the top of 
+the image, with coordinates [415, 549, 594, 673]. 
+The second airplane is located in the center of 
+the image, with coordinates [661, 522, 854, 645]. 
+The third one is located with 
+[510,206,559,640]</think>
+<answer>There are 3 airplanes.</answer>
+Higher Answer Accuracy
+Pseudo-reasoning
+ Logical Hallucination
+(c) GeoReason(ours)
+Question:
+What can be inferred about the 
+capacity of the area based on the 
+current distribution of airplanes?
+<think>
+The image shows that this is the 
+area of the airport apron. 
+In the picture, two passenger 
+planes can be seen parked 
+beside the jet bridge. One is at 
+the top and the other is in the 
+middle. 
+There is also an empty parking 
+space below, which can be used 
+for parking aircraft.
+</think>
+<answer>
+The area has a moderate 
+capacity and can also 
+accommodate one airplane.
+</answer>
+Verifiable Logical Consistency
+Deductive Inference
+Cognitive Reliability
+Fig. 1. RS-VLM paradigm evolution. (a)Perception-centric: limited to
+surface-level identification with low accuracy. (b)CoT-augmented: improved
+accuracy but prone to pseudo-reasoning and logical decoupling. (c)Geo-
+Reason: achieves verifiable logical consistency and cognitive reliability via
+consistency-aware RL.
+hallucinations, while Chain-of-Thought (CoT) [10] prompting
+often introduces “pseudo-reasoning”—a phenomenon where
+correct conclusions are derived from flawed logic or posi-
+tional shortcuts rather than spatial evidence [11, 12]. Such
+decoupling between reasoning trajectories and factual evidence
+severely undermines the cognitive reliability of RS-VLMs in
+strategic decision-making tasks, such as capacity estimation or
+functional zoning [13].
+To bridge this gap, we proposeGeoReason, a framework
+designed to align internal reasoning with final decisions
+through a consistency-aware pipeline (Fig. 1(c)). Our contri-
+arXiv:2601.04118v2  [cs.CV]  8 Jan 2026
+bution is twofold: 1) We curateGeoReason-Bench, a logic-
+driven dataset of 4,000 high-fidelity reasoning trajectories
+synthesized from geometric primitives and expert-knowledge
+pipelines that transform morphological patterns into verifiable
+logic. 2) We develop a two-stage training strategy consisting
+ofSupervised Knowledge Initialization[14] followed by
+Consistency-Aware Reinforcement Learning[15]. By lever-
+aging Group Relative Policy Optimization (GRPO) [16] with
+a novelLogical Consistency Reward (LCR), our method
+employs an option permutation strategy to penalize logical
+drift. This approach compels the model to internalize sound
+deductive derivation, effectively bridging the gap between
+perceptual recognition and high-level deductive in remote
+sensing [17].
+II. PROPOSEDMETHODOLOGY
+The overall architecture of GeoReason is illustrated in
+Fig. 2. It bridges the gap between raw perception and cog-
+nitive reasoning through a logic-driven curation pipeline and
+a consistency-reinforced training strategy.
+A. GeoReason-Bench: A Logic-Driven Curation Pipeline
+To transition from perception-centric tasks to high-level
+cognitive interpretation, we develop a pipeline that transforms
+raw geometric primitives into high-fidelity reasoning trajecto-
+ries. This process is structured into two primary phases: multi-
+modal knowledge integration and logic-augmented synthesis.
+1) Multi-modal Knowledge Integration:We first derive
+domain-specific structural features from the DOTA [18] and
+DIOR [19] repositories. Beyond standard bounding boxes, we
+extract geometric primitives (e.g., scale and orientation) and
+aggregate them into morphological patterns, such as spatial
+density, inter-object spacing, and clustering configurations
+(e.g., grid-like residential zones vs. linear logistics hubs) [20].
+To bridge the gap between these discrete features and high-
+level reasoning, we further employ a state-of-the-art VLM to
+generate holistic scene descriptions, capturing global context
+and latent environmental attributes. By synthesizing these
+natural language narratives with structural metadata, we create
+a multi-layered representation that ensures the subsequent
+reasoning generation is grounded in both precise geometric
+priors and rich semantic context.
+2) Logic-Augmented Synthesis and Quality Control:The
+integrated features are serialized into structured prompts for
+GPT-4o to synthesize reasoning-centric samples, each con-
+sisting of a Reasoning TrajectoryT(Chain-of-Thought) and
+a Final AnswerA. The dataset is stratified into two func-
+tional subsets: a Perception-Logic Subset (DSF T , 1k) focusing
+on multi-step spatial integration, and a Deductive-Reasoning
+Subset (D RL, 3k) formatted as Multiple-Choice Questions
+(MCQs) targeting high-level challenges like functional zon-
+ing and capacity estimation. To ensure logical integrity, we
+implement a dual-gate quality control mechanism. First, a
+cross-model consistency check is performed using a secondary
+VLM to prune ”logical hallucinations” where the reasoning
+contradicts the visual evidence. Second, a manual expert re-
+view is conducted on a 10% representative sample to calibrate
+linguistic precision and verify the domain logic. This rigorous
+refinement process ensures that GeoReason-Bench provides
+a high-fidelity foundation for the subsequent reinforcement
+learning stage.
+B. Two-Stage training pipeline
+To internalize the deductive capabilities of GeoReason-
+Bench, we develop a two-stage training pipeline (Fig. 2
+middle). Stage 1 employs Supervised Knowledge Initialization
+to equip the model with foundational reasoning syntax and
+domain expertise. Stage 2 implements Consistency-Aware Re-
+inforcement Learning via Group Relative Policy Optimization
+(GRPO) to drive the transition from supervised imitation to
+autonomous logical correction.
+1) Supervised Knowledge Initialization:The first stage
+involves Supervised Fine-Tuning (SFT), a process primarily
+focuses on equipping the model with the fundamental syntax
+of Chain-of-Thought (CoT) and remote sensing domain exper-
+tise. By utilizing the perception-logic subsetD SF T , we fine-
+tune the initial model to minimize the standard auto-regressive
+cross-entropy loss:
+LSF T =−
+TX
+t=1
+logP(y t|y<t,I,X)(1)
+whereIis the input image,Xdenotes the structured prompt,
+andyrepresents the target sequence comprising the reasoning
+trajectoryTand the final answerA. Through SFT, the model
+learns to bridge raw visual features with linguistically coherent
+and spatially grounded reasoning chains, providing a stable
+policy initialization for the subsequent reinforcement learning
+phase.
+2) Consistency-Aware Reinforcement Learning:Building
+upon the SFT initialization, we employ Group Relative Pol-
+icy Optimization (GRPO) [21] to further refine the model’s
+deductive reliability. GRPO is particularly suited for remote
+sensing tasks as it eliminates the memory-intensive critic
+network by utilizing group-level relative rewards to estimate
+the baseline. For each input, we sample a group ofGoutputs
+{o1, o2, ..., oG}, and the total reward assigned to each trajec-
+toryiis formulated as:
+Ri =r acc +r f mt +r LCR (2)
+wherer acc andr f mt denote the rewards for outcome accuracy
+and format compliance, respectively.
+To specifically mitigate the ”logical hallucination” problem,
+we propose a novelLogical Consistency Reward (LCR),
+denoted asr LCR. This mechanism utilizes anOption Per-
+mutationstrategy to ensure that the model’s decision is
+strictly anchored in its reasoning trace rather than positional
+shortcuts. Given an imageIand queryq, the model generates
+a reasoning tracetand an initial answera. We then apply a
+permutationP(·)to shuffle the options, yielding a rephrased
+queryq ′ =P(q). A ”frozen-logic” second pass is performed
+GeoReason-Bench Two-stage Training Pipeline Inference
+Stage1: Supervised Fine-Tuning Stage2: Consistency-Aware RL
+airplane:    
+[109,122,311,282],
+[106,359,340,547],
+...... 
+GroundTruth 
+Annoatation
+Spacing Arrangement
+Quantity Density
+Multi-modal Knowledge
+ Context + Latent Attributes
+Reasoning-Centric 
+Quality Control
+Dataset
+Knowledge Initialization
+Input
+Reasoning
+Output CoT Data
+Pretrained VLM
+Vision Encoder
+Language Model
+(w/LoRA)
+Frozen
+ Trainable
+Multimodal 
+Input
+Finetuned-VLM
+Sampled Answers 
+Generation
+ What can be inferred about 
+the arrangement and the 
+physical capacity of the 
+airplane parking areas?
+A) Airplanes are gathering, 
+indicating limited space.
+B) Airplanes are grid-
+aligned, suggesting ample 
+space.
+C) Airplanes are randomly 
+distributed with moderate 
+density. 
+D) Airplanes are aligned in 
+a linear, suggesting ample 
+space.
+Answer Evaluation Update Policy
+Reward Calculation
+Final Answer Reward
+Logical Consistency Reward
+Format Reward
+GRPO
+Inference
+GPT4o
+       Reason -> Answer:B
+Fig. 2. Overview of the GeoReason framework: (Left) logic-driven curation of GeoReason-Bench via multimodal knowledge integration; (Middle) two-stage
+training pipeline comprising Supervised Fine-Tuning and Consistency-Aware Reinforcement Learning; (Right) the resulting deductive inference process.
+to predict a secondary answer˜a∼π θ(·|I, q ′, t). Ther LCR is
+then designed to penalizelogical driftwhere the conclusion
+shifts despite an identical reasoning trace:
+rLCR = ln(e+L t)·Φ(a,˜a)−Ω(a,˜a)(3)
+whereL t is the trace length. The core logicΦgrants a bonus
+αif bothaand˜aare correct and semantically consistent,
+whileΩimposes a penaltyηifaand˜alead to contradictory
+conclusions.
+The policy is updated by maximizing the following objec-
+tive function:
+J(θ) =E
+"
+1
+G
+GX
+i=1
+Li −βD KL(πθ||πref)
+#
+(4)
+where the group-wise clipped lossL i is defined as:
+Li = min(wiAi,clip(w i,1−ϵ,1 +ϵ)A i)(5)
+The importance weightw i and normalized advantageA i are
+given by:
+wi = πθ(oi|q)
+πθold(oi|q) , A i = Ri −mean(R)
+std(R) (6)
+This reinforcement learning stage compels the model to in-
+ternalize expert-level decision-making through sound logical
+derivation rather than stochastic guessing.
+III. EXPERIMENT
+A. Experimental Setup
+1) Datasets:We conduct experiments on GeoReason-
+Bench, a logic-driven dataset containing 4,000 high-fidelity
+reasoning trajectories. It comprises two subsets: a Perception-
+Logic Subset (D SF T , 1k), and a Deductive-Reasoning Subset
+(DRL, 3k).
+2) Evaluation Metrics:To provide a comprehensive assess-
+ment, we utilize three quantitative metrics:
+•Per-category Accuracy: Five distinct task dimensions:
+count, color, shape, reason, and scene (rural or urban).
+•Overall Accuracy(OA): The ratio of the total number of
+correctly predicted samples to the total size of the test
+set.
+•Average Accuracy(AA): The mean of the accuracies
+achieved across the five categories.
+3) Implementation Details:We utilize Qwen2.5-VL-7B
+[22] as the base model with LoRA (rank 16). The training
+follows a two-stage process: 1) SFT for 1 epoch with a
+learning rate (LR) of1×10 −4; 2) GRPO for 1200 steps with
+an LR of1×10 −6.
+B. Quantitative Results
+Table I summarizes the quantitative performance on the
+GeoReason-Bench test set. We evaluate models across Per-
+ceptual Tasks (Count, Color, Shape, Scene) and Reasoning
+Tasks (Reason) to analyze their multi-level understanding. As
+shown in Table I, GeoReason significantly outperforms all
+baselines, achieving an Overall Accuracy (OA) of 51.27% and
+an Average Accuracy (AA) of 56.20%. Notably, in the Reason-
+ing task, our framework achieves 43.51%, surpassing the base
+Qwen2.5-VL by 19.65% and the commercial GPT baseline by
+9.83%. These results demonstrate that our consistency-aware
+reinforcement learning effectively bridges the gap between
+surface-level perception and high-level deductive inference,
+compelling the model to anchor its decisions in verifiable
+spatial logic rather than stochastic guessing.
+C. Ablation Study
+The ablation study in Table II illustrates the incremental
+impact of each component on mitigating logical hallucina-
+TABLE I
+COMPARATIVE ANALYSIS OF OUR PROPOSEDGEOREASON AGAINST STATE-OF-THE-ART BASELINES ON
+PERCEPTUAL AND REASONING TASKS. THE BEST RESULTS ARE HIGHLIGHTED IN BOLD,AND THE
+SECOND-BEST RESULTS ARE UNDERLINED.
+Method Perceptual Tasks Reasoning Overall Metrics
+Count Color Shape Scene Reason OA AA
+Close-source Commercial Vision-Language Models
+GPT-4o [23] 6.35 42.27 34.57 92.06 33.68 38.54 41.79
+Open-source Vision-Language Models
+Llava [24] 9.52 44.33 18.52 90.48 16.84 28.69 35.94
+Qwen2.5-VL [22] 25.40 40.21 37.04 90.48 23.86 35.65 43.40
+Open-source Remote Sensing Vision-Language Models
+RS-EoT [21] 19.05 45.36 45.68 68.25 32.28 38.71 42.12
+GeoChat [25] 12.70 17.53 20.99 90.48 16.49 24.79 31.64
+SkySenseGPT [26] 14.29 24.74 23.46 93.65 14.39 25.81 34.10
+GeoReason(Ours) 34.92 56.70 50.62 95.23 43.51 51.27 56.20
+TABLE II
+ABLATION STUDY OF DIFFERENT TRAINING STAGES ON THE
+GEOREASON-BENCH TEST SET.
+Configuration AA(%)Reason Acc(%)
+Base Model (Qwen2.5-VL) 43.40 23.86
++ SFT 47.92 31.93
++ GRPO (Standard) 53.18 36.49
++ GRPO (Consistency Reward) 56.20 43.51
+What can be inferred about the physical capacity of the parking area surrounding the 
+buildings?
+A) The parking area is at saturation level with minimal available spaces.
+B) The parking area has a high occupancy but still accommodates some vehicles.
+C) The parking area is sparsely used, indicating low vehicle traffic.
+D) The parking area is designed for maximum vehicle capacity but currently underutilized.
+Question
+<think> 
+1. Environment Mapping: Identify large 
+paved surfaces around the industrial 
+buildings. 
+2. Feature Perception: Observe numerous 
+small, dark-toned rectangular objects 
+clustered across the grey pavement, 
+particularly in the lower and right sections.
+3. Density Inference: These detected 
+clusters represent a high concentration of 
+stored vehicles or equipment, indicating 
+that the facility's physical capacity is near 
+saturation.
+ </think>
+<answer> C </answer> 
+<think> 
+1. Spatial Segmentation: Delineate the 
+paved zones surrounding the white-roofed 
+buildings as the primary area of interest. 
+2. Density Estimation: Detect only 2-3 
+discrete objects (likely boats/trailers) in 
+the peripheral zones, while the vast central 
+pavement remains unoccupied. 
+3. Grounded Conclusion: The dominant 
+ratio of empty surface area to detected 
+objects confirms a 'sparsely used' state, 
+aligning perfectly with Option C.
+ </think>
+<answer> C </answer> 
+WR-CA CR-CA
+Fig. 3. Reasoning-Answer alignment comparison. Red denotes correct answer
+or reasoning trace and purple denotes flawed reasoning components. The left
+case is an example ofWrong Reasoning but Correct Answer (WR-CA),
+indicating logical hallucination, while the right case is an example ofCorrect
+Reasoning and Correct Answer (CR-CA), demonstrating logically sound
+deductive interpretation.
+tions. The SFT stage establishes the basic “Reason-Answer”
+paradigm, elevating Reasoning Accuracy to 31.93%. While the
+subsequent integration of standard GRPO improves Average
+Accuracy to 53.81%, the Reasoning Accuracy lags at 36.49%.
+This gap underscores a critical process-outcome misalignment,
+where the model prioritizes visual shortcuts over genuine
+deduction. The proposed Logical Consistency Reward (LCR)
+successfully bridges this gap, driving Reasoning Accuracy to
+43.51%. By penalizing logical contradictions, LCR compels
+the model to treat the reasoning chain as essential evidence,
+effectively suppressing hallucinations and ensuring that final
+answers are anchored in verifiable spatial logic.
+D. Qualitative Analysis
+Fig. 3 illustrates the impact of LCR on a representative
+parking area utilization task. The standard GRPO baseline
+(WR-CA) exhibits severe logic hallucination; it paradoxically
+claims the area is “near saturation” with “numerous objects”
+while selecting Option C (Sparsely used). In contrast, Geo-
+Reason (CR-CA) demonstrates robust evidential support by
+accurately identifying the “dominant empty surface” and “2-3
+discrete objects”. This alignment confirms that LCR effectively
+forces the model to ground its reasoning in visual evidence,
+eliminating the reliance on spurious correlations.
+IV. CONCLUSION
+In this paper, we presented GeoReason, a novel frame-
+work designed to mitigate logical hallucinations and pseudo-
+reasoning in Remote Sensing Vision-Language Models (RS-
+VLMs). By introducing GeoReason-Bench, we provided a
+high-fidelity foundation of 4,000 reasoning trajectories that
+transform geometric primitives into structured deductive logic.
+Our two-stage training pipeline, which integrates Group Rel-
+ative Policy Optimization (GRPO) with a specialized Logical
+Consistency Reward (LCR), compels the model to anchor
+its final decisions strictly within verifiable reasoning traces.
+Experimental results demonstrate that GeoReason significantly
+enhances both overall accuracy and cognitive reliability, effec-
+tively ensuring that the model provides the right answers for
+the right reasons.
+REFERENCES
+[1] Y . Hu, J. Yuan, C. Wen, X. Lu, Y . Liu, and X. Li, “Rsgpt: A
+remote sensing vision language model and benchmark,”ISPRS
+Journal of Photogrammetry and Remote Sensing, vol. 224, pp.
+272–286, 2025. 1
+[2] X. Li, C. Wen, Y . Hu, Z. Yuan, and X. X. Zhu, “Vision-language
+models in remote sensing: Current progress and future trends,”
+IEEE Geoscience and Remote Sensing Magazine, vol. 12, no. 2,
+pp. 32–66, 2024.
+[3] Y . Zhan, Z. Xiong, and Y . Yuan, “Skyeyegpt: Unifying remote
+sensing vision-language tasks via instruction tuning with large
+language model,”ISPRS Journal of Photogrammetry and Re-
+mote Sensing, vol. 221, pp. 64–77, 2025.
+[4] Z. Wen, Z. Yang, X. Bao, L. Zhang, X. Xiang, W. Li, and
+Y . Liu, “D3r-detr: Detr with dual-domain density refinement
+for tiny object detection in aerial images,” 2026. [Online].
+Available: https://arxiv.org/abs/2601.02747 1
+[5] H. Shen, P. Liu, J. Li, C. Fang, Y . Ma, J. Liao, Q. Shen,
+Z. Zhang, K. Zhao, Q. Zhanget al., “Vlm-r1: A stable and gen-
+eralizable r1-style large vision-language model,”arXiv preprint
+arXiv:2504.07615, 2025. 1
+[6] Z. Wen, P. Li, Y . Liu, J. Chen, X. Xiang, Y . Li, H. Wang,
+Y . Zhao, and G. Zhou, “Fanet: Frequency-aware attention-
+based tiny-object detection in remote sensing images,”Remote
+Sensing, 2025.
+[7] X. Xiang, G. Zhou, B. Niu, Z. Pan, L. Huang, W. Li, Z. Wen,
+J. Qi, and W. Gao, “Infrared-visible image fusion meets object
+detection: Towards unified optimization for multimodal percep-
+tion,”Remote Sensing, vol. 17, no. 21, p. 3637, 2025. 1
+[8] H. Lin, D. Hong, S. Ge, C. Luo, K. Jiang, H. Jin, and C. Wen,
+“Rs-moe: A vision-language model with mixture of experts for
+remote sensing image captioning and visual question answer-
+ing,”IEEE Transactions on Geoscience and Remote Sensing,
+2025. 1
+[9] Y . Ding, L. Li, B. Cao, and J. Shao, “Rethinking bottlenecks
+in safety fine-tuning of vision language models,”arXiv preprint
+arXiv:2501.18533, 2025. 1
+[10] J. Wei, X. Wang, D. Schuurmans, M. Bosma, F. Xia, E. Chi,
+Q. V . Le, D. Zhouet al., “Chain-of-thought prompting elicits
+reasoning in large language models,”Advances in neural infor-
+mation processing systems, vol. 35, pp. 24 824–24 837, 2022.
+1
+[11] B. Bennett, “Spatial reasoning with propositional logics,” in
+Principles of knowledge representation and reasoning. El-
+sevier, 1994, pp. 51–62. 1
+[12] J. J. Koehler and D. N. Shaviro, “Veridical verdicts: Increasing
+verdict accuracy through the use of overtly probabilistic evi-
+dence and methods,”Cornell L. Rev., vol. 75, p. 246, 1989.
+1
+[13] D. Muhtar, E. Zhang, Z. Li, F. Gu, Y . He, P. Xiao, and X. Zhang,
+“Quality-driven curation of remote sensing vision-language data
+via learned scoring models,”arXiv preprint arXiv:2503.00743,
+2025. 1
+[14] T. Chu, Y . Zhai, J. Yang, S. Tong, S. Xie, D. Schuurmans,
+Q. V . Le, S. Levine, and Y . Ma, “Sft memorizes, rl generalizes:
+A comparative study of foundation model post-training,”arXiv
+preprint arXiv:2501.17161, 2025. 2
+[15] Y . Chen, Y . Ge, R. Wang, Y . Ge, J. Cheng, Y . Shan, and
+X. Liu, “Grpo-care: Consistency-aware reinforcement learning
+for multimodal reasoning,”arXiv preprint arXiv:2506.16141,
+2025. 2
+[16] Z. Shao, P. Wang, Q. Zhu, R. Xu, J. Song, X. Bi, H. Zhang,
+M. Zhang, Y . Li, Y . Wuet al., “Deepseekmath: Pushing the
+limits of mathematical reasoning in open language models,”
+arXiv preprint arXiv:2402.03300, 2024. 2
+[17] Y . Zhou, Y . Wang, X. He, A. Shen, R. Xiao, Z. Li, Q. Feng,
+Z. Guo, Y . Yang, H. Wuet al., “Scientists’ first exam: Probing
+cognitive abilities of mllm via perception, understanding, and
+reasoning,”arXiv preprint arXiv:2506.10521, 2025. 2
+[18] G.-S. Xia, X. Bai, J. Ding, Z. Zhu, S. Belongie, J. Luo,
+M. Datcu, M. Pelillo, and L. Zhang, “Dota: A large-scale dataset
+for object detection in aerial images,” inProceedings of the
+IEEE conference on computer vision and pattern recognition,
+2018, pp. 3974–3983. 2
+[19] K. Li, G. Wan, G. Cheng, L. Meng, and J. Han, “Object
+detection in optical remote sensing images: A survey and a
+new benchmark,”ISPRS journal of photogrammetry and remote
+sensing, vol. 159, pp. 296–307, 2020. 2
+[20] X. Xiang, G. Zhou, Z. Wen, W. Li, B. Niu, F. Wang,
+L. Huang, Q. Wang, Y . Liu, Z. Pan, and Y . Hu, “Slgnet:
+Synergizing structural priors and language-guided modulation
+for multimodal object detection,” 2026. [Online]. Available:
+https://arxiv.org/abs/2601.02249 2
+[21] R. Shao, Z. Li, Z. Zhang, L. Xu, X. He, H. Yuan, B. He,
+Y . Dai, Y . Yan, Y . Chenet al., “Asking like socrates: Socrates
+helps vlms understand remote sensing images,”arXiv preprint
+arXiv:2511.22396, 2025. 2, 4
+[22] S. Bai, K. Chen, X. Liu, J. Wang, W. Ge, S. Song, K. Dang,
+P. Wang, S. Wang, J. Tanget al., “Qwen2. 5-vl technical report,”
+arXiv preprint arXiv:2502.13923, 2025. 3, 4
+[23] J. Schulman, B. Zoph, C. Kim, J. Hilton, J. Menick, J. Weng,
+J. F. C. Uribe, L. Fedus, L. Metz, M. Pokornyet al., “Chatgpt:
+Optimizing language models for dialogue,”OpenAI blog, vol. 2,
+no. 4, 2022. 4
+[24] C. Li, C. Wong, S. Zhang, N. Usuyama, H. Liu, J. Yang,
+T. Naumann, H. Poon, and J. Gao, “Llava-med: Training a
+large language-and-vision assistant for biomedicine in one day,”
+Advances in Neural Information Processing Systems, vol. 36,
+pp. 28 541–28 564, 2023. 4
+[25] K. Kuckreja, M. S. Danish, M. Naseer, A. Das, S. Khan,
+and F. S. Khan, “Geochat: Grounded large vision-language
+model for remote sensing,” inProceedings of the IEEE/CVF
+Conference on Computer Vision and Pattern Recognition, 2024,
+pp. 27 831–27 840. 4
+[26] J. Luo, Z. Pang, Y . Zhang, T. Wang, L. Wang, B. Dang, J. Lao,
+J. Wang, J. Chen, Y . Tanet al., “Skysensegpt: A fine-grained
+instruction tuning dataset and model for remote sensing vision-
+language understanding,”arXiv preprint arXiv:2406.10100,
+2024. 4

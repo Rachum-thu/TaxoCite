@@ -1,0 +1,910 @@
+IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENSING, VOL. 60, 2022 4708011
+Bi-Modal Transformer-Based Approach for Visual
+Question Answering in Remote Sensing Imagery
+Y akoub Bazi , Senior Member , IEEE, Mohamad Mahmoud Al Rahhal , Senior Member , IEEE,
+Mohamed Lamine Mekhalﬁ, Senior Member , IEEE, Mansour Abdulaziz Al Zuair , Member , IEEE,
+and Farid Melgani , Fellow, IEEE
+Abstract— Recently, vision-language models based on trans-
+formers are gaining popularity for joint modeling of visual and
+textual modalities. In particular, they show impressive results
+when transferred to several downstream tasks such as zero and
+few-shot classiﬁcation. In this article, we propose a visual question
+answering (VQA) approach for remote sensing images based on
+these models. The VQA task a ttempts to provide answers to
+image-related questions. In contrast, VQA has gained popularity
+in computer vision, in remote sensing, it is not widespread.
+First, we use the contrastive language image pretraining (CLIP)
+network for embedding the image patches and question words
+into a sequence of visual and textual representations. Then,
+we learn attention mechanisms to capture the intradependencies
+and interdependencies within and between these representations.
+Afterward, we generate the ﬁnal answer by averaging the
+predictions of two classiﬁers mounted on the top of the resulting
+contextual representations. In the experiments, we study the
+performance of the proposed approach on two datasets acquired
+with Sentinel-2 and aerial sensors. In particular, we demonstrate
+that our approach can achieve better results with reduced
+training size compared with the recent state-of-the-art.
+Index Terms — Co-attention, remote se nsing, self-attention,
+transformers, vision-language models, visual question
+answering (VQA).
+I. I NTRODUCTION
+R
+EMOTE sensing technology has undergone steady
+progress very recently. It powers a myriad of civilian and
+military applications, thanks to the deployment of quantitative
+and qualitative sensors, on the one hand, and the evolution of
+powerful hardware and software platforms, on the other hand.
+Manuscript received 12 January 2022; revised 29 March 2022, 13 May
+2022, and 19 June 2022; accepted 10 July 2022. Date of publication 19 July
+2022; date of current version 4 August 2022. This work was supported
+by the Research Center of College of Computer and Information Sciences,
+Deanship of Scientiﬁc Research, King Saud University, Riyadh, Saudi Arabia.
+(Corresponding author: Yakoub Bazi.)
+Y akoub Bazi and Mansour Abdulaziz A l Zuair are with the Department of
+Computer Engineering, College of Com puter and Information Sciences, King
+Saud University, Riyadh 11543, Saudi Arabia (e-mail: ybazi@ksu.edu.sa;
+zuair@ksu.edu.sa).
+Mohamad Mahmoud Al Rahhal is with the Applied Computer Science
+Department, College of Applied Comput er Science, King Saud University,
+Riyadh 11543, Saudi Arabia (e-ma il: mmalrahhal@ksu.edu.sa).
+Mohamed Lamine Mekhalﬁ is with the Technologies of Vision, Digital
+Industry Center, Fondazione Bruno Kessler, 38123 Trento, Italy (e-mail:
+mmekhalﬁ@fbk.eu).
+Farid Melgani is with the Department of Information Engineering and
+Computer Science, University of Trento, 38123 Trento, Italy (e-mail:
+farid.melgani@unitn.it).
+Digital Object Identiﬁer 10.1109/TGRS.2022.3192460
+Remote sensing image analysis has been acquiring a partic-
+ular interest, owing to the amount of data potentially present
+in an image, which enables many tasks such as land use/land
+cover classiﬁcation [1], [2] and object detection [3], [4].
+In this regard, effective image analysis often remains depen-
+dent on the pinpointing of objects therein. Early systems relied
+on shallow representations which demonstrated rather lim-
+ited performance. The appearance of deep learning strategies
+has brought several breakthroughs in advancing RS image
+understanding.
+To provide a comprehensive human-like interpretation of
+the RS information, it is crucial to integrate natural lan-
+guage processing (NLP) with visual understanding to go from
+merely recognizing objects present in the scene to describe
+the attributes of the objects and the relation between them.
+To this end, joint vision-language modeling has been intro-
+duced recently for the tasks of d escribing the content of
+images via captioning [5]–[8] and image retrieval using textual
+queries [9], [10].
+Beyond image captioning and text- to-image retrieval, recent
+literature suggests another query fashion, namely visual ques-
+tion answering (VQA) [11], which consists of providing feed-
+back about an image-relevant question. Therefore, unlike prior
+image retrieval and captioning tasks, in VQA, both the image
+and a speciﬁc question are given as inputs (see Fig. 1). Y et,
+with respect to image captioning which normally generates a
+holistic natural language description of the image, VQA offers
+the advantage of retrieving ﬁner details (e.g., the speciﬁcs of
+certain objects in the image such as the area they occupy
+within the image, the relative position of an object with respect
+to another object, and the density of certain objects across a
+particular area in the image, among others). Therefore, it is
+rational to regard VQA as a complementary component to
+captioning.
+A typical VQA pipeline involves four modules, namely:
+1) a feature extractor to draw meaningful visual cues from
+the query image; 2) a textual feature extractor from the query
+question; 3) an embedding component to combine the earlier
+two feature modalities; and 4) a prediction head [12]. In the
+context of RS imagery, the few existing VQA models use long
+short-term memory networks (LSTMs) for question modeling.
+Y et in recent years, another type of model called transformer
+has revolutionized the ﬁeld of NLP , pushing the state-of-the-
+art for several NLP tasks. Furthermore, the emergence of joint
+1558-0644 © 2022 I EEE. Personal u se is perm itted, but republication/redistri bution requires IEEE permission.
+See https://www.ieee.org/publications/rights/index.html for more information.
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+4708011 IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENSING, VOL. 60, 2022
+Fig. 1. Object-level remote sensing image analysis approaches.
+vision-language modeling based on transformers also showed
+to be a promising alternative for representation learning com-
+pared with standard paradigms that learn to map images to
+discrete labels. Instead, they learn to align images to raw text
+such as contrastive language image pretraining (CLIP) [13]
+and object-semantics aligned pretraining (OSCAR) [14]. This
+type of learning allows transferring knowledge to a boarder
+range of downstream tasks such as classiﬁcation, zero shot,
+and few-shot learning to name a few.
+In this work, we exploit these models for transferring
+knowledge to our VQA task. We use the CLIP network,
+based on vision and language transformer encoders, as fea-
+ture extractor for embedding the image patches and question
+words into sequence of feature representations. Then, we learn
+attention mechanisms through two decoders to capture the
+intradependencies and interdep endencies between these rep-
+resentations. In order to generate the ﬁnal answer, we take
+the average prediction of two classiﬁers mounted on the top
+of the resulting contextual representations. The parameters
+of the decoders and classiﬁers are optimized using the well-
+known cross-entropy loss, while those of CLIP are kept ﬁxed.
+The main contributions of this article can be summarized as
+follows.
+1) We propose a VQA approach based on visual-language
+transformers models;
+2) We capture the intradependenc ies and interdependencies
+within-and-between visual and textual representations
+using self-attention and co-attention mechanisms;
+3) We show experimentally that our approach can yield
+promising results on low-resolution and high-resolution
+datasets acquired by Sentinel-2 and Aerial sensors.
+In particular, we show that our approach can obtain com-
+petitive results using only 10% of the original training
+set.
+The rest of this article is organized as follows. Section II
+presents the related works. Section III describes the proposed
+VQA approach. Section IV presents the experimental results.
+Finally, Section V draws the conclusions and suggestions for
+future developments.
+II. R
+ELA TED WORKS
+In the following sections, we present a review of some
+notable works in VQA in the context of computer vision and
+remote sensing followed by the utilization of transformers for
+solving other remote sensing tasks.
+A. VQA in Computer Vision
+The literature suggests several VQA works in computer
+vision, thanks to the existing abundant large-scale datasets and
+rich object annotations. Respectively, only a few contributions
+have been developed so far in remote sensing, owing mainly
+to the scarcity of diverse and rich ground truths. For instance,
+among the notable works proposed in the general computer
+vision literature, one can ﬁnd the work of [11], which poses the
+problem of open-ended VQA by prompting selective questions
+about the image at hand. To this end, a dataset that collects
+roughly 0.25-M images and 0.76-M respective questions, and
+10-M answers was built. The questions ranged from a holistic
+style such as “how many bikes are there?” or “what kind of
+store is this?” to an action-associated style such as “what is
+the woman reaching for?” or “can you park here?” or “why is
+the boy on the right freaking out?” The work in [15] attempts
+to associate image regions to the query text by concatenating
+the question and answer representations, and combining them
+with weighted image region features. Such an approach has
+proven efﬁcient to tell the network where to look in the image
+given a question. The work in [16] pays attention not only to
+the relevant image regions but also to the words that compose
+the posed question. Thus, a hierarchical visual-textual pipeline
+is presented by applying co-attention on both the image and
+the question, where word level, phrase level, and question level
+embeddings are modeled. In [31], VQA was addressed within
+an adversarial learning approach in order to augment training
+examples without altering the visual and semantic properties
+of ground-truth data.
+Both question and image cues are essential in VQA. The
+work in [17] supplicates this information pair with cues from
+the answer itself, where image and question features are
+fused and branched out into two heads which are availed to:
+1) predict the answer and 2) reattend image objects under
+guidance of answer representations, respectively.
+Recent trends consider scenarios in which a question and
+a set of images are presented at the input, where the query
+regards the relations of objects or image portions within the
+image set, or about a topic/scene relevant to the image set [18].
+Video-based VQA is another promising trend [19].
+B. VQA Remote Sensing
+VQA in remote sensing images, however, is still at its debut
+and the amount of contributions is sharply scarce. For instance,
+in [20], low- and high-resolution datasets were constructed by
+leveraging OpenStreenMap (containing geo-localized informa-
+tion provided by volunteers) to release questions and answers
+relevant to the images. Convolutional neural networks (CNNs)
+and LSTM networks were adopted to model the visual and
+textual cues, respectively. The resulting textual and visual
+features are fused using point-wise multiplication. In [21],
+convolutional features and word vectors were used to capture
+the visual and natural language contents, respectively. Mutual
+attention is adopted to improve the alignment between the
+two feature modalities, topped with a fully connected (FC)
+layer to output the answer. In another work, a large VQA
+dataset was built and released [22]. In particular, question
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+BAZI et al. : BI-MODAL TRANSFORMER-BASED APPROACH FOR VISUAL QUESTION ANSWERING 4708011
+generation is based on image labels explicitly and proceeds by:
+1) composing yes/no queries about the presence of one or more
+land cover classes and 2) composing which/what questions
+regarding land cover classes.
+C. Transformers for RS T asks
+Transformers are now regarded as de facto standard in
+NLP tasks. Recently, they have been extended to vision tasks
+yielding the so-called ViT network [23]. In the context of
+remote sensing, some notable works have been developed
+based on these backbones. For example, Bashmal et al. [24]
+present a multilabel classiﬁcation method for UA V images.
+Bazi et al. [25] proposed an extensive evaluation of ViT [25]
+for scene classiﬁcation. In another work, He et al. [26] intro-
+duced a hyperspectral image classiﬁcation model consisting of
+spectral and spatial transformer blocks. Chen et al. [27] intro-
+duced a transformer-based change detection method in order to
+model contexts within the bi-temporal image which enhances
+the recognition of objects of interest. In another work [28], the
+transformer model has been applied for crop circle detection.
+In the context of image captioning, Shen et al. [29], [30]
+used the transformer as a replacement to LSTM. Both works
+conﬁrm its superiority compared with LSTM for sequences
+modeling.
+It can be seen that recent literature regards transformers
+as an efﬁcient tool for image modeling thanks to the attention
+mechanism which allows them to model inter region relations.
+III. M
+ETHOD
+Let us consider a training set Dtr ={ Xi, qi, yi }Ntr
+i=1 composed
+of Ntr input image and question pairs (Xi , qi) associated with
+the desired categorical answer yi ∈ RC where C represents
+the number of possible answers. In this work, we consider
+closed-ended VQA, where the answers are given in the form
+of “yes,” “no,” object counting, area covered by particular
+objects, urban, and rural. Our aim is to learn a model that
+can predict answers for a set of unseen N
+ts test image and
+question pairs Dts ={ X j, q j }Nts
+j=1.
+Thus, this VQA setting can be regarded as a multiclass
+classiﬁcation problem with bimodal heterogonous inputs com-
+ing from vision and NLP worlds. In the following sections,
+we provide detailed descriptions of our VQA model shown in
+Fig. 2.
+A. Feature Extraction Using CLIP
+A common practice for learning visual representations is to
+use vision models pretrained on large scale datasets such as
+ImageNet dataset. Y et, our task involves learning from both
+images and texts modalities. For such purpose, we propose
+to explore vision-language pretrained models as an alternative
+solution. In particular, we adopt the CLIP model that is based
+on dual transformers pretrained on matching 400-M image-text
+pairs through contrastive loss optimization.
+The text encoder is a Bert-like transformer architecture [31].
+The process starts by tokenizing the words of the question q
+i
+appended with two special tokens [SOS] and [EOS] repre-
+senting the start and end of the sequence into unique numeric
+numbers. The vocabulary size is equal to 49 408. To facilitate
+batch processing, the text encoder uses a sequence with a ﬁxed
+length equal to 77 in addition to a word embedding layer to
+embed the sequence into features of dimension 512. To supply
+the sequence with informatio n about the order of each word, a
+learnable positional embedding is added. The resulting initial
+representation is then fed as input through multiple identical
+layers (i.e., 12 layers) to generate the ﬁnal representation.
+Each layer of this encoder, as shown in Fig. 3, uses a
+multihead self-attention (MSA) block followed by a small
+multilayer perceptron (MLP) blo ck. Both blocks are connected
+with skip connections and use LayerNorm (LN) [32]. Com-
+pared with batch normalization (BN), LN aims at estimating
+the normalization statistics from the summed inputs to the
+neurons within a hidden layer. It has been applied in recurrent
+networks as a solution for improving the generalization ability.
+Lately, it has been adopted in transformers. The MLP is a
+simple feed-forward network consisting of two FC layers with
+Gaussian error linear unit (GELU) activation function applied
+in between [33]. The GELU activation function is expressed
+as follows:
+GELU(x) = x(x) (1)
+where (x) is the standard Gaussian cumulative distribution
+function. The choice of this function was made on the basis
+of prior NLP literature where it has been found that it handles
+better the problem of vanishing gradient compared with other
+activations. The main goal of the MSA block is to model
+the long-range dependencies between a speciﬁc token and all
+other tokens in the sequence. Each MSA block is composed of
+several scaled dot-product attention mechanisms. The scaled
+dot-product attention function is performed in parallel by
+multiple heads to enable the model to pay attention to more
+than one feature at a time. The results of all heads are
+concatenated and linearly project ed into the desired dimension
+using a weighted matrix.
+Finally, a linear layer is used to map the features to the
+dimension 512. To meet the requirements of our VQA task,
+we remove the pooling operation to keep the representation
+of each token in the sentence, thus resulting in a sequence of
+dimension 77 × 512.
+On the other side, the image encoder is based on the vision
+transformer proposed by Dosovitskiy et al. [23] termed as
+ViT16. First, the image X
+i is resized to the dimension 224 ×
+224 × 3 pixels. Then, it is divided into 196 nonoverlapping
+patches of spatial dimension 16 × 16 pixels. These patches
+are ﬂattened and mapped using a linear embedding layer.
+Positional encoding is appended t o the patch representations.
+The resulting embedded sequence of patches is then fed to an
+encoder similar to the one used previously for NLP . As done
+for the NLP transformer, we discard the pooling operation
+to keep the sequence of visual representations of dimension
+196 × 512 where each token of dimension 512 represents a
+particular region of the image of dimension 16 × 16 pixels.
+B. Learning Contextual Representations
+Let us consider {F
+Xi , Fqi }Ntr
+i=1 as the visual and textual rep-
+resentations obtained from CLIP , with FXi ∈ R1×196×512 and
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+4708011 IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENSING, VOL. 60, 2022
+Fig. 2. Proposed VQA approach: we use a vision-langua ge transformer to encode image and question pairs into textual and visual feature representatio ns.
+Then, we use two transformer decoders to discover t he contextual relationship between these represe ntations. For classiﬁcation, we average the out puts of
+two classiﬁers mounted on the top of the attende d textual and visual representations.
+Fig. 3. (a) Self-attention layer used in the transformer with its (b) MSA
+block. The MSA block is composed of mu ltiple scaled dot-product attention.
+Fqi R1×77×512. As mentioned previously, 196 and 77 represent
+the length of the visual and textual sequences, while 512 repre-
+sent the feature dimension. We propose to capture from these
+visual and textual representations the internal dependencies
+among each modality as well as the cross-modality correlation.
+For such purpose, we use two decoders with similar archi-
+tecture for generating these contextual representations. For
+consistency, we use two decoders with the same architecture as
+the blocks adopted in CLIP yet our decoders contain additional
+layers for co-attention. For example, we show in Fig. 2 the
+decoder part related to the text branch.
+It is also composed of MSA for capturing the intradependen-
+cies among the textual representation followed by multihead
+co-attention (MCA) for capturing the correlation with the
+visual representations. Here also, both layers are connected
+with skip connections and use LN. The MSA layer receives
+F
+qi and projects it using the weight matrices W Q , W K ,a n d
+W V ∈ R512×512, such that Q = W Q Fqi , K = W K Fqi , and
+V = W V Fqi .
+The MSA comprises eight independent self-attention heads
+operating in parallel, and each head computes a different
+attention score using the scaled dot-product similarity between
+Q, K ,a n d V
+Attention(Q, K, V ) = softmax
+ QK
+T
+√
+512
+
+V. (2)
+Then, the outputs of all heads are concatenated and projected
+with another learnable weights matrix. The MCA block works
+in the same way as MSA except the key and values are now
+coming from the visual features: Q = W Q Fqi , K = W K FXi ,
+and V = W V FXi . At the output of the text decoder, we obtain
+the conditional textual representations referred as F
+qi .O nt h e
+other side, the image decoder yields the conditional visual
+representations F
+Xi by considering the visual representation
+as queries and the textual representations as keys and values.
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+BAZI et al. : BI-MODAL TRANSFORMER-BASED APPROACH FOR VISUAL QUESTION ANSWERING 4708011
+Fig. 4. Example of images with different type of question answers. (a) LR and (b) HR datasets.
+C. Classiﬁcation
+For obtaining the answer, we use one classiﬁer per modality.
+For each modality, we use global average pooling (GAP) to
+convert the sequence into a single feature of dimension 512.
+Then, we feed this feature t o an FC layer with Softmax
+activation function. Thus, the outputs of the text and image
+classiﬁers are given as follows :
+⎧
+⎨
+⎩
+ˆy
+q
+i = Softmax
+
+FC
+
+GAP
+
+F
+qi
+
+ˆy X
+i = Softmax
+
+FC
+
+GAP
+
+F
+Xi
+
+.
+(3)
+Then, we train the network by optimizing the standard cross-
+entropy loss in a batch-wise manner over the training set. The
+total loss over the training set is given as follows :
+L = λ1
+Ntr
+	Ntr
+i=1
+CrossEntropy
+
+yi, ˆyq
+i
+
++ λ2
+Ntr
+	Ntr
+i=1
+CrossEntropy
+
+yi, ˆy X
+i
+
+(4)
+where λ1 and λ2 are the two regularization parameters con-
+trolling the contributions of both losses. In our experiments,
+we set them to 0.5. In the prediction phase, we take the average
+prediction of both classiﬁers
+ˆyi = 0.5
+
+ˆyq
+i + ˆy X
+i
+
+. (5)
+IV . E XPERIMENTAL RESULTS
+A. Dataset Description
+1) Low Resolution: This dataset consists of nine different
+tiles of 10 m of spatial resolution, covering 6.55 km 2,w h i c h
+are based on Sentinel-2 images acquired over The Netherlands
+(RGB bands). These tiles were divided into 772 images of size
+256 × 256 pixels. Then, 77 232 question–answer pairs were
+generated. For each image, many questions–answers were
+given (around 100 question–answer per image). The ques-
+tions are mainly related to object presence (answer: yes/no),
+comparisons between objects (answer: yes/no), rural or urban
+areas, and object counting. Regarding object counting, it was
+proposed in [20] to assign object counts in speciﬁc ranges
+(answer: equal to 0; greater than 0 and smaller or equal
+to 10; greater than 10 and smaller or equal to 100; greater
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+4708011 IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENSING, VOL. 60, 2022
+than 100 and smaller or equal to 1000; and greater than
+1000). Thus, the maximum number of possible answers for
+this dataset is C = 11. We follow the split proposed in [20]
+by taking 77.8% of the original tiles, 11.1% and 11.1%,
+for training, validation, and tes t, respectively. In Fig. 4(a),
+we depict examples of images, questions, and answers. In con-
+trast, in Fig. 5(a) and (b), we show the distribution of the
+answers for this dataset for both train and test sets.
+2) High Resolution: This dataset contains 161 different tiles
+of aerial images with 15 cm of spatial resolution. These tiles
+were divided into 10 659 images of size 512 × 512 pix-
+els, where each image covers covering 5898 m
+2. Similarly,
+1 066 316 question–answer pairs were generated (around 100
+question–answer per image). The questions are related to
+object counting (answer: from 0 to 89 object counts), pres-
+ence (answer: yes/no), comparison (answer: yes/no), and area
+covered by particular objects in s pecify ranges similar to object
+counting for the LR dataset (answer: equal to 0; greater than
+0 and smaller or equal to 10; greater than 10 and smaller or
+equal to 100; greater than 100 and smaller or equal to 1000;
+and greater than 1000). Based on this division, the number
+for classes in this dataset is C = 99. The training set holds
+61.5% of the tiles, 11.2% are allocated to the validation set,
+and the rest as test sets (20.5% for test set 1 and 6.8% for
+test set 2). Here, we notice that test set 2 is used for assessing
+the robustness of the model on image acquired at different
+locations. In Fig. 4(b), we show the examples of images,
+questions, and answers for this HR dataset. As done for the
+LR dataset, we show in Fig. 5(c) and (d), the distribution of
+the answers and examples of image–question pairs. For ease of
+interpretation, we present the number of counting answers as a
+single class yet in the experiments, we consider 89 categorical
+counting classes as mentioned previously. It is worth recalling
+that the images of Fig. 4 were selected randomly so as to
+cover a variety of question types (count, presence, comparison,
+and urban/rural) for the LR dataset and (count, presence,
+comparison, and area) for the HR dataset.
+B. Experimental Setup and Evaluation Metrics
+We implement our method using PyTorch library [34] on
+a PC with Core(TM) i9-7920X CPU, GeForce RTX 1080 Ti
+11 GB, and 64-GB RAM.
+We optimize our model using Adam optimizer [35] with
+a learning rate of 0.0001 and for 30 iterations. We set the
+minibatch size to 120. For data augmentation, we resize the
+images to 288 × 288 pixels and then we randomly crop 224 ×
+224 pixels. Then, we apply also random rotation by 20
+◦.
+For the LR dataset, we present the accuracies per question
+type: count, presence, comparison, and urban/rural. In contrast,
+for the HR dataset, we group them into count, presence,
+comparison, and area.
+C. Results on LR Dataset
+We train the model on the training set for three different
+trials with different initializations. Then, we present the aver-
+aged classiﬁcation accuracies fo r these three trials along with
+the standard deviation. From Table I, we see that the text
+TABLE I
+CLASSIFICA TION RESULTS OBT AINED FOR THE LR T EST SET.T HE NUM -
+BERS BETWEEN BRACKETS INDICA TE THE ST ANDARD DEVIA TION
+TABLE II
+CLASSIFICA TION RESULTS OBT AINED FOR THE FIRST HR T EST SET
+classiﬁer (with the output ˆyq
+i ) gives an average accuracy (AA)
+and overall accuracy (OA) of (85.96% and 84.76%). While the
+image classiﬁer (with the output ˆ y
+X
+i ) performs slightly better,
+the respective scores are (86.14% and 84.73%). In contrast,
+fusing both classiﬁers (the output ˆ yi) leads to (86.78% and
+85.56%). We can observe that when the question type is
+relevant to presence, comparis on, and urban/rural categories,
+the scores exceed 91%. Y et, for the counting class, it is only
+72.22%, which indicates that this class is more challenging as
+we have to assign objects in speciﬁc ranges. Comparing our
+results to the work presented in [20], we observe signiﬁcant
+improvements for all classes with 2.66% up to 9.66% for
+urban/rural and count classes, respectively. The increase in
+(OA and AA) accuracies is (5.29% and 6.48%).
+D. Results on HR Datasets
+Table II reports the scores obtained for the ﬁrst HR dataset.
+Here, both text and image classiﬁers yield close results and
+their fusion yields slight improvement scoring an (AA and
+OA) equal to (84.98% and 85.30%). The counting class is the
+worst one as we obtain 69.80%. Regarding the second HR test
+dataset, as shown in Table III, the accuracies are less compared
+with the ﬁrst HR dataset due to the data-shift problem as the
+images are acquired at different locations. Here again, the text
+classiﬁer performs slightly better compared with the image
+classiﬁer and their fusion yields an (AA and OA) of (80.54%
+and 81.23%). Comparing these results to the method proposed
+in [20], we observe that our method performs better on both
+datasets.
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+BAZI et al. : BI-MODAL TRANSFORMER-BASED APPROACH FOR VISUAL QUESTION ANSWERING 4708011
+Fig. 5. Distribution of classes per question type. (a) Train and (b) test of LR dataset. (c) Train and (d) ﬁrst test set of the HR dataset.
+TABLE III
+CLASSIFICA TION RESULTS OBT AINED FOR THE SECOND HR T EST SET t
+E. Sensitivity With Respect to the Training Set Size
+As mentioned previously, around 100 questions were gen-
+erated automatically for each image for both LR and HR
+datasets. In this experiment, we analyze the sensitivity of
+the model with respect to low regime training size scenarios.
+We repeat the above experiments using 20% and 10% of the
+training sets by sampling over questions. Table IV shows the
+classiﬁcation results expressed in terms of OA and standard
+deviation for the LR dataset for three trials with different train-
+ing subsets. Our model yields an (AA and OA) of (85.72% and
+84.30%) and (83.83% and 82.85%) for the scenarios 20% and
+10%, respectively, resulting a decrease of (1.06% and 1.26%)
+and (2.95% and 2.71%) compared with the original training
+set. Y et, it still provides better scores compared with [20] by
+using only 10% of the training set. Similar observations can
+be made for the HR datasets (see Tables V and VI), where
+the model reaches almost the s ame accuracies for the ﬁrst
+HR dataset with only 10% of the training set. Furthermore, it
+performs better for the second HR dataset with 10% of training
+set. This conﬁrms clearly the ability of the network in learning
+suitable visual and textual representations for the VQA task.
+F . Impact of Decoders
+As mentioned previously, we append two transformer
+decoders to model the contextual relationship between the
+visual and textual image representations. To this end, we carry
+out experiments by removing this part and assess the
+performance of the model. The results are reported in
+Tables VII and VIII for LR and HR datasets, respectively.
+Evidently, discarding the decoder part incurs a signiﬁcant drop
+in the performance on both dataset s. For instance, considering
+the question of type “comparison” in the HR dataset, roughly
+25% drop is observed when the decoder is discarded, and an
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+4708011 IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENSING, VOL. 60, 2022
+TABLE IV
+CLASSIFICA TION RESULTS OBT AINED FOR THE LR T EST SET USING 20% AND 10% OF THE TRAINING SET.T HE METHOD
+PROPOSED IN [35] U SES THE ENTIRE TRAINING SET
+TABLE V
+CLASSIFICA TION RESULTS OBT AINED FOR THE FIRST HR T EST SET USING 20% AND 10% OF THE TRAINING SET.
+THE METHOD PROPOSED IN [35] U SES THE ENTIRE TRAINING SET
+TABLE VI
+CLASSIFICA TION RESULTS OBT AINED FOR THE SECOND HR T EST SET USING 20% AND 10% OF THE TRAINING SET.
+THE METHOD PROPOSED IN [35] U SES THE ENTIRE TRAINING SET
+TABLE VII
+CLASSIFICA TION RESULTS OBT AINED FOR THE LR T EST SET
+WITH AND WITHOUT DECODERS
+OA accuracy drop of about 18% is noticed for the LR dataset,
+which underlines the importanc e of taking intermodality fea-
+ture relationship into account.
+TABLE VIII
+CLASSIFICA TION RESULTS OBT AINED FOR THE HR1 AND
+HR2 T EST SETS WITH AND WITHOUT DECODERS
+G. Attention Maps
+In the following, we show the attention maps provided by
+the proposed bi-modal transformer model over questions and
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+BAZI et al. : BI-MODAL TRANSFORMER-BASED APPROACH FOR VISUAL QUESTION ANSWERING 4708011
+Fig. 6. Attentions over text and images for the HR dataset.
+Fig. 7. Attentions over text and images for the LR dataset.
+images to understand relevance of text and image regions for
+generating the answer. To capture the attention maps from the
+output token to the input space of the network, we adopt the
+attention rollout strategy proposed in [36]. Basically, at every
+transformer block, an attention matrix that quantiﬁes attention
+ﬂow from a certain token in the previous layer to another
+token in the next layer is envisioned. Therefore, to track down
+attention ﬂow between two matrices, their respective weight
+matrices are recursively multiplied. As proposed in the original
+paper [36], we consider the average of the attention heads.
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+4708011 IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENSING, VOL. 60, 2022
+Fig. 6 shows the attention for text and question pairs
+generated from HR dataset. It can be observed that when
+the question queries about more than one object, such as the
+top left example which compares the amount of “roads” with
+respect to “buildings,” the network seems to emphasize on
+both of the objects as shown in the attention map. It can
+also be noted that the object “roads” displays higher peaks
+in the attention map, owing to the fact that it is the object
+that is stressed in the query question (“more” roads than
+buildings).
+Interestingly, querying the amount of roads (top right exam-
+ple) incites the network to focus on the object “roads” in the
+image. The same holds for the two examples at the bottom
+where the network looks at the whereabouts of the objects that
+are present in the query questions (i.e., buildings and parkings,
+respectively). This suggests an evident consistency between
+the input question and the attention of the network.
+In Fig. 7, we depict the attention maps produced from the
+LR dataset. For instance, in the top example, when the question
+queries about the object “building,” the attention maps reﬂect
+relevant areas in the image, paying less attention to the bottom
+of the image where no buildings are observed. When the
+query regards the object “gardens,” however, more attention
+is given to the bottom of the image (rightmost attention map
+of the top example). As per the second example, querying
+the presence of the “square building” object stresses diverse
+areas across the image although the image consists mostly
+of agricultural ﬁelds, which may be due to the constraint
+“square” that characterizes both the buildings and the ﬁelds.
+When querying about the number of buildings (second map),
+the attention drops signiﬁcantly with respect to the previous
+case, while querying about the presence of water (last map),
+sparse attention can be observed. On this point, it is to note
+that the attention maps in the LR case suggest less relevance
+with the image compared with the HR case that offers major
+spatial details.
+Although the illustrated examples show a promising coher-
+ence between the questions and the network’s focus areas
+in particular for the HR dataset, we believe that even ﬁner
+results can be obtained. In particular, it is to point out that
+the network does not receive the bounding box a nnotations of
+the objects included in the questions, which is an important
+information that can support the network in the training.
+In contrast, we deal with images that were acquired from a
+top-view, which is known to disr egard the facade of the objects
+of interest. Another contributing factor is the construction of
+the dataset itself, where most of the questions were produced
+automatically, yet many of them can be rather noisy and could
+be misleading to the network.
+V. C
+ONCLUSION
+In this article, we have introduced a VQA approach based
+on vision and language transformers. We have proposed to
+capture the dependencies betw een visual and textual repre-
+sentations using co-attention mechanisms. In the experimental
+results, we have shown that our approach can yield promising
+results in terms of classiﬁcatio n accuracy compared with the
+existing solutions with reduced training set size. For future
+developments, we propose to enhance the method by increas-
+ing the diversity among the two classiﬁers. In terms of dataset,
+we suggest adding object-based annotations to better capture
+the correlation between the textual and visual cues. Another
+possible interesting development is to extend the dataset to
+open-ended VQA scenarios where the answer can be given as
+a natural language.
+R
+EFERENCES
+[1] M. Ohki and M. Shimada, “Large-area land use and land cover classiﬁ-
+cation with quad, compact, and dual polarization SAR data by PALSAR-
+2,” IEEE Trans. Geosci. Remote Sens. , vol. 56, no. 9, pp. 5550–5557,
+Sep. 2018, doi: 10.1109/TGRS.2018.2819694.
+[2] M. Weigand, J. Staab, M. Wurm, and H. Taubenböck, “Spatial and
+semantic effects of Lucas samples on fully automated land use/land
+cover classiﬁcation in high-resolution Sentinel-2 data,” Int. J. Appl.
+Earth Observ. Geoinformation, vol. 88, Jun. 2020, Art. no. 102065, doi:
+10.1016/j.jag.2020.102065.
+[3] Z. Dong, M. Wang, Y . Wang, Y . Zhu, and Z. Zhang, “Object detection
+in high resolution remote sensing imagery based on convolutional
+neural networks with suitable object scale features,” IEEE Trans.
+Geosci. Remote Sens. , vol. 58, no. 3, pp. 2104–2114, Mar. 2020, doi:
+10.1109/TGRS.2019.2953119.
+[4] K. Fu, Z. Chang, Y . Zhang, G. Xu , K. Zhang, and X. Sun, “Rotation-
+aware and multi-scale convolutional neural network for object detec-
+tion in remote sensing images,” ISPRS J. Photogramm. Remote
+Sens., vol. 161, pp. 294–308, Mar. 2020, doi: 10.1016/j.isprsjprs.2020.
+01.025.
+[5] X. Lu, B. Wang, and X. Zheng, “Sound active attention frame-
+work for remote sensing image captioning,” IEEE Trans. Geosci.
+Remote Sens. , vol. 58, no. 3, pp. 1985–2000, Mar. 2020, doi:
+10.1109/TGRS.2019.2951636.
+[6] W. Huang, Q. Wang, and X. Li, “Denoising-based multiscale fea-
+ture fusion for remote sensing image captioning,” IEEE Geosci.
+Remote Sens. Lett. , vol. 18, no. 3, pp. 436–440, Mar. 2021, doi:
+10.1109/LGRS.2020.2980933.
+[7] Q. Wang, W. Huang, X. Zhang, and X. Li, “Word–sentence
+framework for remote sensing image captioning,” IEEE Trans.
+Geosci. Remote Sens. , vol. 59, no. 12, pp. 1–12, Dec. 2020, doi:
+10.1109/TGRS.2020.3044054.
+[8] X. Ma, R. Zhao, and Z. Shi, “Multiscale methods for optical remote-
+sensing image captioning,” IEEE Geosci. Remote Sens. Lett. , vol. 18,
+no. 11, pp. 2001–2005, Nov. 2021, doi: 10.1109/LGRS.2020.3009243.
+[9] T. Abdullah, Y . Bazi, M. M. Al Ra hhal, M. L. Mekhalﬁ , L. Rangarajan,
+and M. Zuair, “TextRS: Deep bidirec tional triplet network for matching
+text to remote sensing images,” Remote Sens. , vol. 12, no. 3, p. 405,
+Jan. 2020, doi: 10.3390/rs12030405.
+[10] M. M. A. Rahhal, Y . Bazi, T. Abdu llah, M. L. Mekhalﬁ, and M. Zuair,
+“Deep unsupervised embedding for remote sensing image retrieval using
+textual cues,” Appl. Sci. , vol. 10, no. 24, p. 8931, Dec. 2020, doi:
+10.3390/app10248931.
+[11] S. Antol et al. (2015). VQA: Visual Question Answering . Accessed:
+Nov. 14, 2021. [Online]. Available: https://openaccess.thecvf.com/conten
+t_iccv_2015/html/Antol_VQA_Visual_Question_ICCV_2015_paper.html
+[12] Q. Wu, D. Teney, P . Wang, C. Shen, A. Dick, and
+A. van den Hengel, “Visual question answering: A survey of methods
+and datasets,” Comput. Vis. Image Understand. , vol. 163, pp. 21–40,
+Oct. 2017, doi: 10.1016/j.cviu.2017.05.001.
+[13] A. Radford et al. , “Learning transferable visual models from natural
+language supervision,” 2021, arXiv:2103.00020.
+[14] X. Li et al., “OSCAR: Object-semantics aligned pre-training for vision-
+language tasks,” in Computer Vision—ECCV (Lecture Notes in Com-
+puter Science), vol. 12375, A. V edaldi, H. Bischof, T. Brox, and
+J. M. Frahm, Eds. Cham, Switzerland: Springer, 2020, doi: 10.1007/978-
+3-030-58577-8_8.
+[15] K. J. Shih, S. Singh, and D. Hoiem, “Where to look: Focus
+regions for visual question answering,” in
+Proc. IEEE Conf. Com-
+put. Vis. Pattern Recognit. (CVPR) , Jun. 2016, pp. 4613–4621, doi:
+10.1109/CVPR.2016.499.
+[16] J. Lu, J. Y ang, D. Batra, and D . Parikh, “Hierarchical question-
+image co-attention for visual question answering,” in Proc.
+Adv. Neural Inf. Process. Syst. , 2016, pp. 1–9. Accessed:
+Nov. 14, 2021. [Online]. Available: https://proceedings.neurips.cc/pape
+r/2016/hash/9dcb88e0137649590b755372b040afad-Abstract.html
+[17] W. Guo, Y . Zhang, J. Y ang, and X. Y uan, “Re-attention for visual ques-
+tion answering,” IEEE Trans. Image Process. , vol. 30, pp. 6730–6743,
+2021, doi: 10.1109/TIP .2021.3097180.
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.
+BAZI et al. : BI-MODAL TRANSFORMER-BASED APPROACH FOR VISUAL QUESTION ANSWERING 4708011
+[18] A. Bansal, Y . Zhang, and R. Chella ppa, “Visual question answering on
+image sets,” in Computer Vision—ECCV (Lecture Notes in Computer
+Science), vol. 12366, A. V edaldi, H. Bischof, T. Brox, and J. M. Frahm,
+Eds. Cham, Switzerland: Springer, 2020, doi: 10.1007/978-3-030-58589-
+1_4.
+[19] Z. Y u et al., “ActivityNet-QA: A dataset for understanding complex web
+videos via question answering,” 2019, arXiv:1906.02467.
+[20] S. Lobry, D. Marcos, J. Murray, and D. Tuia, “RSVQA: Visual
+question answering for remote sensing data,” IEEE Trans. Geosci.
+Remote Sens. , vol. 58, no. 12, pp. 8555–8566, Dec. 2020, doi:
+10.1109/TGRS.2020.2988782.
+[21] X. Zheng, B. Wang, X. Du, and X. Lu, “Mutual attention
+inception network for remote sensing visual question answering,”
+IEEE Trans. Geosci. Remote Sens. , vol. 60, pp. 1–14, 2022, doi:
+10.1109/TGRS.2021.3079918.
+[22] S. Lobry, B. Demir, and D. Tuia, “RSVQA meets bigearthnet: A new,
+large-scale, visual question answeri ng dataset for remote sensing,” in
+Proc. IEEE Int. Geosci. Remote Sens. Symp. (IGARSS) , Jul. 2021,
+pp. 1218–1221, doi: 10.1109/IGARSS47720.2021.9553307.
+[23] A. Dosovitskiy et al. , “An image is worth 16 ×16 words: Transformers
+for image recognition at scale,” 2020, arXiv:2010.11929.
+[24] L. Bashmal, Y . Bazi, M. M. Al Ra hhal, H. Alhichri, and N. Al Ajlan,
+“UA V image multi-labeling with data-efﬁcient transformers,” Appl. Sci.,
+vol. 11, no. 9, p. 3974, Apr. 2021, doi: 10.3390/app11093974.
+[25] Y . Bazi, L. Bashmal, M. M. A. Rahhal, R. A. Dayil, and N. Al Ajlan,
+“Vision transformers for remote sensing image classiﬁcation,” Remote
+Sens., vol. 13, no. 3, p. 516, Feb. 2021, doi: 10.3390/rs13030516.
+[26] X. He, Y . Chen, and Z. Lin, “Spatia l-spectral transformer for hyperspec-
+tral image classiﬁcation,” Remote Sens., vol. 13, no. 3, p. 498, Jan. 2021,
+doi: 10.3390/rs13030498.
+[27] H. Chen, Z. Qi, and Z. Shi, “Remote sensing image change detection
+with transformers,” IEEE Trans. Geosci. Remote Sens., vol. 60, pp. 1–14,
+2021, doi: 10.1109/TGRS.2021.3095166.
+[28] M. L. Mekhalﬁ, C. Nicolo, Y . Bazi , M. M. A. Rahhal, N. A. Alsharif, and
+E. A. Maghayreh, “Contrasting YOLO v5, transformer, and EfﬁcientDet
+detectors for crop circle detection in desert,” IEEE Geosci. Remote Sens.
+Lett., vol. 19, pp. 1–5, 2022, doi: 10.1109/LGRS.2021.3085139.
+[29] X. Shen, B. Liu, Y . Zhou, and J. Zhao, “Remote sensing image caption
+generation via transformer and reinforcement learning,” Multimedia
+Tools Appl. , vol. 79, nos. 35–36, pp. 26661–26682, Sep. 2020, doi:
+10.1007/s11042-020-09294-7.
+[30] X. Shen, B. Liu, Y . Zhou, J. Zhao, and M. Liu, “Remote sensing
+image captioning via variational aut oencoder and reinforcement learn-
+ing,” Knowl.-Based Syst. , vol. 203, Sep. 2020, Art. no. 105920, doi:
+10.1016/j.knosys.2020.105920.
+[31] A. V aswani et al. , “Attention is all you need,” 2017, arXiv:1706.03762.
+[32] J. L. Ba, J. R. Kiros, and G. E. Hinton, “Layer normalization,” 2016,
+arXiv:1607.06450.
+[33] D. Hendrycks and K. Gimpel, “G aussian error linear units (GELUs),”
+2016, arXiv:1606.08415
+.
+[34] A. Paszke et al. (Oct. 2017). Automatic differentiation in PyTorch .
+Accessed: Nov. 25, 2021. [Online]. Available: https://openreview.ne
+t/forum?id=BJJsrmfCZ
+[35] D. P . Kingma and J. Ba, “Adam: A method for stochastic optimization,”
+2014, arXiv:1412.6980.
+[36] S. Abnar and W. Zuidema, “Quantif ying attention ﬂow in transformers,”
+2020, arXiv:2005.00928.
+Yakoub Bazi (Senior Member, IEEE) r eceived the
+State Engineer and M.Sc. degrees in electronics
+from the University of Batna, Batna, Algeria, in
+1994 and 2000, respectively, and the Ph.D. degree
+in information and communication technology from
+the University of Trento, Trento, Italy, in 2005.
+From 2000 to 2002, he was a Lecturer with the
+University of M’Sila, M ’Sila, Algeria. In 2006, he
+joined the University of Trento, as a Post-Doctoral
+Researcher. From 2006 to 2009, he was an Assistant
+Professor with the College of Engineering, Al-Jouf
+University, Sakakah, Saudi Arabia. He is currently an Associate Professor
+with the Department of Computer Engi neering, College of Computer and
+Information Sciences, King Saud University, Riyadh, Saudi Arabia. He is a
+referee for several interna tional journals. His research interests include remote
+sensing, signal/image medical analysis, and computer vision.
+Dr. Bazi is an Associate Editor of IEEE G
+EOSCIENCE AND REMOTE SENS -
+ING LETTERS and IEEE T RANSACTIONS ON GEOSCIENCE AND REMOTE
+SENSING .
+Mohamad Mahmoud Al Rahhal (Senior Mem-
+ber, IEEE) r eceived the B.Sc. degree in computer
+engineering from Aleppo University, Aleppo, Syria,
+in 2002, the M.Sc. degree from Hamdard University,
+New Delhi, India, in 2005, and the Ph.D. degree in
+computer engineering from King Saud University,
+Riyadh, Saudi Arabia, in 2015.
+From 2006 to 2012, he was a Lecturer with Al-Jouf
+University, Sakakah, Saudi Arabia. He is currently
+an Associate Professor with the College of Applied
+Computer Engineering, King Saud University. His
+research interests include signal/image medical analysis, remote sensing, and
+computer vision.
+Mohamed Lamine Mekhalﬁ (Senior Member,
+IEEE) received the M.Sc. degree in electronics from
+the University of Hadj Lakhdar, Batna, Algeria,
+in 2012, and the Ph.D. degree in information and
+communication technology from the University of
+Trento, Trento, Italy, in 2016.
+He served as a Post-Doctoral Researcher at the
+PA VIS Department, Italian Institute of Technology,
+Genova, Italy, for a year. Then, he was a Researcher
+with Metacortex Srl, Trento. He joined Technologies
+of Vision Unit, Fondazione Bruno Kessler, Trento,
+as a Researcher, in 2021. His research interests are in the ﬁelds of computer
+vision and remote sensing.
+Mansour Abdulaziz Al Zuair (Member, IEEE)
+received the B.S. degree in computer engineering
+from King Saud University, Riyadh, Saudi Arabia,
+in 1986, and the M.S. and Ph.D. degrees in computer
+engineering from Syracuse University, Syracuse,
+NY , USA, in 1989 and 1996, respectively.
+He was the Chairman of the Computer
+Engineering Department, King Saud University,
+from 2003 to 2006, the Vice Dean from 2009 to
+2015, and has been the Dean of the College of
+Computer and Information Sciences, since 2016.
+He is currently an Associate Professor with the Department of Computer
+Engineering, College of Computer an d Information Sciences, King Saud
+University. His research interests include computer architecture, computer
+networks, and signal processing.
+Farid Melgani (Fellow, IEEE) r eceived the State
+Engineer degree in electronics from the University
+of Batna, Batna, Algeria, in 1994, the M.Sc. degree
+in electrical engineering from the University of
+Baghdad, Baghdad, Iraq, in 1999, and the Ph.D.
+degree in electronic and computer engineering from
+the University of Genoa, Genoa, Italy, in 2003.
+He is currently a Full Professor of telecommuni-
+cations with the Department of Information Engi-
+neering and Computer Science, University of Trento,
+Trento, Italy, where he teaches pattern recognition,
+machine learning, and digital transmission. He is also the Head of the Signal
+Processing and Recognition Laboratory and the Coordinator of the Doctoral
+School in Industrial Innovation, University of Trento. He has coauthored
+more than 240 scientiﬁc publications. His research interests are in the areas
+of remote sensing, signal/image processing, pattern recognition, machine
+learning, and computer vision.
+Dr. Melgani is an Associate Editor of the IEEE T
+RANSACTIONS ON GEO -
+SCIENCE AND REMOTE SENSING , International Journal of Remote Sensing ,
+and IEEE J OURNAL ON MINIA TURIZA TION FOR AIR AND SPACE SYSTEMS .
+Authorized licensed use limited to: University of Illinois. Downloaded on January 31,2026 at 21:12:22 UTC from IEEE Xplore.  Restrictions apply.

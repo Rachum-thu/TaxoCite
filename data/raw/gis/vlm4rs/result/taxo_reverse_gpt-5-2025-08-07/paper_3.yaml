@@ -1,0 +1,348 @@
+"citations":
+- "unique_context_marker": "[1, 2, 3, 4, 5, 6, 7, 8]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[3, 4, 9, 10]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Image-Level Understanding Tasks"
+- "unique_context_marker": "[3, 11]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[12, 13, 14]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[12, 15]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  - 2
+  - 4
+  - 5
+  - 13
+  - 16
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  - "Hyperparameter Utilization"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+  - "Pretraining Backbones and Modal Encoders"
+  - "Other Topic"
+  - "Spectral/Temporal Encoding and Masking"
+  - "Adaptation and Tuning Regimes"
+  - null
+- "unique_context_marker": "[16]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[17]"
+  "block_ids":
+  - 1
+  - 7
+  - 10
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  - "Resource Utilization"
+  "topic_labels":
+  - "Dataset Construction and Annotation"
+  - null
+  - "Image-Level Understanding Tasks"
+- "unique_context_marker": "[18]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Domain Overview"
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Dataset Construction and Annotation"
+  - null
+- "unique_context_marker": "[19]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Dataset Construction and Annotation"
+- "unique_context_marker": "[20]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Domain Overview"
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Dataset Construction and Annotation"
+  - null
+- "unique_context_marker": "[21, 22, 23, 24, 25, 26, 27, 28, 29, 30]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prospective Application"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[1, 2, 3, 4, 5, 6]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[31]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[32, 33]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Generalization and Data-Shift Assessment"
+- "unique_context_marker": "[34, 35]"
+  "block_ids":
+  - 1
+  - 7
+  - 9
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  - null
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+  - "Spectral/Temporal Encoding and Masking"
+  - null
+- "unique_context_marker": "[36]"
+  "block_ids":
+  - 1
+  - 4
+  - 11
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  - "Model/Architecture Adoption"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+  - "Other Topic"
+  - "Pretraining Backbones and Modal Encoders"
+- "unique_context_marker": "[29, 28, 37, 38]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[39, 40]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[41, 42, 43, 44]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[45]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[46, 47, 48, 27]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[2, 3, 4, 5, 6]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Pretraining Backbones and Modal Encoders"
+- "unique_context_marker": "[34]"
+  "block_ids":
+  - 2
+  - 11
+  - 12
+  - 14
+  "intent_labels":
+  - "Research Gap"
+  - "Setting/Protocal Adoption"
+  - "Setting/Protocal Adoption"
+  - "Result Comparison"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+  - "RS-Specific Self-Supervised Pretraining"
+  - "Task-Specific Metrics and Protocols"
+  - null
+- "unique_context_marker": "[35]"
+  "block_ids":
+  - 2
+  - 14
+  "intent_labels":
+  - "Research Gap"
+  - "Setting/Protocal Adoption"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+  - "Task-Specific Metrics and Protocols"
+- "unique_context_marker": "[49]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+- "unique_context_marker": "[50, 51, 52]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+- "unique_context_marker": "[52]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+- "unique_context_marker": "[53]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+- "unique_context_marker": "[54]"
+  "block_ids":
+  - 2
+  - 7
+  - 12
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Spectral/Temporal Encoding and Masking"
+  - "Spectral/Temporal Encoding and Masking"
+  - "Spectral/Temporal Encoding and Masking"
+- "unique_context_marker": "[55]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Pretraining Backbones and Modal Encoders"
+- "unique_context_marker": "[56]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Pretraining Backbones and Modal Encoders"
+- "unique_context_marker": "[57, 58]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Spectral/Temporal Encoding and Masking"
+- "unique_context_marker": "[54, 59, 60]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[34, 3]"
+  "block_ids":
+  - 11
+  "intent_labels":
+  - "Result Comparison"
+  "topic_labels":
+  - "RS-Specific Self-Supervised Pretraining"
+- "unique_context_marker": "[61]"
+  "block_ids":
+  - 11
+  - 13
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  - "Result Comparison"
+  "topic_labels":
+  - "Pretraining Backbones and Modal Encoders"
+  - "Pretraining Backbones and Modal Encoders"
+- "unique_context_marker": "[48]"
+  "block_ids":
+  - 12
+  "intent_labels":
+  - "Result Comparison"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[62, 3]"
+  "block_ids":
+  - 13
+  "intent_labels":
+  - "Result Comparison"
+  "topic_labels":
+  - "Pretraining Backbones and Modal Encoders"
+- "unique_context_marker": "[2]"
+  "block_ids":
+  - 13
+  "intent_labels":
+  - "Hyperparameter Utilization"
+  "topic_labels":
+  - "Spectral/Temporal Encoding and Masking"
+- "unique_context_marker": "[63]"
+  "block_ids":
+  - 14
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - null
+- "unique_context_marker": "[35, 64]"
+  "block_ids":
+  - 14
+  "intent_labels":
+  - "Setting/Protocal Adoption"
+  "topic_labels":
+  - "Task-Specific Metrics and Protocols"
