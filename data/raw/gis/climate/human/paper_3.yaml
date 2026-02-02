@@ -1,0 +1,513 @@
+title: Physics-Guided Learning of Meteorological Dynamics for Weather Downscaling and Forecasting
+blocks:
+- block_id: 0
+  content: 'Weather forecasting is essential but remains computationally intensive and physically incomplete in traditional
+    numerical weather prediction (NWP) methods. Deep learning (DL) models offer efficiency and accuracy but often ignore physical
+    laws, limiting interpretability and generalization. We propose PhyDL-NWP, a physics-guided deep learning framework that
+    integrates physical equations with latent force parameterization into data-driven models. It predicts weather variables
+    from arbitrary spatiotemporal coordinates, computes physical terms via automatic differentiation, and uses a physics-informed
+    loss to align predictions with governing dynamics. PhyDL-NWP enables resolution-free downscaling by modeling weather as
+    a continuous function and fine-tunes pre-trained models with minimal overhead, achieving up to 170× faster inference with
+    only 55K parameters. Experiments show that PhyDL-NWP improves both forecasting performance and physical consistency.
+
+
+    CCS Concepts
+
+    •Applied computing → Physical sciences and engineering ; • Computing methodologies → Machine learning.
+
+
+    Keywords
+
+    Physics; Learning; Weather; Prediction; Parameterization'
+  citations: []
+- block_id: 1
+  content: 'Weather prediction remains one of modern science’s most complex and vital challenges, with the nonlinear interactions
+    between various meteorological variables, the vast spatial and temporal scales involved, and the chaotic nature of weather
+    systems. The first-principle approach to weather prediction, i.e., numerical weather prediction (NWP), relies on mathematical
+    models of atmospheric and oceanic phenomena. NWP is often computationally intensive at high resolution, and many unresolved
+    physical processes such as precipitation and radiation need to be represented by parameterization. Therefore, there has
+    been a growing interest in using machine learning (ML) models for weather prediction. Deep learning models, trained by
+    nearly 40 years of European Center for Medium-Range Weather Forecasts (ECMWF) reanalysis v5 (ERA5) data [8], have demonstrated
+    remarkable ability to capture complex nonlinear relationships for tasks such as weather forecasting [28, 39] and downscaling
+    [35]. However, despite the recent success of ML techniques, the application of deep learning to weather prediction is
+    not without challenges. Existing ML models do not incorporate established physical laws (e.g., fluid dynamics, thermodynamics)
+    to ensure that the derived variables are consistent with these laws.
+
+
+    Physics-Informed Neural Networks (PINN) [30] have gained prominence as alternatives to traditional numerical simulations,
+    offering innovative approaches to weather prediction. However, weather prediction is inherently complex, involving numerous
+    factors and processes that are influenced by local variations, boundary condition changes, small-scale phenomena like
+    microclimates, and external forces. Many of these critical factors, which significantly affect first-principle equations,
+    are often missing from existing datasets due to challenges in measurement and quantification. For instance, the PDE governing
+    temperature evolution (see Table 6) includes thermal diffusivity, which is not available in typical weather datasets such
+    as ERA5 and must instead be estimated through turbulence parameterizations. Other unavailable terms include vertical velocity,
+    friction, etc. This poses a challenge to constructing complete and accurate physical models, thereby limiting the fidelity
+    of physics-informed learning approaches in real-world settings.
+
+
+    In light of this challenge, we propose a novel framework, PhyDL-NWP. This proposed paradigm first trains a neural network
+    to predict weather conditions based on spatio-temporal coordinates, then leverages automatic differentiation for calculating
+    partial differential equation (PDE) terms. Based on this, we construct a library of physics terms derived from first-principle
+    equations that can be represented using available dataset variables. To address unresolved processes and missing variables,
+    we adopt a parametrization strategy, introducing a latent force model as a parametrization term to capture the effects
+    of physical forces not explicitly represented in the constructed PDEs.
+
+
+    This design enables PhyDL-NWP to generate super-resolution weather data at arbitrary granularity, while simultaneously
+    providing interpretable physical insights. Based on the constructed governing equations that represent the physical principles,
+    we constrain and guide the optimization of deep learning models, enhancing model performance across datasets with varying
+    climates and sources. In extensive experiments across 17 baselines and four datasets, we demonstrate that the learned
+    parameterized PDEs align closely with the desired physical equations. The physics-guided models consistently outperform
+    their vanilla counterparts.
+
+
+    In short, our contributions are summarized as follows:
+
+    - We propose a novel physics-guided learning framework PhyDL-NWP that completes weather equations using latent force parameterization
+    to inform deep learning models of the underlying physical mechanism of meteorology.
+
+    - PhyDL-NWP directly provides a novel way to model weather data in an online learning manner with unlimited granularity.
+    Weather downscaling can be done by simply feeding any continuous coordinates to the model, without the need for coarse-granular
+    data as input during inference.
+
+    - PhyDL-NWP provides an effective paradigm for weather forecasting by forcing the prediction to align with the parameterized
+    weather equations via a physics-guided loss.
+
+    - PhyDL-NWP is extremely efficient and can be directly used to fine-tune any pre-trained weather forecasting model. It
+    can be up to 170 times faster in inference than a standalone model, with only up to 55 thousand parameters.
+
+    - The state-of-the-art performance of PhyDL-NWP is evaluated using both reanalysis and real-world observational datasets,
+    spanning global and local scales. PhyDL-NWP shows consistency with the underlying physics in a variety of weather variables.'
+  citations:
+  - marker: '[8]'
+    intent_label: Domain Overview
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[28]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[30]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[35]'
+    intent_label: Prior Methods
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 2
+  content: 'In the area of weather prediction, Numerical Weather Prediction (NWP) [1, 21] is the current mainstream method.
+    It uses mathematical models of the atmosphere and oceans, such as partial differential equations (PDE), to predict future
+    weather based on current weather conditions. Some notable NWP models include European Centre for Medium-Range Weather
+    Forecasts (ECMWF), Global Forecast System (GFS), etc. NWP can forecast weather in the medium range but usually involves
+    extensive computation. For example, ECMWF operates one of the largest supercomputer complexes in Europe.
+
+
+    Recently, deep learning has emerged as another promising solution to weather forecasting [9, 29] and downscaling [26,
+    35] tasks. These deep learning models [7, 37] rely on different neural architectures such as LSTM [15], CNN [38], GNN
+    [19] and Transformer [39] to capture the evolving dynamics and correlation across space and time. Many large models have
+    emerged in recent years. For example, ClimaX [24], GraphCastNet [14], ClimateLearn [25], FengWu [3], Pangu-Weather [2]
+    all use backbones such as the Vision Transformer (ViT), UNet and autoencoders, for training a large model for weather
+    forecasting. WeatherBench [31] benchmarks the use of pre-training techniques for weather forecasting. In addition, FourcastNet
+    [28] leverages the adaptive Fourier neural operator (AFNO) [5, 16] to treat weather as a latent PDE system. In recent
+    years, a few studies such as NeuralGCM [13] and WeatherGFT [41] have started to explore the integration of underlying
+    physical mechanisms [36] in weather prediction. However, there are still no explicit efforts to use parameterization to
+    ensure the completeness of the primitive equations based on the data.
+
+
+    In addition, spatio-temporal modeling based on deep learning [18] has thrived in recent years. Many previous works also
+    approach the weather prediction task from the perspective of spatio-temporal modeling [6]. Dynamical systems modeling
+    involves the formulation of systems whose states evolve over time. Given the governing equations, physics-informed approaches
+    [12, 30] use the physics mechanism to enhance the dynamical systems. In the absence of governing equations, the identification
+    of physical equations [4, 22, 23] is proposed to provide insights with respect to the laws of physics.'
+  citations:
+  - marker: '[1]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[2]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[4]'
+    intent_label: Prior Methods
+    topic_label: Climate Prediction and Data-Driven Modeling
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[9]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Climate Prediction and Data-Driven Modeling
+  - marker: '[13]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[14]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[16]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[18]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[19]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[22]'
+    intent_label: Prior Methods
+    topic_label: Climate Prediction and Data-Driven Modeling
+  - marker: '[23]'
+    intent_label: Prior Methods
+    topic_label: Climate Prediction and Data-Driven Modeling
+  - marker: '[24]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[28]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[29]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[30]'
+    intent_label: Prior Methods
+    topic_label: Climate Prediction and Data-Driven Modeling
+  - marker: '[31]'
+    intent_label: Prior Methods
+    topic_label: Foundation models and generative architectures
+  - marker: '[35]'
+    intent_label: Prior Methods
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[36]'
+    intent_label: Domain Overview
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[38]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[41]'
+    intent_label: Prior Methods
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 3
+  content: ''
+  citations: []
+- block_id: 4
+  content: 'We study a spatiotemporal weather dataset, denoted as
+
+    u = [u1 (x, y, t), . . . , uh (x, y, t)]. (1)
+
+    Using the physics expression, this dataset comprises h distinct weather variable fields (such as temperature and pressure),
+    each related to specific input coordinates (x, y, t). Here, x ∈ [1, . . . , n] and y ∈ [1, . . . , m] represent spatial
+    coordinates, while t ∈ [1, . . . , T] corresponds to the temporal dimension.
+
+
+    This dataset can be alternatively expressed as a sequence of spatial “images” X = [X1, . . . , XT], with each “image”
+    Xi being a tensor in Rn×m×h, encapsulating the spatial and weather-factor dimensions at each time point.
+
+
+    We focus on two primary tasks based on this dataset:
+
+    - Weather Downscaling: The goal is to generate super-resolution weather “images” Y = [Y1, . . . , YT] from X, where each
+    Yi is a tensor in Rn′×m′×h. The challenge is to derive this detailed data from the original, coarser dataset X, with the
+    dimensions n′ > n and m′ > m.
+
+    - Weather Forecasting: This task aims to find a model g to predict future weather conditions for a duration of r hours,
+    represented as [X]_{i+1}^{i+r} = [Xi+1, . . . , Xi+r]. These predictions are based on observed data from the preceding
+    s + 1 hours, [X]_{i-s}^{i} = [Xi−s, . . . , Xi], for each time instance i. That is, g([X]_{i-s}^{i}) = [X]_{i+1}^{i+r}.'
+  citations:
+  - marker: '[1]'
+    intent_label: Problem Formulation
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 5
+  content: 'In this section, we aim to learn the physical mechanism represented by PDE with parameterization to fit the weather
+    data. A typical partial differential equation (PDE) with parametrization terms has the following form:
+
+    ∂u/∂t = Qπ(x, y, t) + Φ(u)Ξ = Qπ(x, y, t) + ∑_{i=1}^{p} φ_i(u) ξ_i, (2)
+
+    where p denotes the number of PDE terms in the equation, each φ_i(u) ∈ [1, u, ∂u/∂x, ∂u/∂y, ∂^2 u/∂x^2, ..., u ∂u/∂x,
+    ...] denotes a PDE term in the equation (see examples in Sec. 4.3), with the set of ξ_i as the coefficients. Qπ(x, y,
+    t) denotes the latent force modeled by a neural network that cannot be represented by Φ(u) explicitly, as a supplement
+    to missing variables unavailable in the weather dataset, such as friction. Examples of Eq. 2 can be seen in Table 6, where
+    a physical equation is composed of both explicit PDE terms and latent force parameterization.'
+  citations:
+  - marker: '[1]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 6
+  content: 'We develop a surrogate weather variable model û = fθ(x, y, t), which takes the spatio-temporal coordinates as
+    input and predicts the h weather variables. Both fθ and Qπ(x, y, t) are designed as feedforward neural networks that are
+    commonly used in the PINN literature [12, 30]. The joint optimization of fθ(x, y, t), φ_i(û), and Qπ(x, y, t) allows the
+    model to simultaneously learn to predict weather variables and approximate the underlying physical dynamics. Once fθ achieves
+    sufficient accuracy, its gradients via automatic differentiation enable the accurate calculation of PDE terms. These inferred
+    terms, together with Qπ, in turn guide the training of fθ, ensuring physical consistency in the learned mapping.
+
+
+    This framework supports continuous weather downscaling in an online learning manner: once trained, fθ can be queried with
+    any new coordinate (x, y, t) for real-time prediction. Unlike traditional downscaling methods that rely on discrete pairs
+    of low- and high-resolution training data, PhyDL-NWP treats weather data as a continuous function over space-time. This
+    enables arbitrary-resolution inference without requiring coarse-resolution inputs or pre-defined grid structures. Downscaling
+    is performed simply by evaluating Y = fθ(x′, y′, t) at any desired fine-grained coordinates in real time, where x′ ∈ R^{n′},
+    y′ ∈ R^{m′} can be any interpolation within the observed spatial domain, enabling super-resolution modeling with minimal
+    inference cost.
+
+
+    The overall loss function LD for weather downscaling is:
+
+    LD(θ, Ξ, π) = Ldata(θ) + α Lphy(θ, Ξ, π), (3)
+
+    where
+
+    Ldata = 1/(nmT) ∑_{x,y,t} || fθ − u ||_2^2, (4)
+
+    Lphy = 1/(n′ m′ T′) ∑_{x′,y′,t′} || ∂fθ/∂t − Φ(fθ) Ξ − Qπ ||_2^2. (5)
+
+    Here, data loss measures how well fθ approximates u on the weather data, and physical loss measures how well the learned
+    equation fits the weather data. The two regularization losses prevent the overfitting of explicit PDE terms fθ and the
+    latent force Qπ.'
+  citations:
+  - marker: '[12]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[30]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Downscaling, bias correction, and data assimilation
+- block_id: 7
+  content: 'In theory, fθ(x, y, t) can also take in future data coordinates and produce the extrapolation directly. However,
+    as fθ(x, y, t) is only trained on historical weather data, while anywhere outside the bounds of where the model was trained
+    is completely unknown. Empirically, we find that fθ alone does not exhibit strong extrapolation or forecasting performance.
+    To improve the extrapolation ability, instead of using fθ directly, we propose to take advantage of the learned physical
+    mechanism represented by Ξ and Qπ to improve another forecasting model gω, which takes historical spatiotemporal data
+    and predicts the future.
+
+
+    Moreover, once fθ is trained, it can generate weather variables at arbitrary spatiotemporal coordinates (x′, y′, t), enabling
+    flexible control over the resolution of historical data used to train or fine-tune gω. This allows seamless integration
+    with any pre-trained forecasting model by aligning spatiotemporal granularity as needed.
+
+
+    To calculate differential terms efficiently, we propose to use finite difference (FD) approximations on super-resolution
+    data from weather downscaling, which is extremely fast, instead of training a surrogate model for every time frame i.
+    The overall loss function LF for weather forecasting is:
+
+    LF(ω) = Ldata(ω) + β Lphy(ω), (6)
+
+    where
+
+    Ldata(ω) = 1/(n m r · q) ∑_{i=s+1}^{T−r} || gω([Y]_{i−s}^{i}) − [Y]_{i+1}^{i+r} ||_2^2, (7)
+
+    Lphy(ω) = 1/(n m r · q) ∑_{i=s+1}^{T−r} || ∂ gω([Y]_{i−s}^{i})/∂t − p ||_2^2, (8)
+
+    with q = T−r−s−1, p = Φ(gω([Y]_{i−s}^{i})) Ξ + Qπ. Note that θ, Ξ, and π are already learned during the downscaling beforehand.
+    α, β, σ1, σ2 are all hyperparameters to balance the different loss terms. As long as the downscaling model fθ is accurate,
+    the recovered physics offers a globally consistent constraint that enhances the generalization of gω without adding substantial
+    model complexity. The size of the parameters as well as the inference speed of the different models are summarized in
+    Table 1. The number of parameters of PhyDL-NWP is much smaller than other models, thus it is much faster to perform forward/backward
+    propagation on fθ and gω.'
+  citations: []
+- block_id: 8
+  content: 'We conduct both the forecasting and downscaling performance comparisons. All experiments were carried out on four
+    NVIDIA A100 graphical cards. Only the performances on the test sets at the optimal performance on the validation sets
+    are reported. The maximum training epochs are 50. Every result is the average of three independent trainings under different
+    random seeds. We select a few representative weather variables and the average of all in the tables for visualization.
+    The average of all variables reflects the overall performance. We use two commonly used metrics [2] for evaluation: Root
+    Mean Square Error (RMSE) and Anomaly Correlation Coefficient (ACC). For both downscaling and forecasting, we split by
+    8:1:1 for train/validation/test datasets in chronological order. Code to implement PhyDL-NWP is available in GitHub.'
+  citations:
+  - marker: '[2]'
+    intent_label: Metrics Utilization
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 9
+  content: 'We evaluate the effectiveness of PhyDL-NWP and other baseline models for weather downscaling on a real-world dataset
+    Huadong, which is derived from the European Centre for Medium-Range Weather Forecasts (ECMWF) operational forecast (HRES)
+    and reanalysis (ERA5) archive. It comprises a grid of 64 × 44 cells, with each cell having a grid size of 0.25 degrees
+    in both latitude and longitude. More data details can be found in Appendix A.1. Since most previous studies on weather
+    downscaling can only handle the downscaling of the two spatial dimensions, for the sake of comparison, we also only report
+    the performance of PhyDL-NWP on spatial downscaling. We perform 2x and 4x downscaling tasks with 0.5 and 1 degrees resolutions,
+    respectively. To facilitate this, the 0.25-degree HRES data undergoes linear interpolation to generate the requisite 0.5-degree
+    and 1-degree input data. We compare our model against the Bicubic interpolation, FSRCNN [27], ResDeepD [32], EDSR [10],
+    RCAN [43], YNet [20], DeepSD [35], and GINE [26]. For the deep learning baselines, channel-wise normalization is performed
+    for efficiency. Unlike prior methods that rely on fine-granular labels for supervision, PhyDL-NWP learns from coarse-granular
+    inputs alone by aligning with physical principles, enabling it to perform super-resolution without labeled training outputs.
+    Details about baselines can be found in Appendix A.2.4.
+
+
+    From experiments, we conclude that PhyDL-NWP provides a significant improvement up to 20.1% to 24.6% on average over RMSE
+    against the baseline models. Well-recognized deep learning models like FSRCNN and YNet achieve much worse results, which
+    could be because most models only consider the downscaling of spatial dimensions, neglecting the patterns in the temporal
+    dimension. Moreover, weather data is multivariable, and the spatio-temporal dependencies are complex, making it difficult
+    to recover the ground-truth information without global modeling. Furthermore, we find that the RMSE for 2x and 4x resolutions
+    is close. Since PhyDL-NWP can provide infinite resolution results given continuous coordinates, we believe that it will
+    be accurate for higher resolution downscaling, based on this evidence. Moreover, PhyDL-NWP can easily perform downscaling
+    in the temporal dimension. We only experiment on spatial dimension to align with existing models.'
+  citations:
+  - marker: '[10]'
+    intent_label: Result Comparison
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[20]'
+    intent_label: Result Comparison
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[26]'
+    intent_label: Result Comparison
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[27]'
+    intent_label: Result Comparison
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[32]'
+    intent_label: Result Comparison
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[35]'
+    intent_label: Result Comparison
+    topic_label: Downscaling, bias correction, and data assimilation
+  - marker: '[43]'
+    intent_label: Result Comparison
+    topic_label: Downscaling, bias correction, and data assimilation
+- block_id: 10
+  content: 'We evaluate the effectiveness of PhyDL-NWP for weather forecasting on two real-world reanalysis datasets derived
+    from ERA5: Ningxia and WeatherBench. In addition to reanalysis data, we also test on a more accurate real-world measurement
+    (observational) dataset Ningbo, where meteorological factors are directly collected from the Ningbo Meteorological Bureau.
+    Ningbo and Ningxia cover two different terrains and climate types in 0.25 degrees resolution, while WeatherBench covers
+    the global weather in 5.625 degrees resolution. On each grid in both datasets, we select the most important observational
+    weather information for evaluation. See more details in Appendix A.1. We perform multiple experiments based on the length
+    of future prediction, ranging from one hour to seven days. Due to the GPU memory limitation, we use the eight weather
+    variables of only ten hours in the past to predict all eight weather variables in the future.
+
+
+    There are five kinds of baseline models in comparison, including: (1) Physics-based models: NWP, PINN [30], PINO [17];
+    (2) Meteorological models: Bi-LSTM-T [42], Hybrid-CBA [7]; (3) Vision models: ConvLSTM [33], FourcastNet [28] based on
+    AFNO [5], ClimaX [24]; (4) Spatio-temporal graph models: MTGNN [40], MegaCRN [11], GraphCast [14]. Some baseline models
+    are slightly modified to adapt to the multi-step prediction setting and/or specific modeling resolution, with details
+    described in the Appendix A.2.4. Besides deep learning models, we also compare these models with the Numerical Weather
+    Prediction (NWP) results provided by ECMWF IFS and the Physics-Informed Neural Network (PINN) [30] based on the PDEs learned
+    by PhyDL-NWP. We denote the baseline models as BaseModels and incorporate them with PhyDL-NWP as BaseModels+.
+
+
+    #### 4.2.1 Regional Weather Forecasting
+
+    In particular, the result of regional forecasting details with seven days are reported, as it represents the model’s capability
+    of long-term medium-range regional weather prediction. The vanilla PINN does not seem to be effective, while the improvement
+    provided by PhyDL-NWP is consistently significant. For Ningbo dataset, the overall improvement on the average of all weather
+    variables is up to 7.18% over RMSE and 14.0% over ACC; for Ningxia dataset, the overall improvement on that is up to 5.48%
+    over RMSE and 18.8% over ACC. All the results are statistically significant. Furthermore, we find that NWP is good in
+    ACC, while being the worst in RMSE. Deep learning models, on the other hand, greatly outperform NWP in RMSE, showing great
+    advantage in modeling capacity.
+
+
+    To understand the holistic properties of PhyDL-NWP, we conduct detailed analyses on the Ningxia dataset. First, the comparison
+    of different models for different forecasting ranges shows that BaseModels+ excels BaseModels and NWP at all time steps.
+    As the forecasting range increases, the deep learning performance decreases quickly. The improvement provided by PhyDL-NWP,
+    however, is increasing in the forecasting range, which highlights its unique advantages of guiding models for long-term
+    forecasting.
+
+
+    In addition, based on AFNO from FourcastNet, PhyDL-NWP clearly improves the performance of the existing deep model, making
+    the forecasting results closer to the ground truth. Specifically, “Total precipitation” is not a typical physical quantity
+    and is hard to predict due to lack of effective physical equation. While the vanilla AFNO performs poorly, AFNO+ provides
+    information about which local areas receive concentrated rainfall. This effectively demonstrated the success of our implemented
+    parameterization strategy with the latent force model.
+
+
+    #### 4.2.2 Global Weather Forecasting
+
+    Besides regional weather forecasting, we also test PhyDL-NWP on the global weather forecasting task, which is the benchmark
+    for a lot of recent works. In comparison, PhyDL-NWP shows substantial improvements over baseline models in the coarser-granular
+    WeatherBench dataset, with statistically significant improvement over RMSE. It is also worth noting that, even for the
+    state-of-the-art GraphCast model, there is still an improvement. Moreover, PhyDL-NWP module is extremely light-weighted
+    and efficient, with a time cost that is 55∼170 times faster than the base forecasting models. The integration of physics
+    and deep learning is clearly demonstrated in this study.'
+  citations:
+  - marker: '[5]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[7]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[11]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[14]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[17]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[24]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[28]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[30]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[33]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[40]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+  - marker: '[42]'
+    intent_label: Result Comparison
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 11
+  content: 'To understand how PhyDL-NWP is grounded on laws of physics, we compare the learned dynamics by PhyDL-NWP from
+    Huadong dataset with the basic equations of NWP [34]. These equations originate from conservation of mass, energy, and
+    momentum. PhyDL-NWP will explicitly use the terms that appear in the first-principle equations and can be represented
+    based on the dataset, while modeling the rest of the dynamics using latent force parameterization. Our latent parameterization
+    strategy is proposed considering that many terms cannot be modeled explicitly, due to missing records in the data or difficulty
+    to measure.
+
+
+    For the modeling of temperature, the basic equation originates from the 3D convection-diffusion equation for heat transfer.
+    Temperature T is influenced by advection (movement of heat due to fluid flow, represented by the velocity components U,
+    V and a vertical component W along height z), diffusion (spread of heat due to thermal diffusivity k), and a heat source
+    H. In addition, t denotes time, x and y denote space, U10 represents the wind components at the heights of 10m. An example
+    of meteorology dynamics of temperature (t) of WeatherBench dataset in the year of 2018 shows that Q and ΦΞ substitute
+    each other well and the combination generally matches ∂T/∂t.
+
+
+    For wind velocity, the compared basic equation originates from the 3D Navier-Stokes equations. The velocity is influenced
+    by convective acceleration, the gradient of pressure p with fluid density ρ, the diffusion of momentum due to viscosity
+    ν for velocity of all directions u, and external force F_fx along the x direction (such as friction). It is obvious that
+    the WeatherBench dataset does not provide all the necessary variables to complete the equation. Our latent force model
+    will address this problem well. Similarly, for surface pressure, the learned equation aligns with the 3D wave equation
+    while the missing vertical component is for the latent force Q to capture. For humidity, the equation originates from
+    the conservation of mass, and combines the advection, diffusion and source terms, where q is the humidity, and S_q is
+    the source term for humidity (e.g., evaporation, condensation). We approximate precipitation using a parameterized PDE
+    for humidity as a tractable surrogate that captures its dominant drivers.'
+  citations:
+  - marker: '[34]'
+    intent_label: Domain Overview
+    topic_label: Spatio-temporal forecasting and nowcasting
+- block_id: 12
+  content: We introduce PhyDL-NWP, a light-weighted physics-guided deep learning framework for weather downscaling and forecasting.
+    By incorporating parameterized physical dynamics through latent force modeling, PhyDL-NWP enables continuous, resolution-free
+    predictions while ensuring consistency with governing equations. It can augment and fine-tune existing forecasting models
+    with minimal overhead, significantly improving both accuracy and physical plausibility. Extensive experiments across diverse
+    datasets demonstrate its effectiveness, scalability, and interpretability, positioning PhyDL-NWP as a practical and generalizable
+    module for modern meteorological modeling.
+  citations: []

@@ -1,0 +1,432 @@
+title: Numerical models outperform AI weather forecasts of record-breaking extremes
+blocks:
+- block_id: 0
+  content: 'Artificial intelligence (AI)-based models are revolutionizing weather forecasting and have surpassed leading numerical
+    weather prediction systems on various benchmark tasks. However, their ability to extrapolate and reliably forecast unprecedented
+    extreme events remains unclear. Here, we show that for record-breaking weather extremes, the numerical model High RESolution
+    forecast (HRES) from the European Centre for Medium-Range Weather Forecasts still consistently outperforms state-of-the-art
+    AI models GraphCast, GraphCast operational, Pangu-Weather, Pangu-Weather operational, and Fuxi. We demonstrate that forecast
+    errors in AI models are consistently larger for record-breaking heat, cold, and wind than in HRES across nearly all lead
+    times. We further find that the examined AI models tend to underestimate both the frequency and intensity of record-breaking
+    events, and they underpredict hot records and overestimate cold records with growing errors for larger record exceedance.
+    Our findings underscore the current limitations of AI weather models in extrapolating beyond their training domain and
+    in forecasting the potentially most impactful record-breaking weather events that are particularly frequent in a rapidly
+    warming climate. Further rigorous verification and model development is needed before these models can be solely relied
+    upon for high-stakes applications such as early warning systems and disaster management.
+
+
+    Keywords: AI weather forecasting, record-breaking extremes, early-warning systems, extrapolation, neural networks'
+  citations: []
+- block_id: 1
+  content: 'Record-breaking weather extremes, such as the 2021 Pacific Northwest, 2010 Russian and 2003 European heatwaves,
+    and winter storms Lothar in 1999 and Kyrill in 2007, have caused numerous fatalities and severe impacts on society, the
+    economy, and ecosystems [1–5]. The level of disaster preparedness and adaptation to extreme events is strongly influenced
+    by events observed in recent decades. Consequently, after extended periods without major events, or when events substantially
+    exceed previous record levels, socio-economic impacts tend to be particularly large.
+
+
+    In addition to long-term disaster preparedness [6], accurate numerical weather prediction (NWP) is critical for early-warning
+    systems to save lives and reduce the impacts of climate extremes [7]. Recently, a new generation of AI weather models
+    has reached and sometimes exceeded forecast skills of state-of-the-art NWP systems [8–11]. These models offer considerable
+    advantages in speed and energy efficiency, raising important questions about their potential to supplement or eventually
+    replace traditional NWP systems [12].
+
+
+    Before warnings for population and critical infrastructure are routinely based on AI models, their performance needs to
+    be further evaluated. In particular, their reliability in forecasting extreme events remains less well understood. Such
+    events are, by definition, rare and contribute little to aggregated overall skill metrics [13]. Nevertheless, recent studies
+    suggest that AI models perform well—and in some cases even better than numerical models—in forecasting extreme weather
+    events [14, 15], particularly for longer lead times [8, 9].
+
+
+    Current forecast evaluation approaches for extreme events typically focus on extreme events exceeding a certain threshold
+    for one or several given variables, such as extreme wind speeds [15], tropical cyclones [8, 9, 14], and high and low temperatures
+    [9, 14–16]. However, due to small sample sizes, the thresholds are often set to, say, the 95th percentile of the test
+    data, thus capturing mostly moderate extremes. Much less is known about record-breaking events, a subset of extreme events
+    that are unprecedented in the observational record. Given the current high rate of global warming, record-breaking events
+    sometimes exceed previous record levels by large margins and have been referred to as black or gray swans [17], or record-shattering
+    extremes [18, 19].
+
+
+    A number of case studies have shown mixed results on the ability of AI weather models to extrapolate beyond the range
+    of their training data. For instance, a seasonal AI forecasting model [20] struggled to predict North Atlantic Oscillation
+    values that extended outside its training distribution [21]. While AI models appear to outperform traditional NWP models
+    on tracking tropical cyclones [8, 9, 23], they tend to underpredict the intensity of the most extreme storms, as measured
+    by mean sea-level pressure [17, 24, 25]. Similar limitations in reaching unprecedented amplitudes have also been observed
+    in other high-impact events such as heatwaves, winter storms, or compound extremes [26]. On the other hand, the unprecedented
+    2024 rainfall in Dubai was well predicted by GraphCast, suggesting that generalization to new events may be possible if
+    they share dynamical similarity with past extremes from other regions [27].
+
+
+    However, these insights primarily rely on isolated case studies of specific events, whose conclusions are inherently difficult
+    to generalize due to the unique features of the analyzed events and models. To systematically evaluate extrapolation in
+    state-of-the-art AI weather models, we construct a benchmark dataset consisting of record-breaking events for heat, cold,
+    and wind extremes. This dataset includes all observations during the test years 2018 and 2020 that exceed the respective
+    historical records from the training period 1979–2017 of all considered AI models. For each variable, a record-breaking
+    event is defined locally, per grid cell and per calendar month, yielding a large sample size even in individual years
+    (see Methods). For the year 2020, this yields 162,751 heat, 32,991 cold, and 53,345 wind records, which are spread across
+    different seasons and climatic zones from tropics to high latitudes (Fig. 1a,b, and Supplementary Fig. 5a–d). The dataset
+    includes many prominent record-breaking events, such as the Siberian heatwave in early 2020 [28] and the U.S. heatwave
+    of August 2020 [29]. Evaluating AI models on this record dataset challenges them to forecast on out-of-distribution data,
+    which is known to be difficult for neural networks in the machine learning literature.
+
+
+    We assess the extrapolation performance on our benchmark dataset of record-breaking events of three leading deterministic
+    AI weather models: GraphCast [9], Pangu-Weather [8], Fuxi [30], as well as the operational variants of GraphCast and Pangu-Weather.
+    Their performance is compared to HRES from the European Centre for Medium-Range Weather Forecasts (ECMWF), which is widely
+    considered as the leading NWP model.'
+  citations: []
+- block_id: 2
+  content: 'Consistent with previous studies [8, 9, 30, 31], we find that, on overall performance, all AI models—except Pangu-Weather—outperform
+    the ECMWF model HRES in forecasting 2-meter temperature across most lead times (Fig. 1c). Forecast accuracy is quantified
+    using root mean square errors (RMSE), computed over all 00 and 12 UTC time steps in test year 2020 and over all land grid
+    points (excluding the Antarctic region; see Methods). For 10-meter wind speed, all AI models consistently outperform HRES
+    across nearly all lead times (Fig. 1f).
+
+
+    However, the predictive skill is drastically different for record-breaking temperature and wind events in 2020. Restricting
+    the RMSE to record-breaking events, the numerical HRES model consistently outperforms all AI models for hot and cold temperature
+    records as well as wind speed records across almost all lead times (Fig. 1d,e,g). The performance gap is most pronounced
+    for short lead times. For lead times beyond 5 days HRES still generally performs better but to a lesser extent. This aligns
+    with previous findings that AI models tend to perform relatively better at longer lead times [9].
+
+
+    While, due to limited data availability, the evaluation is shown for a single year only as in most previous studies [8,
+    15], we observe the same pattern in 2018, the other year for which forecasts are available, except for Fuxi (Supplementary
+    Fig. 22). The years 2018 and 2020 are distinctly different in terms of ENSO conditions, with 2018 transitioning from La
+    Nina to El Nino and 2020 undergoing a strong El Nino to La Nina shift. Since ENSO strongly influences the occurrence of
+    temperature records [32], particularly in the tropics, the consistent outperformance of HRES across both years shows the
+    robustness of the results. The better skill of HRES in predicting record-breaking events is further consistent across
+    different seasons and a wide range of different climate zones, including tropics, subtropics, mid-latitudes and northern
+    high latitudes (Fig. 1a, Supplementary Figs. 7 and 8).
+
+
+    While it is common to evaluate ERA5-trained AI models against ERA5 reanalysis, and HRES against its own analysis at lead
+    time 0 (HRES-fc0) [8, 9, 30] (see Methods), this approach can complicate comparisons due to different horizontal resolution:
+    ERA5 has a resolution of 0.25◦, whereas HRES operates at 0.1◦. To assess the sensitivity of our findings to the choice
+    of different reference datasets, we also evaluate operational versions of GraphCast and Pangu-Weather against HRES on
+    a common test dataset of record-breaking events identified using HRES-fc0 as observational ground truth. Also in this
+    setting, HRES consistently outperforms the AI models on the records (Supplementary Fig. 14).
+
+
+    Selecting a subset of extreme events based on observations can favor models that produce too many extreme forecasts—a
+    problem known as the forecaster’s dilemma [33] (see Methods for discussion). Thus, we construct an alternative benchmark
+    avoiding the forecaster’s dilemma, based on events where the forecast itself, rather than the observation, exceeds the
+    training record [34]. Results from this forecast-conditioned evaluation (Supplementary Fig. 20) are consistent with the
+    previous conclusion that HRES outperforms current AI models in forecasting records.'
+  citations: []
+- block_id: 3
+  content: 'While we demonstrate that AI models underperform compared to HRES in forecasting record-breaking events, their
+    errors may arise from over- or underprediction of event intensity. When considering all data of the test year 2020, all
+    models have relatively small, unsystematic biases (Supplementary Fig. 9a,d). To better understand model behavior beyond
+    their training domain, we compare forecast accuracy and bias against the record exceedance, that is, the margin by which
+    a record is exceeded. We find that AI models generally underpredict temperature during high records and overpredict during
+    low records. This pattern is shown for GraphCast and heat records (Fig. 2a). The systematic underprediction is remarkably
+    consistent across regions, seasons, and location in tropics, subtropics and mid- to high-latitudes, despite the fact that
+    the physical drivers of heat records vary substantially across regions. This behavior is not limited to a single model:
+    other AI models show similar patterns of intensity underestimation, while HRES demonstrates a more balanced distribution
+    of over- and underpredictions (Supplementary Fig. 6). These results strongly suggest that AI model forecast errors are
+    at least partly due to systematic extrapolation limitations.
+
+
+    For all record types, the errors of the three AI models seem to grow almost linearly with respect to the degree of record
+    exceedance (Fig. 2b–d for a lead time of 2 days; additional lead times in Supplementary Fig. 10). This trend indicates
+    that forecast bias is the primary driver of error (Fig. 2e–g and Supplementary Fig. 9): the greater the record exceedance,
+    the larger the underestimation of event intensity. The models behave as if their predictions have an implicit (soft) cap
+    at a certain local value. In contrast, the physical HRES model is more robust to extreme records exceedances. For temperature
+    records, HRES exhibits a nearly constant error across increasing exceedances. For wind records, it shows a mild tendency
+    of underestimation, though far less so than AI models. Overall, HRES exhibits lower forecast bias for all records types,
+    and bias is not the dominant source of error, particularly for cold and wind records.
+
+
+    Importantly, this behavior, shown here for the evaluation year 2020, is fully consistent with results from both the operational
+    forecasts in 2020 and non-operational forecasts in 2018 (Supplementary Figs. 15 and 23). The systematic, one-sided bias
+    observed across event types, lead times, regions and independent years provides strong evidence that current AI models
+    have a structural extrapolation problem when forecasting record-breaking events.'
+  citations: []
+- block_id: 4
+  content: 'We further test the ability of AI models to predict not only the intensity but also the frequency of record-breaking
+    events. We find that, in addition to underestimating event intensity, AI models systematically underpredict the number
+    of records relative to their ERA5 ground truth (Fig. 3a–c). This underestimation results in a high number of false negatives
+    and consequently low recall (defined as the ratio of true positives to the observed positives). In contrast, HRES forecasts
+    a number of records comparable to its HRES-fc0 ground truth, with a slight overestimation for heat records at smaller
+    lead times.
+
+
+    Correctly predicting the number of record-breaking events does not imply accurate timing. In risk management, the trade-off
+    between false positives and false negatives is typically evaluated using precision-recall curves (see Methods). Across
+    all record types and lead times, HRES’s precision-recall curves are consistently better than GraphCast’s, in the sense
+    that they are closer to the ideal point (precision = 1, recall = 1), indicating superior classification performance for
+    heat, cold and wind records (Fig. 3d–f). This is in contrast with earlier results that demonstrate that GraphCast outperforms
+    numerical models for more moderate extreme events [9]. Similar results are observed for Pangu-Weather and Fuxi, where
+    HRES again shows a better classification skill across all lead times (Supplementary Figs. 11 and 12).
+
+
+    As an additional evaluation, we convert both forecast and ground truth into binary variables (1 if a record is exceeded
+    and 0 otherwise) and compute the correlation between them (see Methods). This metric complements the precision-recall
+    analysis by incorporating true negatives and measuring the degree of dependence between different models’ forecasts. HRES
+    has a higher correlation with its ground truth HRES-fc0 than the AI models with their ground truth ERA5, reaffirming its
+    superior performance in forecasting record-breaking events (Fig. 3g–i).
+
+
+    Interestingly, all AI models are positively correlated with each other, showing that they tend to make errors on the same
+    events. This may be due to shared biases learned from their common training data.'
+  citations: []
+- block_id: 5
+  content: 'Our findings consistently show that current AI models underperform HRES in forecasting record-breaking events.
+    They tend to underpredict heat and wind speed records, and overpredict cold records, with greater forecast biases the
+    larger the record margin. This strongly suggests a systematic extrapolation problem in these models.
+
+
+    All current state-of-the-art AI weather models are built on neural network architectures such as transformers [8, 30]
+    or graph neural networks [9, 10, 35]. In machine learning, extrapolation, also referred to as out-of-distribution generalization,
+    is a well-known fundamental challenge in these models. It has been observed in a range of applications, including image
+    classification [36], protein fitness prediction [37], and large language models [38]. Our record benchmark dataset is
+    explicitly designed to test this out-of-distribution problem within AI weather models (see Methods for discussion).
+
+
+    The AI models studied here do not use any knowledge of physical principles and do not explicitly enforce energy balances
+    or other physical constraints [39, 40]. They are purely data-driven and essentially interpolate between observed historical
+    weather patterns in the training period 1979–2017 to produce forecasts for new initial conditions in the test period.
+    This is in stark contrast to physics-based numerical models like HRES that strongly rely on partial differential equations
+    describing the evolution of the atmosphere based on our understanding of physics. This fundamental difference in modeling
+    philosophy likely explains the discrepancy in performance between AI and NWP models for record-breaking events (Fig. 1c–g).
+    While AI models excel when the test set closely resembles the training distribution, capturing complex atmospheric patterns
+    and improving skill on average conditions, they struggle when forecasting unprecedented events outside the training domain,
+    even at short lead times. The nearly linear increase of the biases with record exceedance (Fig. 2e–g) suggests an implicit
+    cap in AI forecasts around the most extreme training observation. Physical models do not have such a bound since physical
+    principles allow them to extrapolate, and, consequently, they exhibit less bias across record magnitudes. Moreover, deterministic
+    AI weather forecasts often smooth out fine-scale spatial features such as sharp wind peaks. By contrast, recent probabilistic
+    AI weather models [35, 41] aim to preserve variability and avoid such smoothing. Still, as our results suggest, even these
+    models likely face similar extrapolation challenges when forecasting out-of-distribution, record-breaking events.
+
+
+    Several promising avenues exist to address this shortcoming in future generations of AI weather models. One strategy is
+    data augmentation, a widely used technique in machine learning to improve robustness to unseen scenarios by enriching
+    the training data [42]. In weather and climate modeling, a key advantage is that numerical climate models can produce
+    very large amounts of physically plausible extreme events outside the training domain. Augmenting training with simulations
+    from different climate regimes [11] or record-breaking events from ensemble boosting [19] could allow AI models to learn
+    from more extreme events than in the original training data. This approach has already shown promise: FourCastNet’s [23]
+    performance on tropical cyclones improves significantly when trained on datasets that include such events [17]. Another
+    promising direction involves hybrid modeling, where specific parameterizations in physical climate models are replaced
+    with AI components [43]. These models combine the efficiency and learning capacity of AI models with the physical consistency
+    and extrapolation ability of physical models. Hybrid models such as NeuralGCM [44] remain fully differentiable and thus
+    allow for efficient optimization of initial conditions [45], for instance. Finally, the loss functions used to train AI
+    weather models are typically designed to predict the mean or bulk of the distribution. To improve extrapolation performance
+    on extremes, it may be possible to adapt principles from statistical learning and extreme value theory [46–48].
+
+
+    Given the remarkably fast evolution of AI models in recent years, there are promising ways to further improve these models
+    even for forecasting record-breaking extremes that will continue to frequently occur in a rapidly warming climate. Nevertheless,
+    the current generation still underperforms HRES exactly during the potentially most impactful weather events, including
+    record-breaking heat and cold events as well as wind storms. Thus, it remains vital to fund and run NWP and AI weather
+    models in parallel and to rigorously evaluate their performance for the most impactful type of weather events.'
+  citations: []
+- block_id: 6
+  content: ''
+  citations: []
+- block_id: 7
+  content: 'For the definition of records we use the ECMWF’s ERA5 reanalysis data [1] from 1979–2017 with daily observations
+    at 00, 06, 12, and 18 UTC time. This dataset coincides with the training data of almost all AI models considered in this
+    paper. The time points in this training data are denoted by Ttrain. The ERA5 data is available on a 0.25◦ × 0.25◦ latitude-longitude
+    grid. Throughout the paper we only consider data over land. We use the land-sea mask from the ERA5 and follow ECMWF [2]
+    by defining a grid cell as land if more than 50% of the cell is covered by land; otherwise it is considered as sea. We
+    exclude the Antarctic region (grid cells with latitude in the range (−60◦, −90◦]) due to aberrant behavior exhibited by
+    some AI models in this region, and denote the remaining set of land grid cells (244,450 grid cells in total) from the
+    ERA5 dataset by G0.25◦.
+
+
+    We use forecasts from the state-of-the-art AI models GraphCast [3], Pangu-Weather [4], and Fuxi [5] from a test period
+    Ttest, which is either of the years 2018 or 2020 in our analyses. For the same period, we use forecasts from the High
+    RESolution model (HRES) of ECMWF for comparison. All the forecast data are publicly available from WeatherBench 2 [6].
+    Pangu-Weather and Fuxi are trained and validated on ERA5 data from 1979–2017; the GraphCast forecast data for years 2018
+    and 2020 are produced by two slightly different versions of GraphCast, i.e., the 2018 data are generated by the GraphCast
+    model trained on ERA5 data from 1979–2017, whilst the 2020 data are generated by the GraphCast model trained with ERA5
+    data from a slightly extended period 1979–2019. In addition, we also employ the operational versions of GraphCast and
+    Pangu-Weather. The former has been fine-tuned on the HRES-fc0 data from 2016–2021, while the latter was used in an operational
+    setting without fine-tuning.
+
+
+    As ground truth for the AI models we use ERA5 data with locations in G0.25◦ in the test period. For HRES and the operational
+    AI models we use HRES-fc0 as ground truth. Using these two different datasets to evaluate the forecasts against is the
+    standard approach in the literature of AI weather models to avoid unfair comparisons [3–5].'
+  citations: []
+- block_id: 8
+  content: 'To define a dataset of record-breaking events in a given year (e.g., 2020) for a variable x of interest (e.g.,
+    2-meter temperature), we first compute the corresponding record in the ERA5 data Ttrain in the training period of the
+    AI models from 1979–2017. We specify whether we consider records in the positive direction (e.g., heat records) or the
+    negative direction (e.g., cold records) by superscripts max or min, respectively. A record rx,max_{s,m} of variable x
+    is defined locally per grid cell s ∈ G0.25◦ and per month m ∈ {January, . . . , December}. More precisely, we define
+
+    rx,max_{s,m} = max_{t∈Ttrain; t∈m} x_{s,t},
+
+    where x_{s,t} is the value of variable x at location s and time t, and t ∈ m indicates that only time points in month
+    m are considered.
+
+
+    We define the set Rx,max ⊆ G0.25◦ × Ttest of record-breaking events of variable x consisting of location-time pairs encoding
+    where and when the event occurred. The test period Ttest contains all time points at 00 and 12 UTC in the test year, i.e.,
+    the year 2018 or 2020 in our analyses. We denote by m(t) the month corresponding to a time t ∈ Ttest, so that x_{s,t}
+    > r^{x,max}_{s,m(t)} means that observation x_{s,t} exceeds its respective monthly historical record. With this we have
+
+    Rx,max = {(s, t) ∈ G0.25◦ × Ttest : x_{s,t} > r^{x,max}_{s,m(t)} }.
+
+
+    We do not evaluate forecasts initiated at 06 and 18 UTC since the HRES forecasts with these initializations are only available
+    for 3.75 days at ECMWF, and all AI-based forecasts are only available for initializations at 00 and 12 UTC on WeatherBench
+    2 [6]. In addition, we only consider lead times that are multiples of 12 hours to ensure that the subsets of ERA5 data
+    used as input and ground truth for AI models have the same +9h lookahead [3] (ERA5 and HRES-fc0 have different data assimilation
+    windows: ERA5 has +3h lookahead at 06 and 18 UTC and +9h lookahead at 00 and 12 UTC, while HRES-fc0 have +3h lookahead
+    for all four time points). Consequently, this comparison setup disadvantages HRES due to the mismatch between a +9h lookahead
+    of ERA5 input and +3h lookahead of HRES-fc0 input, thereby strengthening our main result that HRES outperforms AI models
+    on record-breaking events.
+
+
+    Note that the notion of a record-breaking event is to be understood relative to the training period. We do not update
+    the record if a larger event has occurred after 2017 (the end of the training period). The reason is that AI models are
+    not retrained and a record-breaking event in the test period will not inform or improve the model for later time steps.
+
+
+    Using as test data the ERA5 ground truth in 2020 we obtain 162,751 records for heat, 32,991 for cold and 53,345 for wind;
+    see the geographical distribution of these records in the map in Fig. 1a and Supplementary Fig. 5, respectively. For the
+    analysis of operational models we define the set of record-breaking events as those where HRES-fc0 exceeds the training
+    record, yielding 170,136 records for heat, 109,155 for cold and 338,235 for wind (Supplementary Fig. 13).'
+  citations: []
+- block_id: 9
+  content: Extrapolation or out-of-distribution generalization in AI models refers to the situation where a test predictor
+    is far away from the distribution of the training predictors. In high-dimensional predictor spaces, it is not trivial
+    to mathematically describe such points. One way of framing extrapolation is to require that the predictor is outside of
+    the convex hull (blue line in Fig. 4) formed by the training data. [7] argue that with this definition of training domain
+    it is in fact very likely that test points need extrapolation. However, convex hulls are computationally prohibitive in
+    high dimensions since the number of facets grows rapidly with the dimension. Our record dataset therefore considers a
+    stronger yet simpler definition, namely all points where at least one test variable is beyond its univariate training
+    range. In Fig. 4 this corresponds to all test points outside of the green rectangle. All events in the record set Rx,max
+    in Equation (2) satisfy this strong definition of out-of-distribution samples.
+  citations: []
+- block_id: 10
+  content: 'We quantify the forecast error with the root mean square error (RMSE). For a target variable x of interest (e.g.,
+    2-meter temperature T2m) the RMSE on a subset of location-initialization pairs for lead time τ is defined as
+
+    RMSE_I(τ) = sqrt( (1 / sum_{(s,t0)∈I} ω_s ) * sum_{(s,t0)∈I} ω_s ( \hat{x}^τ_{s,t0} - x_{s,t0+τ} )^2 ),
+
+    where
+
+    - G0.25◦ is the set of locations/grid cells,
+
+    - I ⊆ G0.25◦ × Ttest is the set of location-initialization pairs of interest,
+
+    - \hat{x}^τ_{s,t0} is a forecast of variable x with lead time τ at location s ∈ G0.25◦ and initialization time t0 ∈ T,
+    and x_{s,t0+τ} is the corresponding ground truth,
+
+    - ω_s is the latitude-based weight chosen as the one used in [3]
+
+    ω_s = { cos(θ_lat(s)) sin(θ_0.25◦/2), if |θ_lat(s)| < π/2; sin^2(θ_0.25◦/4), if |θ_lat(s)| = π/2 }, with θ_a as the radian
+    associated with degree a.
+
+
+    Our definition of RMSE is more general than the conventional one [6] in the sense that we allow to focus on a subset I
+    of location-initialization pairs (s, t0). If we set I as the product of the set of all grid cells over the globe and all
+    time points in Ttest, we recover the traditional (latitude-weighted) RMSE on all test locations and initialization times.
+
+
+    In the computation of RMSE on record-breaking events such as shown in Fig. 1, we choose the set I in the following way.
+    Recall the set Rx,max ⊆ G0.25◦ × Ttest of location-time pairs of all records in a given time period (e.g., the year 2020).
+    We choose all location-initialization pairs such that the target of the forecasting with lead time τ corresponds to a
+    record, i.e.,
+
+    I_τ = {(s, t0) ∈ G0.25◦ × Ttest : (s, t0 + τ) ∈ Rx,max }.
+
+    The corresponding RMSE_I(τ) is the error of a model made in forecasting records with lead time τ.
+
+
+    To construct a confidence interval for the RMSE_I(τ), we assume that the central limit theorem holds for the weighted
+    square errors. Then by the Delta method, we obtain the asymptotic distribution of RMSE_I(τ) and construct approximate
+    normal confidence intervals. Alternatively, bootstrap can be used to construct the confidence bands [8]. We tried the
+    non-parametric bootstrap with 1000 resamplings, which yielded similar confidence bands to the normal ones. For the sake
+    of computational feasibility, we use the above normal confidence levels throughout the paper.'
+  citations: []
+- block_id: 11
+  content: 'To complement RMSE and investigate whether a forecasting model under- or overpredicts the ground truth, we consider
+    the latitude-weighted forecast bias
+
+    FB_I(τ) = (1 / sum_{(s,t0)∈I} ω_s) * sum_{(s,t0)∈I} ω_s ( \hat{x}^τ_{s,t0} - x_{s,t0+τ} ).
+
+    Confidence intervals for the forecast bias are computed in the same way as for RMSE based on asymptotic normality.'
+  citations: []
+- block_id: 12
+  content: 'For early warning systems it is crucial that a weather forecasting model is able to predict the occurrence of
+    an extreme event accurately. We therefore consider record-breaking event forecasting as a binary classification problem
+    by assessing whether a forecasting model can predict the exceedance of a variable over its previous record in the sense
+    of (1). Since this classification problem is strongly imbalanced, similar to previous studies [3], we use precision-recall
+    curves that are well-suited for such cases since they account for both false positives and false negatives.
+
+
+    For a set I ⊆ G0.25◦ × Ttest of location-initialization pairs of interest, we compute the precision and recall for variable
+    x at lead time τ as (we set r_{s,m} = r^{x,max}_{s,m} to simplify notation)
+
+
+    Precision_I(τ) = sum_{(s,t0)∈I} 1{ \hat{x}^τ_{s,t0} > r_{s,m(t0+τ)} } 1{ x_{s,t0+τ} > r_{s,m(t0+τ)} } / sum_{(s,t0)∈I}
+    1{ \hat{x}^τ_{s,t0} > r_{s,m(t0+τ)} },
+
+
+    Recall_I(τ) = sum_{(s,t0)∈I} 1{ \hat{x}^τ_{s,t0} > r_{s,m(t0+τ)} } 1{ x_{s,t0+τ} > r_{s,m(t0+τ)} } / sum_{(s,t0)∈I} 1{
+    x_{s,t0+τ} > r_{s,m(t0+τ)} }.
+
+
+    As above m(t0 + τ) is the month corresponding to time t0 + τ.
+
+
+    In order to produce a precision-recall curve from a deterministic forecast, following [3], we introduce a common “gain”
+    parameter to define scaled forecasts by
+
+    scaled forecast = forecast + gain × forecast std. deviation.
+
+    Using these scaled forecasts in the precision and recall formulae instead of only \hat{x}^τ_{s,t0} and varying the gain
+    parameter in a suitable range ([−1.5, 1.5] in our case) yields a precision-recall curve. The scaling allows the study
+    of different trade-offs between false positives and false negatives, and using a common gain parameter enables averaging
+    over all spatial locations s ∈ G0.25◦.
+
+
+    Our parameterization of the scaled forecasts is slightly different from the one in [3], but it is theoretically more justified.
+    Indeed, for a probabilistic forecast from a location-scale family, the scaled forecast corresponds to choosing the same
+    quantile of the forecast distribution at all locations. For each variable x, each location s ∈ G0.25◦, each month m and
+    each lead time τ we estimate the forecast standard deviations in the scaled forecast from forecasts in the year 2020 for
+    the different models. We assume that this standard deviation is constant for time points in the same month so that we
+    have enough data for the estimation.'
+  citations: []
+- block_id: 13
+  content: In order to compute the correlation between the different model forecasts and ground truths, we define suitable
+    functions indicating whether the corresponding record is exceeded. Fix a lead time τ and, for instance, consider the variable
+    x with max-records abbreviated by r_{s,m} = r^{x,max}_{s,m}. For a forecast \hat{x}^τ_{s,t} from some model define for
+    each time point t0 ∈ Ttest the indicator 1{\hat{x}^τ_{s,t0} > r_{s,m(t0+τ)}} that takes value 1 if \hat{x}^τ_{s,t0} exceeds
+    the record r_{s,m(t0+τ)} and 0 otherwise. We can now compute the correlation between these indicators, indexed by all
+    t0 + τ ∈ Ttest and s ∈ G0.25◦, for two different forecast models. Similarly, for a ground truth (either ERA5 or HRES-fc0)
+    we define for each time point t0 + τ ∈ Ttest the indicator 1{x_{s,t0+τ} > r_{s,m(t0+τ)}}. We then compute correlations
+    of these ground truths with the forecast indicators, and between forecast indicators from different models. The resulting
+    correlation matrix is shown for the ERA5-trained AI models in Fig. 3g–i, and for the operational AI models in Supplementary
+    Fig. 17g–i.
+  citations: []
+- block_id: 14
+  content: 'In the theory of forecast evaluation, the forecaster’s dilemma [9] shows that computing an evaluation score only
+    on a subset of observations can incentivize sub-optimal forecasts. Such conditioning appears in the RMSE defined above
+    if the set I depends on the observations, as, for instance, in the case of record-breaking events defined earlier. This
+    metric should therefore not be used as the sole evaluation criterion, but rather in combination with others. We therefore
+    also report the overall RMSE on all events in Fig. 1, Supplementary Figs. 14 and 22, which show that all methods yield
+    errors on a comparable scale and do not appear to artificially hedge forecasts of extreme events. In addition, we consider
+    different evaluation criteria such as precision-recall curves that take into account both false positives and false negatives
+    (Fig. 3d–f and Supplementary Fig. 17d–f).
+
+
+    Computing the RMSE on a subset of extreme observations is common in the literature of AI weather forecasts [3, 8, 10].
+    Another approach that avoids the forecaster’s dilemma completely is to condition on the forecasts instead of the observations
+    [11]. We follow this approach to compare the operational version of GraphCast with HRES. We choose as the set of record-breaking
+    events all location-initialization pairs such that forecasts with lead time τ from both GraphCast operational and HRES
+    exceed the training record. For max-records of variable x, for instance, this yields an index set
+
+    I_τ = { (s, t0) ∈ G0.25◦ × Ttest : \hat{x}^{HRES,τ}_{s,t0} > r_{s,m(t0+τ)}, \hat{x}^{GraphCast,τ}_{s,t0} > r_{s,m(t0+τ)}
+    },
+
+    to be used in the RMSE. The results (Supplementary Fig. 20) look qualitatively similar to those from conditioning on the
+    observations, except that we have a much smaller set of events that are jointly forecasted to be record-breaking by both
+    models compared to the original record dataset.'
+  citations: []
