@@ -131,10 +131,10 @@ blocks:
     topic_label: Foundation models and generative architectures
   - marker: '[4]'
     intent_label: Prior Methods
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Climate Prediction and Data-Driven Modeling
   - marker: '[5]'
     intent_label: Prior Methods
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Foundation models and generative architectures
   - marker: '[6]'
     intent_label: Prior Methods
     topic_label: Spatio-temporal forecasting and nowcasting
@@ -146,7 +146,7 @@ blocks:
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[12]'
     intent_label: Prior Methods
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Climate Prediction and Data-Driven Modeling
   - marker: '[13]'
     intent_label: Prior Methods
     topic_label: Spatio-temporal forecasting and nowcasting
@@ -158,9 +158,9 @@ blocks:
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[16]'
     intent_label: Prior Methods
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Foundation models and generative architectures
   - marker: '[18]'
-    intent_label: Domain Overview
+    intent_label: Prior Methods
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[19]'
     intent_label: Prior Methods
@@ -170,10 +170,10 @@ blocks:
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[22]'
     intent_label: Prior Methods
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Climate Prediction and Data-Driven Modeling
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Climate Prediction and Data-Driven Modeling
   - marker: '[24]'
     intent_label: Prior Methods
     topic_label: Foundation models and generative architectures
@@ -185,13 +185,13 @@ blocks:
     topic_label: Downscaling, bias correction, and data assimilation
   - marker: '[28]'
     intent_label: Prior Methods
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Foundation models and generative architectures
   - marker: '[29]'
     intent_label: Prior Methods
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[30]'
     intent_label: Prior Methods
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Climate Prediction and Data-Driven Modeling
   - marker: '[31]'
     intent_label: Prior Methods
     topic_label: Foundation models and generative architectures
@@ -199,7 +199,7 @@ blocks:
     intent_label: Prior Methods
     topic_label: Downscaling, bias correction, and data assimilation
   - marker: '[36]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[37]'
     intent_label: Prior Methods
@@ -242,7 +242,7 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Problem Formulation
-    topic_label: Downscaling, bias correction, and data assimilation
+    topic_label: Spatio-temporal forecasting and nowcasting
 - block_id: 5
   content: 'In this section, we aim to learn the physical mechanism represented by PDE with parameterization to fit the weather
     data. A typical partial differential equation (PDE) with parametrization terms has the following form:
@@ -256,7 +256,7 @@ blocks:
     a physical equation is composed of both explicit PDE terms and latent force parameterization.'
   citations:
   - marker: '[1]'
-    intent_label: Problem Formulation
+    intent_label: Algorithm/Principle Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
 - block_id: 6
   content: 'We develop a surrogate weather variable model û = fθ(x, y, t), which takes the spatio-temporal coordinates as
@@ -457,7 +457,7 @@ blocks:
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[24]'
     intent_label: Result Comparison
-    topic_label: Foundation models and generative architectures
+    topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[28]'
     intent_label: Result Comparison
     topic_label: Spatio-temporal forecasting and nowcasting

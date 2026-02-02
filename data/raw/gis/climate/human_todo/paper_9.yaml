@@ -84,10 +84,10 @@ blocks:
     intent_label: Research Gap
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[20]'
-    intent_label: Prior Methods
+    intent_label: Model/Architecture Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[23]'
-    intent_label: Prior Methods
+    intent_label: Model/Architecture Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[24]'
     intent_label: Prior Methods
@@ -108,7 +108,7 @@ blocks:
     intent_label: Research Gap
     topic_label: Foundation models and generative architectures
   - marker: '[40]'
-    intent_label: Domain Overview
+    intent_label: Prior Methods
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[44]'
     intent_label: Prospective Application
@@ -175,7 +175,7 @@ blocks:
     intent_label: Prior Methods
     topic_label: Foundation models and generative architectures
   - marker: '[19]'
-    intent_label: Prior Methods
+    intent_label: Research Gap
     topic_label: Foundation models and generative architectures
   - marker: '[20]'
     intent_label: Prior Methods
@@ -217,7 +217,7 @@ blocks:
     intent_label: Prior Methods
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[39]'
-    intent_label: Prior Methods
+    intent_label: Research Gap
     topic_label: Foundation models and generative architectures
   - marker: '[41]'
     intent_label: Prior Methods
@@ -424,7 +424,7 @@ blocks:
     intent_label: Model/Architecture Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[19]'
-    intent_label: Model/Architecture Adoption
+    intent_label: Research Gap
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[23]'
     intent_label: Model/Architecture Adoption
@@ -456,7 +456,7 @@ blocks:
     intent_label: Algorithm/Principle Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[15]'
-    intent_label: Metrics Utilization
+    intent_label: Algorithm/Principle Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[20]'
     intent_label: Algorithm/Principle Adoption
@@ -465,7 +465,7 @@ blocks:
     intent_label: Algorithm/Principle Adoption
     topic_label: Foundation models and generative architectures
   - marker: '[22]'
-    intent_label: Metrics Utilization
+    intent_label: Algorithm/Principle Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[23]'
     intent_label: Algorithm/Principle Adoption
@@ -569,7 +569,7 @@ blocks:
     intent_label: Resource Utilization
     topic_label: Downscaling, bias correction, and data assimilation
   - marker: '[23]'
-    intent_label: Model/Architecture Adoption
+    intent_label: Algorithm/Principle Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[40]'
     intent_label: Benchmark Utilization

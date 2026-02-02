@@ -140,22 +140,22 @@ blocks:
     intent_label: Domain Overview
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[7]'
-    intent_label: Domain Overview
+    intent_label: Resource Utilization
     topic_label: Downscaling, bias correction, and data assimilation
   - marker: '[8]'
-    intent_label: Prior Methods
+    intent_label: Result Comparison
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[9]'
     intent_label: Prior Methods
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[10]'
-    intent_label: Prior Methods
+    intent_label: Result Comparison
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[11]'
     intent_label: Prior Methods
     topic_label: Foundation models and generative architectures
   - marker: '[12]'
-    intent_label: Prior Methods
+    intent_label: Result Comparison
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[13]'
     intent_label: Prior Methods
@@ -164,13 +164,13 @@ blocks:
     intent_label: Prior Methods
     topic_label: Foundation models and generative architectures
   - marker: '[15]'
-    intent_label: Prior Methods
+    intent_label: Result Comparison
     topic_label: Downscaling, bias correction, and data assimilation
   - marker: '[16]'
-    intent_label: Prior Methods
+    intent_label: Result Comparison
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[17]'
-    intent_label: Prior Methods
+    intent_label: Result Comparison
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[18]'
     intent_label: Domain Overview
@@ -260,10 +260,10 @@ blocks:
     intent_label: Algorithm/Principle Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[20]'
-    intent_label: Prior Methods
+    intent_label: Model/Architecture Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[21]'
-    intent_label: Prior Methods
+    intent_label: Model/Architecture Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
 - block_id: 7
   content: 'The model architecture of the base FuXi model consists of three main components: cube embedding, U-Transformer,

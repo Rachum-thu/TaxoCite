@@ -182,7 +182,7 @@ blocks:
     topic_label: Foundation models and generative architectures
   - marker: '[28]'
     intent_label: Research Gap
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Foundation models and generative architectures
   - marker: '[29]'
     intent_label: Result Comparison
     topic_label: Spatio-temporal forecasting and nowcasting
@@ -323,7 +323,7 @@ blocks:
     intent_label: Algorithm/Principle Adoption
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[22]'
-    intent_label: Prior Methods
+    intent_label: Research Gap
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[31]'
     intent_label: Algorithm/Principle Adoption
@@ -333,10 +333,10 @@ blocks:
     topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[33]'
     intent_label: Model/Architecture Adoption
-    topic_label: Foundation models and generative architectures
+    topic_label: Spatio-temporal forecasting and nowcasting
   - marker: '[34]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Foundation models and generative architectures
+    topic_label: Spatio-temporal forecasting and nowcasting
 - block_id: 4
   content: 'Training models with large internal representations such as FCN3 requires more memory than what is
 
@@ -454,14 +454,14 @@ blocks:
     intent_label: Domain Overview
     topic_label: Foundation models and generative architectures
   - marker: '[38]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Foundation models and generative architectures
   - marker: '[39]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Foundation models and generative architectures
   - marker: '[40]'
     intent_label: Resource Utilization
-    topic_label: Spatio-temporal forecasting and nowcasting
+    topic_label: Downscaling, bias correction, and data assimilation
 - block_id: 5
   content: 'Key performance scores of FCN3 such as continuously ranked probability score (CRPS) and ensemble-mean
 
