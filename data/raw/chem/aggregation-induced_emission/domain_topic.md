@@ -68,3 +68,6 @@
 
 ### Intermolecular interaction modulation
 **Description:** Hydrogen bonding, halogen bonding, and aurophilicity regulate emission, ISC and stability.
+
+## Other Intent
+**Description:** Any citation role not covered above or cases where the local context is insufficient to confidently map to a node (e.g., acknowledgements/credits, dataset license notes, peripheral mentions, unclear function).
