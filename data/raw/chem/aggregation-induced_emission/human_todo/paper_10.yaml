@@ -56,25 +56,25 @@ blocks:
   citations:
   - marker: '[9,10]'
     intent_label: Domain Overview
-    topic_label: aggregation-induced emission
+    topic_label: Intermolecular interaction modulation
   - marker: '[11]'
     intent_label: Importance of Problem
-    topic_label: aggregation-induced emission
+    topic_label: Applications and engineering strategies
   - marker: '[12,13]'
     intent_label: Prior Methods
     topic_label: Intermolecular interaction modulation
   - marker: '[14]'
     intent_label: Prior Methods
-    topic_label: aggregation-induced emission
+    topic_label: Applications and engineering strategies
   - marker: '[15]'
     intent_label: Prior Methods
-    topic_label: aggregation-induced emission
+    topic_label: Applications and engineering strategies
   - marker: '[16]'
     intent_label: Prior Methods
-    topic_label: aggregation-induced emission
+    topic_label: Applications and engineering strategies
   - marker: '[17,18]'
     intent_label: Prior Methods
-    topic_label: aggregation-induced emission
+    topic_label: Applications and engineering strategies
   - marker: '[19,20]'
     intent_label: Prior Methods
     topic_label: Intermolecular interaction modulation
@@ -83,16 +83,16 @@ blocks:
     topic_label: Intermolecular interaction modulation
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: aggregation-induced emission
+    topic_label: Intermolecular interaction modulation
   - marker: '[24]'
     intent_label: Domain Overview
-    topic_label: Intermolecular interaction modulation
+    topic_label: Other Intent
   - marker: '[25,26]'
     intent_label: Prior Methods
-    topic_label: aggregation-induced emission
+    topic_label: Intermolecular interaction modulation
   - marker: '[27–29]'
     intent_label: Research Gap
-    topic_label: aggregation-induced emission
+    topic_label: Applications and engineering strategies
   - marker: '[30,31]'
     intent_label: Research Gap
     topic_label: Intermolecular interaction modulation
@@ -104,7 +104,7 @@ blocks:
     topic_label: Restriction of intramolecular motion (RIM)
   - marker: '[34]'
     intent_label: Domain Overview
-    topic_label: Transformation
+    topic_label: aggregation-induced emission
 - block_id: 2
   content: ''
   citations: []
@@ -253,7 +253,7 @@ blocks:
     topic_label: Transformation
   - marker: '[38]'
     intent_label: Domain Overview
-    topic_label: Transformation
+    topic_label: Other Intent
   - marker: '[39]'
     intent_label: Prior Methods
     topic_label: Crystal and aggregate engineering strategies
@@ -319,13 +319,13 @@ blocks:
   citations:
   - marker: '[40]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: aggregation-induced emission
+    topic_label: Other Intent
   - marker: '[41]'
     intent_label: Domain Overview
-    topic_label: aggregation-induced emission
+    topic_label: Other Intent
   - marker: '[42]'
     intent_label: Domain Overview
-    topic_label: aggregation-induced emission
+    topic_label: Other Intent
 - block_id: 7
   content: 'Based on the above studies, going from microscopic hydrophilicity-hydrophobicity transformation to mesoscopic
     morphological variation and up to macroscopic mechanical performance, we propose a toughening mechanism as illustrated
@@ -388,4 +388,4 @@ blocks:
   citations:
   - marker: '[46]'
     intent_label: Prospective Application
-    topic_label: Transformation
+    topic_label: Applications and engineering strategies
