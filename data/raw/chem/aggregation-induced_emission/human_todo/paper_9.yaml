@@ -42,7 +42,7 @@ blocks:
     topic_label: Applications and engineering strategies
   - marker: '[15,16]'
     intent_label: Prospective Application
-    topic_label: Photodynamic therapy and theranostics
+    topic_label: Applications and engineering strategies
 - block_id: 1
   content: 'There are three key steps in the workflow: (1) dataset curation, (2) model building and (3) experiment–learning
     evolution.'
@@ -189,7 +189,7 @@ blocks:
     topic_label: Crystal and aggregate engineering strategies
   - marker: '[32]'
     intent_label: Prior Methods
-    topic_label: Crystal and aggregate engineering strategies
+    topic_label: Other Intent
   - marker: '[13]'
     intent_label: Result Comparison
     topic_label: Crystal and aggregate engineering strategies
@@ -270,13 +270,13 @@ blocks:
   citations:
   - marker: '[34–39]'
     intent_label: Domain Overview
-    topic_label: aggregation-induced emission
+    topic_label: Crystal and aggregate engineering strategies
   - marker: '[40]'
     intent_label: Prior Methods
     topic_label: Mechanistic foundations
   - marker: '[41,42]'
     intent_label: Prior Methods
-    topic_label: aggregation-induced emission
+    topic_label: Mechanistic foundations
 - block_id: 7
   content: Fluorescent COFs hold great promise as probes for bioimaging[43,44], as the photo-bleaching effect from small molecules
     can be largely alleviated. To achieve deeper imaging depth and a higher signal-to-noise ratio, light absorption with a
@@ -299,19 +299,19 @@ blocks:
   citations:
   - marker: '[43,44]'
     intent_label: Prospective Application
-    topic_label: Photodynamic therapy and theranostics
+    topic_label: Applications and engineering strategies
   - marker: '[45]'
     intent_label: Domain Overview
-    topic_label: Photodynamic therapy and theranostics
+    topic_label: Mechanistic foundations
   - marker: '[46–48]'
     intent_label: Prior Methods
-    topic_label: Photodynamic therapy and theranostics
+    topic_label: Mechanistic foundations
   - marker: '[49]'
     intent_label: Domain Overview
-    topic_label: Photodynamic therapy and theranostics
+    topic_label: Mechanistic foundations
   - marker: '[47]'
     intent_label: Result Comparison
-    topic_label: Photodynamic therapy and theranostics
+    topic_label: Other Intent
 - block_id: 8
   content: 'Despite advances in simulation techniques and the development of AI, the interplay between researchers and AI
     has yet to be fully established. In this study, an interactive experiment–learning method was used to integrate model
@@ -337,10 +337,10 @@ blocks:
   citations:
   - marker: '[50,51]'
     intent_label: Prior Methods
-    topic_label: Applications and engineering strategies
+    topic_label: Other Intent
   - marker: '[52]'
     intent_label: Prior Methods
-    topic_label: Applications and engineering strategies
+    topic_label: Other Intent
 - block_id: 9
   content: Any methods, additional references, Nature Portfolio reporting summaries, source data, extended data, supplementary
     information, acknowledgements, peer review information; details of author contributions and competing interests; and statements
