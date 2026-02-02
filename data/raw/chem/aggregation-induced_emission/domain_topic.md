@@ -1,4 +1,4 @@
-# Aggregation-induced Emission
+# aggregation-induced emission
 
 ## Mechanistic foundations
 **Description:** Core physical mechanisms governing enhanced emission upon aggregation and solidification.
