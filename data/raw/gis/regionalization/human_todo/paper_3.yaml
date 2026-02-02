@@ -1,6 +1,21 @@
 title: The max- p- compact- regions problem
 blocks:
 - block_id: 0
+  content: The max- p- compact- regions problem involves the aggregation of a set of small areas into an unknown maximum number
+    (p) of compact, homogeneous, and spatially contiguous regions such that a regional attribute value is higher than a predefined
+    threshold. The max- p- compact- regions problem is an extension of the max- p- regions problem accounting for compactness.
+    The max- p- regions model has been widely used to define study regions in many application cases since it allows users
+    to specify criteria and then to identify a regionalization scheme. However, the max- p- regions model does not consider
+    compactness even though compactness is usually a desirable goal in regionalization, implying ideal accessibility and apparent
+    homogeneity. This article discusses how to integrate a compactness measure into the max- p regionalization process by
+    constructing a multiobjective optimization model that maximizes the number of regions while optimizing the compactness
+    of identified regions. An efficient heuristic algorithm is developed to address the computational intensity of the max-
+    p- compact- regions problem so that it can be applied to large- scale practical regionalization problems. This new algorithm
+    will be implemented in the open- source Python Spatial Analysis Library. One hypothetical and one practical application
+    of the max- p- compact- regions problem are introduced to demonstrate the effectiveness and efficiency of the proposed
+    algorithm.
+  citations: []
+- block_id: 1
   content: 'Regionalization has been an important area of research in GIScience, involving aggregating larger numbers of smaller
     areas into a smaller set of larger regions to fulfill a particular goal. For example, endogenous neighborhoods can be
     identified by clustering neighboring small- scale geographic units to executive functions such as detecting neighborhood
@@ -51,41 +66,41 @@ blocks:
   citations:
   - marker: Rey et  al., 2011
     intent_label: Prospective Application
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Spielman & Singleton,  2015
     intent_label: Prospective Application
-    topic_label: Other Intent
-  - marker: Li, Shi, Li, & Li, 2007
+    topic_label: regionalization
+  - marker: (Li, Shi, Li, & Li, 2007)
     intent_label: Prospective Application
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Hess & Samuels, 1971
     intent_label: Prospective Application
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Hess, Weaver, Siegfeldt, Whelan, & Zitlau, 1965
     intent_label: Prospective Application
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Li, Church, & Goodchild, 2014
     intent_label: Prospective Application
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Niemi, Grofman, Carlucci, & Hofeller, 1990
     intent_label: Prospective Application
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Duque, Anselin, and Rey (2012)
     intent_label: Problem Formulation
     topic_label: max-p regions formulations
-  - marker: Camacho- Collados, Liberatore, & Angulo, 2015
+  - marker: (Camacho- Collados, Liberatore, & Angulo, 2015)
     intent_label: Prospective Application
-    topic_label: Other Intent
-  - marker: Niemi et al., 1990
+    topic_label: Compactness-driven location–allocation approaches
+  - marker: (Niemi et al., 1990)
     intent_label: Prospective Application
-    topic_label: Other Intent
-  - marker: Hamidi & Zandiatashbar, 2021
+    topic_label: Compactness-driven location–allocation approaches
+  - marker: (Hamidi & Zandiatashbar, 2021)
     intent_label: Prospective Application
-    topic_label: Other Intent
-  - marker: Li et al., 2014
+    topic_label: Compactness-driven location–allocation approaches
+  - marker: (Li et al., 2014)
     intent_label: Problem Formulation
     topic_label: p-regions formulations
-- block_id: 1
+- block_id: 2
   content: 'The family of regionalization methods can be divided into two categories: supervised regionalization and unsupervised
     regionalization. Supervised regionalization methods always assume prior knowledge about the aggregation process, including
     relevant variables for the aggregation, a prespecified number of regions, spatial contiguity constraints within each region,
@@ -152,22 +167,16 @@ blocks:
     becomes more challenging to obtain optimal solutions (Li et al., 2014). Therefore, advances in effectively and efficiently
     solving the max- p- regions problem while considering compactness are needed.'
   citations:
-  - marker: (Duque, Ramos, & Suriñach, 2007)
+  - marker: (Li et al., 2014)
+    intent_label: Prior Methods
+    topic_label: Heterogeneity objective functions
+  - marker: (Duque, Ramos, & Suriñach, 2007; Govorov, Beconytė, Gienko, & Putrenko, 2019)
     intent_label: Domain Overview
-    topic_label: Other Intent
-  - marker: (Govorov, Beconytė, Gienko, & Putrenko, 2019)
-    intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: Problem formulations and objectives
   - marker: (Duque, Church, & Middleton, 2011)
     intent_label: Prior Methods
     topic_label: p-regions formulations
-  - marker: (Assunção, Neves, Câmara, & da Costa Freitas, 2006)
-    intent_label: Prior Methods
-    topic_label: Top-down divisive edge-removal methods
-  - marker: (Guo, 2008)
-    intent_label: Prior Methods
-    topic_label: Top-down divisive edge-removal methods
-  - marker: (Guo & Wang, 2011)
+  - marker: (Assunção, Neves, Câmara, & da Costa Freitas, 2006; Guo, 2008; Guo & Wang, 2011)
     intent_label: Prior Methods
     topic_label: Top-down divisive edge-removal methods
   - marker: (Duque et  al., 2011)
@@ -176,137 +185,132 @@ blocks:
   - marker: (Weaver & Hess, 1963)
     intent_label: Prior Methods
     topic_label: Heterogeneity objective functions
-  - marker: (Li et al., 2014)
-    intent_label: Prior Methods
-    topic_label: Other Intent
   - marker: (Niesterowicz, Stepinski, & Jasiewicz, 2016)
     intent_label: Prior Methods
     topic_label: Algorithms without explicit spatial contiguity constraint
-  - marker: (Duque et al., 2011)
-    intent_label: Prior Methods
-    topic_label: max-p regions formulations
-  - marker: (Ghiggi, Puliafito, & Zoppoli, 1975)
-    intent_label: Prior Methods
-    topic_label: max-p regions formulations
-  - marker: (Oehrlein & Haunert, 2017)
+  - marker: (Duque et al., 2011; Ghiggi, Puliafito, & Zoppoli, 1975; Oehrlein & Haunert, 2017)
     intent_label: Prior Methods
     topic_label: max-p regions formulations
   - marker: (2014)
-    intent_label: Prior Methods
-    topic_label: Enriched aggregate constraints
+    intent_label: Domain Overview
+    topic_label: max-p regions formulations
   - marker: (2017)
     intent_label: Prior Methods
     topic_label: max-p regions formulations
   - marker: (2021)
     intent_label: Prior Methods
     topic_label: Local search with area swaps and metaheuristics
-  - marker: (Fryer & Holden, 2011)
+  - marker: (e.g., Fryer & Holden, 2011; Hess et al., 1965; Niemi et al., 1990)
     intent_label: Importance of Problem
-    topic_label: Other Intent
-  - marker: (Hess et al., 1965)
+    topic_label: Problem formulations and objectives
+  - marker: (Duque et al., 2007; Weaver & Hess, 1963)
     intent_label: Importance of Problem
-    topic_label: Other Intent
-  - marker: (Niemi et al., 1990)
-    intent_label: Importance of Problem
-    topic_label: Other Intent
-  - marker: (Duque et al., 2007)
-    intent_label: Prior Methods
-    topic_label: Other Intent
+    topic_label: Problem formulations and objectives
   - marker: (Hess & Samuels, 1971)
     intent_label: Prospective Application
-    topic_label: Other Intent
+    topic_label: Compactness-driven location–allocation approaches
+  - marker: (Duque et al., 2007)
+    intent_label: Domain Overview
+    topic_label: Problem formulations and objectives
   - marker: (Li, Goodchild, & Church, 2013)
     intent_label: Prior Methods
-    topic_label: Compactness-driven location–allocation approaches
+    topic_label: Exact optimization models
   - marker: (Datta, Malczewski, & Figueira, 2012)
     intent_label: Prior Methods
-    topic_label: Other Intent
+    topic_label: Problem formulations and objectives
   - marker: (2007)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: Problem formulations and objectives
   - marker: (2013)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: Problem formulations and objectives
   - marker: (Duque et al., 2012)
-    intent_label: Importance of Problem
-    topic_label: Local search with area swaps and metaheuristics
-  - marker: (Wei et al., 2021)
-    intent_label: Prior Methods
-    topic_label: Local search with area swaps and metaheuristics
-  - marker: (2012)
     intent_label: Research Gap
     topic_label: Exact optimization models
-- block_id: 2
+  - marker: (e.g., 16 units in Duque et al., 2012)
+    intent_label: Research Gap
+    topic_label: Exact optimization models
+  - marker: (Wei et al., 2021)
+    intent_label: Research Gap
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: (2012)
+    intent_label: Prior Methods
+    topic_label: Local search with area swaps and metaheuristics
+- block_id: 3
   content: "To begin, assume that compactness is neglected. Formulation of the max- p- regions problem relies on the following\
     \ notation (Duque et  al., 2012):\ni, I = index and set of areas, I = {1, …, n}\nk = index of potential regions, k = {1,\
     \ …, n}\nc = index of contiguity order, c = {0, …, q}, with q = n − 1\ndij = dissimilarity relationships between areas\
-    \ i and j, with i, j ∈ I and i < j\nli = spatially extensive attribute value of area i, with i ∈ I\nT = minimum value\
-    \ (threshold) for attribute l at the regional scale\n\nWe also have two decision variables:\nwij =\n{ 1, if areas i and\
-    \ j share a border, with i, j ∈ I and i ≠ j,\n 0, otherwise\nNi = /braceleft.s1j/uni007C.varwij = 1/braceright.s1\nh =\
-    \ 1 + �log � �i �j⟩i dij ��\nyij =\n{ 1, if areas i and j belong to the same region,\n 0, otherwise\n\nWe do not know\
-    \ a priori the number of regions that will be created in the max- p- regions problem, therefore, the “potential regions”,\
-    \ indexed by k, could range from 1 to the total number of areas. When region k starts to grow from its “root” area i,\
-    \ xk0 i equals 1, which means that area i is assigned to region k in order 0. With the index of contiguity order c, an\
-    \ ordering system is used in this model to ensure contiguity within one region. The non- root areas are assigned to a\
-    \ region only if the area is adjacent to an area assigned to the same region with a smaller order number. The size criterion\
-    \ that each region must satisfy is based on the spatially extensive attribute li. One region can finish growing only if\
-    \ the total attribute value of the areas within this region exceeds the threshold. The max- p- regions problem is as follows:\n\
-    \nsubject to\nEquation (1) consists of two terms. The first seeks a maximum number of areas designated as “root,” which\
-    \ is equivalent to maximizing the number of regions, p, since each region has one and only one “root” area. This term\
-    \ is multiplied by – 1 because the objective function is formulated as a minimization problem. The second term aims to\
-    \ minimize the total pairwise dissimilarities between areas assigned to the same region. These two terms are merged by\
-    \ introducing an implicit hierarchy so that the number of regions, p, reaches the maximum first, and then reducing the\
-    \ heterogeneity within the p regions. To achieve this hierarchy, a scaling factor h is multiplied by the first term. By\
-    \ doing so, a feasible solution with a larger value of p will always be preferred over any other solution with a smaller\
-    \ value of p no matter what their amount of heterogeneity is. Heterogeneity is only compared between solutions with the\
-    \ same number of regions, within which lower heterogeneity will be preferred.\n\nConstraint 2 ensures each region does\
-    \ not have more than one “root” area. Constraint 3 specifies that each area must be assigned to precisely one region with\
-    \ one contiguity order. Constraint 4 restricts the assignment\nxkc i =\n{ 1, if area i is assigned to region k in order\
-    \ c,\n 0, otherwise\nmade for an area i to region k in order c only if there exists an area j, adjacent to i, that is\
-    \ assigned to the same region k in order c − 1. Constraint 5 ensures that the sum of the spatially extensive attribute\
-    \ in one region will exceed the prespecified threshold. Constraint 6 builds the connection between two types of decision\
-    \ variables, ensuring the binary variable yij equals 1 whenever areas i and j are assigned to the same region k. Constraints\
-    \ 7 and 8 indicate binary integer restrictions on decision variables.\n\nClearly, the max- p- regions model only considers\
-    \ region contiguity but does not include any concern for region compactness. To encourage region compactness, we extend\
-    \ the max- p- regions model into a new optimization model, the max- p- compact- regions model, where a compactness measure\
-    \ is integrated into the objective functions. Specifically, the max- p- compact- regions involves two objectives that\
-    \ aim to maximize the number of regions as well as optimize the overall compactness of these regions, and it is formulated\
-    \ as follows:\n\nwhere C /parenleft.s1Zk /parenright.s1 represents the compactness of region k and Zk is the set of areas\
-    \ that are assigned to this region. Similar to the objective function of the max- p- regions problem, a scaling factor\
-    \ h� = 1 + �log �∑ n k=1 C �Zk��� is used here to ensure that a solution having a larger value of p is always preferred\
-    \ to any other solution with a smaller p no matter how compact the regions are. The overall compactness of the regions\
-    \ is optimized only when the maximum p is reached. By weighting the two objectives with the scaling factor, the model\
-    \ is forced to compare total compactness between solutions with the same number of regions. The proposed max- p- compact-\
-    \ regions model does not involve the within- region dissimilarity component as the max- p- regions model. However, the\
-    \ dissimilarity component can be added into the model formulation and solving process, which will be briefly illustrated\
-    \ in Section 6.\n\nResearch related to the development of an effective compactness measure has been of interest within\
-    \ the scientific community. These measures can be grouped into four categories: the area- perimeter approach, shape- reference\
-    \ approaches, geometric pixel measurement, and the elements dispersion approach (Li et  al., 2013). In this article, we\
-    \ adopt a direct compactness measure based on a normalized moment of inertia (NMI) because of its accurate description,\
-    \ proven effectiveness and outstanding computational efficiency (Li et al., 2013, 2014). The compactness index C /parenleft.s1Zk\
-    \ /parenright.s1 for region k is defined by:\n\nwhere AZk is the area of region k containing a set of areas Zk, and IG\
-    \ zk is the second moment of inertia (MI) of the region about an axis perpendicular to it and passing through its centroid\
-    \ G. The MI can be calculated as a region grows when a neighboring basic unit is aggregated (or indeed as a region shrinks\
-    \ when a unit is removed). That is, the MI of a new region can be derived by summing the MI of the origin region before\
-    \ the aggregation and the MI of the neighboring unit that will be aggregated into the region. More details of the calculation\
-    \ process are given in Li et al. (2014). C /parenleft.s1 Zk /parenright.s1 ranges from 0 to 1, where 1 refers to the most\
+    \ i and j, with i, j ∈ I and i < j\nli = spatially extensive attribute value of area i, with i ∈ I\nT= minimum value (threshold)\
+    \ for attribute l at the regional scale\n\nWe also have two decision variables:\nwij =\n⎧\n⎪\n⎪\n⎨\n⎪\n⎪⎩\n1,\n0,\nif\
+    \ areas i and j share a border, withi, j ∈ I and i ≠ j,\notherwise\nNi = /braceleft.s1j/uni007C.varwij = 1/braceright.s1\n\
+    h = 1 +\n�\nlog\n�\n�\ni\n�\nj�j⟩i\ndij\n��\nyij =\n⎧\n⎪\n⎨\n⎪⎩\n1, if areas i and j belong to the same region,\n0, otherwise\n\
+    \nWe do not know a priori the number of regions that will be created in the max- p- regions problem, therefore, the “potential\
+    \ regions”, indexed by k, could range from 1 to the total number of areas. When region k starts to grow from its “root”\
+    \ area i, xk0\ni equals 1, which means that area i is assigned to region k in order 0. With the index of contiguity order\
+    \ c, an ordering system is used in this model to ensure contiguity within one region. The non- root areas are assigned\
+    \ to a region only if the area is adjacent to an area assigned to the same region with a smaller order number. The size\
+    \ criterion that each region must satisfy is based on the spatially extensive attribute li. One region can finish growing\
+    \ only if the total attribute value of the areas within this region exceeds the threshold. The max- p- regions problem\
+    \ is as follows:\nsubject to\nEquation (1) consists of two terms. The first seeks a maximum number of areas designated\
+    \ as “root,” which is equivalent to maximizing the number of regions, p, since each region has one and only one “root”\
+    \ area. This term is multiplied by – 1 because the objective function is formulated as a minimization problem. The second\
+    \ term aims to minimize the total pairwise dissimilarities between areas assigned to the same region. These two terms\
+    \ are merged by introducing an implicit hierarchy so that the number of regions, p, reaches the maximum first, and then\
+    \ reducing the heterogeneity within the p regions. To achieve this hierarchy, a scaling factor h is multiplied by the\
+    \ first term. By doing so, a feasible solution with a larger value of p will always be preferred over any other solution\
+    \ with a smaller value of p no matter what their amount of heterogeneity is. Heterogeneity is only compared between solutions\
+    \ with the same number of regions, within which lower heterogeneity will be preferred.\n\nConstraint 2 ensures each region\
+    \ does not have more than one “root” area. Constraint 3 specifies that each area must be assigned to precisely one region\
+    \ with one contiguity order. Constraint 4 restricts the assignment\nxkc\ni =\n⎧\n⎪\n⎨\n⎪⎩\n1, if area i is assigned to\
+    \ regionk in order c,\n0, otherwise\n(1)minimize\n�\n−\nn�\nk=1\nn�\ni=1\nxk0\ni\n�\n× 10h +\n�\ni\n�\nj�j⟩i\ndijyij\n\
+    (2)\nn/uni2211.s1\ni=1\nxk0\ni ≤ 1, ∀k\n(3)\nn/uni2211.s1\nk=1\nq/uni2211.s1\nc=0\nxkc\ni = 1, ∀i\n(4)xkc\ni ≤\n/uni2211.s1\n\
+    j ∈ Ni\nxk(c−1 )\nj , ∀ i, k, c\n(5)\nn/uni2211.s1\ni=1\nq/uni2211.s1\nc=0\nxkc\ni li ≥ T\nn/uni2211.s1\ni=1\nxk0\ni ,\
+    \ ∀k\n(6)yij ≥\n/uni2211.s1\nc\nxkc\ni +\n/uni2211.s1\nc\nxkc\nj − 1, ∀i, k, c\n(7)yij ∈ {0, 1}, ∀ i, j\n(8)xkc\ni ∈ {0,\
+    \ 1}, ∀ i, k, c\n\nmade for an area i to region k in order c only if there exists an area j, adjacent to i, that is assigned\
+    \ to the same region k in order c − 1. Constraint 5 ensures that the sum of the spatially extensive attribute in one region\
+    \ will exceed the prespecified threshold. Constraint 6 builds the connection between two types of decision variables,\
+    \ ensuring the binary variable yij equals 1 whenever areas i and j are assigned to the same region k. Constraints 7 and\
+    \ 8 indicate binary integer restrictions on decision variables.\n\nClearly, the max- p- regions model only considers region\
+    \ contiguity but does not include any concern for region compactness. To encourage region compactness, we extend the max-\
+    \ p- regions model into a new optimization model, the max- p- compact- regions model, where a compactness measure is integrated\
+    \ into the objective functions. Specifically, the max- p- compact- regions involves two objectives that aim to maximize\
+    \ the number of regions as well as optimize the overall compactness of these regions, and it is formulated as follows:\n\
+    where C /parenleft.s1Zk\n/parenright.s1\n represents the compactness of region k and Zk is the set of areas that are assigned\
+    \ to this region. Similar to the objective function of the max- p- regions problem, a scaling factor h� = 1 + �log �∑\
+    \ n\nk=1 C �Zk\n���\n is used here to ensure that a solution having a larger value of p is always preferred to any other\
+    \ solution with a smaller p no matter how compact the regions are. The overall compactness of the regions is optimized\
+    \ only when the maximum p is reached. By weighting the two objectives with the scaling factor, the model is forced to\
+    \ compare total compactness between solutions with the same number of regions. The proposed max- p- compact- regions model\
+    \ does not involve the within- region dissimilarity component as the max- p- regions model. However, the dissimilarity\
+    \ component can be added into the model formulation and solving process, which will be briefly illustrated in Section\
+    \ 6.\n\nResearch related to the development of an effective compactness measure has been of interest within the scientific\
+    \ community. These measures can be grouped into four categories: the area- perimeter approach, shape- reference approaches,\
+    \ geometric pixel measurement, and the elements dispersion approach (Li et  al., 2013). In this article, we adopt a direct\
+    \ compactness measure based on a normalized moment of inertia (NMI) because of its accurate description, proven effectiveness\
+    \ and outstanding computational efficiency (Li et al., 2013, 2014). The compactness index C /parenleft.s1Zk\n/parenright.s1\n\
+    \ for region k is defined by:\nwhere AZk\n is the area of region k containing a set of areas Zk, and IG\nzk\n is the second\
+    \ moment of inertia (MI) of the region about an axis perpendicular to it and passing through its centroid G. The MI can\
+    \ be calculated as a region grows when a neighboring basic unit is aggregated (or indeed as a region shrinks when a unit\
+    \ is removed). That is, the MI of a new region can be derived by summing the MI of the origin region before the aggregation\
+    \ and the MI of the neighboring unit that will be aggregated into the region. More details of the calculation process\
+    \ are given in Li et al. (2014). C\n/parenleft.s1\nZk\n/parenright.s1\n\nranges from 0 to 1, where 1 refers to the most\
     \ compact shape (a circle), and 0 refers to an infinitely extending shape. The compactness measurement based on Equation\
     \ (10) is clearly nonlinear; therefore, the max- p- compact- regions problem, formulated in Equations (2)– (9), is a nonlinear\
     \ integer programming problem."
   citations:
-  - marker: '(Duque et  al., 2012):'
+  - marker: (Duque et  al., 2012)
     intent_label: Problem Formulation
-    topic_label: Order-based core assignment models
-  - marker: (Li et  al., 2013).
-    intent_label: Domain Overview
-    topic_label: Other Intent
-  - marker: (Li et  al., 2013, 2014).
+    topic_label: max-p regions formulations
+  - marker: (Li et  al., 2013)
+    intent_label: Prior Methods
+    topic_label: Problem formulations and objectives
+  - marker: (Li et  al., 2013, 2014)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Other Intent
-  - marker: Li et al. (2014).
+    topic_label: Problem formulations and objectives
+  - marker: Li et al. (2014)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Other Intent
-- block_id: 3
+    topic_label: Problem formulations and objectives
+- block_id: 4
   content: 'Given the known expensive computation in solving the max- p- regions problem and the nonlinear nature of the integrated
     compactness measure, a heuristic solution approach is developed to solve the max- p- compact- regions problem efficiently.
     The approach consists of four main stages: shape processing, region growing, enclave assignment, and local search. The
@@ -352,31 +356,31 @@ blocks:
 
     The local search algorithm for max- p- compact- regions is an extension of the algorithm in Wei et al. (2021), and it
     is also designed with the integration of simulated annealing and a tabu list. However, the goal is to optimize the overall
-    compactness of regions as formulated in Equation (9). Specifically, given a feasible solution, all candidate units which
-    can move to a neighboring region without violating the contiguity and threshold constraints are identified and added into
-    a potential unit (PU) list. Then we randomly select one candidate unit from the list and identify its move to the neighboring
-    region with the best compactness change, which is referred to as the recipient region. If the move can improve the total
-    compactness, accept the move and add its reverse move to a tabu list. Otherwise, the non- improving move might also be
-    accepted with a certain probability if it is not in the tabu list. The probability is defined by Boltzmann''s equation,
-    p = e−Δ C∕t, where ΔC is the total compactness change because of the move and t is the current temperature. The temperature
-    is initialized to be 1 and gradually decreases at a prespecified cooling rate during the process. The tabu list (TL) is
-    a list of banned moves to prevent the search from returning to previously visited solutions. The introduction of the tabu
-    list has been demonstrated to eliminate search oscillation, thereby speeding up convergence. In sum, in the local search
-    algorithm, the candidate units will be checked one by one for possible improvement and then removed from the potential
-    unit list. A new potential unit list will be identified if the current one is empty. The phase will end once the total
-    number of non- improving moves (NM) reaches the prespecified maximum non- improving moves value (MNM) or the temperature
-    t is less than the minimum allowed (MA).'
+    compactness of regions as formulated in Equation (9). The process is described in Pseudocode 1. Specifically, given a
+    feasible solution, all candidate units which can move to a neighboring region without violating the contiguity and threshold
+    constraints are identified and added into a potential unit (PU) list. Then we randomly select one candidate unit from
+    the list and identify its move to the neighboring region with the best compactness change, which is referred to as the
+    recipient region. If the move can improve the total compactness, accept the move and add its reverse move to a tabu list.
+    Otherwise, the non- improving move might also be accepted with a certain probability if it is not in the tabu list. The
+    probability is defined by Boltzmann''s equation, p = e−Δ C∕t, where ΔC is the total compactness change because of the
+    move and t is the current temperature. The temperature is initialized to be 1 and gradually decreases at a prespecified
+    cooling rate during the process. The tabu list (TL) is a list of banned moves to prevent the search from returning to
+    previously visited solutions. The introduction of the tabu list has been demonstrated to eliminate search oscillation,
+    thereby speeding up convergence. In sum, in the local search algorithm, the candidate units will be checked one by one
+    for possible improvement and then removed from the potential unit list. A new potential unit list will be identified if
+    the current one is empty. The phase will end once the total number of non- improving moves (NM) reaches the prespecified
+    maximum non- improving moves value (MNM) or the temperature t is less than the minimum allowed (MA).'
   citations:
   - marker: Li et al. (2013)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Other Intent
+    topic_label: Problem formulations and objectives
   - marker: Duque et al. (2012)
     intent_label: Prior Methods
     topic_label: Local search with area swaps and metaheuristics
   - marker: Wei et al. (2021)
     intent_label: Algorithm/Principle Adoption
     topic_label: Local search with area swaps and metaheuristics
-- block_id: 4
+- block_id: 5
   content: 'In this section a series of applications are introduced to assess the ability of the proposed solution approach
     to solve the max- p- compact- regions problem. First, a hypothetical problem having a known optimal solution is used to
     demonstrate that the proposed solution approach can achieve optimality. Then experiments based on both hypothetical and
@@ -389,28 +393,31 @@ blocks:
     are connected by vertices, and adjacent triangles share two vertices and an edge. The spatial extensive attribute value
     for each triangle is 1, and the threshold value is 24. The objective of this max- p- compact- regions problem is to aggregate
     the 168 triangles into the maximum number of compact and spatially contiguous regions such that the total value of the
-    regional attribute is no less than 24. The number of regions is up to 7 (=168/24) in order to satisfy the threshold constraint.
+    regional attribute is no less than 24. The number of regions is up to 7 ( =168/24) in order to satisfy the threshold constraint.
     When the study area is partitioned into 7 regions with 24 basic units in each region, the most compact regions are regular
-    hexagons, which has been demonstrated in Li et al. (2014). Therefore, the optimal solution of this max- p- compact- regions
-    problem is seven regular hexagons, each of them consisting of 24 triangles. Among the 1,000 times the solution approach
-    executed for this problem, the percentage finding the true max- p value (7 in this case) and compactness index (.99 using
-    the MI- based measure for a regular hexagon) was 100%. That is, all of the cases reach the optimal solution. The computation
-    time for each time in this case is approximately 0.01 s. This experiment demonstrates that the proposed solution approach
-    can obtain global optimal solutions for a max- p- compact- regions problem with a known optimal solution.
+    hexagons, which has been demonstrated in Li et al. (2014).
+
+
+    Therefore, the optimal solution of this max- p- compact- regions problem is seven regular hexagons, each of them consisting
+    of 24 triangles. Among the 1,000 times the solution approach executed for this problem, the percentage finding the true
+    max- p value (7 in this case) and compactness index (.99 using the MI- based measure for a regular hexagon) was 100%.
+    That is, all of the cases reach the optimal solution. The computation time for each time in this case is approximately
+    0.01 s. This experiment demonstrates that the proposed solution approach can obtain global optimal solutions for a max-
+    p- compact- regions problem with a known optimal solution.
 
 
     The practical application is based on a realistic data set consisting of 111,670 traffic analysis zones (TAZs) in six
     southern California counties (Ventura, Los Angeles, Orange, San Bernardino, Riverside, and Imperial). The spatial extensive
-    attribute value is the block- based population, which is interpolated in each TAZ by pysal/Tobler (an open- source sublibrary
-    for areal interpolation and dasymetric mapping of Python Spatial Analysis Library (PySAL)). Three different threshold
-    values, T = 5,000, 50,000, and 100,000, are tested.
+    attribute value is the block- based population, which is interpolated in each TAZ by pysal/Tobler (https://pysal.org/toble  r/#)
+    (an open- source sublibrary for areal interpolation and dasymetric mapping of Python Spatial Analysis Library (PySAL)).
+    Three different threshold values, T = 5,000, 50,000, and 100,000, are tested.
 
 
     The identified regionalization results corresponding to the threshold value of population 100,000 are presented. In this
     case, 111,670 areas are aggregated into 126 relatively compact regions, and the best average compactness measurement is
     equal to .84. To clarify the difference between max- p- compact- regions and max- p- regions, the max- p- regions algorithm
-    is also applied to this data set using the same threshold constraint. For the max- p- regions problem, only 119 regions
-    are identified, with worse compactness.
+    is also applied to this data set using the same threshold constraint. As shown, only 119 regions are identified, with
+    worse compactness.
 
 
     An interesting thing we notice is that in this case the max- p value identified by max- p- compact- regions is higher
@@ -462,10 +469,10 @@ blocks:
   - marker: Wei et al. (2021)
     intent_label: Prior Methods
     topic_label: Bottom-up seeded agglomeration
-  - marker: Li et al. (2014)
+  - marker: Li et al. (2014).
     intent_label: Domain Overview
-    topic_label: Other Intent
-- block_id: 5
+    topic_label: Compactness-driven location–allocation approaches
+- block_id: 6
   content: 'There are seven parameters in the solution approach. They are: the iterations of construction (IC) and the top
     N neighboring units (TNNU) in the region grow phase, the top N neighboring regions (TNNR) in the enclave assignment phase,
     and the iteration of simulated annealing (ISA), the temperature cooling rate alpha, the length of tabu list (LTL), and
@@ -476,15 +483,16 @@ blocks:
     specify the setting of parameters. The overall idea is to automatically search for the ideal combination of parameters
     based on a distributed Bayesian hyperparameter optimization method. Whatever option is chosen, the goal is to spend a
     little more time selecting the parameters in order to ensure the quality of solutions. The combinations of parameters
-    selected by Parasweep were used in Section 5. Take the realistic data with T = 100,000 as an example; the parameter settings
-    are IC = 1,000, TNNU = 3, TNNR = 2, ISA = 100, alpha = 0.998, LTL = 10, and MNM =100.
+    selected by Parasweep were used in Section 5. Take the realistic data with T  = 100,000 as an example; the parameter settings
+    are IC  = 1,000, TNNU =  3, TNNR =  2, ISA =  100, alpha =  0.998, LTL =  10, and MNM =100.
 
 
     The definitions of these parameters may affect the performance of the solution approach in different data sets to varying
-    degrees. Take TNNU (in the region growth phase) as an example. When N = 1, the algorithm will only include the neighboring
-    unit that maximizes compactness while gradually releasing the condition to allow more possibilities when N increases.
-    The choice of N is more sensitive for the hypothetical data set, for which always adding the top candidate will optimize
-    the quality of the solution. However, randomly picking one of the top three works best for the large realistic dataset.
+    degrees. Take TNNU (in the region growth phase) as an example. When N  = 1, the algorithm will only include the neighboring
+    unit that maximizes compactness while gradually releasing the condition to allow more possibilities when N  increases.
+    Changes of the solution when the TNNU parameter varies are recorded. In sum, the choice of N is more sensitive for the
+    hypothetical data set, for which always adding the top candidate will optimize the quality of the solution. However, randomly
+    picking one of the top three works best for the large realistic dataset.
 
 
     Different from the original max- p- regions problem which accounts for the total within- region dissimilarity, the max-
@@ -492,17 +500,18 @@ blocks:
     solution framework can be extended to a multiobjective regionalization problem that simultaneously deals with compactness
     and within- region dissimilarity. One potential new objective function is as follows:
 
+    where w1, w2 ∈ /bracketleft.s10, 1/bracketright.s1
 
-    where w1, w2 ∈ /bracketleft.s10, 1/bracketright.s1. They are weights linking the second term involving maximizing compactness
-    and the third term associated with minimizing dissimilarity. Like h and h/uni2032.var, h/uni2032.var/uni2032.var is also
-    a scaling factor, which is used to ensure the priority of finding a large number of identified regions before carrying
-    out compactness and dissimilarity. An interesting extension for further research would be the exploration of this new
-    multiobjective compact max- p model. The corresponding solution approach can follow the idea of our proposed one. The
-    difference is that a certain form of integration of within- region dissimilarity and compactness needs to be calculated
-    with each movement in the phase of enclave assignment and local search. The selection of w1 and w2 will affect the final
-    partitioning solution, and it is challenging to quantify their relationship and explain the rationale behind it.'
+    . They are weights linking the second term involving maximizing compactness and the third term associated with minimizing
+    dissimilarity. Like h and h/uni2032.var, h/uni2032.var/uni2032.var is also a scaling factor, which is used to ensure the
+    priority of finding a large number of identified regions before carrying out compactness and dissimilarity. An interesting
+    extension for further research would be the exploration of this new multiobjective compact max- p model. The corresponding
+    solution approach can follow the idea of our proposed one. The difference is that a certain form of integration of within-
+    region dissimilarity and compactness needs to be calculated with each movement in the phase of enclave assignment and
+    local search. The selection of w1 and w2 will affect the final partitioning solution, and it is challenging to quantify
+    their relationship and explain the rationale behind it.'
   citations: []
-- block_id: 6
+- block_id: 7
   content: 'In this article we have mathematically formulated a model, called the max- p- compact- regions problem, to consider
     compactness in regionalization when the number of regions, p, has not been predefined. The solution algorithm developed
     can efficiently relieve the computational intensity of the proposed problem. It is demonstrated to obtain global optimal

@@ -1,6 +1,22 @@
 title: Delimitation of Functional Regions Using a p-Regions Problem Approach
 blocks:
 - block_id: 0
+  content: 'Various spatial data analyses have been used for the identification of functional regions. Functional regions
+    are identified by grouping many areal units into fewer clusters to classify the areal units in terms of similar properties,
+    as well as to constrain the spatial contiguity of the areal units in each cluster. This article proposes a spatial optimization
+    model, called the p-functional regions problem, to solve a regionalization problem by considering geographic flows. The
+    magnitude of geographic flows, such as journey-to-work, is widely considered a good indicator of functional relationships
+    between areas so that regionalization models incorporating various criteria, such as the maximum intraregion flows or
+    the total inflows from other units, may be used to identify the p regions. We also propose an analytical target reduction
+    approach to enhance the model tractability in generating optimal solutions to large problems and to demonstrate the effectiveness
+    of the optimization model using journey-to-work data from Seoul (South Korea) and South Carolina (the United States).
+
+
+    Keywords
+
+    functional regions, spatial optimization, p-regions problem, geographic flows'
+  citations: []
+- block_id: 1
   content: 'The concept of functional regions provides a framework for investigating the structure of geographic space. A
     functional region is characterized by the agglomeration of economic activities at a regional center that focuses people’s
     movements from the surrounding vicinities or hinterland. The center in a functional region is often referred to as a central
@@ -47,7 +63,7 @@ blocks:
     and Estivill-Castro 1998). However, the location–allocation approach does not always guarantee the spatial contiguity
     of the regions (Mehrotra, Johnson, and Nemhauser 1998; Cova and Church 2000). Recently, several researchers have included
     an explicit contiguity requirement as a constraint in spatial regionalization optimization models (Shirabe 2009; Salazar-Aguilar,
-    Rı́os-Mercado, and Cabrera-Rı́os 2011; Duque, Church, and Middleton 2011). While the contiguity constraints have produced
+    Ríos-Mercado, and Cabrera-Ríos 2011; Duque, Church, and Middleton 2011). While the contiguity constraints have produced
     contiguous regions in previous research, the location of a center in each region may not be structured. If a regionalization
     problem involves identifying urban or regional systems or delimiting areas such as labor markets or commuting sheds, then
     the problem should be formulated such that the functional centers of the regions in the solution is to be determined.
@@ -70,29 +86,29 @@ blocks:
   citations:
   - marker: (Berry and Garrison 1958)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: Problem formulations and objectives
   - marker: (Noronha and Goodchild 1992)
     intent_label: Domain Overview
     topic_label: Heterogeneity objective functions
   - marker: (Taaffe, Gauthier, and O’Kelly 1996)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: Problem formulations and objectives
   - marker: (see Masser and Brown 1975; Masser and Scheurwater 1980; Rosing and ReVelle 1986; Noronha and Goodchild 1992;
       Alvanides, Openshaw, and Duke-Williams 2000)
-    intent_label: Prior Methods
-    topic_label: Other Intent
+    intent_label: Prospective Application
+    topic_label: Problem formulations and objectives
   - marker: (Coombes et al. 1979; Schwanen, Deileman, and Dijst 2003)
-    intent_label: Domain Overview
-    topic_label: Other Intent
+    intent_label: Prospective Application
+    topic_label: Problem formulations and objectives
   - marker: (e.g., Song and Kim 2015)
-    intent_label: Domain Overview
-    topic_label: Other Intent
+    intent_label: Prospective Application
+    topic_label: Problem formulations and objectives
   - marker: (Green 1958; Coombes et al. 1979; van der Laan 1998; Schwanen, Deileman, and Dijst 2003)
-    intent_label: Domain Overview
-    topic_label: Other Intent
+    intent_label: Prospective Application
+    topic_label: Problem formulations and objectives
   - marker: (Brown and Holmes 1971)
     intent_label: Problem Formulation
-    topic_label: Problem formulations and objectives
+    topic_label: regionalization
   - marker: (Hess et al. 1965; Morrill 1981; Williams 1995)
     intent_label: Problem Formulation
     topic_label: Heterogeneity objective functions
@@ -108,15 +124,15 @@ blocks:
   - marker: (Mehrotra, Johnson, and Nemhauser 1998; Cova and Church 2000)
     intent_label: Research Gap
     topic_label: Compactness-driven location–allocation approaches
-  - marker: (Shirabe 2009; Salazar-Aguilar, Rı́os-Mercado, and Cabrera-Rı́os 2011; Duque, Church, and Middleton 2011)
+  - marker: (Shirabe 2009; Salazar-Aguilar, Ríos-Mercado, and Cabrera-Ríos 2011; Duque, Church, and Middleton 2011)
     intent_label: Prior Methods
     topic_label: Exact optimization models
   - marker: (e.g., see Shirabe 2009; Duque, Church, and Middleton 2011)
     intent_label: Research Gap
-    topic_label: max-p regions formulations
-- block_id: 1
+    topic_label: Exact optimization models
+- block_id: 2
   content: 'A vast amount of literature on districting and regionalization exists in operations research. Zoltners and Sinha
-    (1983), Williams (1995), and Duque, Romas, and Suriñach (2007) have written review articles in the field. Here, we focus
+    (1983), Williams (1995), and Duque, Romas, and Surinach (2007) have written review articles in the field. Here, we focus
     on studies on functional regionalization with contiguity constraints. Functional regionalization was initially motivated
     by interest in spatial systems, urban structures, and related regional policy and planning (e.g., Berry and Garrison 1958;
     Masser and Brown 1975). Functional regions are generally defined based on a greater magnitude of interactions or connections
@@ -139,11 +155,10 @@ blocks:
     for spatial contiguity can dramatically increase the complexity of the problem, exact optimization solutions have been
     limited in practice to small n cases. Alternatively, relaxed solution frameworks can be considered if the locations of
     the centers are known (Shirabe 2009) or if the seeds of regions can be prespecified (Duque, Church, and Middleton 2011;
-    Salazar-Aguilar, Rı́os-Mercado, and Cabrera-Rı́os 2011). Heuristic methods, such as greedy algorithms (Openshaw 1977),
-    simulated annealing, and Tabu search (Openshaw and Rao 1995; Bozkaya, Erkut, and Laporte 2003; Bozkaya et al. 2011; Duque,
-    Anselin, and Rey 2012), are typically employed when global optimal solutions are unattainable because of the complexity
-    of the model. However, heuristic approaches may require contextual knowledge of the areas studied to achieve the best
-    results.
+    Salazar-Aguilar, Ríos-Mercado, and Cabrera-Ríos 2011). Heuristic methods, such as greedy algorithms (Openshaw 1977), simulated
+    annealing, and Tabu search (Openshaw and Rao 1995; Bozkaya, Erkut, and Laporte 2003; Bozkaya et al. 2011; Duque, Anselin,
+    and Rey 2012), are typically employed when global optimal solutions are unattainable because of the complexity of the
+    model. However, heuristic approaches may require contextual knowledge of the areas studied to achieve the best results.
 
 
     As previously discussed, the main issues in functional regionalization include (1) the objectives of the model relative
@@ -164,11 +179,11 @@ blocks:
     interactions (e.g., commuting flows). Here, the concern is the interpretation of where and why a particular geographic
     area is identified as a functional center, as well as how well the model captures the existing spatial context of the
     area being studied (Morrill 1981; Williams 1995). In classical location theories, a region is characterized by a functional
-    center (central place), which possesses high-frequency interactions with and its hinterland (Christaller 1966; Lösch
-    1938). If functional centers are the inflow-dominant units within the delineated region, then these units should represent
-    an administrative unit, a population center, or a service center that provides a major source of job opportunities. By
-    contrast, outflow-dominant units can be characterized as residential or suburban areas where people commute to selected
-    functional centers (Yeates 1963).
+    center (central place), which possesses high-frequency interactions with and its hinterland (Christaller 1966; Lösch 1938).
+    If functional centers are the inflow-dominant units within the delineated region, then these units should represent an
+    administrative unit, a population center, or a service center that provides a major source of job opportunities. By contrast,
+    outflow-dominant units can be characterized as residential or suburban areas where people commute to selected functional
+    centers (Yeates 1963).
 
 
     Second, as a geographic criterion in regionalization problems, spatial contiguity is regarded as an important condition
@@ -184,7 +199,7 @@ blocks:
     areas are grouped as population core areas surrounded by counties, which have social and economic ties that are measured
     by commuting flows to workplaces (White House 2009). In this context, the contiguity requirement is prescribed explicitly
     by a constraint in a regionalization model (Garfinkel and Nemhauser 1970; Mehrotra, Johnson, and Nemhauser 1998; Duque,
-    Romas, and Suriñach 2007). From a modeling perspective, spatial contiguity is often translated into a network tree generation
+    Romas, and Surinach 2007). From a modeling perspective, spatial contiguity is often translated into a network tree generation
     problem to check the validity of contiguity. Areal units and their adjacency relationships are expressed as nodes and
     edges in terms of a graph, such that a region is verified as contiguous only if there is at least one path connecting
     all the spatial units within the region or if all the spatial units within the region are connected to the tree structure.
@@ -196,14 +211,14 @@ blocks:
     efficient constraints based on graph theory. For example, Zoltners and Shinha (1983) proposed a set of constraints using
     a tree structure to reflect the shortest path adjacency. The underlying logic was that areal units in a region maintain
     their connectedness in a tree structure when arbitrarily chosen seed units of the region at the kth level are allocated
-    to a seed of the region when the predecessor of the seed, that is, a tree at the (k/C0 1)th level, is also allocated to
+    to a seed of the region when the predecessor of the seed, that is, a tree at the (k − 1)th level, is also allocated to
     the seed. Shirabe (2005, 2009) used flow-based contiguity constraints to construct a flow-based network for each region.
     The constraints build p-partitioned tree networks for a given number of areal units. Suppose a network is formed for each
     region, after which a sink in the constraints becomes the root of a shortest path tree. If a path has only one sink within
     a region and receives unit flows from the other nodes (spatial units), then the region is contiguous. Although this prescription
     can effectively reduce the number of variables and constraints, the model remains limited to relatively small problems
-    unless the number of sinks consisting of regions is known a priori. Salazar-Aguilar, Rı́os-Mercado, and Cabrera-Rı́os
-    (2011) proposed an integer quadratic programming model with subtour elimination constraints that guarantee territory connectivity
+    unless the number of sinks consisting of regions is known a priori. Salazar-Aguilar, Ríos-Mercado, and Cabrera-Ríos (2011)
+    proposed an integer quadratic programming model with subtour elimination constraints that guarantee territory connectivity
     or contiguity. This model is based on the main principle of first solving a relaxed version of the problem without contiguity
     constraints. If the solution contains subtours, then the appropriate subtour elimination constraints are added, and the
     problem is solved again. This process is repeated until a feasible solution is found. However, the obtained feasible solution
@@ -213,7 +228,7 @@ blocks:
     Third, a regionalization model, particularly when formulated in terms of MIP with contiguity constraints, may be non-tractable
     due to complexity. Duque, Church, and Middleton (2011) have presented three strategies for ensuring contiguity, along
     with the corresponding MIP models: (1) TreePRM, which adapts subtour elimination breaking constraints similar to those
-    given by Salazar-Aguilar, Rı́os-Mercado, and Cabrera-Rı́os (2011); (2) OrderPRM, which uses ordered-area assignment variables
+    given by Salazar-Aguilar, Ríos-Mercado, and Cabrera-Ríos (2011); (2) OrderPRM, which uses ordered-area assignment variables
     to prevent cycles and ensure contiguity; and (3) FlowPRM, which uses unit flow constraints similar to those given by Shirabe
     (2005, 2009). Each strategy has its own distinct strengths in solving problems, but any p-regions problem that is formulated
     in the form of MIP belongs to a class of NP-hard problems, which means that the solution is ensured only for a limited
@@ -232,39 +247,39 @@ blocks:
   citations:
   - marker: (Berry and Garrison 1958)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: (Brown and Holmes 1971)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Zoltners and Sinha (1983)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Williams (1995)
     intent_label: Domain Overview
-    topic_label: Other Intent
-  - marker: Duque, Romas, and Suriñach (2007)
+    topic_label: regionalization
+  - marker: Duque, Romas, and Surinach (2007)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: (e.g., Berry and Garrison 1958; Masser and Brown 1975)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: (Brown and Horton 1970)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Brown and Holmes (1971)
-    intent_label: Problem Formulation
-    topic_label: Other Intent
+    intent_label: Prior Methods
+    topic_label: regionalization
   - marker: Masser and Brown (1975)
     intent_label: Prior Methods
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Masser and Scheurwater (1980)
     intent_label: Prior Methods
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: (see Openshaw 1973; Masser and Brown 1975; Fischer 1980; Masser and Scheurwater 1980)
     intent_label: Prior Methods
     topic_label: Conventional clustering with post hoc contiguity checks
   - marker: (Openshaw and Wymer 1995)
-    intent_label: Research Gap
+    intent_label: Prior Methods
     topic_label: Conventional clustering with post hoc contiguity checks
   - marker: (Hess et al. 1965; George, Lamar, and Wallace 1997)
     intent_label: Prior Methods
@@ -278,12 +293,12 @@ blocks:
   - marker: (Shirabe 2009)
     intent_label: Prior Methods
     topic_label: Compactness-driven location–allocation approaches
-  - marker: (Duque, Church, and Middleton 2011; Salazar-Aguilar, Rı́os-Mercado, and Cabrera-Rı́os 2011)
+  - marker: (Duque, Church, and Middleton 2011; Salazar-Aguilar, Ríos-Mercado, and Cabrera-Ríos 2011)
     intent_label: Prior Methods
-    topic_label: Bottom-up seeded agglomeration
+    topic_label: Order-based core assignment models
   - marker: (Openshaw 1977)
     intent_label: Prior Methods
-    topic_label: Local search with area swaps and metaheuristics
+    topic_label: Bottom-up seeded agglomeration
   - marker: (Openshaw and Rao 1995; Bozkaya, Erkut, and Laporte 2003; Bozkaya et al. 2011; Duque, Anselin, and Rey 2012)
     intent_label: Prior Methods
     topic_label: Local search with area swaps and metaheuristics
@@ -298,44 +313,47 @@ blocks:
     topic_label: Heterogeneity objective functions
   - marker: (Morrill 1981; Williams 1995)
     intent_label: Domain Overview
-    topic_label: Other Intent
-  - marker: (Christaller 1966; Lösch 1938)
+    topic_label: regionalization
+  - marker: (Christaller 1966; Lösch 1938)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: (Yeates 1963)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: (Nystuen and Dacey 1961; Wheeler and Mitchelson 1989)
     intent_label: Domain Overview
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: (White House 2009)
     intent_label: Prospective Application
-    topic_label: Other Intent
-  - marker: (Garfinkel and Nemhauser 1970; Mehrotra, Johnson, and Nemhauser 1998; Duque, Romas, and Suriñach 2007)
+    topic_label: regionalization
+  - marker: (Garfinkel and Nemhauser 1970; Mehrotra, Johnson, and Nemhauser 1998; Duque, Romas, and Surinach 2007)
     intent_label: Prior Methods
-    topic_label: Exact optimization models
+    topic_label: regionalization
   - marker: Zoltners and Shinha (1983)
     intent_label: Prior Methods
     topic_label: Adjacency-level assignment formulations
   - marker: Shirabe (2005, 2009)
     intent_label: Prior Methods
     topic_label: Flow-based network connectivity formulations
-  - marker: Salazar-Aguilar, Rı́os-Mercado, and Cabrera-Rı́os (2011)
+  - marker: Salazar-Aguilar, Ríos-Mercado, and Cabrera-Ríos (2011)
     intent_label: Prior Methods
     topic_label: Link-selection with subtour elimination
   - marker: Duque, Church, and Middleton (2011)
     intent_label: Prior Methods
     topic_label: Exact optimization models
+  - marker: Shirabe’s model (2005)
+    intent_label: Prior Methods
+    topic_label: Exact optimization models
   - marker: (for further details, see Duque, Church, and Middleton 2011)
     intent_label: Prior Methods
-    topic_label: Flow-based network connectivity formulations
+    topic_label: Exact optimization models
   - marker: (e.g., Duque, Anselin, and Rey 2012)
     intent_label: Prior Methods
-    topic_label: Local search with area swaps and metaheuristics
-- block_id: 2
+    topic_label: Heuristic models with explicit contiguity
+- block_id: 3
   content: ''
   citations: []
-- block_id: 3
+- block_id: 4
   content: 'Many districting or regionalization problems focus mainly on constructing districts or regions by grouping basic
     areal units without necessarily identifying the regional center. However, this article proposes a PFRP, in which functional
     centers are determined simultaneously with contiguous functional regions. The basic structure of the PFRP combines the
@@ -346,111 +364,68 @@ blocks:
     contiguity constraints. The following notation is used in the PFRP:
 
 
-    i ¼ index of basic spatial units ; i ¼ 1; ... ; n; 2 I;
+    i = index of basic spatial units; i = 1, ... , n; i ∈ I;
 
-    k ¼ index of spatial units selected as functional centers of the region ; k ¼ 1; ... ; n;
+    k = index of spatial units selected as functional centers of the region; k = 1, ... , n;
 
-    p ¼ the number of regions to be districted;
+    p = the number of regions to be districted;
 
-    cij ¼ 1; if spatial units i and j are adjacent
+    cij = 1 if spatial units i and j are adjacent; 0 otherwise.
 
-    0; otherwise;
+    Ni = { j | cij = 1 }; a set of spatial units that are adjacent to i;
 
-    /C26
-
-    Ni ¼ jjcij ¼ 1
-
-    /C8/C9
-
-    ; a set of spatial units that are adjacent to i;
-
-    aik ¼ the amount of geographic movement from spatial unit i to regional center k:
+    aik = the amount of geographic movement from spatial unit i to regional center k.
 
 
     The following decision variables are included in this model:
 
-    yik ¼ 1; if spatial unit i is included in region k
 
-    0; otherwise;
+    yik = 1 if spatial unit i is included in region k; 0 otherwise.
 
-    /C26
+    wik = 1 if spatial unit i is chosen as a sink of region k; 0 otherwise.
 
-    wik ¼ 1; if spatial unit i is chosen as a sink of region k
-
-    0; otherwise;
-
-    /C26
-
-    fijk ¼ the amount of unit flow from i to j in region kðfijk /C21 0Þ:
+    fijk = the amount of unit flow from i to j in region k (fijk ≥ 0).
 
 
     Here, aik indicates the magnitude of the actual spatial interactions between the basic areal units and the regional centers,
     such as commuting and migration, to determine the functional regions, whereas fijk denotes the conceptual flows between
-    basic spatial units a contiguous region. Based on this notation and the corresponding decision variables, the PFRP can
-    be modeled as follows:
+    basic spatial units in a contiguous region. Based on this notation and the corresponding decision variables, the PFRP
+    can be modeled as follows:
 
 
-    Maximize
-
-    X
-
-    k
-
-    X
-
-    i
-
-    aik yik ð1Þ
+    Maximize sum_k sum_i aik yik (1)
 
 
     Subject to:
 
-    X
-
-    k
-
-    yik ¼ 1; 8i; ð2Þ
-
-    wik /C20 yik ; 8i; k; ð3Þ
-
-    X
-
-    i
-
-    wik /C20 1; 8k; ð4Þ
-
-    X
-
-    k
-
-    X
-
-    i
-
-    wik ¼ p; ð5Þ
-
-    fijk /C20 yik ðn /C0 pÞ; 8i; j 2 Ni; k; ð6Þ
-
-    fijk /C20 yjk ðn /C0 pÞ; 8i; j 2 Ni; k; ð7Þ
+    sum_k yik = 1, ∀ i. (2)
 
 
-    X
+    wik ≤ yik, ∀ i, k. (3)
 
-    j2Ni
 
-    fijk /C0
+    sum_i wik ≤ 1, ∀ k. (4)
 
-    X
 
-    j2Ni
+    sum_k sum_i wik = p. (5)
 
-    fjik /C21 yik /C0ð n /C0 pÞwik ; 8i; k; ð8Þ
 
-    yik ¼f 0; 1g; 8i; k; ð9Þ
+    fijk ≤ yik (n − p), ∀ i, j ∈ Ni, k. (6)
 
-    wik ¼f 0; 1g; 8i; k; ð10Þ
 
-    fijk /C21 0; 8i; j 2 Ni; k: ð11Þ
+    fijk ≤ yjk (n − p), ∀ i, j ∈ Ni, k. (7)
+
+
+    sum_{j∈Ni} fijk − sum_{j∈Ni} fjik ≥ yik − (n − p) wik, ∀ i, k. (8)
+
+
+    yik ∈ {0, 1}, ∀ i, k. (9)
+
+
+    wik ∈ {0, 1}, ∀ i, k. (10)
+
+
+    fijk ≥ 0, ∀ i, j ∈ Ni, k. (11)
 
 
     The objective function maximizes the spatial interactions from the assigned areal units to a center within a region; the
@@ -463,11 +438,11 @@ blocks:
     is p (p < n). Constraints (4) and (5) together allow only p regions to be delimited. Constraints (6) and (7) ensure that
     unit flows can exist between the spatial units i and j if and only if both units are adjacent to and assigned to the same
     region k. The contiguity requirement for regionalization is established by constraint (8), which enforce the unit flows
-    between the areal units assigned to the same region. If the areal unit i is not a sink (wik ¼ 0), the areal unit i must
-    supply at least one unit flow. If the areal unit i is a sink, the sink can have a nonnegative net flow up to (n /C0 p
-    /C0 1). Here ‘‘n /C0 p /C0 1’’ represents the largest number of areal units that can be assigned to a region. Constraints
-    (9) and (10) impose integer restrictions on the location and allocation decision variables. Constraint (11) ensures that
-    fijk is nonnegative.
+    between the areal units assigned to the same region. If the areal unit i is not a sink (wik = 0), the areal unit i must
+    supply at least one unit flow. If the areal unit i is a sink, the sink can have a nonnegative net flow up to (n − p −
+    1). Here ‘‘n − p − 1’’ represents the largest number of areal units that can be assigned to a region. Constraints (9)
+    and (10) impose integer restrictions on the location and allocation decision variables. Constraint (11) ensures that fijk
+    is nonnegative.
 
 
     Although the PFRP has a similar structure to the models of Shirabe (2009) and Duque, Church, and Middleton (2011) from
@@ -477,43 +452,42 @@ blocks:
     the PFRP requires that p is explicitly specified as a constraint (see constraint [5]) because the PFRP is a maximization
     model. The similarity of this constraint to FLOWPRM may appear trivial, but combining this constraint with constraints
     (2), (3), and (4) narrows the solution space. The computational difficulty is thus reduced. The second difference between
-    the PFRP and other models is that the former locates the functional centers through the term wik. Figure 1 shows that
-    the decision variables wik in the PFRP function differently in finding a solution for p ¼ 3 compared to the same variables
-    in other models, for example, FLOWPRM. The index k denotes an areal unit that is selected as a functional center. By contrast,
-    in other models, k indicates the number of p-partitioned regions that are imposed as ordered numbers ( k ¼ 1, 2, 3, ...
-    , p; see Shirabe 2009; Duque, Church, and Middleton 2011). The index k in wik in the PFRP ranges from 1 to n, instead
-    of from 1 to p, because the model should select p centers from n areal units, as well as delineating the boundaries of
-    the p regions. If k has a value between 1 and p, then the PFRP cannot track the location of a region’s functional center.
-    The main rationale of this treatment is to identify the sink and the functional center for each region during the regionalization
-    process. This notational treatment allows the variable wik to be interpreted in a different manner in the PFRP. For example,
-    w9_2 ¼ 1 in Figure 1 indicates that areal unit 9 is selected as a sink where all unit flows come together from all areal
-    units within a region centered on areal unit 2. By contrast, comparable variables in other models usually represent areal
-    unit 9 as a sink of the second delineated region among p regions. The variables w19_19 and w23_23 (¼1) indicate that areal
-    units 19 and 23 are both functional centers and sinks for a region. Note that the selected functional center in the PFRP
-    is not necessarily identical to the sink of the unit flow in each region because constraint (8) determines the sink of
-    a region among the areal units in the region. In addition, considering that the goal of the objective function is to designate
-    the selected spatial unit k as the functional center that maximizes spatial interactions from other areal units i within
-    a region, the selected spatial unitk represents a central place or business center (i.e., a CBD) where geographical flows
-    from other centers are highly concentrated.
+    the PFRP and other models is that the former locates the functional centers through the term wik. The decision variables
+    wik in the PFRP function differently in finding a solution for p = 3 compared to the same variables in other models, for
+    example, FLOWPRM. The index k denotes an areal unit that is selected as a functional center. By contrast, in other models,
+    k indicates the number of p-partitioned regions that are imposed as ordered numbers (k = 1, 2, 3, ... , p; see Shirabe
+    2009; Duque, Church, and Middleton 2011). The index k in wik in the PFRP ranges from 1 to n, instead of from 1 to p, because
+    the model should select p centers from n areal units, as well as delineating the boundaries of the p regions. If k has
+    a value between 1 and p, then the PFRP cannot track the location of a region’s functional center. The main rationale of
+    this treatment is to identify the sink and the functional center for each region during the regionalization process. This
+    notational treatment allows the variable wik to be interpreted in a different manner in the PFRP. For example, w9_2 =
+    1 indicates that areal unit 9 is selected as a sink where all unit flows come together from all areal units within a region
+    centered on areal unit 2. By contrast, comparable variables in other models usually represent areal unit 9 as a sink of
+    the second delineated region among p regions. The variables w19_19 and w23_23 (=1) indicate that areal units 19 and 23
+    are both functional centers and sinks for a region. Note that the selected functional center in the PFRP is not necessarily
+    identical to the sink of the unit flow in each region because constraint (8) determines the sink of a region among the
+    areal units in the region. In addition, considering that the goal of the objective function is to designate the selected
+    spatial unit k as the functional center that maximizes spatial interactions from other areal units i within a region,
+    the selected spatial unit k represents a central place or business center (i.e., a CBD) where geographical flows from
+    other centers are highly concentrated.
 
 
     The logic of the PFRP in aggregating areal units into a set of functional regions can be explained by determining the
-    dominant flows of the geographic inflows, outflows, and intraflows. As illustrated in Figure 2, if an areal unit (unit
-    8 in Figure 2a) receives substantial inflows from other units with small outflows, then this inflow-dominant unit is very
-    likely to be the region’s functional center. By contrast, if an areal unit has dominant outflows to some vicinity (Figure
-    2b), then this areal unit is likely to be part of the region’s hinterlands. As a special case, if an areal unit has substantial
-    intraflows with small inflows and outflows (Figure 2c), then the areal unit is considered a self-sustaining region that
-    is not included in any other region. The main characteristic of the daily commuting flow is that geographic proximity
-    in journey-to-work flows is a critical factor in delineating the space of economic activities and that most job opportunities
-    are usually more accessible in a central areal unit that acts as a functional center and whose influential space diminishes
-    with distance (Kim et al. 2012).'
+    dominant flows of the geographic inflows, outflows, and intraflows. If an areal unit receives substantial inflows from
+    other units with small outflows, then this inflow-dominant unit is very likely to be the region’s functional center. By
+    contrast, if an areal unit has dominant outflows to some vicinity, then this areal unit is likely to be part of the region’s
+    hinterlands. As a special case, if an areal unit has substantial intraflows with small inflows and outflows, then the
+    areal unit is considered a self-sustaining region that is not included in any other region. The main characteristic of
+    the daily commuting flow is that geographic proximity in journey-to-work flows is a critical factor in delineating the
+    space of economic activities and that most job opportunities are usually more accessible in a central areal unit that
+    acts as a functional center and whose influential space diminishes with distance (Kim et al. 2012).'
   citations:
   - marker: Duque, Church, and Middleton (2011)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Flow-based network connectivity formulations
+    topic_label: p-regions formulations
   - marker: Shirabe (2009)
     intent_label: Algorithm/Principle Adoption
-    topic_label: Flow-based network connectivity formulations
+    topic_label: p-regions formulations
   - marker: Hess et al. 1965
     intent_label: Prior Methods
     topic_label: Compactness-driven location–allocation approaches
@@ -525,19 +499,19 @@ blocks:
     topic_label: Compactness-driven location–allocation approaches
   - marker: Shirabe 2009
     intent_label: Algorithm/Principle Adoption
-    topic_label: Flow-based network connectivity formulations
+    topic_label: regionalization
   - marker: Duque, Church, and Middleton 2011
     intent_label: Algorithm/Principle Adoption
+    topic_label: regionalization
+  - marker: (Kim et al. 2012)
+    intent_label: Algorithm/Principle Adoption
     topic_label: Flow-based network connectivity formulations
-  - marker: Kim et al. 2012
-    intent_label: Domain Overview
-    topic_label: Other Intent
-- block_id: 4
+- block_id: 5
   content: ''
   citations: []
-- block_id: 5
+- block_id: 6
   content: 'We apply the PFRP to Seoul, South Korea. We consider Seoul for several reasons. First, the number of spatial units
-    is appropriate for examining the solvability of p-regions problems. Seoul consists of twenty-five wards (‘‘gu’’ in Korean).
+    is appropriate for examining the solvability of p-regions problems. Seoul consists of twenty-five wards ("gu" in Korean).
     From previous research, an optimal solution is difficult to find in most districting models for a problem size of more
     than twenty-five areal units; problems involving sixteen units at a particular p level are often even harder to solve
     if there is a contiguity requirement in the model (Shirabe 2009; Duque, Church, and Middleton 2011). Second, identifying
@@ -553,256 +527,232 @@ blocks:
 
 
     For geographic flows, we consider the daily origin–destination commuting flows among Seoul’s twenty-five wards for the
-    year 2005. Figure 3 shows the spatial pattern of total inflows (Figure 3a) and outflows (Figure 3b) for these twenty-five
-    areal units. Areal units 2 (Jung-gu, a conventional CBD), 23 (Gangnam-gu, a new CBD), and 19 (Yeongdeungpo-gu, a third
-    CBD) are recognized as Seoul’s three major CBDs because these areal units host many firms and thus receive substantial
-    inflows from other areal units. By contrast, areal units 11, 16, 20, 21, and 24 show dominant outflows. With rapid advances
-    in transportation systems and fluctuations in the housing market, these units have been developed as traditional residential
+    year 2005. Areal units 2 (Jung-gu, a conventional CBD), 23 (Gangnam-gu, a new CBD), and 19 (Yeongdeungpo-gu, a third CBD)
+    are recognized as Seoul’s three major CBDs because these areal units host many firms and thus receive substantial inflows
+    from other areal units. By contrast, areal units 11, 16, 20, 21, and 24 show dominant outflows. With rapid advances in
+    transportation systems and fluctuations in the housing market, these units have been developed as traditional residential
     areas (Song and Kim 2015). This raises the question of which units act as CBDs and how their influential boundaries can
-    be delineated in terms of economic service areas of each unit. Figure 3 shows the locations of the three functional centers
-    identified by the PFRP, which supports the findings of Song et al. (2012) who have identified the same CBDs in Seoul.'
+    be delineated in terms of economic service areas of each unit. The daily commuting flows in Seoul (2005) support the findings
+    of Song et al. (2012) who have identified the same CBDs in Seoul.'
   citations:
   - marker: (Shirabe 2009; Duque, Church, and Middleton 2011)
     intent_label: Importance of Problem
     topic_label: Exact optimization models
   - marker: (Song and Kim 2015)
     intent_label: Prospective Application
-    topic_label: Other Intent
+    topic_label: regionalization
   - marker: Song et al. (2012)
-    intent_label: Result Comparison
-    topic_label: Other Intent
-- block_id: 6
-  content: 'The test cases in this study, from p ¼ 2 to p ¼ 23, are successfully solved with optimality. To solve the different
+    intent_label: Prospective Application
+    topic_label: regionalization
+- block_id: 7
+  content: 'The test cases in this study, from p = 2 to p = 23, are successfully solved with optimality. To solve the different
     cases, we use a CPLEX 12.1 with Intel’s Xeon Quad Core 3.2 GHz/3 GB RAM based on the Windows 7 operating system; the PFRP
-    results of the problem cases are visualized using ESRI ArcGIS 9.3. Figure 4 shows the distribution of solution times for
-    all cases to investigate the actual computational effort needed to solve the PFRP. The worst computational performance
-    for the PFRP is observed at lower levels of p (2, 3, and 4), taking approximately sixteen to twenty-six hours; however,
-    optimal solutions are found for the remaining 87 percent of the cases in less than thirty minutes. In fact, 50 percent
-    of the cases are solved in just a few minutes. This indicates that the PFRP can outperform other models in practice for
-    moderate-sized regionalization problems regardless of the level of p.
+    results of the problem cases are visualized using ESRI ArcGIS 9.3. The worst computational performance for the PFRP is
+    observed at lower levels of p (2, 3, and 4), taking approximately sixteen to twenty-six hours; however, optimal solutions
+    are found for the remaining 87 percent of the cases in less than thirty minutes. In fact, 50 percent of the cases are
+    solved in just a few minutes. This indicates that the PFRP can outperform other models in practice for moderate-sized
+    regionalization problems regardless of the level of p.
 
 
-    Figure 5 shows the optimal locations of the functional centers and districted regions for p ranging from 2 to 5. Here,
-    we make the following observations. First, given the flow patterns in Figure 3, the interactions between areal units may
-    be influenced by the behavior of commuters in Seoul who tend to live near CBDs to avoid a long commute to work. Note that
-    the locations of the functional centers identified by the PFRP show how CBDs have emerged as Seoul has developed economically.
-    Figure 5a, for p ¼ 2, identifies Seoul as a city with two distinct functional centers: (1) Jung-gu (unit 2), a conventional
-    CBD, and (2) Gangnam-gu (unit 23), a newly established CBD. At p ¼ 3, another regional CBD, Yeongdeungpo-gu (unit 19)
-    is added to the western region of Seoul by dividing the area covered by Gangnam-gu at p ¼ 2. The areal unit 19 is currently
-    recognized as a subfunctional center in the southern region of Seoul, which is consistent with this districting result.
-    Note that the major residential regions (units 11, 16, and 24) shown in Figure 3b are nested within the three CBDs. At
-    p ¼ 4 and 5, the spatial units 16 and 25, respectively, are newly added, implying that these spatial units emerge as subfunctional
-    centers from previous regionalization results, whereas the conventional CBD (unit 2) maintains its dominant position as
-    a CBD regardless of the level of regionalization. This result suggests that labor markets become fragmented through the
-    emergence of multiple centers.
+    The optimal locations of the functional centers and districted regions for p ranging from 2 to 5 show the following observations.
+    First, given the flow patterns, the interactions between areal units may be influenced by the behavior of commuters in
+    Seoul who tend to live near CBDs to avoid a long commute to work. Note that the locations of the functional centers identified
+    by the PFRP show how CBDs have emerged as Seoul has developed economically. For p = 2, Seoul is identified as a city with
+    two distinct functional centers: (1) Jung-gu (unit 2), a conventional CBD, and (2) Gangnam-gu (unit 23), a newly established
+    CBD. At p = 3, another regional CBD, Yeongdeungpo-gu (unit 19) is added to the western region of Seoul by dividing the
+    area covered by Gangnam-gu at p = 2. The areal unit 19 is currently recognized as a subfunctional center in the southern
+    region of Seoul, which is consistent with this districting result. Note that the major residential regions (units 11,
+    16, and 24) are nested within the three CBDs. At p = 4 and 5, the spatial units 16 and 25, respectively, are newly added,
+    implying that these spatial units emerge as subfunctional centers from previous regionalization results, whereas the conventional
+    CBD (unit 2) maintains its dominant position as a CBD regardless of the level of regionalization. This result suggests
+    that labor markets become fragmented through the emergence of multiple centers.
 
 
     Second, regarding computational aspects, the inclusion relationship between selected sets of centers is observed at different
-    levels of p. In addition, a set of optimal solutions for functional centers at p /C0 1 is found as a nested set of functional
-    centers at p, or functional centers at a specific level of p can be a predefined set at p /C0 1. Table 1 implies that
-    the optimal locations of the regional centers at p ¼ 2 (centers 2 and 23) are included at p ¼ 3 and that the set of functional
-    centers at p ¼ 3 becomes part of the optimal locations at p ¼ 4. In other words, an optimal solution at p becomes a candidate
-    set of centers at lower levels of p (p /C0 1, p /C0 2, ... , and 2). In the test cases, this inclusion relationship is
-    observed from p ¼ 2 to p ¼ 20, with increasing p, in all cases except at p ¼ 15. The nested-set relationship can be used
-    to predict which units are potential candidates for functional centers. This characteristic motivates a potential solution
-    strategy that may guarantee global optima based on the optimal solutions that are identified at a selected level of p.
-    As indicated by the three columns on the right-hand side of Table 1, there is some computational difficulty associated
-    with finding optimal solutions of the PFRP at lower levels of p. If any case with a lower p value suffers from computational
-    complexity, then the search for the optimal solution at p can be initiated from the optimal solution sets at a higher
-    level of p because the elimination of any candidates can tighten the solution space and thus help ensure global optima.
+    levels of p. In addition, a set of optimal solutions for functional centers at p − 1 is found as a nested set of functional
+    centers at p, or functional centers at a specific level of p can be a predefined set at p − 1. In the test cases, this
+    inclusion relationship is observed from p = 2 to p = 20, with increasing p, in all cases except at p = 15. The nested-set
+    relationship can be used to predict which units are potential candidates for functional centers. This characteristic motivates
+    a potential solution strategy that may guarantee global optima based on the optimal solutions that are identified at a
+    selected level of p. If any case with a lower p value suffers from computational complexity, then the search for the optimal
+    solution at p can be initiated from the optimal solution sets at a higher level of p because the elimination of any candidates
+    can tighten the solution space and thus help ensure global optima.
 
 
     Third, an ideal number of regions for delimiting the functional regions can be determined based on changes in the objective
-    values. As summarized in Table 1, the objective value increases with p, indicating that the efficiency of the spatial
-    interactions increases as regions are more regionalized in the model. Furthermore, the results in Figure 6 suggest that
-    increments in the objective values with p may indicate natural breaks for effectively delimiting the functional regions.
-    Significant changes are observed when p changes from 3 to 4 and 5 to 6, indicating that an ideal regional district corresponds
-    to p ¼ 3 or p ¼ 5 in the case of Seoul. As discussed in the previous section, the regionalization process in Seoul during
-    the last three decades is well represented by both districting results.
-
-
-    For p ¼ 3, the three CBDs reflect the mid-2000s, when the southern and northern regions of Seoul developed as distinct
-    economic areas, and the southern region was divided into two functional districts, namely functional centers 23 (a new
-    CBD) and 19 (the third CBD; Song et al. 2012). As long as regions are districted in a nested structure with an increase
-    in p, a discussion on the hierarchy of p regions is possible. For example, at p ¼ 5, spatial units 2 and 23 are the top-tier
-    centers, followed by spatial unit 19 as a second-tier center and spatial units 16 and 25 as subregional centers of 19
-    and 23, respectively. Based on central place theory, these regionalization patterns indicate service areas or hinterlands
-    for the p-functional centers, as well as the regional hierarchy.'
+    values. The objective value increases with p, indicating that the efficiency of the spatial interactions increases as
+    regions are more regionalized in the model. Increments in the objective values with p may indicate natural breaks for
+    effectively delimiting the functional regions. Significant changes are observed when p changes from 3 to 4 and 5 to 6,
+    indicating that an ideal regional district corresponds to p = 3 or p = 5 in the case of Seoul. For p = 3, the three CBDs
+    reflect the mid-2000s, when the southern and northern regions of Seoul developed as distinct economic areas, and the southern
+    region was divided into two functional districts, namely functional centers 23 (a new CBD) and 19 (the third CBD; Song
+    et al. 2012). As long as regions are districted in a nested structure with an increase in p, a discussion on the hierarchy
+    of p regions is possible. For example, at p = 5, spatial units 2 and 23 are the top-tier centers, followed by spatial
+    unit 19 as a second-tier center and spatial units 16 and 25 as subregional centers of 19 and 23, respectively. Based on
+    central place theory, these regionalization patterns indicate service areas or hinterlands for the p-functional centers,
+    as well as the regional hierarchy.'
   citations:
   - marker: Song et al. 2012
     intent_label: Domain Overview
-    topic_label: Other Intent
-- block_id: 7
+    topic_label: p-regions formulations
+- block_id: 8
   content: ''
   citations: []
-- block_id: 8
-  content: 'Table 1 seems to suggest that the model can solve a set of more than twenty-five areal units. In general, given
-    n areal units, computational time rapidly decreases as the number of p regions increases. Large computational times are
-    only observed for lower levels of p with a higher level of complexity in terms of the numbers of constraints and variables.
+- block_id: 9
+  content: 'The model’s computational time rapidly decreases as the number of p regions increases. Large computational times
+    are only observed for lower levels of p with a higher level of complexity in terms of the numbers of constraints and variables.
     Thus, large computational times may be a problem if exact solutions are required at those levels. In terms of the model
-    structure, note that constraints (6), (7), and (8) include the constant (n /C0 p), which dictates the maximum number of
+    structure, note that constraints (6), (7), and (8) include the constant (n − p), which dictates the maximum number of
     allowable areal units constituting a region. In other words, a decrease in p increases the value of the constant, implying
     that the possibility of unit flows among the assigned spatial units also increases. In addition, an increase in p increases
     the objective value because most areal units have intraflows that far exceed the maximum outflows. In contrast, a decrease
     in p allows the intraflows of many areal units to be substituted for the largest, second largest, or third largest outflows.
 
 
-    As noted earlier, an interesting observation from Table 1 is that the set of centers selected at p /C0 1 is a subset of
-    centers obtained for the range of p. This observation is due to the behavior of the objective function of the model. Basically,
-    the model’s objective function searches for potential centers from either (1) areal units receiving large inflows from
-    unselected areal units or (2) units with large intraflows. In theory, areal units with relatively small intraflows or
-    large outflows can be considered potential centers. However, the model tends to designate areal units as potential centers
-    if there are substantial differences between the magnitude of the intraflows and that of the largest (hereafter referred
-    to as DIFF1) or second largest (hereafter referred to as DIFF2) outflows from a unit. These differences represent the
-    impact on the objective value when a spatial unit is assigned to a center instead of being selected as a center. If only
-    DIFF1 and DIFF2 are considered in the model, then the model has similar characteristics to the Nystuen–Dacey model in
-    which centers are determined only by dominant flows from other nodes. However, note that the contiguity requirement of
-    the model restricts the center to be within delimited regions. As a result, regions cannot be organized in a nonplanar
-    type of hierarchy.
+    An interesting observation is that the set of centers selected at p − 1 is a subset of centers obtained for the range
+    of p. This observation is due to the behavior of the objective function of the model. Basically, the model’s objective
+    function searches for potential centers from either (1) areal units receiving large inflows from unselected areal units
+    or (2) units with large intraflows. In theory, areal units with relatively small intraflows or large outflows can be considered
+    potential centers. However, the model tends to designate areal units as potential centers if there are substantial differences
+    between the magnitude of the intraflows and that of the largest (hereafter referred to as DIFF1) or second largest (hereafter
+    referred to as DIFF2) outflows from a unit. These differences represent the impact on the objective value when a spatial
+    unit is assigned to a center instead of being selected as a center. If only DIFF1 and DIFF2 are considered in the model,
+    then the model has similar characteristics to the Nystuen–Dacey model in which centers are determined only by dominant
+    flows from other nodes. However, note that the contiguity requirement of the model restricts the center to be within delimited
+    regions. As a result, regions cannot be organized in a nonplanar type of hierarchy.
 
 
     This behavior of the model rarely changes when the level of p decreases or increases. The results indicate that it is
-    very unlikely that areal units that are not selected as potential centers at p are selected as centers at p /C0 1. Using
-    hypothetical data with six spatial units, Figure 7 and Table 2 show conceptually and in detail how the PFRP functions
-    in determining the locations of centers and assigning unselected areal units to the centers. As an initial step in understanding
-    the behavior of the model, DIFF1 and DIFF2 are calculated by subtracting the largest and second largest outflows, respectively,
-    of an areal unit from its intraflows (see Table 2). For p ¼ 5, areal unit 6, which has the smallest effect (25) on the
-    objective value in terms of DIFF1, maximizes the objective function when areal unit 6 is assigned to areal unit 5. Similarly,
-    for p ¼ 4, spatial unit 2, for which DIFF1 corresponds to the second smallest effect, becomes a unit to be dropped from
-    a set of candidate centers at p ¼ 5 and is assigned to center 1. Districting three regions is more complicated because
-    the contiguity constraint must be considered. For p ¼ 3, although areal unit 5 has the third smallest effect after units
-    2 and 6, areal unit 5 is already grouped with unit 6. If unit 5 is assigned to unit 3, then unit 6 is assigned to unit
-    3 or 4 based on contiguity. If unit 5 is assigned to 3 and unit 6 is assigned to 4, then the decrement in the objective
-    value is 80 (5 ! 3:40; 6 ! 4: 40). Alternatively, if both units 5 and 6 are assigned to unit 3, then the objective value
-    decreases by 75 (5 !3: 40; 6 ! 3: 35), corresponding to a better grouping. However, the best case is found when assigning
-    units 2, 4, and 6 to units 1, 3, and 5, respectively. This assignment results in the minimum decrement (55), thus maximizing
-    the objective value. Finally, when a similar process is applied to p ¼ 2, the maximum objective value is found once unit
-    2 is assigned to center 1 and units 4, 5, and 6 are grouped around center 3.'
+    very unlikely that areal units that are not selected as potential centers at p are selected as centers at p − 1. Using
+    hypothetical data with six spatial units, a conceptual example shows how the PFRP functions in determining the locations
+    of centers and assigning unselected areal units to the centers. As an initial step in understanding the behavior of the
+    model, DIFF1 and DIFF2 are calculated by subtracting the largest and second-largest outflows, respectively, of an areal
+    unit from its intraflows. For p = 5, areal unit 6, which has the smallest effect on the objective value in terms of DIFF1,
+    maximizes the objective function when areal unit 6 is assigned to areal unit 5. Similarly, for p = 4, spatial unit 2,
+    for which DIFF1 corresponds to the second-smallest effect, becomes a unit to be dropped from a set of candidate centers
+    at p = 5 and is assigned to center 1. Districting three regions is more complicated because the contiguity constraint
+    must be considered. Although areal unit 5 has the third smallest effect after units 2 and 6, areal unit 5 is already grouped
+    with unit 6. If unit 5 is assigned to 3 and unit 6 is assigned to 4, then the decrement in the objective value is 80.
+    Alternatively, if both units 5 and 6 are assigned to unit 3, then the objective value decreases by 75, corresponding to
+    a better grouping. However, the best case is found when assigning units 2, 4, and 6 to units 1, 3, and 5, respectively.
+    This assignment results in the minimum decrement, thus maximizing the objective value. Finally, when a similar process
+    is applied to p = 2, the maximum objective value is found once unit 2 is assigned to center 1 and units 4, 5, and 6 are
+    grouped around center 3.'
   citations: []
-- block_id: 9
-  content: 'Based on this hypothetical example and the empirical experiment, we propose the ATR method to solve p-regions
-    problems for a larger number of areal units. At a given p level, the global optimal or near-optimal solutions are found
-    by considering the solution set found at the p þ q level, rather than for all combinations of areal units (n) with functional
-    centers. Here, q represents the ATR step size where 1 /C20 q /C20 (p /C0 1). ATR is based on the principle that the areal
-    unit with the smallest contribution to the objective value during the delimitation of p regions is likely to have the
-    smallest impact on the objective value when delineating (p /C0 q) regions. Further, the centers that are selected at a
-    level p are likely to be selected as centers at a lower level. This suggests that unselected areal units in the p-regions
-    problem can be reasonably excluded from a set of potential centers when solving the (p /C0 q)-regions problem.
+- block_id: 10
+  content: 'Based on this hypothetical example and the empirical experiment, we propose the analytical target reduction (ATR)
+    method to solve p-regions problems for a larger number of areal units. At a given p level, the global optimal or near-optimal
+    solutions are found by considering the solution set found at the p + q level, rather than for all combinations of areal
+    units (n) with functional centers. Here, q represents the ATR step size where 1 ≤ q ≤ (p − 1). ATR is based on the principle
+    that the areal unit with the smallest contribution to the objective value during the delimitation of p regions is likely
+    to have the smallest impact on the objective value when delineating (p − q) regions. Further, the centers that are selected
+    at a level p are likely to be selected as centers at a lower level. This suggests that unselected areal units in the p-regions
+    problem can be reasonably excluded from a set of potential centers when solving the (p − q)-regions problem.
 
 
-    ATR proceeds by the following steps. First, the p ¼ (n /C0 q) case is solved. In this step, the set of potential seeds
-    is I (|I| ¼ n). The procedure can be started at an intermediate level of p, that is, with a high q value, but a relatively
+    ATR proceeds by the following steps. First, the p = (n − q) case is solved. In this step, the set of potential seeds is
+    I (|I| = n). The procedure can be started at an intermediate level of p, that is, with a high q value, but a relatively
     high q value may require significantly longer computation times. Second, unselected spatial units are eliminated from
-    the set of potential centers and are added to the set of assigned spatial units U. Third, two additional constraints,
-    (12) and (13), restrict the areal units in U to be centers and sinks for the next ATR case:
+    the set of potential centers and are added to the set of assigned spatial units U. Third, two additional constraints restrict
+    the areal units in U to be noncenters and non-sinks for the next ATR case:
 
-    yij ¼ 0 8i; j 2 U ; ð12Þ
+    yij = 0 ∀ i, j ∈ U;
 
-    wij ¼ 0 8i; j 2 U : ð13)
+    wij = 0 ∀ i, j ∈ U.
 
-
-    Fourth, the previous steps are repeated until p ¼ 2 or p < q is reached. This approach has considerable benefits because
-    the complexity of the problem decreases significantly from nCp to pC(p/C0 q) at the location level. The complexity of
-    the allocation level decreases because of the narrowed search space at a given location level, although the contiguity
-    structure among the areal units may influence the solution efficiency for a particular case. It should be noted that although
-    a lower q value requires less computational effort in finding the optimal solution, the probability of finding the global
+    Fourth, the previous steps are repeated until p = 2 or p < q is reached. This approach has considerable benefits because
+    the complexity of the problem decreases significantly from nCp to pC(p − q) at the location level. The complexity of the
+    allocation level decreases because of the narrowed search space at a given location level, although the contiguity structure
+    among the areal units may influence the solution efficiency for a particular case. It should be noted that although a
+    lower q value requires less computational effort in finding the optimal solution, the probability of finding the global
     optimum increases, along with the solution time, as the value of q increases.
 
 
-    The performance of ATR can be improved by considering another important factor from Tables 1 and 2. Note that some areal
-    units are consistently selected as functional centers regardless of the p level. In general, such units (denoted as the
-    set S) have substantial intraflows (self-sustaining spatial units) or inflows from other areal units. An areal unit with
-    dominant inflows from other units can be regarded as a functional center. Thus, the solution space can be reduced and
-    the computational efficiency improved by considering one or two areal units as centers regardless of the p level. Applying
-    this concept to ATR requires the following constraints (14) and (15):
+    The performance of ATR can be improved by considering another important factor. Note that some areal units are consistently
+    selected as functional centers regardless of the p level. In general, such units (denoted as the set S) have substantial
+    intraflows (self-sustaining spatial units) or inflows from other areal units. An areal unit with dominant inflows from
+    other units can be regarded as a functional center. Thus, the solution space can be reduced and the computational efficiency
+    improved by considering one or two areal units as centers regardless of the p level. Applying this concept to ATR requires
+    the following constraints:
 
-    yii ¼ 1 8 i 2 S; ð14Þ
+    yii = 1 ∀ i ∈ S;
 
-    wii ¼ 1 8 i 2 S: ð15)
-
-
-    Finally, note that the exception that is observed at p ¼ 15 in Table 1 may occur when ATR is applied with q ¼ 1. This
-    exception occurs under three conditions: (1) the largest outflows of an areal unit are to a center that is not adjacent
-    to the areal unit (which is defined as the first law of geography), (2) no unit flow route is ensured from the areal unit
-    to the center, and (3) areal units that similarly impact the objective value are distributed around the center. This problem
-    can be resolved using a higher q value.
+    wii = 1 ∀ i ∈ S.
 
 
-    Table 3 demonstrates how ATR models are more effective compared to the original model. An ATR model substantially reduces
-    the computational time for all cases, without losing optimality. The longest computational time is less than five minutes,
-    with most cases requiring only 1 percent of the solution time of the original model. In addition, the ATR model shows
-    a 99 percent reduction in the number of iterations relative to the original model. Not surprisingly, these results are
-    due to significant reductions in complexity at each location level, that is, the ATR model selects p /C0 1 functional
-    centers from p predetermined centers. Among the twenty-two cases, the solution at p ¼ 14 is the only case in which a solution
-    set is not covered by a set at the next higher level, p ¼ 15 (q ¼ 1). Thus, the remaining twenty-one cases (95.5 percent)
-    are globally optimal solutions. If a more conservative approach is required, then a higher q value can be used and computational
-    times remain reasonable. The third column of Table 3 (an ATR model with q ¼ 2) shows that all solution sets are globally
-    optimal and that the longest computational time is only 16.9 minutes, which is only 1.6 percent of the computational time
-    for the original model. In addition, the ATR model reduces the number of iterations required by the original model by
-    72.9 percent. These results demonstrate that ATR is a promising approach for a large size problem when optimal solutions
-    are desired. This approach is particular applicable to regionalization problems involving spatial interactions such as
-    migration and commuting with a short-distance tendency (Ravenstein 1885; Tobler 1987) or interactions derived from the
-    central place theory (Christaller 1966).'
+    Finally, note that an exception may occur when ATR is applied with q = 1. This exception occurs under three conditions:
+    (1) the largest outflows of an areal unit are to a center that is not adjacent to the areal unit (which is defined as
+    the first law of geography), (2) no unit flow route is ensured from the areal unit to the center, and (3) areal units
+    that similarly impact the objective value are distributed around the center. This problem can be resolved using a higher
+    q value.
+
+
+    The ATR model substantially reduces the computational time for all cases, without losing optimality. The longest computational
+    time is less than five minutes in tested cases, with most cases requiring only 1 percent of the solution time of the original
+    model. In addition, the ATR model shows a 99 percent reduction in the number of iterations relative to the original model.
+    These results are due to significant reductions in complexity at each location level, that is, the ATR model selects p
+    − 1 functional centers from p predetermined centers. If a more conservative approach is required, then a higher q value
+    can be used and computational times remain reasonable. ATR is a promising approach for large-size problems when optimal
+    solutions are desired. This approach is particularly applicable to regionalization problems involving spatial interactions
+    such as migration and commuting with a short-distance tendency (Ravenstein 1885; Tobler 1987) or interactions derived
+    from the central place theory (Christaller 1966).'
   citations:
   - marker: (Ravenstein 1885; Tobler 1987)
-    intent_label: Domain Overview
-    topic_label: Other Intent
+    intent_label: Prospective Application
+    topic_label: Flow-based network connectivity formulations
   - marker: (Christaller 1966)
-    intent_label: Domain Overview
-    topic_label: Other Intent
-- block_id: 10
+    intent_label: Prospective Application
+    topic_label: Compactness-driven location–allocation approaches
+- block_id: 11
   content: 'Here, we test the PFRP model by incorporating ATR for a large data set, namely forty-six counties in South Carolina
     using journey-to-work data from the 2000 US Census. As with the previous p-regions models, the MIP version of the PFRP
     is limited to a set of approximately twenty-five areal units for solving the problem with optimality. Thus, we apply ATR
-    to assess its impacts on the solution capability of the original PFRP. To predetermine the initial seeds, Figure 8 provides
-    the spatial pattern of interactions among the forty-six counties in terms of intraflows and inflows, which are used as
-    a reference when adding constraints (14) and (15). Two counties (Greenville and Richard) show dominant intraflows (Figure
-    8a) as well as inflows. In contrast, there are several counties in the southwestern and northern areas that show minimal
-    intraflows and/or inflows (Figure 8b). Intuitively, these small counties are clearly not likely to be functional centers,
-    whereas the two counties with dominant intraflows are.
+    to assess its impacts on the solution capability of the original PFRP. To predetermine the initial seeds, the spatial
+    pattern of interactions among the forty-six counties in terms of intraflows and inflows is used as a reference when adding
+    the constraints that fix certain units as centers. Two counties (Greenville and Richland) show dominant intraflows as
+    well as inflows. In contrast, there are several counties in the southwestern and northern areas that show minimal intraflows
+    and/or inflows. Intuitively, these small counties are clearly not likely to be functional centers, whereas the two counties
+    with dominant intraflows are.
 
 
-    Table 4 shows the computational results obtained for the PFRP by applying ATR with q ¼ 1 sequentially from p ¼ 44 to p
-    ¼ 2. Because the optimal functional centers are identified at each p, those units that are not selected as functional
-    centers at the p /C0 1 level are excluded using constraints (11) and (12). As a result, optimal solutions for thirty-six
-    cases (84 percent) are derived for p = 9 to p = 44, for which the computational time ranges from several seconds to a
-    few hours. Note that seven cases are terminated due to memory problems, with a gap ranging from 3.78 percent to 41.7 percent.
-    However, despite the gap, the objective values are global optima, which are verified through enumerations for p ¼ 2 –
-    8. Note also that most of the excluded spatial units are counties with minimal intraflows or inflows from other counties,
-    whereas the top ten counties (10, 34, 4, 22, 46, 2, 24, 41, 25, and 1) satisfying these criteria remain in the set of
-    potential centers until the sequential process reaches p ¼ 9.
+    Applying ATR with q = 1 sequentially from p = 44 to p = 2, optimal solutions for thirty-six cases (84 percent) are derived
+    for p = 9 to p = 44, for which the computational time ranges from several seconds to a few hours. Some cases terminated
+    due to memory problems, with a gap ranging from 3.78 percent to 41.7 percent. However, despite the gap, the objective
+    values are global optima, which were verified through enumeration-based results for p = 2–8. Most of the excluded spatial
+    units are counties with minimal intraflows or inflows from other counties, whereas the top ten counties satisfying these
+    criteria remain in the set of potential centers until the sequential process reaches p = 9.
 
 
-    Figure 9 demonstrates that ATR is appropriate, not only for the PFRP but also for other districting model variants. As
-    expected, at p ¼ 3, South Carolina is simply districted with three regions centered at Greenville, Richard, and Charleston
-    counties, which have the three largest populations in South Carolina. At p ¼ 4, Horry county, which ranks fourth in terms
-    of intraflows, is added as a functional center by annexing some neighboring counties from regions covered by Richland
-    and Charleston. At p ¼ 5 and 6, Spartanburg and Beaufort counties are added as regional centers. It is noteworthy that
-    these three counties show dominant intraflows but small inflows and are grouped with only a few neighboring counties.
-    This finding may indicate that these counties are more self-sustaining regions than regions with functional centers in
-    Greenville, Richard, and Charleston counties. The regional delimitation of South Carolina can be explained using a combination
-    of central location theory and labor-shed regions. Not surprisingly, Richland County, which includes Columbia, the capital
-    of South Carolina, is a major functional center for administrative services. The most populous counties, Greenville and
-    Charleston, have experienced a rapid population growth in conjunction with a corresponding increase in job opportunities.
+    The ATR approach is appropriate, not only for the PFRP but also for other districting model variants. At p = 3, South
+    Carolina is districted with three regions centered at Greenville, Richland, and Charleston counties, which have the three
+    largest populations in South Carolina. At p = 4, Horry county, which ranks fourth in terms of intraflows, is added as
+    a functional center by annexing some neighboring counties from regions covered by Richland and Charleston. At p = 5 and
+    6, Spartanburg and Beaufort counties are added as regional centers. These three counties show dominant intraflows but
+    small inflows and are grouped with only a few neighboring counties, indicating that these counties are more self-sustaining
+    regions than regions with functional centers in Greenville, Richland, and Charleston counties. The regional delimitation
+    of South Carolina can be explained using a combination of central location theory and labor-shed regions. Richland County,
+    which includes Columbia, the capital of South Carolina, is a major functional center for administrative services. The
+    most populous counties, Greenville and Charleston, have experienced rapid population growth in conjunction with a corresponding
+    increase in job opportunities.
 
 
     The most appropriate level of p for regionalization can be identified from the variation of the objective function values
-    with p. In Figure 10, the most significant increment in the objective function is clearly observed as p changes from 3
-    to 4, indicating that the optimal number of regions is three. If more regions are considered, then five regions are reasonable
-    because of an alternative natural break found in the variation in the objective function values from p ¼ 5 to p ¼ 6. In
-    terms of an urban hierarchy, the first-tier consists of three centers (Greenville, Richard, and Charleston counties),
-    and the second-tier comprises Horry and Spartanburg counties as subfunctional centers.'
+    with p. The most significant increment in the objective function is clearly observed as p changes from 3 to 4, indicating
+    that the optimal number of regions is three. If more regions are considered, then five regions are reasonable because
+    of an alternative natural break found in the variation in the objective function values from p = 5 to p = 6. In terms
+    of an urban hierarchy, the first-tier consists of three centers (Greenville, Richland, and Charleston counties), and the
+    second-tier comprises Horry and Spartanburg counties as subfunctional centers.'
   citations: []
-- block_id: 11
+- block_id: 12
   content: 'This article considers a flow-based regionalization problem (PFRP) in terms of an MIP formulation that determines
     p functional centers and aggregates n areal units into p contiguous regions based on spatial interactions. This PFRP model
     is based on classical location theory, which assumes that a region consists of functional centers that are often referred
     to as central places, urban centers, or CBDs, depending on geographic scales, surrounded by a hinterland that is linked
     through spatial interaction with the centers. Spatial interactions, including inflows, outflows, and intraflows, are key
     to transforming areal units into p-functional regions, where the pattern of spatial interactions may represent an area
-    of commuting or similar economic flows. In our results, the PFRP only groups commuting flows among regions with a set
-    of functional centers. However, note the empirical observation that the functional regions formed by a pattern of spatial
-    interactions among regions, such as commuting flows, are also governed by other political or economic activities.
+    of commuting or similar economic flows. The PFRP only groups commuting flows among regions with a set of functional centers.
+    However, note the empirical observation that the functional regions formed by a pattern of spatial interactions among
+    regions, such as commuting flows, are also governed by other political or economic activities.
 
 
     There are three main differences between the PFRP presented here and other p-regions models. First, the PFRP fundamentally
@@ -827,14 +777,14 @@ blocks:
     of areal units, which is still the main issue in using a mathematical programming approach to solve regionalization problems.
     In this regard, future research should be two-pronged. First, the suitability and effectiveness of ATR should be evaluated
     for use with complex data sets, followed by the development of heuristic techniques for practical applications (Duque,
-    Romas, and Suriñach 2007).'
+    Romas, and Surinach 2007).'
   citations:
-  - marker: (2011)
-    intent_label: Research Gap
+  - marker: Duque, Church, and Middleton (2011)
+    intent_label: Prior Methods
     topic_label: Exact optimization models
-  - marker: (2009)
-    intent_label: Research Gap
+  - marker: Shirabe (2009)
+    intent_label: Prior Methods
     topic_label: Exact optimization models
-  - marker: (Duque, Romas, and Suriñach 2007)
+  - marker: (Duque, Romas, and Surinach 2007)
     intent_label: Prior Methods
     topic_label: Heuristic models with explicit contiguity
