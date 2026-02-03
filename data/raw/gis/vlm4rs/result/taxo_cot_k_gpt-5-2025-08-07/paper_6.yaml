@@ -5,7 +5,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Language Models and Tokenization"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Instruction-Following Conversational Sets"
 - "unique_context_marker": "[5–7]"
   "block_ids":
   - 1
@@ -24,36 +28,36 @@
   - - "Prior Methods"
     - "Prior Methods"
     - "Prior Methods"
-    - "Domain Overview"
+    - "Prior Methods"
     - "Prior Methods"
   "topic_labels":
-  - []
+  - - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Explanations and Consistency Checks"
-    - "Explanations and Consistency Checks"
-    - "Explanations and Consistency Checks"
-    - "Explanations and Consistency Checks"
-    - "Explanations and Consistency Checks"
+  - - "Bias Analysis and Error Taxonomies"
+    - "Reliability, Reasoning, and Trustworthiness"
+    - "Bias Analysis and Error Taxonomies"
+    - "Reliability, Reasoning, and Trustworthiness"
+    - "Bias Analysis and Error Taxonomies"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Research Gap"
+  - - "Prior Methods"
     - "Research Gap"
     - "Prior Methods"
     - "Research Gap"
-    - "Research Gap"
+    - "Prior Methods"
   "topic_labels":
-  - - "Prompt and Adapter Tuning"
-    - "Prompt and Adapter Tuning"
-    - "Instruction Tuning and Reinforcement Alignment"
-    - "Prompt and Adapter Tuning"
-    - "Prompt and Adapter Tuning"
+  - []
 - "unique_context_marker": "[11, 12]"
   "block_ids":
   - 1
@@ -67,11 +71,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Image-Level Understanding Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Image-Level Understanding Tasks"
+  - []
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
@@ -97,13 +97,17 @@
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Research Gap"
   "topic_labels":
-  - - "Image-Level Understanding Tasks"
-    - "Instruction Tuning and Reinforcement Alignment"
-    - "Explanations and Consistency Checks"
-    - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
+  - - "Other Topics"
+    - "Reliability, Reasoning, and Trustworthiness"
+    - "Reliability, Reasoning, and Trustworthiness"
+    - "Reliability, Reasoning, and Trustworthiness"
+    - "Logical Consistency Reinforcement"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 3
@@ -129,11 +133,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - - "Algorithm/Principle Adoption"
-    - "Algorithm/Principle Adoption"
-    - "Algorithm/Principle Adoption"
-    - "Algorithm/Principle Adoption"
-    - "Algorithm/Principle Adoption"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[22]"
@@ -142,4 +142,8 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
+    - "Language Models and Tokenization"

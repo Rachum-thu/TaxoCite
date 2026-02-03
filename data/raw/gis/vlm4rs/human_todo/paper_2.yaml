@@ -54,46 +54,46 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Prospective Application
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Other Topics
   - marker: '[2]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Other Topics
   - marker: '[3]'
     intent_label: Research Gap
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Robustness, Domain Shift, and Generalization
   - marker: '[4]'
     intent_label: Research Gap
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Robustness, Domain Shift, and Generalization
   - marker: '[5]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Representation Learning Backbones for RS
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[7]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[8]'
     intent_label: Research Gap
-    topic_label: Dataset Construction and Annotation
+    topic_label: Zero-/Few-Shot and Prompt Sensitivity
   - marker: '[9]'
     intent_label: Research Gap
-    topic_label: Dataset Construction and Annotation
+    topic_label: Zero-/Few-Shot and Prompt Sensitivity
   - marker: '[10]'
     intent_label: Research Gap
-    topic_label: Dataset Construction and Annotation
+    topic_label: Zero-/Few-Shot and Prompt Sensitivity
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Contrastive Vision-Language Encoders
+    topic_label: Contrastive Alignment Objectives
   - marker: '[12]'
     intent_label: Prior Methods
-    topic_label: Contrastive Vision-Language Encoders
+    topic_label: Attention-Based Co-Encoding
   - marker: '[13]'
     intent_label: Prior Methods
-    topic_label: Contrastive Vision-Language Encoders
+    topic_label: Attention-Based Co-Encoding
   - marker: '[14]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
 - block_id: 2
   content: In this section, we will first introduce the utilized vision-language multimodal model CLIP, and then explain the
     prompt tuning-based transfer learning method.
@@ -155,13 +155,13 @@ blocks:
   citations:
   - marker: '[14]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[15]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[16]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
 - block_id: 4
   content: 'In this section, we will introduce the employed prompt tuning method called MaPle. Compared to other prompt tuning
     approaches, MaPle incorporates learnable prompts in both modal branches, allowing both modalities to adapt to downstream
@@ -226,13 +226,13 @@ blocks:
   citations:
   - marker: '[16]'
     intent_label: Result Comparison
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[17]'
     intent_label: Benchmark Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Image-Level Understanding
   - marker: '[18]'
     intent_label: Benchmark Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Image-Level Understanding
 - block_id: 6
   content: 'AID Dataset: It is a large-scale dataset used for aerial image classification in remote sensing scenarios. It
     consists of 10,000 sample images of 30 different types of aerial scenes. Each category contains 200 to 400 samples. The

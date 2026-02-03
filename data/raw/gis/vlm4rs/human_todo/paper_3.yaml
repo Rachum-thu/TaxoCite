@@ -52,55 +52,55 @@ blocks:
   citations:
   - marker: '[1, 2, 3, 4, 5, 6, 7, 8]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Other Topics
   - marker: '[3, 4, 9, 10]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Other Topics
   - marker: '[3, 11]'
     intent_label: Prior Methods
-    topic_label: Task Scoping and Formulations
+    topic_label: Other Topics
   - marker: '[12, 13, 14]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Other Topics
   - marker: '[12, 15]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Other Topics
   - marker: '[1]'
     intent_label: Model/Architecture Adoption
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Other Topics
   - marker: '[16]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Other Topics
   - marker: '[17]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Other Topics
   - marker: '[18]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Other Topics
   - marker: '[19]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Other Topics
   - marker: '[20]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Other Topics
   - marker: '[21, 22, 23, 24, 25, 26, 27, 28, 29, 30]'
     intent_label: Prospective Application
-    topic_label: Task Scoping and Formulations
+    topic_label: Other Topics
   - marker: '[1, 2, 3, 4, 5, 6]'
     intent_label: Research Gap
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Other Topics
   - marker: '[31]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Other Topics
   - marker: '[32, 33]'
     intent_label: Domain Overview
-    topic_label: Generalization and Data-Shift Assessment
+    topic_label: Other Topics
   - marker: '[34, 35]'
     intent_label: Research Gap
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[36]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
 - block_id: 2
   content: 'ML for SITS Deep learning has been used for many Satellite Image Time Series (SITS) supervised-learning tasks
     such as crop-type mapping [29, 28, 37, 38], yield prediction [39, 40], understanding the economy [41, 42, 43, 44], precipitation
@@ -130,53 +130,53 @@ blocks:
     architecture, and propose a novel self-supervised framework for satellite data.'
   citations:
   - marker: '[1]'
-    intent_label: Prior Methods
-    topic_label: RS-Specific Self-Supervised Pretraining
+    intent_label: Model/Architecture Adoption
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[29, 28, 37, 38]'
     intent_label: Domain Overview
-    topic_label: Multispectral and Temporal Modeling
+    topic_label: Temporal and Multimodal Variants
   - marker: '[39, 40]'
     intent_label: Domain Overview
-    topic_label: Multispectral and Temporal Modeling
+    topic_label: Temporal and Multimodal Variants
   - marker: '[41, 42, 43, 44]'
     intent_label: Domain Overview
-    topic_label: Multispectral and Temporal Modeling
+    topic_label: Temporal and Multimodal Variants
   - marker: '[45]'
     intent_label: Domain Overview
-    topic_label: Multispectral and Temporal Modeling
+    topic_label: Temporal and Multimodal Variants
   - marker: '[46, 47, 48, 27]'
     intent_label: Domain Overview
-    topic_label: Multispectral and Temporal Modeling
+    topic_label: Temporal and Multimodal Variants
   - marker: '[2, 3, 4, 5, 6]'
-    intent_label: Prior Methods
-    topic_label: RS-Specific Self-Supervised Pretraining
+    intent_label: Domain Overview
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[34]'
     intent_label: Research Gap
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[35]'
     intent_label: Research Gap
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[49]'
     intent_label: Prior Methods
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[50, 51, 52]'
     intent_label: Prior Methods
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[52]'
     intent_label: Prior Methods
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[53]'
     intent_label: Research Gap
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[54]'
     intent_label: Research Gap
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Multispectral and Temporal Encodings
   - marker: '[55]'
     intent_label: Research Gap
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Other Topics
   - marker: '[56]'
     intent_label: Research Gap
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Multispectral and Temporal Encodings
 - block_id: 3
   content: ''
   citations: []
@@ -194,11 +194,11 @@ blocks:
     on the masked patches [1].'
   citations:
   - marker: '[1]'
-    intent_label: Model/Architecture Adoption
-    topic_label: RS-Specific Self-Supervised Pretraining
+    intent_label: Prior Methods
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[36]'
-    intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    intent_label: Prior Methods
+    topic_label: Vision Encoder Choices and Scales
 - block_id: 5
   content: 'Positional encoding allows transformers to make their learned representations position-aware. In MAE [1] and in
     many transformers [57, 58], the positional encoding is:
@@ -212,10 +212,10 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Prior Methods
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Multispectral and Temporal Encodings
   - marker: '[57, 58]'
     intent_label: Prior Methods
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Multispectral and Temporal Encodings
 - block_id: 6
   content: In this section, we describe SatMAE with temporal (4.1) and multi-spectral (4.2) satellite images.
   citations: []
@@ -292,16 +292,16 @@ blocks:
   citations:
   - marker: '[17]'
     intent_label: Domain Overview
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Multiresolution and Patch Strategies
   - marker: '[34, 35]'
-    intent_label: Prior Methods
-    topic_label: Spectral/Temporal Encoding and Masking
+    intent_label: Domain Overview
+    topic_label: Multispectral and Temporal Encodings
   - marker: '[54]'
     intent_label: Prior Methods
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Multispectral and Temporal Encodings
   - marker: '[54, 59, 60]'
     intent_label: Prior Methods
-    topic_label: null
+    topic_label: Multiresolution and Patch Strategies
 - block_id: 8
   content: 'While MAE does operate on images I ∈ R^{C×H×W}, usually C = 3 for RGB images. Satellite data, on the other hand,
     can often have multiple spectral bands. For example, Sentinel-2 imagery has C = 13 bands of 10m, 20m and 60m spatial resolution,
@@ -366,7 +366,7 @@ blocks:
   citations:
   - marker: '[17]'
     intent_label: Resource Utilization
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Temporal and Multimodal Variants
 - block_id: 11
   content: In this section, we perform experiments on fMoW single image classification task. Following [34], we report both
     the performance of linear probing and finetuning setting. Table 1 shows that compared to the previous state-of-the-art
@@ -378,16 +378,16 @@ blocks:
   citations:
   - marker: '[36]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[34]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[34, 3]'
     intent_label: Result Comparison
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[61]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
 - block_id: 12
   content: 'Main experiments We perform image-sequence classification on the temporal version of fMoW RGB to evaluate our
     temporal SatMAE. The temporal fMoW consists of co-located image sequences with a length of 3. As seen in table 2, SatMAE
@@ -405,14 +405,14 @@ blocks:
     to [34] is beneficial. Further ablations on mask ratio p_m and patch size P are in appendix A.4.'
   citations:
   - marker: '[34]'
-    intent_label: Setting/Protocal Adoption
-    topic_label: Task-Specific Metrics and Protocols
-  - marker: '[54]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Ablation and Component Attribution
+  - marker: '[54]'
+    intent_label: Prior Methods
+    topic_label: Multispectral and Temporal Encodings
   - marker: '[48]'
     intent_label: Result Comparison
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Multispectral and Temporal Encodings
 - block_id: 13
   content: 'In this section, we pre-train and finetune SatMAE on the image classification task of the fMoW-Sentinel dataset.
     We pre-train SatMAE+Stack 4.2 and investigate SatMAE+Group+CM 4.1.2 and SatMAE+Group+IM 4.1.2, (see 4.2, 4.2). The full
@@ -448,17 +448,17 @@ blocks:
     of mask ratio p_m and patch size P (see A.5), and the usefulness of the 13 Sentinel-2 spectral bands (see A.6).'
   citations:
   - marker: '[1]'
-    intent_label: Hyperparameter Utilization
-    topic_label: Adaptation and Tuning Regimes
+    intent_label: Setting/Protocal Adoption
+    topic_label: Training and Adaptation Regimes
   - marker: '[61]'
     intent_label: Result Comparison
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[62, 3]'
     intent_label: Result Comparison
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[2]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Multispectral and Temporal Encodings
 - block_id: 14
   content: 'Now, we finetune our pre-trained SatMAE on downstream tasks on remote-sensing datasets, including land cover classiﬁcation
     (5.5), multi-label classiﬁcation (5.5), and building segmentation (5.5). Finetuning details are included in A.7, A.8,
@@ -493,22 +493,22 @@ blocks:
   citations:
   - marker: '[18]'
     intent_label: Benchmark Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Image-Level Understanding
   - marker: '[20]'
     intent_label: Benchmark Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[34]'
     intent_label: Result Comparison
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[35]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Train/Val/Test Splits and Domain-Shift Protocols
   - marker: '[63]'
     intent_label: Benchmark Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Image-Level Understanding
   - marker: '[35, 64]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Train/Val/Test Splits and Domain-Shift Protocols
 - block_id: 15
   content: We show the visualization of the reconstruction quality of two different SatMAE masking strategies. SatMAE+IM successfully
     reconstructs all the airplanes even though their number varies across time. In contrast, the SatMAE with Consistent Masking
@@ -531,7 +531,7 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Model/Architecture Adoption
-    topic_label: RS-Specific Self-Supervised Pretraining
+    topic_label: Self-Supervised Pretraining on RS Data
 - block_id: 17
   content: 'Accurate measurements of economic, social, and environmental phenomena are key inputs into policy decisions made
     around the world, but the sparsity of labelled data on many outcomes means that such decisions are often not guided by

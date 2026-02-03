@@ -5,14 +5,14 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - null
+  - "Instruction-Following Conversational Sets"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 1
@@ -23,23 +23,23 @@
   - "Research Gap"
   - "Result Comparison"
   "topic_labels":
-  - null
-  - "Adaptation and Tuning Regimes"
-  - null
+  - "Other Topics"
+  - "Other Topics"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[38, 40]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Answer Space Design and Class Taxonomy"
 - "unique_context_marker": "[14, 19, 41]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - null
   "topic_labels":
-  - "Instruction Tuning and Reinforcement Alignment"
+  - null
 - "unique_context_marker": "[7]"
   "block_ids":
   - 1
@@ -50,7 +50,7 @@
   - 11
   - 12
   "intent_labels":
-  - "Resource Utilization"
+  - "Model/Architecture Adoption"
   - "Prior Methods"
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
@@ -58,12 +58,12 @@
   - "Model/Architecture Adoption"
   - "Metrics Utilization"
   "topic_labels":
-  - "LLM-Assisted Instruction Generation"
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
+  - "Language Models and Tokenization"
+  - "Language Models and Tokenization"
   - null
-  - "Pretraining Backbones and Modal Encoders"
-  - "LLM-Assisted Instruction Generation"
-  - "Pretraining Backbones and Modal Encoders"
+  - "Instruction-Following Conversational Sets"
+  - "Language Models and Tokenization"
   - null
 - "unique_context_marker": "[20]"
   "block_ids":
@@ -75,9 +75,9 @@
   - "Resource Utilization"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
-  - "Dataset Construction and Annotation"
-  - "Task-Specific Metrics and Protocols"
+  - "Instruction-Following Conversational Sets"
+  - null
+  - "Answer Space Design and Class Taxonomy"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 1
@@ -86,8 +86,8 @@
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
-  - "Dataset Construction and Annotation"
+  - "Image-Level Understanding"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 1
@@ -98,16 +98,16 @@
   - "Resource Utilization"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Rule-Driven QA and Grounding Labels"
-  - "Dataset Construction and Annotation"
-  - "Region-Level Interaction Tasks"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Connector and Prompt Mechanisms"
+  - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
@@ -120,24 +120,24 @@
   - "Algorithm/Principle Adoption"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Prompt and Adapter Tuning"
-  - "Prompt and Adapter Tuning"
-  - "Prompt and Adapter Tuning"
-  - "Prompt and Adapter Tuning"
+  - "Parameter-Efficient Adaptation"
+  - "Parameter-Efficient Adaptation"
+  - null
+  - "Parameter-Efficient Adaptation"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[18, 41]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Connector and Prompt Mechanisms"
+  - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 2
@@ -150,73 +150,73 @@
   - "Model/Architecture Adoption"
   - "Result Comparison"
   "topic_labels":
-  - "Connector and Prompt Mechanisms"
-  - "Connector and Prompt Mechanisms"
-  - "Connector and Prompt Mechanisms"
-  - "Generalization and Data-Shift Assessment"
+  - "Vision-Language Connectors to LLMs"
+  - "Vision-Language Connectors to LLMs"
+  - null
+  - "Zero-/Few-Shot and Prompt Sensitivity"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[41]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Adaptation and Tuning Regimes"
+  - "Temporal and Multimodal Variants"
 - "unique_context_marker": "[14, 29]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Adaptation and Tuning Regimes"
+  - "Other Topics"
 - "unique_context_marker": "[42]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[3, 38]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 7
@@ -225,8 +225,8 @@
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive Vision-Language Encoders"
-  - "Contrastive Vision-Language Encoders"
+  - "Vision Encoder Choices and Scales"
+  - null
 - "unique_context_marker": "[10]"
   "block_ids":
   - 7
@@ -240,105 +240,105 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - null
 - "unique_context_marker": "[15]"
   "block_ids":
   - 8
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - null
 - "unique_context_marker": "[34]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[6]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[27]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[25]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - null
 - "unique_context_marker": "[31]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[39]"
   "block_ids":
   - 9
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Rule-Driven QA and Grounding Labels"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[36]"
   "block_ids":
   - 9
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - null
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[37]"
   "block_ids":
   - 9
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - null
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 11
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive Vision-Language Encoders"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 11
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - null
+  - "Training and Adaptation Regimes"
 - "unique_context_marker": "[33]"
   "block_ids":
   - 12
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Generalization and Data-Shift Assessment"
+  - null
 - "unique_context_marker": "[35]"
   "block_ids":
   - 12
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Generalization and Data-Shift Assessment"
+  - null
 - "unique_context_marker": "[4]"
   "block_ids":
   - 12
@@ -348,4 +348,4 @@
   - "Result Comparison"
   "topic_labels":
   - null
-  - "Region-Level Interaction Tasks"
+  - null

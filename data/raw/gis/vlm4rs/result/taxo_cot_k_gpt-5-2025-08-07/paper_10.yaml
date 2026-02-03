@@ -3,78 +3,66 @@
   "block_ids":
   - 0
   "intent_labels":
-  - []
-  "topic_labels":
-  - - "Region-Level Interaction Tasks"
-    - "Dataset Construction and Annotation"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Dataset Construction and Annotation"
-- "unique_context_marker": "[38]"
-  "block_ids":
-  - 0
-  - 1
-  - 5
-  "intent_labels":
-  - []
-  - []
-  - - "Benchmark Utilization"
-    - "Resource Utilization"
-    - "Resource Utilization"
-    - "Benchmark Utilization"
-    - "Resource Utilization"
-  "topic_labels":
-  - - "Region-Level Interaction Tasks"
-    - "Dataset Construction and Annotation"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Dataset Construction and Annotation"
-  - - "Attention-Based Fusion Blocks"
-    - "Attention-Based Fusion Blocks"
-    - "Attention-Based Fusion Blocks"
-    - "Attention-Based Fusion Blocks"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-  - []
-- "unique_context_marker": "[12]"
-  "block_ids":
-  - 0
-  - 5
-  "intent_labels":
-  - []
   - - "Resource Utilization"
     - "Resource Utilization"
     - "Resource Utilization"
     - "Resource Utilization"
     - "Resource Utilization"
   "topic_labels":
-  - - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
+  - []
+- "unique_context_marker": "[38]"
+  "block_ids":
+  - 0
+  - 1
+  - 5
+  "intent_labels":
+  - - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+  - []
+  - []
+  "topic_labels":
+  - []
+  - []
+  - []
+- "unique_context_marker": "[12]"
+  "block_ids":
+  - 0
+  - 5
+  "intent_labels":
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+  - []
+  "topic_labels":
+  - []
   - []
 - "unique_context_marker": "[26]"
   "block_ids":
   - 0
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
-  - - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
+  - []
 - "unique_context_marker": "[35]"
   "block_ids":
   - 0
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
-  - - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
+  - []
 - "unique_context_marker": "[7]"
   "block_ids":
   - 0
@@ -83,27 +71,27 @@
   - 7
   - 8
   "intent_labels":
+  - - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
   - []
   - []
   - []
-  - - "Result Comparison"
-    - "Result Comparison"
-    - "Result Comparison"
-    - "Result Comparison"
-    - "Result Comparison"
   - []
   "topic_labels":
-  - - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Region-Level Interaction Tasks"
-    - "Dataset Construction and Annotation"
-  - - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
   - []
+  - - "Visual Grounding Corpora and Geometry Labels"
+    - "Visual Grounding Corpora and Geometry Labels"
+    - "Visual Grounding Corpora and Geometry Labels"
+    - "Visual Grounding Corpora and Geometry Labels"
+    - "Visual Grounding Corpora and Geometry Labels"
+  - - "Instruction-Following Conversational Sets"
+    - "Instruction-Following Conversational Sets"
+    - "Train/Val/Test Splits and Domain-Shift Protocols"
+    - "Instruction-Following Conversational Sets"
+    - "Instruction-Following Conversational Sets"
   - []
   - []
 - "unique_context_marker": "[37]"
@@ -118,118 +106,134 @@
     - "Prior Methods"
   - []
   "topic_labels":
-  - - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
+  - []
   - []
 - "unique_context_marker": "[30]"
   "block_ids":
   - 0
   "intent_labels":
-  - []
+  - - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
   "topic_labels":
-  - - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
+  - []
 - "unique_context_marker": "[17]"
   "block_ids":
   - 0
   - 1
   - 9
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   - []
   - []
   "topic_labels":
-  - - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-  - - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Attention-Based Fusion Blocks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
   - []
+  - []
+  - - "Visual Grounding Corpora and Geometry Labels"
+    - "Visual Grounding Corpora and Geometry Labels"
+    - "Visual Grounding Corpora and Geometry Labels"
+    - "Visual Grounding Corpora and Geometry Labels"
+    - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 0
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Research Gap"
+    - "Research Gap"
+    - "Prior Methods"
+    - "Research Gap"
   "topic_labels":
-  - - "Training Signals and Objectives"
-    - "Adaptation and Tuning Regimes"
-    - "Adaptation and Tuning Regimes"
-    - "Training Signals and Objectives"
-    - "Adaptation and Tuning Regimes"
+  - - "Hybrid Supervision and Consistency Losses"
+    - "Hybrid Supervision and Consistency Losses"
+    - "Training and Adaptation Regimes"
+    - "Hybrid Supervision and Consistency Losses"
+    - "Hybrid Supervision and Consistency Losses"
 - "unique_context_marker": "[1]"
   "block_ids":
   - 0
   - 7
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   - []
   "topic_labels":
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - - "Vision-Language Connectors to LLMs"
+    - "Vision-Language Connectors to LLMs"
+    - "Vision-Language Connectors to LLMs"
+    - "Instruction Tuning and SFT"
+    - "Vision-Language Connectors to LLMs"
   - []
 - "unique_context_marker": "[2]"
   "block_ids":
   - 0
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - - "Vision-Language Connectors to LLMs"
+    - "Vision-Language Connectors to LLMs"
+    - "Vision-Language Connectors to LLMs"
+    - "Instruction Tuning and SFT"
+    - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 0
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - - "Vision-Language Connectors to LLMs"
+    - "Vision-Language Connectors to LLMs"
+    - "Vision-Language Connectors to LLMs"
+    - "Instruction Tuning and SFT"
+    - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 0
   - 6
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   - []
   "topic_labels":
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - - "Vision-Language Connectors to LLMs"
+    - "Vision-Language Connectors to LLMs"
+    - "Vision-Language Connectors to LLMs"
+    - "Instruction Tuning and SFT"
+    - "Vision-Language Connectors to LLMs"
   - []
 - "unique_context_marker": "[4]"
   "block_ids":
   - 0
   - 1
   "intent_labels":
-  - []
+  - - "Research Gap"
+    - "Research Gap"
+    - "Research Gap"
+    - "Research Gap"
+    - "Research Gap"
   - []
   "topic_labels":
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - []
   - []
 - "unique_context_marker": "[14]"
   "block_ids":
@@ -237,15 +241,19 @@
   - 1
   - 5
   "intent_labels":
-  - []
-  - []
+  - - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   - []
   "topic_labels":
-  - - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
+  - []
   - []
   - []
 - "unique_context_marker": "[15]"
@@ -296,11 +304,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Attention-Based Fusion Blocks"
-    - "Attention-Based Fusion Blocks"
-    - "Attention-Based Fusion Blocks"
-    - "Attention-Based Fusion Blocks"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - []
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
@@ -309,8 +313,8 @@
   - - "Prior Methods"
     - "Prior Methods"
     - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+    - "Research Gap"
+    - "Research Gap"
   - []
   "topic_labels":
   - []
@@ -354,14 +358,22 @@
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
 - "unique_context_marker": "[42]"
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
 - "unique_context_marker": "[21]"
@@ -380,11 +392,7 @@
   - []
   "topic_labels":
   - []
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
+  - []
 - "unique_context_marker": "[40]"
   "block_ids":
   - 1
@@ -394,29 +402,29 @@
   - []
   "topic_labels":
   - []
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
+  - []
 - "unique_context_marker": "[24]"
   "block_ids":
   - 2
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[43]"
   "block_ids":
   - 2
   "intent_labels":
   - []
   "topic_labels":
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Instruction Tuning and Reinforcement Alignment"
-    - "Pretraining Backbones and Modal Encoders"
+  - - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
 - "unique_context_marker": "[44]"
   "block_ids":
   - 3
@@ -440,11 +448,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Adaptation and Tuning Regimes"
-    - "Training Signals and Objectives"
-    - "Adaptation and Tuning Regimes"
-    - "Adaptation and Tuning Regimes"
-    - "Adaptation and Tuning Regimes"
+  - []
 - "unique_context_marker": "[12, 26, 35]"
   "block_ids":
   - 6
@@ -472,15 +476,19 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Metrics and Thresholds for Grounding"
+    - "Metrics and Thresholds for Grounding"
+    - "Metrics and Thresholds for Grounding"
+    - "Metrics and Thresholds for Grounding"
+    - "Metrics and Thresholds for Grounding"
 - "unique_context_marker": "[6]"
   "block_ids":
   - 9
   "intent_labels":
   - []
   "topic_labels":
-  - - "Connector and Prompt Mechanisms"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Connector and Prompt Mechanisms"
-    - "Connector and Prompt Mechanisms"
+  - - "Region and Point Prompting Interfaces"
+    - "Region and Point Prompting Interfaces"
+    - "Region and Point Prompting Interfaces"
+    - "Region and Point Prompting Interfaces"
+    - "Region and Point Prompting Interfaces"

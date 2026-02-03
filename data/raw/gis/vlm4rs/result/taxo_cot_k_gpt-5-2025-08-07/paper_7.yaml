@@ -5,46 +5,42 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
+  - []
 - "unique_context_marker": "[2]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Other Topics"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Other Topics"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 1
   - 5
   "intent_labels":
-  - - "Prospective Application"
-    - "Prospective Application"
-    - "Prospective Application"
-    - "Prospective Application"
-    - "Prospective Application"
-  - - "Research Gap"
-    - "Domain Overview"
-    - "Domain Overview"
+  - []
+  - - "Background"
+    - "Research Gap"
+    - "Research Gap"
     - "Domain Overview"
     - "Research Gap"
   "topic_labels":
-  - - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Task Scoping and Formulations"
+  - []
   - []
 - "unique_context_marker": "[5]"
   "block_ids":
@@ -55,28 +51,28 @@
     - "Problem Formulation"
     - "Prior Methods"
     - "Problem Formulation"
-    - "Domain Overview"
+    - "Prior Methods"
   - []
   "topic_labels":
   - []
-  - []
+  - - "Dataset Construction and Supervision Sources"
+    - "Instruction-Following Conversational Sets"
+    - "Instruction-Following Conversational Sets"
+    - "Instruction-Following Conversational Sets"
+    - "Instruction-Following Conversational Sets"
 - "unique_context_marker": "[6]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
-    - "Research Gap"
-    - "Research Gap"
-    - "Research Gap"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[7]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
+  - - "Research Gap"
+    - "Prior Methods"
     - "Prior Methods"
     - "Prior Methods"
     - "Research Gap"
@@ -90,11 +86,7 @@
   - []
   - []
   "topic_labels":
-  - - "Task Scoping and Formulations"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
+  - []
   - []
 - "unique_context_marker": "[9]"
   "block_ids":
@@ -108,18 +100,10 @@
   - 1
   - 7
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   - []
   "topic_labels":
-  - - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
+  - []
   - []
 - "unique_context_marker": "[11]"
   "block_ids":
@@ -127,62 +111,58 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Other Topics"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
+  - []
 - "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
-    - "Region-Level Interaction Tasks"
+  - - "Other Topics"
+    - "Object/Region-Level Grounding and Referring"
+    - "Object/Region-Level Grounding and Referring"
+    - "Object/Region-Level Grounding and Referring"
+    - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task Scoping and Formulations"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
+  - - "Other Topics"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
+  - []
 - "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
+  - - "Other Topics"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 1
@@ -191,11 +171,7 @@
   - []
   - []
   "topic_labels":
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
+  - []
   - []
 - "unique_context_marker": "[18]"
   "block_ids":
@@ -203,39 +179,39 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
+  - - "Other Topics"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
+  - - "Other Topics"
+    - "Object/Region-Level Grounding and Referring"
+    - "Pixel-Level and Dense Outputs"
+    - "Object/Region-Level Grounding and Referring"
+    - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
+  - - "Other Topics"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
+    - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
+  - - "Research Gap"
+    - "Prior Methods"
     - "Prior Methods"
     - "Prior Methods"
     - "Research Gap"
@@ -245,8 +221,8 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
+  - - "Research Gap"
+    - "Prior Methods"
     - "Prior Methods"
     - "Prior Methods"
     - "Research Gap"
@@ -256,8 +232,8 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
+  - - "Research Gap"
+    - "Prior Methods"
     - "Prior Methods"
     - "Prior Methods"
     - "Research Gap"
@@ -270,18 +246,10 @@
   - 12
   "intent_labels":
   - []
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   - []
   "topic_labels":
-  - - "Image-Level Understanding Tasks"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
+  - []
   - []
   - []
 - "unique_context_marker": "[25]"
@@ -297,11 +265,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Attention-Based Fusion Blocks"
-    - "Attention-Based Fusion Blocks"
+  - []
 - "unique_context_marker": "[27]"
   "block_ids":
   - 1
@@ -315,7 +279,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Cross-Sensor and Cross-Region Transfer"
+    - "Cross-Sensor and Cross-Region Transfer"
+    - "Cross-Sensor and Cross-Region Transfer"
+    - "Cross-Sensor and Cross-Region Transfer"
+    - "Cross-Sensor and Cross-Region Transfer"
 - "unique_context_marker": "[29]"
   "block_ids":
   - 1
@@ -329,14 +297,22 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Cross-Sensor and Cross-Region Transfer"
+    - "Cross-Sensor and Cross-Region Transfer"
+    - "Cross-Sensor and Cross-Region Transfer"
+    - "Cross-Sensor and Cross-Region Transfer"
+    - "Cross-Sensor and Cross-Region Transfer"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 3
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Rule-Based and OSM-Derived QA Pairs"
+    - "Rule-Based and OSM-Derived QA Pairs"
+    - "Rule-Based and OSM-Derived QA Pairs"
+    - "Rule-Based and OSM-Derived QA Pairs"
+    - "Rule-Based and OSM-Derived QA Pairs"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 7
@@ -354,17 +330,13 @@
   - - "Domain Overview"
     - "Domain Overview"
     - "Domain Overview"
-    - "Prior Methods"
-    - "Domain Overview"
+    - "Research Gap"
+    - "Research Gap"
   - []
   "topic_labels":
   - []
   - []
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Image-Level Understanding Tasks"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - []
 - "unique_context_marker": "[34]"
   "block_ids":
   - 7
@@ -392,11 +364,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Training Signals and Objectives"
-    - "Contrastive Alignment and Cross-Entropy"
-    - "Training Signals and Objectives"
-    - "Training Signals and Objectives"
-    - "Training Signals and Objectives"
+  - []
 - "unique_context_marker": "[38]"
   "block_ids":
   - 11
@@ -404,15 +372,19 @@
   - - "Domain Overview"
     - "Domain Overview"
     - "Domain Overview"
-    - "Prior Methods"
-    - "Domain Overview"
+    - "Research Gap"
+    - "Research Gap"
   "topic_labels":
   - []
 - "unique_context_marker": "[39]"
   "block_ids":
   - 11
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Prior Methods"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
   - []
 - "unique_context_marker": "[40]"
@@ -429,7 +401,7 @@
   - - "Domain Overview"
     - "Domain Overview"
     - "Domain Overview"
-    - "Prior Methods"
+    - "Research Gap"
     - "Domain Overview"
   "topic_labels":
   - []

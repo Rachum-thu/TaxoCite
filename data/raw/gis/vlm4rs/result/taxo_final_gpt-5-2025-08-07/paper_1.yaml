@@ -5,49 +5,49 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[2]"
   "block_ids":
   - 0
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 0
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
+  - "Other Topics"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 0
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
+  - "Other Topics"
 - "unique_context_marker": "[5]–[8]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Contrastive Alignment Objectives"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Contrastive Alignment Objectives"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 0
@@ -56,43 +56,43 @@
   - "Problem Formulation"
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
-  - "Dataset Construction and Annotation"
+  - "Image-Level Understanding"
+  - "Answer Space Design and Class Taxonomy"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 0
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive Vision-Language Encoders"
+  - "Contrastive Alignment Objectives"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 0
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive Vision-Language Encoders"
+  - "Contrastive Alignment Objectives"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 2
@@ -101,29 +101,29 @@
   - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Training Signals and Objectives"
-  - "Pretraining Backbones and Modal Encoders"
+  - "Other Topics"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
+  - "Temporal and Multimodal Variants"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Multispectral and Temporal Modeling"
+  - "Temporal and Multimodal Variants"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 3
@@ -138,25 +138,25 @@
   - "Result Comparison"
   - "Result Comparison"
   "topic_labels":
-  - "Rule-Driven QA and Grounding Labels"
-  - "Rule-Driven QA and Grounding Labels"
-  - "Task-Specific Metrics and Protocols"
-  - "Image-Level Understanding Tasks"
-  - "Generalization and Data-Shift Assessment"
+  - "Rule-Based and OSM-Derived QA Pairs"
+  - "Answer Space Design and Class Taxonomy"
+  - "Captioning and QA Scoring"
+  - "Captioning and QA Scoring"
+  - "Zero-/Few-Shot and Prompt Sensitivity"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 3
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 3
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Rule-Driven QA and Grounding Labels"
+  - "Rule-Based and OSM-Derived QA Pairs"
 - "unique_context_marker": "[23]"
   "block_ids":
   - 4
@@ -165,89 +165,89 @@
   - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
-  - "Pretraining Backbones and Modal Encoders"
+  - "Vision Encoder Choices and Scales"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[25]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Spectral/Temporal Encoding and Masking"
+  - "Multispectral and Temporal Encodings"
 - "unique_context_marker": "[27]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Multispectral and Temporal Modeling"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[29]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 6
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Other Topics"
 - "unique_context_marker": "[33]"
   "block_ids":
   - 6
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Other Topics"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 11
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Task-Specific Metrics and Protocols"
+  - "Other Topics"
 - "unique_context_marker": "[35]"
   "block_ids":
   - 11
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Training Signals and Objectives"
+  - "Other Topics"
 - "unique_context_marker": "[36]"
   "block_ids":
   - 16
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Explanations and Consistency Checks"
+  - "Explainability and Attention Visualization"

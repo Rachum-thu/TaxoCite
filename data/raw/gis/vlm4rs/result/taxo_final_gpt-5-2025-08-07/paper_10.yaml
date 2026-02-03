@@ -5,7 +5,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[38]"
   "block_ids":
   - 0
@@ -16,9 +16,9 @@
   - "Prior Methods"
   - "Resource Utilization"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
-  - "Attention-Based Fusion Blocks"
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Object/Region-Level Grounding and Referring"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 0
@@ -27,22 +27,22 @@
   - "Domain Overview"
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 0
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[35]"
   "block_ids":
   - 0
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[7]"
   "block_ids":
   - 0
@@ -57,11 +57,11 @@
   - "Result Comparison"
   - "Metrics Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
-  - "Dataset Construction and Annotation"
-  - "Dataset Construction and Annotation"
-  - "Adaptation and Tuning Regimes"
-  - "Task-Specific Metrics and Protocols"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Instruction-Following Conversational Sets"
+  - "Object/Region-Level Grounding and Referring"
+  - "Metrics and Thresholds for Grounding"
 - "unique_context_marker": "[37]"
   "block_ids":
   - 0
@@ -70,69 +70,69 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
-  - "Dataset Construction and Annotation"
+  - "Pixel-Level and Dense Outputs"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 0
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
+  - "Other Topics"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 0
   - 1
   - 9
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   - "Prior Methods"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
-  - "Region-Level Interaction Tasks"
-  - "Dataset Construction and Annotation"
+  - "Pixel-Level and Dense Outputs"
+  - "Pixel-Level and Dense Outputs"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 0
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Adaptation and Tuning Regimes"
+  - "Hybrid Supervision and Consistency Losses"
 - "unique_context_marker": "[1]"
   "block_ids":
   - 0
   - 7
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Adaptation and Tuning Regimes"
+  - "Vision-Language Connectors to LLMs"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[2]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 0
   - 6
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Pretraining Backbones and Modal Encoders"
+  - "Vision-Language Connectors to LLMs"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 0
@@ -141,8 +141,8 @@
   - "Research Gap"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Language Models and Tokenization"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 0
@@ -150,61 +150,61 @@
   - 5
   "intent_labels":
   - "Resource Utilization"
-  - "Domain Overview"
+  - "Prior Methods"
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
-  - "Image-Level Understanding Tasks"
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Image-Level Understanding"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[41]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
@@ -213,64 +213,64 @@
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Textualization of Spatial Outputs"
-  - "Textualization of Spatial Outputs"
+  - "Textualization of Geometry and Masks"
+  - "Textualization of Geometry and Masks"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[23]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[39]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[42]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 1
@@ -279,8 +279,8 @@
   - "Research Gap"
   - "Result Comparison"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
-  - "Task-Specific Metrics and Protocols"
+  - "Object/Region-Level Grounding and Referring"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[40]"
   "block_ids":
   - 1
@@ -289,29 +289,29 @@
   - "Research Gap"
   - "Result Comparison"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
-  - "Task-Specific Metrics and Protocols"
+  - "Object/Region-Level Grounding and Referring"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 2
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive Vision-Language Encoders"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[43]"
   "block_ids":
   - 2
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[44]"
   "block_ids":
   - 3
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Textualization of Spatial Outputs"
+  - "Textualization of Geometry and Masks"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 3
@@ -320,47 +320,47 @@
   - "Algorithm/Principle Adoption"
   - "Result Comparison"
   "topic_labels":
-  - "Textualization of Spatial Outputs"
-  - "Textualization of Spatial Outputs"
+  - "Textualization of Geometry and Masks"
+  - "Textualization of Geometry and Masks"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 6
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Adaptation and Tuning Regimes"
+  - "Other Topics"
 - "unique_context_marker": "[12, 26, 35]"
   "block_ids":
   - 6
   "intent_labels":
-  - null
+  - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[14, 22]"
   "block_ids":
   - 7
   "intent_labels":
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Task-Specific Metrics and Protocols"
+  - "Metrics and Thresholds for Grounding"
 - "unique_context_marker": "[36]"
   "block_ids":
   - 8
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Task-Specific Metrics and Protocols"
+  - "Metrics and Thresholds for Grounding"
 - "unique_context_marker": "[33, 37]"
   "block_ids":
   - 9
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Task-Specific Metrics and Protocols"
+  - "Metrics and Thresholds for Grounding"
 - "unique_context_marker": "[6]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Connector and Prompt Mechanisms"
+  - "Region and Point Prompting Interfaces"

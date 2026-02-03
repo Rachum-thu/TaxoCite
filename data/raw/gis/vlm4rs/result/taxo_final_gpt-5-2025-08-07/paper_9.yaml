@@ -9,9 +9,9 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and Reinforcement Alignment"
-  - "Textualization of Spatial Outputs"
-  - "Region-Level Interaction Tasks"
+  - "Vision-Language Connectors to LLMs"
+  - "Textualization of Geometry and Masks"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[Chen et al., 2023a]"
   "block_ids":
   - 1
@@ -28,19 +28,19 @@
   - "Algorithm/Principle Adoption"
   - "Resource Utilization"
   "topic_labels":
-  - "Instruction Tuning and Reinforcement Alignment"
-  - "Textualization of Spatial Outputs"
-  - "Region-Level Interaction Tasks"
-  - "Connector and Prompt Mechanisms"
-  - "Rule-Driven QA and Grounding Labels"
-  - "Pretraining Backbones and Modal Encoders"
+  - "Vision-Language Connectors to LLMs"
+  - "Textualization of Geometry and Masks"
+  - "Instruction Tuning and SFT"
+  - "Multiresolution and Patch Strategies"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[Zhan et al., 2023b]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Task Scoping and Formulations"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[Liu et al., 2023]"
   "block_ids":
   - 1
@@ -51,9 +51,9 @@
   - "Prior Methods"
   - "Research Gap"
   "topic_labels":
-  - "Instruction Tuning and Reinforcement Alignment"
-  - "Connector and Prompt Mechanisms"
-  - "Instruction Tuning and Reinforcement Alignment"
+  - "Instruction Tuning and SFT"
+  - "Vision-Language Connectors to LLMs"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[Yuan et al., 2023a]"
   "block_ids":
   - 1
@@ -62,15 +62,15 @@
   - "Domain Overview"
   - "Domain Overview"
   "topic_labels":
-  - "Task Scoping and Formulations"
-  - "Task Scoping and Formulations"
+  - "Task Formulations in RS VLM"
+  - "Task Formulations in RS VLM"
 - "unique_context_marker": "[Hoxha et al., 2023]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[Yuan et al., 2023b]"
   "block_ids":
   - 1
@@ -79,8 +79,8 @@
   - "Domain Overview"
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[Zhan et al., 2023a]"
   "block_ids":
   - 1
@@ -89,8 +89,8 @@
   - "Domain Overview"
   - "Domain Overview"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
-  - "Region-Level Interaction Tasks"
+  - "Object/Region-Level Grounding and Referring"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[Bashmal et al., 2023]"
   "block_ids":
   - 1
@@ -99,43 +99,43 @@
   - "Research Gap"
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
-  - "Multispectral and Temporal Modeling"
+  - "Temporal and Multimodal Variants"
+  - "Temporal and Multimodal Variants"
 - "unique_context_marker": "[Xiong et al., 2022]"
   "block_ids":
   - 3
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Task Scoping and Formulations"
+  - "Task Formulations in RS VLM"
 - "unique_context_marker": "[OpenAI, 2022]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[Touvron et al., 2023a]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[OpenAI, 2023]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[Chiang et al., 2023]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[Li et al., 2023]"
   "block_ids":
   - 4
@@ -144,15 +144,15 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
-  - "Connector and Prompt Mechanisms"
+  - "Vision-Language Connectors to LLMs"
+  - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[Zhu et al., 2023]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Connector and Prompt Mechanisms"
+  - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[Wang et al., 2023]"
   "block_ids":
   - 4
@@ -161,54 +161,54 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Textualization of Spatial Outputs"
-  - "Region-Level Interaction Tasks"
+  - "Textualization of Geometry and Masks"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[Hu et al., 2023]"
   "block_ids":
   - 4
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[Dai et al., 2023]"
   "block_ids":
   - 5
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Instruction Tuning and Reinforcement Alignment"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[Fang et al., 2023]"
   "block_ids":
   - 7
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive Vision-Language Encoders"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[Touvron et al., 2023b]"
   "block_ids":
   - 7
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[Mou et al., 2020]"
   "block_ids":
   - 8
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Rule-Driven QA and Grounding Labels"
+  - "Temporal and Multimodal Variants"
 - "unique_context_marker": "[Li et al., 2020]"
   "block_ids":
   - 8
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[Xia et al., 2018]"
   "block_ids":
   - 8
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"

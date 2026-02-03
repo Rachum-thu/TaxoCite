@@ -5,35 +5,35 @@
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Task Scoping and Formulations"
+  - "Other Topics"
 - "unique_context_marker": "[2]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Task Scoping and Formulations"
+  - "Other Topics"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Task Scoping and Formulations"
+  - "Other Topics"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[6]"
   "block_ids":
   - 1
@@ -44,9 +44,9 @@
   - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Dataset Construction and Annotation"
-  - "Connector and Prompt Mechanisms"
+  - "Attention-Based Co-Encoding"
+  - "Image-Level Understanding"
+  - "Vision-Language Connectors to LLMs"
 - "unique_context_marker": "[7]"
   "block_ids":
   - 1
@@ -55,8 +55,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Attention-Based Co-Encoding"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 1
@@ -65,8 +65,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Instruction Tuning and Reinforcement Alignment"
+  - "Attention-Based Co-Encoding"
+  - "Hallucination Mitigation and Honesty"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 1
@@ -75,8 +75,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Attention-Based Co-Encoding"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
@@ -85,8 +85,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Attention-Based Co-Encoding"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
@@ -95,159 +95,159 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Attention-Based Co-Encoding"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Dataset Construction and Supervision Sources"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Dataset Construction and Supervision Sources"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Dataset Construction and Supervision Sources"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Dataset Construction and Supervision Sources"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Dataset Construction and Supervision Sources"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Dataset Construction and Supervision Sources"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Contrastive Alignment Objectives"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Dataset Construction and Supervision Sources"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 4
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Task Scoping and Formulations"
+  - "Other Topics"
 - "unique_context_marker": "[23]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive Vision-Language Encoders"
+  - "Contrastive Alignment Objectives"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and Reinforcement Alignment"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[25]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Other Topics"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 6
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[27]"
   "block_ids":
   - 6
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 6
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Other Topics"
 - "unique_context_marker": "[29]"
   "block_ids":
   - 13
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 13
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 13
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 13
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Instruction Tuning and SFT"
 - "unique_context_marker": "[33]"
   "block_ids":
   - 13
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Prompt and Adapter Tuning"
+  - "Parameter-Efficient Adaptation"

@@ -3,46 +3,46 @@
   "block_ids":
   - 0
   "intent_labels":
-  - "Resource Utilization"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[38]"
   "block_ids":
   - 0
   - 1
   - 5
   "intent_labels":
-  - "Resource Utilization"
+  - null
   - "Prior Methods"
-  - null
+  - "Resource Utilization"
   "topic_labels":
-  - null
-  - "Region-Level Interaction Tasks"
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Object/Region-Level Grounding and Referring"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 0
   - 5
   "intent_labels":
-  - "Domain Overview"
   - null
+  - "Resource Utilization"
   "topic_labels":
-  - null
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[35]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Domain Overview"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[7]"
   "block_ids":
   - 0
@@ -51,160 +51,160 @@
   - 7
   - 8
   "intent_labels":
-  - "Resource Utilization"
+  - null
   - "Research Gap"
   - "Resource Utilization"
-  - "Setting/Protocal Adoption"
+  - "Result Comparison"
   - "Metrics Utilization"
   "topic_labels":
-  - null
-  - "Region-Level Interaction Tasks"
-  - "Dataset Construction and Annotation"
-  - "Adaptation and Tuning Regimes"
-  - "Task-Specific Metrics and Protocols"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Object/Region-Level Grounding and Referring"
+  - "Metrics and Thresholds for Grounding"
 - "unique_context_marker": "[37]"
   "block_ids":
   - 0
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - null
   - "Prior Methods"
   "topic_labels":
-  - null
-  - "Dataset Construction and Annotation"
+  - "Pixel-Level and Dense Outputs"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Prospective Application"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Other Topics"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 0
   - 1
   - 9
   "intent_labels":
-  - "Research Gap"
+  - null
   - "Prior Methods"
   - "Benchmark Utilization"
   "topic_labels":
+  - "Pixel-Level and Dense Outputs"
+  - "Pixel-Level and Dense Outputs"
   - null
-  - "Region-Level Interaction Tasks"
-  - "Dataset Construction and Annotation"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Research Gap"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Other Topics"
 - "unique_context_marker": "[1]"
   "block_ids":
   - 0
   - 7
   "intent_labels":
-  - "Research Gap"
+  - null
   - "Result Comparison"
   "topic_labels":
-  - null
-  - "Adaptation and Tuning Regimes"
+  - "Other Topics"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[2]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Research Gap"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Other Topics"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Research Gap"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Other Topics"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 0
   - 6
   "intent_labels":
-  - "Research Gap"
+  - null
   - "Model/Architecture Adoption"
   "topic_labels":
-  - null
-  - "Pretraining Backbones and Modal Encoders"
+  - "Other Topics"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 0
   - 1
   "intent_labels":
-  - "Research Gap"
+  - null
   - "Prior Methods"
   "topic_labels":
-  - null
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Language Models and Tokenization"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 0
   - 1
   - 5
   "intent_labels":
-  - "Resource Utilization"
+  - null
   - "Domain Overview"
   - "Resource Utilization"
   "topic_labels":
-  - null
-  - "Image-Level Understanding Tasks"
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Image-Level Understanding"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[41]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
@@ -213,64 +213,64 @@
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Textualization of Spatial Outputs"
-  - "Textualization of Spatial Outputs"
+  - "Textualization of Geometry and Masks"
+  - "Textualization of Geometry and Masks"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[23]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[39]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Fusion, Alignment, and Outputs"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[42]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 1
@@ -279,8 +279,8 @@
   - "Research Gap"
   - "Result Comparison"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
-  - null
+  - "Object/Region-Level Grounding and Referring"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[40]"
   "block_ids":
   - 1
@@ -289,15 +289,15 @@
   - "Research Gap"
   - "Result Comparison"
   "topic_labels":
-  - "Region-Level Interaction Tasks"
-  - null
+  - "Object/Region-Level Grounding and Referring"
+  - "Object/Region-Level Grounding and Referring"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 2
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive Vision-Language Encoders"
+  - null
 - "unique_context_marker": "[43]"
   "block_ids":
   - 2
@@ -311,7 +311,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Textualization of Spatial Outputs"
+  - "Textualization of Geometry and Masks"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 3
@@ -320,43 +320,43 @@
   - "Algorithm/Principle Adoption"
   - "Result Comparison"
   "topic_labels":
-  - "Textualization of Spatial Outputs"
-  - "Textualization of Spatial Outputs"
+  - "Textualization of Geometry and Masks"
+  - "Textualization of Geometry and Masks"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 6
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - null
+  - "Other Topics"
 - "unique_context_marker": "[12, 26, 35]"
   "block_ids":
   - 6
   "intent_labels":
-  - null
+  - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Annotation"
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[14, 22]"
   "block_ids":
   - 7
   "intent_labels":
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Task-Specific Metrics and Protocols"
+  - "Metrics and Thresholds for Grounding"
 - "unique_context_marker": "[36]"
   "block_ids":
   - 8
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Task-Specific Metrics and Protocols"
+  - "Metrics and Thresholds for Grounding"
 - "unique_context_marker": "[33, 37]"
   "block_ids":
   - 9
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Task-Specific Metrics and Protocols"
+  - null
 - "unique_context_marker": "[6]"
   "block_ids":
   - 9

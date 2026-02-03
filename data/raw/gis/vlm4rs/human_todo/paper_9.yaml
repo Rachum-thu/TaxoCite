@@ -80,31 +80,31 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023b]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[Chen et al., 2023a]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[Zhan et al., 2023b]'
     intent_label: Prior Methods
-    topic_label: Task Scoping and Formulations
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[Liu et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Instruction Tuning and SFT
   - marker: '[Yuan et al., 2023a]'
     intent_label: Domain Overview
-    topic_label: Task Scoping and Formulations
+    topic_label: Task Formulations in RS VLM
   - marker: '[Hoxha et al., 2023]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[Yuan et al., 2023b]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[Zhan et al., 2023a]'
     intent_label: Domain Overview
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[Bashmal et al., 2023]'
     intent_label: Research Gap
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Temporal and Multimodal Variants
 - block_id: 2
   content: ''
   citations: []
@@ -119,19 +119,19 @@ blocks:
   citations:
   - marker: '[Yuan et al., 2023a]'
     intent_label: Domain Overview
-    topic_label: Task Scoping and Formulations
+    topic_label: Task Formulations in RS VLM
   - marker: '[Yuan et al., 2023b]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[Zhan et al., 2023a]'
     intent_label: Domain Overview
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[Bashmal et al., 2023]'
     intent_label: Domain Overview
-    topic_label: Multispectral and Temporal Modeling
+    topic_label: Temporal and Multimodal Variants
   - marker: '[Xiong et al., 2022]'
     intent_label: Prior Methods
-    topic_label: Task Scoping and Formulations
+    topic_label: Task Formulations in RS VLM
 - block_id: 4
   content: With the rise of advanced LLMs, ChatGPT [OpenAI, 2022], LLaMA [Touvron et al., 2023a], GPT-4 [OpenAI, 2023], and
     Vicuna [Chiang et al., 2023] have shown remarkable abilities in various language tasks. BLIP-2 [Li et al., 2023] extends
@@ -146,37 +146,37 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023b]'
     intent_label: Prior Methods
-    topic_label: Textualization of Spatial Outputs
+    topic_label: Textualization of Geometry and Masks
   - marker: '[Chen et al., 2023a]'
     intent_label: Prior Methods
-    topic_label: Textualization of Spatial Outputs
+    topic_label: Textualization of Geometry and Masks
   - marker: '[Liu et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Connector and Prompt Mechanisms
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[OpenAI, 2022]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[Touvron et al., 2023a]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[OpenAI, 2023]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[Chiang et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[Li et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[Zhu et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Connector and Prompt Mechanisms
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[Wang et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Textualization of Spatial Outputs
+    topic_label: Textualization of Geometry and Masks
   - marker: '[Hu et al., 2023]'
     intent_label: Research Gap
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
 - block_id: 5
   content: The purpose of instruction tuning is to enhance the instruction following ability of the model. Drawing inspiration
     from LLMs in instruction tuning, LLaVA [Liu et al., 2023] fine-tunes the model based on synthetic multi-modal instruction-following
@@ -190,19 +190,19 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023b]'
     intent_label: Prior Methods
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Instruction Tuning and SFT
   - marker: '[Chen et al., 2023a]'
     intent_label: Prior Methods
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Instruction Tuning and SFT
   - marker: '[Liu et al., 2023]'
     intent_label: Research Gap
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Instruction Tuning and SFT
   - marker: '[Wang et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Instruction Tuning and SFT
   - marker: '[Dai et al., 2023]'
     intent_label: Research Gap
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Instruction Tuning and SFT
 - block_id: 6
   content: ''
   citations: []
@@ -238,16 +238,16 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023a]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Connector and Prompt Mechanisms
+    topic_label: Multiresolution and Patch Strategies
   - marker: '[Li et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Connector and Prompt Mechanisms
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[Fang et al., 2023]'
     intent_label: Model/Architecture Adoption
-    topic_label: Contrastive Vision-Language Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[Touvron et al., 2023b]'
     intent_label: Model/Architecture Adoption
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Language Models and Tokenization
 - block_id: 8
   content: 'While acquiring instruction fine-tuning datasets in the general domain is straightforward, there are no equivalent
     datasets in the remote sensing domain. To address this gap, a unified RS vision-language instruction data, SkyEye-968k,
@@ -296,16 +296,16 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023a]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Rule-Driven QA and Grounding Labels
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[Mou et al., 2020]'
     intent_label: Resource Utilization
-    topic_label: Rule-Driven QA and Grounding Labels
+    topic_label: Temporal and Multimodal Variants
   - marker: '[Li et al., 2020]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[Xia et al., 2018]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
 - block_id: 9
   content: 'The model is trained to follow a series of task-specific instructions on the RS multi-modal instruction-following
     data. To achieve an effective SkyEyeGPT, we design a two-stage instruction tuning approach.
@@ -362,7 +362,7 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023a]'
     intent_label: Resource Utilization
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision-Language Connectors to LLMs
 - block_id: 12
   content: We have developed a demonstration of a remote sensing multi-modal chatbot, showcasing the vision-language understanding
     and conversational capabilities of SkyEyeGPT. We also provide several real conversations with users or comparisons. Surprisingly,

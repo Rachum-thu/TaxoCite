@@ -73,37 +73,37 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[2]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[3]'
     intent_label: Domain Overview
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Other Topics
   - marker: '[4]'
     intent_label: Domain Overview
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Other Topics
   - marker: '[5]–[8]'
-    intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    intent_label: Domain Overview
+    topic_label: Image-Level Understanding
   - marker: '[9]'
-    intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    intent_label: Domain Overview
+    topic_label: Contrastive Alignment Objectives
   - marker: '[10]'
-    intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    intent_label: Domain Overview
+    topic_label: Contrastive Alignment Objectives
   - marker: '[11]'
     intent_label: Problem Formulation
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[12]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Attention-Based Co-Encoding
   - marker: '[13]'
-    intent_label: Prior Methods
-    topic_label: Contrastive Vision-Language Encoders
+    intent_label: Model/Architecture Adoption
+    topic_label: Contrastive Alignment Objectives
   - marker: '[14]'
     intent_label: Prior Methods
-    topic_label: Contrastive Vision-Language Encoders
+    topic_label: Contrastive Alignment Objectives
 - block_id: 1
   content: In the following sections, we present a review of some notable works in VQA in the context of computer vision and
     remote sensing followed by the utilization of transformers for solving other remote sensing tasks.
@@ -136,25 +136,25 @@ blocks:
   citations:
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Dataset Construction and Annotation
+    topic_label: Answer Space Design and Class Taxonomy
   - marker: '[15]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[16]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[31]'
     intent_label: Prior Methods
-    topic_label: Training Signals and Objectives
+    topic_label: Other Topics
   - marker: '[17]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[18]'
     intent_label: Prior Methods
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Temporal and Multimodal Variants
   - marker: '[19]'
     intent_label: Prior Methods
-    topic_label: Multispectral and Temporal Modeling
+    topic_label: Temporal and Multimodal Variants
 - block_id: 3
   content: 'VQA in remote sensing images, however, is still at its debut and the amount of contributions is sharply scarce.
     For instance, in [20], low- and high-resolution datasets were constructed by leveraging OpenStreetMap (containing geo-localized
@@ -169,13 +169,13 @@ blocks:
   citations:
   - marker: '[20]'
     intent_label: Prior Methods
-    topic_label: Rule-Driven QA and Grounding Labels
+    topic_label: Rule-Based and OSM-Derived QA Pairs
   - marker: '[21]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[22]'
     intent_label: Prior Methods
-    topic_label: Rule-Driven QA and Grounding Labels
+    topic_label: Rule-Based and OSM-Derived QA Pairs
 - block_id: 4
   content: 'Transformers are now regarded as de facto standard in NLP tasks. Recently, they have been extended to vision tasks
     yielding the so-called ViT network [23]. In the context of remote sensing, some notable works have been developed based
@@ -193,28 +193,28 @@ blocks:
   citations:
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[24]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[25]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[26]'
     intent_label: Prior Methods
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Multispectral and Temporal Encodings
   - marker: '[27]'
     intent_label: Prior Methods
-    topic_label: Multispectral and Temporal Modeling
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[28]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[29]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[30]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
 - block_id: 5
   content: 'Let us consider a training set Dtr = {Xi, qi, yi}_i=1^Ntr composed of Ntr input image and question pairs (Xi,
     qi) associated with the desired categorical answer yi ∈ R^C where C represents the number of possible answers. In this
@@ -263,16 +263,16 @@ blocks:
   citations:
   - marker: '[31]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[23]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[32]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Other Topics
   - marker: '[33]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Other Topics
 - block_id: 7
   content: 'Let us consider {FXi, Fqi}_i=1^Ntr as the visual and textual representations obtained from CLIP, with FXi ∈ R^{1×196×512}
     and Fqi ∈ R^{1×77×512}. As mentioned previously, 196 and 77 represent the length of the visual and textual sequences,
@@ -361,7 +361,7 @@ blocks:
   citations:
   - marker: '[20]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Rule-Driven QA and Grounding Labels
+    topic_label: Answer Space Design and Class Taxonomy
 - block_id: 11
   content: 'We implement our method using PyTorch library [34] on a PC with Core(TM) i9-7920X CPU, GeForce RTX 1080 Ti 11
     GB, and 64-GB RAM.
@@ -377,10 +377,10 @@ blocks:
   citations:
   - marker: '[34]'
     intent_label: Resource Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Other Topics
   - marker: '[35]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Training Signals and Objectives
+    topic_label: Other Topics
 - block_id: 12
   content: We train the model on the training set for three different trials with different initializations. Then, we present
     the averaged classification accuracies for these three trials along with the standard deviation. From Table I, we see
@@ -395,7 +395,7 @@ blocks:
   citations:
   - marker: '[20]'
     intent_label: Result Comparison
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Captioning and QA Scoring
 - block_id: 13
   content: Table II reports the scores obtained for the first HR dataset. Here, both text and image classiﬁers yield close
     results and their fusion yields slight improvement scoring an (AA and OA) equal to (84.98% and 85.30%). The counting class
@@ -407,7 +407,7 @@ blocks:
   citations:
   - marker: '[20]'
     intent_label: Result Comparison
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Captioning and QA Scoring
 - block_id: 14
   content: As mentioned previously, around 100 questions were generated automatically for each image for both LR and HR datasets.
     In this experiment, we analyze the sensitivity of the model with respect to low regime training size scenarios. We repeat
@@ -422,7 +422,7 @@ blocks:
   citations:
   - marker: '[20]'
     intent_label: Result Comparison
-    topic_label: Generalization and Data-Shift Assessment
+    topic_label: Zero-/Few-Shot and Prompt Sensitivity
 - block_id: 15
   content: As mentioned previously, we append two transformer decoders to model the contextual relationship between the visual
     and textual image representations. To this end, we carry out experiments by removing this part and assess the performance
@@ -477,7 +477,7 @@ blocks:
   citations:
   - marker: '[36]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Explanations and Consistency Checks
+    topic_label: Explainability and Attention Visualization
 - block_id: 17
   content: In this article, we have introduced a VQA approach based on vision and language transformers. We have proposed
     to capture the dependencies between visual and textual representations using co-attention mechanisms. In the experimental

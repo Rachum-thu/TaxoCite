@@ -3,68 +3,88 @@
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
   "topic_labels":
-  - - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Image-Level Understanding Tasks"
+  - []
 - "unique_context_marker": "[2]"
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
   "topic_labels":
-  - - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Image-Level Understanding Tasks"
+  - []
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
+    - "Prospective Application"
   "topic_labels":
-  - - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
-    - "Image-Level Understanding Tasks"
+  - []
 - "unique_context_marker": "[4]"
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
-    - "Pretraining Backbones and Modal Encoders"
+  - - "Image-Level Understanding"
+    - "Vision Encoder Choices and Scales"
+    - "Representation Learning Backbones for RS"
+    - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
-    - "Image-Level Understanding Tasks"
-    - "Pretraining Backbones and Modal Encoders"
+  - - "Pixel-Level and Dense Outputs"
+    - "Vision Encoder Choices and Scales"
+    - "Representation Learning Backbones for RS"
+    - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[6]"
   "block_ids":
   - 1
   - 3
   - 4
   "intent_labels":
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   - []
-  - []
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - []
+  - - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
   - []
   - []
 - "unique_context_marker": "[7]"
@@ -72,67 +92,127 @@
   - 1
   - 4
   "intent_labels":
-  - []
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - []
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+  - - "Image-Level Understanding"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Image-Level Understanding"
+    - "Cross-Modal Alignment and Fusion"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 1
   - 4
   "intent_labels":
-  - []
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - []
+  - - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
   - []
 - "unique_context_marker": "[9]"
   "block_ids":
   - 1
   - 4
   "intent_labels":
-  - []
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - []
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+  - - "Image-Level Understanding"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Image-Level Understanding"
+    - "Cross-Modal Alignment and Fusion"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
   - 4
   "intent_labels":
-  - []
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - []
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+  - - "Image-Level Understanding"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Image-Level Understanding"
+    - "Cross-Modal Alignment and Fusion"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
   - 4
   "intent_labels":
-  - []
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - []
-  - - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
-    - "Cross-Modal Fusion, Alignment, and Outputs"
+  - - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+  - - "Image-Level Understanding"
+    - "Cross-Modal Alignment and Fusion"
+    - "Cross-Modal Alignment and Fusion"
+    - "Image-Level Understanding"
+    - "Cross-Modal Alignment and Fusion"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 3
@@ -207,28 +287,44 @@
   "block_ids":
   - 4
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
   - []
 - "unique_context_marker": "[23]"
   "block_ids":
   - 4
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
 - "unique_context_marker": "[24]"
   "block_ids":
   - 4
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
 - "unique_context_marker": "[25]"
   "block_ids":
   - 4
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
 - "unique_context_marker": "[26]"
@@ -258,36 +354,44 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Instruction Tuning and Reinforcement Alignment"
-    - "Instruction Tuning and Reinforcement Alignment"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Instruction Tuning and Reinforcement Alignment"
-    - "Pretraining Backbones and Modal Encoders"
+  - - "Vision-Language Connectors to LLMs"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Language Models and Tokenization"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 13
   "intent_labels":
   - []
   "topic_labels":
-  - - "Instruction Tuning and Reinforcement Alignment"
-    - "Instruction Tuning and Reinforcement Alignment"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Instruction Tuning and Reinforcement Alignment"
-    - "Pretraining Backbones and Modal Encoders"
+  - - "Vision-Language Connectors to LLMs"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Language Models and Tokenization"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 13
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Vision-Language Connectors to LLMs"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Language Models and Tokenization"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 13
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Vision-Language Connectors to LLMs"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Instruction Tuning and SFT"
+    - "Language Models and Tokenization"
 - "unique_context_marker": "[33]"
   "block_ids":
   - 13

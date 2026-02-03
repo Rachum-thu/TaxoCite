@@ -5,55 +5,55 @@
   "intent_labels":
   - "Importance of Problem"
   "topic_labels":
-  - null
+  - "Other Topics"
 - "unique_context_marker": "[2]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 1
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Prospective Application"
   - null
   "topic_labels":
-  - null
-  - "Dataset Construction and Annotation"
+  - "Other Topics"
+  - "Rule-Based and OSM-Derived QA Pairs"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 1
   - 11
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
-  - "Dataset Construction and Annotation"
+  - "Other Topics"
+  - null
 - "unique_context_marker": "[6]"
-  "block_ids":
-  - 1
-  "intent_labels":
-  - "Prior Methods"
-  "topic_labels":
-  - "Image-Level Understanding Tasks"
-- "unique_context_marker": "[7]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Other Topics"
+- "unique_context_marker": "[7]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prospective Application"
+  "topic_labels":
+  - "Image-Level Understanding"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 1
@@ -62,15 +62,15 @@
   - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - null
-  - "Pretraining Backbones and Modal Encoders"
+  - "Other Topics"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
@@ -79,50 +79,50 @@
   - "Prior Methods"
   - "Resource Utilization"
   "topic_labels":
-  - null
-  - "Pretraining Backbones and Modal Encoders"
+  - "Vision Encoder Choices and Scales"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Visual Grounding Corpora and Geometry Labels"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 1
@@ -131,50 +131,50 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - null
-  - "Pretraining Backbones and Modal Encoders"
+  - "Visual Grounding Corpora and Geometry Labels"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[23]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Contrastive Alignment Objectives"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 1
@@ -182,68 +182,68 @@
   - 12
   "intent_labels":
   - "Domain Overview"
-  - null
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
-  - "Cross-Modal Fusion, Alignment, and Outputs"
-  - "Attention-Based Fusion Blocks"
+  - "Other Topics"
+  - "Cross-Modal Alignment and Fusion"
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[25]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[27]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Fusion Blocks"
+  - "Attention-Based Co-Encoding"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Generalization and Data-Shift Assessment"
+  - "Cross-Sensor and Cross-Region Transfer"
 - "unique_context_marker": "[29]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Cross-Sensor and Cross-Region Transfer"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Generalization and Data-Shift Assessment"
+  - "Cross-Sensor and Cross-Region Transfer"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 3
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Rule-Driven QA and Grounding Labels"
+  - null
 - "unique_context_marker": "[32]"
   "block_ids":
   - 7
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[33]"
   "block_ids":
   - 7
@@ -254,62 +254,62 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
-  - "Dataset Construction and Annotation"
-  - null
+  - "Vision Encoder Choices and Scales"
+  - "Small Object Density and Counting Challenges"
+  - "Small Object Density and Counting Challenges"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 7
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[35]"
   "block_ids":
   - 7
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[36]"
   "block_ids":
   - 7
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pretraining Backbones and Modal Encoders"
+  - "Language Models and Tokenization"
 - "unique_context_marker": "[37]"
   "block_ids":
   - 10
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - null
+  - "Other Topics"
 - "unique_context_marker": "[38]"
   "block_ids":
   - 11
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding Tasks"
+  - "Small Object Density and Counting Challenges"
 - "unique_context_marker": "[39]"
   "block_ids":
   - 11
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Adaptation and Tuning Regimes"
+  - "Cross-Sensor and Cross-Region Transfer"
 - "unique_context_marker": "[40]"
   "block_ids":
   - 11
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Adaptation and Tuning Regimes"
+  - "Cross-Sensor and Cross-Region Transfer"
 - "unique_context_marker": "[41]"
   "block_ids":
   - 11
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Explanations and Consistency Checks"
+  - "Bias Analysis and Error Taxonomies"

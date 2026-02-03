@@ -5,11 +5,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
+  - []
 - "unique_context_marker": "[3, 4, 9, 10]"
   "block_ids":
   - 1
@@ -23,33 +19,21 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task-Specific Metrics and Protocols"
-    - "Task Scoping and Formulations"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Task-Specific Metrics and Protocols"
-    - "Task Scoping and Formulations"
+  - []
 - "unique_context_marker": "[12, 13, 14]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
+  - []
 - "unique_context_marker": "[12, 15]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Pretraining Backbones and Modal Encoders"
-    - "Task Scoping and Formulations"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Task-Specific Metrics and Protocols"
-    - "Task Scoping and Formulations"
+  - []
 - "unique_context_marker": "[1]"
   "block_ids":
   - 1
@@ -59,7 +43,11 @@
   - 13
   - 16
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Model/Architecture Adoption"
+    - "Model/Architecture Adoption"
+    - "Prior Methods"
+    - "Model/Architecture Adoption"
   - []
   - []
   - []
@@ -67,34 +55,30 @@
   - []
   "topic_labels":
   - []
-  - - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-  - - "RS-Specific Self-Supervised Pretraining"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
+  - - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
   - []
+  - - "Self-Supervised Pretraining on RS Data"
+    - "Multispectral and Temporal Encodings"
+    - "Multispectral and Temporal Encodings"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Multispectral and Temporal Encodings"
   - []
-  - - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
+  - - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Pretraining Backbones and Modal Encoders"
-    - "Task Scoping and Formulations"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Task-Specific Metrics and Protocols"
-    - "Task Scoping and Formulations"
+  - []
 - "unique_context_marker": "[17]"
   "block_ids":
   - 1
@@ -102,15 +86,15 @@
   - 10
   "intent_labels":
   - []
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Resource Utilization"
   - []
   "topic_labels":
   - []
-  - - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
+  - []
   - []
 - "unique_context_marker": "[18]"
   "block_ids":
@@ -121,11 +105,7 @@
   - []
   "topic_labels":
   - []
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Dataset Construction and Annotation"
+  - []
 - "unique_context_marker": "[19]"
   "block_ids":
   - 1
@@ -142,44 +122,28 @@
   - []
   "topic_labels":
   - []
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Dataset Construction and Annotation"
+  - []
 - "unique_context_marker": "[21, 22, 23, 24, 25, 26, 27, 28, 29, 30]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Image-Level Understanding Tasks"
-    - "Task Scoping and Formulations"
-    - "Image-Level Understanding Tasks"
-    - "Task Scoping and Formulations"
-    - "Task Scoping and Formulations"
+  - []
 - "unique_context_marker": "[1, 2, 3, 4, 5, 6]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
+  - []
 - "unique_context_marker": "[31]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Generalization and Data-Shift Assessment"
-    - "Dataset Construction and Annotation"
-    - "Dataset Construction and Annotation"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Dataset Construction and Annotation"
+  - []
 - "unique_context_marker": "[32, 33]"
   "block_ids":
   - 1
@@ -210,16 +174,8 @@
   - []
   - []
   "topic_labels":
-  - - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-  - - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
-    - "Pretraining Backbones and Modal Encoders"
+  - []
+  - []
   - []
 - "unique_context_marker": "[29, 28, 37, 38]"
   "block_ids":
@@ -227,66 +183,46 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Image-Level Understanding Tasks"
-    - "Multispectral and Temporal Modeling"
+  - []
 - "unique_context_marker": "[39, 40]"
   "block_ids":
   - 2
   "intent_labels":
   - []
   "topic_labels":
-  - - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Image-Level Understanding Tasks"
-    - "Multispectral and Temporal Modeling"
+  - []
 - "unique_context_marker": "[41, 42, 43, 44]"
   "block_ids":
   - 2
   "intent_labels":
   - []
   "topic_labels":
-  - - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Image-Level Understanding Tasks"
-    - "Multispectral and Temporal Modeling"
+  - []
 - "unique_context_marker": "[45]"
   "block_ids":
   - 2
   "intent_labels":
   - []
   "topic_labels":
-  - - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Image-Level Understanding Tasks"
-    - "Multispectral and Temporal Modeling"
+  - []
 - "unique_context_marker": "[46, 47, 48, 27]"
   "block_ids":
   - 2
   "intent_labels":
   - []
   "topic_labels":
-  - - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Image-Level Understanding Tasks"
-    - "Multispectral and Temporal Modeling"
+  - []
 - "unique_context_marker": "[2, 3, 4, 5, 6]"
   "block_ids":
   - 2
   "intent_labels":
   - []
   "topic_labels":
-  - - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
+  - - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
+    - "Self-Supervised Pretraining on RS Data"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 2
@@ -300,17 +236,9 @@
   - []
   "topic_labels":
   - []
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "Task-Specific Metrics and Protocols"
   - []
-  - - "Task-Specific Metrics and Protocols"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "Task-Specific Metrics and Protocols"
+  - []
+  - []
 - "unique_context_marker": "[35]"
   "block_ids":
   - 2
@@ -357,14 +285,14 @@
   "intent_labels":
   - []
   - []
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Prior Methods"
+    - "Algorithm/Principle Adoption"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
-  - - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
+  - []
   - []
 - "unique_context_marker": "[55]"
   "block_ids":
@@ -379,14 +307,22 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Multispectral and Temporal Encodings"
+    - "Multispectral and Temporal Encodings"
+    - "Multispectral and Temporal Encodings"
+    - "Attention-Based Co-Encoding"
+    - "Multispectral and Temporal Encodings"
 - "unique_context_marker": "[57, 58]"
   "block_ids":
   - 5
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Vision Encoder Choices and Scales"
+    - "Multispectral and Temporal Encodings"
+    - "Multispectral and Temporal Encodings"
+    - "Vision Encoder Choices and Scales"
+    - "Multispectral and Temporal Encodings"
 - "unique_context_marker": "[54, 59, 60]"
   "block_ids":
   - 7
@@ -400,11 +336,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
-    - "RS-Specific Self-Supervised Pretraining"
+  - []
 - "unique_context_marker": "[61]"
   "block_ids":
   - 11
@@ -421,11 +353,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Spectral/Temporal Encoding and Masking"
-    - "Multispectral and Temporal Modeling"
-    - "Multispectral and Temporal Modeling"
-    - "Spectral/Temporal Encoding and Masking"
-    - "Spectral/Temporal Encoding and Masking"
+  - - "Multispectral and Temporal Encodings"
+    - "Multispectral and Temporal Encodings"
+    - "Multispectral and Temporal Encodings"
+    - "Multispectral and Temporal Encodings"
+    - "Multispectral and Temporal Encodings"
 - "unique_context_marker": "[62, 3]"
   "block_ids":
   - 13
@@ -437,11 +369,7 @@
   "block_ids":
   - 13
   "intent_labels":
-  - - "Hyperparameter Utilization"
-    - "Setting/Protocal Adoption"
-    - "Setting/Protocal Adoption"
-    - "Setting/Protocal Adoption"
-    - "Setting/Protocal Adoption"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[63]"
@@ -450,11 +378,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Task-Specific Metrics and Protocols"
-    - "Dataset Construction and Annotation"
+  - []
 - "unique_context_marker": "[35, 64]"
   "block_ids":
   - 14
