@@ -56,7 +56,7 @@ blocks:
     intent_label: Prospective Application
     topic_label: Other Topics
   - marker: '[2]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Other Topics
   - marker: '[3]'
     intent_label: Research Gap
@@ -65,8 +65,8 @@ blocks:
     intent_label: Research Gap
     topic_label: Robustness, Domain Shift, and Generalization
   - marker: '[5]'
-    intent_label: Prior Methods
-    topic_label: Representation Learning Backbones for RS
+    intent_label: Domain Overview
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[6]'
     intent_label: Prior Methods
     topic_label: Vision Encoder Choices and Scales
@@ -75,22 +75,22 @@ blocks:
     topic_label: Vision Encoder Choices and Scales
   - marker: '[8]'
     intent_label: Research Gap
-    topic_label: Zero-/Few-Shot and Prompt Sensitivity
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[9]'
     intent_label: Research Gap
-    topic_label: Zero-/Few-Shot and Prompt Sensitivity
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[10]'
     intent_label: Research Gap
-    topic_label: Zero-/Few-Shot and Prompt Sensitivity
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Contrastive Alignment Objectives
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[12]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[13]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[14]'
     intent_label: Prior Methods
     topic_label: Vision Encoder Choices and Scales
