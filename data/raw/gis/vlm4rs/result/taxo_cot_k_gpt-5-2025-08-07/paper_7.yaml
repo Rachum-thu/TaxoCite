@@ -12,32 +12,24 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
+  - []
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
+  - []
 - "unique_context_marker": "[4]"
   "block_ids":
   - 1
   - 5
   "intent_labels":
   - []
-  - - "Background"
-    - "Research Gap"
+  - - "Research Gap"
     - "Research Gap"
     - "Domain Overview"
+    - "Research Gap"
     - "Research Gap"
   "topic_labels":
   - []
@@ -47,35 +39,35 @@
   - 1
   - 11
   "intent_labels":
-  - - "Problem Formulation"
-    - "Problem Formulation"
+  - - "Prior Methods"
     - "Prior Methods"
     - "Problem Formulation"
     - "Prior Methods"
+    - "Problem Formulation"
   - []
   "topic_labels":
   - []
-  - - "Dataset Construction and Supervision Sources"
-    - "Instruction-Following Conversational Sets"
-    - "Instruction-Following Conversational Sets"
-    - "Instruction-Following Conversational Sets"
-    - "Instruction-Following Conversational Sets"
+  - []
 - "unique_context_marker": "[6]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Language- or Instruction-Derived RS Supervision"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Task Formulations in RS"
+    - "Language- or Instruction-Derived RS Supervision"
 - "unique_context_marker": "[7]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Research Gap"
-    - "Prior Methods"
-    - "Prior Methods"
+  - - "Prior Methods"
     - "Prior Methods"
     - "Research Gap"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
 - "unique_context_marker": "[8]"
@@ -94,7 +86,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
+    - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
@@ -111,11 +107,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
+  - []
 - "unique_context_marker": "[12]"
   "block_ids":
   - 1
@@ -129,22 +121,14 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
+  - []
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Pixel-Level and Dense Outputs"
-    - "Pixel-Level and Dense Outputs"
-    - "Pixel-Level and Dense Outputs"
-    - "Pixel-Level and Dense Outputs"
+  - []
 - "unique_context_marker": "[15]"
   "block_ids":
   - 1
@@ -158,11 +142,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Pixel-Level and Dense Outputs"
-    - "Pixel-Level and Dense Outputs"
-    - "Pixel-Level and Dense Outputs"
-    - "Pixel-Level and Dense Outputs"
+  - []
 - "unique_context_marker": "[17]"
   "block_ids":
   - 1
@@ -179,8 +159,8 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Pixel-Level and Dense Outputs"
+  - - "Pixel-Level and Dense Outputs"
+    - "Vision Encoder Choices and Scales"
     - "Pixel-Level and Dense Outputs"
     - "Pixel-Level and Dense Outputs"
     - "Pixel-Level and Dense Outputs"
@@ -190,19 +170,19 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Object/Region-Level Grounding and Referring"
-    - "Pixel-Level and Dense Outputs"
-    - "Object/Region-Level Grounding and Referring"
-    - "Pixel-Level and Dense Outputs"
+  - - "Object-Level Understanding"
+    - "Vision Encoder Choices and Scales"
+    - "Object-Level Understanding"
+    - "Object-Level Understanding"
+    - "Object-Level Understanding"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topics"
-    - "Pixel-Level and Dense Outputs"
+  - - "Pixel-Level and Dense Outputs"
+    - "Vision Encoder Choices and Scales"
     - "Pixel-Level and Dense Outputs"
     - "Pixel-Level and Dense Outputs"
     - "Pixel-Level and Dense Outputs"
@@ -210,35 +190,39 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Research Gap"
-    - "Prior Methods"
-    - "Prior Methods"
+  - - "Prior Methods"
     - "Prior Methods"
     - "Research Gap"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
 - "unique_context_marker": "[22]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Research Gap"
-    - "Prior Methods"
-    - "Prior Methods"
+  - - "Prior Methods"
     - "Prior Methods"
     - "Research Gap"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - []
 - "unique_context_marker": "[23]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Research Gap"
-    - "Prior Methods"
-    - "Prior Methods"
+  - - "Prior Methods"
     - "Prior Methods"
     - "Research Gap"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
-  - []
+  - - "Joint Vision–Language Backbones"
+    - "Feature-Level and Representation Fusion"
+    - "Feature-Level and Representation Fusion"
+    - "Feature-Level and Representation Fusion"
+    - "Feature-Level and Representation Fusion"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 1
@@ -279,40 +263,40 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Cross-Sensor and Cross-Region Transfer"
-    - "Cross-Sensor and Cross-Region Transfer"
-    - "Cross-Sensor and Cross-Region Transfer"
-    - "Cross-Sensor and Cross-Region Transfer"
-    - "Cross-Sensor and Cross-Region Transfer"
+  - []
 - "unique_context_marker": "[29]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Other Topics"
+    - "Domain Shift and Data Scarcity Effects"
+    - "Other Topics"
+    - "Other Topics"
+    - "Domain Shift and Data Scarcity Effects"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 1
   "intent_labels":
   - []
   "topic_labels":
-  - - "Cross-Sensor and Cross-Region Transfer"
-    - "Cross-Sensor and Cross-Region Transfer"
-    - "Cross-Sensor and Cross-Region Transfer"
-    - "Cross-Sensor and Cross-Region Transfer"
-    - "Cross-Sensor and Cross-Region Transfer"
+  - - "Domain Shift and Data Scarcity Effects"
+    - "Domain Shift and Data Scarcity Effects"
+    - "Domain Shift and Data Scarcity Effects"
+    - "Domain Shift and Data Scarcity Effects"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 3
   "intent_labels":
   - []
   "topic_labels":
-  - - "Rule-Based and OSM-Derived QA Pairs"
-    - "Rule-Based and OSM-Derived QA Pairs"
-    - "Rule-Based and OSM-Derived QA Pairs"
-    - "Rule-Based and OSM-Derived QA Pairs"
-    - "Rule-Based and OSM-Derived QA Pairs"
+  - - "Synthetic and Simulated RS Imagery"
+    - "Synthetic and Simulated RS Imagery"
+    - "Synthetic and Simulated RS Imagery"
+    - "Language- or Instruction-Derived RS Supervision"
+    - "Synthetic and Simulated RS Imagery"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 7
@@ -327,11 +311,7 @@
   - 12
   "intent_labels":
   - []
-  - - "Domain Overview"
-    - "Domain Overview"
-    - "Domain Overview"
-    - "Research Gap"
-    - "Research Gap"
+  - []
   - []
   "topic_labels":
   - []
@@ -369,19 +349,15 @@
   "block_ids":
   - 11
   "intent_labels":
-  - - "Domain Overview"
-    - "Domain Overview"
-    - "Domain Overview"
-    - "Research Gap"
-    - "Research Gap"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[39]"
   "block_ids":
   - 11
   "intent_labels":
-  - - "Domain Overview"
-    - "Prior Methods"
+  - - "Prior Methods"
+    - "Domain Overview"
     - "Domain Overview"
     - "Domain Overview"
     - "Domain Overview"
@@ -398,10 +374,6 @@
   "block_ids":
   - 11
   "intent_labels":
-  - - "Domain Overview"
-    - "Domain Overview"
-    - "Domain Overview"
-    - "Research Gap"
-    - "Domain Overview"
+  - []
   "topic_labels":
   - []

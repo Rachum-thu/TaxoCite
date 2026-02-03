@@ -5,26 +5,18 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
+  - []
 - "unique_context_marker": "[19]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
-  - - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
+  - - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 1
@@ -36,11 +28,7 @@
   - []
   "topic_labels":
   - []
-  - - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
+  - []
   - []
 - "unique_context_marker": "[38, 40]"
   "block_ids":
@@ -53,17 +41,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Algorithm/Principle Adoption"
-    - "Prior Methods"
-    - "Algorithm/Principle Adoption"
-    - "Prior Methods"
+  - []
   "topic_labels":
-  - - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
+  - []
 - "unique_context_marker": "[7]"
   "block_ids":
   - 1
@@ -85,18 +65,10 @@
   - []
   - []
   - []
-  - - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
   - []
   - []
-  - - "Language Models and Tokenization"
-    - "Captioning and QA Scoring"
-    - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
-    - "Captioning and QA Scoring"
+  - []
+  - []
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
@@ -108,11 +80,7 @@
   - []
   "topic_labels":
   - []
-  - - "Rule-Based and OSM-Derived QA Pairs"
-    - "Image-Level Understanding"
-    - "Instruction-Following Conversational Sets"
-    - "Rule-Based and OSM-Derived QA Pairs"
-    - "Dataset Construction and Supervision Sources"
+  - []
   - []
 - "unique_context_marker": "[5]"
   "block_ids":
@@ -143,7 +111,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+    - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
@@ -158,11 +130,7 @@
   "topic_labels":
   - []
   - []
-  - - "Parameter-Efficient Adaptation"
-    - "Parameter-Efficient Adaptation"
-    - "Parameter-Efficient Adaptation"
-    - "Parameter-Efficient Adaptation"
-    - "Parameter-Efficient Adaptation"
+  - []
   - []
 - "unique_context_marker": "[9]"
   "block_ids":
@@ -192,11 +160,7 @@
   "topic_labels":
   - []
   - []
-  - - "Vision-Language Connectors to LLMs"
-    - "Vision-Language Connectors to LLMs"
-    - "Vision-Language Connectors to LLMs"
-    - "Vision-Language Connectors to LLMs"
-    - "Vision-Language Connectors to LLMs"
+  - []
   - []
 - "unique_context_marker": "[18]"
   "block_ids":
@@ -244,21 +208,33 @@
   "block_ids":
   - 2
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Research Gap"
+    - "Research Gap"
+    - "Research Gap"
   "topic_labels":
   - []
 - "unique_context_marker": "[16]"
   "block_ids":
   - 2
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Research Gap"
+    - "Research Gap"
+    - "Research Gap"
   "topic_labels":
   - []
 - "unique_context_marker": "[3, 38]"
   "block_ids":
   - 2
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Research Gap"
+    - "Research Gap"
+    - "Research Gap"
   "topic_labels":
   - []
 - "unique_context_marker": "[28]"
@@ -270,44 +246,32 @@
   - []
   "topic_labels":
   - []
-  - - "Vision Encoder Choices and Scales"
-    - "Vision Encoder Choices and Scales"
-    - "Vision Encoder Choices and Scales"
-    - "Vision Encoder Choices and Scales"
-    - "Vision Encoder Choices and Scales"
+  - []
 - "unique_context_marker": "[10]"
   "block_ids":
   - 7
   "intent_labels":
   - []
   "topic_labels":
-  - - "Vision-Language Connectors to LLMs"
-    - "Other Topics"
-    - "Vision-Language Connectors to LLMs"
-    - "Vision-Language Connectors to LLMs"
-    - "Vision-Language Connectors to LLMs"
+  - []
 - "unique_context_marker": "[26]"
   "block_ids":
   - 8
   "intent_labels":
   - []
   "topic_labels":
-  - - "Dataset Construction and Supervision Sources"
-    - "Contrastive Alignment Objectives"
-    - "Dataset Construction and Supervision Sources"
-    - "Dataset Construction and Supervision Sources"
-    - "Dataset Construction and Supervision Sources"
+  - []
 - "unique_context_marker": "[15]"
   "block_ids":
   - 8
   "intent_labels":
   - []
   "topic_labels":
-  - - "Dataset Construction and Supervision Sources"
-    - "Other Topics"
-    - "Dataset Construction and Supervision Sources"
-    - "Dataset Construction and Supervision Sources"
-    - "Dataset Construction and Supervision Sources"
+  - - "Language- or Instruction-Derived RS Supervision"
+    - "Joint Vision–Language Backbones"
+    - "Language- or Instruction-Derived RS Supervision"
+    - "Joint Vision–Language Backbones"
+    - "Language- or Instruction-Derived RS Supervision"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 9
@@ -335,18 +299,14 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Rule-Based and OSM-Derived QA Pairs"
-    - "Image-Level Understanding"
-    - "Instruction-Following Conversational Sets"
-    - "Rule-Based and OSM-Derived QA Pairs"
-    - "Dataset Construction and Supervision Sources"
+  - []
 - "unique_context_marker": "[31]"
   "block_ids":
   - 9
   "intent_labels":
   - - "Resource Utilization"
-    - "Resource Utilization"
     - "Model/Architecture Adoption"
+    - "Resource Utilization"
     - "Model/Architecture Adoption"
     - "Resource Utilization"
   "topic_labels":
@@ -355,9 +315,9 @@
   "block_ids":
   - 9
   "intent_labels":
-  - - "Other Intent"
+  - - "Resource Utilization"
     - "Resource Utilization"
-    - "Resource Utilization"
+    - "Other Intent"
     - "Resource Utilization"
     - "Resource Utilization"
   "topic_labels":
@@ -375,22 +335,14 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Visual Grounding Corpora and Geometry Labels"
-    - "Visual Grounding Corpora and Geometry Labels"
-    - "Visual Grounding Corpora and Geometry Labels"
-    - "Visual Grounding Corpora and Geometry Labels"
-    - "Visual Grounding Corpora and Geometry Labels"
+  - []
 - "unique_context_marker": "[37]"
   "block_ids":
   - 9
   "intent_labels":
   - []
   "topic_labels":
-  - - "Visual Grounding Corpora and Geometry Labels"
-    - "Visual Grounding Corpora and Geometry Labels"
-    - "Visual Grounding Corpora and Geometry Labels"
-    - "Visual Grounding Corpora and Geometry Labels"
-    - "Visual Grounding Corpora and Geometry Labels"
+  - []
 - "unique_context_marker": "[24]"
   "block_ids":
   - 11
@@ -411,22 +363,14 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Image-Level Understanding"
-    - "Train/Val/Test Splits and Domain-Shift Protocols"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
+  - []
 - "unique_context_marker": "[35]"
   "block_ids":
   - 12
   "intent_labels":
   - []
   "topic_labels":
-  - - "Image-Level Understanding"
-    - "Zero-/Few-Shot and Prompt Sensitivity"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Image-Level Understanding"
+  - []
 - "unique_context_marker": "[4]"
   "block_ids":
   - 12
@@ -435,13 +379,5 @@
   - []
   - []
   "topic_labels":
-  - - "Instruction Tuning and SFT"
-    - "Answer Space Design and Class Taxonomy"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Zero-/Few-Shot and Prompt Sensitivity"
-  - - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
+  - []
+  - []

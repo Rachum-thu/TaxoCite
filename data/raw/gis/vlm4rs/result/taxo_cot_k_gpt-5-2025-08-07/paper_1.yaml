@@ -3,63 +3,39 @@
   "block_ids":
   - 0
   "intent_labels":
-  - - "Prior Methods"
-    - "Domain Overview"
-    - "Domain Overview"
-    - "Prior Methods"
-    - "Domain Overview"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[2]"
   "block_ids":
   - 0
   "intent_labels":
-  - - "Prior Methods"
-    - "Domain Overview"
-    - "Domain Overview"
-    - "Prior Methods"
-    - "Domain Overview"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[3]"
   "block_ids":
   - 0
   "intent_labels":
-  - - "Prior Methods"
-    - "Domain Overview"
-    - "Domain Overview"
-    - "Prior Methods"
-    - "Domain Overview"
+  - []
   "topic_labels":
-  - - "Other Topics"
-    - "Other Topics"
-    - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
-    - "Other Topics"
+  - []
 - "unique_context_marker": "[4]"
   "block_ids":
   - 0
   "intent_labels":
-  - - "Prior Methods"
-    - "Domain Overview"
-    - "Domain Overview"
-    - "Prior Methods"
-    - "Domain Overview"
+  - []
   "topic_labels":
-  - - "Other Topics"
-    - "Other Topics"
-    - "Object/Region-Level Grounding and Referring"
-    - "Object/Region-Level Grounding and Referring"
-    - "Other Topics"
+  - []
 - "unique_context_marker": "[5]–[8]"
   "block_ids":
   - 0
   "intent_labels":
   - - "Prior Methods"
+    - "Prior Methods"
     - "Domain Overview"
     - "Domain Overview"
     - "Prior Methods"
-    - "Domain Overview"
   "topic_labels":
   - []
 - "unique_context_marker": "[9]"
@@ -67,84 +43,68 @@
   - 0
   "intent_labels":
   - - "Prior Methods"
+    - "Prior Methods"
     - "Domain Overview"
     - "Domain Overview"
     - "Prior Methods"
-    - "Domain Overview"
   "topic_labels":
-  - - "Contrastive Alignment Objectives"
-    - "Contrastive Alignment Objectives"
-    - "Contrastive Alignment Objectives"
-    - "Contrastive Alignment Objectives"
-    - "Other Topics"
+  - - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 0
   "intent_labels":
   - - "Prior Methods"
+    - "Prior Methods"
     - "Domain Overview"
     - "Domain Overview"
     - "Prior Methods"
-    - "Domain Overview"
   "topic_labels":
-  - - "Contrastive Alignment Objectives"
-    - "Contrastive Alignment Objectives"
-    - "Contrastive Alignment Objectives"
-    - "Contrastive Alignment Objectives"
-    - "Other Topics"
+  - - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
+    - "Image-Level Understanding"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 0
   - 2
   "intent_labels":
-  - - "Problem Formulation"
-    - "Problem Formulation"
-    - "Problem Formulation"
-    - "Problem Formulation"
-    - "Problem Formulation"
+  - []
   - []
   "topic_labels":
-  - - "Other Topics"
+  - - "Image-Level Understanding"
     - "Image-Level Understanding"
+    - "Region-Level Understanding"
     - "Image-Level Understanding"
-    - "Image-Level Understanding"
-    - "Other Topics"
-  - []
+    - "Object-Level Understanding"
+  - - "Language- or Instruction-Derived RS Supervision"
+    - "Language- or Instruction-Derived RS Supervision"
+    - "Public Remote Sensing Benchmarks"
+    - "Manual Expert or Crowdsourced Annotation"
+    - "Answer Space Constraints"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 0
   "intent_labels":
-  - - "Domain Overview"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
-  - - "Other Topics"
-    - "Attention-Based Co-Encoding"
-    - "Attention-Based Co-Encoding"
-    - "Attention-Based Co-Encoding"
-    - "Other Topics"
+  - []
 - "unique_context_marker": "[13]"
   "block_ids":
   - 0
   "intent_labels":
-  - - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
-    - "Model/Architecture Adoption"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[14]"
   "block_ids":
   - 0
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[15]"
@@ -182,26 +142,14 @@
   "block_ids":
   - 2
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
-  - - "Temporal and Multimodal Variants"
-    - "Temporal and Multimodal Variants"
-    - "Temporal and Multimodal Variants"
-    - "Temporal and Multimodal Variants"
-    - "Temporal and Multimodal Variants"
+  - []
 - "unique_context_marker": "[19]"
   "block_ids":
   - 2
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[20]"
@@ -221,11 +169,7 @@
   - []
   - []
   - []
-  - - "Captioning and QA Scoring"
-    - "Image-Level Understanding"
-    - "Captioning and QA Scoring"
-    - "Captioning and QA Scoring"
-    - "Captioning and QA Scoring"
+  - []
   - []
 - "unique_context_marker": "[21]"
   "block_ids":
@@ -266,7 +210,7 @@
   "topic_labels":
   - - "Vision Encoder Choices and Scales"
     - "Vision Encoder Choices and Scales"
-    - "Image-Level Understanding"
+    - "Vision Encoder Choices and Scales"
     - "Vision Encoder Choices and Scales"
     - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[26]"
@@ -289,11 +233,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Vision Encoder Choices and Scales"
-    - "Vision Encoder Choices and Scales"
-    - "Object/Region-Level Grounding and Referring"
-    - "Vision Encoder Choices and Scales"
-    - "Vision Encoder Choices and Scales"
+  - []
 - "unique_context_marker": "[29]"
   "block_ids":
   - 4
@@ -314,28 +254,44 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Language Models and Tokenization"
+    - "Other Topics"
+    - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
+    - "Other Topics"
 - "unique_context_marker": "[33]"
   "block_ids":
   - 6
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Language Models and Tokenization"
+    - "Other Topics"
+    - "Language Models and Tokenization"
+    - "Language Models and Tokenization"
+    - "Other Topics"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 11
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Evaluation Baselines and Tooling"
+    - "Evaluation Baselines and Tooling"
+    - "Evaluation Baselines and Tooling"
+    - "Evaluation Baselines and Tooling"
+    - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[35]"
   "block_ids":
   - 11
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Training and Adaptation Regimes"
+    - "Other Topics"
+    - "Evaluation Baselines and Tooling"
+    - "Training and Adaptation Regimes"
+    - "Training and Adaptation Regimes"
 - "unique_context_marker": "[36]"
   "block_ids":
   - 16

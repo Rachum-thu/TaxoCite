@@ -9,9 +9,9 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Vision-Language Connectors to LLMs"
-  - "Textualization of Geometry and Masks"
-  - "Instruction Tuning and SFT"
+  - "Joint Vision–Language Backbones"
+  - "Structured Spatial Outputs"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[Chen et al., 2023a]"
   "block_ids":
   - 1
@@ -28,19 +28,19 @@
   - "Algorithm/Principle Adoption"
   - "Resource Utilization"
   "topic_labels":
-  - "Vision-Language Connectors to LLMs"
-  - "Textualization of Geometry and Masks"
-  - "Instruction Tuning and SFT"
-  - "Multiresolution and Patch Strategies"
-  - "Visual Grounding Corpora and Geometry Labels"
-  - "Vision-Language Connectors to LLMs"
+  - "Joint Vision–Language Backbones"
+  - "Structured Spatial Outputs"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+  - "Computational and Data-Scale Constraints"
+  - "Language- or Instruction-Derived RS Supervision"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[Zhan et al., 2023b]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Task Formulations in RS VLM"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[Liu et al., 2023]"
   "block_ids":
   - 1
@@ -51,9 +51,9 @@
   - "Prior Methods"
   - "Research Gap"
   "topic_labels":
-  - "Instruction Tuning and SFT"
-  - "Vision-Language Connectors to LLMs"
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
+  - "Feature-Level and Representation Fusion"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[Yuan et al., 2023a]"
   "block_ids":
   - 1
@@ -62,8 +62,8 @@
   - "Domain Overview"
   - "Domain Overview"
   "topic_labels":
-  - "Task Formulations in RS VLM"
-  - "Task Formulations in RS VLM"
+  - "Public Remote Sensing Benchmarks"
+  - "Task Formulations in RS"
 - "unique_context_marker": "[Hoxha et al., 2023]"
   "block_ids":
   - 1
@@ -89,8 +89,8 @@
   - "Domain Overview"
   - "Domain Overview"
   "topic_labels":
-  - "Object/Region-Level Grounding and Referring"
-  - "Object/Region-Level Grounding and Referring"
+  - "Object-Level Understanding"
+  - "Region-Level Understanding"
 - "unique_context_marker": "[Bashmal et al., 2023]"
   "block_ids":
   - 1
@@ -105,9 +105,9 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
-  - "Task Formulations in RS VLM"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[OpenAI, 2022]"
   "block_ids":
   - 4
@@ -144,15 +144,15 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Vision-Language Connectors to LLMs"
-  - "Vision-Language Connectors to LLMs"
+  - "Joint Vision–Language Backbones"
+  - "Feature-Level and Representation Fusion"
 - "unique_context_marker": "[Zhu et al., 2023]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision-Language Connectors to LLMs"
+  - "Feature-Level and Representation Fusion"
 - "unique_context_marker": "[Wang et al., 2023]"
   "block_ids":
   - 4
@@ -161,8 +161,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Textualization of Geometry and Masks"
-  - "Instruction Tuning and SFT"
+  - "Structured Spatial Outputs"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[Hu et al., 2023]"
   "block_ids":
   - 4
@@ -176,7 +176,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[Fang et al., 2023]"
   "block_ids":
   - 7
@@ -197,18 +197,18 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Temporal and Multimodal Variants"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[Li et al., 2020]"
   "block_ids":
   - 8
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[Xia et al., 2018]"
   "block_ids":
   - 8
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"

@@ -72,34 +72,34 @@ blocks:
   citations:
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Joint Vision–Language Backbones
   - marker: '[19]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[12]'
     intent_label: Prospective Application
     topic_label: Other Topics
   - marker: '[38, 40]'
     intent_label: Research Gap
-    topic_label: Answer Space Design and Class Taxonomy
+    topic_label: Answer Space Constraints
   - marker: '[14, 19, 41]'
-    intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[7]'
     intent_label: Model/Architecture Adoption
     topic_label: Language Models and Tokenization
   - marker: '[20]'
     intent_label: Resource Utilization
-    topic_label: Instruction-Following Conversational Sets
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[5]'
     intent_label: Resource Utilization
-    topic_label: Image-Level Understanding
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[30]'
     intent_label: Resource Utilization
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[14]'
     intent_label: Model/Architecture Adoption
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[11]'
     intent_label: Algorithm/Principle Adoption
     topic_label: Parameter-Efficient Adaptation
@@ -129,7 +129,7 @@ blocks:
   citations:
   - marker: '[12]'
     intent_label: Research Gap
-    topic_label: Instruction Tuning and SFT
+    topic_label: Multi-Task and Joint Training
   - marker: '[7]'
     intent_label: Prior Methods
     topic_label: Language Models and Tokenization
@@ -138,22 +138,22 @@ blocks:
     topic_label: Vision Encoder Choices and Scales
   - marker: '[18, 41]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[17]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[18]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[8]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[13]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[41]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[22]'
     intent_label: Prior Methods
     topic_label: Temporal and Multimodal Variants
@@ -161,13 +161,13 @@ blocks:
     intent_label: Prior Methods
     topic_label: Other Topics
   - marker: '[42]'
-    intent_label: Prior Methods
+    intent_label: Research Gap
     topic_label: Image-Level Understanding
   - marker: '[16]'
-    intent_label: Prior Methods
+    intent_label: Research Gap
     topic_label: Image-Level Understanding
   - marker: '[3, 38]'
-    intent_label: Prior Methods
+    intent_label: Research Gap
     topic_label: Image-Level Understanding
 - block_id: 3
   content: 'Visually grounded conversations for remote sensing aim to generate textual responses interleaved with corresponding
@@ -264,13 +264,13 @@ blocks:
     topic_label: Parameter-Efficient Adaptation
   - marker: '[17]'
     intent_label: Model/Architecture Adoption
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Joint Vision–Language Backbones
   - marker: '[28]'
     intent_label: Model/Architecture Adoption
     topic_label: Vision Encoder Choices and Scales
   - marker: '[10]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Other Topics
 - block_id: 8
   content: To enhance the effectiveness of our model on general visual tasks and optimize training efficiency, we employ a
     strategy that involves initializing the network with pre-trained weights and fine-tuning specific segments for remote
@@ -287,16 +287,16 @@ blocks:
     topic_label: Parameter-Efficient Adaptation
   - marker: '[17]'
     intent_label: Model/Architecture Adoption
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[28]'
     intent_label: Model/Architecture Adoption
-    topic_label: Vision Encoder Choices and Scales
+    topic_label: Joint Vision–Language Backbones
   - marker: '[26]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Supervision Sources
+    topic_label: Other Topics
   - marker: '[15]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Supervision Sources
+    topic_label: Language- or Instruction-Derived RS Supervision
 - block_id: 9
   content: 'By using LLM Vicuna [7], we align the model to follow a range of instructions by presenting and curating varied
     instruction-following data with multi-round conversations regarding remote sensing imagery. We specifically provide system
@@ -368,43 +368,43 @@ blocks:
   citations:
   - marker: '[7]'
     intent_label: Resource Utilization
-    topic_label: Instruction-Following Conversational Sets
+    topic_label: Language Models and Tokenization
   - marker: '[20]'
     intent_label: Resource Utilization
-    topic_label: Rule-Based and OSM-Derived QA Pairs
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[5]'
     intent_label: Resource Utilization
-    topic_label: Image-Level Understanding
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[30]'
     intent_label: Resource Utilization
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[34]'
     intent_label: Resource Utilization
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[6]'
     intent_label: Resource Utilization
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[27]'
     intent_label: Resource Utilization
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[25]'
     intent_label: Resource Utilization
-    topic_label: Rule-Based and OSM-Derived QA Pairs
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[31]'
     intent_label: Resource Utilization
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[32]'
     intent_label: Resource Utilization
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[39]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Object/Region-Level Grounding and Referring
+    topic_label: Language- or Instruction-Derived RS Supervision
   - marker: '[36]'
     intent_label: Research Gap
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Object-Level Understanding
   - marker: '[37]'
     intent_label: Research Gap
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Object-Level Understanding
 - block_id: 10
   content: ''
   citations: []
@@ -426,7 +426,7 @@ blocks:
     topic_label: Parameter-Efficient Adaptation
   - marker: '[24]'
     intent_label: Model/Architecture Adoption
-    topic_label: Vision Encoder Choices and Scales
+    topic_label: Joint Vision–Language Backbones
   - marker: '[21]'
     intent_label: Algorithm/Principle Adoption
     topic_label: Training and Adaptation Regimes
@@ -451,16 +451,16 @@ blocks:
   citations:
   - marker: '[7]'
     intent_label: Metrics Utilization
-    topic_label: Language Models and Tokenization
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[33]'
     intent_label: Benchmark Utilization
-    topic_label: Image-Level Understanding
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[35]'
     intent_label: Benchmark Utilization
-    topic_label: Image-Level Understanding
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[4]'
     intent_label: Result Comparison
-    topic_label: Instruction Tuning and SFT
+    topic_label: Evaluation Baselines and Tooling
 - block_id: 13
   content: 'Datasets for evaluation. RSVQA-HRBEN [20] comprises 10,569 high-resolution photos and 1,066,316 question-answer
     pairs, with 61.5%, 11.2%, 20.5%, and 6.8% divided into training, validation, test 1, and test 2 sets, respectively. This
@@ -484,13 +484,13 @@ blocks:
   citations:
   - marker: '[12]'
     intent_label: Result Comparison
-    topic_label: Instruction Tuning and SFT
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[20]'
     intent_label: Benchmark Utilization
-    topic_label: Answer Space Design and Class Taxonomy
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[17]'
     intent_label: Result Comparison
-    topic_label: Zero-/Few-Shot and Prompt Sensitivity
+    topic_label: Evaluation Baselines and Tooling
 - block_id: 14
   content: 'Datasets for evaluation. For the evaluation of grounding tasks, we propose a new benchmark that contains different
     referring and grounding tasks. We use the validation set from [30] and used the same dataset creation pipeline as in Sec.
@@ -508,10 +508,10 @@ blocks:
   citations:
   - marker: '[30]'
     intent_label: Benchmark Utilization
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[4]'
     intent_label: Result Comparison
-    topic_label: Object/Region-Level Grounding and Referring
+    topic_label: Evaluation Baselines and Tooling
 - block_id: 15
   content: Although recent advancements in large Vision-Language Models (VLMs) have shown promise in natural image domains,
     their performance in Remote Sensing (RS) scenarios is still limited due to the unique domain-specific challenges. Addressing

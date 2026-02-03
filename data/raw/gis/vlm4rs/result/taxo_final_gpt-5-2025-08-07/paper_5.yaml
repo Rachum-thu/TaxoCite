@@ -5,14 +5,14 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 1
@@ -24,22 +24,22 @@
   - "Result Comparison"
   "topic_labels":
   - "Other Topics"
-  - "Instruction Tuning and SFT"
-  - "Instruction Tuning and SFT"
+  - "Multi-Task and Joint Training"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[38, 40]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Answer Space Design and Class Taxonomy"
+  - "Answer Space Constraints"
 - "unique_context_marker": "[14, 19, 41]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[7]"
   "block_ids":
   - 1
@@ -62,9 +62,9 @@
   - "Language Models and Tokenization"
   - "Language Models and Tokenization"
   - "Language Models and Tokenization"
-  - "Instruction-Following Conversational Sets"
   - "Language Models and Tokenization"
   - "Language Models and Tokenization"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
@@ -75,9 +75,9 @@
   - "Resource Utilization"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Instruction-Following Conversational Sets"
-  - "Rule-Based and OSM-Derived QA Pairs"
-  - "Answer Space Design and Class Taxonomy"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 1
@@ -86,8 +86,8 @@
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
-  - "Image-Level Understanding"
-  - "Image-Level Understanding"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 1
@@ -98,16 +98,16 @@
   - "Resource Utilization"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
-  - "Visual Grounding Corpora and Geometry Labels"
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Vision-Language Connectors to LLMs"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
@@ -137,7 +137,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision-Language Connectors to LLMs"
+  - "Feature-Level and Representation Fusion"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 2
@@ -150,38 +150,38 @@
   - "Model/Architecture Adoption"
   - "Result Comparison"
   "topic_labels":
-  - "Vision-Language Connectors to LLMs"
-  - "Vision-Language Connectors to LLMs"
-  - "Vision-Language Connectors to LLMs"
-  - "Zero-/Few-Shot and Prompt Sensitivity"
+  - "Feature-Level and Representation Fusion"
+  - "Joint Vision–Language Backbones"
+  - "Feature-Level and Representation Fusion"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[41]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 2
@@ -200,21 +200,21 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[3, 38]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[28]"
@@ -226,98 +226,98 @@
   - "Model/Architecture Adoption"
   "topic_labels":
   - "Vision Encoder Choices and Scales"
-  - "Vision Encoder Choices and Scales"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 7
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Vision-Language Connectors to LLMs"
+  - "Other Topics"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 8
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Other Topics"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 8
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Language- or Instruction-Derived RS Supervision"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[6]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[27]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[25]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Rule-Based and OSM-Derived QA Pairs"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Pixel-Level and Dense Outputs"
+  - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 9
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Pixel-Level and Dense Outputs"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[39]"
   "block_ids":
   - 9
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Object/Region-Level Grounding and Referring"
+  - "Language- or Instruction-Derived RS Supervision"
 - "unique_context_marker": "[36]"
   "block_ids":
   - 9
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Object-Level Understanding"
 - "unique_context_marker": "[37]"
   "block_ids":
   - 9
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Object-Level Understanding"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 11
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 11
@@ -331,14 +331,14 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Image-Level Understanding"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[35]"
   "block_ids":
   - 12
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Image-Level Understanding"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 12
@@ -347,5 +347,5 @@
   - "Result Comparison"
   - "Result Comparison"
   "topic_labels":
-  - "Instruction Tuning and SFT"
-  - "Object/Region-Level Grounding and Referring"
+  - "Evaluation Baselines and Tooling"
+  - "Evaluation Baselines and Tooling"

@@ -3,96 +3,96 @@
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Domain Overview"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[2]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Domain Overview"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Domain Overview"
   "topic_labels":
-  - null
+  - "Object-Level Understanding"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Domain Overview"
   "topic_labels":
-  - null
+  - "Object-Level Understanding"
 - "unique_context_marker": "[5]–[8]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Domain Overview"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Domain Overview"
   "topic_labels":
-  - null
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Domain Overview"
   "topic_labels":
-  - null
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 0
   - 2
   "intent_labels":
-  - null
+  - "Problem Formulation"
   - "Prior Methods"
   "topic_labels":
   - null
-  - "Answer Space Design and Class Taxonomy"
+  - null
 - "unique_context_marker": "[12]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Feature-Level and Representation Fusion"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive Alignment Objectives"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 0
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - "Contrastive Alignment Objectives"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Co-Encoding"
+  - "Language-Conditioned or Semantic Fusion"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Co-Encoding"
+  - "Language-Conditioned or Semantic Fusion"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 2
@@ -101,7 +101,7 @@
   - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Other Topics"
+  - "Domain Shift and Data Scarcity Effects"
   - "Language Models and Tokenization"
 - "unique_context_marker": "[17]"
   "block_ids":
@@ -109,14 +109,14 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Co-Encoding"
+  - "Language-Conditioned or Semantic Fusion"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Pairwise or Relational RS Supervision"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 2
@@ -138,25 +138,25 @@
   - "Result Comparison"
   - "Result Comparison"
   "topic_labels":
-  - "Rule-Based and OSM-Derived QA Pairs"
-  - "Answer Space Design and Class Taxonomy"
-  - "Captioning and QA Scoring"
-  - null
-  - "Zero-/Few-Shot and Prompt Sensitivity"
+  - "Rule-Based or GIS/Map-Derived"
+  - "Public Remote Sensing Benchmarks"
+  - "Evaluation Baselines and Tooling"
+  - "Evaluation Baselines and Tooling"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 3
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Co-Encoding"
+  - "Language-Conditioned or Semantic Fusion"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 3
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Rule-Based and OSM-Derived QA Pairs"
+  - "Language- or Instruction-Derived RS Supervision"
 - "unique_context_marker": "[23]"
   "block_ids":
   - 4
@@ -180,7 +180,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 4
@@ -194,14 +194,14 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pixel-Level and Dense Outputs"
+  - "Temporal and Multimodal Variants"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - null
+  - "Object-Level Understanding"
 - "unique_context_marker": "[29]"
   "block_ids":
   - 4
@@ -222,32 +222,32 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Other Topics"
+  - null
 - "unique_context_marker": "[33]"
   "block_ids":
   - 6
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Other Topics"
+  - null
 - "unique_context_marker": "[34]"
   "block_ids":
   - 11
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Other Topics"
+  - null
 - "unique_context_marker": "[35]"
   "block_ids":
   - 11
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Other Topics"
+  - null
 - "unique_context_marker": "[36]"
   "block_ids":
   - 16
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Explainability and Attention Visualization"
+  - "Diagnostic, Attribution, and Error Analysis"

@@ -12,14 +12,14 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[3]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[4]"
   "block_ids":
   - 1
@@ -28,8 +28,8 @@
   - "Prospective Application"
   - null
   "topic_labels":
-  - "Other Topics"
-  - "Rule-Based and OSM-Derived QA Pairs"
+  - "Object-Level Understanding"
+  - "Manual Expert or Crowdsourced Annotation"
 - "unique_context_marker": "[5]"
   "block_ids":
   - 1
@@ -38,20 +38,20 @@
   - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
-  - null
+  - "Feature-Level and Representation Fusion"
+  - "Manual Expert or Crowdsourced Annotation"
 - "unique_context_marker": "[6]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topics"
 - "unique_context_marker": "[7]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prospective Application"
+  - "Prior Methods"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[8]"
@@ -70,7 +70,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
@@ -87,42 +87,42 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Object-Level Understanding"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 1
@@ -131,7 +131,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
   - "Vision Encoder Choices and Scales"
 - "unique_context_marker": "[18]"
   "block_ids":
@@ -139,42 +139,42 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - null
 - "unique_context_marker": "[19]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - null
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - null
 - "unique_context_marker": "[21]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Image-Level Understanding"
 - "unique_context_marker": "[23]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
-  - "Contrastive Alignment Objectives"
+  - "Feature-Level and Representation Fusion"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 1
@@ -186,50 +186,50 @@
   - "Prior Methods"
   "topic_labels":
   - "Other Topics"
-  - "Cross-Modal Alignment and Fusion"
-  - "Attention-Based Co-Encoding"
+  - "Feature-Level and Representation Fusion"
+  - "Language-Conditioned or Semantic Fusion"
 - "unique_context_marker": "[25]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Co-Encoding"
+  - "Language-Conditioned or Semantic Fusion"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Co-Encoding"
+  - "Feature-Level and Representation Fusion"
 - "unique_context_marker": "[27]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Attention-Based Co-Encoding"
+  - "Language-Conditioned or Semantic Fusion"
 - "unique_context_marker": "[28]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Cross-Sensor and Cross-Region Transfer"
+  - "Domain Shift and Data Scarcity Effects"
 - "unique_context_marker": "[29]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Cross-Sensor and Cross-Region Transfer"
+  - "Domain Shift and Data Scarcity Effects"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Cross-Sensor and Cross-Region Transfer"
+  - "Domain Shift and Data Scarcity Effects"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 3
@@ -255,8 +255,8 @@
   - "Prior Methods"
   "topic_labels":
   - "Vision Encoder Choices and Scales"
-  - "Small Object Density and Counting Challenges"
-  - "Small Object Density and Counting Challenges"
+  - "Output Consistency and Error Characteristics"
+  - "Answer Space Constraints"
 - "unique_context_marker": "[34]"
   "block_ids":
   - 7
@@ -284,32 +284,32 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Other Topics"
+  - "Training and Adaptation Regimes"
 - "unique_context_marker": "[38]"
   "block_ids":
   - 11
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Small Object Density and Counting Challenges"
+  - "Output Consistency and Error Characteristics"
 - "unique_context_marker": "[39]"
   "block_ids":
   - 11
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Sensor and Cross-Region Transfer"
+  - "Domain Shift and Data Scarcity Effects"
 - "unique_context_marker": "[40]"
   "block_ids":
   - 11
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Sensor and Cross-Region Transfer"
+  - "Domain Shift and Data Scarcity Effects"
 - "unique_context_marker": "[41]"
   "block_ids":
   - 11
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Bias Analysis and Error Taxonomies"
+  - "Bias and Fairness Considerations"

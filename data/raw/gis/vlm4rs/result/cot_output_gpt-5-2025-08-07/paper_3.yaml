@@ -5,33 +5,33 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Self-Supervised Pretraining on RS Data"
 - "unique_context_marker": "[3, 4, 9, 10]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topics"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[3, 11]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topics"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[12, 13, 14]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topics"
+  - "Self-Supervised Pretraining on RS Data"
 - "unique_context_marker": "[12, 15]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Other Topics"
 - "unique_context_marker": "[1]"
@@ -43,24 +43,24 @@
   - 13
   - 16
   "intent_labels":
-  - "Algorithm/Principle Adoption"
   - "Model/Architecture Adoption"
   - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   - "Prior Methods"
   - "Setting/Protocal Adoption"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Other Topics"
   - "Self-Supervised Pretraining on RS Data"
   - "Self-Supervised Pretraining on RS Data"
   - "Self-Supervised Pretraining on RS Data"
-  - "Training and Adaptation Regimes"
+  - "Multispectral and Temporal Encodings"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
   - "Self-Supervised Pretraining on RS Data"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Other Topics"
 - "unique_context_marker": "[17]"
@@ -73,9 +73,9 @@
   - "Domain Overview"
   - "Resource Utilization"
   "topic_labels":
-  - "Other Topics"
-  - "Multiresolution and Patch Strategies"
-  - "Temporal and Multimodal Variants"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 1
@@ -84,15 +84,15 @@
   - "Domain Overview"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Other Topics"
-  - "Image-Level Understanding"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Other Topics"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 1
@@ -101,22 +101,22 @@
   - "Domain Overview"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Other Topics"
-  - "Pixel-Level and Dense Outputs"
+  - "Public Remote Sensing Benchmarks"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[21, 22, 23, 24, 25, 26, 27, 28, 29, 30]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Other Topics"
+  - "Region-Level Understanding"
 - "unique_context_marker": "[1, 2, 3, 4, 5, 6]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Other Topics"
+  - "Self-Supervised Pretraining on RS Data"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 1
@@ -130,7 +130,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Other Topics"
+  - "Scale, Spatial Complexity, and Resolution Effects"
 - "unique_context_marker": "[34, 35]"
   "block_ids":
   - 1
@@ -151,7 +151,7 @@
   - 11
   "intent_labels":
   - "Model/Architecture Adoption"
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
   "topic_labels":
   - "Vision Encoder Choices and Scales"
@@ -163,21 +163,21 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Temporal and Multimodal Variants"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[39, 40]"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Temporal and Multimodal Variants"
+  - "Region-Level Understanding"
 - "unique_context_marker": "[41, 42, 43, 44]"
   "block_ids":
   - 2
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Temporal and Multimodal Variants"
+  - "Region-Level Understanding"
 - "unique_context_marker": "[45]"
   "block_ids":
   - 2
@@ -191,12 +191,12 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Temporal and Multimodal Variants"
+  - "Pixel-Level and Dense Outputs"
 - "unique_context_marker": "[2, 3, 4, 5, 6]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Self-Supervised Pretraining on RS Data"
 - "unique_context_marker": "[34]"
@@ -211,10 +211,10 @@
   - "Algorithm/Principle Adoption"
   - "Result Comparison"
   "topic_labels":
+  - "Pairwise or Relational RS Supervision"
   - "Self-Supervised Pretraining on RS Data"
-  - "Self-Supervised Pretraining on RS Data"
-  - "Ablation and Component Attribution"
-  - "Pixel-Level and Dense Outputs"
+  - "Evaluation Baselines and Tooling"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[35]"
   "block_ids":
   - 2
@@ -223,15 +223,15 @@
   - "Research Gap"
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Self-Supervised Pretraining on RS Data"
-  - "Train/Val/Test Splits and Domain-Shift Protocols"
+  - "Pairwise or Relational RS Supervision"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[49]"
   "block_ids":
   - 2
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Self-Supervised Pretraining on RS Data"
+  - "Pairwise or Relational RS Supervision"
 - "unique_context_marker": "[50, 51, 52]"
   "block_ids":
   - 2
@@ -252,7 +252,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Self-Supervised Pretraining on RS Data"
+  - "Knowledge- and Context-Augmented"
 - "unique_context_marker": "[54]"
   "block_ids":
   - 2
@@ -264,7 +264,7 @@
   - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Multispectral and Temporal Encodings"
-  - "Multispectral and Temporal Encodings"
+  - "Self-Supervised Pretraining on RS Data"
   - "Multispectral and Temporal Encodings"
 - "unique_context_marker": "[55]"
   "block_ids":
@@ -279,21 +279,21 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Multispectral and Temporal Encodings"
+  - "Cross-Sensor and Cross-Modality Fusion"
 - "unique_context_marker": "[57, 58]"
   "block_ids":
   - 5
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Vision Encoder Choices and Scales"
+  - "Multispectral and Temporal Encodings"
 - "unique_context_marker": "[54, 59, 60]"
   "block_ids":
   - 7
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Multiresolution and Patch Strategies"
+  - "Multispectral and Temporal Encodings"
 - "unique_context_marker": "[34, 3]"
   "block_ids":
   - 11
@@ -317,7 +317,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Multispectral and Temporal Encodings"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[62, 3]"
   "block_ids":
   - 13
@@ -338,11 +338,11 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Image-Level Understanding"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[35, 64]"
   "block_ids":
   - 14
   "intent_labels":
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Train/Val/Test Splits and Domain-Shift Protocols"
+  - "Evaluation Baselines and Tooling"

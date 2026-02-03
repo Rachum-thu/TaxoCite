@@ -41,12 +41,12 @@
   - 4
   "intent_labels":
   - "Prior Methods"
-  - "Domain Overview"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Alignment and Fusion"
-  - "Image-Level Understanding"
-  - "Vision-Language Connectors to LLMs"
+  - "Joint Vision–Language Backbones"
+  - "Manual Expert or Crowdsourced Annotation"
+  - "Parameter-Efficient Adaptation"
 - "unique_context_marker": "[7]"
   "block_ids":
   - 1
@@ -55,8 +55,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Alignment and Fusion"
-  - "Cross-Modal Alignment and Fusion"
+  - "Joint Vision–Language Backbones"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 1
@@ -65,8 +65,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Alignment and Fusion"
-  - "Hallucination Mitigation and Honesty"
+  - "Joint Vision–Language Backbones"
+  - "Output Consistency and Error Characteristics"
 - "unique_context_marker": "[9]"
   "block_ids":
   - 1
@@ -75,8 +75,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Alignment and Fusion"
-  - "Cross-Modal Alignment and Fusion"
+  - "Joint Vision–Language Backbones"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
@@ -85,8 +85,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Alignment and Fusion"
-  - "Cross-Modal Alignment and Fusion"
+  - "Joint Vision–Language Backbones"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[11]"
   "block_ids":
   - 1
@@ -95,78 +95,78 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Cross-Modal Alignment and Fusion"
-  - "Cross-Modal Alignment and Fusion"
+  - "Joint Vision–Language Backbones"
+  - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[12]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding"
+  - "Manual Expert or Crowdsourced Annotation"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Image-Level Understanding"
+  - "Manual Expert or Crowdsourced Annotation"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Language- or Instruction-Derived RS Supervision"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Contrastive Alignment Objectives"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Dataset Construction and Supervision Sources"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 4
@@ -180,21 +180,21 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive Alignment Objectives"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[24]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[25]"
   "block_ids":
   - 4
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Multi-Task and Joint Training"
 - "unique_context_marker": "[26]"
   "block_ids":
   - 6
@@ -215,35 +215,35 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Other Topics"
+  - "Rule-Based or GIS/Map-Derived"
 - "unique_context_marker": "[29]"
   "block_ids":
   - 13
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[30]"
   "block_ids":
   - 13
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[31]"
   "block_ids":
   - 13
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Result Comparison"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[32]"
   "block_ids":
   - 13
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Result Comparison"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Evaluation Baselines and Tooling"
 - "unique_context_marker": "[33]"
   "block_ids":
   - 13

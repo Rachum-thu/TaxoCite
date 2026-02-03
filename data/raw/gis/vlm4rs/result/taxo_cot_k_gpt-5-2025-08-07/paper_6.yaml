@@ -5,31 +5,23 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Language Models and Tokenization"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction Tuning and SFT"
-    - "Instruction-Following Conversational Sets"
+  - - "Task Formulations in RS"
+    - "Task Formulations in RS"
+    - "Task Formulations in RS"
+    - "Joint Vision–Language Backbones"
+    - "Joint Vision–Language Backbones"
 - "unique_context_marker": "[5–7]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[8]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - - "Image-Level Understanding"
     - "Image-Level Understanding"
@@ -42,20 +34,12 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Bias Analysis and Error Taxonomies"
-    - "Reliability, Reasoning, and Trustworthiness"
-    - "Bias Analysis and Error Taxonomies"
-    - "Reliability, Reasoning, and Trustworthiness"
-    - "Bias Analysis and Error Taxonomies"
+  - []
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
-    - "Prior Methods"
-    - "Research Gap"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - []
 - "unique_context_marker": "[11, 12]"
@@ -71,7 +55,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Region-Level Understanding"
+    - "Region-Level Understanding"
+    - "Region-Level Understanding"
+    - "Region-Level Understanding"
+    - "Region-Level Understanding"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
@@ -92,41 +80,57 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Training and Adaptation Regimes"
+    - "Training and Adaptation Regimes"
+    - "Training and Adaptation Regimes"
+    - "Training and Adaptation Regimes"
+    - "Hybrid Supervision and Consistency Losses"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Domain Overview"
+  - - "Research Gap"
     - "Domain Overview"
     - "Domain Overview"
     - "Domain Overview"
-    - "Research Gap"
+    - "Domain Overview"
   "topic_labels":
   - - "Other Topics"
-    - "Reliability, Reasoning, and Trustworthiness"
-    - "Reliability, Reasoning, and Trustworthiness"
-    - "Reliability, Reasoning, and Trustworthiness"
-    - "Logical Consistency Reinforcement"
+    - "Other Topics"
+    - "Task Formulations in RS"
+    - "Output Consistency and Error Characteristics"
+    - "Other Topics"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 3
   "intent_labels":
-  - []
+  - - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
   "topic_labels":
   - []
 - "unique_context_marker": "[19]"
   "block_ids":
   - 3
   "intent_labels":
-  - []
+  - - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
   "topic_labels":
   - []
 - "unique_context_marker": "[20]"
   "block_ids":
   - 3
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
   - []
 - "unique_context_marker": "[21]"
@@ -142,8 +146,4 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
-    - "Language Models and Tokenization"
+  - []

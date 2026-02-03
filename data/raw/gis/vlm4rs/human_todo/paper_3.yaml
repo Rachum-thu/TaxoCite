@@ -51,50 +51,50 @@ blocks:
     over previous state-of-the-art methods on benchmark datasets as well as downstream remote sensing tasks (see 5)'
   citations:
   - marker: '[1, 2, 3, 4, 5, 6, 7, 8]'
-    intent_label: Prior Methods
-    topic_label: Other Topics
+    intent_label: Domain Overview
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[3, 4, 9, 10]'
-    intent_label: Prior Methods
-    topic_label: Other Topics
+    intent_label: Domain Overview
+    topic_label: Image-Level Understanding
   - marker: '[3, 11]'
-    intent_label: Prior Methods
-    topic_label: Other Topics
+    intent_label: Domain Overview
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[12, 13, 14]'
-    intent_label: Prior Methods
-    topic_label: Other Topics
+    intent_label: Domain Overview
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[12, 15]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Other Topics
   - marker: '[1]'
     intent_label: Model/Architecture Adoption
-    topic_label: Other Topics
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[16]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Other Topics
   - marker: '[17]'
     intent_label: Domain Overview
-    topic_label: Other Topics
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[18]'
     intent_label: Domain Overview
-    topic_label: Other Topics
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[19]'
     intent_label: Domain Overview
-    topic_label: Other Topics
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[20]'
     intent_label: Domain Overview
-    topic_label: Other Topics
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[21, 22, 23, 24, 25, 26, 27, 28, 29, 30]'
     intent_label: Prospective Application
-    topic_label: Other Topics
+    topic_label: Region-Level Understanding
   - marker: '[1, 2, 3, 4, 5, 6]'
     intent_label: Research Gap
-    topic_label: Other Topics
+    topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[31]'
     intent_label: Domain Overview
     topic_label: Other Topics
   - marker: '[32, 33]'
     intent_label: Domain Overview
-    topic_label: Other Topics
+    topic_label: Scale, Spatial Complexity, and Resolution Effects
   - marker: '[34, 35]'
     intent_label: Research Gap
     topic_label: Self-Supervised Pretraining on RS Data
@@ -130,35 +130,35 @@ blocks:
     architecture, and propose a novel self-supervised framework for satellite data.'
   citations:
   - marker: '[1]'
-    intent_label: Model/Architecture Adoption
+    intent_label: Prior Methods
     topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[29, 28, 37, 38]'
     intent_label: Domain Overview
     topic_label: Temporal and Multimodal Variants
   - marker: '[39, 40]'
-    intent_label: Domain Overview
+    intent_label: Prior Methods
     topic_label: Temporal and Multimodal Variants
   - marker: '[41, 42, 43, 44]'
     intent_label: Domain Overview
-    topic_label: Temporal and Multimodal Variants
+    topic_label: Region-Level Understanding
   - marker: '[45]'
     intent_label: Domain Overview
     topic_label: Temporal and Multimodal Variants
   - marker: '[46, 47, 48, 27]'
-    intent_label: Domain Overview
-    topic_label: Temporal and Multimodal Variants
+    intent_label: Prior Methods
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[2, 3, 4, 5, 6]'
     intent_label: Domain Overview
     topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[34]'
     intent_label: Research Gap
-    topic_label: Self-Supervised Pretraining on RS Data
+    topic_label: Pairwise or Relational RS Supervision
   - marker: '[35]'
     intent_label: Research Gap
-    topic_label: Self-Supervised Pretraining on RS Data
+    topic_label: Pairwise or Relational RS Supervision
   - marker: '[49]'
     intent_label: Prior Methods
-    topic_label: Self-Supervised Pretraining on RS Data
+    topic_label: Pairwise or Relational RS Supervision
   - marker: '[50, 51, 52]'
     intent_label: Prior Methods
     topic_label: Self-Supervised Pretraining on RS Data
@@ -167,7 +167,7 @@ blocks:
     topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[53]'
     intent_label: Research Gap
-    topic_label: Self-Supervised Pretraining on RS Data
+    topic_label: Knowledge- and Context-Augmented
   - marker: '[54]'
     intent_label: Research Gap
     topic_label: Multispectral and Temporal Encodings
@@ -176,7 +176,7 @@ blocks:
     topic_label: Other Topics
   - marker: '[56]'
     intent_label: Research Gap
-    topic_label: Multispectral and Temporal Encodings
+    topic_label: Cross-Sensor and Cross-Modality Fusion
 - block_id: 3
   content: ''
   citations: []
@@ -194,10 +194,10 @@ blocks:
     on the masked patches [1].'
   citations:
   - marker: '[1]'
-    intent_label: Prior Methods
+    intent_label: Algorithm/Principle Adoption
     topic_label: Self-Supervised Pretraining on RS Data
   - marker: '[36]'
-    intent_label: Prior Methods
+    intent_label: Model/Architecture Adoption
     topic_label: Vision Encoder Choices and Scales
 - block_id: 5
   content: 'Positional encoding allows transformers to make their learned representations position-aware. In MAE [1] and in
@@ -292,7 +292,7 @@ blocks:
   citations:
   - marker: '[17]'
     intent_label: Domain Overview
-    topic_label: Multiresolution and Patch Strategies
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[34, 35]'
     intent_label: Domain Overview
     topic_label: Multispectral and Temporal Encodings
@@ -301,7 +301,7 @@ blocks:
     topic_label: Multispectral and Temporal Encodings
   - marker: '[54, 59, 60]'
     intent_label: Prior Methods
-    topic_label: Multiresolution and Patch Strategies
+    topic_label: Multispectral and Temporal Encodings
 - block_id: 8
   content: 'While MAE does operate on images I ∈ R^{C×H×W}, usually C = 3 for RGB images. Satellite data, on the other hand,
     can often have multiple spectral bands. For example, Sentinel-2 imagery has C = 13 bands of 10m, 20m and 60m spatial resolution,
@@ -366,7 +366,7 @@ blocks:
   citations:
   - marker: '[17]'
     intent_label: Resource Utilization
-    topic_label: Temporal and Multimodal Variants
+    topic_label: Public Remote Sensing Benchmarks
 - block_id: 11
   content: In this section, we perform experiments on fMoW single image classification task. Following [34], we report both
     the performance of linear probing and finetuning setting. Table 1 shows that compared to the previous state-of-the-art
@@ -406,13 +406,13 @@ blocks:
   citations:
   - marker: '[34]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Ablation and Component Attribution
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[54]'
     intent_label: Prior Methods
     topic_label: Multispectral and Temporal Encodings
   - marker: '[48]'
     intent_label: Result Comparison
-    topic_label: Multispectral and Temporal Encodings
+    topic_label: Evaluation Baselines and Tooling
 - block_id: 13
   content: 'In this section, we pre-train and finetune SatMAE on the image classification task of the fMoW-Sentinel dataset.
     We pre-train SatMAE+Stack 4.2 and investigate SatMAE+Group+CM 4.1.2 and SatMAE+Group+IM 4.1.2, (see 4.2, 4.2). The full
@@ -449,7 +449,7 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Training and Adaptation Regimes
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[61]'
     intent_label: Result Comparison
     topic_label: Vision Encoder Choices and Scales
@@ -493,22 +493,22 @@ blocks:
   citations:
   - marker: '[18]'
     intent_label: Benchmark Utilization
-    topic_label: Image-Level Understanding
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[20]'
     intent_label: Benchmark Utilization
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[34]'
     intent_label: Result Comparison
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[35]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Train/Val/Test Splits and Domain-Shift Protocols
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[63]'
     intent_label: Benchmark Utilization
-    topic_label: Image-Level Understanding
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[35, 64]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Train/Val/Test Splits and Domain-Shift Protocols
+    topic_label: Evaluation Baselines and Tooling
 - block_id: 15
   content: We show the visualization of the reconstruction quality of two different SatMAE masking strategies. SatMAE+IM successfully
     reconstructs all the airplanes even though their number varies across time. In contrast, the SatMAE with Consistent Masking

@@ -80,19 +80,19 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023b]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Joint Vision–Language Backbones
   - marker: '[Chen et al., 2023a]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Joint Vision–Language Backbones
   - marker: '[Zhan et al., 2023b]'
     intent_label: Prior Methods
-    topic_label: Object/Region-Level Grounding and Referring
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[Liu et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[Yuan et al., 2023a]'
     intent_label: Domain Overview
-    topic_label: Task Formulations in RS VLM
+    topic_label: Task Formulations in RS
   - marker: '[Hoxha et al., 2023]'
     intent_label: Domain Overview
     topic_label: Image-Level Understanding
@@ -101,7 +101,7 @@ blocks:
     topic_label: Image-Level Understanding
   - marker: '[Zhan et al., 2023a]'
     intent_label: Domain Overview
-    topic_label: Object/Region-Level Grounding and Referring
+    topic_label: Object-Level Understanding
   - marker: '[Bashmal et al., 2023]'
     intent_label: Research Gap
     topic_label: Temporal and Multimodal Variants
@@ -119,19 +119,19 @@ blocks:
   citations:
   - marker: '[Yuan et al., 2023a]'
     intent_label: Domain Overview
-    topic_label: Task Formulations in RS VLM
+    topic_label: Task Formulations in RS
   - marker: '[Yuan et al., 2023b]'
     intent_label: Domain Overview
     topic_label: Image-Level Understanding
   - marker: '[Zhan et al., 2023a]'
     intent_label: Domain Overview
-    topic_label: Object/Region-Level Grounding and Referring
+    topic_label: Region-Level Understanding
   - marker: '[Bashmal et al., 2023]'
     intent_label: Domain Overview
     topic_label: Temporal and Multimodal Variants
   - marker: '[Xiong et al., 2022]'
-    intent_label: Prior Methods
-    topic_label: Task Formulations in RS VLM
+    intent_label: Research Gap
+    topic_label: Task Formulations in RS
 - block_id: 4
   content: With the rise of advanced LLMs, ChatGPT [OpenAI, 2022], LLaMA [Touvron et al., 2023a], GPT-4 [OpenAI, 2023], and
     Vicuna [Chiang et al., 2023] have shown remarkable abilities in various language tasks. BLIP-2 [Li et al., 2023] extends
@@ -146,13 +146,13 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023b]'
     intent_label: Prior Methods
-    topic_label: Textualization of Geometry and Masks
+    topic_label: Structured Spatial Outputs
   - marker: '[Chen et al., 2023a]'
     intent_label: Prior Methods
-    topic_label: Textualization of Geometry and Masks
+    topic_label: Structured Spatial Outputs
   - marker: '[Liu et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[OpenAI, 2022]'
     intent_label: Prior Methods
     topic_label: Language Models and Tokenization
@@ -167,13 +167,13 @@ blocks:
     topic_label: Language Models and Tokenization
   - marker: '[Li et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[Zhu et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[Wang et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Textualization of Geometry and Masks
+    topic_label: Structured Spatial Outputs
   - marker: '[Hu et al., 2023]'
     intent_label: Research Gap
     topic_label: Image-Level Understanding
@@ -190,19 +190,19 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023b]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[Chen et al., 2023a]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[Liu et al., 2023]'
     intent_label: Research Gap
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[Wang et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[Dai et al., 2023]'
     intent_label: Research Gap
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
 - block_id: 6
   content: ''
   citations: []
@@ -238,10 +238,10 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023a]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Multiresolution and Patch Strategies
+    topic_label: Computational and Data-Scale Constraints
   - marker: '[Li et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[Fang et al., 2023]'
     intent_label: Model/Architecture Adoption
     topic_label: Vision Encoder Choices and Scales
@@ -296,16 +296,16 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023a]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Language- or Instruction-Derived RS Supervision
   - marker: '[Mou et al., 2020]'
     intent_label: Resource Utilization
-    topic_label: Temporal and Multimodal Variants
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[Li et al., 2020]'
     intent_label: Resource Utilization
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[Xia et al., 2018]'
     intent_label: Resource Utilization
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
 - block_id: 9
   content: 'The model is trained to follow a series of task-specific instructions on the RS multi-modal instruction-following
     data. To achieve an effective SkyEyeGPT, we design a two-stage instruction tuning approach.
@@ -362,7 +362,7 @@ blocks:
   citations:
   - marker: '[Chen et al., 2023a]'
     intent_label: Resource Utilization
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Joint Vision–Language Backbones
 - block_id: 12
   content: We have developed a demonstration of a remote sensing multi-modal chatbot, showcasing the vision-language understanding
     and conversational capabilities of SkyEyeGPT. We also provide several real conversations with users or comparisons. Surprisingly,

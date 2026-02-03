@@ -43,25 +43,25 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Prior Methods
-    topic_label: Rule-Based and OSM-Derived QA Pairs
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[2]'
     intent_label: Prior Methods
-    topic_label: Language Models and Tokenization
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[3]'
     intent_label: Prior Methods
     topic_label: Language Models and Tokenization
   - marker: '[4]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[5]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[7]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[8]'
     intent_label: Domain Overview
     topic_label: Other Topics
@@ -138,7 +138,7 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[3]'
     intent_label: Prior Methods
     topic_label: Language Models and Tokenization
@@ -153,7 +153,7 @@ blocks:
     topic_label: Vision Encoder Choices and Scales
   - marker: '[12]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Representation Learning Backbones for RS
   - marker: '[13]'
     intent_label: Algorithm/Principle Adoption
     topic_label: Vision Encoder Choices and Scales
@@ -198,16 +198,16 @@ blocks:
   citations:
   - marker: '[4]'
     intent_label: Result Comparison
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[9]'
     intent_label: Result Comparison
     topic_label: Vision Encoder Choices and Scales
   - marker: '[15]'
-    intent_label: Benchmark Utilization
-    topic_label: Train/Val/Test Splits and Domain-Shift Protocols
+    intent_label: Setting/Protocal Adoption
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[16]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Supervision Sources
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[17]'
     intent_label: Resource Utilization
     topic_label: Language Models and Tokenization

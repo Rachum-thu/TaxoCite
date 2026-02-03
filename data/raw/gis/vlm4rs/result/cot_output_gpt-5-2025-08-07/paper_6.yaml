@@ -5,14 +5,14 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Image-Level Understanding"
 - "unique_context_marker": "[5–7]"
   "block_ids":
   - 1
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Object/Region-Level Grounding and Referring"
+  - "Object-Level Understanding"
 - "unique_context_marker": "[8]"
   "block_ids":
   - 1
@@ -26,88 +26,88 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Bias Analysis and Error Taxonomies"
+  - "Output Consistency and Error Characteristics"
 - "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
-  - "Prompt-Based Modulation"
+  - "Prompt-Based Conditioning"
 - "unique_context_marker": "[11, 12]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Bias Analysis and Error Taxonomies"
+  - "Output Consistency and Error Characteristics"
 - "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
   - "Prospective Application"
   "topic_labels":
-  - "Other Topics"
+  - "Region-Level Understanding"
 - "unique_context_marker": "[14]"
   "block_ids":
   - 1
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Instruction Tuning and SFT"
+  - "Instruction Tuning and Supervised Fine-Tuning (SFT)"
 - "unique_context_marker": "[15]"
   "block_ids":
   - 1
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Logical Consistency Reinforcement"
+  - "Hybrid Supervision and Consistency Losses"
 - "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Logical Consistency Reinforcement"
+  - "Hybrid Supervision and Consistency Losses"
 - "unique_context_marker": "[17]"
   "block_ids":
   - 1
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Hallucination Mitigation and Honesty"
+  - "Task Formulations in RS"
 - "unique_context_marker": "[18]"
   "block_ids":
   - 3
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[19]"
   "block_ids":
   - 3
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Visual Grounding Corpora and Geometry Labels"
+  - "Public Remote Sensing Benchmarks"
 - "unique_context_marker": "[20]"
   "block_ids":
   - 3
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Other Topics"
+  - "Region-Level Understanding"
 - "unique_context_marker": "[21]"
   "block_ids":
   - 4
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Memory/Compute Optimization Techniques"
+  - "Training and Adaptation Regimes"
 - "unique_context_marker": "[22]"
   "block_ids":
   - 6
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Language Models and Tokenization"
+  - "Joint Vision–Language Backbones"
