@@ -13,25 +13,28 @@ User Prompt:
 **Core Requirement:**
 Infer a single, unified taxonomy that captures how references are conceptually used across non-survey research papers within the provided topic. 
 
-1. The Paper Content provides examples of how references can be conceptually used. Survey Content aids to (a) clarify terminology and (b) consolidate overlapping concepts, and (c) introduce additional conceptual terms that are *parallel to* those observed in the Paper Content.
+1. The Paper Content provides examples of how references are conceptually used within the topic. Survey Content aids to (a) clarify terminology and (b) consolidate overlapping concepts, and (c) introduce additional knowledge to sample Paper Content.
 2. The taxonomy MUST reflect topic-specific reference functions rather than generic paper sections (e.g., avoid labels such as "Introduction", "Related Work", "Methods"). When evidence is weak or inconsistent, prefer higher-level, safer abstractions. 
-3. The taxonomy MUST be reusable across multiple research papers under the provided topic beyond the provided Paper Content. Avoid specific paper titles, benchmark names, dataset names, tool names, or model names.
-4. The topic may be interdisciplinary. When reference usage reflects different disciplinary perspectives, the taxonomy should explicitly represent these lenses, rather than collapsing them into a single-domain framing. Identify the primary disciplinary perspectives that dominate reference usage, and represent secondary or supporting disciplines at a coarser level of granularity.
+3. The taxonomy MUST be reusable across multiple research papers under the provided topic.
+4. The taxonomy MUST be defined by intrinsic conceptual or structural logic rather than by specific or enumerations of methods, model families, techniques, or implementation variants. Avoid categories that are inherently open-ended and could be easily expanded by adding additional parallel nodes.
+5. The topic may be interdisciplinary. When reference usage reflects different disciplinary perspectives, the taxonomy should explicitly distinguish between concepts that are central to the core topic and concepts borrowed from contributing fields, rather than collapsing all references into a single-domain framing.
 
 **Instructions:**
 1. **Analyze the Paper and Survey Content:** Identify the intent of the references in the Paper Content, including how they are used to frame problems, motivate methods, support assumptions, or interpret results. Survey Content is used only as secondary support to clarify terminology, merge overlapping concepts, or introduce additional *parallel* conceptual terms that fit the Paper Content. 
 2. **Extract the Hierarchy:** Build a taxonomy where:
    - **Level 1 (#):** Must be exactly "{topic_name}".
-   - **Level 2 (##):** Major dimensions/paradigms of the topic. 
-      - **Logic-First Principle:** Identify all Level-2 nodes first, before expanding the hierarchy. Each Level-2 node must represent a distinct conceptual role , with no overlap between nodes. Together, the Level-2 nodes must be sufficient to cover the major reference-usage logic under "{topic_name}".
-   - **Level 3 (###):** Specific sub-categories or methodological classes.
-      - Refine Level-2 dimensions while remaining abstract. Level-3 nodes must be defined by intrinsic conceptual or structural logic, producing a set of categories that is relatively complete and stable at this level. Do NOT define Level-3 nodes by listing methods, model families, or technique variants, as such classifications are inherently open-ended and not logically complete. Avoid classifications that are open-ended by nature and could be easily expanded with additional parallel categories.
+   - **Level 2 (##):** Major dimensions/paradigms of the topic. **Logic-First Principle:** Identify all Level-2 nodes before expanding the hierarchy. 
+      - Each Level-2 node must represent a distinct conceptual role in how references are used, with no overlap between nodes. 
+      - Taken together, the Level-2 nodes SHOULD be sufficient to account for the major reference-usage logics under "{topic_name}".
+      - Evaluate the Level-2 set for redundancy and incompleteness: merge nodes that are conceptually redundant, and split nodes that conflate multiple distinct roles.
+      - Refine the Level-2 nodes iteratively until the set is logically complete, mutually exclusive, and stable.
+   - **Level 3 (###):** Specific sub-categories or methodological classes while remaining abstract. Level-3 nodes must be conceptually consistent with their parent Level-2 node and should further specify its role without introducing overlap across different Level-2 branches. Avoid introducing concepts at Level-3 that would be more appropriately placed at Level-2.
    - Hard Constraint: Do NOT use level-4 headers (####). The deepest allowed level is ###.
 3. **Descriptions:**
    - Every node (except for the root) MUST have a one-line description immediately under it.
    - Use this exact format for the description line:
      `**Description:** <one concise sentence (8-20 words) summarizing this node>`
-   - Descriptions must be neutral, factual, and based on the Paper and Survey Content (no citations).
+   - Descriptions must be neutral, factual, aligned with the Paper and Survey Content (no citations).
    - Do not repeat the node name verbatim in its description.
 6. **Formatting (Strict):**
    - Output ONLY the taxonomy.
@@ -39,7 +42,7 @@ Infer a single, unified taxonomy that captures how references are conceptually u
    - Under each header, include exactly ONE description line as specified.
    - No extra bullet points, no numbering, no citations, no commentary, no blank sections.
    
-An example taxonomy for the topic "retrieval augmented generation" is:
+An example taxonomy for the topic "retrieval augmented generation":
 """
 # retrieval augmented generation
 
@@ -52,18 +55,30 @@ An example taxonomy for the topic "retrieval augmented generation" is:
 ### Retrieval Granularity
 **Description:** Selection of indexing units such as documents, chunks, tokens, entities, or mentions.
 
-### Indexing and Query Optimization
-**Description:** Chunking, metadata, hierarchical indices, and query rewriting/expansion to improve recall and precision.
 ...
+
+## Generation
+
+...
+
+## Retrieval Integration for Generation
+...
+
 """
 
 **Paper Content:**
 """
-Paper Content:
+
 {paper_text}
 
-Survey Content:
+"""
+
+**Survey Content:**
+
+"""
+
 {survey_text}
+
 """
 
 **Output:**

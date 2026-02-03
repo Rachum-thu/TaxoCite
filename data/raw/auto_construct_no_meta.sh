@@ -29,9 +29,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Run each pipeline step
 # bash "$SCRIPT_DIR/util/convert_pdf_to_txt.sh" "$DIR"
 # bash "$SCRIPT_DIR/util/convert_txt_to_md.sh" "$DIR"
-# bash "$SCRIPT_DIR/util/generate_taxonomy.sh" "$DIR" --topic_name "Remote Sensing with Vision-Language Models"
-bash "$SCRIPT_DIR/util/segment_papers.sh" "$DIR"
-bash "$SCRIPT_DIR/util/locate_references.sh" "$DIR" --mode no_meta
+bash "$SCRIPT_DIR/util/generate_taxonomy.sh" "$DIR" --topic_name "Remote Sensing with Vision-Language Models"
+# bash "$SCRIPT_DIR/util/segment_papers.sh" "$DIR"
+# bash "$SCRIPT_DIR/util/locate_references.sh" "$DIR" --mode no_meta
 
 echo "=========================================="
 echo "Pipeline completed successfully!"
