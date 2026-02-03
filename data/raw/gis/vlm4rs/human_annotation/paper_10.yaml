@@ -47,52 +47,52 @@ blocks:
   citations:
   - marker: '[27]'
     intent_label: Resource Utilization
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[38]'
     intent_label: Resource Utilization
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[12]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[26]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[35]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[7]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[37]'
     intent_label: Prior Methods
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[30]'
     intent_label: Prospective Application
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Other Topics
   - marker: '[17]'
-    intent_label: Research Gap
-    topic_label: Region-Level Interaction Tasks
+    intent_label: Prior Methods
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[28]'
     intent_label: Research Gap
-    topic_label: Adaptation and Tuning Regimes
+    topic_label: Hybrid Supervision and Consistency Losses
   - marker: '[1]'
-    intent_label: Research Gap
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    intent_label: Prior Methods
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[2]'
-    intent_label: Research Gap
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    intent_label: Prior Methods
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[5]'
-    intent_label: Research Gap
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    intent_label: Prior Methods
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[16]'
-    intent_label: Research Gap
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    intent_label: Prior Methods
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[4]'
     intent_label: Research Gap
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Language Models and Tokenization
   - marker: '[14]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
 - block_id: 1
   content: 'Remote Sensing Referring Detection and Segmentation. Compared to multimodal tasks like image captioning [15, 41],
     text-image retrieval [20], and visual question answering (VQA) [18] in RS, research on referring detection is a novel
@@ -126,76 +126,76 @@ blocks:
   citations:
   - marker: '[38]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[7]'
     intent_label: Research Gap
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[37]'
     intent_label: Prior Methods
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[17]'
     intent_label: Prior Methods
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[4]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[14]'
-    intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    intent_label: Prior Methods
+    topic_label: Image-Level Understanding
   - marker: '[15]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[41]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[20]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[18]'
     intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Image-Level Understanding
   - marker: '[10]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[13]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[3]'
     intent_label: Prior Methods
-    topic_label: Textualization of Spatial Outputs
+    topic_label: Textualization of Geometry and Masks
   - marker: '[8]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[31]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[34]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[39]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[32]'
-    intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    intent_label: Prior Methods
+    topic_label: Image-Level Understanding
   - marker: '[42]'
-    intent_label: Domain Overview
-    topic_label: Image-Level Understanding Tasks
+    intent_label: Prior Methods
+    topic_label: Image-Level Understanding
   - marker: '[21]'
     intent_label: Research Gap
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[22]'
     intent_label: Research Gap
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[40]'
     intent_label: Research Gap
-    topic_label: Region-Level Interaction Tasks
+    topic_label: Object/Region-Level Grounding and Referring
 - block_id: 2
   content: The architecture of GeoGround is highly streamlined, consisting of only a visual encoder (CLIP-ViT [24]), a connector
     (two-layer MLPs), and an LLM (Vicuna 1.5 [43]), without introducing additional encoders or decoders. The framework of
@@ -204,10 +204,10 @@ blocks:
   citations:
   - marker: '[24]'
     intent_label: Model/Architecture Adoption
-    topic_label: Contrastive Vision-Language Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[43]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
 - block_id: 3
   content: 'To train three types of visual grounding tasks with a unified data pipeline, we textualize the three grounding
     supervision signals into three corresponding text strings. We refer to this process as signal textualization, which serves
@@ -235,13 +235,13 @@ blocks:
   citations:
   - marker: '[3]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Textualization of Spatial Outputs
+    topic_label: Textualization of Geometry and Masks
   - marker: '[44]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Textualization of Spatial Outputs
+    topic_label: Textualization of Geometry and Masks
   - marker: '[9]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Textualization of Spatial Outputs
+    topic_label: Textualization of Geometry and Masks
 - block_id: 4
   content: 'We propose a hybrid supervision that simultaneously utilizes Text-HBB, Text-OBB, and Text-Mask to comprehensively
     enhance the visual grounding capabilities of VLMs. First, we adopt a basic supervised learning paradigm to train three
@@ -305,16 +305,16 @@ blocks:
   citations:
   - marker: '[38]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[12]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[7]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Instruction-Following Conversational Sets
   - marker: '[14]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
 - block_id: 6
   content: Our method is based on LLaVA-1.5-7B [16] with the input image resolution fixed at 336×336. We utilize the AdamW
     optimizer [19], starting with an initial learning rate of 2e-4, followed by a linear decay schedule after a warm-up phase
@@ -325,13 +325,13 @@ blocks:
   citations:
   - marker: '[16]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[19]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Adaptation and Tuning Regimes
+    topic_label: Other Topics
   - marker: '[12, 26, 35]'
-    intent_label: null
-    topic_label: Dataset Construction and Annotation
+    intent_label: Resource Utilization
+    topic_label: Visual Grounding Corpora and Geometry Labels
 - block_id: 7
   content: 'Settings. We follow standard evaluation protocols [14, 22] and assess the REC task using Acc@0.5 metric. Except
     for H2RSVLM [22] and EarthGPT [40], whose metrics are cited in the original articles due to the lack of open source code,
@@ -350,19 +350,19 @@ blocks:
   citations:
   - marker: '[7]'
     intent_label: Result Comparison
-    topic_label: Adaptation and Tuning Regimes
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[1]'
     intent_label: Result Comparison
-    topic_label: Adaptation and Tuning Regimes
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[22]'
     intent_label: Result Comparison
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[40]'
     intent_label: Result Comparison
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Object/Region-Level Grounding and Referring
   - marker: '[14, 22]'
     intent_label: Setting/Protocal Adoption
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Metrics and Thresholds for Grounding
 - block_id: 8
   content: 'Settings. Following GeoChat [7], we also use Acc@0.5 as metric, with the difference being that rotated IoU [36]
     is used instead of normal IoU during the calculation.
@@ -375,10 +375,10 @@ blocks:
   citations:
   - marker: '[7]'
     intent_label: Metrics Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Metrics and Thresholds for Grounding
   - marker: '[36]'
     intent_label: Metrics Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Metrics and Thresholds for Grounding
 - block_id: 9
   content: 'Settings. We utilize Acc@0.5 and Mean Intersection-over-Union (mIoU) as evaluation metrics, similar to prior studies
     [33, 37]. As GeoGround is currently the only RS VLM that supports the RES task, we compare it with three generalist VLMs
@@ -392,13 +392,13 @@ blocks:
   citations:
   - marker: '[17]'
     intent_label: Benchmark Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Visual Grounding Corpora and Geometry Labels
   - marker: '[33, 37]'
     intent_label: Metrics Utilization
-    topic_label: Task-Specific Metrics and Protocols
+    topic_label: Metrics and Thresholds for Grounding
   - marker: '[6]'
     intent_label: Resource Utilization
-    topic_label: Connector and Prompt Mechanisms
+    topic_label: Region and Point Prompting Interfaces
 - block_id: 10
   content: 'Effect of Hybrid Supervision. The ablation study of the components in our proposed hybrid supervision method confirms
     their effectiveness and further highlights the importance of output consistency in improving performance. To compute BCS,
@@ -419,7 +419,7 @@ blocks:
   citations:
   - marker: '[9]'
     intent_label: Result Comparison
-    topic_label: Textualization of Spatial Outputs
+    topic_label: Textualization of Geometry and Masks
 - block_id: 11
   content: Qualitative comparisons between GeoGround and GeoChat include HBBs and OBBs. It can be observed that GeoGround
     consistently demonstrates superior localization accuracy, whether handling simple or relatively complex referential expressions.

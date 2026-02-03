@@ -43,28 +43,28 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Prior Methods
-    topic_label: Rule-Driven QA and Grounding Labels
+    topic_label: Rule-Based and OSM-Derived QA Pairs
   - marker: '[2]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Language Models and Tokenization
   - marker: '[3]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[4]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[5]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[7]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[8]'
     intent_label: Domain Overview
-    topic_label: Remote Sensing with Vision-Language Models
+    topic_label: Other Topics
 - block_id: 2
   content: 'Given a triplet (I, Q, A) of an image, question, and answer, a VQA system provides the answer A given the image
     I and the question Q as the input. In line with the RS literature, we consider VQA in RS as a classification problem,
@@ -138,28 +138,28 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Connector and Prompt Mechanisms
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[3]'
     intent_label: Prior Methods
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
   - marker: '[9]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[10]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[11]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[12]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Attention-Based Co-Encoding
   - marker: '[13]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Attention-Based Fusion Blocks
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[14]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Knowledge Distillation and Freezing Policies
 - block_id: 3
   content: 'The experiments were conducted on the RSVQAxBEN benchmark dataset [15], which contains almost 15 million image/question/answer
     triplets extracted from the BigEarthNet-S2 dataset [16]. The questions provided in this dataset are about: i) the presence
@@ -198,19 +198,19 @@ blocks:
   citations:
   - marker: '[4]'
     intent_label: Result Comparison
-    topic_label: Spectral/Temporal Encoding and Masking
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[9]'
     intent_label: Result Comparison
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[15]'
-    intent_label: Setting/Protocal Adoption
-    topic_label: Task-Specific Metrics and Protocols
+    intent_label: Benchmark Utilization
+    topic_label: Train/Val/Test Splits and Domain-Shift Protocols
   - marker: '[16]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[17]'
     intent_label: Resource Utilization
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Language Models and Tokenization
 - block_id: 4
   content: 'In this paper, we have studied efficient transformer-based models in the framework of VQA in RS. In particular,
     we have introduced the LiT-4-RSVQA architecture. Our architecture is based on lightweight transformer encoder modules,

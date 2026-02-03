@@ -103,37 +103,37 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Prospective Application
-    topic_label: Task Scoping and Formulations
+    topic_label: Other Topics
   - marker: '[2]'
     intent_label: Prospective Application
-    topic_label: Task Scoping and Formulations
+    topic_label: Other Topics
   - marker: '[3]'
     intent_label: Prospective Application
-    topic_label: Task Scoping and Formulations
+    topic_label: Other Topics
   - marker: '[4]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[5]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding Tasks
+    topic_label: Vision Encoder Choices and Scales
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[7]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[8]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[9]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[10]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
 - block_id: 2
   content: ''
   citations: []
@@ -159,37 +159,37 @@ blocks:
   citations:
   - marker: '[6]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Image-Level Understanding
   - marker: '[12]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[13]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[14]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[15]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[16]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[17]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Image-Level Understanding
   - marker: '[18]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Image-Level Understanding
   - marker: '[19]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Dataset Construction and Supervision Sources
   - marker: '[20]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Contrastive Alignment Objectives
   - marker: '[21]'
     intent_label: Domain Overview
-    topic_label: Dataset Construction and Annotation
+    topic_label: Dataset Construction and Supervision Sources
 - block_id: 4
   content: With the growing availability of remote sensing multimodal datasets, a number of vision-language models [6], [7],
     [8], [9], [10], [11] have been proposed to enhance the understanding and interpretation of aerial imagery through natural
@@ -210,34 +210,34 @@ blocks:
   citations:
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Connector and Prompt Mechanisms
+    topic_label: Vision-Language Connectors to LLMs
   - marker: '[7]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[8]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Hallucination Mitigation and Honesty
   - marker: '[9]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[10]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Cross-Modal Alignment and Fusion
   - marker: '[22]'
     intent_label: Domain Overview
-    topic_label: Task Scoping and Formulations
+    topic_label: Other Topics
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: Contrastive Vision-Language Encoders
+    topic_label: Contrastive Alignment Objectives
   - marker: '[24]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Instruction Tuning and SFT
   - marker: '[25]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Fusion, Alignment, and Outputs
+    topic_label: Other Topics
 - block_id: 5
   content: 'Most existing remote sensing VLM datasets focus primarily on basic descriptions of objects in a scene, typically
     providing only information about the objects present. While these datasets serve a purpose in supporting fundamental tasks
@@ -279,13 +279,13 @@ blocks:
   citations:
   - marker: '[26]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Language Models and Tokenization
   - marker: '[27]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Language Models and Tokenization
   - marker: '[28]'
     intent_label: Resource Utilization
-    topic_label: Dataset Construction and Annotation
+    topic_label: Other Topics
 - block_id: 7
   content: 'Through the above data construction pipeline, the RSWK dataset successfully collected a total of 14,141 landmark
     instances from 175 countries, each accompanied by high-resolution satellite imagery, domain-specific remote sensing attributes,
@@ -444,19 +444,19 @@ blocks:
   citations:
   - marker: '[29]'
     intent_label: Result Comparison
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Instruction Tuning and SFT
   - marker: '[30]'
     intent_label: Result Comparison
-    topic_label: Instruction Tuning and Reinforcement Alignment
+    topic_label: Instruction Tuning and SFT
   - marker: '[31]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Instruction Tuning and SFT
   - marker: '[32]'
     intent_label: Model/Architecture Adoption
-    topic_label: Pretraining Backbones and Modal Encoders
+    topic_label: Instruction Tuning and SFT
   - marker: '[33]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Prompt and Adapter Tuning
+    topic_label: Parameter-Efficient Adaptation
 - block_id: 14
   content: 'The performance of baseline and proposed models on the image captioning task over remote sensing imagery is evaluated
     using a comprehensive set of metrics including BLEU-1 to BLEU-4, METEOR, ROUGE-L, and CIDEr. Among the baseline models,
