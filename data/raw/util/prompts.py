@@ -1,6 +1,6 @@
 taxonomy_induction_prompt_paper_and_survey = '''
 System Role:
-You are a Senior Domain Scientist and Taxonomist. Your goal is to construct a reusable taxonomy that captures how prior work (references) is conceptually used across papers within the same research topic.
+You are a Senior Domain Scientist and Taxonomist. Your goal is to construct a reusable domain-specific topic taxonomy that captures how prior work (references) is conceptually used across papers within the same research topic.
 
 User Prompt:
 **Task:** Construct a topic-specific taxonomy for the research topic: "{topic_name}".
@@ -23,15 +23,11 @@ Infer a single, unified taxonomy that captures how references are conceptually u
 2. **Extract the Hierarchy:** Build a taxonomy where:
    - **Level 1 (#):** Must be exactly "{topic_name}".
    - **Level 2 (##):** Major dimensions/paradigms of the topic. 
+      - **Logic-First Principle:** Identify all Level-2 nodes first, before expanding the hierarchy. Each Level-2 node must represent a distinct conceptual role , with no overlap between nodes. Together, the Level-2 nodes must be sufficient to cover the major reference-usage logic under "{topic_name}".
    - **Level 3 (###):** Specific sub-categories or methodological classes.
+      - Refine Level-2 dimensions while remaining abstract. Level-3 nodes must be defined by intrinsic conceptual or structural logic, producing a set of categories that is relatively complete and stable at this level. Do NOT define Level-3 nodes by listing methods, model families, or technique variants, as such classifications are inherently open-ended and not logically complete. Avoid classifications that are open-ended by nature and could be easily expanded with additional parallel categories.
    - Hard Constraint: Do NOT use level-4 headers (####). The deepest allowed level is ###.
-3. **Level-2 Identification (Logic-First):** Identify all Level-2 nodes first, before expanding the hierarchy. Each Level-2 node must represent a distinct conceptual role in how references are used, with no overlap between nodes. Together, the Level-2 nodes must be sufficient to cover the major reference-usage logic under "{topic_name}".
-4. **Granularity Control (Crucial):**
-   - **Total Node Count:** 20-30 nodes total (including the root).
-   - **Depth (Strict):** Exactly 3 levels total (#, ##, ###). Do not produce any #### nodes.
-   - **Leaf Nodes:** Must be concepts/method categories (e.g., "Location Encoder"), NOT specific paper titles, benchmark names, dataset names, tool names, or model names.
-   -**Exclusivity Requirement:** Leaf nodes should be conceptually distinct and non-overlapping across the taxonomy. Avoid duplicating the same underlying concept under different disciplinary perspectives.
-5. **Descriptions:**
+3. **Descriptions:**
    - Every node (except for the root) MUST have a one-line description immediately under it.
    - Use this exact format for the description line:
      `**Description:** <one concise sentence (8-20 words) summarizing this node>`

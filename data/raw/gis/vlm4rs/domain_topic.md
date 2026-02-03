@@ -80,3 +80,6 @@
 
 ### Spectral/Temporal Encoding and Masking
 **Description:** Positional encodings, band grouping, and independent masking across time or spectra.
+
+## Other Topics
+**Description:** Topics and methods that do not fit into the above categories or are emerging areas.
