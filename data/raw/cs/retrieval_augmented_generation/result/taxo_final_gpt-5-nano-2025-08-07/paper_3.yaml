@@ -6,9 +6,9 @@
   - 4
   "intent_labels":
   - "Domain Overview"
-  - "Metrics Utilization"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "NLP Applications"
+  - "Generation Quality"
   - "Retrieval Quality"
 - "title": "Mean Reciprocal Rank"
   "unique_context_marker": "[2]"
@@ -23,7 +23,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Wizard of Wikipedia: Knowledge-Powered Conversational Agents"
@@ -33,7 +33,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Downstream Tasks"
 - "title": "The Faiss library"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -47,7 +47,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Unsupervised Dense Information Retrieval with Contrastive Learning"
@@ -73,12 +73,12 @@
   - 6
   - 7
   "intent_labels":
-  - "Domain Overview"
+  - "Metrics Utilization"
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
   "topic_labels":
   - "Retrieval Integration for Generation"
-  - "Parameter-Accessible Generators (White-box)"
+  - "Input-Layer Integration"
   - "Intermediate-Layer Integration"
 - "title": "Ragas: Evaluation framework for your retrieval-augmented generation (RAG) pipelines"
   "unique_context_marker": "[10]"
@@ -103,7 +103,7 @@
   "intent_labels":
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Retrieval Quality"
 - "title": "TriviaQA: A Large Scale Distantly Supervised Challenge Dataset for Reading Comprehension"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -111,7 +111,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Downstream Tasks"
 - "title": "Dense Passage Retrieval for Open-Domain Question Answering"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -130,7 +130,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Downstream Tasks"
 - "title": "Retrieval-augmented generation for knowledge-intensive NLP tasks"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -162,7 +162,7 @@
   "intent_labels":
   - "Hyperparameter Utilization"
   "topic_labels":
-  - "Training Strategies"
+  - "Independent Training"
 - "title": "KILT: a Benchmark for Knowledge Intensive Language Tasks"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -172,8 +172,8 @@
   - "Benchmark Utilization"
   - "Benchmark Utilization"
   "topic_labels":
+  - "NLP Applications"
   - "Downstream Tasks"
-  - "Evaluation Aspects and Tools"
 - "title": "Exploring the limits of transfer learning with a unified text-to-text transformer"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -251,7 +251,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Retrieval Quality"
 - "title": "FEVER: a Large-scale Dataset for Fact Extraction and VERification"
@@ -261,15 +261,15 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Downstream Tasks"
 - "title": "Attention is All you Need"
   "unique_context_marker": "[32]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Background"
+  - "Domain Overview"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Scaling and Modality Expansion"
 - "title": "HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering"
   "unique_context_marker": "[33]"
   "block_ids":
@@ -277,7 +277,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Downstream Tasks"
 - "title": "Stochastic RAG: End-to-End Retrieval-Augmented Generation through Expected Utility Maximization"
   "unique_context_marker": "[34]"
   "block_ids":
@@ -293,4 +293,4 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Retrieval Integration for Generation"

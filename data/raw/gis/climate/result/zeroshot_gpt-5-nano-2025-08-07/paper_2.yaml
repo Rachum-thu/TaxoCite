@@ -10,7 +10,7 @@
   - "Setting/Protocal Adoption"
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Short- to medium-range global prediction"
   - "Short- to medium-range global prediction"
   - "Uncertainty and inference strategies"
 - "title": "ECMWF activities for improved hurricane forecasts"
@@ -20,23 +20,23 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Short- to medium-range global prediction"
 - "title": "Recent progress and outlook for the ECMWF integrated forecasting system"
   "unique_context_marker": "[3]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Importance of Problem"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Short- to medium-range global prediction"
 - "title": "Can deep learning beat numerical weather prediction?"
   "unique_context_marker": "[4]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Prior Methods"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Short- to medium-range global prediction"
 - "title": "Weatherbench: a benchmark data set for data-driven weather forecasting"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -46,7 +46,7 @@
   - "Benchmark Utilization"
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Iterative dynamics forecasting"
+  - "Short- to medium-range global prediction"
   - "Uncertainty and inference strategies"
 - "title": "Weatherbench probability: A benchmark dataset for probabilistic medium-range weather forecasting along with deep learning baseline models"
   "unique_context_marker": "[6]"
@@ -55,7 +55,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Short- to medium-range global prediction"
+  - "Gridded spatio-temporal fields"
 - "title": "The era5 global reanalysis"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -65,7 +65,7 @@
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
-  - "Multi-step training to mitigate error accumulation"
+  - "Short- to medium-range global prediction"
   - "Gridded spatio-temporal fields"
 - "title": "Data-driven medium-range weather prediction with a resnet pretrained on climate simulations: A new model for weatherbench"
   "unique_context_marker": "[8]"
@@ -74,15 +74,15 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Multi-interval ensembling via randomized rollouts"
+  - "Transformers for climate modeling"
 - "title": "Improving data-driven global weather prediction using deep convolutional neural networks on a cubed sphere"
   "unique_context_marker": "[9]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Transformers for climate modeling"
 - "title": "SwinVRNN: A data-driven ensemble forecasting model via learned distribution perturbation"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -92,16 +92,16 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Time series representations"
+  - "Generative models: GANs and diffusion"
   - "Transformers for climate modeling"
 - "title": "Deep residual learning for image recognition"
   "unique_context_marker": "[11]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Direct forecasting"
+  - "Short- to medium-range global prediction"
 - "title": "Fourcastnet: A global data-driven high-resolution weather model using adaptive fourier neural operators"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -109,31 +109,31 @@
   - 3
   - 7
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   - "Setting/Protocal Adoption"
   - "Prior Methods"
   "topic_labels":
-  - "Continuous lead-time conditioning"
-  - "Gridded spatio-temporal fields"
+  - "Graph neural networks for Earth systems"
+  - "Learning and training strategies"
   - "Transformers for climate modeling"
 - "title": "Adaptive Fourier Neural Operators: Efficient Token Mixers for Transformers"
   "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph neural networks for Earth systems"
+  - "Multi-step training to mitigate error accumulation"
 - "title": "An image is worth 16x16 words: Transformers for image recognition at scale"
   "unique_context_marker": "[14]"
   "block_ids":
   - 1
   - 7
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Iterative dynamics forecasting"
   - "Transformers for climate modeling"
 - "title": "SwinRDM: Integrate Swin-RNN with Diffusion Model Towards High-Resolution and High-Quality Weather Forecasting"
   "unique_context_marker": "[15]"
@@ -144,7 +144,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Physics-informed objectives and constraints"
+  - "Supervised pretraining and finetuning of foundation models"
   - "Transformers for climate modeling"
 - "title": "Accurate medium-range global weather forecasting with 3d neural networks"
   "unique_context_marker": "[16]"
@@ -159,9 +159,9 @@
   - "Prior Methods"
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
-  - "Prior Methods"
+  - "Result Comparison"
   "topic_labels":
-  - "Uncertainty and inference strategies"
+  - "Supervised pretraining and finetuning of foundation models"
   - "Iterative dynamics forecasting"
   - "Transformers for climate modeling"
   - "Multi-interval ensembling via randomized rollouts"
@@ -181,30 +181,30 @@
   - "Setting/Protocal Adoption"
   - "Algorithm/Principle Adoption"
   - "Algorithm/Principle Adoption"
-  - "Prior Methods"
+  - "Result Comparison"
   "topic_labels":
-  - "Weather pattern detection and understanding"
+  - "Supervised pretraining and finetuning of foundation models"
   - "Gridded spatio-temporal fields"
   - "Short- to medium-range global prediction"
   - "Multi-step training to mitigate error accumulation"
-  - "Graph neural networks for Earth systems"
+  - "Supervised pretraining and finetuning of foundation models"
   - "Short- to medium-range global prediction"
 - "title": "Challenges and design choices for global weather and climate models based on machine learning"
   "unique_context_marker": "[18]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Domain Overview"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Challenges and future directions"
 - "title": "FengWu: Pushing the Skillful Global Medium-range Weather Forecast beyond 10 Days Lead"
   "unique_context_marker": "[19]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Downscaling and super-resolution"
+  - "Multi-interval ensembling via randomized rollouts"
 - "title": "Cascaded diffusion models for high fidelity image generation"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -212,7 +212,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Iterative dynamics forecasting"
+  - "Supervised pretraining and finetuning of foundation models"
 - "title": "A convolutional neural network cascade for face detection"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -220,7 +220,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Iterative dynamics forecasting"
+  - "Supervised pretraining and finetuning of foundation models"
 - "title": "VideoMAE: Masked autoencoders are data-efficient learners for self-supervised video pre-training"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -236,7 +236,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Learning and training strategies"
 - "title": "Swin transformer: Hierarchical vision transformer using shifted windows"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -308,7 +308,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Learning and training strategies"
 - "title": "Adam: A Method for Stochastic Optimization"
   "unique_context_marker": "[33]"
   "block_ids":
@@ -316,7 +316,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Learning and training strategies"
 - "title": "Decoupled Weight Decay Regularization"
   "unique_context_marker": "[34]"
   "block_ids":
@@ -324,7 +324,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Learning and training strategies"
 - "title": "FractalNet: Ultra-deep neural networks without residuals"
   "unique_context_marker": "[35]"
   "block_ids":
@@ -332,7 +332,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Learning and training strategies"
 - "title": "PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel"
   "unique_context_marker": "[36]"
   "block_ids":
@@ -340,7 +340,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Learning and training strategies"
 - "title": "Training Deep Nets with Sublinear Memory Cost"
   "unique_context_marker": "[37]"
   "block_ids":
@@ -348,7 +348,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Learning and training strategies"
 - "title": "Deterministic Nonperiodic Flow"
   "unique_context_marker": "[38]"
   "block_ids":
@@ -356,13 +356,13 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Multi-interval ensembling via randomized rollouts"
+  - "Uncertainty and inference strategies"
 - "title": "Stochastic representation of model uncertainties in the ECMWF ensemble prediction system"
   "unique_context_marker": "[39]"
   "block_ids":
   - 9
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Multi-interval ensembling via randomized rollouts"
 - "title": "Ensemble forecasting"
@@ -370,7 +370,7 @@
   "block_ids":
   - 9
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Multi-interval ensembling via randomized rollouts"
 - "title": "Dropout as a Bayesian approximation: Representing model uncertainty in deep learning"
@@ -418,7 +418,7 @@
   "block_ids":
   - 14
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Multi-interval ensembling via randomized rollouts"
 - "title": "A multivariate balanced initial ensemble generation approach for an atmospheric general circulation model"
@@ -426,7 +426,7 @@
   "block_ids":
   - 14
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Multi-interval ensembling via randomized rollouts"
 - "title": "Subseasonal to seasonal prediction project: bridging the gap between weather and climate"
@@ -434,7 +434,7 @@
   "block_ids":
   - 14
   "intent_labels":
-  - "Research Gap"
+  - "Domain Overview"
   "topic_labels":
   - "Subseasonal-to-seasonal and climate projection"
 - "title": "Subseasonal to seasonal prediction of weather to climate with application to tropical cyclones"
@@ -444,7 +444,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Uncertainty and inference strategies"
 - "title": "Fuxi: A cascade machine learning forecasting system for 15-day global weather forecast"
   "unique_context_marker": "[50]"
   "block_ids": []

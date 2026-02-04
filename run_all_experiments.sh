@@ -26,42 +26,13 @@ run_command() {
 }
 
 # Total number of commands
-TOTAL=14
+TOTAL=5
 STEP=1
 
 echo "Starting all experiments..."
 echo "================================"
 
-# Auto annotation commands
-run_command "bash data/raw/auto_annotate.sh data/raw/cs/generative_retrieval" $STEP $TOTAL
-STEP=$((STEP + 1))
-
-run_command "bash data/raw/auto_annotate.sh data/raw/gis/regionalization" $STEP $TOTAL
-STEP=$((STEP + 1))
-
-# gpt-5-nano-2025-08-07 experiments
-run_command "bash method/run_experiments.sh data/raw/cs/point_cloud gpt-5-nano-2025-08-07" $STEP $TOTAL
-STEP=$((STEP + 1))
-
-run_command "bash method/run_experiments.sh data/raw/cs/diffusion_llm gpt-5-nano-2025-08-07" $STEP $TOTAL
-STEP=$((STEP + 1))
-
-run_command "bash method/run_experiments.sh data/raw/gis/climate gpt-5-nano-2025-08-07" $STEP $TOTAL
-STEP=$((STEP + 1))
-
-run_command "bash method/run_experiments.sh data/raw/cs/generative_retrieval gpt-5-nano-2025-08-07" $STEP $TOTAL
-STEP=$((STEP + 1))
-
-run_command "bash method/run_experiments.sh data/raw/gis/regionalization gpt-5-nano-2025-08-07" $STEP $TOTAL
-STEP=$((STEP + 1))
-
 # gpt-5-mini-2025-08-07 experiments
-run_command "bash method/run_experiments.sh data/raw/cs/point_cloud gpt-5-mini-2025-08-07" $STEP $TOTAL
-STEP=$((STEP + 1))
-
-run_command "bash method/run_experiments.sh data/raw/cs/diffusion_llm gpt-5-mini-2025-08-07" $STEP $TOTAL
-STEP=$((STEP + 1))
-
 run_command "bash method/run_experiments.sh data/raw/gis/climate gpt-5-mini-2025-08-07" $STEP $TOTAL
 STEP=$((STEP + 1))
 

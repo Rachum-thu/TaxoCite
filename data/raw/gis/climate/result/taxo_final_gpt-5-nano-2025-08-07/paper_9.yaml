@@ -1,0 +1,528 @@
+"citations":
+- "title": "Deﬁnition of extreme weather events (subchapter 1.1)"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prospective Application"
+  "topic_labels":
+  - "Short- to medium-range global prediction"
+- "title": "Interaction networks for learning about objects, relations and physics"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+- "title": "The quiet revolution of numerical weather prediction"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Importance of Problem"
+  "topic_labels":
+  - "Short- to medium-range global prediction"
+- "title": "Accurate medium-range global weather forecasting with 3d neural networks"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Short- to medium-range global prediction"
+  - "Transformers for climate modeling"
+- "title": "Spherical Fourier neural operators: Learning stable dynamics on the sphere"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 2
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+- "title": "Uncertainty quantiﬁcation for data-driven weather models"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Multi-interval ensembling via randomized rollouts"
+- "title": "The second met ofﬁce uniﬁed model–JULES regional atmosphere and land conﬁguration, RAL2"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Prior Methods"
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Short- to medium-range global prediction"
+- "title": "FengWu: Pushing the skillful global medium-range weather forecast beyond 10 days lead"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 2
+  - 10
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Transformers for climate modeling"
+  - "Iterative dynamics forecasting"
+- "title": "Swinrdm: integrate swinrnn with diffusion model towards high-resolution and high-quality weather forecasting"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Fuxi: a cascade machine learning forecasting system for 15-day global weather forecast"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Uncertainty and inference strategies"
+  - "Transformers for climate modeling"
+- "title": "Fundamentals of numerical weather prediction"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Gridded spatio-temporal fields"
+- "title": "Ifs documentation cy46r1 - part v: Ensemble prediction system"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 13
+  "intent_labels":
+  - "Result Comparison"
+  "topic_labels":
+  - "Short- to medium-range global prediction"
+- "title": "Why should ensemble spread match the RMSE of the ensemble mean?"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 12
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Uncertainty and inference strategies"
+- "title": "Multiscale meshgraphnets"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+- "title": "Strictly proper scoring rules, prediction, and estimation"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Calibration of large neural weather models"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 2
+  - 12
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Uncertainty and inference strategies"
+  - "Uncertainty and inference strategies"
+- "title": "The ERA5 global reanalysis"
+  "unique_context_marker": "[17]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Denoising diffusion probabilistic models"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+  - "Generative models: GANs and diffusion"
+- "title": "SwinVRNN: A data-driven ensemble forecasting model via learned distribution perturbation"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 1
+  - 2
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Graph neural networks for Earth systems"
+- "title": "Forecasting global weather with graph neural networks"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 1
+  - 2
+  - 5
+  - 10
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+  - "Iterative dynamics forecasting"
+- "title": "Auto-encoding variational Bayes"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Neural general circulation models for weather and climate"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 2
+  - 10
+  - 17
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Physics-informed objectives and constraints"
+  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Learning skillful medium-range global weather forecasting"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 1
+  - 2
+  - 4
+  - 5
+  - 8
+  - 9
+  - 10
+  - 12
+  - 13
+  - 16
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  - "Problem Formulation"
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  - "Result Comparison"
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+  - "Direct forecasting"
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+  - "Iterative dynamics forecasting"
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+  - "Direct forecasting"
+- "title": "AIFS-ECMWF’s data-driven forecasting system"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 1
+  - 2
+  - 5
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
+- "title": "AtmoRep: A stochastic model of atmosphere dynamics using large scale representation learning"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Transformers for climate modeling"
+- "title": "Ensemble forecasting"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+- "title": "Generative emulation of weather forecast ensembles with diffusion models"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "Simulating continuum mechanics with multi-scale graph neural networks"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+- "title": "Swin transformer: Hierarchical vision transformer using shifted windows"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Transformers for climate modeling"
+- "title": "A simple baseline for bayesian uncertainty in deep learning"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 2
+  - 12
+  "intent_labels":
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Multi-interval ensembling via randomized rollouts"
+  - "Uncertainty and inference strategies"
+- "title": "Residual diffusion modeling for km-scale atmospheric downscaling"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "AROME-MetCoOp: A nordic convective-scale operational weather prediction model"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Short- to medium-range global prediction"
+- "title": "ClimaX: A foundation model for weather and climate"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 2
+  - 4
+  "intent_labels":
+  - "Prior Methods"
+  - "Problem Formulation"
+  "topic_labels":
+  - "Transformers for climate modeling"
+  - "Direct forecasting"
+- "title": "Scaling transformer neural networks for skillful and reliable medium-range weather forecasting"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 2
+  - 4
+  - 10
+  "intent_labels":
+  - "Prior Methods"
+  - "Problem Formulation"
+  - "Prior Methods"
+  "topic_labels":
+  - "Transformers for climate modeling"
+  - "Direct forecasting"
+  - "Iterative dynamics forecasting"
+- "title": "Graph-based neural weather prediction for limited area modeling"
+  "unique_context_marker": "[35]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Probabilistic forecasting with generative networks via scoring rule minimization"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 17
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Four-castnet: A global data-driven high-resolution weather model using adaptive fourier neural operators"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Multi-interval ensembling via randomized rollouts"
+  - "Graph neural networks for Earth systems"
+- "title": "ICON in climate limited-area mode (ICON release version 2.6.1): a new regional climate model"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Short- to medium-range global prediction"
+- "title": "Gencast: Diffusion-based ensemble forecasting for medium-range weather"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 1
+  - 2
+  - 16
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Generative models: GANs and diffusion"
+  - "Generative models: GANs and diffusion"
+- "title": "WeatherBench 2: A benchmark for the next generation of data-driven global weather models"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 1
+  - 13
+  - 16
+  "intent_labels":
+  - "Setting/Protocal Adoption"
+  - "Resource Utilization"
+  - "Prior Methods"
+  "topic_labels":
+  - "Short- to medium-range global prediction"
+  - "Gridded spatio-temporal fields"
+  - "Direct forecasting"
+- "title": "U-net: Convolutional networks for biomedical image segmentation"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+- "title": "Simple and effective vae training with calibrated decoders"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Ensemble methods for neural network-based weather forecasts"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Physics-informed objectives and constraints"
+- "title": "The AROME-france convective-scale operational model"
+  "unique_context_marker": "[44]"
+  "block_ids":
+  - 1
+  - 14
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Short- to medium-range global prediction"
+- "title": "Learning structured output representation using deep conditional generative models"
+  "unique_context_marker": "[45]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Generative modeling by estimating gradients of the data distribution"
+  "unique_context_marker": "[46]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "Consistency models"
+  "unique_context_marker": "[47]"
+  "block_ids":
+  - 17
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "Wasserstein auto-encoders"
+  "unique_context_marker": "[48]"
+  "block_ids":
+  - 17
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "Neural discrete representation learning"
+  "unique_context_marker": "[49]"
+  "block_ids":
+  - 17
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "ClimODE: Climate forecasting with physics-informed neural ODEs"
+  "unique_context_marker": "[50]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Physics-informed objectives and constraints"
+- "title": "Sub-seasonal forecasting with a large ensemble of deep-learning weather prediction models"
+  "unique_context_marker": "[51]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Uncertainty and inference strategies"
+- "title": "Scientiﬁc challenges of convective-scale numerical weather prediction"
+  "unique_context_marker": "[52]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Importance of Problem"
+  - "Domain Overview"
+  "topic_labels":
+  - "Uncertainty and inference strategies"
+  - "Probabilistic forecasting with diffusion or variational objectives"

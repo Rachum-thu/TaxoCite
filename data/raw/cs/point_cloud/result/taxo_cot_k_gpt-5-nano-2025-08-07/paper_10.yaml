@@ -4,13 +4,17 @@
   "block_ids":
   - 2
   "intent_labels":
-  - []
+  - - "Domain Overview"
+    - "Prior Methods"
+    - "Domain Overview"
+    - "Prior Methods"
+    - "Problem Formulation"
   "topic_labels":
-  - - "Input Representations and Modalities"
+  - - "Raw point-based representations"
     - "Input Representations and Modalities"
     - "Input Representations and Modalities"
-    - "Input Representations and Modalities"
-    - "Input Representations and Modalities"
+    - "Raw point-based representations"
+    - "Raw point-based representations"
 - "title": "PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -18,11 +22,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Raw point-based representations"
-    - "Raw point-based representations"
-    - "Raw point-based representations"
-    - "Raw point-based representations"
-    - "Raw point-based representations"
+  - []
 - "title": "PointNet++: Deep Hierarchical Feature Learning on Point Sets in a Metric Space"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -30,11 +30,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Raw point-based representations"
-    - "Raw point-based representations"
-    - "Raw point-based representations"
-    - "Raw point-based representations"
-    - "Pointwise MLP architectures"
+  - []
 - "title": "SEGCloud: Semantic Segmentation of 3D Point Clouds"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -42,11 +38,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
+  - []
 - "title": "Cylinder3D: An Effective 3D Framework for Driving-scene LiDAR Semantic Segmentation"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -54,11 +46,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
+  - []
 - "title": "RPVNet: A Deep and Efficient Range-Point-Voxel Fusion Network for LiDAR Point Cloud Segmentation"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -66,11 +54,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Hybrid multi-modal representations"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Hybrid multi-modal representations"
+  - []
 - "title": "RangeNet++: Fast and Accurate LiDAR Semantic Segmentation"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -80,11 +64,7 @@
   - []
   - []
   "topic_labels":
-  - - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
+  - []
   - []
 - "title": "SalsaNext: Fast, Uncertainty-Aware Semantic Segmentation of LiDAR Point Clouds"
   "unique_context_marker": "[8]"
@@ -97,16 +77,8 @@
   - []
   - []
   "topic_labels":
-  - - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-  - - "Projection-based segmentation"
-    - "Convolution-based operators"
-    - "Semantic Segmentation: Approaches"
-    - "Projection-based segmentation"
-    - "Semantic Segmentation: Approaches"
+  - []
+  - []
   - []
 - "title": "SqueezeSeg: Convolutional Neural Nets with Recurrent CRF for Real-Time Road-Object Segmentation from 3D LiDAR Point Cloud"
   "unique_context_marker": "[9]"
@@ -117,11 +89,7 @@
   - []
   - []
   "topic_labels":
-  - - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
+  - []
   - []
 - "title": "3D-MiniNet: Learning a 2D Representation from Point Clouds for Fast and Efficient 3D LIDAR Semantic Segmentation"
   "unique_context_marker": "[10]"
@@ -132,11 +100,7 @@
   - []
   - []
   "topic_labels":
-  - - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
-    - "Projection-based representations"
+  - []
   - []
 - "title": "PointCNN: Convolution On X-Transformed Points"
   "unique_context_marker": "[11]"
@@ -145,13 +109,25 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Convolution-based operators"
-    - "Convolution-based operators"
-    - "Convolution-based operators"
-    - "Raw point supervised architectures"
-    - "Convolution-based operators"
+  - []
 - "title": "3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation"
   "unique_context_marker": "[12]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "SpSequenceNet: Semantic segmentation network on 4D point clouds"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "SPLATNet: Sparse Lattice Networks for Point Cloud Processing"
+  "unique_context_marker": "[14]"
   "block_ids":
   - 2
   "intent_labels":
@@ -161,30 +137,6 @@
     - "Volumetric voxelization"
     - "Volumetric voxelization"
     - "Volumetric voxelization"
-    - "Volumetric voxelization"
-- "title": "SpSequenceNet: Semantic segmentation network on 4D point clouds"
-  "unique_context_marker": "[13]"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - []
-  "topic_labels":
-  - - "Sequential RNN-based models"
-    - "Sequential RNN-based models"
-    - "Sequential RNN-based models"
-    - "Sequential RNN-based models"
-    - "Sequential RNN-based models"
-- "title": "SPLATNet: Sparse Lattice Networks for Point Cloud Processing"
-  "unique_context_marker": "[14]"
-  "block_ids":
-  - 2
-  "intent_labels":
-  - []
-  "topic_labels":
-  - - "Discretization-based segmentation"
-    - "Volumetric voxelization"
-    - "Volumetric voxelization"
-    - "Hierarchical structures"
     - "Volumetric voxelization"
 - "title": "PolarNet: An Improved Grid Representation for Online LiDAR Point Clouds Semantic Segmentation"
   "unique_context_marker": "[15]"
@@ -205,11 +157,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Graph-based neural models"
-    - "Graph-based neural models"
-    - "Graph-based neural models"
-    - "Graph-based neural models"
-    - "Graph-based neural models"
+  - []
 - "title": "SqueezeSegV2: Improved Model Structure and Unsupervised Domain Adaptation for Road-Object Segmentation from a LiDAR Point Cloud"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -219,11 +167,11 @@
   - []
   - []
   "topic_labels":
-  - - "Self-supervised and Cross-modal Pretraining"
-    - "Self-supervised and Cross-modal Pretraining"
-    - "Self-supervised and Cross-modal Pretraining"
+  - - "Weakly and unsupervised segmentation"
+    - "Weakly and unsupervised segmentation"
     - "Self-supervised and Cross-modal Pretraining"
     - "Weakly and unsupervised segmentation"
+    - "Self-supervised and Cross-modal Pretraining"
   - []
 - "title": "CPGNet: Cascade Point-Grid Fusion Network for Real-Time LiDAR Semantic Segmentation"
   "unique_context_marker": "[18]"
@@ -232,11 +180,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Projection-based representations"
-    - "Hybrid fusion methods"
-    - "Hybrid multi-modal representations"
-    - "Hybrid multi-modal representations"
-    - "Hybrid multi-modal representations"
+  - []
 - "title": "PCSCNet: Fast 3D Semantic Segmentation of LiDAR Point Cloud for Autonomous Car using Point Convolution and Sparse Convolution Network"
   "unique_context_marker": "[19]"
   "block_ids":
@@ -244,11 +188,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Convolution-based operators"
+  - - "Hybrid multi-modal representations"
+    - "Hybrid multi-modal representations"
+    - "Hybrid multi-modal representations"
+    - "Convolution-based operators"
     - "Projection-based representations"
-    - "Convolution-based operators"
-    - "Convolution-based operators"
-    - "Convolution-based operators"
 - "title": "TORNADO-Net: multiview total variation semantic segmentation with Diamond inception module"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -262,12 +206,8 @@
     - "Projection-based representations"
     - "Projection-based representations"
     - "Projection-based representations"
-    - "Projection-based representations"
-  - - "Projection-based segmentation"
-    - "Convolution-based operators"
-    - "Semantic Segmentation: Approaches"
-    - "Projection-based segmentation"
-    - "Semantic Segmentation: Approaches"
+    - "Hybrid multi-modal representations"
+  - []
 - "title": "RangeBird: Multi View Panoptic Segmentation of 3D Point Clouds with Neighborhood Attention"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -290,8 +230,12 @@
     - "Prior Methods"
     - "Domain Overview"
     - "Prior Methods"
-    - "Domain Overview"
-  - []
+    - "Prior Methods"
+  - - "Background"
+    - "Prior Methods"
+    - "Algorithm/Principle Adoption"
+    - "Prior Methods"
+    - "Model/Architecture Adoption"
   "topic_labels":
   - - "Projection-based representations"
     - "Projection-based representations"
@@ -331,7 +275,7 @@
     - "Prior Methods"
     - "Domain Overview"
     - "Prior Methods"
-    - "Domain Overview"
+    - "Prior Methods"
   "topic_labels":
   - - "Projection-based representations"
     - "Projection-based representations"
@@ -343,11 +287,11 @@
   "block_ids":
   - 2
   "intent_labels":
-  - - "Domain Overview"
+  - - "Research Gap"
     - "Prior Methods"
     - "Research Gap"
-    - "Research Gap"
-    - "Domain Overview"
+    - "Prior Methods"
+    - "Prior Methods"
   "topic_labels":
   - - "Projection-based representations"
     - "Projection-based representations"
@@ -365,9 +309,16 @@
     - "Prior Methods"
     - "Domain Overview"
     - "Prior Methods"
+    - "Prior Methods"
+  - - "Domain Overview"
     - "Domain Overview"
-  - []
-  - []
+    - "Prior Methods"
+    - "Prior Methods"
+  - - "Domain Overview"
+    - "Prospective Application"
+    - "Background"
+    - "Prospective Application"
+    - "Domain Overview"
   "topic_labels":
   - - "Projection-based representations"
     - "Projection-based representations"
@@ -375,7 +326,11 @@
     - "Projection-based representations"
     - "Projection-based representations"
   - []
-  - []
+  - - "Hybrid multi-modal representations"
+    - "Hybrid multi-modal representations"
+    - "Hybrid multi-modal representations"
+    - "Hybrid multi-modal representations"
+    - "Hybrid multi-modal representations"
 - "title": "Spherical U-Net on Cortical Surfaces: Methods and Applications"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -385,10 +340,10 @@
     - "Prior Methods"
     - "Domain Overview"
     - "Prior Methods"
-    - "Domain Overview"
+    - "Prior Methods"
   "topic_labels":
   - - "Projection-based representations"
-    - "Semantic Segmentation: Approaches"
+    - "Projection-based representations"
     - "Projection-based representations"
     - "Projection-based representations"
     - "Projection-based representations"
@@ -401,10 +356,10 @@
     - "Prior Methods"
     - "Domain Overview"
     - "Prior Methods"
-    - "Domain Overview"
+    - "Prior Methods"
   "topic_labels":
   - - "Projection-based representations"
-    - "Semantic Segmentation: Approaches"
+    - "Projection-based representations"
     - "Projection-based representations"
     - "Projection-based representations"
     - "Projection-based representations"
@@ -415,7 +370,10 @@
   - 5
   "intent_labels":
   - []
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - []
   - - "Convolution-based operators"
@@ -436,19 +394,25 @@
   "block_ids":
   - 5
   "intent_labels":
-  - []
+  - - "Background"
+    - "Model/Architecture Adoption"
+    - "Model/Architecture Adoption"
+    - "Model/Architecture Adoption"
   "topic_labels":
   - - "Convolution-based operators"
     - "Convolution-based operators"
     - "Convolution-based operators"
-    - "Projection-based representations"
+    - "Convolution-based operators"
     - "Convolution-based operators"
 - "title": "FFTs on the Rotation Group"
   "unique_context_marker": "[32]"
   "block_ids":
   - 5
   "intent_labels":
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - - "Convolution-based operators"
     - "Convolution-based operators"
@@ -460,7 +424,10 @@
   "block_ids":
   - 5
   "intent_labels":
-  - []
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - - "Convolution-based operators"
     - "Convolution-based operators"
@@ -472,7 +439,10 @@
   "block_ids":
   - 5
   "intent_labels":
-  - []
+  - - "Background"
+    - "Model/Architecture Adoption"
+    - "Background"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - - "Convolution-based operators"
     - "Convolution-based operators"
@@ -489,9 +459,9 @@
   - []
   "topic_labels":
   - - "Projection-based segmentation"
+    - "Semantic Segmentation: Approaches"
     - "Projection-based representations"
     - "Projection-based segmentation"
-    - "Raw point-based representations"
     - "Projection-based segmentation"
   - []
 - "title": "SemanticKITTI: A Dataset for Semantic Scene Understanding of LiDAR Sequences"
@@ -502,9 +472,9 @@
   - []
   "topic_labels":
   - - "Projection-based segmentation"
+    - "Semantic Segmentation: Approaches"
     - "Projection-based representations"
     - "Projection-based segmentation"
-    - "Raw point-based representations"
     - "Projection-based segmentation"
 - "title": "SemanticPOSS: A Point Cloud Dataset with Large Quantity of Dynamic Instances"
   "unique_context_marker": "[37]"
@@ -516,9 +486,9 @@
   - []
   "topic_labels":
   - - "Projection-based segmentation"
+    - "Semantic Segmentation: Approaches"
     - "Projection-based representations"
     - "Projection-based segmentation"
-    - "Raw point-based representations"
     - "Projection-based segmentation"
   - []
 - "title": "Scalability in Perception for Autonomous Driving: Waymo Open Dataset"
@@ -531,9 +501,9 @@
   - []
   "topic_labels":
   - - "Projection-based segmentation"
+    - "Semantic Segmentation: Approaches"
     - "Projection-based representations"
     - "Projection-based segmentation"
-    - "Raw point-based representations"
     - "Projection-based segmentation"
   - []
 - "title": "A2D2: Audi Autonomous Driving Dataset"
@@ -544,9 +514,9 @@
   - []
   "topic_labels":
   - - "Projection-based segmentation"
+    - "Semantic Segmentation: Approaches"
     - "Projection-based representations"
     - "Projection-based segmentation"
-    - "Raw point-based representations"
     - "Projection-based segmentation"
 - "title": "Annotation Tool and Urban Dataset for 3D Point Cloud Semantic Segmentation"
   "unique_context_marker": "[40]"
@@ -563,10 +533,10 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Semantic Segmentation: Approaches"
-    - "Convolution-based operators"
+  - - "Projection-based segmentation"
     - "Semantic Segmentation: Approaches"
-    - "Projection-based segmentation"
+    - "Semantic Segmentation: Approaches"
+    - "Semantic Segmentation: Approaches"
     - "Semantic Segmentation: Approaches"
 - "title": "COLA: COarse LAbel pre-training for 3D semantic segmentation of sparse LiDAR datasets"
   "unique_context_marker": "[42]"
@@ -577,12 +547,12 @@
     - "Prior Methods"
     - "Prior Methods"
     - "Prior Methods"
-    - "Prior Methods"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - - "Projection-based segmentation"
+    - "Semantic Segmentation: Approaches"
+    - "Semantic Segmentation: Approaches"
     - "Weakly and unsupervised segmentation"
-    - "Projection-based segmentation"
-    - "Raw point-based representations"
     - "Semantic Segmentation: Approaches"
 - "title": "LiDARNet: A Boundary-Aware Domain Adaptation Model for Point Cloud Semantic Segmentation"
   "unique_context_marker": "[43]"
@@ -591,8 +561,8 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Semantic Segmentation: Approaches"
+  - - "Projection-based representations"
+    - "Projection-based representations"
     - "Semantic Segmentation: Approaches"
-    - "Projection-based segmentation"
     - "Projection-based representations"
-    - "Projection-based representations"
+    - "Input Representations and Modalities"

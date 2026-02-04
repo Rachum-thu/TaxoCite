@@ -4,9 +4,9 @@
   "block_ids":
   - 10
   "intent_labels":
-  - "Metrics Utilization"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
 - "title": "Meta LLaMA 3"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -16,11 +16,11 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
-  - "Resource Utilization"
+  - null
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
-  - "Parameter-Accessible Generators (White-box)"
-  - "Parameter-Inaccessible Generators (Black-box)"
+  - "Other Topic"
+  - null
 - "title": "Language models are few-shot learners"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -28,7 +28,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Training-free Methods"
+  - "Other Topic"
 - "title": "Bge m3-embedding: Multi-lingual, multi-functionality, multi-granularity text embeddings through self-knowledge distillation"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -36,7 +36,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Retriever Type"
+  - "Other Topic"
 - "title": "Towards Personalized Evaluation of Large Language Models with An Anonymous Crowd-Sourcing Platform"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -44,7 +44,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Generation Quality"
 - "title": "FlagEmbedding Reranker"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -52,7 +52,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Context Curation and Compression"
+  - "Other Topic"
 - "title": "LoRA: Low-Rank Adaptation of Large Language Models"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -68,15 +68,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Generation Quality"
 - "title": "Retrieval-augmented generation for knowledge-intensive nlp tasks"
   "unique_context_marker": "[9]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Retrieval"
 - "title": "Unlocking the Potential of Large Language Models for Explainable Recommendations"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -84,7 +84,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Generation Quality"
 - "title": "The probabilistic relevance framework: BM25 and beyond"
   "unique_context_marker": "[11]"
   "block_ids":
@@ -92,7 +92,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Retriever Type"
+  - "Other Topic"
 - "title": "Chain-of-thought prompting elicits reasoning in large language models"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -100,12 +100,12 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Training-free Methods"
+  - "Other Topic"
 - "title": "CRAG–Comprehensive RAG Benchmark"
   "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Benchmark Utilization"
+  - "Domain Overview"
   "topic_labels":
-  - "Evaluation"
+  - "Evaluation Aspects and Tools"

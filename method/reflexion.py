@@ -135,11 +135,15 @@ def main():
             intent_outputs_r1.append(CitationClassification(classifications=intent_classifications))
             topic_outputs_r1.append(CitationClassification(classifications=topic_classifications))
     else:
-        # Run zeroshot classification from scratch
+        # Run zeroshot classification from scratch (intent and topic in parallel)
+        from concurrent.futures import ThreadPoolExecutor
         print("Round 1: Zero-shot classification...")
         zeroshot_llm = llm.with_structured_output(CitationClassification)
-        intent_outputs_r1 = zeroshot_llm.batch(intent_prompts, config={"max_concurrency": 32})
-        topic_outputs_r1 = zeroshot_llm.batch(topic_prompts, config={"max_concurrency": 32})
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            intent_future = executor.submit(zeroshot_llm.batch, intent_prompts, {"max_concurrency": 32})
+            topic_future = executor.submit(zeroshot_llm.batch, topic_prompts, {"max_concurrency": 32})
+            intent_outputs_r1 = intent_future.result()
+            topic_outputs_r1 = topic_future.result()
 
     # Round 2: Reflexion - critique and refine
     print("Round 2: Reflexion...")
@@ -174,9 +178,14 @@ def main():
             previous_annotations=prev_topic_str
         ))
 
+    # Round 2 batch (intent and topic in parallel)
+    from concurrent.futures import ThreadPoolExecutor
     reflexion_llm = llm.with_structured_output(ReflexionClassification)
-    intent_outputs_r2 = reflexion_llm.batch(reflexion_intent_prompts, config={"max_concurrency": 32})
-    topic_outputs_r2 = reflexion_llm.batch(reflexion_topic_prompts, config={"max_concurrency": 32})
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        intent_future = executor.submit(reflexion_llm.batch, reflexion_intent_prompts, {"max_concurrency": 32})
+        topic_future = executor.submit(reflexion_llm.batch, reflexion_topic_prompts, {"max_concurrency": 32})
+        intent_outputs_r2 = intent_future.result()
+        topic_outputs_r2 = topic_future.result()
 
     # Fill results with validation
     for block_id, intent_output, topic_output in zip(block_ids_to_process, intent_outputs_r2, topic_outputs_r2):

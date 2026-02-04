@@ -6,7 +6,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Other Topic"
+  - "point_cloud"
 - "title": "Deep learning for image and point cloud fusion in autonomous driving: A review"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -14,7 +14,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Other Topic"
+  - "point_cloud"
 - "title": "Spg: Unsupervised domain adaptation for 3d object detection via semantic point generation"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -22,7 +22,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Other Topic"
+  - "point_cloud"
 - "title": "Text to point cloud localization with relation-enhanced transformer"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -30,7 +30,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Other Topic"
+  - "point_cloud"
 - "title": "Joint representation learning for text and 3d point cloud"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -41,7 +41,7 @@
   - "Prior Methods"
   "topic_labels":
   - "Other Topic"
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Parts2words: Learning joint embedding of point clouds and texts by bidirectional matching between parts and words"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -52,7 +52,7 @@
   - "Prior Methods"
   "topic_labels":
   - "Other Topic"
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Vse++: Improving visual-semantic embeddings with hard negatives"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -67,9 +67,9 @@
   - "Model/Architecture Adoption"
   "topic_labels":
   - "Other Topic"
-  - "Contrastive and cross-modal objectives"
-  - "Contrastive and cross-modal objectives"
-  - "Raw point-based representations"
+  - "Other Topic"
+  - "Hybrid multi-modal representations"
+  - "Transformer-based attention models"
 - "title": "Learning the best pooling strategy for visual semantic embedding"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -82,8 +82,8 @@
   - "Result Comparison"
   "topic_labels":
   - "Other Topic"
-  - "Contrastive and cross-modal objectives"
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
+  - "Hybrid multi-modal representations"
 - "title": "Cross-modal active complementary learning with self-refining correspondence"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -94,7 +94,7 @@
   - "Result Comparison"
   "topic_labels":
   - "Other Topic"
-  - "Contrastive and cross-modal objectives"
+  - "Hybrid multi-modal representations"
 - "title": "Focus your attention: A bidirectional focal attention network for image-text matching"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -115,8 +115,8 @@
   - "Result Comparison"
   "topic_labels":
   - "Other Topic"
-  - "Contrastive and cross-modal objectives"
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
+  - "Hybrid multi-modal representations"
 - "title": "Negative-aware attention framework for image-text matching"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -127,7 +127,7 @@
   - "Result Comparison"
   "topic_labels":
   - "Other Topic"
-  - "Contrastive and cross-modal objectives"
+  - "Hybrid multi-modal representations"
 - "title": "Scanrefer: 3d object localization in rgb-d scans using natural language"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -137,14 +137,14 @@
   - 14
   "intent_labels":
   - "Other Intent"
-  - "Domain Overview"
+  - "Prior Methods"
   - "Benchmark Utilization"
   - "Benchmark Utilization"
   "topic_labels":
   - "Other Topic"
-  - "Self-supervised and Cross-modal Pretraining"
-  - "Self-supervised and Cross-modal Pretraining"
   - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
+  - "Hybrid multi-modal representations"
 - "title": "Referit3d: Neural listeners for fine-grained 3d object identification in real-world scenes"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -154,14 +154,14 @@
   - 14
   "intent_labels":
   - "Other Intent"
-  - "Domain Overview"
+  - "Prior Methods"
   - "Benchmark Utilization"
   - "Benchmark Utilization"
   "topic_labels":
   - "Other Topic"
-  - "Self-supervised and Cross-modal Pretraining"
-  - "Self-supervised and Cross-modal Pretraining"
   - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
+  - "Hybrid multi-modal representations"
 - "title": "Ll3da: Visual interactive instruction tuning for omni-3d understanding reasoning and planning"
   "unique_context_marker": "[15]"
   "block_ids":
@@ -170,39 +170,39 @@
   - 14
   "intent_labels":
   - "Other Intent"
-  - "Prior Methods"
+  - "Research Gap"
   - "Benchmark Utilization"
   "topic_labels":
   - "Other Topic"
   - "Self-supervised and Cross-modal Pretraining"
-  - "Contrastive and cross-modal objectives"
+  - "Hybrid multi-modal representations"
 - "title": "Deep learning on point clouds and its application: A survey"
   "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topic"
+  - "point_cloud"
 - "title": "Learning with noisy correspondence for cross-modal matching"
   "unique_context_marker": "[17]"
   "block_ids":
   - 1
   - 14
   "intent_labels":
-  - "Other Intent"
-  - "Metrics Utilization"
+  - "Research Gap"
+  - "Result Comparison"
   "topic_labels":
-  - "Other Topic"
-  - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
+  - "Hybrid multi-modal representations"
 - "title": "Learning from noisy correspondence with tri-partition for cross-modal matching"
   "unique_context_marker": "[18]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Research Gap"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
 - "title": "Improving cross-modal retrieval with set of diverse embeddings"
   "unique_context_marker": "[19]"
   "block_ids":
@@ -210,7 +210,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Hybrid multi-modal representations"
 - "title": "Fine-grained image-text matching by cross-modal hard aligning network"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -220,8 +220,8 @@
   - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
+  - "Hybrid multi-modal representations"
 - "title": "Learning semantic relationship among instances for image-text matching"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -233,9 +233,9 @@
   - "Result Comparison"
   - "Result Comparison"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
-  - "Contrastive and cross-modal objectives"
   - "Other Topic"
+  - "Hybrid multi-modal representations"
+  - "Contrastive and cross-modal objectives"
 - "title": "Romo: Robust unsupervised multimodal learning with noisy pseudo labels"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -243,7 +243,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Rono: robust discriminative learning with noisy labels for 2d-3d cross-modal retrieval"
   "unique_context_marker": "[23]"
   "block_ids":
@@ -251,7 +251,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Discover cross-modality nuances for visible-infrared person re-identification"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -259,7 +259,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Representation learning with contrastive predictive coding"
   "unique_context_marker": "[25]"
   "block_ids":
@@ -267,7 +267,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Large scale online learning of image similarity through ranking"
   "unique_context_marker": "[26]"
   "block_ids":
@@ -275,7 +275,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Inter-intra modal representation augmentation with dct-transformer adversarial network for image-text matching"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -283,7 +283,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Robust noisy correspondence learning with equivariant similarity consistency"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -291,7 +291,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Stacked cross attention for image-text matching"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -301,8 +301,8 @@
   - "Prior Methods"
   - "Metrics Utilization"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
+  - "Hybrid multi-modal representations"
 - "title": "Shapeglot: Learning language for shape differentiation"
   "unique_context_marker": "[30]"
   "block_ids":
@@ -310,7 +310,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Text2shape: Generating shapes from natural language by learning joint embeddings"
   "unique_context_marker": "[31]"
   "block_ids":
@@ -318,7 +318,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Scannet: Richly-annotated 3d reconstructions of indoor scenes"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -326,13 +326,13 @@
   - 6
   - 14
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Resource Utilization"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
-  - "point_cloud"
   - "Contrastive and cross-modal objectives"
+  - "Raw point-based representations"
+  - "Hybrid multi-modal representations"
 - "title": "Instancerefer: Cooperative holistic understanding for visual grounding on point clouds through instance multi-level contextual referring"
   "unique_context_marker": "[33]"
   "block_ids":
@@ -340,7 +340,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Transrefer3d: Entity-and-relation aware transformer for fine-grained 3d visual grounding"
   "unique_context_marker": "[34]"
   "block_ids":
@@ -348,15 +348,15 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Scan2cap: Context-aware dense captioning in rgb-d scans"
   "unique_context_marker": "[35]"
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Context-aware alignment and mutual masking for 3d-language pre-training"
   "unique_context_marker": "[36]"
   "block_ids":
@@ -364,23 +364,23 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Imagenet: A large-scale hierarchical image database"
   "unique_context_marker": "[37]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Research Gap"
+  - "Importance of Problem"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Conceptual captions: A cleaned, hypernymed, image alt-text dataset for automatic image captioning"
   "unique_context_marker": "[38]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Research Gap"
+  - "Importance of Problem"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Scanqa: 3d question answering for spatial scene understanding"
   "unique_context_marker": "[39]"
   "block_ids":
@@ -395,11 +395,11 @@
   - 10
   - 11
   "intent_labels":
+  - "Model/Architecture Adoption"
   - "Other Intent"
-  - "Prior Methods"
   "topic_labels":
-  - "Raw point-based representations"
   - "Transformer-based attention models"
+  - "Other Topic"
 - "title": "Cross-modal retrieval with partially mismatched pairs"
   "unique_context_marker": "[41]"
   "block_ids":
@@ -409,10 +409,10 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   - "Result Comparison"
-  - "Algorithm/Principle Adoption"
+  - "Result Comparison"
   "topic_labels":
   - "Contrastive and cross-modal objectives"
-  - "Contrastive and cross-modal objectives"
+  - "Hybrid multi-modal representations"
   - "Contrastive and cross-modal objectives"
 - "title": "Multi-view visual semantic embedding"
   "unique_context_marker": "[42]"
@@ -421,7 +421,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Hybrid multi-modal representations"
 - "title": "Esa: External space attention aggregation for image-text retrieval"
   "unique_context_marker": "[43]"
   "block_ids":
@@ -433,9 +433,9 @@
   - "Result Comparison"
   - "Model/Architecture Adoption"
   "topic_labels":
+  - "Hybrid multi-modal representations"
   - "Contrastive and cross-modal objectives"
-  - "Other Topic"
-  - "Raw point-based representations"
+  - "Transformer-based attention models"
 - "title": "Focal loss for dense object detection"
   "unique_context_marker": "[44]"
   "block_ids":
@@ -459,7 +459,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Graph-based neural models"
 - "title": "Learning phrase representations using rnn encoder-decoder for statistical machine translation"
   "unique_context_marker": "[47]"
   "block_ids":
@@ -467,7 +467,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Sequential RNN-based models"
 - "title": "Bert: Pre-training of deep bidirectional transformers for language understanding"
   "unique_context_marker": "[48]"
   "block_ids":
@@ -475,4 +475,4 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Transformer-based attention models"

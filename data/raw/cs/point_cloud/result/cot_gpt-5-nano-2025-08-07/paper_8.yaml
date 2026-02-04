@@ -12,7 +12,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Problem Formulation"
+  - "Domain Overview"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Elevation mapping for locomotion and navigation using gpu"
@@ -21,81 +21,81 @@
   - 1
   - 17
   "intent_labels":
-  - "Importance of Problem"
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
+  - "Result Comparison"
   "topic_labels":
-  - "Projection-based representations"
-  - "Projection-based representations"
+  - "Volumetric voxelization"
+  - "Hybrid multi-modal representations"
 - "title": "Probabilistic terrain mapping for mobile robots with uncertain localization"
   "unique_context_marker": "[4]"
   "block_ids":
   - 1
   - 3
   "intent_labels":
-  - "Prospective Application"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
-  - "Hybrid fusion methods"
+  - "Hybrid multi-modal representations"
+  - "Semantic Segmentation: Approaches"
 - "title": "Voxblox: Incremental 3d euclidean signed distance fields for on-board mav planning"
   "unique_context_marker": "[5]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Domain Overview"
   "topic_labels":
-  - "Volumetric voxelization"
+  - "Raw point-based representations"
 - "title": "Learning robust perceptive locomotion for quadrupedal robots in the wild"
   "unique_context_marker": "[6]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Tamols: Terrain-aware motion optimization for legged systems"
   "unique_context_marker": "[7]"
   "block_ids":
   - 1
   - 3
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
+  - "Weakly and unsupervised segmentation"
   - "Semantic Segmentation: Approaches"
-  - "Hybrid fusion methods"
 - "title": "Locomotion policy guided traversability learning using volumetric representations of complex environments"
   "unique_context_marker": "[8]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Hybrid fusion methods"
 - "title": "Fast Traversability Estimation for Wild Visual Navigation"
   "unique_context_marker": "[9]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Resource Utilization"
+  - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Hybrid multi-modal representations"
 - "title": "Safe local exploration for replanning in cluttered unknown environments for micro-aerial vehicles"
   "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Evaluation"
+  - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Graph-based subterranean exploration path planning using aerial and legged robots"
   "unique_context_marker": "[11]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Metrics Utilization"
+  - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based representations"
 - "title": "Robotic mapping: A survey"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -103,7 +103,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Hybrid fusion methods"
+  - "Semantic Segmentation: Approaches"
 - "title": "Robot-centric elevation mapping with uncertainty estimates"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -111,7 +111,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Hybrid fusion methods"
+  - "Semantic Segmentation: Approaches"
 - "title": "Stereo vision and terrain modeling for quadruped robots"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -119,7 +119,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Hybrid fusion methods"
+  - "Semantic Segmentation: Approaches"
 - "title": "A generative model of terrain for autonomous navigation in vegetation"
   "unique_context_marker": "[15]"
   "block_ids":
@@ -127,7 +127,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Hybrid fusion methods"
+  - "Semantic Segmentation: Approaches"
 - "title": "Support surface estimation for legged robots"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -137,8 +137,8 @@
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Hybrid fusion methods"
-  - "Hybrid multi-modal representations"
+  - "Semantic Segmentation: Approaches"
+  - "Projection-based representations"
 - "title": "Pose consistency kkt-loss for weakly supervised learning of robot-terrain interaction model"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -146,7 +146,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Semantic Segmentation: Approaches"
 - "title": "Learning predictions of the load-bearing surface for autonomous rough-terrain navigation in vegetation"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -154,13 +154,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Volumetric voxelization"
+  - "Semantic Segmentation: Approaches"
 - "title": "Deeper depth prediction with fully convolutional residual networks"
   "unique_context_marker": "[19]"
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "Monocular depth estimation with hierarchical fusion of dilated cnns and soft-weighted-sum inference"
@@ -168,7 +168,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "Self-supervised monocular depth estimation with internal feature fusion"
@@ -176,7 +176,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "Self-supervised monocular trained depth estimation using self-attention and discrete disparity volume"
@@ -184,7 +184,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "Self-supervised monocular depth estimation: Solving the dynamic object problem by semantic guidance"
@@ -192,7 +192,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "Syndistnet: Self-supervised monocular fisheye camera distance estimation synergized with semantic segmentation for autonomous driving"
@@ -200,7 +200,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "Self-supervised sparse-to-dense: Self-supervised depth completion from lidar and monocular camera"
@@ -208,7 +208,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "Learning steering kernels for guided depth completion"
@@ -216,7 +216,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "U-net: Convolutional networks for biomedical image segmentation"
@@ -225,11 +225,11 @@
   - 4
   - 9
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
-  - "Hybrid multi-modal representations"
+  - "Projection-based segmentation"
 - "title": "Supervised outlier detection in large-scale mvs point clouds for 3d city modeling applications"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -237,13 +237,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Semantic Segmentation: Approaches"
 - "title": "Deep auxiliary learning for visual localization and odometry"
   "unique_context_marker": "[29]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Projection-based segmentation"
 - "title": "Semantic terrain segmentation in the navigation vision of planetary rovers—a systematic literature review"
@@ -251,7 +251,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Projection-based segmentation"
 - "title": "Multimodal semantic segmentation in autonomous driving: A review of current approaches and future perspectives"
@@ -259,7 +259,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Hybrid fusion methods"
 - "title": "Hyperdense-net: A hyper-densely connected cnn for multi-modal image segmentation"
@@ -267,7 +267,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Hybrid fusion methods"
 - "title": "Gaussian processes for machine learning"
@@ -277,7 +277,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Hybrid multi-modal representations"
+  - "Raw point-based representations"
 - "title": "Efficientnet: Rethinking model scaling for convolutional neural networks"
   "unique_context_marker": "[34]"
   "block_ids":
@@ -287,8 +287,8 @@
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Projection-based representations"
   - "Hybrid multi-modal representations"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Imagenet: A large-scale hierarchical image database"
   "unique_context_marker": "[35]"
   "block_ids":
@@ -296,7 +296,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Input Representations and Modalities"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Understanding the difficulty of training deep feedforward neural networks"
   "unique_context_marker": "[36]"
   "block_ids":
@@ -304,7 +304,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Input Representations and Modalities"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Decoupled weight decay regularization"
   "unique_context_marker": "[37]"
   "block_ids":
@@ -312,18 +312,18 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Input Representations and Modalities"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Adabins: Depth estimation using adaptive bins"
   "unique_context_marker": "[38]"
   "block_ids":
   - 12
   - 16
   "intent_labels":
-  - "Hyperparameter Utilization"
+  - "Algorithm/Principle Adoption"
   - "Metrics Utilization"
   "topic_labels":
-  - "Input Representations and Modalities"
-  - "Other Topic"
+  - "Self-supervised and Cross-modal Pretraining"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Fully convolutional networks for semantic segmentation"
   "unique_context_marker": "[39]"
   "block_ids":
@@ -339,4 +339,4 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Projection-based representations"
+  - "Discretization-based segmentation"

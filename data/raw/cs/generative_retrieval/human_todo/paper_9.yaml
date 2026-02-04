@@ -1,0 +1,567 @@
+title: Scaling the Vocabulary of Non-autoregressive Models for Efficient Generative Retrieval
+blocks:
+- block_id: 0
+  content: Generative Retrieval introduces a new approach to Information Retrieval by re- framing it as a constrained generation
+    task, leveraging recent advancements in Autoregressive (AR) language models. However, AR-based Generative Retrieval methods
+    suffer from high inference latency and cost compared to traditional dense retrieval techniques, limiting their practical
+    applicability. This paper investigates fully Non-autoregressive (NAR) language models as a more efficient alternative
+    for generative retrieval. While standard NAR models alleviate latency and cost concerns, they exhibit a significant drop
+    in retrieval performance (compared to AR models) due to their inability to capture dependencies between target tokens.
+    To address this, we question the conventional choice of limiting the target token space to solely words or sub-words.
+    We propose PIXAR, a novel approach that expands the target vocabulary of NAR models to include multi-word entities and
+    common phrases (up to 5 million tokens), thereby reducing token dependencies. PIXAR employs inference optimization strategies
+    to maintain low inference latency despite the significantly larger vocabulary. Our results demonstrate that PIXAR achieves
+    a relative improvement of 31.0% in MRR@10 on MS MARCO and 23.2% in Hits@5 on Natural Questions compared to standard NAR
+    models with similar latency and cost. Furthermore, online A/B experiments on a large commercial search engine show that
+    PIXAR increases ad clicks by 5.08% and revenue by 4.02%.
+  citations: []
+- block_id: 1
+  content: 'Generative Retrieval (GR) has emerged as a promising approach within Information Retrieval, particularly for text
+    retrieval tasks [3, 40, 42, 21]. This approach involves creating a set of document identifiers that represent documents
+    from the original corpus. A generative model is then trained to generate document identifiers for an input query. The
+    generated identifiers are subsequently mapped back to the corresponding documents in the corpus. GR methods typically
+    utilize an autoregressive (AR) language model to generate the document identifier as a sequence of words or sub-words
+    tokens from a predefined target vocabulary. By leveraging high-quality document identifiers and capturing complex dependencies
+    between tokens through the autoregressive generation process, GR has achieved substantial improvements in retrieval performance
+    in recent years [3, 21, 20].
+
+
+    Despite these advancements, deploying GR models in low-latency applications, such as sponsored search, remains a significant
+    challenge due to the high inference complexity of AR models [19, 28]. This stems from their sequential token-by-token
+    generation mechanism [13]. To address this challenge, our paper explores the use of non-autoregressive (NAR) language
+    models for GR. These models significantly reduce inference costs by generating all tokens of the document identifier simultaneously.
+    However, this parallel generation limits the model’s ability to capture dependencies among tokens (words, sub-words) in
+    the output identifier, leading to inferior retrieval performance compared to AR-based GR models. To enable NAR-based GR
+    to leverage word and sub-word interactions during generation, we propose expanding the model’s target vocabulary by incorporating
+    phrases within the document identifiers as tokens. Intuitively, predicting high-probability phrases at each position in
+    the output sequence allows the NAR model to better understand the intricate relationships between words and sub-words
+    within each predicted phrase, potentially enhancing retrieval performance. This forms the basis of our first research
+    question:
+
+
+    (RQ1)- How does the retrieval accuracy of a NAR-based GR model (with a target vocabulary containing word/sub-word level
+    tokens) change when the target vocabulary is expanded to include phrases from document identifiers as additional tokens?
+
+
+    While a positive answer to the above question will provide an approach to get high quality retrieval from NAR-based GR,
+    it also comes at a cost to the inference latency. While generating phrases at output instead of solely words leads to
+    shorter output sequences and helps latency, as the vocabulary size grows, predicting the most likely tokens at each of
+    these output positions becomes computationally far more demanding leading to much higher overall latency. Consequently,
+    to make NAR-based GR truly viable for latency-sensitive applications, we need to develop efficient inference methods that
+    can select the top tokens from the enlarged vocabulary more efficiently. This leads us to our second research question:
+
+
+    (RQ2)- How can we reduce the inference latency of a NAR-based GR model with a large target vocabulary without compromising
+    its retrieval accuracy?
+
+
+    In this work, we make progress on both these questions. Our key contributions are outlined below.'
+  citations:
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: Architectural and decoding innovations
+  - marker: '[13]'
+    intent_label: Research Gap
+    topic_label: Scalability and efficiency of generative retrieval
+  - marker: '[19]'
+    intent_label: Research Gap
+    topic_label: Scalability and efficiency of generative retrieval
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Architectural and decoding innovations
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Architectural and decoding innovations
+  - marker: '[28]'
+    intent_label: Research Gap
+    topic_label: Scalability and efficiency of generative retrieval
+  - marker: '[40]'
+    intent_label: Prior Methods
+    topic_label: Architectural and decoding innovations
+  - marker: '[42]'
+    intent_label: Prior Methods
+    topic_label: Architectural and decoding innovations
+- block_id: 2
+  content: '1. We present PIXAR (Phrase-Indexed eXtreme vocabulary for non-Autoregressive Retrieval), a novel approach to
+    NAR-based GR. By leveraging a vast target vocabulary encompassing phrases within document identifiers, PIXAR achieves
+    superior retrieval quality compared to conventional NAR-based GR models. Through innovative training and inference optimizations,
+    PIXAR effectively mitigates the computational burden associated with its large vocabulary. This allows for efficient retrieval
+    of relevant documents during the inference process. The architecture of PIXAR is presented in Figure 1. A comprehensive
+    explanation of each component can be found in Section 4.
+
+
+    2. We conducted comprehensive experiments on two widely-used text retrieval benchmarks, MS MARCO [2] and Natural Questions
+    (NQ) [17]. Our results demonstrate PIXAR’s significant performance gains: a relative improvement of 24.0% in MRR@10 on
+    MSMARCO and a 23.2% increase in Hits@5 on NQ, compared to standard NAR-based retrieval models while maintaining similar
+    inference latency. These findings underscore PIXAR’s effectiveness in enhancing retrieval quality for various text retrieval
+    tasks.
+
+
+    3. Moreover, A/B testing on a large commercial search engine revealed a significant impact of PIXAR: a 5.08% increase
+    in ad clicks and a 4.02% boost in revenue. These findings validate PIXAR’s practical value in improving user engagement
+    and driving business outcomes.'
+  citations:
+  - marker: '[2]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[17]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+- block_id: 3
+  content: 'Generative retrieval: GR is an emerging paradigm in information retrieval that formulates retrieval as a generation
+    task. A key distinction among different GR methods lies in their approach to represent documents. Some methods directly
+    generate the full text of the document, particularly for short documents like keywords [22, 27, 32]. Others opt for more
+    concise representations, such as numeric IDs [40, 45, 25, 42, 43, 34], document titles [5, 6], sub-strings [3], pseudo
+    queries [39], or a combination of these descriptors [21, 20]. Despite showcasing promising results, existing GR approaches
+    have high inference latency and computational cost due their reliance on AR language models, presenting a significant
+    challenge for their real-world adoption.
+
+
+    Non-autoregressive Models: Recent works have explored NAR models for various generation tasks, such as machine translation
+    [13], text summarization [31], and specific retrieval applications like sponsored search [28]. NAR models aim to accelerate
+    inference by predicting word or sub-word tokens independently and in parallel with a single forward pass. However, NAR
+    models struggle to capture the inherent multimodality in target sequences, where multiple valid outputs exist for a single
+    input, due to their lack of target dependency modeling [13]. This often leads to predictions that mix tokens from multiple
+    valid outputs, resulting in significant performance degradation. To mitigate this, existing approaches focus on accurately
+    predicting a single mode rather than modeling all modes. For instance, some methods use knowledge distillation to simplify
+    the training data [13, 44], while a few others relax the loss function [11, 9, 24, 35]. While these approaches are effective
+    for tasks requiring a single correct output, GR necessitates retrieving all relevant document identifiers for accurate
+    retrieval and ranking. In this work, we propose an orthogonal approach to improve NAR models for retrieval by directly
+    predicting phrases instead of sub-words. This reduces the number of independent predictions required in NARs, leading
+    to improved retrieval performance.
+
+
+    Efficient Softmax: The softmax operation, crucial for generating probability distributions over target vocabularies in
+    language models, presents a significant computational bottleneck, particularly for large vocabularies. Existing approaches
+    address this through techniques such as low-rank approximation of classifier weights [7, 36], clustering of classifier
+    weights or hidden states to pre-select target tokens [12, 8]. However, these methods remain computationally expensive
+    for NAR models which perform multiple softmax operations within a single forward pass. In contrast, we introduce a novel
+    method that utilizes a dedicated shortlist embedding to efficiently narrow down target tokens for the entire query, thereby
+    significantly reducing latency and maintaining strong retrieval performance.
+
+
+    Large Vocabulary: Recent work has highlighted the benefits of large sub-word vocabularies for encoder models, particularly
+    in multilingual settings [23]. Non-parametric language models, which predict outputs from an open vocabulary of n-grams
+    and phrases using their dense embeddings, have also gained traction for tasks like question answering and text continuation
+    [26, 4, 18]. While our work shares the goal of expanding vocabulary size with non-parametric models, we directly learn
+    classifier weights for an extended target vocabulary within a non-autoregressive framework.'
+  citations:
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[4]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[9]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[13]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[18]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Architectural and decoding innovations
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Architectural and decoding innovations
+  - marker: '[22]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[23]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[24]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[28]'
+    intent_label: Prior Methods
+    topic_label: Downstream task adaptation
+  - marker: '[31]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[32]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[34]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[35]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[36]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Training strategies and data augmentation
+  - marker: '[40]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[42]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[43]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[44]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[45]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+- block_id: 4
+  content: 'Notation: We let Q to be a set of queries and X to be a finite set of textual documents (called the document corpus).
+    Following the GR paradigm from prior works [3, 21, 20], we use a set of document identifiers (docids) D. Prior literature
+    uses docids such as titles, sub-strings, pseudo-queries etc. In this paper, following recent works [42, 45, 21], we leverage
+    pre-trained language models to generate high quality pseudo-queries from documents, which we then use as docids. For non-negative
+    integers m < n , we denote the set {m, . . . , n} by [m, n]. We use P (with or without subscripts) to denote probability
+    distributions and the exact distribution is made clear at the time of use. Next we describe salient features of NAR language
+    models relevant to our work.
+
+
+    NAR Models: NAR models generate all tokens of the docid in parallel and therefore lead to faster retrieval than AR models.
+    These models assume conditional independence among target tokens, i.e., P(d | q, θ) = Qn t=1 P(dt | q, θ) and so for each
+    position t ∈ [s], they select the top tokens based on the conditional probability distribution P(. | q, θ). This simplification
+    enables efficient inference but comes at a cost. Previous studies in various applications, including machine translation
+    [13, 14], have demonstrated that the assumption of conditional independence rarely holds for real-world data. Consequently,
+    NAR models often struggle to capture crucial dependencies between target tokens, leading to a substantial performance
+    degradation compared to their autoregressive counterparts. In our proposed work described in Section 4, we develop a technique
+    that can overcome this quality degradation by adding phrase level tokens (within docids) and designing novel training/inference
+    mechanisms that can still benefit from the parallel generation mode of NAR models.'
+  citations:
+  - marker: '[3]'
+    intent_label: Problem Formulation
+    topic_label: Generative document retrieval
+  - marker: '[13]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[14]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[20]'
+    intent_label: Problem Formulation
+    topic_label: Generative document retrieval
+  - marker: '[21]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Training strategies and data augmentation
+  - marker: '[42]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Training strategies and data augmentation
+  - marker: '[45]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Training strategies and data augmentation
+- block_id: 5
+  content: The core idea behind PIXAR is to scale up the target vocabulary of NAR models by including phrases from docids.
+    We explain the methodology for constructing this expanded vocabulary in Section 4.1. To enable efficient inference with
+    a larger vocabulary, PIXAR constructs a small number of token subsets from the target vocabulary during training. At inference
+    time, PIXAR selects and combines relevant subsets to create a concise shortlist of candidate tokens. For each output position,
+    PIXAR only re-ranks tokens among this shortlisted subset to predict the top tokens. Finally, these top tokens at different
+    positions are combined using trie constrained beam search to generate the docids. Section 4.2 provides the complete details
+    of the PIXAR pipeline, including the novel training and inference mechanisms.
+  citations: []
+- block_id: 6
+  content: 'Our goal is to build a target tokenizer and vocabulary with the following desired characteristics: (i) Efficient
+    Encoding: The vocabulary should encode docids using fewer bits, resulting in shorter target sequences, (ii) Token Frequency:
+    Ensure every token appears with a minimum frequency in the docid set to facilitate effective training of the language
+    modelling weights, and (iii) Linguistic Structure: Include common phrases while respecting word boundaries. While Byte-Pair
+    Encoding (BPE) [37] is a popular method for constructing vocabularies, its greedy merging strategy often results in sub-optimal
+    tokens that blend characters from different words. To circumvent this, tokenizers in language models like LLama [41] and
+    GPT [33, 29] incorporate a pre-tokenization heuristic that splits sentences by spaces and punctuation marks before applying
+    BPE. However, this approach results in vocabularies limited to words and sub-words, which, as we show in Section 5.3,
+    perform significantly worse than phrase-based vocabularies.
+
+
+    Instead, we adopt a two-stage approach: candidate selection followed by vocabulary construction, as proposed in TokenMonster
+    [10]. Initially, we generate a set of potential token candidates by considering all possible character substrings up to
+    a specified maximum length. We then filter these substrings based on criteria such as adherence to word boundaries and
+    consistency in character types (letters, numbers, punctuation, etc.). Only tokens that exceed a minimum occurrence threshold
+    are retained as potential candidates. In the second stage, we iteratively refine the candidate set to construct an optimal
+    vocabulary of a specified size. We generate multiple test vocabularies from the pool of candidate tokens. Each test vocabulary
+    is then used to tokenize the dataset, and a scoring system evaluates the efficiency of each token based on the total number
+    of characters it compresses in the docid set. Tokens that perform poorly are removed, and the process is repeated until
+    the desired vocabulary size is reached. Since we follow the vocabulary construction process from TokenMonster [10], we
+    refer the reader to [10] for further details.'
+  citations:
+  - marker: '[10]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Other Topics
+  - marker: '[29]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[33]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[41]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+- block_id: 7
+  content: 'In this section, we provide details of the PIXAR pipeline. At a high level PIXAR comprises of a NAR model, a set
+    of learnable vectors c1, . . . , cm and their corresponding r-sized subsets W1, . . . , Wm ⊂ V , where V is the target
+    vocabulary constructed using the method described in Section 4.1. Here, m and r are hyper-parameters that can be tuned.
+    The set Wi, i ∈ [m] contains the top r tokens in the target vocabulary V as per the Softmax probability score, Pci(v)
+    = exp(cT i wv) / sum_{u∈V} exp(cT i wu), where for each token u ∈ V , wu ∈ Rd is a learnable parameter vector in the NAR
+    model. We will explain the role of the cis below but first we demonstrate the journey of an input query q through the
+    pipeline. q is first prepended with a special "[CLS]" token and sent through the NAR model. It passes through the transformer
+    layers which outputs a sequence of embeddings x0(q), x1(q), . . . , xs(q) ∈ Rd, where s is the output sequence length
+    and d is the hidden dimension of the embeddings. Following this, k vectors from the set {ci, i ∈ [m]}, that have the largest
+    inner product with x0(q) are computed. Without loss of generality, assume they are c1, . . . , ck. The union of the corresponding
+    sets i.e., W0(q) = W1 ∪ . . . ∪ Wk is then obtained. This becomes a final set of shortlisted tokens from V and tokens
+    within it are subsequently used for generation of the docids. This means W0(q) should at least contain tokens for all
+    positions in the output to be generated for q. For each t ∈ [1, s], the set W0(q) is re-ranked according to the Softmax
+    probability scores Pt(. | q), defined as, Pt(v | q) = exp(xt(q)T wv) / sum_{u∈V} exp(xt(q)T wu). This gives ordered sets
+    Wt0(q) for each t ∈ [1, s]. The top tokens in Wt0(q) are ideally more relevant to the tth position in the docid to be
+    generated. We generate the top docids by performing permutation decoding [27] which utilizes constrained beam search on
+    trie data structures representing document identifiers in D as a sequence of tokens from the target vocabulary V . Since
+    x0(q) is used to obtain the shortlisted set of tokens W0(q), we call it the shortlist embedding.
+
+
+    Training: We train PIXAR using a training dataset of query, docid pairs (q1, d1), . . . ,(qN , dN). Our training has two
+    parts. First, we minimize a novel loss function ℓ(¯θ) to learn a vector ¯θ comprising of the the hidden parameters within
+    the transformer layers as well as the token parameter vectors wu, u ∈ V . Our loss ℓ(¯θ) comprises of three terms. The
+    first term ℓ1(¯θ) is the standard cross entropy loss between the Softmax predictions at each t ∈ [1, s] and the actual
+    docid sequence of the document identifiers in the training data, i.e., ℓ1(¯θ) = − sum_{i=1..N} sum_{t=1..s} log(Pt(dt_i
+    | qi)).
+
+
+    In the PIXAR pipeline, we use x0(q) to compute a subset of tokens W0(q) ⊂ V , that should ideally contain tokens at all
+    positions in the generated output docid. To achieve this we add another cross entropy loss term that intuitively accounts
+    for how well a Softmax activation is able to predict the set of tokens in the output docid by using embedding x0(q), i.e.,
+    ℓ2(¯θ) = − sum_{i=1..N} sum_{t=1..s} log(P0(dt_i | qi)).
+
+
+    Finally, for all t ∈ [1, s] we add a self normalization loss term that enables efficient computation of the Softmax based
+    probability scores, i.e., ℓ3(¯θ) = sum_{i=1..N} sum_{t=1..s} log2(sum_{v∈V} exp(xt(qi)T wv)). Note that, post minimization
+    of the loss ℓ3(¯θ), for each t ∈ [1, s], we can use the probability estimates ePt(v | q) = exp(xt(q)T wv), instead of
+    Pt(v | q) defined above. For large target vocabularies (e.g., our expanded vocabulary with phrase tokens), these estimates
+    are much faster to compute since the sum in the denominator over the entire target vocabulary is avoided. Finally, we
+    combine these three terms into our overall loss as, ℓ(¯θ) = ℓ1(¯θ) + λ2ℓ2(¯θ) + λ3ℓ3(¯θ), where λ2, λ3 are hyper-parameters
+    to be tuned. After minimizing ℓ(¯θ), we train further to learn the vectors c1, . . . , cm described earlier. For each
+    training pair (qi, di), i ∈ [N], let ei ∈ [m] be such that cei has the largest inner product with x0(qi), i.e., ei = arg
+    max_{j∈[m]} ⟨x0(qi), cj⟩. Then we minimize a function ℓ′(c1, . . . , cm) that computes the cross entropy loss between
+    the Softmax distributions Pcei , i ∈ [N] and the docid sequence di, i.e., ℓ′(c1, . . . , cm) = − sum_{i=1..N} sum_{t=1..s}
+    log(Pcei (dt_i)). Intuitively, this means that we try to maximize the likelihood of the tokens present in the docid di,
+    for the vector cei that is most aligned with x0(qi). This will ensure that the set Wei (defined earlier in this section)
+    will have a good chance of containing the tokens in di. Recall that, in our description of the PIXAR pipeline we find
+    k vectors that have highest inner product with x0(qi) and not just the most aligned vector cei. This enhances the chance
+    of the tokens in di being present in W0(q), since it is a union of the sets of tokens corresponding to these k vectors.
+
+
+    Efficient Inference: We now explain how the PIXAR pipeline outlined in this section is able to circumvent latency overheads
+    that arise due to the new expanded target vocabulary V . Recall the typical NAR model described in Section 3. As the size
+    of V becomes larger the computational cost of inference grows primarily due to two reasons; (a) the language modelling
+    head needs to select top tokens from V at each output position, and (b) computing the Softmax distribution at each output
+    position becomes expensive since its denominator computes a sum over the target vocabulary. While (b) is easily tackled
+    using the self normalization loss ℓ3(¯θ), PIXAR’s handling of (a) is more intricate. Instead of directly selecting tokens
+    from V at each output position, it selects tokens from re-ranked versions of the shortlisted subset W0(q). This set is
+    further a union of (k many) r-sized subsets and therefore has size ≤ rk. By choosing hyper-parameters appropriately, we
+    can ensure that rk ≪ |V |. To identify the shortlisted subset W0(q), PIXAR finds the k vectors among c1, . . . , cm with
+    largest inner product with x0(q). Given x0(q), this can also be done efficiently since we can choose the hyper-prameter
+    m appropriately, i.e. m ≪ |V |. This allows the PIXAR pipeline to avoid the additional inference latency that arises from
+    the expanded target vocabulary V . Note that very small values of m, r, k can impact retrieval quality and therefore need
+    to be tuned for high quality retrieval. In our experiments in Section 5, we demonstrate for two popular datasets that
+    even when |V | is scaled to 5 million, m, r, k can be chosen in a way that ensures high retrieval quality with negligible
+    impact on inference time.'
+  citations:
+  - marker: '[1]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Architectural and decoding innovations
+  - marker: '[27]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Identifier design and decoding constraints
+- block_id: 8
+  content: In this section, we evaluate our proposed PIXAR method in three different experimental settings. First, we benchmark
+    PIXAR against leading GR approaches, including AR and NAR methods. Next, we perform a component-wise ablation study on
+    PIXAR to examine the impact of each component on retrieval performance and model latency. We also compare our novel inference
+    pipeline (Section 4.2) with inference optimization methods from the literature. Finally, we assess the effectiveness of
+    PIXAR in a real-world application, focusing on sponsored search.
+  citations: []
+- block_id: 9
+  content: 'We evaluate PIXAR on two types of datasets: (i) public datasets designed for passage retrieval tasks, and (ii)
+    a proprietary dataset used for sponsored search applications. Below, we describe each dataset:
+
+
+    Public Datasets: We use two prominent datasets to evaluate PIXAR and other GR methods: MS MARCO [2] and Natural Questions
+    (NQ) [17]. The MS MARCO dataset, derived from Bing search queries, provides a large collection of real-world queries and
+    their corresponding passages from relevant web documents. NQ contains real user queries from Google Search that are linked
+    to relevant Wikipedia articles, emphasizing text retrieval for answering intricate information needs. For both these datasets,
+    we follow the preprocessing approach of [21] and utilize pseudo queries generated from passages as docids for PIXAR.
+
+
+    Proprietary Dataset: We further evaluate PIXAR in the context of sponsored search, where the objective is to retrieve
+    relevant ads for user queries. We utilize advertiser bid keywords as docids for ads. We perform offline evaluations on
+    SponsoredSearch-1B, a large-scale dataset of query-keyword pairs mined from the logs of a large commercial search engine.
+    This dataset includes approximately 1.7 billion query-keyword pairs, with 70 million unique queries and 56 million unique
+    keywords. The test set consists of 1 million queries, with a retrieval set of 1 billion keywords.
+
+
+    Metrics & Baselines: Following prior work [21, 20], we evaluate all models using MRR@k and Recall@k for the MS MARCO dataset,
+    and Hits@k for NQ. For the SponsoredSearch-1B dataset, we use Precision@K as the evaluation metric. Additionally, we measure
+    inference latency with a batch size of 1 on a Nvidia T4 GPU. We compare PIXAR with several AR baselines, including DSI
+    [40], NCI [42], SEAL [3], MINDER [21], and LTRGR [20]. We report retrieval results from the respective papers and obtain
+    inference latency by running the official code. For NAR baselines, we include CLOVERv2 [28] and replicate their method
+    on our datasets due to the absence of reported numbers and official code for these datasets.'
+  citations:
+  - marker: '[2]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[3]'
+    intent_label: Result Comparison
+    topic_label: Architectural and decoding innovations
+  - marker: '[17]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[20]'
+    intent_label: Result Comparison
+    topic_label: Architectural and decoding innovations
+  - marker: '[21]'
+    intent_label: Result Comparison
+    topic_label: Training strategies and data augmentation
+  - marker: '[28]'
+    intent_label: Result Comparison
+    topic_label: Architectural and decoding innovations
+  - marker: '[40]'
+    intent_label: Result Comparison
+    topic_label: Architectural and decoding innovations
+  - marker: '[42]'
+    intent_label: Result Comparison
+    topic_label: Architectural and decoding innovations
+- block_id: 10
+  content: 'We present the results of PIXAR and various GR baselines on the MS MARCO dataset. We observe several key findings
+    from this comparison. First, CLOVERv2 significantly outperforms AR baselines like SEAL, NCI, and DSI, while also offering
+    substantial improvements in inference latency. This highlights CLOVERv2 as a strong NAR baseline. However, CLOVERv2 falls
+    short when compared to more recent AR models, particularly MINDER and LTRGR. For instance, CLOVERv2’s recall at 100 is
+    lower than that of MINDER by 11.8 absolute points. Next, our proposed PIXAR model with a 5M target vocabulary outperforms
+    the strong CLOVERv2 baseline across all metrics, showing approximately 20-30% relative improvements. This strongly supports
+    our hypothesis that increasing the target vocabulary of NAR models can significantly imrpove retrieval performance. Moreover,
+    PIXAR exceeds the performance of MINDER in every metric, achieving a 22.5% improvement in MRR at 10, while also achieving
+    substantial speedups in inference latency. Notably, PIXAR achieves this performance without utilizing multiple types of
+    docids like MINDER (titles, n-grams, pseudo queries) and relies solely on pseudo queries. Additionally, PIXAR closely
+    rivals LTRGR, lagging by only 1.5 absolute points in MRR@10 (a 5.8% relative difference), despite not using a complex
+    two-stage training with a passage-level loss like LTRGR.
+
+
+    The results on the NQ dataset show that the baseline CLOVERv2 NAR model significantly trails behind AR models like SEAL,
+    MINDER, and LTRGR. Similar to MS MARCO, PIXAR substantially outperforms CLOVERv2 on all metrics, yielding around 13-23%
+    gains while maintaining significant latency speedups over AR models. Importantly, PIXAR reduces the relative gap with
+    LTRGR from 16.3% to 5.1%. These results demonstrate the effectiveness of PIXAR in leveraging large vocabularies in NAR
+    models to achieve substantially better retrieval performance than standard NAR models while retaining their latency benefits.'
+  citations: []
+- block_id: 11
+  content: 'Our PIXAR model integrates three primary components: (i) a vocabulary and tokenizer that incorporate phrases in
+    addition to words, (ii) an expanded vocabulary size of 5M tokens, and (iii) an efficient inference pipeline (Section 4.2)
+    to accelerate NAR inference. To analyze the impact of each component, we conducted detailed ablation studies, which we
+    describe below.
+
+
+    Phrase-enhanced Vocabulary: We first investigated the effectiveness of PIXAR’s vocabulary construction strategy (detailed
+    in Section 4.1), focusing on the inclusion of phrases. To isolate this effect, we fixed the vocabulary size to 128K, equivalent
+    to that of DeBERTa-v3, which was used to initialize the encoder. We compared the retrieval performance on the MS MARCO
+    dataset using the original DeBERTa BPE tokenizer, a custom sub-word BPE, a sub-word Unigram, and our phrase-based tokenizer,
+    all trained on the MS MARCO docid set. We observed that a custom-tailored BPE tokenizer performs marginally better than
+    the original DeBERTa tokenizer. Further, the Unigram tokenizer outperforms the BPE by approximately 1.9% in MRR@10 and
+    Recall@100, in relative terms. Most notably, our phrase-based tokenizer substantially outperforms the best baseline (Unigram
+    tokenizer), with a relative improvement of 13.7% in MRR@10 (from 19.0% to 21.6%) and 12.6% in Recall@100 (from 68.7% to
+    77.5%). These results clearly demonstrate the benefits of extending beyond words to include phrases in the vocabulary
+    for NAR models.
+
+
+    Vocabulary Scaling: Next, we analyze the impact of increasing the target vocabulary size in NAR models, addressing RQ1
+    posed in Section 1. For this study, we utilized the phrase-based tokenizer and varied the vocabulary size from 128K to
+    5 million tokens. We used the full softmax operation without any approximation to observe the raw effect of scaling. There
+    is a consistent increase in retrieval performance as the vocabulary size increases across both MS MARCO and NQ datasets.
+    Notably, the improvement persists even when the vocabulary size exceeds 1 million tokens. For instance, when increasing
+    the vocabulary size from 1 million to 5 million tokens, Recall@5 on the MS MARCO dataset improves by 7.7% (from 35.7 to
+    38.5). These findings highlight the clear advantages of scaling up the vocabulary size in NAR models in terms of retrieval
+    performance.
+
+
+    Efficient PIXAR Inference: Scaling vocabulary size introduces computational challenges due to the expensive softmax operation.
+    We compared PIXAR’s inference pipeline (Section 4.2) against established techniques: (i) low-rank approximation methods
+    (SVD-Softmax [38], HiRE-Softmax [36]) and (ii) clustering-based methods (Fast Vocabulary Projection [7] and its variant
+    Centroid Projection). While offering modest speedups, low-rank approximations like HiRE-softmax still result in significantly
+    higher inference latency due to their linear complexity with vocabulary size. Clustering-based methods like Fast Vocabulary
+    Projection offer further speedups in mean latency but remain slower than smaller-vocabulary baselines. In contrast, PIXAR
+    achieves superior performance, delivering substantial speedups over full softmax and faster inference than clustering-based
+    methods while maintaining comparable retrieval performance to full softmax. This translates to a latency only modestly
+    higher than the CLOVERv2 model which has a much smaller vocabulary. These results highlight the effectiveness of our tailored
+    softmax approximation, which efficiently predicts shortlist tokens for all language modeling head projections in NAR models.'
+  citations:
+  - marker: '[7]'
+    intent_label: Result Comparison
+    topic_label: Scalability and efficiency of generative retrieval
+  - marker: '[36]'
+    intent_label: Result Comparison
+    topic_label: Scalability and efficiency of generative retrieval
+  - marker: '[38]'
+    intent_label: Result Comparison
+    topic_label: Scalability and efficiency of generative retrieval
+- block_id: 12
+  content: 'To gain deeper insights into PIXAR’s superior performance compared to smaller-vocabulary NAR models like CLOVERv2,
+    we present qualitative examples. PIXAR’s tokenizer effectively captures multi-word entities like locations (e.g., "des
+    moines iowa") and common phrases (e.g., "average temp", "what’s the weather like in") as single tokens. Consequently,
+    the weights in the language modelling head of PIXAR can learn representations for these multi-word entities and phrases
+    from training data, capturing their semantic meaning. In contrast, standard NAR models like CLOVERv2 tend to break down
+    words representing single concepts into multiple tokens (e.g., "des moines iowa" is fragmented into four tokens: "des",
+    "mo", "ines", "iowa"). This hinders the language modeling head from learning meaningful representations for these concepts.
+    Moreover, representing common phrases like "what’s the weather like in" allows PIXAR to make fewer independent predictions
+    in parallel, reducing the target output sequence length. Specifically, the mean and 99th percentile target sequence length
+    decreases from 10.98 to 4.05 and from 18 to 9 in PIXAR compared to CLOVERv2. This reduction in target tokens simplifies
+    the model’s prediction task, leading to improved retrieval performance. Interestingly, despite shorter target sequence
+    lengths, PIXAR tends to predict longer outputs with more words, as each token represents multiple words. This addresses
+    a common issue with NAR models, namely their tendency to generate short outputs [15, 28].'
+  citations:
+  - marker: '[15]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[28]'
+    intent_label: Research Gap
+    topic_label: Architectural and decoding innovations
+- block_id: 13
+  content: To demonstrate the effectiveness of PIXAR in real-world scenarios, we conducted a series of experiments in sponsored
+    search, where the task is to retrieve the most relevant advertisements for user queries. In this application, ads are
+    treated as documents, and the keywords bid by advertisers serve as the docids. We first evaluated PIXAR on the SponsoredSearch-1B
+    dataset, where it significantly outperformed CLOVERv2, increasing P@100 from 23.5% to 29.1% (relative improvement of 23.7%).
+    Further, we deployed PIXAR on a large-scale commercial search engine and conducted A/B testing against an ensemble of
+    leading proprietary dense retrieval and generative retrieval algorithms. PIXAR improved revenue by 4.02% with 5.08% increase
+    in clicks, 0.64% increase in click-through rate, and 4.35% increase in query coverage, underscoring its effectiveness
+    in a real-world setting.
+  citations: []
+- block_id: 14
+  content: In this work, we introduced PIXAR, a novel NAR-based retrieval approach that leverages phrase-level tokens within
+    an expanded target vocabulary. Our experiments demonstrated that PIXAR bridges the performance gap with state-of-the-art
+    AR methods while retaining the inherent efficiency of NAR models. This speed advantage positions PIXAR as a promising
+    candidate for latency-sensitive applications like real-time search and recommendation systems.
+  citations: []

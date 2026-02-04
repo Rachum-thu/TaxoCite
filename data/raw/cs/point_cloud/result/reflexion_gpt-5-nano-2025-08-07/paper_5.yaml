@@ -6,7 +6,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Other Topic"
 - "title": "Exploring the limits of transfer learning with a unified text-to-text transformer"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -14,7 +14,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Other Topic"
 - "title": "Masked autoencoders are scalable vision learners"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -22,7 +22,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Other Topic"
 - "title": "Representation learning with contrastive predictive coding"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -30,7 +30,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Other Topic"
 - "title": "Momentum contrast for unsupervised visual representation learning"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -38,7 +38,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Hybrid multi-modal representations"
+  - "Other Topic"
 - "title": "Flamingo: a visual language model for few-shot learning"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -46,7 +46,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Hybrid multi-modal representations"
+  - "Other Topic"
 - "title": "A simple framework for contrastive learning of visual representations"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -54,7 +54,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Self-supervised video representation learning by context and motion decoupling"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -62,7 +62,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Pointcontrast: Unsupervised pre-training for 3d point cloud understanding"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -72,7 +72,7 @@
   - "Other Intent"
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
   - "Contrastive and cross-modal objectives"
 - "title": "4dcontrast: Contrastive learning with dynamic correspondences for 3d scene understanding"
   "unique_context_marker": "[10]"
@@ -81,7 +81,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Joint data and feature augmentation for self-supervised representation learning on point clouds"
   "unique_context_marker": "[11]"
   "block_ids":
@@ -120,19 +120,19 @@
   - 3
   - 5
   "intent_labels":
-  - "Domain Overview"
   - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
   - "Hierarchical structures"
 - "title": "Poincaré glove: Hyperbolic word embeddings"
   "unique_context_marker": "[16]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
 - "title": "Hyperbolic graph convolutional neural networks"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -140,7 +140,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
 - "title": "Hyperbolic image embeddings"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -148,7 +148,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
 - "title": "Hyperbolic vision transformers: Combining improvements in metric learning"
   "unique_context_marker": "[19]"
   "block_ids":
@@ -156,10 +156,10 @@
   - 6
   "intent_labels":
   - "Prior Methods"
-  - "Background"
+  - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Edgcnet: Joint dynamic hyperbolic graph convolution and dual squeeze-and-attention for 3d point cloud segmentation"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -167,7 +167,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
 - "title": "Self-supervised 3d behavior representation learning based on homotopic hyperbolic embedding"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -175,7 +175,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
 - "title": "Hyperbolic representation learning: Revisiting and advancing"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -183,7 +183,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Hierarchical structures"
 - "title": "Rethinking the compositionality of point clouds through regularization in the hyperbolic space"
   "unique_context_marker": "[23]"
   "block_ids":
@@ -191,7 +191,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Hierarchical structures"
 - "title": "Hyperbolic geometry"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -207,13 +207,13 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "point_cloud"
+  - "Contrastive and cross-modal objectives"
 - "title": "Learning representations and generative models for 3d point clouds"
   "unique_context_marker": "[26]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Hierarchical structures"
 - "title": "A scalable active framework for region annotation in 3d shape collections"
@@ -223,7 +223,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Projection-based representations"
 - "title": "Disn: Deep implicit surface network for high-quality single-view 3d reconstruction"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -231,7 +231,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Projection-based representations"
 - "title": "Dynamic graph cnn for learning on point clouds"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -255,7 +255,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Learning a probabilistic latent space of object shapes via 3d generative-adversarial modeling"
   "unique_context_marker": "[32]"
   "block_ids": []
@@ -283,7 +283,7 @@
   "intent_labels":
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Other Topic"
 - "title": "Unsupervised point cloud pre-training via occlusion completion"
   "unique_context_marker": "[37]"
   "block_ids":
@@ -291,7 +291,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "3D Shape Classification: Learning Strategies"
+  - "Other Topic"
 - "title": "Crosspoint: Self-supervised cross-modal contrastive learning for 3d point cloud understanding"
   "unique_context_marker": "[38]"
   "block_ids":
@@ -301,7 +301,7 @@
   - "Setting/Protocal Adoption"
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
   - "Hybrid multi-modal representations"
 - "title": "Self-supervised intra-modal and cross-modal contrastive learning for point cloud understanding"
   "unique_context_marker": "[39]"
@@ -315,7 +315,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Graph-based neural models"
+  - "Other Topic"
 - "title": "Umap: Uniform manifold approximation and projection for dimension reduction"
   "unique_context_marker": "[41]"
   "block_ids": []
@@ -328,7 +328,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "3D Shape Classification: Learning Strategies"
+  - "Other Topic"
 - "title": "Self-supervised deep learning on point clouds by reconstructing space"
   "unique_context_marker": "[43]"
   "block_ids": []

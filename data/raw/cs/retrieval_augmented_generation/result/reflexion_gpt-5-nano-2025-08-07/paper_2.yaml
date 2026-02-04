@@ -6,11 +6,11 @@
   - 8
   - 9
   "intent_labels":
-  - "Resource Utilization"
+  - "Model/Architecture Adoption"
   - "Prior Methods"
-  - "Research Gap"
+  - "Other Intent"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Other Topic"
   - "Sequential Training"
   - "Generation"
 - "title": "Query Refinement Prompts for Closed-Book Long-Form Question Answering"
@@ -20,7 +20,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Retrieval"
+  - "Retrieval Integration for Generation"
 - "title": "A general language assistant as a laboratory for alignment"
   "unique_context_marker": "[3]"
   "block_ids": []
@@ -35,19 +35,19 @@
   "intent_labels":
   - "Metrics Utilization"
   - "Algorithm/Principle Adoption"
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Generation Quality"
   - "Input-Layer Integration"
-  - "Trustworthiness and Robustness"
+  - "Generation Quality"
 - "title": "Benchmarking Foundation Models with Language-Model-as-an-Examiner"
   "unique_context_marker": "[5]"
   "block_ids":
   - 11
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Metrics Utilization"
   "topic_labels":
-  - "Generation Quality"
+  - "Generation"
 - "title": "Improving language models by retrieving from trillions of tokens"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -55,18 +55,18 @@
   - 2
   "intent_labels":
   - "Other Intent"
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Retrieval"
+  - "Input-Layer Integration"
   - "Intermediate-Layer Integration"
 - "title": "Language models are few-shot learners"
   "unique_context_marker": "[7]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Training-free Methods"
+  - "Independent Training"
 - "title": "FELM: Benchmarking Factuality Evaluation of Large Language Models"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -89,7 +89,7 @@
   - 8
   - 9
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
   - "Sequential Training"
@@ -99,9 +99,9 @@
   "block_ids":
   - 11
   "intent_labels":
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Sequential Training"
 - "title": "ELI5: Long Form Question Answering"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -114,7 +114,7 @@
   - "Benchmark Utilization"
   "topic_labels":
   - "NLP Applications"
-  - "NLP Applications"
+  - "Other Topic"
   - "NLP Applications"
 - "title": "GPTScore: Evaluate as You Desire"
   "unique_context_marker": "[13]"
@@ -139,7 +139,7 @@
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "NLP Applications"
 - "title": "Retrieval augmented language model pre-training"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -147,18 +147,18 @@
   - 2
   "intent_labels":
   - "Other Intent"
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "NLP Applications"
-  - "Joint Training"
+  - "Input-Layer Integration"
+  - "Independent Training"
 - "title": "RefChecker for Fine-grained Hallucination Detection"
   "unique_context_marker": "[17]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Evaluation Aspects and Tools"
 - "title": "Unsupervised dense information retrieval with contrastive learning"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -174,7 +174,7 @@
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "Triviaqa: A large scale distantly supervised challenge dataset for reading comprehension"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -189,10 +189,10 @@
   - 3
   - 9
   "intent_labels":
-  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Evaluation Aspects and Tools"
   - "Generation Quality"
 - "title": "Dense passage retrieval for open-domain question answering"
   "unique_context_marker": "[22]"
@@ -207,9 +207,9 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Training-free Methods"
+  - "Independent Training"
 - "title": "Evaluating the factual consistency of abstractive text summarization"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -225,7 +225,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "NLP Applications"
+  - "Context Curation and Compression"
 - "title": "Natural questions: a benchmark for question answering research"
   "unique_context_marker": "[26]"
   "block_ids":
@@ -240,10 +240,10 @@
   - 3
   - 9
   "intent_labels":
-  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Evaluation Aspects and Tools"
   - "Generation Quality"
 - "title": "Evaluating verifiability in generative search engines"
   "unique_context_marker": "[28]"
@@ -252,7 +252,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Generation Quality"
+  - "Evaluation Aspects and Tools"
 - "title": "WebGLM: Towards An Efficient Web-Enhanced Question Answering System with Human Preferences"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -264,18 +264,18 @@
   - 11
   "intent_labels":
   - "Other Intent"
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   - "Prior Methods"
   - "Prior Methods"
   - "Resource Utilization"
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Generation Quality"
   - "NLP Applications"
   - "Retrieval Granularity"
   - "Input-Layer Integration"
+  - "Other Topic"
   - "NLP Applications"
-  - "Evaluation Aspects and Tools"
 - "title": "G-Eval: NLG Evaluation using Gpt-4 with Better Human Alignment"
   "unique_context_marker": "[30]"
   "block_ids":
@@ -291,7 +291,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "NLP Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "Augmented language models: a survey"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -306,7 +306,7 @@
   - 3
   - 9
   "intent_labels":
-  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   - "Prior Methods"
   "topic_labels":
   - "Evaluation Aspects and Tools"
@@ -320,22 +320,22 @@
   - 11
   "intent_labels":
   - "Other Intent"
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "NLP Applications"
-  - "NLP Applications"
-  - "Downstream Tasks"
-  - "Retrieval"
+  - "Evaluation Aspects and Tools"
+  - "Intermediate-Layer Integration"
+  - "Input-Layer Integration"
+  - "Sequential Training"
 - "title": "GPT-4 technical report"
   "unique_context_marker": "[35]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Evaluation Aspects and Tools"
 - "title": "Training language models to follow instructions with human feedback"
   "unique_context_marker": "[36]"
   "block_ids":
@@ -344,15 +344,15 @@
   - 8
   - 11
   "intent_labels":
+  - "Setting/Protocal Adoption"
+  - "Algorithm/Principle Adoption"
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
-  - "Domain Overview"
-  - "Hyperparameter Utilization"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
-  - "Sequential Training"
-  - "Sequential Training"
+  - "Evaluation Aspects and Tools"
   - "Independent Training"
+  - "Sequential Training"
+  - "Sequential Training"
 - "title": "WebCPM: Interactive Web Search for Chinese Long-form Question Answering"
   "unique_context_marker": "[37]"
   "block_ids":
@@ -363,16 +363,16 @@
   - 11
   "intent_labels":
   - "Prior Methods"
-  - "Prior Methods"
+  - "Resource Utilization"
   - "Prior Methods"
   - "Resource Utilization"
   - "Prior Methods"
   "topic_labels":
   - "NLP Applications"
-  - "Context Curation and Compression"
-  - "Joint Training"
-  - "NLP Applications"
-  - "Retrieval"
+  - "Retrieval Granularity"
+  - "Input-Layer Integration"
+  - "Other Topic"
+  - "Sequential Training"
 - "title": "Squad: 100,000+ questions for machine comprehension of text"
   "unique_context_marker": "[38]"
   "block_ids":
@@ -388,7 +388,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Inaccessible Generators (Black-box)"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Is reinforcement learning (not) for natural language processing?: Benchmarks, baselines, and building blocks for natural language policy optimization"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -396,10 +396,10 @@
   - 3
   "intent_labels":
   - "Other Intent"
-  - "Problem Formulation"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Training Strategies"
-  - "Training Strategies"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Coqa: A conversational question answering challenge"
   "unique_context_marker": "[41]"
   "block_ids":
@@ -415,7 +415,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "NLP Applications"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Blenderbot 3: a deployed conversational agent that continually learns to responsibly engage"
   "unique_context_marker": "[43]"
   "block_ids":
@@ -444,15 +444,15 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Sequential Training"
 - "title": "Evaluating open question answering evaluation"
   "unique_context_marker": "[47]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Generation Quality"
+  - "Evaluation Aspects and Tools"
 - "title": "Survey on factuality in large language models: Knowledge, retrieval and domain-specificity"
   "unique_context_marker": "[48]"
   "block_ids":
@@ -460,7 +460,7 @@
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Generation Quality"
+  - "Evaluation Aspects and Tools"
 - "title": "Neural text generation with unlikelihood training"
   "unique_context_marker": "[49]"
   "block_ids": []
@@ -475,11 +475,11 @@
   "intent_labels":
   - "Other Intent"
   - "Algorithm/Principle Adoption"
-  - "Metrics Utilization"
+  - "Domain Overview"
   "topic_labels":
   - "Evaluation Aspects and Tools"
   - "Training Strategies"
-  - "retrieval augmented generation"
+  - "Training Strategies"
 - "title": "Face4RAG: Factual Consistency Evaluation for Retrieval Augmented Generation in Chinese"
   "unique_context_marker": "[51]"
   "block_ids":
@@ -501,6 +501,6 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Metrics Utilization"
+  - "Setting/Protocal Adoption"
   "topic_labels":
   - "Evaluation Aspects and Tools"

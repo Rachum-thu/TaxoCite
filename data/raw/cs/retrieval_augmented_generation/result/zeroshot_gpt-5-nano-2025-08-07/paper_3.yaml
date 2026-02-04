@@ -5,8 +5,8 @@
   - 1
   - 4
   "intent_labels":
-  - "Domain Overview"
-  - "Metrics Utilization"
+  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Evaluation Aspects and Tools"
   - "Retrieval Quality"
@@ -23,9 +23,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Retrieval Quality"
 - "title": "Wizard of Wikipedia: Knowledge-Powered Conversational Agents"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -33,7 +33,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Other Topic"
 - "title": "The Faiss library"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -41,29 +41,29 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Retriever Type"
+  - "Other Topic"
 - "title": "Efficient multiple-click models in web search"
   "unique_context_marker": "[6]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Retrieval Quality"
 - "title": "Unsupervised Dense Information Retrieval with Contrastive Learning"
   "unique_context_marker": "[7]"
   "block_ids":
   - 6
   "intent_labels":
-  - "Resource Utilization"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Retriever Type"
+  - "Other Topic"
 - "title": "Distilling Knowledge from Reader to Retriever for Question Answering"
   "unique_context_marker": "[8]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering"
@@ -73,21 +73,21 @@
   - 6
   - 7
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   - "Model/Architecture Adoption"
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
-  - "Downstream Tasks"
-  - "Input-Layer Integration"
+  - "Evaluation Aspects and Tools"
+  - "Other Topic"
   - "Other Topic"
 - "title": "Ragas: Evaluation framework for your retrieval-augmented generation (RAG) pipelines"
   "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Downstream Tasks"
 - "title": "IR evaluation methods for retrieving highly relevant documents"
   "unique_context_marker": "[11]"
   "block_ids":
@@ -101,9 +101,9 @@
   "block_ids":
   - 6
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Resource Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Other Topic"
 - "title": "TriviaQA: A Large Scale Distantly Supervised Challenge Dataset for Reading Comprehension"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -111,18 +111,18 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Other Topic"
 - "title": "Dense Passage Retrieval for Open-Domain Question Answering"
   "unique_context_marker": "[14]"
   "block_ids":
   - 2
   - 6
   "intent_labels":
-  - "Prior Methods"
-  - "Algorithm/Principle Adoption"
+  - "Research Gap"
+  - "Setting/Protocal Adoption"
   "topic_labels":
   - "Evaluation Aspects and Tools"
-  - "Retriever Type"
+  - "Other Topic"
 - "title": "Natural Questions: A Benchmark for Question Answering Research"
   "unique_context_marker": "[15]"
   "block_ids":
@@ -130,23 +130,23 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Other Topic"
 - "title": "Retrieval-augmented generation for knowledge-intensive NLP tasks"
   "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
-  - "Retrieval Quality"
+  - "Downstream Tasks"
 - "title": "ROUGE: A Package for Automatic Evaluation of Summaries"
   "unique_context_marker": "[17]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Metrics Utilization"
+  - "Other Intent"
   "topic_labels":
-  - "Retrieval Quality"
+  - "Downstream Tasks"
 - "title": "Pyserini: A Python Toolkit for Reproducible Information Retrieval Research with Sparse and Dense Representations"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -154,26 +154,26 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Indexing and Query Optimization"
+  - "Other Topic"
 - "title": "Decoupled Weight Decay Regularization"
   "unique_context_marker": "[19]"
   "block_ids":
   - 6
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Hyperparameter Utilization"
   "topic_labels":
-  - "Training Strategies"
+  - "Other Topic"
 - "title": "KILT: a Benchmark for Knowledge Intensive Language Tasks"
   "unique_context_marker": "[20]"
   "block_ids":
   - 1
   - 6
   "intent_labels":
-  - "Benchmark Utilization"
+  - "Other Intent"
   - "Benchmark Utilization"
   "topic_labels":
   - "Downstream Tasks"
-  - "Evaluation Aspects and Tools"
+  - "Other Topic"
 - "title": "Exploring the limits of transfer learning with a unified text-to-text transformer"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -181,21 +181,21 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Other Topic"
 - "title": "Okapi at TREC-3"
   "unique_context_marker": "[22]"
   "block_ids":
   - 6
   "intent_labels":
-  - "Resource Utilization"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Retriever Type"
+  - "Other Topic"
 - "title": "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems"
   "unique_context_marker": "[23]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "A Symmetric Dual Encoding Dense Retrieval Framework for Knowledge-Intensive Visual Question Answering"
@@ -203,7 +203,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Optimization Methods for Personalizing Large Language Models through Retrieval Augmentation"
@@ -211,7 +211,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
   - "Downstream Tasks"
 - "title": "LaMP: When Large Language Models Meet Personalization"
@@ -219,7 +219,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
   - "Retrieval Quality"
 - "title": "Pre-Training Multi-Modal Dense Retrievers for Outside-Knowledge Visual Question Answering"
@@ -227,7 +227,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Corpus Annotation as a Scientific Task"
@@ -235,7 +235,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Retrieval Augmentation Reduces Hallucination in Conversation"
@@ -243,7 +243,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Large language models can accurately predict searcher preferences"
@@ -251,7 +251,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "FEVER: a Large-scale Dataset for Fact Extraction and VERification"
@@ -261,13 +261,13 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Other Topic"
 - "title": "Attention is All you Need"
   "unique_context_marker": "[32]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Background"
+  - "Other Intent"
   "topic_labels":
   - "Other Topic"
 - "title": "HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering"
@@ -277,20 +277,20 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Other Topic"
 - "title": "Stochastic RAG: End-to-End Retrieval-Augmented Generation through Expected Utility Maximization"
   "unique_context_marker": "[34]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
-  - "Retrieval Quality"
+  - "Evaluation Aspects and Tools"
 - "title": "Retrieval-Enhanced Machine Learning"
   "unique_context_marker": "[35]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Evaluation Aspects and Tools"

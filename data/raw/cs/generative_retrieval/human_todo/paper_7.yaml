@@ -1,0 +1,1707 @@
+title: Learning to Tokenize for Generative Retrieval
+blocks:
+- block_id: 0
+  content: 'Conventional document retrieval techniques are mainly based on
+
+    the index-retrieve paradigm. It is challenging to optimize pipelines
+
+    based on this paradigm in an end-to-end manner. As an alternative,
+
+    generative retrieval represents documents as identifiers (docid)
+
+    and retrieves documents by generating docids, enabling end-to-
+
+    end modeling of document retrieval tasks. However, it is an open
+
+    question how one should define the document identifiers. Current
+
+    approaches to the task of defining document identifiers rely on
+
+    fixed rule-based docids, such as the title of a document or the result
+
+    of clustering BERT embeddings, which often fail to capture the
+
+    complete semantic information of a document.
+
+    We propose GenRet, a document tokenization learning method
+
+    to address the challenge of defining document identifiers for gen-
+
+    erative retrieval. GenRet learns to tokenize documents into short
+
+    discrete representations (i.e., docids) via a discrete auto-encoding
+
+    approach. Three components are included in GenRet: (i) a tokeniza-
+
+    tion model that produces docids for documents; (ii) a reconstruction
+
+    model that learns to reconstruct a document based on a docid; and
+
+    (iii) a sequence-to-sequence retrieval model that generates relevant
+
+    document identifiers directly for a designated query. By using an
+
+    auto-encoding framework, GenRet learns semantic docids in a
+
+    fully end-to-end manner, where the produced docids can be recon-
+
+    structed back to the original documents to ensure their semantics.
+
+    We also develop a progressive training scheme to capture the au-
+
+    toregressive nature of docids and to stabilize training.
+
+    We conduct experiments on the NQ320K, MS MARCO, and BEIR
+
+    datasets to assess the effectiveness of GenRet. GenRet establishes
+
+    the new state-of-the-art on the NQ320K dataset. Especially, com-
+
+    pared to generative retrieval baselines, GenRet can achieve signifi-
+
+    cant improvements on the unseen documents (e.g., at least +14%
+
+    relative improvements in terms of R@1). Furthermore, GenRet can
+
+    better represent and retrieve documents that have not been seen
+
+    during the training phase compared to previous rule-based tok-
+
+    enization methods. GenRet also outperforms comparable baselines
+
+    on MS MARCO and BEIR, demonstrating the method’s generaliz-
+
+    ability.'
+  citations: []
+- block_id: 1
+  content: 'Document retrieval plays an essential role in web search applica-
+
+    tions and various downstream knowledge-intensive tasks, such as
+
+    question-answering and dialogue systems as it is aimed on iden-
+
+    tifying relevant documents to satisfy users’ queries. Most tradi-
+
+    tional document retrieval approaches apply sparse retrieval meth-
+
+    ods, which rely on building an inverted index with term matching
+
+    metrics such as TF-IDF [38], query likelihood [22], or BM25 [39].
+
+    The term matching metrics, however, often suffer from a lexical
+
+    mismatch [24].
+
+
+    Major progress has recently been made in dense retrieval (DR)
+
+    models due to advances in pre-trained language models (LMs) [13,
+
+    19, 31, 47]. As illustrated in Figure 1 (a), DR methods learn dense
+
+    representations of both queries and documents using dual encoders,
+
+    and subsequently retrieve relevant documents using maximal inner
+
+    product search ( MIPS) [18, 19]. DR methods are able to address
+
+    the lexical mismatch issue with state-of-the-art performance on
+
+    various retrieval tasks [25, 29].
+
+
+    Despite their success, DR approaches face two main limitations [5,
+
+    28]: (i) DR models employ an index-retrieval pipeline with a fixed
+
+    search procedure (MIPS), making it difficult to jointly optimize all
+
+    modules in an end-to-end way; and (ii) The learning strategies (e.g.,
+
+    contrastive learning [19]) are usually not consistent with the pre–
+
+    training objectives, such as the next token prediction [3], which
+
+    makes it hard to leverage knowledge in pre-trained LMs [1].
+
+
+    Generative retrieval. Recently, generative retrieval has emerged
+
+    as a new paradigm for document retrieval [1, 5, 42, 46, 52, 53].
+
+    As illustrated in Figure 1 (b), generative retrieval models directly
+
+    generate a ranked list of document identifiers (docids) for a given
+
+    query using generative LMs. Specifically, there are two main steps
+
+    involved in generative retrieval models: (i) Document tokenization,
+
+    where each document in the corpus is tokenized as a sequence of
+
+    discrete characters, i.e., docids, and (ii) Generation as retrieval, where
+
+    the docids of relevant documents are output by autoregressively
+
+    decoding for a given query. Unlike DR, the generative paradigm
+
+    presents an end-to-end solution for document retrieval tasks [42].
+
+    It also offers a promising approach to better exploit the capabilities
+
+    of recent large LMs [1, 46].
+
+
+    Learning to tokenize documents. Document tokenization plays
+
+    a crucial role in generative retrieval, as it defines how the document
+
+    is distributed in the semantic space [42]. And it is still an open
+
+    problem how to define the document identifiers. Most previous
+
+    generative methods tend to employ rule-based document tokenizers,
+
+    such as generating titles or URLs [5, 52], or clustering results from
+
+    off-the-shelf document embeddings [42, 46]. However, such rule-
+
+    based methods are usually ad-hoc and do not generalize well. In
+
+    particular, the tokenization results potentially perform well on
+
+    retrieving documents that have been seen during training, but
+
+    generalize poorly to new or out-of-distribution documents [23, 27].
+
+
+    The proposed method. To address the above problem, this paper
+
+    proposes GenRet, a document tokenization learning framework
+
+    that learns to tokenize a document into semantic docids in a dis-
+
+    crete auto-encoding scheme. Specifically, GenRet consists of a
+
+    shared sequence-to-sequence-based document tokenization model,
+
+    a retrieval model, and a document reconstruction model. In the
+
+    proposed auto-encoding learning scheme, the tokenization model
+
+    learns to convert documents to discrete docids, which are subse-
+
+    quently utilized by the reconstruction model to reconstruct the
+
+    original document. The generative retrieval model is trained to
+
+    generate docids in an autoregressive manner for a given query.
+
+    The above three models are optimized in an end-to-end fashion to
+
+    achieve seamless integration.
+
+
+    We further identify two challenges when using auto-encoding
+
+    to optimize a generative retrieval model: (i) docids with an autore-
+
+    gressive nature, and (ii) docids with diversity. To address the first
+
+    challenge and also to stabilize the training of GenRet, we devise
+
+    a progressive training scheme. This training scheme allows for a
+
+    stable training of the model by fixing optimized prefix docids z< t.
+
+    To optimize the docids at each step, three proposed losses are uti-
+
+    lized: (i) a reconstruction loss for predicting the document using the
+
+    generated docid, (ii) a commitment loss for committing the docid
+
+    and to avoid forgetting, and (iii) a retrieval loss for optimizing the
+
+    retrieval performance end-to-end. To address the second challenge,
+
+    we propose a parameter initialization strategy and a re-assignment
+
+    of the docid based on a diverse clustering technique to increase the
+
+    diversity of the generated docids.
+
+
+    Experiments. We conduct experiments on three well-known doc-
+
+    ument retrieval benchmark datasets: (i) NQ320K, with a subset of
+
+    Wikipedia [21, 42]; (ii) MS MARCO, with web pages relevant to
+
+    a set of search queries [4, 52]; and (iii) BEIR, with heterogeneous
+
+    retrieval tasks for out-of-distribution evaluation [43]. Our experi-
+
+    mental results demonstrate that GenRet attains superior retrieval
+
+    performance against state-of-the-art dense or generative retrieval
+
+    models. Experiments on NQ320K show that GenRet establishes
+
+    the new state-of-the-art on this dataset, achieving +14% relative
+
+    improvements on the unseen test set compared to the best base-
+
+    line method. Experiments on MS MARCO and six BEIR datasets
+
+    also shows that GenRet significantly outperforms existing gener-
+
+    ative methods and achieves competitive results compared to the
+
+    best dense retrieval model. Experiments on retrieving new docu-
+
+    ments, analytical experiments, and efficiency analysis confirm the
+
+    effectiveness of the proposed model.
+
+
+    Contributions. In this paper we make the following contributions:
+
+    (i) We propose GenRet, a generative retrieval model that represents
+
+    documents as semantic discrete docids. To the best of our knowl-
+
+    edge, this is the first tokenization learning method for document
+
+    retrieval. (ii) We propose an auto-encoding approach, where the
+
+    docids generated by our tokenization model are reconstruct by a
+
+    reconstruction model to ensure the docids capture the semantic
+
+    information of the document. (iii) We devise a progressive training
+
+    scheme to model the autoregressive nature of docids and stabilize
+
+    the training process. (iv) Experimental results demonstrate that
+
+    GenRet achieves significant improvements, especially on unseen
+
+    documents, compared to generative retrieval baselines.'
+  citations:
+  - marker: '[1]'
+    intent_label: Prior Methods
+    topic_label: Generative document retrieval
+  - marker: '[3]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[4]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[5]'
+    intent_label: Research Gap
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[13]'
+    intent_label: Domain Overview
+    topic_label: Other Topics
+  - marker: '[18]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[19]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[21]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[22]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[23]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[24]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[27]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[28]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[29]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[31]'
+    intent_label: Domain Overview
+    topic_label: Other Topics
+  - marker: '[38]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[42]'
+    intent_label: Benchmark Utilization
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[43]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[46]'
+    intent_label: Research Gap
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[47]'
+    intent_label: Domain Overview
+    topic_label: Other Topics
+  - marker: '[52]'
+    intent_label: Benchmark Utilization
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[53]'
+    intent_label: Prior Methods
+    topic_label: Generative document retrieval
+- block_id: 2
+  content: 'The document retrieval task can be formalized as the process of re-
+
+    trieving a relevant document d for a search query q from a collection
+
+    of documents D. Each document, d ∈ D, is a plain text document
+
+    consisting of a sequence of tokens, denoted as d = {d1, . . . , d|d|},
+
+    where |d| represents the total number of tokens in the document.
+
+    Unlike dense retrieval methods, which return the most relevant
+
+    documents based on the relevance score of each document with
+
+    respect to a given query q, generative retrieval models aim to directly
+
+    generate documents for a given query q using a generative model.
+
+
+    Document tokenization. For generative retrieval models, it is usu-
+
+    ally challenging and computationally inefficient to directly gener-
+
+    ate original documents of typically long length. Therefore, most
+
+    existing approaches rely on the technique named document tok-
+
+    enization, which represents a document d = {d1, . . . , d|d|} as a
+
+    shorter sequence of discrete tokens (docid) z = {z1, . . . , zt, . . . , zM},
+
+    where each token zt is as a K-way categorical variable, with zt ∈
+
+    {1, 2, . . . , K}.
+
+
+    As an alternative sequence of the original document, the tok-
+
+    enized docid z should satisfy the following two properties: (i) differ-
+
+    ent documents have short but different docids; (ii) docids capture the
+
+    semantics of their associated documents as much as possible [42].
+
+    Because z is a sequence of a fixed length and usually shorter than
+
+    the original document d, the model’s training and inference can be
+
+    simplified and more efficient.
+
+
+    As mentioned above, this paper employs a tokenization model
+
+    Q : d → z to map d to docid z. More details about Q are provided
+
+    in Section 3.1.
+
+
+    Generation as retrieval. After tokenizing each document to docid
+
+    z, a generative retrieval model P : q → z learns to retrieve relevant
+
+    documents by generating a query q to a docid z autoregressively:
+
+    z = ∏t=1^M P(zt | z< t, q), (1)
+
+    where z< t denotes the prefix of z up to time step t. The model em-
+
+    ploys a constrained decoding technique to ensure that the generated
+
+    docid z exists in the corpus D [5]. This is achieved by constructing
+
+    a prefix tree based on the valid docids in D and truncating the
+
+    generation probability of invalid docids to 0.0 during the decod-
+
+    ing process. The model retrieves multiple documents using beam
+
+    search.'
+  citations:
+  - marker: '[5]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Architectural and decoding innovations
+  - marker: '[42]'
+    intent_label: Problem Formulation
+    topic_label: Identifier design and decoding constraints
+- block_id: 3
+  content: 'Conventionally, document tokenization is done by a fixed pre-
+
+    processing step, such as using the title of a document or the results
+
+    of hierarchical clustering obtained from BERT [5, 42]. However, it
+
+    has been observed that such ad-hoc document tokenization meth-
+
+    ods often fail to capture the complete semantics of a document. For
+
+    example, the title of a web page often does not exist or has low
+
+    relevance to the content of the web page, and the use of clustering-
+
+    based docids arbitrarily defines the document in discrete space.
+
+
+    In this paper, we propose GenRet, a novel tokenization learn-
+
+    ing method based on discrete auto-encoding, to learn semantic
+
+    docid in a fully end-to-end manner. The proposed GenRet comprises three
+
+    main components: (i) a sequence-to-sequence based retrieval model
+
+    (P(z | q)), (ii) a document tokenization model (Q(z | d)), and (iii) a
+
+    reconstruction model (R(d | z)). The document tokenization model
+
+    tokenizes a document d into unique discrete variables z, and the
+
+    retrieval model is trained to generate the latent variables z for a
+
+    given query q. In addition, the reconstruction model is used to
+
+    re-generate the original document from z to ensure z captures the
+
+    semantics of the original document as much as possible.
+
+
+    We detail the model architecture of the document tokenization
+
+    and document retrieval model in Section 3.1, the devised recon-
+
+    struction model in Section 3.2, and the model optimization method
+
+    in Section 3.3.'
+  citations:
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[42]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+- block_id: 4
+  content: 'Since document tokenization and generative retrieval both aim to
+
+    map the input text to a discrete docid, we use a shared T5 Transformer architecture for document tokenization and generative
+    re-
+
+    trieval models. Specifically, given an input text d, the T5-based
+
+    tokenization model encodes d and a prefix of docid z< t and contin-
+
+    uously produces latent representation d_t of d at time step t:
+
+    d_t = Decoder(Encoder(d), z< t) ∈ R^D, (2)
+
+    where D denotes the hidden size of the model, Encoder(d) denotes
+
+    the output of the Encoder.
+
+
+    Then, the tokenization model generates a token for each doc-
+
+    ument based on d_t. At each timestep t, we define an external
+
+    embedding matrix named codebook E_t ∈ R^{K×D}, where K is the
+
+    size of the discrete latent space. There are K embedding vectors
+
+    e_{t,j} ∈ R^D, j ∈ [K], and each vector e_{t,j} can be regarded as the
+
+    centroid of a segmentation.
+
+
+    Based on the codebook E_t, the discrete latent variable z_t at
+
+    timestep t is calculated by a dot-product look-up using the codebook:
+
+    Q(z_t = j | z< t, d) = Softmax_j(d_t · E_t^T), (3)
+
+    where Q(z_t = j | z< t, d) denotes the probability of tokenizing d
+
+    to a particular value j ∈ [K] at timestep t, Softmax_j is a softmax
+
+    function to output the probability of axis j.
+
+
+    Finally, the tokenization model selects the docid that achieves
+
+    the maximum probability to define the docid z_t:
+
+    z_t = arg max_j Q(z_t = j | z< t, d). (4)
+
+    in which the model selects the id j corresponding to the embedding
+
+    vector e_{t,j} with the maximum inner-product with d_t as the docid
+
+    z_t at timestep t.
+
+
+    The generative retrieval model P(z | q) shares the same archi-
+
+    tecture as Q(z | d), while generating z using the input query q, as
+
+    formulated in Eq. 1.'
+  citations: []
+- block_id: 5
+  content: 'The docid generated by the tokenization model Q is required to
+
+    capture the semantic information of the document. To this end, we
+
+    propose an auto-encoding training scheme, where a reconstruction
+
+    model R : z → d that predicts d using z is designed to force the
+
+    tokenization model Q : d → z to reproduce a docid z that can be
+
+    reconstructed back-to-the original document.
+
+
+    The input of the reconstruction model is docid z, and the output
+
+    is its associated document d. We first embed z into representa-
+
+    tion matrix z = {z1, . . . , zM} ∈ R^{M×D} using the codebook of the
+
+    tokenization model:
+
+    z = {e_{1,z1}, e_{2,z2}, . . . , e_{M,zM}} ∈ R^{M×D}, (5)
+
+    where each t ∈ [M], z_t = e_{t,z_t} ∈ R^D is the embedding vector of z_t
+
+    in the t-step codebook E_t.
+
+
+    We then devise a retrieval-based reconstruction model that pre-
+
+    dicts the target document d by retrieving it from document collec-
+
+    tion D, based on the inputs z. The relevance score between the
+
+    input docid z and the target document d is defined as follows:
+
+    R(d | z) = ∏_{t=1}^M exp(z_t · sg(d_t^T)) / Σ_{d* ∈ S(z< t)} exp(z_t · sg(d*_t^T)), (6)
+
+    where S(z< t) is a sub-collection of D consisting of documents that
+
+    have a docid prefix that is the same as z< t. d* ∈ S(z< t) represents a
+
+    document from the sub-collection S(z< t). d_t and d*_t are continuous
+
+    representation of documents d and d*, respectively, as defined in
+
+    Eq. 2. The operator sg(·) is the stop gradient operator defined as
+
+    follows:
+
+    sg(x) = x, forward pass; 0, backward pass. (7)
+
+
+    Intuitively, R(d | z) is designed to retrieve a specific document d
+
+    from a set of documents S(z< t) at each timestep t. The set S(z< t)
+
+    only includes those documents that are assigned the same docid
+
+    prefix z< t as the target document d. By utilizing this loss function,
+
+    at each step t, the model is facilitated to learn the residual semantics
+
+    of the documents not captured by the previous docid z< t.'
+  citations: []
+- block_id: 6
+  content: 'For the document tokenization model Q(z | d), generative retrieval
+
+    model P(z | q) and reconstruction model R(d | z), jointly optimiz-
+
+    ing these three models using auto-encoding is challenging for the
+
+    following two reasons:
+
+
+    • Learning docids in an autoregressive fashion. That is: (i) The
+
+    prediction of the z_t at time t relies on previously predicted do-
+
+    cids z< t, which is often under-optimized at the beginning and
+
+    rapidly changes during training, making it difficult to reach con-
+
+    vergence. (ii) Simultaneously optimizing z makes it challenging
+
+    to guarantee a unique docid assignment. To stabilize the training
+
+    of GenRet, we devise a progressive training scheme (see Sec-
+
+    tion 3.3.1).
+
+
+    • Generating docids with diversity. Optimizing the model us-
+
+    ing auto-encoding often leads to unbalanced docid assignment: a
+
+    few major docids are assigned to a large number of documents
+
+    and most other docids are rarely assigned. Such a sub-optimal
+
+    distribution of docids affects the model distinguishability, which
+
+    in turns triggers length increments of docids in order to distin-
+
+    guish conflicting documents. We introduce two diverse clustering
+
+    techniques to ensure docid diversity (see Section 3.3.2).
+
+
+    #### 3.3.1 Progressive training scheme
+
+    To optimize each of the three models listed above in an autoregressive manner, we propose a progressive auto-encoding
+    learning scheme. The whole learning scheme contains M learning steps with respect to the final docid in M-token. And the
+    docid z_T at step T ∈ [M] is learned and optimized at the corresponding learning step. Besides, at each step T ∈ [M],
+    the docid z_T and the model parameters associated with z_T generation are updated, while previously produced docids z<
+    T and other parameters are kept fixed. By progressively performing the above process, we can finally optimize and learn
+    our models.
+
+
+    At each optimization step, say the T-step, we devise the learning objective for document tokenization consisting of three
+    loss functions detailed below.
+
+
+    Reconstruction loss. We utilize the reconstruction model R(d | z)
+
+    as an auxiliary model to learn to optimize the docid generation,
+
+    whose main goal is capturing as much semantics in the docid as
+
+    possible. Therefore, we define a reconstruction loss function of step
+
+    T as follows:
+
+    L_Rec = − log R(d | \hat{z}_{≤T})
+
+    \hat{z}_{≤T} = {sg(z1), . . . , sg(z_{T−1}), z_T} ∈ R^{T×D}
+
+    ∀ t ∈ [T] : z_t = e_{t,j*} ∈ R^D, j* = arg max_j Q(z_t = j | z< t, d),
+
+    (8)
+
+    where \hat{z}_{≤T} is the first T representations of the z, and only the
+
+    variable z_T is optimized in step T. Q(z_t = j | z< t, d) is defined in
+
+    Eq. 3. And the document tokenization model Q can therefore be
+
+    optimized when minimizing L_Rec.
+
+
+    Of note, since the computation involves a non-differentiable op-
+
+    eration – arg max(·), we apply straight-through gradient estimation
+
+    to back-propagate the gradient from reconstruction loss [44, 49].
+
+    Specifically, the gradients to document representation d_T are de-
+
+    fined as ∂ L_Rec / ∂ d_T ≈ ∂ L_Rec / ∂ z_T. And the gradients to the codebook embed-
+
+    ding e_{T,j} are defined as ∂ L_Rec / ∂ e_{T,j} ≈ 1_{z_T = j} ∂ L_Rec / ∂ z_T.
+
+
+    Commitment loss. In addition, to make sure the predicted docid
+
+    commits to an embedding and to avoid models forgetting previous
+
+    docid z< t, we add a commitment loss as follows:
+
+    L_Com = − Σ_{t=1}^T log Q(z_t | z< t, d). (9)
+
+
+    Retrieval loss. For the generative retrieval model P, we jointly
+
+    learn it together with the document tokenization model Q, where P
+
+    learns to generate the docids of relevant documents d given a query
+
+    q. Specifically, suppose (q, d) are a query and relevant document
+
+    pair; we define the learning objective of retrieval model P as:
+
+    L_Ret = − log exp(q_T · d_T) / Σ_{d^- ∼ B} exp(q_T · d^-_T) − Σ_{t=1}^T log P(z_t | z< t, q), (10)
+
+    where the first term is a ranking-oriented loss enhancing the model
+
+    using (q, d) pair; d^- is an in-batch negative document from the
+
+    same training mini-batch B; q_T and d_T denote the representation
+
+    of q and d at timestep T. The second term is the cross-entropy loss
+
+    for generating docid z based on query q.
+
+
+    The final loss we use at step-T is the sum of reconstruction loss,
+
+    commitment loss, and retrieval loss:
+
+    L = L_Rec + L_Com + L_Ret. (11)
+
+
+    #### 3.3.2 Diverse clustering technique
+
+    To ensure diversity of generated docids, we adopt two diverse clustering techniques–codebook initialization and docid
+    re-assignment at each progressive training step, where codebook initialization mainly aims to increase the balance of
+    semantic space segmentation, and the docid re-assignment mainly aims to increase the balance of docid assignments.
+
+
+    Codebook initialization. In order to initialize the codebook for
+
+    our model, we first warm-up the model by passing the continuous
+
+    representation d_T to the reconstruction model instead of the
+
+    docid representation z_T as defined in Eq. 5. During this warm-up
+
+    phase, we optimize the model using the reconstruction loss L_Rec
+
+    and commitment loss L_Com. Next, we collect the continuous rep-
+
+    resentations d_T of all documents in D, and cluster them into K
+
+    groups. The centroids of these clusters are then used as the ini-
+
+    tialized codebook E_T. To balance the initialized docid distribution,
+
+    we utilize a diverse constrained clustering algorithm, Constrained
+
+    K-Means, which modifies the cluster assignment step (E in EM)
+
+    by formulating it as a minimum cost flow (MCF) linear network
+
+    optimization problem [2].
+
+
+    Docid re-assignment. In order to assign docids to a batch of doc-
+
+    uments, we modify the dot-product look-up results in Eq. 3 by
+
+    ensuring that the docid for different documents in the batch are
+
+    distinct [6, 49]. Specifically, let D_t = {d_t^{(1)}, . . . , d_t^{(B)}} ∈ R^{B×D} de-
+
+    note the continuous representation of a batch of documents with
+
+    batch size of B. The dot-product results are represented by H = D_t ·
+
+    E_t^T ∈ R^{B×K}. To obtain distinct docids, we calculate an alternative
+
+    H* = Diag(u) exp(H / ε) Diag(v), where u and v are re-normalization
+
+    vectors in R^K and R^B, respectively. The re-normalization vectors
+
+    are computed via the iterative Sinkhorn-Knopp algorithm [9]. Fi-
+
+    nally, H* is used instead of H in the Softmax (Eq. 3) and arg max
+
+    (Eq. 4) operations to obtain the docid z_t.'
+  citations:
+  - marker: '[2]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Identifier design and decoding constraints
+  - marker: '[6]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Identifier design and decoding constraints
+  - marker: '[9]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Identifier design and decoding constraints
+  - marker: '[44]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: 'Document identifiers: learnable representations'
+  - marker: '[49]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: 'Document identifiers: learnable representations'
+- block_id: 7
+  content: ''
+  citations: []
+- block_id: 8
+  content: 'We conduct experiments on three well-known document retrieval
+
+    datasets: NQ [21], MS MARCO [4], and BEIR [43].
+
+
+    NQ320K. NQ320K is a popular dataset for evaluating generative
+
+    retrieval models [42, 46]. It is based on the Natural Questions (NQ)
+
+    dataset proposed by Google [21]. NQ320k consists of 320k query-
+
+    document pairs, where the documents are gathered from Wikipedia
+
+    pages, and the queries are natural language questions. We follow
+
+    the evaluation setup in NCI [46] and further split the test set into
+
+    two subsets: seen test, in which the annotated target documents
+
+    of the queries are included in the training set; and unseen test, in
+
+    which no labeled document is included in the training set.
+
+
+    MS MARCO. MS MARCO is a collection of queries and web pages
+
+    from Bing search. Akin to NQ320k and following [52], we sample
+
+    a subset of documents from the labeled documents, and use their
+
+    corresponding queries for training. We evaluate the models on the
+
+    queries of the MS MARCO dev set and retrieval on the sampled
+
+    document subset.
+
+
+    BEIR. BEIR is a collection of datasets for heterogeneous retrieval
+
+    tasks. In this paper, we evaluate the models on 6 BEIR datasets,
+
+    which include distinct retrieval tasks and document collections from
+
+    NQ and MS MARCO: (i) BEIR-Arg retrieves a counterargument to
+
+    an argument; (ii) BEIR-Covid retrieves scientific articles about the
+
+    COVID-19 pandemic; (iii) BEIR-NFC retrieves medical documents
+
+    from PubMed; (iv) BEIR-SciFact retrieves scientific papers for fact-
+
+    checking; (v) BEIR-SciDocs retrieves citations for scientific papers;
+
+    (vi) BEIR-FiQA retrieves financial documents.
+
+
+    We summarize the statistics of above datasets in Table 1.'
+  citations:
+  - marker: '[4]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[21]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[42]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[43]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[46]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[52]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Evaluation of generative document retrieval
+- block_id: 9
+  content: 'On NQ320K, we use Recall@{1,10,100} and Mean Reciprocal Rank
+
+    (MRR)@100 as evaluation metrics, following [46]. On MS MARCO,
+
+    we use Recall@{1, 10, 100} and MRR@10 as evaluation metrics,
+
+    following [52]. On BEIR, we use nDCG@10 as the main metrics and
+
+    calculate the average nDCG@10 values across multiple downstream
+
+    sub-datasets as overall metrics.'
+  citations:
+  - marker: '[46]'
+    intent_label: Metrics Utilization
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[52]'
+    intent_label: Metrics Utilization
+    topic_label: Evaluation of generative document retrieval
+- block_id: 10
+  content: 'We consider three types of baselines: sparse retrieval methods,
+
+    dense retrieval methods, and generative retrieval methods.
+
+
+    The sparse retrieval baselines are as follows: BM25 [39], uses the
+
+    tf-idf feature to measure term weights; we use the implementation
+
+    from http://pyserini.io/. DocT5Query expands a document with
+
+    possible queries predicted by a finetuned T5 with this document as
+
+    the input.
+
+
+    The dense retrieval baselines are as follows: DPR [19], a du-
+
+    al-encoder model using the representation of the [CLS] token of
+
+    BERT. ANCE [47], an asynchronously updated ANN indexer is
+
+    utilized to mine hard negatives for training a RoBERTa-based du-
+
+    al-encoder model. Sentence-T5 [30], a dual-encoder model that
+
+    uses T5 to produce continuous sentence embeddings. We reproduce
+
+    Sentence-T5 (ST5 for short) on our datasets, the model is based
+
+    on T5-Base EncDec model and is trained with in-batch negatives.
+
+    GTR [31], a state-of-the-art dense retrieval model that pre-trains
+
+    sentence-T5 on billions of paired data using contrastive learning.
+
+    Contriever [16], a dual-encoder model pre-trained using un-
+
+    supervised contrastive learning with independent cropping and
+
+    inverse cloze task.
+
+
+    And the generative retrieval baselines are as follows: GENRE [5],
+
+    an autoregressive retrieval model that generates the document’s
+
+    title. The original GENRE is trained on the KILT dataset [33] using
+
+    BART, and we reproduce GENRE on our datasets using T5 for a
+
+    fair comparison. For datasets without title, we use the first 32 tokens
+
+    of the document as pseudo-title. DSI [42], which represents
+
+    documents using hierarchical K-means clustering results, and in-
+
+    dexes documents using the first 32 tokens as pseudo-queries. As the
+
+    original code is not open source, we reproduce DSI using T5-base
+
+    and the docids of NCI [46]. SEAL [1] uses arbitrary n-grams in
+
+    documents as docids, and retrieves documents under the constraint
+
+    of a pre-built FM-indexer. We refer to the results reported by Wang
+
+    et al. [46]. CGR-Contra [23], a title generation model with a
+
+    contextualized vocabulary embedding and a contrastive learning
+
+    loss. DSI-QG [53], uses a query generation model to augment the
+
+    document collection. We reproduce the DSI-QG results using T5
+
+    and our dataset. NCI [46], uses a prefix-aware weight-adaptive
+
+    decoder and various query generation strategies, including DocAs-
+
+    Query and DocT5Query. In particular, NCI augments training data
+
+    by generating 15 queries for each document. Ultron [52], uses a
+
+    three-stage training pipeline and represents the document as three
+
+    types of identifiers, including URL, PQ, and Atomic.
+
+
+    We highlight three of our reproduced baselines that constitute
+
+    a fair comparison with the proposed method, all of which use the
+
+    T5 model and experimental setup, but they differ model outputs:
+
+    (i) Sentence-T5 outputs continuous vectors, (ii) GENRE outputs
+
+    document titles, (iii) DSI-QG outputs clustering ID, while GenRet
+
+    outputs docids learned using the proposed tokenization method.'
+  citations:
+  - marker: '[1]'
+    intent_label: Result Comparison
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[5]'
+    intent_label: Result Comparison
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[16]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[19]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[23]'
+    intent_label: Result Comparison
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[30]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[31]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[33]'
+    intent_label: Prior Methods
+    topic_label: Evaluation of generative document retrieval
+  - marker: '[39]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[42]'
+    intent_label: Result Comparison
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[46]'
+    intent_label: Result Comparison
+    topic_label: Training strategies and data augmentation
+  - marker: '[47]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[52]'
+    intent_label: Result Comparison
+    topic_label: Architectural and decoding innovations
+  - marker: '[53]'
+    intent_label: Result Comparison
+    topic_label: Training strategies and data augmentation
+- block_id: 11
+  content: 'Hyper-parameters. In our experiments, we utilize the T5-Base
+
+    model [35] as the base Transformer and initialize a new codebook
+
+    embedding E_t for each time step. We set the number of clusters to
+
+    be K = 512 for all datasets, with the length of the docid M being
+
+    dependent on the number of documents present. For datasets con-
+
+    taining a larger number of candidate documents, a larger value of
+
+    M is set to ensure that all documents are assigned unique document
+
+    ids. In the docid re-assignment, the hyper-parameter ε is set to 1.0,
+
+    and the Sinkhorn-Knopp algorithm is executed for 100 iterations.
+
+
+    Indexing with query generation. Following previous work [45,
+
+    46, 53], we use query generation models to generate synthetic
+
+    (query, document) pairs for data augmentation. Specifically, we
+
+    use the pre-trained query generation model from DocT5Query [8]
+
+    to augment the NQ and MS MARCO datasets. In query generation,
+
+    we use nucleus sampling with parameters p = 0.8, t = 0.8 and
+
+    generate five queries for each document in the collection. For the
+
+    BEIR datasets, we use the queries generated by GPL [45], which can
+
+    be downloaded from their website. GPL uses a DocT5Query [8]
+
+    generator trained on MS MARCO to generate about 250K queries
+
+    for each BEIR dataset.
+
+
+    Training and inference. The proposed models and the repro-
+
+    duced baselines are implemented with PyTorch 1.7.1 and Hugging-
+
+    Face transformers 4.22.2. We optimize the model using AdamW
+
+    and set the learning rate to 5e−4. The batch size is 256, and the
+
+    model is optimized for up to 500k steps for each timestep. In pro-
+
+    gressive training, we first warm up the model for 5K steps and
+
+    then initialize the codebook using the clustering centroids as men-
+
+    tioned in Section 3.3.1. We use constrained clustering to obtain
+
+    diverse clustering results. During inference, we use beam search
+
+    with constrained decoding [5] and a beam size of 100.'
+  citations:
+  - marker: '[5]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Architectural and decoding innovations
+  - marker: '[8]'
+    intent_label: Resource Utilization
+    topic_label: Training strategies and data augmentation
+  - marker: '[35]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Architectural and decoding innovations
+  - marker: '[45]'
+    intent_label: Resource Utilization
+    topic_label: Training strategies and data augmentation
+  - marker: '[46]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Training strategies and data augmentation
+  - marker: '[53]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Training strategies and data augmentation
+- block_id: 12
+  content: ''
+  citations: []
+- block_id: 13
+  content: 'Results on NQ320K. GenRet outperforms both the strong pre-trained dense retrieval
+
+    model, GTR, and the previous best generative retrieval method, NCI,
+
+    thereby establishing a new state-of-the-art on the NQ320K dataset.
+
+    Furthermore, our results reveal that existing generative retrieval
+
+    methods perform well on the seen test but lag behind dense retrieval
+
+    methods on the unseen test. For example, NCI obtains an MRR@100
+
+    of 76.8 on the seen test, which is higher than the MRR@100 of 65.3
+
+    obtained by GTR-Base. However, on unseen test data, NCI performs
+
+    worse than GTR-Base. In contrast, GenRet performs well on both
+
+    seen and unseen test data. This result highlights the ability of
+
+    GenRet to combine the advantages of both dense and generative
+
+    retrieval by learning discrete docids with semantics through end-
+
+    to-end optimization.
+
+
+    Results on MS MARCO. GenRet significantly outperforms previous gen-
+
+    erative retrieval methods and achieves comparable results with the
+
+    state-of-the-art dense retrieval method GTR. Furthermore, previous
+
+    generative retrieval methods (e.g., GENRE, Ultron) utilizing meta-
+
+    data such as the title and URL, while exhibiting decent performance
+
+    on the NQ320K dataset, underperform in comparison to previous-
+
+    best dense retrieval (GTR) and sparse retrieval (DocT5Query) meth-
+
+    ods on the MS MARCO dataset. This can likely because that the
+
+    NQ320K dataset retrieves Wikipedia documents, where metadata
+
+    like the title effectively capture the semantics of the document. In
+
+    the case of the MS MARCO dataset, which is a web search dataset,
+
+    the metadata often does not adequately characterize the documents,
+
+    resulting in a decline in performance of the generative retrieval
+
+    model. In contrast, GenRet learns to generate semantic docids that
+
+    effectively enhance the generative retrieval model.
+
+
+    Results on BEIR. These datasets represent a diverse range of information retrieval scenarios. On average, GenRet
+
+    outperforms strong baselines including BM25 and GTR-Base, and
+
+    achieves competitive results compared to state-of-the-art sparse
+
+    and dense retrieval methods. In comparison to the ST5 GPL method
+
+    that utilizes the same training data and backbone T5 model, Gen-
+
+    Ret achieves better results. Additionally, GenRet demonstrates
+
+    a significant improvement over the previous generative retrieval
+
+    model GENRE that utilizes titles as docids. Furthermore, GENRE
+
+    performs poorly on some datasets, such as BEIR-Covid and BEIR-
+
+    SciDocs. This may be because the titles of the documents in these
+
+    datasets do not adequately capture their semantic content.'
+  citations: []
+- block_id: 14
+  content: 'In this experiment, we investigate the impact of various document
+
+    tokenization techniques on the ability of generative retrieval mod-
+
+    els to retrieve new documents. The generative models with different
+
+    tokenization methods are trained on NQ320K data, excluding un-
+
+    seen documents, and are evaluated on NQ320K Unseen test set
+
+    and BEIR-{Arg, NFC, SciDocs} datasets. For the baseline methods,
+
+    which use rule-based document tokenization methods, the docids
+
+    are generated for the target document collection using their re-
+
+    spective tokenization techniques. In contrast, our proposed method
+
+    uses a tokenization model to tokenize the documents in the target
+
+    collection, producing the docids. However, our method may result
+
+    in duplicate docids. In such cases, all corresponding documents
+
+    are retrieved and shuffled in an arbitrary order.
+
+
+    Document tokenization methods that do not consider the se-
+
+    mantic information of the documents, such as Naive String and
+
+    Atomic, are ineffective in retrieving new documents without model
+
+    updating. Methods that consider the semantic information of the
+
+    documents, such as those based on title or BERT clustering, show
+
+    some improvement. Our proposed document tokenization method
+
+    significantly improves over these existing rule-based document
+
+    tokenization methods. For instance, when the model trained on NQ
+
+    – a factoid QA data based on Wikipedia documents – is applied to
+
+    a distinct retrieval task on a different document collection, BEIR-
+
+    SciDocs, a citation retrieval task on a collection of scientific articles,
+
+    our proposed document tokenization model still showed promising
+
+    results. This suggests that our proposed method effectively encodes
+
+    the semantic information of documents in the docid and leads to a
+
+    better fit between the docid and the generative retrieval model.'
+  citations: []
+- block_id: 15
+  content: 'We further conduct analytical experiments to study the effective-
+
+    ness of the proposed method.
+
+
+    We plot the frequencies of docids at the first timestep of various learning methods. We label each method using
+
+    a box with a docid and a diversity metric d, which is calculated by:
+
+    d = 1 − 1/(2n) Σ_{j=1}^K |n_j − n_u|, where |·| represents the absolute value,
+
+    n denotes the total number of documents, n_j denotes the number
+
+    of documents that have a docid = j, and n_u = n / K is the expected
+
+    number of documents per docid under the uniform distribution.
+
+    The results demonstrate the superiority of GenRet in terms of distribution uniformity. It uses all the
+
+    potential docid k = 512 and achieves the highest diversity metric.
+
+    The method without docid reassignment also yields a relatively balanced distribution. However, the distribution of the
+    method without diverse
+
+    codebook initialization is highly uneven, which can be attributed to
+
+    the fact that most of the randomly initialized codebook embeddings
+
+    are not selected by the model during the initial training phase,
+
+    leading to their lack of update and further selection in subsequent
+
+    training. Additionally, the models without diverse clustering tend
+
+    to converge to a trivial solution where all documents are assigned
+
+    the same docid.
+
+
+    We also present the results of two ablated variants. First, GenRet w/o learning is a generative model that has
+
+    been trained directly using the final output docid from GenRet,
+
+    without utilizing the proposed learning scheme. Its retrieval perfor-
+
+    mance is comparable to that of GenRet on seen test data; however,
+
+    it is significantly lower on unseen test data. The proposed pro-
+
+    gressive auto-encoding scheme is crucial for the model to capture
+
+    the semantic information of documents, rather than just the well-
+
+    defined discrete docid. Secondly, GenRet w/ T5-Small uses a small
+
+    model, and its performance is inferior to that of GenRet using
+
+    T5-Base. However, the gap between the performance on seen and
+
+    unseen test data is smaller, which could be attributed to the limited
+
+    fitting capacity of the small model.'
+  citations: []
+- block_id: 16
+  content: 'We compare GenRet with baseline models on MS MARCO
+
+    (323,569 documents) in terms of memory footprint, offline index-
+
+    ing time (not including the time for neural network training), and
+
+    online retrieval latency for different Top-K values. We have four
+
+    observations: (i) The memory footprint of generative retrieval mod-
+
+    els (GENRE, DSI-QG, and the proposed model) is smaller than of
+
+    dense and sparse retrieval methods. The memory footprint of gen-
+
+    erative retrieval models is only dependent on the model parameters,
+
+    whereas dense and sparse retrieval methods require additional stor-
+
+    age space for document embeddings, which increases linearly with
+
+    the size of the document collection. (ii) DSI and GenRet take a
+
+    longer time for offline indexing, as DSI involves encoding and clus-
+
+    tering documents using BERT, while GenRet requires tokenizing
+
+    documents using a tokenization model. Dense retrieval’s offline
+
+    time consumption comes from document encoding; GENRE uses
+
+    titles hence no offline computation. (iii) The online retrieval latency
+
+    of the generative retrieval model is associated with the beam size
+
+    (i.e., Top-K) and the length of the docid. GenRet utilizes diverse
+
+    clustering to generate a shorter docid, resulting in improved online
+
+    retrieval speed compared to DSI and GENRE.'
+  citations: []
+- block_id: 17
+  content: 'An example of outputs of GENRE, NCI, and GenRet for the query “what state courts can order a new trial” and its
+    corresponding document in NQ320K is presented. The results show that GenRet,
+
+    unlike the baselines, successfully returns the docid of the target
+
+    document. The example shows that the model focuses on different words at
+
+    different time steps. GenRet gives more attention to words related
+
+    to the topic, such as "Appellate", in t = 1, and more attention to words
+
+    related to the country, such as "United States", in t = 2.'
+  citations: []
+- block_id: 18
+  content: 'Sparse retrieval. Traditional sparse retrieval calculates the docu-
+
+    ment score using term matching metrics such as TF-IDF [38], query
+
+    likelihood [22] or BM25 [39]. It is widely used in practice due to
+
+    its outstanding trade-off between accuracy and efficiency. Some
+
+    methods adaptively assign the term importance using deep neural
+
+    network [12, 14, 51]. With the recent development of pre-trained
+
+    LMs, DeepCT [10] and HDCT [11] calculate term importance using
+
+    contextualized text representation from BERT. Doc2Query [32] and
+
+    DocT5Query [8] predict relevant queries to augment documents
+
+    before building the BM25 index using a generative model like T5.
+
+    Sparse retrieval often suffers from the lexical mismatches [24].
+
+
+    Dense retrieval. Dense retrieval (DR) presents queries and docu-
+
+    ments in dense vectors and models their similarities with the inner
+
+    product or cosine similarity [19]. Compared with sparse retrieval,
+
+    dense retrieval relieves the lexical mismatch problem. Various tech-
+
+    niques have been proposed to improve DR models, such as hard
+
+    negative mining [34, 47], late interaction [20, 41], and knowledge
+
+    distillation [15, 26]. Recent studies have shown the effectiveness of
+
+    pre-training DR models using contrastive learning on large-scale
+
+    corpora [16, 31, 37]. Despite their success, DR approaches have
+
+    several limitations [5, 28]: (i) DR models employ an index-retrieval
+
+    pipeline with a fixed search procedure (MIPS), making it difficult
+
+    to optimize the model end-to-end [42, 46]. (ii) Training DR models
+
+    relies on contrastive learning [19] to distinguish positives from neg-
+
+    atives, which is inconsistent with large LMs training objectives [3]
+
+    and fails to fully utilize the capabilities of pre-trained LMs [1].
+
+
+    Generative retrieval. Generative retrieval is increasing gaining
+
+    attention. It retrieves documents by generating their docid using a
+
+    generative model like T5. Generative retrieval presents an end-to-
+
+    end solution for document retrieval tasks [28, 42] and allows for
+
+    better exploitation of the capabilities of large generative LMs [1].
+
+    Cao et al. [5] first propose an autoregressive entity retrieval model
+
+    to retrieve documents by generating titles. Tay et al. [42] propose
+
+    a differentiable search index (DSI) and represent the document as
+
+    atomic id, naive string, or semantic string. Bevilacqua et al. [1]
+
+    suggest using arbitrary spans of a document as docids. Additionally,
+
+    multiple-stage pre-training [7, 52], query generation [46, 52, 53],
+
+    contextualized embedding [23], and continual learning [27], have
+
+    been explored in recent studies. However, existing generative re-
+
+    trieval models have a limitation in that they rely on fixed document
+
+    tokenization to produce docids, which often fails to capture the
+
+    semantic information of a document [42]. It is an open question
+
+    of how one should define the docids. To further capture document
+
+    semantics in docid, we propose document tokenization learning
+
+    methods. The semantic docid is automatically generated by the
+
+    proposed discrete auto-encoding learning scheme in an end-to-end
+
+    manner.
+
+
+    Discrete representation learning. Learning discrete represen-
+
+    tations using neural networks is an important research area in
+
+    machine learning. For images, Rolfe [40] proposes the discrete vari-
+
+    ational autoencoder, and VQ-VAE [44] learns quantized represen-
+
+    tations via vector quantization. Dall-E [36] uses an autoregressive
+
+    model to generate discrete image representation for text-to-image
+
+    generation. Recently, representation learning has attracted consid-
+
+    erable attention in NLP tasks, for tasks such as machine transla-
+
+    tion [54], dialogue generation [50], and text classification [17, 48].
+
+    For document retrieval, RepCONC [49] uses a discrete representa-
+
+    tion learning method based on constrained clustering for vector
+
+    compression. We propose a document tokenization learning method
+
+    for generative retrieval, which captures the autoregressive nature
+
+    of docids by progressive training and enhances the diversity of
+
+    docids by diverse clustering techniques.'
+  citations:
+  - marker: '[1]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[3]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: text-based'
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Training strategies and data augmentation
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Training strategies and data augmentation
+  - marker: '[10]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[14]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[16]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[17]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[19]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[22]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[23]'
+    intent_label: Prior Methods
+    topic_label: Architectural and decoding innovations
+  - marker: '[24]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: Incremental learning on dynamic corpora
+  - marker: '[28]'
+    intent_label: Research Gap
+    topic_label: Generative document retrieval
+  - marker: '[31]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[32]'
+    intent_label: Prior Methods
+    topic_label: Training strategies and data augmentation
+  - marker: '[34]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[36]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[38]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[40]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[41]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[42]'
+    intent_label: Prior Methods
+    topic_label: 'Document identifiers: numeric-based'
+  - marker: '[44]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[46]'
+    intent_label: Research Gap
+    topic_label: Training strategies and data augmentation
+  - marker: '[47]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[48]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[49]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[50]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[51]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[52]'
+    intent_label: Prior Methods
+    topic_label: Training strategies and data augmentation
+  - marker: '[53]'
+    intent_label: Prior Methods
+    topic_label: Training strategies and data augmentation
+  - marker: '[54]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+- block_id: 19
+  content: 'This paper has proposed a document tokenization learning method
+
+    for generative retrieval, named GenRet. The proposed method
+
+    learns to tokenize documents into short discrete representations
+
+    (i.e., docids) via a discrete auto-encoding approach, which ensures
+
+    the semantics of the generated docids. A progressive training method
+
+    and two diverse clustering techniques have been proposed to en-
+
+    hance the training of the model. Empirical results on various docu-
+
+    ment retrieval datasets have demonstrated the effectiveness of the
+
+    proposed method. Especially, GenRet achieves outperformance
+
+    on unseen documents and can be well generalized to multiple re-
+
+    trieval tasks. In future work, we would like to extend the approach
+
+    to large document collections. We also plan to explore generative
+
+    pre-training for document tokenization using large-scale language
+
+    models. Additionally, we intend to investigate the dynamic adapta-
+
+    tion of docid prefixes for progressive training.'
+  citations: []

@@ -6,21 +6,17 @@
   - 4
   "intent_labels":
   - []
-  - - "Model/Architecture Adoption"
-    - "Metrics Utilization"
-    - "Metrics Utilization"
-    - "Metrics Utilization"
-    - "Metrics Utilization"
+  - []
   "topic_labels":
-  - - "Generation Quality"
-    - "NLP Applications"
-    - "NLP Applications"
+  - - "Evaluation Aspects and Tools"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
+    - "Generation Quality"
+    - "Generation Quality"
+    - "Generation Quality"
   - - "Retrieval Quality"
     - "Retrieval Quality"
     - "Retrieval Quality"
-    - "Retrieval Quality"
+    - "Other Topic"
     - "Retrieval Quality"
 - "title": "Mean Reciprocal Rank"
   "unique_context_marker": "[2]"
@@ -35,17 +31,17 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
-    - "Metrics Utilization"
+  - - "Domain Overview"
     - "Model/Architecture Adoption"
-    - "Prior Methods"
+    - "Model/Architecture Adoption"
+    - "Domain Overview"
+    - "Metrics Utilization"
   "topic_labels":
   - - "Evaluation Aspects and Tools"
     - "Evaluation Aspects and Tools"
     - "Evaluation Aspects and Tools"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
+    - "Evaluation Aspects and Tools"
 - "title": "Wizard of Wikipedia: Knowledge-Powered Conversational Agents"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -53,7 +49,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Downstream Tasks"
+    - "Downstream Tasks"
+    - "Downstream Tasks"
+    - "NLP Applications"
+    - "NLP Applications"
 - "title": "The Faiss library"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -61,23 +61,23 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Indexing and Query Optimization"
+    - "Indexing and Query Optimization"
+    - "Downstream Tasks"
+    - "Indexing and Query Optimization"
+    - "NLP Applications"
 - "title": "Efficient multiple-click models in web search"
   "unique_context_marker": "[6]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
-    - "Setting/Protocal Adoption"
-    - "Metrics Utilization"
-    - "Prior Methods"
+  - []
   "topic_labels":
-  - - "Downstream Tasks"
+  - - "Evaluation Aspects and Tools"
     - "Evaluation Aspects and Tools"
-    - "Evaluation"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
+    - "Evaluation Aspects and Tools"
+    - "Evaluation Aspects and Tools"
 - "title": "Unsupervised Dense Information Retrieval with Contrastive Learning"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -85,11 +85,15 @@
   "intent_labels":
   - - "Model/Architecture Adoption"
     - "Model/Architecture Adoption"
+    - "Resource Utilization"
     - "Model/Architecture Adoption"
-    - "Resource Utilization"
-    - "Resource Utilization"
+    - "Model/Architecture Adoption"
   "topic_labels":
-  - []
+  - - "Retriever Type"
+    - "Retriever Type"
+    - "Retriever Type"
+    - "Retriever Type"
+    - "Retriever Type"
 - "title": "Distilling Knowledge from Reader to Retriever for Question Answering"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -105,33 +109,41 @@
   - 6
   - 7
   "intent_labels":
-  - []
+  - - "Metrics Utilization"
+    - "Metrics Utilization"
+    - "Metrics Utilization"
+    - "Domain Overview"
+    - "Domain Overview"
   - []
   - []
   "topic_labels":
-  - - "Retrieval Integration for Generation"
-    - "Downstream Tasks"
-    - "Retrieval Integration for Generation"
-    - "Evaluation Aspects and Tools"
+  - - "NLP Applications"
     - "Retrieval Quality"
-  - []
-  - []
+    - "Retrieval Integration for Generation"
+    - "Retrieval Integration for Generation"
+    - "Retrieval Integration for Generation"
+  - - "Input-Layer Integration"
+    - "Input-Layer Integration"
+    - "Input-Layer Integration"
+    - "Intermediate-Layer Integration"
+    - "Input-Layer Integration"
+  - - "Intermediate-Layer Integration"
+    - "Intermediate-Layer Integration"
+    - "Intermediate-Layer Integration"
+    - "Intermediate-Layer Integration"
+    - "Intermediate-Layer Integration"
 - "title": "Ragas: Evaluation framework for your retrieval-augmented generation (RAG) pipelines"
   "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - - "Evaluation Aspects and Tools"
     - "Evaluation Aspects and Tools"
-    - "Evaluation Aspects and Tools"
-    - "Evaluation Aspects and Tools"
     - "Retrieval Quality"
+    - "Evaluation Aspects and Tools"
+    - "Evaluation Aspects and Tools"
 - "title": "IR evaluation methods for retrieving highly relevant documents"
   "unique_context_marker": "[11]"
   "block_ids":
@@ -148,10 +160,14 @@
   - - "Setting/Protocal Adoption"
     - "Setting/Protocal Adoption"
     - "Setting/Protocal Adoption"
-    - "Setting/Protocal Adoption"
-    - "Setting/Protocal Adoption"
+    - "Resource Utilization"
+    - "Model/Architecture Adoption"
   "topic_labels":
-  - []
+  - - "Retrieval Quality"
+    - "Parameter-Accessible Generators (White-box)"
+    - "Retrieval Quality"
+    - "Retrieval Quality"
+    - "Evaluation Aspects and Tools"
 - "title": "TriviaQA: A Large Scale Distantly Supervised Challenge Dataset for Reading Comprehension"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -159,11 +175,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "NLP Applications"
-    - "NLP Applications"
-    - "Retrieval Quality"
+  - - "Downstream Tasks"
+    - "Downstream Tasks"
     - "Downstream Tasks"
     - "NLP Applications"
+    - "Retrieval Quality"
 - "title": "Dense Passage Retrieval for Open-Domain Question Answering"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -174,7 +190,11 @@
   - []
   "topic_labels":
   - []
-  - []
+  - - "Retriever Type"
+    - "Retriever Type"
+    - "Retriever Type"
+    - "Retriever Type"
+    - "NLP Applications"
 - "title": "Natural Questions: A Benchmark for Question Answering Research"
   "unique_context_marker": "[15]"
   "block_ids":
@@ -182,23 +202,27 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "NLP Applications"
-    - "NLP Applications"
-    - "Retrieval Quality"
+  - - "Downstream Tasks"
+    - "Downstream Tasks"
     - "Downstream Tasks"
     - "NLP Applications"
+    - "Evaluation Aspects and Tools"
 - "title": "Retrieval-augmented generation for knowledge-intensive NLP tasks"
   "unique_context_marker": "[16]"
   "block_ids":
   - 1
   "intent_labels":
-  - []
+  - - "Model/Architecture Adoption"
+    - "Metrics Utilization"
+    - "Benchmark Utilization"
+    - "Domain Overview"
+    - "Domain Overview"
   "topic_labels":
-  - - "Retrieval Integration for Generation"
-    - "Downstream Tasks"
-    - "Retrieval Integration for Generation"
+  - - "Evaluation Aspects and Tools"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
+    - "Retrieval Integration for Generation"
+    - "Retrieval Integration for Generation"
+    - "Retrieval Integration for Generation"
 - "title": "ROUGE: A Package for Automatic Evaluation of Summaries"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -206,11 +230,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Generation Quality"
+  - - "Evaluation Aspects and Tools"
+    - "NLP Applications"
+    - "Generation Quality"
+    - "Generation Quality"
     - "Evaluation Aspects and Tools"
-    - "Downstream Tasks"
-    - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
 - "title": "Pyserini: A Python Toolkit for Reproducible Information Retrieval Research with Sparse and Dense Representations"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -218,7 +242,11 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Indexing and Query Optimization"
+    - "Indexing and Query Optimization"
+    - "Retriever Type"
+    - "Indexing and Query Optimization"
+    - "Retriever Type"
 - "title": "Decoupled Weight Decay Regularization"
   "unique_context_marker": "[19]"
   "block_ids":
@@ -226,26 +254,30 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Training Strategies"
+    - "Independent Training"
+    - "Training Strategies"
+    - "Independent Training"
+    - "Independent Training"
 - "title": "KILT: a Benchmark for Knowledge Intensive Language Tasks"
   "unique_context_marker": "[20]"
   "block_ids":
   - 1
   - 6
   "intent_labels":
-  - - "Benchmark Utilization"
-    - "Benchmark Utilization"
-    - "Benchmark Utilization"
-    - "Prior Methods"
-    - "Benchmark Utilization"
-  - - "Benchmark Utilization"
-    - "Benchmark Utilization"
-    - "Benchmark Utilization"
-    - "Benchmark Utilization"
-    - "Benchmark Utilization"
+  - []
+  - []
   "topic_labels":
-  - []
-  - []
+  - - "NLP Applications"
+    - "NLP Applications"
+    - "NLP Applications"
+    - "Downstream Tasks"
+    - "Downstream Tasks"
+  - - "Downstream Tasks"
+    - "Downstream Tasks"
+    - "Downstream Tasks"
+    - "Evaluation Aspects and Tools"
+    - "NLP Applications"
 - "title": "Exploring the limits of transfer learning with a unified text-to-text transformer"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -253,35 +285,39 @@
   "intent_labels":
   - []
   "topic_labels":
-  - []
+  - - "Parameter-Accessible Generators (White-box)"
+    - "Parameter-Accessible Generators (White-box)"
+    - "Parameter-Accessible Generators (White-box)"
+    - "Other Topic"
+    - "Parameter-Accessible Generators (White-box)"
 - "title": "Okapi at TREC-3"
   "unique_context_marker": "[22]"
   "block_ids":
   - 6
   "intent_labels":
-  - []
+  - - "Resource Utilization"
+    - "Resource Utilization"
+    - "Resource Utilization"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
   "topic_labels":
   - - "Retriever Type"
     - "Retriever Type"
     - "Retriever Type"
     - "Retriever Type"
-    - "Retriever Type"
+    - "Indexing and Query Optimization"
 - "title": "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems"
   "unique_context_marker": "[23]"
   "block_ids":
   - 1
   "intent_labels":
-  - - "Prior Methods"
-    - "Research Gap"
-    - "Prior Methods"
-    - "Prior Methods"
-    - "Prior Methods"
+  - []
   "topic_labels":
   - - "Evaluation Aspects and Tools"
+    - "NLP Applications"
+    - "Training-free Methods"
     - "Evaluation Aspects and Tools"
-    - "Downstream Tasks"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
 - "title": "A Symmetric Dual Encoding Dense Retrieval Framework for Knowledge-Intensive Visual Question Answering"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -298,10 +334,10 @@
   - []
   "topic_labels":
   - - "NLP Applications"
-    - "NLP Applications"
-    - "NLP Applications"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
+    - "NLP Applications"
+    - "NLP Applications"
+    - "NLP Applications"
 - "title": "LaMP: When Large Language Models Meet Personalization"
   "unique_context_marker": "[26]"
   "block_ids":
@@ -310,10 +346,10 @@
   - []
   "topic_labels":
   - - "NLP Applications"
-    - "NLP Applications"
-    - "NLP Applications"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
+    - "NLP Applications"
+    - "NLP Applications"
+    - "NLP Applications"
 - "title": "Pre-Training Multi-Modal Dense Retrievers for Outside-Knowledge Visual Question Answering"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -335,23 +371,27 @@
   "block_ids":
   - 1
   "intent_labels":
-  - - "Domain Overview"
-    - "Research Gap"
+  - - "Setting/Protocal Adoption"
+    - "Result Comparison"
+    - "Result Comparison"
     - "Domain Overview"
-    - "Setting/Protocal Adoption"
-    - "Metrics Utilization"
+    - "Domain Overview"
   "topic_labels":
-  - - "Generation Quality"
+  - - "NLP Applications"
     - "NLP Applications"
-    - "Scaling and Modality Expansion"
+    - "Generation Quality"
+    - "Generation Quality"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
 - "title": "Large language models can accurately predict searcher preferences"
   "unique_context_marker": "[30]"
   "block_ids":
   - 2
   "intent_labels":
-  - []
+  - - "Prior Methods"
+    - "Model/Architecture Adoption"
+    - "Prior Methods"
+    - "Model/Architecture Adoption"
+    - "Background"
   "topic_labels":
   - []
 - "title": "FEVER: a Large-scale Dataset for Fact Extraction and VERification"
@@ -361,27 +401,22 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "NLP Applications"
-    - "NLP Applications"
-    - "Retrieval Quality"
+  - - "Downstream Tasks"
+    - "Downstream Tasks"
     - "Downstream Tasks"
     - "NLP Applications"
+    - "Evaluation Aspects and Tools"
 - "title": "Attention is All you Need"
   "unique_context_marker": "[32]"
   "block_ids":
   - 3
   "intent_labels":
-  - - "Background"
+  - - "Domain Overview"
     - "Domain Overview"
-    - "Importance of Problem"
+    - "Domain Overview"
     - "Background"
-    - "Domain Overview"
   "topic_labels":
-  - - "Generation"
-    - "Evaluation Aspects and Tools"
-    - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
-    - "Generation"
+  - []
 - "title": "HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering"
   "unique_context_marker": "[33]"
   "block_ids":
@@ -389,10 +424,10 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "NLP Applications"
-    - "NLP Applications"
-    - "Retrieval Quality"
+  - - "Downstream Tasks"
     - "Downstream Tasks"
+    - "Downstream Tasks"
+    - "NLP Applications"
     - "NLP Applications"
 - "title": "Stochastic RAG: End-to-End Retrieval-Augmented Generation through Expected Utility Maximization"
   "unique_context_marker": "[34]"
@@ -401,11 +436,7 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Retrieval Integration for Generation"
-    - "Downstream Tasks"
-    - "Retrieval Integration for Generation"
-    - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
+  - []
 - "title": "Retrieval-Enhanced Machine Learning"
   "unique_context_marker": "[35]"
   "block_ids":
@@ -413,8 +444,8 @@
   "intent_labels":
   - []
   "topic_labels":
-  - - "Other Topic"
-    - "retrieval augmented generation"
-    - "NLP Applications"
+  - - "Retrieval Integration for Generation"
     - "Evaluation Aspects and Tools"
-    - "Retrieval Quality"
+    - "Evaluation Aspects and Tools"
+    - "Retrieval Integration for Generation"
+    - "Retrieval Integration for Generation"

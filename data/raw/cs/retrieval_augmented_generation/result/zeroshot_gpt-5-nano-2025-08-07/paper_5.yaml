@@ -12,7 +12,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "GEN-IR@ SIGIR 2023: The first workshop on generative information retrieval"
@@ -38,13 +38,13 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "Factual error correction for abstractive summarization models"
   "unique_context_marker": "[6]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Importance of Problem"
+  - "Research Gap"
   "topic_labels":
   - "Other Topic"
 - "title": "Verifiable generation with subsentence-level fine-grained citations"
@@ -52,7 +52,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Domain Overview"
+  - "Benchmark Utilization"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Benchmarking large language models in retrieval-augmented generation"
@@ -66,11 +66,11 @@
   - "Benchmark Utilization"
   - "Benchmark Utilization"
   - "Research Gap"
-  - "Setting/Protocal Adoption"
+  - "Resource Utilization"
   "topic_labels":
   - "Evaluation Aspects and Tools"
   - "Generation Quality"
-  - "Evaluation Aspects and Tools"
+  - "Evaluation"
   - "NLP Applications"
 - "title": "Hallucination detection: Robustly discerning reliable answers in large language models"
   "unique_context_marker": "[9]"
@@ -101,7 +101,7 @@
   "block_ids":
   - 12
   "intent_labels":
-  - "Background"
+  - "Prior Methods"
   "topic_labels":
   - "Generation Quality"
 - "title": "RAGAs: Automated evaluation of retrieval augmented generation"
@@ -111,7 +111,7 @@
   - 4
   "intent_labels":
   - "Prior Methods"
-  - "Setting/Protocal Adoption"
+  - "Background"
   "topic_labels":
   - "Evaluation Aspects and Tools"
   - "Retrieval Quality"
@@ -120,7 +120,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Metrics Utilization"
+  - "Background"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Word embedding based generalized language model for information retrieval"
@@ -136,7 +136,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "Enabling large language models to generate text with citations"
@@ -144,15 +144,15 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Trustworthiness and Robustness"
+  - "Generation Quality"
 - "title": "Retrieval-augmented generation for large language models: A survey"
   "unique_context_marker": "[18]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "Rethinking with retrieval: Faithful large language model inference"
@@ -162,7 +162,7 @@
   - 3
   "intent_labels":
   - "Domain Overview"
-  - "Algorithm/Principle Adoption"
+  - "Research Gap"
   "topic_labels":
   - "Retrieval"
   - "Other Topic"
@@ -179,7 +179,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Problem Formulation"
+  - "Research Gap"
   "topic_labels":
   - "Other Topic"
 - "title": "Chain-of-thought improves text generation with citations in large language models"
@@ -195,7 +195,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Research Gap"
   "topic_labels":
   - "Other Topic"
 - "title": "Knowledge graph-augmented language models for knowledge-grounded dialogue generation"
@@ -213,7 +213,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Applications"
+  - "Retrieval Integration for Generation"
 - "title": "Natural questions: A benchmark for question answering research"
   "unique_context_marker": "[26]"
   "block_ids":
@@ -223,8 +223,8 @@
   - "Benchmark Utilization"
   - "Research Gap"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
-  - "Evaluation Aspects and Tools"
+  - "NLP Applications"
+  - "Evaluation"
 - "title": "Evaluating RAG Architectures on Benchmark Tasks"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -232,7 +232,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Other Topic"
 - "title": "Retrieval-augmented generation for knowledge-intensive NLP tasks"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -267,13 +267,13 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Domain-specific Applications"
+  - "Other Topic"
 - "title": "Evaluating verifiability in generative search engines"
   "unique_context_marker": "[32]"
   "block_ids":
   - 4
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Background"
   "topic_labels":
   - "Generation Quality"
 - "title": "An analysis on matching mechanisms and token pruning for late-interaction models"
@@ -289,7 +289,7 @@
   "block_ids":
   - 8
   "intent_labels":
-  - "Other Intent"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Downstream Tasks"
 - "title": "Faithful abstractive summarization via fact-aware consistency-constrained transformer"
@@ -299,7 +299,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Generation Quality"
+  - "Training-free Methods"
 - "title": "Query rewriting for retrieval-augmented large language models"
   "unique_context_marker": "[36]"
   "block_ids":
@@ -313,7 +313,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "MTEB: Massive text embedding benchmark"
@@ -326,7 +326,7 @@
   - "Other Intent"
   "topic_labels":
   - "Other Topic"
-  - "Indexing and Query Optimization"
+  - "Other Topic"
 - "title": "How to Evaluate LLMs for RAG?"
   "unique_context_marker": "[39]"
   "block_ids":
@@ -334,13 +334,13 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Domain-specific Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "KILT: A benchmark for knowledge intensive language tasks"
   "unique_context_marker": "[40]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Open-retrieval conversational question answering"
@@ -364,7 +364,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Importance of Problem"
+  - "Research Gap"
   "topic_labels":
   - "Other Topic"
 - "title": "ARES: An automated evaluation framework for retrieval-augmented generation systems"
@@ -383,7 +383,7 @@
   "block_ids":
   - 12
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Generation Quality"
 - "title": "In ChatGPT we trust? Measuring and characterizing the reliability of ChatGPT"
@@ -409,13 +409,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Applications"
+  - "Retrieval Integration for Generation"
 - "title": "Asking and answering questions to evaluate the factual consistency of summaries"
   "unique_context_marker": "[49]"
   "block_ids":
   - 12
   "intent_labels":
-  - "Background"
+  - "Prior Methods"
   "topic_labels":
   - "Generation Quality"
 - "title": "Query2doc: Query expansion with large language models"
@@ -423,7 +423,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "Chain-of-thought prompting elicits reasoning in large language models"
@@ -447,7 +447,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "Large language models for generative information extraction: A survey"
@@ -463,7 +463,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "ALiiCE: Evaluating positional fine-grained citation generation"
@@ -473,13 +473,13 @@
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "PRCA: Fitting black-box large language models for retrieval question answering via pluggable reward-driven contextual adapter"
   "unique_context_marker": "[57]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "Coreferential reasoning learning for language representation"
@@ -527,7 +527,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Resource Utilization"
+  - "Prior Methods"
   "topic_labels":
   - "Other Topic"
 - "title": "Towards fine-grained citation evaluation in generated text: A comparative analysis of faithfulness metrics"
@@ -537,7 +537,7 @@
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "ChatGPT hallucinates when attributing answers"
   "unique_context_marker": "[65]"
   "block_ids":
@@ -545,4 +545,4 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Training-free Methods"
+  - "Generation Quality"

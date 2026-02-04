@@ -4,7 +4,7 @@
   "block_ids":
   - 10
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Other Intent"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Meta LLaMA 3"
@@ -18,9 +18,9 @@
   - "Model/Architecture Adoption"
   - "Other Intent"
   "topic_labels":
-  - "Sequential Training"
-  - "Retrieval Granularity"
-  - "Training-free Methods"
+  - "Parameter-Accessible Generators (White-box)"
+  - "Parameter-Inaccessible Generators (Black-box)"
+  - "Other Topic"
 - "title": "Language models are few-shot learners"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -42,7 +42,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Other Intent"
   "topic_labels":
   - "NLP Applications"
 - "title": "FlagEmbedding Reranker"
@@ -60,13 +60,13 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Sequential Training"
+  - "Independent Training"
 - "title": "Reformulating Sequential Recommendation: Learning Dynamic User Interest with Content-enriched Language Modeling"
   "unique_context_marker": "[8]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Other Intent"
   "topic_labels":
   - "NLP Applications"
 - "title": "Retrieval-augmented generation for knowledge-intensive nlp tasks"
@@ -74,15 +74,15 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Benchmark Utilization"
+  - "Other Intent"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Retrieval"
 - "title": "Unlocking the Potential of Large Language Models for Explainable Recommendations"
   "unique_context_marker": "[10]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Other Intent"
   "topic_labels":
   - "NLP Applications"
 - "title": "The probabilistic relevance framework: BM25 and beyond"
@@ -100,12 +100,12 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Generation"
+  - "Training-free Methods"
 - "title": "CRAG–Comprehensive RAG Benchmark"
   "unique_context_marker": "[13]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Resource Utilization"
+  - "Other Intent"
   "topic_labels":
   - "Evaluation Aspects and Tools"

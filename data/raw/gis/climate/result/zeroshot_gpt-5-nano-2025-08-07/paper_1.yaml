@@ -6,7 +6,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Physics-informed objectives and constraints"
+  - "Continuous lead-time conditioning"
 - "title": "The quiet revolution of numerical weather prediction"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -14,7 +14,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Short- to medium-range global prediction"
+  - "Transformers for climate modeling"
 - "title": "Accurate medium-range global weather forecasting with 3D neural networks"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -24,20 +24,20 @@
   - 15
   "intent_labels":
   - "Prior Methods"
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Result Comparison"
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Transformers for climate modeling"
   - "Gridded spatio-temporal fields"
-  - "Transformers for climate modeling"
   - "Physics-informed objectives and constraints"
+  - "Transformers for climate modeling"
+  - "Transformers for climate modeling"
 - "title": "Large scale gan training for high fidelity natural image synthesis"
   "unique_context_marker": "[4]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Generative models: GANs and diffusion"
 - "title": "Fengwu: Pushing the skillful global medium-range weather forecast beyond 10 days lead"
@@ -49,11 +49,11 @@
   "intent_labels":
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Transformers for climate modeling"
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Short- to medium-range global prediction"
   - "Multi-step training to mitigate error accumulation"
+  - "Subseasonal-to-seasonal and climate projection"
 - "title": "Fuxi: a cascade machine learning forecasting system for 15-day global weather forecast"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -61,38 +61,38 @@
   - 15
   "intent_labels":
   - "Other Intent"
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Continuous lead-time conditioning"
-  - "Iterative dynamics forecasting"
+  - "Subseasonal-to-seasonal and climate projection"
 - "title": "FuXi: A cascade machine learning forecasting system for 15-day global weather forecast"
   "unique_context_marker": "[7]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Graph neural networks for Earth systems"
-  - "Transformers for climate modeling"
+  - "Forecasting and simulation tasks"
+  - "Multi-step training to mitigate error accumulation"
 - "title": "Combining distribution-based neural networks to predict weather forecast probabilities"
   "unique_context_marker": "[8]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
   - "Transformers for climate modeling"
-  - "Transformers for climate modeling"
+  - "Direct forecasting"
 - "title": "Diffusion models beat GANs on image synthesis"
   "unique_context_marker": "[9]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Generative models: GANs and diffusion"
 - "title": "An image is worth 16x16 words: Transformers for image recognition at scale"
@@ -112,11 +112,11 @@
   "intent_labels":
   - "Prior Methods"
   - "Prior Methods"
-  - "Other Intent"
+  - "Domain Overview"
   "topic_labels":
-  - "Multi-interval ensembling via randomized rollouts"
+  - "Graph neural networks for Earth systems"
   - "Direct forecasting"
-  - "Transformers for climate modeling"
+  - "Short- to medium-range global prediction"
 - "title": "Deep learning for twelve hour precipitation forecasts"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -127,7 +127,7 @@
   - "Other Intent"
   "topic_labels":
   - "Continuous lead-time conditioning"
-  - "Transformers for climate modeling"
+  - "Multi-interval ensembling via randomized rollouts"
 - "title": "PyTorch lightning"
   "unique_context_marker": "[13]"
   "block_ids": []
@@ -143,9 +143,9 @@
   "block_ids":
   - 15
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Short- to medium-range global prediction"
 - "title": "ERA5 hourly data on single levels from 1979 to present"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -163,14 +163,14 @@
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Transformers for climate modeling"
   - "Gridded spatio-temporal fields"
 - "title": "Denoising diffusion probabilistic models"
   "unique_context_marker": "[18]"
   "block_ids":
   - 15
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "An Introduction to Dynamic Meteorology"
@@ -192,11 +192,11 @@
   - 10
   - 15
   "intent_labels":
-  - "Domain Overview"
-  - "Other Intent"
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
   - "Generative models: GANs and diffusion"
-  - "Self- and semi-supervised learning for climate"
+  - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "Forecasting global weather with graph neural networks"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -210,14 +210,14 @@
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
   - "Prior Methods"
-  - "Model/Architecture Adoption"
   - "Prior Methods"
-  - "Other Intent"
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph neural networks for Earth systems"
+  - "Transformers for climate modeling"
+  - "Multi-step training to mitigate error accumulation"
   - "Iterative dynamics forecasting"
-  - "Multi-interval ensembling via randomized rollouts"
-  - "Gridded spatio-temporal fields"
+  - "Physics-informed objectives and constraints"
   - "Multi-step training to mitigate error accumulation"
   - "Graph neural networks for Earth systems"
 - "title": "Auto-encoding variational bayes"
@@ -225,9 +225,9 @@
   "block_ids":
   - 15
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Physics-informed objectives and constraints"
+  - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "Adam: A method for stochastic optimization"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -241,7 +241,7 @@
   "block_ids":
   - 15
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Physics-informed objectives and constraints"
 - "title": "Learning skillful medium-range global weather forecasting"
@@ -261,11 +261,11 @@
   - "Algorithm/Principle Adoption"
   - "Prior Methods"
   - "Result Comparison"
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Graph neural networks for Earth systems"
   - "Multi-step training to mitigate error accumulation"
-  - "Multi-interval ensembling via randomized rollouts"
+  - "Iterative dynamics forecasting"
   - "Physics-informed objectives and constraints"
   - "Multi-step training to mitigate error accumulation"
   - "Graph neural networks for Earth systems"
@@ -277,13 +277,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Uncertainty and inference strategies"
+  - "Multi-interval ensembling via randomized rollouts"
 - "title": "Swin transformer v2: Scaling up capacity and resolution"
   "unique_context_marker": "[28]"
   "block_ids":
   - 15
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Transformers for climate modeling"
 - "title": "The origins of computer weather prediction and climate modeling"
@@ -301,7 +301,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Forecasting and simulation tasks"
 - "title": "The Monte Carlo method"
   "unique_context_marker": "[31]"
   "block_ids":
@@ -309,7 +309,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Multi-interval ensembling via randomized rollouts"
 - "title": "ClimaX: A foundation model for weather and climate"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -321,21 +321,21 @@
   "intent_labels":
   - "Prospective Application"
   - "Prior Methods"
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Physics-informed objectives and constraints"
   - "Supervised pretraining and finetuning of foundation models"
-  - "Gridded spatio-temporal fields"
-  - "Transformers for climate modeling"
+  - "Physics-informed objectives and constraints"
+  - "Multimodal integration across heterogeneous resolutions"
   - "Continuous lead-time conditioning"
 - "title": "Probabilistic weather forecasting with hierarchical graph neural networks"
   "unique_context_marker": "[33]"
   "block_ids":
   - 15
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "PyTorch: An imperative style, high-performance deep learning library"
@@ -351,21 +351,21 @@
   - 6
   - 15
   "intent_labels":
+  - "Domain Overview"
   - "Prior Methods"
-  - "Model/Architecture Adoption"
   - "Prior Methods"
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Short- to medium-range global prediction"
-  - "Gridded spatio-temporal fields"
+  - "Multi-interval ensembling via randomized rollouts"
+  - "Physics-informed objectives and constraints"
   - "Multi-step training to mitigate error accumulation"
-  - "Transformers for climate modeling"
+  - "Short- to medium-range global prediction"
 - "title": "Scalable diffusion models with transformers"
   "unique_context_marker": "[36]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Generative models: GANs and diffusion"
 - "title": "FiLM: Visual reasoning with a general conditioning layer"
@@ -373,7 +373,7 @@
   "block_ids":
   - 10
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Continuous lead-time conditioning"
 - "title": "Gencast: Diffusion-based ensemble forecasting for medium-range weather"
@@ -381,7 +381,7 @@
   "block_ids":
   - 15
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "Data-driven medium-range weather prediction with a resnet pretrained on climate simulations: A new model for WeatherBench"
@@ -390,11 +390,11 @@
   - 1
   - 2
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Short- to medium-range global prediction"
-  - "Short- to medium-range global prediction"
+  - "Iterative dynamics forecasting"
+  - "Continuous lead-time conditioning"
 - "title": "WeatherBench: a benchmark data set for data-driven weather forecasting"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -403,11 +403,11 @@
   - 15
   "intent_labels":
   - "Resource Utilization"
+  - "Prior Methods"
   - "Benchmark Utilization"
-  - "Other Intent"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
-  - "Gridded spatio-temporal fields"
+  - "Continuous lead-time conditioning"
+  - "Physics-informed objectives and constraints"
   - "Gridded spatio-temporal fields"
 - "title": "WeatherBench 2: A benchmark for the next generation of data-driven global weather models"
   "unique_context_marker": "[41]"
@@ -418,7 +418,7 @@
   - "Benchmark Utilization"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Time series representations"
   - "Short- to medium-range global prediction"
 - "title": "Toward data-driven weather and climate forecasting: Approximating a simple general circulation model with deep learning"
   "unique_context_marker": "[42]"
@@ -429,11 +429,11 @@
   "intent_labels":
   - "Prior Methods"
   - "Prior Methods"
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Gridded spatio-temporal fields"
-  - "Weather pattern detection and understanding"
-  - "Recurrent networks and ConvLSTM"
+  - "Direct forecasting"
+  - "Graph neural networks for Earth systems"
 - "title": "Metnet: A neural weather model for precipitation forecasting"
   "unique_context_marker": "[43]"
   "block_ids":
@@ -441,15 +441,15 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Precipitation nowcasting"
+  - "Continuous lead-time conditioning"
 - "title": "Parameterization Schemes: Keys to Understanding Numerical Weather Prediction Models"
   "unique_context_marker": "[44]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Research Gap"
   "topic_labels":
-  - "Physics-informed objectives and constraints"
+  - "Multi-interval ensembling via randomized rollouts"
 - "title": "Attention is all you need"
   "unique_context_marker": "[45]"
   "block_ids":
@@ -457,7 +457,7 @@
   - 10
   "intent_labels":
   - "Model/Architecture Adoption"
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Transformers for climate modeling"
   - "Transformers for climate modeling"
@@ -466,7 +466,7 @@
   "block_ids":
   - 15
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Physics-informed objectives and constraints"
 - "title": "The modelling infrastructure of the Integrated Forecasting System: Recent advances and future challenges"
@@ -476,7 +476,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Short- to medium-range global prediction"
+  - "Direct forecasting"
 - "title": "Can machines learn to predict weather? Using deep learning to predict gridded 500-hPa geopotential height from historical weather data"
   "unique_context_marker": "[48]"
   "block_ids":
@@ -486,11 +486,11 @@
   "intent_labels":
   - "Prior Methods"
   - "Prior Methods"
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
+  - "Self- and semi-supervised learning for climate"
+  - "Direct forecasting"
   - "Short- to medium-range global prediction"
-  - "Subseasonal-to-seasonal and climate projection"
-  - "Recurrent networks and ConvLSTM"
 - "title": "Improving data-driven global weather prediction using deep convolutional neural networks on a cubed sphere"
   "unique_context_marker": "[49]"
   "block_ids":
@@ -498,13 +498,13 @@
   - 2
   - 15
   "intent_labels":
-  - "Model/Architecture Adoption"
   - "Prior Methods"
-  - "Other Intent"
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
+  - "Post-processing and enhancement tasks"
+  - "Direct forecasting"
   - "Short- to medium-range global prediction"
-  - "Robust generalization under non-stationary climate"
-  - "Recurrent networks and ConvLSTM"
 - "title": "PyTorch image models"
   "unique_context_marker": "[50]"
   "block_ids": []

@@ -1,0 +1,820 @@
+"citations":
+- "title": "Configuration and intercomparison of deep learning neural models for statistical downscaling"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "CPMIP: measurements of real computational performance of Earth system models in CMIP6"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "The quiet revolution of numerical weather prediction"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Pangu-weather: A 3d high-resolution model for fast and accurate global weather forecast"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 1
+  - 5
+  - 6
+  - 9
+  - 15
+  "intent_labels":
+  - "Research Gap"
+  - "Benchmark Utilization"
+  - "Model/Architecture Adoption"
+  - "Problem Formulation"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Gridded spatio-temporal fields"
+  - "Transformers for climate modeling"
+  - "Short- to medium-range global prediction"
+  - "Supervised pretraining and finetuning of foundation models"
+- "title": "Internal variability plays a dominant role in global climate projections of temperature and precipitation extremes"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "pyESDv1.0.1: An open-source Python framework for empirical-statistical downscaling of climate information"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Downscaling and super-resolution"
+- "title": "Machine Learning in Weather Prediction and Climate Analyses—Applications and Perspectives"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "DroughtCast: A Machine Learning Forecast of the United States Drought Monitor"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "ClimART: A benchmark dataset for emulating atmospheric radiative transfer in weather and climate models"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Forecasting and simulation tasks"
+- "title": "CMIP6-Downscaling"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Downscaling and super-resolution"
+- "title": "CliMetLab"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Data types and structures"
+- "title": "Potential for surprising heat and drought events in wheat-producing regions of USA and China"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "The Community Earth System Model Version 2 (CESM2)"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Machine Learning for numerical weather and climate modelling: a review"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Rainbench: Enabling data-driven precipitation forecasting on a global scale"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Precipitation nowcasting"
+- "title": "An image is worth 16x16 words: Transformers for image recognition at scale"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Other Topic"
+- "title": "Deep learning for twelve hour precipitation forecasts"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
+- "title": "About Copernicus"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Overview of the Coupled Model Intercomparison Project Phase 6 (CMIP6) experimental design and organization"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 1
+  - 5
+  "intent_labels":
+  - "Research Gap"
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Gridded spatio-temporal fields"
+- "title": "Earthformer: Exploring space-time transformers for earth system forecasting"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Transformers for climate modeling"
+- "title": "Weatherbench probability: A benchmark dataset for probabilistic medium-range weather forecasting along with deep learning baseline models"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 2
+  - 7
+  - 13
+  "intent_labels":
+  - "Benchmark Utilization"
+  - "Metrics Utilization"
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "A Deep Hybrid Model for Weather Forecasting"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Towards multi-spatiotemporal-scale generalized pde modeling"
+  "unique_context_marker": "[23]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Scikit-downscale: an open source python package for scalable climate downscaling"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Downscaling and super-resolution"
+- "title": "Statistical downscaling of climate scenarios over Scandinavia"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Downscaling and super-resolution"
+- "title": "Array programming with NumPy"
+  "unique_context_marker": "[26]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Deep residual learning for image recognition"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 6
+  - 9
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Recurrent networks and ConvLSTM"
+  - "Other Topic"
+- "title": "Masked autoencoders are scalable vision learners"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Other Topic"
+- "title": "The ERA5 global reanalysis"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 1
+  - 5
+  - 9
+  "intent_labels":
+  - "Research Gap"
+  - "Domain Overview"
+  - "Resource Utilization"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Gridded spatio-temporal fields"
+  - "Other Topic"
+- "title": "Deep Learning for Improving Numerical Weather Prediction of Heavy Rainfall"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "xarray: N-d labeled arrays and datasets in python"
+  "unique_context_marker": "[31]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Deep networks with stochastic depth"
+  "unique_context_marker": "[32]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Summary for Policymakers"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Leakage and the reproducibility crisis in ML-based science"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Machine Learning for the Geosciences: Challenges and Opportunities"
+  "unique_context_marker": "[35]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Physics-informed machine learning: case studies for weather and climate modelling"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Forecasting global weather with graph neural networks"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Graphcast: Learning skillful medium-range global weather forecasting"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 5
+  - 9
+  - 15
+  "intent_labels":
+  - "Benchmark Utilization"
+  - "Benchmark Utilization"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Other Topic"
+  - "Supervised pretraining and finetuning of foundation models"
+- "title": "An evaluation of ERA5 precipitation for climate monitoring"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Regional climate research: Needs and Opportunities"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Climate Downscaling Using YNet: A Deep Convolutional Network with Skip Connections and Fusion"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Decoupled weight decay regularization"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Other Topic"
+- "title": "Climate damages and adaptation potential across diverse sectors of the United States"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Using artificial intelligence to improve real-time decision-making for high-impact weather"
+  "unique_context_marker": "[44]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "DroughtED: A dataset and methodology for drought forecasting spanning multiple climate zones"
+  "unique_context_marker": "[45]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Weather pattern detection and understanding"
+- "title": "Analyzing climate change impacts on health, energy, water resources, and biodiversity sectors for effective climate change policy in South Korea"
+  "unique_context_marker": "[46]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Flood Prediction Using Machine Learning Models: Literature Review"
+  "unique_context_marker": "[47]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Learned benchmarks for subseasonal forecasting"
+  "unique_context_marker": "[48]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Subseasonal-to-seasonal and climate projection"
+- "title": "Extension of convolutional neural network along temporal and vertical directions for precipitation downscaling"
+  "unique_context_marker": "[49]"
+  "block_ids":
+  - 1
+  - 5
+  - 6
+  "intent_labels":
+  - "Research Gap"
+  - "Benchmark Utilization"
+  - "Prior Methods"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
+- "title": "NASA Earthdata: Open Access for Open Science"
+  "unique_context_marker": "[50]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Climate Change and Climate Modeling"
+  "unique_context_marker": "[51]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "ClimaX: A foundation model for weather and climate"
+  "unique_context_marker": "[52]"
+  "block_ids":
+  - 5
+  - 6
+  - 9
+  - 12
+  - 15
+  "intent_labels":
+  - "Benchmark Utilization"
+  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Transformers for climate modeling"
+  - "Other Topic"
+  - "Short- to medium-range global prediction"
+  - "Supervised pretraining and finetuning of foundation models"
+- "title": "Pytorch: An imperative style, high-performance deep learning library"
+  "unique_context_marker": "[53]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Fourcastnet: A global data-driven high-resolution weather model using adaptive fourier neural operators"
+  "unique_context_marker": "[54]"
+  "block_ids":
+  - 1
+  - 5
+  - 9
+  - 12
+  - 15
+  "intent_labels":
+  - "Research Gap"
+  - "Benchmark Utilization"
+  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Gridded spatio-temporal fields"
+  - "Other Topic"
+  - "Short- to medium-range global prediction"
+  - "Supervised pretraining and finetuning of foundation models"
+- "title": "Ccdownscaling: A python package for multivariable statistical climate model downscaling"
+  "unique_context_marker": "[55]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Downscaling and super-resolution"
+- "title": "ClimateNet: an expert-labeled open dataset and deep learning architecture for enabling high-precision analyses of extreme weather"
+  "unique_context_marker": "[56]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Weather pattern detection and understanding"
+- "title": "PRISM Climate Group"
+  "unique_context_marker": "[57]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Resource Utilization"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Nadbenchmarks–a compilation of benchmark datasets for machine learning tasks related to natural disasters"
+  "unique_context_marker": "[58]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Weather pattern detection and understanding"
+- "title": "A review of radar-based nowcasting of precipitation and applicable machine learning techniques"
+  "unique_context_marker": "[59]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "ExtremeWeather: A large-scale climate dataset for semi-supervised detection, localization, and understanding of extreme weather events"
+  "unique_context_marker": "[60]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Weather pattern detection and understanding"
+- "title": "Floodnet: A high resolution aerial imagery dataset for post flood scene understanding"
+  "unique_context_marker": "[61]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - "Research Gap"
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Weather pattern detection and understanding"
+- "title": "Data-Driven Medium-Range Weather Prediction With a Resnet Pretrained on Climate Simulations: A New Model for WeatherBench"
+  "unique_context_marker": "[62]"
+  "block_ids":
+  - 5
+  - 6
+  - 9
+  "intent_labels":
+  - "Benchmark Utilization"
+  - "Resource Utilization"
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
+  - "Other Topic"
+- "title": "WeatherBench: A Benchmark Data Set for Data-Driven Weather Forecasting"
+  "unique_context_marker": "[63]"
+  "block_ids":
+  - 1
+  - 2
+  - 5
+  - 9
+  "intent_labels":
+  - "Research Gap"
+  - "Benchmark Utilization"
+  - "Benchmark Utilization"
+  - "Result Comparison"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Short- to medium-range global prediction"
+  - "Gridded spatio-temporal fields"
+  - "Other Topic"
+- "title": "Resolution effects on regional climate model simulations of seasonal precipitation over Europe"
+  "unique_context_marker": "[64]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Skilful precipitation nowcasting using deep generative models of radar"
+  "unique_context_marker": "[65]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Earthnet2021: A large-scale dataset and challenge for earth surface forecasting as a guided video prediction task"
+  "unique_context_marker": "[66]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Weather pattern detection and understanding"
+- "title": "Changing intensity of hydroclimatic extreme events revealed by GRACE and GRACE-FO"
+  "unique_context_marker": "[67]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Deepdownscale: A deep learning strategy for high-resolution weather forecast"
+  "unique_context_marker": "[68]"
+  "block_ids":
+  - 1
+  - 6
+  - 10
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
+  - "Downscaling and super-resolution"
+- "title": "U-net: Convolutional networks for biomedical image segmentation"
+  "unique_context_marker": "[69]"
+  "block_ids":
+  - 6
+  - 9
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Recurrent networks and ConvLSTM"
+  - "Other Topic"
+- "title": "Statistical downscaling of precipitation using machine learning techniques"
+  "unique_context_marker": "[70]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Overview of the norwegian earth system model (noresm2) and key climate response of cmip6 deck, historical, and scenario simulations"
+  "unique_context_marker": "[71]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Setting/Protocal Adoption"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Deep learning for improved global precipitation in numerical weather prediction systems"
+  "unique_context_marker": "[72]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "Iowarain: A statewide rain event dataset based on weather radars and quantitative precipitation estimation"
+  "unique_context_marker": "[73]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Direct forecasting"
+- "title": "2010-2019: A landmark decade of U.S. billion-dollar weather and climate disasters"
+  "unique_context_marker": "[74]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Metnet: A neural weather model for precipitation forecasting"
+  "unique_context_marker": "[75]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
+- "title": "Definition, diagnosis, and origin of extreme weather and climate events"
+  "unique_context_marker": "[76]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Other Topic"
+- "title": "A contemporary review on drought modeling using machine learning approaches"
+  "unique_context_marker": "[77]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Downscaling of ERA-interim temperature in the contiguous United States and its implications for rain–snow partitioning"
+  "unique_context_marker": "[78]"
+  "block_ids":
+  - 10
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Downscaling and super-resolution"
+- "title": "Pyrocast: a machine learning pipeline to forecast pyrocumulonimbus (pyrocb) clouds"
+  "unique_context_marker": "[79]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Direct forecasting"
+- "title": "Spatio-temporal weather forecasting and attention mechanism on convolutional lstms"
+  "unique_context_marker": "[80]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
+- "title": "Deepsd: Generating high resolution climate change projections through single image super-resolution"
+  "unique_context_marker": "[81]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "Intercomparison of machine learning methods for statistical downscaling: the case of daily and extreme precipitation"
+  "unique_context_marker": "[82]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Climate change 2001: Synthesis report: Third assessment report of the Intergovernmental Panel on Climate Change"
+  "unique_context_marker": "[83]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "ClimateBench v1.0: A Benchmark for Data-Driven Climate Projections"
+  "unique_context_marker": "[84]"
+  "block_ids":
+  - 1
+  - 2
+  - 4
+  "intent_labels":
+  - "Research Gap"
+  - "Benchmark Utilization"
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Subseasonal-to-seasonal and climate projection"
+  - "Subseasonal-to-seasonal and climate projection"
+- "title": "The modelling infrastructure of the Integrated Forecasting System: Recent advances and future challenges"
+  "unique_context_marker": "[85]"
+  "block_ids":
+  - 5
+  - 9
+  "intent_labels":
+  - "Prior Methods"
+  - "Result Comparison"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Other Topic"
+- "title": "Can Machines Learn to Predict Weather? Using Deep Learning to Predict Gridded 500-hPa Geopotential Height From Historical Weather Data"
+  "unique_context_marker": "[86]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
+- "title": "Improving Data-Driven Global Weather Prediction Using Deep Convolutional Neural Networks on a Cubed Sphere"
+  "unique_context_marker": "[87]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Research Gap"
+  - "Prior Methods"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
+- "title": "Pytorch image models"
+  "unique_context_marker": "[88]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Integrating physics-based modeling with machine learning: A survey"
+  "unique_context_marker": "[89]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Meteorological drought forecasting based on a statistical model with machine learning techniques in Shaanxi province, China"
+  "unique_context_marker": "[90]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"

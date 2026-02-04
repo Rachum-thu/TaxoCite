@@ -8,7 +8,7 @@
   - "Domain Overview"
   - "Metrics Utilization"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
   - "Raw point supervised architectures"
 - "title": "Classiﬁcation of aerial photogrammetric 3D point clouds"
   "unique_context_marker": "[2]"
@@ -17,7 +17,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "SemanticKITTI: A dataset for semantic scene understanding of lidar sequences"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -29,8 +29,8 @@
   - "Domain Overview"
   - "Metrics Utilization"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
   - "Raw point supervised architectures"
+  - "Raw point-based representations"
   - "Raw point supervised architectures"
 - "title": "deep learning on 3D point clouds"
   "unique_context_marker": "[4]"
@@ -39,7 +39,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Discretization-based segmentation"
 - "title": "SnapNet: 3D point cloud semantic labeling with 2D deep segmentation networks"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -47,7 +47,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based segmentation"
 - "title": "Combining forecasts: A review and annotated bibliography"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -55,7 +55,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Hybrid fusion methods"
 - "title": "Blender - a 3D modelling and rendering package"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -63,7 +63,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "ImageNet: A large-scale hierarchical image database"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -71,7 +71,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Projection-based representations"
 - "title": "PyTorch Lightning"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -95,7 +95,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Raw point supervised architectures"
 - "title": "SEMANTIC3D.NET: A new large-scale point cloud classification benchmark"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -105,7 +105,7 @@
   - "Domain Overview"
   - "Metrics Utilization"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
   - "Raw point supervised architectures"
 - "title": "Optimal linear combinations of neural networks"
   "unique_context_marker": "[13]"
@@ -114,7 +114,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Hybrid fusion methods"
 - "title": "3D reconstruction from photographs by CMP SfM web service"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -130,7 +130,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Raw point supervised architectures"
 - "title": "Towards Semantic Segmentation of Urban-Scale 3D Point Clouds: A Dataset, Benchmarks and Challenges"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -140,7 +140,7 @@
   - "Domain Overview"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
   - "Raw point supervised architectures"
 - "title": "A multi-view recurrent neural network for 3D mesh segmentation"
   "unique_context_marker": "[17]"
@@ -149,7 +149,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Raw point-based representations"
 - "title": "Microsoft coco: Common objects in context"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -157,7 +157,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Projection-based representations"
 - "title": "Deep Learning-Based Damage Detection from Aerial SfM Point Clouds"
   "unique_context_marker": "[19]"
   "block_ids":
@@ -173,7 +173,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based representations"
 - "title": "Contextual classification of lidar data and building object detection in urban areas"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -181,7 +181,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "PyTorch: An Imperative Style, High-Performance Deep Learning Library"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -197,7 +197,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Raw point-based representations"
 - "title": "Pointnet: Deep learning on point sets for 3d classification and segmentation"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -220,7 +220,7 @@
   - "Other Intent"
   - "Model/Architecture Adoption"
   - "Prior Methods"
-  - "Model/Architecture Adoption"
+  - "Result Comparison"
   "topic_labels":
   - "Raw point supervised architectures"
   - "Raw point supervised architectures"
@@ -243,8 +243,8 @@
   - "Other Intent"
   - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
-  - "Raw point supervised architectures"
+  - "Hierarchical structures"
+  - "Raw point-based representations"
 - "title": "A survey of path following control strategies for UAVs focused on quadrotors"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -252,7 +252,7 @@
   "intent_labels":
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "Deep learning in neural networks: An overview"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -268,7 +268,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based segmentation"
 - "title": "Splatnet: Sparse lattice networks for point cloud processing"
   "unique_context_marker": "[31]"
   "block_ids":
@@ -276,7 +276,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based segmentation"
 - "title": "Toronto-3D: A Large-scale Mobile LiDAR Dataset for Semantic Segmentation of Urban Roadways"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -286,8 +286,8 @@
   - "Other Intent"
   - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
   - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "DALES: A Large-scale Aerial LiDAR Data Set for Semantic Segmentation"
   "unique_context_marker": "[33]"
   "block_ids":
@@ -295,7 +295,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "Velodyn Lidar: model HDL-64e"
   "unique_context_marker": "[34]"
   "block_ids":
@@ -303,7 +303,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "Pointnet++ Pytorch"
   "unique_context_marker": "[35]"
   "block_ids":
@@ -319,7 +319,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "Hydra - A framework for elegantly configuring complex applications"
   "unique_context_marker": "[37]"
   "block_ids":
@@ -343,7 +343,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Raw point supervised architectures"
 - "title": "Voxelnet: End-to-end learning for point cloud based 3d object detection"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -351,7 +351,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Volumetric voxelization"
 - "title": "DublinCity: Annotated LiDAR Point Cloud and its Applications"
   "unique_context_marker": "[41]"
   "block_ids":
@@ -359,4 +359,4 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"

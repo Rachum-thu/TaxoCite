@@ -6,21 +6,21 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Sequential Training"
+  - "Independent Training"
 - "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
   "unique_context_marker": "[2]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Background"
+  - "Domain Overview"
   "topic_labels":
-  - "Retrieval Granularity"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Probing-RAG: Self-Probing to Guide Language Models in Selective Document Retrieval"
   "unique_context_marker": "[3]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
 - "title": "Improving language models by retrieving from trillions of tokens"
@@ -29,27 +29,27 @@
   - 2
   - 3
   "intent_labels":
-  - "Background"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Retrieval Integration for Generation"
   - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Language models are few-shot learners"
   "unique_context_marker": "[5]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Background"
+  - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Palm: Scaling language modeling with pathways"
   "unique_context_marker": "[6]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Background"
+  - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "How abilities in large language models are affected by supervised fine-tuning data composition"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -57,15 +57,15 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Training-free Methods"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Decoupling Knowledge and Context: An Efficient and Effective Retrieval Augmented Generation Framework via Cross Attention"
   "unique_context_marker": "[8]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "I3 retriever: incorporating implicit interaction in pre-trained language models for passage retrieval"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -73,37 +73,37 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "From local to global: A graph rag approach to query-focused summarization"
   "unique_context_marker": "[10]"
   "block_ids":
   - 2
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Retrieval Granularity"
   - "Parameter-Accessible Generators (White-box)"
+  - "Indexing and Query Optimization"
 - "title": "Scaling laws for dense retrieval"
   "unique_context_marker": "[11]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Background"
+  - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Retrieval augmented language model pre-training"
   "unique_context_marker": "[12]"
   "block_ids":
   - 2
   - 3
   "intent_labels":
-  - "Background"
   - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Retrieval Integration for Generation"
   - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Constructing a multi-hop QA dataset for comprehensive evaluation of reasoning steps"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -111,7 +111,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Evaluation"
 - "title": "LoRA: Low-Rank Adaptation of Large Language Models"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -123,53 +123,53 @@
   - "Model/Architecture Adoption"
   - "Algorithm/Principle Adoption"
   - "Algorithm/Principle Adoption"
-  - "Algorithm/Principle Adoption"
+  - "Metrics Utilization"
   "topic_labels":
-  - "Sequential Training"
   - "Parameter-Accessible Generators (White-box)"
+  - "Intermediate-Layer Integration"
   - "Parameter-Accessible Generators (White-box)"
-  - "Parameter-Accessible Generators (White-box)"
+  - "Evaluation Aspects and Tools"
 - "title": "GRAG: Graph Retrieval-Augmented Generation"
   "unique_context_marker": "[15]"
   "block_ids":
   - 2
   - 3
   "intent_labels":
-  - "Background"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
-  - "Parameter-Accessible Generators (White-box)"
+  - "Indexing and Query Optimization"
 - "title": "Leveraging passage retrieval with generative models for open domain question answering"
   "unique_context_marker": "[16]"
   "block_ids":
   - 2
   - 3
   "intent_labels":
-  - "Background"
   - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Retrieval Integration for Generation"
   - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Adaptive-RAG: Learning to Adapt Retrieval-Augmented Large Language Models through Question Complexity"
   "unique_context_marker": "[17]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Retrieval as attention: End-to-end learning of retrieval and reading within a single transformer"
   "unique_context_marker": "[18]"
   "block_ids":
   - 2
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Retrieval Granularity"
   - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Active retrieval augmented generation"
   "unique_context_marker": "[19]"
   "block_ids":
@@ -177,13 +177,13 @@
   - 11
   - 12
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   - "Result Comparison"
   - "Resource Utilization"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
-  - "Parameter-Accessible Generators (White-box)"
-  - "Retrieval"
+  - "Retrieval Integration for Generation"
+  - "Input-Layer Integration"
+  - "Retriever Type"
 - "title": "Dense passage retrieval for open-domain question answering"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -197,9 +197,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Retrieval Granularity"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Same task, more tokens: the impact of input length on the reasoning performance of large language models"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -207,18 +207,18 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "NLP Applications"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Retrieval-augmented generation for knowledge-intensive nlp tasks"
   "unique_context_marker": "[23]"
   "block_ids":
   - 2
   - 3
   "intent_labels":
+  - "Research Gap"
   - "Prior Methods"
-  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Retrieval Integration for Generation"
   - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Towards better web search performance: pre-training, fine-tuning and learning to rank"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -226,15 +226,15 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "CtrlA: Adaptive Retrieval-Augmented Generation via Probe-Guided Control"
   "unique_context_marker": "[25]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retrieval Integration for Generation"
 - "title": "Lost in the middle: How language models use long contexts"
   "unique_context_marker": "[26]"
   "block_ids":
@@ -248,9 +248,9 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "When Not to Trust Language Models: Investigating Effectiveness of Parametric and Non-Parametric Memories"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -258,13 +258,13 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Evaluation"
 - "title": "Llama-3.2-1B-Instruct"
   "unique_context_marker": "[29]"
   "block_ids":
   - 12
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
 - "title": "Meta-Llama-3-8B-Instruct"
@@ -272,7 +272,7 @@
   "block_ids":
   - 12
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
 - "title": "Fact Finding: Attempting to Reverse-Engineer Factual Recall on the Neuron Level"
@@ -280,7 +280,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Background"
+  - "Problem Formulation"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
 - "title": "Graph retrieval-augmented generation: A survey"
@@ -289,19 +289,19 @@
   - 2
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Retrieval Granularity"
   - "Parameter-Accessible Generators (White-box)"
+  - "Indexing and Query Optimization"
 - "title": "In-context retrieval-augmented language models"
   "unique_context_marker": "[33]"
   "block_ids":
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Retriever Type"
+  - "Retrieval Integration for Generation"
 - "title": "The probabilistic relevance framework: BM25 and beyond"
   "unique_context_marker": "[34]"
   "block_ids":
@@ -309,31 +309,31 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Towards a search engine for machines: Unified ranking for multiple retrieval-augmented large language models"
   "unique_context_marker": "[35]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Bloom: A 176b-parameter open-access multilingual language model"
   "unique_context_marker": "[36]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Replug: Retrieval-augmented black-box language models"
   "unique_context_marker": "[37]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Analysis of a very large web search engine query log"
   "unique_context_marker": "[38]"
   "block_ids":
@@ -341,7 +341,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Indexing and Query Optimization"
+  - "Context Curation and Compression"
 - "title": "96.55% of Content Gets No Traffic From Google. Here’s How to Be in the Other 3.45% [New Research for 2023]"
   "unique_context_marker": "[39]"
   "block_ids":
@@ -349,7 +349,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Indexing and Query Optimization"
+  - "Context Curation and Compression"
 - "title": "Wikiformer: Pre-training with Structured Information of Wikipedia for Ad-hoc Retrieval"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -357,7 +357,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Caseformer: Pre-training for Legal Case Retrieval"
   "unique_context_marker": "[41]"
   "block_ids":
@@ -365,7 +365,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "STARD: A Chinese Statute Retrieval Dataset Derived from Real-life Queries by Non-professionals"
   "unique_context_marker": "[42]"
   "block_ids":
@@ -373,7 +373,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Thuir2 at ntcir-16 session search (ss) task"
   "unique_context_marker": "[43]"
   "block_ids":
@@ -381,7 +381,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Mitigating entity-level hallucination in large language models"
   "unique_context_marker": "[44]"
   "block_ids":
@@ -389,13 +389,13 @@
   - 3
   - 12
   "intent_labels":
+  - "Domain Overview"
   - "Prior Methods"
-  - "Algorithm/Principle Adoption"
-  - "Hyperparameter Utilization"
+  - "Resource Utilization"
   "topic_labels":
-  - "Retrieval Granularity"
   - "Parameter-Accessible Generators (White-box)"
-  - "Retriever Type"
+  - "Retrieval Integration for Generation"
+  - "Retrieval"
 - "title": "DRAGIN: Dynamic Retrieval Augmented Generation based on the Real-time Information Needs of Large Language Models"
   "unique_context_marker": "[45]"
   "block_ids":
@@ -404,15 +404,15 @@
   - 11
   - 12
   "intent_labels":
+  - "Domain Overview"
   - "Prior Methods"
-  - "Algorithm/Principle Adoption"
   - "Result Comparison"
   - "Resource Utilization"
   "topic_labels":
-  - "Retrieval Granularity"
   - "Parameter-Accessible Generators (White-box)"
-  - "Parameter-Accessible Generators (White-box)"
-  - "Training Strategies"
+  - "Retrieval Integration for Generation"
+  - "Input-Layer Integration"
+  - "Retrieval"
 - "title": "Unsupervised real-time hallucination detection based on the internal states of large language models"
   "unique_context_marker": "[46]"
   "block_ids": []
@@ -425,21 +425,21 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Evaluation"
 - "title": "Llama: Open and efficient foundation language models"
   "unique_context_marker": "[48]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "NLP Applications"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Interleaving retrieval with chain-of-thought reasoning for knowledge-intensive multi-step questions"
   "unique_context_marker": "[49]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
 - "title": "Knowledge Editing through Chain-of-Thought"
@@ -449,7 +449,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "LeKUBE: A Legal Knowledge Update BEnchmark"
   "unique_context_marker": "[51]"
   "block_ids":
@@ -457,23 +457,23 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Self-knowledge guided retrieval augmentation for large language models"
   "unique_context_marker": "[52]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"
 - "title": "Rat: Retrieval augmented thoughts elicit context-aware reasoning in long-horizon generation"
   "unique_context_marker": "[53]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retrieval"
 - "title": "Continual learning for large language models: A survey"
   "unique_context_marker": "[54]"
   "block_ids":
@@ -481,17 +481,17 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Training-free Methods"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Qwen2.5 Technical Report"
   "unique_context_marker": "[55]"
   "block_ids":
   - 2
   - 12
   "intent_labels":
-  - "Prior Methods"
-  - "Setting/Protocal Adoption"
+  - "Domain Overview"
+  - "Resource Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Parameter-Accessible Generators (White-box)"
   - "Parameter-Accessible Generators (White-box)"
 - "title": "HotpotQA: A dataset for diverse, explainable multi-hop question answering"
   "unique_context_marker": "[56]"
@@ -500,7 +500,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Evaluation"
 - "title": "Seakr: Self-aware knowledge retrieval for adaptive retrieval augmented generation"
   "unique_context_marker": "[57]"
   "block_ids":
@@ -508,24 +508,24 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retrieval Integration for Generation"
 - "title": "Rankrag: Unifying context ranking with retrieval-augmented generation in llms"
   "unique_context_marker": "[58]"
   "block_ids":
   - 2
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Retrieval Granularity"
   - "Parameter-Accessible Generators (White-box)"
+  - "Indexing and Query Optimization"
 - "title": "Neuron-Level Knowledge Attribution in Large Language Models"
   "unique_context_marker": "[59]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Background"
+  - "Research Gap"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
 - "title": "Statistical language models for information retrieval"
@@ -533,6 +533,6 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Hyperparameter Utilization"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retriever Type"

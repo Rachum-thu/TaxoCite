@@ -7,31 +7,31 @@
   - 16
   "intent_labels":
   - "Domain Overview"
-  - "Setting/Protocal Adoption"
-  - "Result Comparison"
+  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
+  - "Deep learning foundations for text classification"
   - "Sentiment and opinion benchmarks"
-  - "Recurrent and hybrid networks"
   - "Recurrent and hybrid networks"
 - "title": "Opinion mining and sentiment analysis"
   "unique_context_marker": "[2]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Prospective Application"
+  - "Domain Overview"
   "topic_labels":
-  - "Recurrent and hybrid networks"
+  - "Deep learning foundations for text classification"
 - "title": "Target-dependent twitter sentiment classification"
   "unique_context_marker": "[3]"
   "block_ids":
   - 0
   - 2
   "intent_labels":
-  - "Problem Formulation"
   - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Capsule-based architectures"
-  - "Recurrent and hybrid networks"
+  - "Deep learning foundations for text classification"
+  - "Other Topics"
 - "title": "A deeper look into sarcastic tweets using deep convolutional neural networks"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -39,7 +39,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Capsule-based architectures"
+  - "Convolutional approaches"
 - "title": "Recurrent attention network on memory for aspect sentiment analysis"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -59,7 +59,7 @@
   - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Capsule-based architectures"
+  - "Graph neural methods for text"
   - "Recurrent and hybrid networks"
   - "Recurrent and hybrid networks"
 - "title": "Attention-based LSTM for aspect-level sentiment classification"
@@ -69,7 +69,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Recurrent and hybrid networks"
+  - "Convolutional approaches"
 - "title": "PhraseRNN: Phrase recursive neural network for aspect-based sentiment analysis"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -88,21 +88,21 @@
   "intent_labels":
   - "Prior Methods"
   - "Prior Methods"
-  - "Setting/Protocal Adoption"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Graph neural methods for text"
-  - "Long-context and memory extensions"
-  - "Graph neural methods for text"
+  - "Capsule-based architectures"
+  - "Recurrent and hybrid networks"
+  - "Capsule-based architectures"
   - "Recurrent and hybrid networks"
 - "title": "Attention modeling for targeted sentiment"
   "unique_context_marker": "[10]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Convolutional approaches"
+  - "Capsule-based architectures"
 - "title": "Interactive attention networks for aspect-level sentiment classification"
   "unique_context_marker": "[11]"
   "block_ids":
@@ -111,14 +111,14 @@
   - 14
   - 16
   "intent_labels":
+  - "Model/Architecture Adoption"
   - "Prior Methods"
-  - "Prior Methods"
-  - "Setting/Protocal Adoption"
+  - "Model/Architecture Adoption"
   - "Result Comparison"
   "topic_labels":
   - "Capsule-based architectures"
   - "Recurrent and hybrid networks"
-  - "Other Topic"
+  - "Graph neural methods for text"
   - "Recurrent and hybrid networks"
 - "title": "Dynamic routing between capsules"
   "unique_context_marker": "[12]"
@@ -131,7 +131,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Sentiment and opinion benchmarks"
+  - "Capsule-based architectures"
   - "Capsule-based architectures"
   - "Capsule-based architectures"
 - "title": "Semi-supervised classification with graph convolutional networks"
@@ -141,7 +141,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Datasets and evaluation methodology"
+  - "Graph neural methods for text"
 - "title": "Tree-structured regional CNN-LSTM model for dimensional sentiment analysis"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -156,7 +156,7 @@
   - 3
   - 16
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
   - "Capsule-based architectures"
@@ -176,7 +176,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Capsule-based architectures"
 - "title": "Hierarchical attention based position-aware network for aspect-level sentiment analysis"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -190,7 +190,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Capsule-based architectures"
 - "title": "Investigating the transferring capability of capsule networks for text classification"
@@ -198,7 +198,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Capsule-based architectures"
 - "title": "Cross-domain sentiment classification by capsule network with semantic rules"
@@ -206,7 +206,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Capsule-based architectures"
 - "title": "Dynamic capsule attention for visual question answering"
@@ -214,7 +214,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Capsule-based architectures"
 - "title": "Aspect-level sentiment analysis using AS-capsules"
@@ -223,8 +223,8 @@
   - 3
   - 16
   "intent_labels":
-  - "Other Intent"
   - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Capsule-based architectures"
   - "Graph neural methods for text"
@@ -233,7 +233,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Capsule-based architectures"
 - "title": "A comprehensive survey of graph embedding: Problems, techniques, and applications"
@@ -249,7 +249,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Graph neural methods for text"
 - "title": "Large-scale hierarchical text classification with recursively regularized deep graph-CNN"
@@ -257,7 +257,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Graph neural methods for text"
 - "title": "Graph convolutional networks for text classification"
@@ -265,7 +265,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Graph neural methods for text"
 - "title": "Cross-domain sentiment classification by capsule network with semantic rules"
@@ -311,12 +311,12 @@
   - 17
   "intent_labels":
   - "Prior Methods"
-  - "Setting/Protocal Adoption"
+  - "Algorithm/Principle Adoption"
   - "Result Comparison"
   - "Setting/Protocal Adoption"
   "topic_labels":
   - "Graph neural methods for text"
-  - "Capsule-based architectures"
+  - "Recurrent and hybrid networks"
   - "Graph neural methods for text"
   - "Datasets and evaluation methodology"
 - "title": "Context-specific heterogeneous graph convolutional network for implicit sentiment analysis"
@@ -420,7 +420,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
+  - "Other Topics"
 - "title": "Transfer capsule network for aspect level sentiment classification"
   "unique_context_marker": "[47]"
   "block_ids":
@@ -452,7 +452,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "PLM-based fine-tuning strategies"
+  - "Encoder-only transformers"
 - "title": "Understanding the difficulty of training deep feedforward neural networks"
   "unique_context_marker": "[51]"
   "block_ids":
@@ -460,7 +460,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Other Topics"
 - "title": "Hierarchical human-like strategy for aspect-level sentiment classification with sentiment linguistic knowledge and reinforcement learning"
   "unique_context_marker": "[52]"
   "block_ids":
@@ -468,7 +468,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "Sentiment and opinion benchmarks"
+  - "Encoder-only transformers"
 - "title": "Target-dependent sentiment classification with long short term memory"
   "unique_context_marker": "[53]"
   "block_ids":

@@ -136,22 +136,27 @@ def main():
             ))
             topic_metadata.append((block_citations, valid_topic_nodes))
 
-    # Batch process reverse retrieval
-    if intent_prompts:
-        intent_results = reverse_llm.batch(intent_prompts, config={"max_concurrency": 32})
-        for result, (block_citations, valid_nodes) in zip(intent_results, intent_metadata):
-            for assignment in result.assignments:
-                validated_node = validate_label(assignment.node, valid_nodes, "Other Intent")
-                for marker in assignment.markers:
-                    fill_labels_by_marker(block_citations, marker, validated_node, "intent_labels")
+    # Batch process reverse retrieval (intent and topic in parallel)
+    from concurrent.futures import ThreadPoolExecutor
+    intent_results, topic_results = [], []
 
-    if topic_prompts:
-        topic_results = reverse_llm.batch(topic_prompts, config={"max_concurrency": 32})
-        for result, (block_citations, valid_nodes) in zip(topic_results, topic_metadata):
-            for assignment in result.assignments:
-                validated_node = validate_label(assignment.node, valid_nodes, "Other Topic")
-                for marker in assignment.markers:
-                    fill_labels_by_marker(block_citations, marker, validated_node, "topic_labels")
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        intent_future = executor.submit(lambda: reverse_llm.batch(intent_prompts, {"max_concurrency": 32}) if intent_prompts else [])
+        topic_future = executor.submit(lambda: reverse_llm.batch(topic_prompts, {"max_concurrency": 32}) if topic_prompts else [])
+        intent_results = intent_future.result()
+        topic_results = topic_future.result()
+
+    for result, (block_citations, valid_nodes) in zip(intent_results, intent_metadata):
+        for assignment in result.assignments:
+            validated_node = validate_label(assignment.node, valid_nodes, "Other Intent")
+            for marker in assignment.markers:
+                fill_labels_by_marker(block_citations, marker, validated_node, "intent_labels")
+
+    for result, (block_citations, valid_nodes) in zip(topic_results, topic_metadata):
+        for assignment in result.assignments:
+            validated_node = validate_label(assignment.node, valid_nodes, "Other Topic")
+            for marker in assignment.markers:
+                fill_labels_by_marker(block_citations, marker, validated_node, "topic_labels")
 
     # Save Phase 1 (reverse retrieval) results
     print("Saving reverse retrieval results...")
@@ -220,12 +225,17 @@ def main():
                 topic_prompts.append(prompt)
                 topic_metadata.append((block_id, unmatched_topic_markers, block_citations))
 
-    # Batch process self-consistency
-    if intent_prompts:
-        intent_results = cot_llm.batch(intent_prompts, config={"max_concurrency": 32})
+    # Batch process self-consistency (intent and topic in parallel)
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        intent_future = executor.submit(lambda: cot_llm.batch(intent_prompts, {"max_concurrency": 32}) if intent_prompts else [])
+        topic_future = executor.submit(lambda: cot_llm.batch(topic_prompts, {"max_concurrency": 32}) if topic_prompts else [])
+        sc_intent_results = intent_future.result()
+        sc_topic_results = topic_future.result()
+
+    if sc_intent_results:
         # Group results by (block_id, marker)
         votes_by_marker = {}
-        for result, (block_id, markers, block_citations) in zip(intent_results, intent_metadata):
+        for result, (block_id, markers, block_citations) in zip(sc_intent_results, intent_metadata):
             for c in result.classifications:
                 key = (block_id, c.marker)
                 if key not in votes_by_marker:
@@ -241,11 +251,10 @@ def main():
             final_label = random.choice(top_choices)
             fill_labels_by_marker(block_to_citations[block_id], marker, final_label, "intent_labels")
 
-    if topic_prompts:
-        topic_results = cot_llm.batch(topic_prompts, config={"max_concurrency": 32})
+    if sc_topic_results:
         # Group results by (block_id, marker)
         votes_by_marker = {}
-        for result, (block_id, markers, block_citations) in zip(topic_results, topic_metadata):
+        for result, (block_id, markers, block_citations) in zip(sc_topic_results, topic_metadata):
             for c in result.classifications:
                 key = (block_id, c.marker)
                 if key not in votes_by_marker:

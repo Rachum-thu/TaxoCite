@@ -6,11 +6,11 @@
   - 5
   - 8
   "intent_labels":
-  - "Prior Methods"
+  - "Background"
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Hybrid multi-modal representations"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
 - "title": "A cross-dataset study for text-based 3d human motion retrieval"
@@ -32,7 +32,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
 - "title": "Quo vadis, action recognition? a new model and the kinetics dataset"
   "unique_context_marker": "[5]"
@@ -54,7 +54,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Raw point-based representations"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Advancing multi-modal sensing through expandable modality alignment"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -66,7 +66,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
 - "title": "Bert: Pre-training of deep bidirectional transformers for language understanding"
@@ -74,7 +74,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Masked autoencoding and tokenization"
 - "title": "Point 4d transformer networks for spatio-temporal modeling in point cloud videos"
@@ -114,13 +114,13 @@
   - 8
   - 9
   "intent_labels":
-  - "Model/Architecture Adoption"
   - "Prior Methods"
   - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
@@ -164,15 +164,15 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
 - "title": "Deep inertial poser: Learning to reconstruct human pose from sparse inertial measurements in real time"
   "unique_context_marker": "[21]"
   "block_ids":
   - 11
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Resource Utilization"
   "topic_labels":
-  - "point_cloud"
+  - "Hybrid multi-modal representations"
 - "title": "Adam: A method for stochastic optimization"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -196,10 +196,10 @@
   - 6
   "intent_labels":
   - "Prior Methods"
-  - "Background"
+  - "Domain Overview"
   "topic_labels":
+  - "Contrastive and cross-modal objectives"
   - "point_cloud"
-  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Uniformer: Unified transformer for efficient spatiotemporal representation learning"
   "unique_context_marker": "[25]"
   "block_ids": []
@@ -221,9 +221,9 @@
   - "Domain Overview"
   - "Benchmark Utilization"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
   - "Self-supervised and Cross-modal Pretraining"
-  - "point_cloud"
+  - "Hybrid multi-modal representations"
 - "title": "Enhancing person identification for smart cities: Fusion of video surveillance and wearable device data based on machine learning"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -243,9 +243,9 @@
   - "Domain Overview"
   - "Benchmark Utilization"
   "topic_labels":
+  - "Contrastive and cross-modal objectives"
   - "point_cloud"
-  - "Self-supervised and Cross-modal Pretraining"
-  - "point_cloud"
+  - "Hybrid multi-modal representations"
 - "title": "Ntu rgb+d 120: A large-scale benchmark for 3d human activity understanding"
   "unique_context_marker": "[30]"
   "block_ids":
@@ -253,7 +253,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "point_cloud"
 - "title": "Mamba4d: Efficient long-sequence point cloud video understanding with disentangled spatial-temporal state space models"
   "unique_context_marker": "[31]"
   "block_ids":
@@ -261,7 +261,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Hybrid multi-modal representations"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Meteornet: Deep learning on dynamic 3d point cloud sequences"
   "unique_context_marker": "[32]"
   "block_ids": []
@@ -295,7 +295,7 @@
   - "Resource Utilization"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
-  - "point_cloud"
+  - "Hybrid multi-modal representations"
 - "title": "Who goes there? exploiting silhouettes and wearable signals for subject identification in multi-person environments"
   "unique_context_marker": "[37]"
   "block_ids":
@@ -303,11 +303,11 @@
   - 5
   - 12
   "intent_labels":
-  - "Prior Methods"
+  - "Background"
   - "Prior Methods"
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Other Topic"
 - "title": "Person re-id by fusion of video silhouettes and wearable signals for home monitoring applications"
@@ -316,10 +316,10 @@
   - 1
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Background"
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
 - "title": "Imu2clip: Language-grounded motion sensor translation with multi-modal contrastive learning"
   "unique_context_marker": "[39]"
@@ -332,7 +332,7 @@
   - 12
   - 18
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Prior Methods"
   - "Prior Methods"
   - "Prior Methods"
@@ -340,13 +340,13 @@
   - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Other Topic"
-  - "Contrastive and cross-modal objectives"
+  - "Other Topic"
 - "title": "Person tracking by fusing posture data from uav video and wearable sensors"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -366,7 +366,7 @@
   - "Algorithm/Principle Adoption"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
 - "title": "Dinov2: Learning robust visual features without supervision"
@@ -374,9 +374,9 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
 - "title": "Action-conditioned 3d human motion synthesis with transformer vae"
   "unique_context_marker": "[43]"
   "block_ids":
@@ -407,9 +407,9 @@
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
+  - "Contrastive and cross-modal objectives"
   - "Self-supervised and Cross-modal Pretraining"
   - "Self-supervised and Cross-modal Pretraining"
-  - "point_cloud"
 - "title": "Learning transferable visual models from natural language supervision"
   "unique_context_marker": "[46]"
   "block_ids":
@@ -418,12 +418,12 @@
   - 9
   - 13
   "intent_labels":
-  - "Model/Architecture Adoption"
   - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
@@ -432,7 +432,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Self-supervised and Cross-modal Pretraining"
 - "title": "Lidar-aid inertial poser: Large-scale human motion capture by sparse inertial and lidar sensors"
@@ -446,9 +446,9 @@
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
-  - "point_cloud"
+  - "Contrastive and cross-modal objectives"
   - "Self-supervised and Cross-modal Pretraining"
-  - "point_cloud"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "An overview of gradient descent optimization algorithms"
   "unique_context_marker": "[49]"
   "block_ids":
@@ -456,7 +456,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Ntu rgb+d: A large scale dataset for 3d human activity analysis"
   "unique_context_marker": "[50]"
   "block_ids":
@@ -464,7 +464,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "point_cloud"
 - "title": "Masked spatio-temporal structure prediction for self-supervised learning on point cloud videos"
   "unique_context_marker": "[51]"
   "block_ids":
@@ -488,7 +488,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Motionclip: Exposing human motion generation to clip space"
   "unique_context_marker": "[54]"
   "block_ids":
@@ -502,7 +502,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
@@ -511,9 +511,9 @@
   "block_ids":
   - 11
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Resource Utilization"
   "topic_labels":
-  - "point_cloud"
+  - "Hybrid multi-modal representations"
 - "title": "Visualizing data using t-sne"
   "unique_context_marker": "[56]"
   "block_ids":
@@ -531,7 +531,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
 - "title": "Self-supervised 4d spatio-temporal feature learning via order prediction of sequential point cloud clips"
   "unique_context_marker": "[58]"
@@ -540,7 +540,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Pvnext: Rethinking network design and temporal motion for point cloud video recognition"
   "unique_context_marker": "[59]"
   "block_ids":
@@ -548,7 +548,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Hybrid multi-modal representations"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Point primitive transformer for long-term 4d point cloud video understanding"
   "unique_context_marker": "[60]"
   "block_ids": []
@@ -563,7 +563,7 @@
   - "Prior Methods"
   - "Domain Overview"
   "topic_labels":
-  - "point_cloud"
+  - "Contrastive and cross-modal objectives"
   - "point_cloud"
 - "title": "Mm-fi: Multi-modal non-intrusive 4d human dataset for versatile wireless sensing"
   "unique_context_marker": "[62]"
@@ -586,7 +586,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
   - "Contrastive and cross-modal objectives"
@@ -597,7 +597,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Contrastive and cross-modal objectives"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "No pain, big gain: classify dynamic point cloud sequences with static models by fitting feature-level space-time surfaces"
   "unique_context_marker": "[65]"
   "block_ids": []

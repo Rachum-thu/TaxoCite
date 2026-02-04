@@ -6,13 +6,13 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "OpenDDAL"
   "unique_context_marker": "[2]"
   "block_ids":
   - 21
   "intent_labels":
-  - "Domain Overview"
+  - "Result Comparison"
   "topic_labels":
   - "Domain-specific Applications"
 - "title": "OWLAPI"
@@ -20,9 +20,9 @@
   "block_ids":
   - 21
   "intent_labels":
-  - "Domain Overview"
+  - "Result Comparison"
   "topic_labels":
-  - "Evaluation"
+  - "Domain-specific Applications"
 - "title": "PyTorch"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -30,15 +30,15 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Other Topic"
 - "title": "An Industrial Evaluation of Unit Test Generation: Finding Real Faults in a Financial Application"
   "unique_context_marker": "[5]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Domain-specific Applications"
 - "title": "RESTful API Automated Test Case Generation with EvoMaster"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -52,9 +52,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "ChatUniTest: A Framework for LLM-Based Test Generation"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -62,15 +62,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "A Survey on Unit Testing Practices and Problems"
   "unique_context_marker": "[9]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Importance of Problem"
+  - "Prior Methods"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Domain-specific Applications"
 - "title": "How Does Execution Information Help with Information-Retrieval Based Bug Localization?"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -89,7 +89,7 @@
   - "Setting/Protocal Adoption"
   "topic_labels":
   - "Downstream Tasks"
-  - "Evaluation Aspects and Tools"
+  - "Downstream Tasks"
 - "title": "Test Case Prioritization: A Family of Empirical Studies"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -97,7 +97,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Domain-specific Applications"
 - "title": "Large Language Models for Software Engineering: Survey and Open Problems"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -105,7 +105,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "CodeBERT: A Pre-Trained Model for Programming and Natural Languages"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -114,12 +114,12 @@
   - 20
   "intent_labels":
   - "Domain Overview"
-  - "Model/Architecture Adoption"
-  - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Downstream Tasks"
-  - "Training Strategies"
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
+  - "Input-Layer Integration"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "EvoSuite: Automatic Test Suite Generation for Object-Oriented Software"
   "unique_context_marker": "[15]"
   "block_ids":
@@ -127,10 +127,10 @@
   - 21
   "intent_labels":
   - "Prior Methods"
-  - "Resource Utilization"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Downstream Tasks"
-  - "Evaluation Aspects and Tools"
+  - "Input-Layer Integration"
+  - "Domain-specific Applications"
 - "title": "VulRepair: A T5-based Automated Software Vulnerability Repair"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -138,10 +138,10 @@
   - 9
   "intent_labels":
   - "Model/Architecture Adoption"
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
-  - "Downstream Tasks"
+  - "Parameter-Accessible Generators (White-box)"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "TestART: Improving LLM-based Unit Test via Co-evolution of Automated Generation and Repair Iteration"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -149,13 +149,13 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "UniXcoder: Unified Cross-Modal Pre-training for Code Representation"
   "unique_context_marker": "[18]"
   "block_ids":
   - 20
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
 - "title": "GraphCodeBERT: Pre-training Code Representations with Data Flow"
@@ -163,17 +163,17 @@
   "block_ids":
   - 20
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Is ISSTA Research Relevant to Industry?"
   "unique_context_marker": "[20]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Importance of Problem"
+  - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Domain-specific Applications"
 - "title": "An Empirical Study on Focal Methods in Deep-Learning-Based Approaches for Assertion Generation"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -183,7 +183,7 @@
   - "Benchmark Utilization"
   - "Domain Overview"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Downstream Tasks"
   - "Domain-specific Applications"
 - "title": "Neural-Based Test Oracle Generation: A Large-scale Evaluation and Lessons Learned"
   "unique_context_marker": "[22]"
@@ -192,7 +192,7 @@
   "intent_labels":
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Downstream Tasks"
 - "title": "Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs"
   "unique_context_marker": "[23]"
   "block_ids":
@@ -200,7 +200,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Domain-specific Applications"
 - "title": "Dense Passage Retrieval for Open-Domain Question Answering"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -216,15 +216,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
   "unique_context_marker": "[26]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Retrieval Integration for Generation"
+  - "Downstream Tasks"
 - "title": "EDITSUM: A Retrieve-and-Edit Framework for Source Code Summarization"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -247,17 +247,17 @@
   - 1
   - 21
   "intent_labels":
-  - "Importance of Problem"
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Generation Quality"
-  - "Evaluation Aspects and Tools"
+  - "Evaluation"
+  - "Domain-specific Applications"
 - "title": "Understanding Build Issue Resolution in Practice: Symptoms and Fix Patterns"
   "unique_context_marker": "[30]"
   "block_ids":
   - 22
   "intent_labels":
-  - "Benchmark Utilization"
+  - "Metrics Utilization"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "CodeXGLUE: A Machine Learning Benchmark Dataset for Code Understanding and Generation"
@@ -268,15 +268,15 @@
   - 20
   - 22
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   - "Metrics Utilization"
   - "Resource Utilization"
   - "Resource Utilization"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
   - "Generation Quality"
-  - "Other Topic"
-  - "Trustworthiness and Robustness"
+  - "Training Strategies"
+  - "Training Strategies"
 - "title": "Using Transfer Learning for Code-Related Tasks"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -284,7 +284,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Studying the Usage of Text-To-Text Transfer Transformer to Support Code-Related Tasks"
   "unique_context_marker": "[33]"
   "block_ids":
@@ -292,7 +292,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Retriever Type"
 - "title": "Retrieval-Based Prompt Selection for Code-Related Few-Shot Learning"
   "unique_context_marker": "[34]"
   "block_ids":
@@ -304,12 +304,12 @@
   - "Prior Methods"
   - "Prior Methods"
   - "Prior Methods"
-  - "Prior Methods"
+  - "Result Comparison"
   "topic_labels":
+  - "Retrieval Integration for Generation"
+  - "Parameter-Inaccessible Generators (Black-box)"
   - "Downstream Tasks"
-  - "Training-free Methods"
-  - "Downstream Tasks"
-  - "Downstream Tasks"
+  - "Parameter-Inaccessible Generators (Black-box)"
 - "title": "Randoop: Feedback-Directed Random Testing for Java"
   "unique_context_marker": "[35]"
   "block_ids":
@@ -335,7 +335,7 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Retrieval Integration for Generation"
   - "Downstream Tasks"
 - "title": "Empirically Revisiting and Enhancing IR-Based Test-Case Prioritization"
   "unique_context_marker": "[38]"
@@ -350,9 +350,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Importance of Problem"
+  - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Domain-specific Applications"
 - "title": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -360,7 +360,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Code Llama: Open Foundation Models for Code"
   "unique_context_marker": "[41]"
   "block_ids":
@@ -370,8 +370,8 @@
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Other Topic"
-  - "Downstream Tasks"
+  - "Retriever Type"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Code-Aware Prompting: A study of Coverage Guided Test Generation in Regression Setting using LLM"
   "unique_context_marker": "[42]"
   "block_ids":
@@ -379,23 +379,23 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation"
   "unique_context_marker": "[43]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Importance of Problem"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topic"
+  - "Domain-specific Applications"
 - "title": "GitBug-Java: A Reproducible Benchmark of Recent Java Bugs"
   "unique_context_marker": "[44]"
   "block_ids":
   - 14
   "intent_labels":
-  - "Research Gap"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Trustworthiness and Robustness"
+  - "Parameter-Inaccessible Generators (Black-box)"
 - "title": "Revisiting and Improving Retrieval-Augmented Deep Assertion Generation"
   "unique_context_marker": "[45]"
   "block_ids":
@@ -411,8 +411,8 @@
   - "Prior Methods"
   - "Prior Methods"
   - "Prior Methods"
-  - "Benchmark Utilization"
-  - "Metrics Utilization"
+  - "Setting/Protocal Adoption"
+  - "Setting/Protocal Adoption"
   - "Setting/Protocal Adoption"
   - "Result Comparison"
   - "Setting/Protocal Adoption"
@@ -420,10 +420,10 @@
   - "Retrieval Integration for Generation"
   - "Input-Layer Integration"
   - "Retriever Type"
-  - "Parameter-Accessible Generators (White-box)"
+  - "Downstream Tasks"
+  - "Generation Quality"
+  - "Other Topic"
   - "Generation"
-  - "Retrieval Integration for Generation"
-  - "Evaluation Aspects and Tools"
   - "Evaluation Aspects and Tools"
 - "title": "ChatGPT vs SBST: A Comparative Assessment of Unit Test Suite Generation"
   "unique_context_marker": "[46]"
@@ -432,15 +432,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "DebugBench: Evaluating Debugging Capability of Large Language Models"
   "unique_context_marker": "[47]"
   "block_ids":
   - 14
   "intent_labels":
-  - "Research Gap"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Trustworthiness and Robustness"
+  - "Parameter-Inaccessible Generators (Black-box)"
 - "title": "Generating Accurate Assert Statements for Unit Test Cases using Pretrained Transformers"
   "unique_context_marker": "[48]"
   "block_ids":
@@ -448,7 +448,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Using Pre-Trained Models To Boost Code Review Automation"
   "unique_context_marker": "[49]"
   "block_ids":
@@ -466,11 +466,11 @@
   - 4
   - 21
   "intent_labels":
-  - "Prior Methods"
-  - "Research Gap"
+  - "Model/Architecture Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topic"
-  - "Scaling and Modality Expansion"
+  - "Parameter-Accessible Generators (White-box)"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "RAP-Gen: Retrieval-Augmented Patch Generation with Codet5 for Automatic Program Repair"
   "unique_context_marker": "[51]"
   "block_ids":
@@ -484,8 +484,8 @@
   - "Prior Methods"
   - "Metrics Utilization"
   "topic_labels":
+  - "Retrieval Integration for Generation"
   - "Parameter-Accessible Generators (White-box)"
-  - "Other Topic"
   - "Downstream Tasks"
   - "Generation Quality"
 - "title": "CodeT5: Identifier-Aware Unified Pre-Trained Encoder-Decoder Models for Code Understanding and Generation"
@@ -497,13 +497,13 @@
   - 20
   "intent_labels":
   - "Domain Overview"
-  - "Domain Overview"
-  - "Algorithm/Principle Adoption"
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  - "Resource Utilization"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
   - "Other Topic"
-  - "Training Strategies"
+  - "Parameter-Accessible Generators (White-box)"
+  - "Parameter-Accessible Generators (White-box)"
   - "Parameter-Accessible Generators (White-box)"
 - "title": "HITS: High-coverage LLM-based Unit Test Generation via Method Slicing"
   "unique_context_marker": "[53]"
@@ -518,9 +518,9 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Generation"
+  - "Training-free Methods"
 - "title": "On Learning Meaningful Assert Statements for Unit Test Cases"
   "unique_context_marker": "[55]"
   "block_ids":
@@ -534,15 +534,15 @@
   - "Prior Methods"
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
-  - "Benchmark Utilization"
-  - "Metrics Utilization"
+  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   - "Setting/Protocal Adoption"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
   - "Parameter-Accessible Generators (White-box)"
   - "Generation"
   - "Downstream Tasks"
-  - "Generation"
+  - "Generation Quality"
   - "Evaluation Aspects and Tools"
 - "title": "Automated Program Repair in the Era of Large Pre-Trained Language Models"
   "unique_context_marker": "[56]"
@@ -565,9 +565,9 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topic"
+  - "Generation"
 - "title": "Automated Assertion Generation via Information Retrieval and Its Integration with Deep Learning"
   "unique_context_marker": "[59]"
   "block_ids":
@@ -580,11 +580,11 @@
   - 18
   - 22
   "intent_labels":
-  - "Result Comparison"
   - "Prior Methods"
   - "Prior Methods"
-  - "Benchmark Utilization"
-  - "Metrics Utilization"
+  - "Prior Methods"
+  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   - "Setting/Protocal Adoption"
   - "Result Comparison"
   - "Setting/Protocal Adoption"
@@ -593,18 +593,18 @@
   - "Retrieval"
   - "Retriever Type"
   - "Downstream Tasks"
+  - "Generation Quality"
+  - "Other Topic"
   - "Generation"
-  - "Retrieval Integration for Generation"
-  - "Evaluation Aspects and Tools"
   - "Evaluation Aspects and Tools"
 - "title": "CIRCLE: Continual Repair across Programming Languages"
   "unique_context_marker": "[60]"
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Evaluating and Improving ChatGPT for Unit Test Generation"
   "unique_context_marker": "[61]"
   "block_ids":
@@ -612,15 +612,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "A Survey of Learning-based Automated Program Repair"
   "unique_context_marker": "[62]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Other Topic"
+  - "Generation"
 - "title": "A Systematic Literature Review on Large Language Models for Automated Program Repair"
   "unique_context_marker": "[63]"
   "block_ids":
@@ -645,12 +645,12 @@
   - 15
   "intent_labels":
   - "Model/Architecture Adoption"
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Metrics Utilization"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
   - "Downstream Tasks"
-  - "Generation Quality"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Gamma: Revisiting Template-Based Automated Program Repair Via Mask Prediction"
   "unique_context_marker": "[66]"
   "block_ids":
@@ -658,7 +658,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Downstream Tasks"
+  - "Other Topic"
 - "title": "Exploring Automated Assertion Generation via Large Language Models"
   "unique_context_marker": "[67]"
   "block_ids":
@@ -666,15 +666,15 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "A Critical Review of Large Language Model on Software Engineering: An Example from ChatGPT and Automated Program Repair"
   "unique_context_marker": "[68]"
   "block_ids":
   - 14
   "intent_labels":
-  - "Research Gap"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Trustworthiness and Robustness"
+  - "Parameter-Inaccessible Generators (Black-box)"
 - "title": "Out of Sight, Out of Mind: Better Automatic Vulnerability Repair by Broadening Input Ranges and Sources"
   "unique_context_marker": "[69]"
   "block_ids":
@@ -682,12 +682,12 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "GrammarT5: Grammar-Integrated Pretrained Encoder-Decoder Neural Model for Code"
   "unique_context_marker": "[70]"
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Other Topic"
+  - "Parameter-Accessible Generators (White-box)"

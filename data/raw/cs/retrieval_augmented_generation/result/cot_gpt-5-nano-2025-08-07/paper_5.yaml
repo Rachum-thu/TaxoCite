@@ -6,13 +6,13 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "NLP Applications"
+  - "Downstream Tasks"
 - "title": "Retrieval-based language models and applications"
   "unique_context_marker": "[2]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Indexing and Query Optimization"
 - "title": "GEN-IR@ SIGIR 2023: The first workshop on generative information retrieval"
@@ -20,7 +20,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Importance of Problem"
   "topic_labels":
   - "Generation Quality"
 - "title": "Azure AI Search: Outperforming Vector Search with Hybrid Retrieval and Ranking Capabilities"
@@ -28,7 +28,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Indexing and Query Optimization"
 - "title": "Sparks of artificial general intelligence: Early experiments with gpt-4"
@@ -36,7 +36,7 @@
   "block_ids":
   - 10
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "NLP Applications"
 - "title": "Factual error correction for abstractive summarization models"
@@ -44,9 +44,9 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Problem Formulation"
   "topic_labels":
-  - "Retrieval"
+  - "Trustworthiness and Robustness"
 - "title": "Verifiable generation with subsentence-level fine-grained citations"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -54,7 +54,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "Benchmarking large language models in retrieval-augmented generation"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -65,19 +65,19 @@
   "intent_labels":
   - "Benchmark Utilization"
   - "Benchmark Utilization"
-  - "Research Gap"
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Retrieval Quality"
   - "Generation Quality"
-  - "NLP Applications"
+  - "Other Topic"
   - "NLP Applications"
 - "title": "Hallucination detection: Robustly discerning reliable answers in large language models"
   "unique_context_marker": "[9]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Importance of Problem"
   "topic_labels":
   - "Generation Quality"
 - "title": "Lift Yourself Up: Retrieval-augmented text generation with self memory"
@@ -85,17 +85,17 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Independent Training"
 - "title": "Promptagator: Few-shot dense retrieval from 8 examples"
   "unique_context_marker": "[11]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Retriever Type"
+  - "Indexing and Query Optimization"
 - "title": "FEQA: A question answering evaluation framework for faithfulness assessment in abstractive summarization"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -103,14 +103,14 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "RAGAs: Automated evaluation of retrieval augmented generation"
   "unique_context_marker": "[13]"
   "block_ids":
   - 1
   - 4
   "intent_labels":
-  - "Background"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
   - "Evaluation Aspects and Tools"
@@ -128,31 +128,31 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Retrieval"
+  - "Context Curation and Compression"
 - "title": "Precise zero-shot dense retrieval without relevance labels"
   "unique_context_marker": "[16]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Indexing and Query Optimization"
+  - "Context Curation and Compression"
 - "title": "Enabling large language models to generate text with citations"
   "unique_context_marker": "[17]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Prior Methods"
+  - "Research Gap"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "Retrieval-augmented generation for large language models: A survey"
   "unique_context_marker": "[18]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Indexing and Query Optimization"
 - "title": "Rethinking with retrieval: Faithful large language model inference"
@@ -161,17 +161,17 @@
   - 1
   - 3
   "intent_labels":
-  - "Background"
-  - "Domain Overview"
+  - "Importance of Problem"
+  - "Problem Formulation"
   "topic_labels":
   - "Trustworthiness and Robustness"
-  - "Retrieval"
+  - "Trustworthiness and Robustness"
 - "title": "Advanced RAG Techniques: An Illustrated Overview"
   "unique_context_marker": "[20]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Retrieval"
 - "title": "Few-shot learning with retrieval augmented language models"
@@ -179,9 +179,9 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Research Gap"
+  - "Problem Formulation"
   "topic_labels":
-  - "Context Curation and Compression"
+  - "Evaluation Aspects and Tools"
 - "title": "Chain-of-thought improves text generation with citations in large language models"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -195,25 +195,25 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
-  - "Retrieval Integration for Generation"
+  - "Context Curation and Compression"
 - "title": "Knowledge graph-augmented language models for knowledge-grounded dialogue generation"
   "unique_context_marker": "[24]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Other Topic"
 - "title": "From semantic to object-oriented data modeling"
   "unique_context_marker": "[25]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Prior Methods"
   "topic_labels":
-  - "Applications"
+  - "Retrieval Integration for Generation"
 - "title": "Natural questions: A benchmark for question answering research"
   "unique_context_marker": "[26]"
   "block_ids":
@@ -221,10 +221,10 @@
   - 7
   "intent_labels":
   - "Benchmark Utilization"
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
-  - "NLP Applications"
+  - "Retrieval Quality"
+  - "Other Topic"
 - "title": "Evaluating RAG Architectures on Benchmark Tasks"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -239,11 +239,11 @@
   - 1
   - 3
   "intent_labels":
-  - "Background"
   - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Retrieval Integration for Generation"
-  - "Retrieval"
+  - "Indexing and Query Optimization"
 - "title": "Citation-enhanced generation for LLM-based chatbots"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -257,9 +257,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Importance of Problem"
   "topic_labels":
-  - "Trustworthiness and Robustness"
+  - "Domain-specific Applications"
 - "title": "UHGEval: Benchmarking the hallucination of Chinese large language models via unconstrained generation"
   "unique_context_marker": "[31]"
   "block_ids":
@@ -267,7 +267,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Domain-specific Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "Evaluating verifiability in generative search engines"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -281,23 +281,23 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Retrieval"
+  - "Evaluation Aspects and Tools"
 - "title": "Hierarchical transformers for multi-document summarization"
   "unique_context_marker": "[34]"
   "block_ids":
   - 8
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Other Topic"
 - "title": "Faithful abstractive summarization via fact-aware consistency-constrained transformer"
   "unique_context_marker": "[35]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Importance of Problem"
   "topic_labels":
   - "Generation Quality"
 - "title": "Query rewriting for retrieval-augmented large language models"
@@ -305,17 +305,17 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Retrieval"
+  - "Evaluation Aspects and Tools"
 - "title": "Large language model is not a good few-shot information extractor, but a good reranker for hard samples!"
   "unique_context_marker": "[37]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Context Curation and Compression"
+  - "Trustworthiness and Robustness"
 - "title": "MTEB: Massive text embedding benchmark"
   "unique_context_marker": "[38]"
   "block_ids":
@@ -326,7 +326,7 @@
   - "Benchmark Utilization"
   "topic_labels":
   - "Retriever Type"
-  - "Retrieval Quality"
+  - "Other Topic"
 - "title": "How to Evaluate LLMs for RAG?"
   "unique_context_marker": "[39]"
   "block_ids":
@@ -340,9 +340,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Research Gap"
   "topic_labels":
-  - "Retrieval"
+  - "Evaluation Aspects and Tools"
 - "title": "Open-retrieval conversational question answering"
   "unique_context_marker": "[41]"
   "block_ids":
@@ -350,7 +350,7 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "NLP Applications"
+  - "Downstream Tasks"
 - "title": "Measuring attribution in natural language generation models"
   "unique_context_marker": "[42]"
   "block_ids":
@@ -358,26 +358,26 @@
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "The curious case of hallucinations in neural machine translation"
   "unique_context_marker": "[43]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Problem Formulation"
   "topic_labels":
-  - "Retrieval Integration for Generation"
+  - "Generation Quality"
 - "title": "ARES: An automated evaluation framework for retrieval-augmented generation systems"
   "unique_context_marker": "[44]"
   "block_ids":
   - 1
   - 4
   "intent_labels":
-  - "Background"
-  - "Benchmark Utilization"
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
   - "Evaluation Aspects and Tools"
-  - "Evaluation Aspects and Tools"
+  - "Retrieval Quality"
 - "title": "QuestEval: Summarization asks for fact-based evaluation"
   "unique_context_marker": "[45]"
   "block_ids":
@@ -391,9 +391,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Importance of Problem"
   "topic_labels":
-  - "Trustworthiness and Robustness"
+  - "Domain-specific Applications"
 - "title": "REPLUG: Retrieval-augmented black-box language models"
   "unique_context_marker": "[47]"
   "block_ids":
@@ -401,15 +401,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Retrieval"
+  - "NLP Applications"
 - "title": "Performance evaluation for CRUD operations in asynchronously replicated document oriented database"
   "unique_context_marker": "[48]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Prior Methods"
   "topic_labels":
-  - "Applications"
+  - "Retrieval Integration for Generation"
 - "title": "Asking and answering questions to evaluate the factual consistency of summaries"
   "unique_context_marker": "[49]"
   "block_ids":
@@ -417,13 +417,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "Query2doc: Query expansion with large language models"
   "unique_context_marker": "[50]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Indexing and Query Optimization"
 - "title": "Chain-of-thought prompting elicits reasoning in large language models"
@@ -441,13 +441,13 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Retriever Type"
+  - "Other Topic"
 - "title": "MindMap: Knowledge graph prompting sparks graph of thoughts in large language models"
   "unique_context_marker": "[53]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Indexing and Query Optimization"
 - "title": "Large language models for generative information extraction: A survey"
@@ -457,15 +457,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Retrieval"
+  - "NLP Applications"
 - "title": "RECOMP: Improving retrieval-augmented LMs with compression and selective augmentation"
   "unique_context_marker": "[55]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Context Curation and Compression"
+  - "Domain-specific Applications"
 - "title": "ALiiCE: Evaluating positional fine-grained citation generation"
   "unique_context_marker": "[56]"
   "block_ids":
@@ -473,13 +473,13 @@
   "intent_labels":
   - "Metrics Utilization"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "PRCA: Fitting black-box large language models for retrieval question answering via pluggable reward-driven contextual adapter"
   "unique_context_marker": "[57]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Context Curation and Compression"
 - "title": "Coreferential reasoning learning for language representation"
@@ -487,9 +487,9 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Domain-specific Applications"
 - "title": "Few-shot generative conversational query rewriting"
   "unique_context_marker": "[59]"
   "block_ids":
@@ -497,23 +497,23 @@
   "intent_labels":
   - "Research Gap"
   "topic_labels":
-  - "NLP Applications"
+  - "Downstream Tasks"
 - "title": "Chain-of-Note: Enhancing robustness in retrieval-augmented language models"
   "unique_context_marker": "[60]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Context Curation and Compression"
 - "title": "A study of smoothing methods for language models applied to information retrieval"
   "unique_context_marker": "[61]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "Independent Training"
 - "title": "NoteLLM: A retrievable large language model for note recommendation"
   "unique_context_marker": "[62]"
   "block_ids":
@@ -527,9 +527,9 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Retriever Type"
+  - "Indexing and Query Optimization"
 - "title": "Towards fine-grained citation evaluation in generated text: A comparative analysis of faithfulness metrics"
   "unique_context_marker": "[64]"
   "block_ids":
@@ -543,6 +543,6 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Background"
+  - "Importance of Problem"
   "topic_labels":
   - "Generation Quality"

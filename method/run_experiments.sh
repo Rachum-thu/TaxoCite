@@ -10,6 +10,7 @@
 # Parse arguments
 DIR=""
 MODEL="gpt-5-nano-2025-08-07"  # Default model
+PARALLEL_JOBS=16  # Number of parallel jobs
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -66,6 +67,7 @@ echo "=========================================="
 echo "Running Experimental Comparison"
 echo "Directory: $DIR"
 echo "Model: $MODEL"
+echo "Parallel jobs: $PARALLEL_JOBS"
 echo "Methods: zeroshot, cot, reflexion, taxocite"
 echo "=========================================="
 
@@ -77,29 +79,24 @@ mkdir -p "$DIR/result/taxo_reverse_$MODEL"
 mkdir -p "$DIR/result/taxo_cot_k_$MODEL"
 mkdir -p "$DIR/result/taxo_final_$MODEL"
 
-# Initialize counters
-zeroshot_count=0
-cot_count=0
-reflexion_count=0
-taxocite_count=0
+# Export variables for parallel
+export DIR MODEL
 
 # ==========================================
 # Method 1: Zero-shot Classification
 # ==========================================
 echo ""
-echo "=== Method 1/4: Zero-shot Classification ==="
+echo "=== Method 1/4: Zero-shot Classification (parallel: $PARALLEL_JOBS) ==="
 
-for seg_file in "$DIR/seg_papers"/*.yaml; do
-    [ -f "$seg_file" ] || continue
-
+run_zeroshot() {
+    seg_file="$1"
     filename=$(basename "$seg_file" .yaml)
     ref_file="$DIR/yaml_refs/${filename}.yaml"
     output_file="$DIR/result/zeroshot_$MODEL/${filename}.yaml"
 
-    # Check if corresponding ref file exists
     if [ ! -f "$ref_file" ]; then
-        echo "Warning: No corresponding ref file for $filename, skipping..."
-        continue
+        echo "Warning: No ref file for $filename, skipping..."
+        return 1
     fi
 
     echo "  Processing $filename..."
@@ -110,33 +107,28 @@ for seg_file in "$DIR/seg_papers"/*.yaml; do
         --ref_list "$ref_file" \
         --output "$output_file" \
         --model "$MODEL"
+}
+export -f run_zeroshot
 
-    if [ $? -eq 0 ]; then
-        ((zeroshot_count++))
-    else
-        echo "  Error: Failed to process $filename with zeroshot"
-    fi
-done
+find "$DIR/seg_papers" -name "*.yaml" | xargs -P $PARALLEL_JOBS -I {} bash -c 'run_zeroshot "$@"' _ {}
 
-echo "Zero-shot completed: $zeroshot_count papers"
+echo "Zero-shot completed"
 
 # ==========================================
 # Method 2: Chain-of-Thought Classification
 # ==========================================
 echo ""
-echo "=== Method 2/4: Chain-of-Thought (CoT) Classification ==="
+echo "=== Method 2/4: Chain-of-Thought (CoT) Classification (parallel: $PARALLEL_JOBS) ==="
 
-for seg_file in "$DIR/seg_papers"/*.yaml; do
-    [ -f "$seg_file" ] || continue
-
+run_cot() {
+    seg_file="$1"
     filename=$(basename "$seg_file" .yaml)
     ref_file="$DIR/yaml_refs/${filename}.yaml"
     output_file="$DIR/result/cot_$MODEL/${filename}.yaml"
 
-    # Check if corresponding ref file exists
     if [ ! -f "$ref_file" ]; then
-        echo "Warning: No corresponding ref file for $filename, skipping..."
-        continue
+        echo "Warning: No ref file for $filename, skipping..."
+        return 1
     fi
 
     echo "  Processing $filename..."
@@ -147,42 +139,37 @@ for seg_file in "$DIR/seg_papers"/*.yaml; do
         --ref_list "$ref_file" \
         --output "$output_file" \
         --model "$MODEL"
+}
+export -f run_cot
 
-    if [ $? -eq 0 ]; then
-        ((cot_count++))
-    else
-        echo "  Error: Failed to process $filename with CoT"
-    fi
-done
+find "$DIR/seg_papers" -name "*.yaml" | xargs -P $PARALLEL_JOBS -I {} bash -c 'run_cot "$@"' _ {}
 
-echo "CoT completed: $cot_count papers"
+echo "CoT completed"
 
 # ==========================================
 # Method 3: Reflexion Classification (reuses zeroshot results)
 # ==========================================
 echo ""
-echo "=== Method 3/4: Reflexion Classification (reusing zeroshot) ==="
+echo "=== Method 3/4: Reflexion Classification (parallel: $PARALLEL_JOBS) ==="
 
-for seg_file in "$DIR/seg_papers"/*.yaml; do
-    [ -f "$seg_file" ] || continue
-
+run_reflexion() {
+    seg_file="$1"
     filename=$(basename "$seg_file" .yaml)
     ref_file="$DIR/yaml_refs/${filename}.yaml"
     zeroshot_file="$DIR/result/zeroshot_$MODEL/${filename}.yaml"
     output_file="$DIR/result/reflexion_$MODEL/${filename}.yaml"
 
-    # Check if corresponding files exist
     if [ ! -f "$ref_file" ]; then
-        echo "Warning: No corresponding ref file for $filename, skipping..."
-        continue
+        echo "Warning: No ref file for $filename, skipping..."
+        return 1
     fi
 
     if [ ! -f "$zeroshot_file" ]; then
         echo "Warning: No zeroshot result for $filename, skipping..."
-        continue
+        return 1
     fi
 
-    echo "  Processing $filename (reusing zeroshot result)..."
+    echo "  Processing $filename..."
     python -m method.reflexion \
         --general_intent_taxonomy data/raw/general_intent.md \
         --domain_topic_taxonomy "$DIR/domain_topic.md" \
@@ -191,25 +178,21 @@ for seg_file in "$DIR/seg_papers"/*.yaml; do
         --output "$output_file" \
         --model "$MODEL" \
         --zeroshot_result "$zeroshot_file"
+}
+export -f run_reflexion
 
-    if [ $? -eq 0 ]; then
-        ((reflexion_count++))
-    else
-        echo "  Error: Failed to process $filename with reflexion"
-    fi
-done
+find "$DIR/seg_papers" -name "*.yaml" | xargs -P $PARALLEL_JOBS -I {} bash -c 'run_reflexion "$@"' _ {}
 
-echo "Reflexion completed: $reflexion_count papers"
+echo "Reflexion completed"
 
 # ==========================================
 # Method 4: TaxoCite (depends on CoT results)
 # ==========================================
 echo ""
-echo "=== Method 4/4: TaxoCite Classification ==="
+echo "=== Method 4/4: TaxoCite Classification (parallel: $PARALLEL_JOBS) ==="
 
-for cot_file in "$DIR/result/cot_$MODEL"/*.yaml; do
-    [ -f "$cot_file" ] || continue
-
+run_taxocite() {
+    cot_file="$1"
     filename=$(basename "$cot_file" .yaml)
     seg_file="$DIR/seg_papers/${filename}.yaml"
     ref_file="$DIR/yaml_refs/${filename}.yaml"
@@ -217,10 +200,9 @@ for cot_file in "$DIR/result/cot_$MODEL"/*.yaml; do
     cot_k_output="$DIR/result/taxo_cot_k_$MODEL/${filename}.yaml"
     final_output="$DIR/result/taxo_final_$MODEL/${filename}.yaml"
 
-    # Check if corresponding files exist
     if [ ! -f "$seg_file" ] || [ ! -f "$ref_file" ]; then
         echo "Warning: Missing seg_paper or ref_list for $filename, skipping..."
-        continue
+        return 1
     fi
 
     echo "  Processing $filename..."
@@ -234,15 +216,12 @@ for cot_file in "$DIR/result/cot_$MODEL"/*.yaml; do
         --cot_k_output "$cot_k_output" \
         --final_output "$final_output" \
         --model "$MODEL"
+}
+export -f run_taxocite
 
-    if [ $? -eq 0 ]; then
-        ((taxocite_count++))
-    else
-        echo "  Error: Failed to process $filename with TaxoCite"
-    fi
-done
+find "$DIR/result/cot_$MODEL" -name "*.yaml" | xargs -P $PARALLEL_JOBS -I {} bash -c 'run_taxocite "$@"' _ {}
 
-echo "TaxoCite completed: $taxocite_count papers"
+echo "TaxoCite completed"
 
 # ==========================================
 # Summary
@@ -251,15 +230,9 @@ echo ""
 echo "=========================================="
 echo "Experimental Comparison Completed!"
 echo "=========================================="
-echo "Results Summary:"
-echo "  1. Zero-shot:   $zeroshot_count papers   -> $DIR/result/zeroshot_$MODEL/"
-echo "  2. CoT:         $cot_count papers   -> $DIR/result/cot_$MODEL/"
-echo "  3. Reflexion:   $reflexion_count papers   -> $DIR/result/reflexion_$MODEL/"
-echo "  4. TaxoCite:    $taxocite_count papers   -> $DIR/result/taxo_final_$MODEL/"
-echo "=========================================="
-echo ""
-echo "Next steps for comparison:"
-echo "  - Compare outputs across result/<method>_$MODEL/ directories"
-echo "  - Run evaluation metrics on each method's results"
-echo "  - Analyze method-specific strengths and weaknesses"
+echo "Results saved to:"
+echo "  1. Zero-shot:   $DIR/result/zeroshot_$MODEL/"
+echo "  2. CoT:         $DIR/result/cot_$MODEL/"
+echo "  3. Reflexion:   $DIR/result/reflexion_$MODEL/"
+echo "  4. TaxoCite:    $DIR/result/taxo_final_$MODEL/"
 echo "=========================================="

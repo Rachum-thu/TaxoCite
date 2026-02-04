@@ -28,8 +28,8 @@
   - "Result Comparison"
   - null
   "topic_labels":
-  - null
-  - "Input-Layer Integration"
+  - "Context Curation and Compression"
+  - "Context Curation and Compression"
   - "Context Curation and Compression"
   - null
 - "title": "Adapting Language Models to Compress Contexts"
@@ -63,7 +63,7 @@
   - 8
   "intent_labels":
   - null
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - null
   - "Input-Layer Integration"
@@ -75,10 +75,10 @@
   - 16
   "intent_labels":
   - null
-  - "Research Gap"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - null
+  - "Context Curation and Compression"
   - "Context Curation and Compression"
   - "Context Curation and Compression"
 - "title": "Debertav3: Improving deberta using electra-style pre-training with gradient-disentangled embedding sharing"
@@ -86,7 +86,7 @@
   "block_ids":
   - 12
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   "topic_labels":
   - "Retriever Type"
 - "title": "RAGGED: Towards Informed Design of Retrieval Augmented Generation Systems"
@@ -96,7 +96,7 @@
   - 8
   "intent_labels":
   - null
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - null
   - "Input-Layer Integration"
@@ -115,7 +115,7 @@
   - 8
   "intent_labels":
   - null
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - null
   - "Input-Layer Integration"
@@ -152,14 +152,14 @@
   - 14
   "intent_labels":
   - null
-  - "Prior Methods"
+  - "Domain Overview"
   - "Resource Utilization"
   - "Benchmark Utilization"
   "topic_labels":
   - null
   - "Input-Layer Integration"
   - "NLP Applications"
-  - "NLP Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "Natural questions: a benchmark for question answering research"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -170,13 +170,13 @@
   - "Benchmark Utilization"
   "topic_labels":
   - "NLP Applications"
-  - "NLP Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "SPLADE-v3: New baselines for SPLADE"
   "unique_context_marker": "[18]"
   "block_ids":
   - 12
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   "topic_labels":
   - "Retriever Type"
 - "title": "Prefix-Tuning: Optimizing Continuous Prompts for Generation"
@@ -207,13 +207,13 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "NLP Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "Text Embeddings Reveal (Almost) As Much As Text"
   "unique_context_marker": "[23]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Context Curation and Compression"
 - "title": "Generative Representational Instruction Tuning"
@@ -223,9 +223,9 @@
   - 4
   "intent_labels":
   - null
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Context Curation and Compression"
   - "Context Curation and Compression"
 - "title": "Ms marco: A human-generated machine reading comprehension dataset"
   "unique_context_marker": "[25]"
@@ -242,7 +242,7 @@
   "intent_labels":
   - null
   "topic_labels":
-  - null
+  - "Sequential Training"
 - "title": "KILT: a benchmark for knowledge intensive language tasks"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -250,7 +250,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Retrieval"
+  - "NLP Applications"
 - "title": "SQuAD: 100,000+ Questions for Machine Comprehension of Text"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -258,7 +258,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - null
+  - "NLP Applications"
 - "title": "BERGEN: A Benchmarking Library for Retrieval-Augmented Generation"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -266,7 +266,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Parameter-Accessible Generators (White-box)"
+  - "NLP Applications"
 - "title": "ASQA: Factoid Questions Meet Long-Form Answers"
   "unique_context_marker": "[30]"
   "block_ids":
@@ -277,7 +277,7 @@
   - "Benchmark Utilization"
   "topic_labels":
   - "NLP Applications"
-  - "NLP Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "LLoCO: Learning Long Contexts Offline"
   "unique_context_marker": "[31]"
   "block_ids":
@@ -285,7 +285,7 @@
   "intent_labels":
   - null
   "topic_labels":
-  - null
+  - "Context Curation and Compression"
 - "title": "Llama 2: Open Foundation and Fine-Tuned Chat Models"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -319,14 +319,14 @@
   - 14
   "intent_labels":
   - null
-  - "Prior Methods"
+  - "Domain Overview"
   - "Resource Utilization"
   - "Benchmark Utilization"
   "topic_labels":
   - null
   - "Input-Layer Integration"
   - "NLP Applications"
-  - "NLP Applications"
+  - "Evaluation Aspects and Tools"
 - "title": "Accelerating Inference of Retrieval-Augmented Generation via Sparse Context Selection"
   "unique_context_marker": "[36]"
   "block_ids":
@@ -334,4 +334,4 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Retrieval Granularity"
+  - "Context Curation and Compression"

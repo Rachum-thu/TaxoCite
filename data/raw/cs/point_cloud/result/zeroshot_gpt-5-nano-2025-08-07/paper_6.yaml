@@ -17,19 +17,19 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Generative modeling pretraining"
-  - "Projection-based representations"
   - "Raw point-based representations"
   - "Projection-based representations"
+  - "Raw point-based representations"
+  - "Generative modeling pretraining"
 - "title": "3d point cloud compression: A survey"
   "unique_context_marker": "[3]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Real-time spatio-temporal lidar point cloud compression"
@@ -113,14 +113,14 @@
   - 8
   "intent_labels":
   - "Prior Methods"
-  - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
   - "Result Comparison"
-  - "Prior Methods"
+  - "Result Comparison"
   "topic_labels":
   - "Projection-based representations"
-  - "Projection-based representations"
+  - "Generative modeling pretraining"
   - "Volumetric voxelization"
-  - "Other Topic"
+  - "Raw point-based representations"
 - "title": "Variable resolution occupancy mapping using gaussian mixture models"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -148,7 +148,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Efficient planning of informative paths for multiple robots"
@@ -156,7 +156,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Multi-robot active sensing of non-stationary gaussian process-based environmental phenomena"
@@ -164,7 +164,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Local gaussian process regression for real time online model learning and control"
@@ -237,11 +237,11 @@
   - 3
   - 5
   "intent_labels":
-  - "Domain Overview"
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
+  - "Background"
   "topic_labels":
   - "Raw point-based representations"
-  - "Projection-based representations"
+  - "Generative modeling pretraining"
 - "title": "GPflow: A gaussian process library using TensorFlow"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -249,7 +249,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Generative modeling pretraining"
+  - "Volumetric voxelization"
 - "title": "TensorFlow: A system for large-scale machine learning"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -257,7 +257,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Generative modeling pretraining"
+  - "Volumetric voxelization"
 - "title": "ROS: an open-source robot operating system"
   "unique_context_marker": "[30]"
   "block_ids":
@@ -265,7 +265,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Volumetric voxelization"
 - "title": "Octomap: An efficient probabilistic 3d mapping framework based on octrees"
   "unique_context_marker": "[31]"
   "block_ids":

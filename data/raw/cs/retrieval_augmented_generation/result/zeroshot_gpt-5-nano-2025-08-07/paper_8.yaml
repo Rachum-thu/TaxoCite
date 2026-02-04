@@ -4,9 +4,9 @@
   "block_ids":
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Resource Utilization"
   "topic_labels":
-  - "Parameter-Inaccessible Generators (Black-box)"
+  - "Downstream Tasks"
 - "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -14,7 +14,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Input-Layer Integration"
 - "title": "Improving language models by retrieving from trillions of tokens"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -22,15 +22,15 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Intermediate-Layer Integration"
 - "title": "When large language models meet personalization: Perspectives of challenges and opportunities"
   "unique_context_marker": "[4]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Research Gap"
+  - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Training Strategies"
 - "title": "Uncovering chatgpt’s capabilities in recommender systems"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -38,13 +38,13 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Domain-specific Applications"
 - "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
   "unique_context_marker": "[6]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Retriever Type"
 - "title": "A Survey on RAG Meeting LLMs: Towards Retrieval-Augmented Large Language Models"
@@ -54,18 +54,18 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Retrieval"
 - "title": "Retrieval-augmented generation for large language models: A survey"
   "unique_context_marker": "[8]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Domain Overview"
   "topic_labels":
-  - "Input-Layer Integration"
-  - "retrieval augmented generation"
+  - "Retrieval Integration for Generation"
+  - "Retrieval"
 - "title": "Retrieval augmented language model pre-training"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -73,7 +73,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Input-Layer Integration"
 - "title": "Lightgcn: Simplifying and powering graph convolution network for recommendation"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -81,18 +81,18 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Training Strategies"
 - "title": "Neural collaborative filtering"
   "unique_context_marker": "[11]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
+  - "Sequential Training"
   - "Training Strategies"
-  - "retrieval augmented generation"
 - "title": "LoRA: Low-Rank Adaptation of Large Language Models"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -100,7 +100,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -108,7 +108,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Intermediate-Layer Integration"
 - "title": "Few-shot learning with retrieval augmented language models"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -116,7 +116,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "NLP Applications"
 - "title": "A survey on contrastive self-supervised learning"
   "unique_context_marker": "[15]"
   "block_ids":
@@ -124,9 +124,9 @@
   - 5
   "intent_labels":
   - "Algorithm/Principle Adoption"
-  - "Other Intent"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Independent Training"
+  - "Input-Layer Integration"
   - "Independent Training"
 - "title": "Personalized soups: Personalized large language model alignment via post-hoc parameter merging"
   "unique_context_marker": "[16]"
@@ -134,11 +134,11 @@
   - 1
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Downstream Tasks"
-  - "retrieval augmented generation"
+  - "Joint Training"
+  - "Training Strategies"
 - "title": "Large language models struggle to learn long-tail knowledge"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -146,7 +146,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "NLP Applications"
 - "title": "Adam: A method for stochastic optimization"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -154,7 +154,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Joint Training"
+  - "Training Strategies"
 - "title": "Matrix factorization techniques for recommender systems"
   "unique_context_marker": "[19]"
   "block_ids":
@@ -162,7 +162,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Training Strategies"
 - "title": "Retrieval-augmented generation for knowledge-intensive nlp tasks"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -170,7 +170,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Input-Layer Integration"
 - "title": "Teach LLMs to Personalize–An Approach inspired by Writing Education"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -178,7 +178,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Input-Layer Integration"
 - "title": "Pre-trained language models for text generation: A survey"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -186,18 +186,18 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "NLP Applications"
 - "title": "Personalized language modeling from personalized human feedback"
   "unique_context_marker": "[23]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Research Gap"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Retrieval Integration for Generation"
-  - "retrieval augmented generation"
+  - "Independent Training"
+  - "Training Strategies"
 - "title": "Rouge: A package for automatic evaluation of summaries"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -205,7 +205,7 @@
   - 10
   "intent_labels":
   - "Metrics Utilization"
-  - "Other Intent"
+  - "Metrics Utilization"
   "topic_labels":
   - "Generation Quality"
   - "Generation Quality"
@@ -218,17 +218,17 @@
   "intent_labels":
   - "Research Gap"
   - "Prior Methods"
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Retriever Type"
-  - "retrieval augmented generation"
+  - "Context Curation and Compression"
+  - "Input-Layer Integration"
   - "Sequential Training"
 - "title": "Roberta: A robustly optimized bert pretraining approach"
   "unique_context_marker": "[26]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Retriever Type"
 - "title": "Pearl: Personalizing large language model writing assistants with generation-calibrated retrievers"
@@ -238,13 +238,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Input-Layer Integration"
 - "title": "Representation learning with contrastive predictive coding"
   "unique_context_marker": "[28]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Other Intent"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Independent Training"
 - "title": "Integrating summarization and retrieval for enhanced personalization via large language models"
@@ -253,17 +253,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Downstream Tasks"
-  - "retrieval augmented generation"
+  - "Evaluation Aspects and Tools"
+  - "Input-Layer Integration"
 - "title": "Okapi at TREC-3"
   "unique_context_marker": "[30]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Retriever Type"
 - "title": "Optimization methods for personalizing large language models through retrieval augmentation"
@@ -273,12 +273,12 @@
   - 2
   - 10
   "intent_labels":
+  - "Domain Overview"
   - "Prior Methods"
-  - "Prior Methods"
-  - "Other Intent"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Sequential Training"
-  - "retrieval augmented generation"
+  - "Generation Quality"
+  - "Input-Layer Integration"
   - "Joint Training"
 - "title": "Lamp: When large language models meet personalization"
   "unique_context_marker": "[32]"
@@ -287,13 +287,13 @@
   - 2
   - 10
   "intent_labels":
-  - "Benchmark Utilization"
+  - "Domain Overview"
   - "Prior Methods"
-  - "Other Intent"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Downstream Tasks"
-  - "retrieval augmented generation"
-  - "Downstream Tasks"
+  - "Evaluation Aspects and Tools"
+  - "Input-Layer Integration"
+  - "Context Curation and Compression"
 - "title": "A survey of controllable learning: Methods and applications in information retrieval"
   "unique_context_marker": "[33]"
   "block_ids": []
@@ -318,33 +318,33 @@
   "intent_labels":
   - "Research Gap"
   - "Prior Methods"
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Independent Training"
-  - "retrieval augmented generation"
-  - "Independent Training"
+  - "Retrieval"
+  - "Input-Layer Integration"
+  - "Sequential Training"
 - "title": "Personalized Pieces: Efficient Personalized Large Language Models through Collaborative Efforts"
   "unique_context_marker": "[37]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Downstream Tasks"
-  - "retrieval augmented generation"
+  - "Retrieval"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Democratizing Large Language Models via Personalized Parameter-Efficient Fine-tuning"
   "unique_context_marker": "[38]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
   - "Context Curation and Compression"
-  - "retrieval augmented generation"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Think Before Recommend: Unleashing the Latent Reasoning Power for Sequential Recommendation"
   "unique_context_marker": "[39]"
   "block_ids":
@@ -352,13 +352,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Attention is all you need"
   "unique_context_marker": "[40]"
   "block_ids":
   - 5
   "intent_labels":
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Retriever Type"
 - "title": "Neural graph collaborative filtering"
@@ -367,11 +367,11 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Downstream Tasks"
-  - "retrieval augmented generation"
+  - "Challenges and Future Directions"
+  - "Training Strategies"
 - "title": "A survey on large language models for recommendation"
   "unique_context_marker": "[42]"
   "block_ids":
@@ -379,7 +379,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Domain-specific Applications"
 - "title": "FedLoRA: When Personalized Federated Learning Meets Low-Rank Adaptation"
   "unique_context_marker": "[43]"
   "block_ids":
@@ -387,7 +387,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Parameter-Accessible Generators (White-box)"
 - "title": "Fine-grained human feedback gives better rewards for language model training"
   "unique_context_marker": "[44]"
   "block_ids":
@@ -395,7 +395,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Training Strategies"
 - "title": "Clear: Contrastive learning for sentence representation"
   "unique_context_marker": "[45]"
   "block_ids":
@@ -403,9 +403,9 @@
   - 5
   "intent_labels":
   - "Algorithm/Principle Adoption"
-  - "Other Intent"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Joint Training"
+  - "Evaluation"
   - "Independent Training"
 - "title": "C-Pack: Packaged Resources To Advance General Chinese Embedding"
   "unique_context_marker": "[46]"
@@ -415,10 +415,10 @@
   - 7
   - 10
   "intent_labels":
-  - "Other Intent"
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
   - "Other Intent"
+  - "Resource Utilization"
   "topic_labels":
   - "Retriever Type"
   - "Retriever Type"
@@ -430,17 +430,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
+  - "Evaluation"
   - "Training Strategies"
-  - "retrieval augmented generation"
 - "title": "Qwen2 technical report"
   "unique_context_marker": "[48]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Resource Utilization"
   "topic_labels":
   - "Parameter-Inaccessible Generators (Black-box)"
 - "title": "Modeling Domain and Feedback Transitions for Cross-Domain Sequential Recommendation"
@@ -475,15 +475,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Generation Quality"
 - "title": "Dense text retrieval based on pretrained language models: A survey"
   "unique_context_marker": "[55]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Research Gap"
+  - "Domain Overview"
   "topic_labels":
-  - "Retriever Type"
+  - "Evaluation"
 - "title": "A survey of large language models"
   "unique_context_marker": "[56]"
   "block_ids":
@@ -493,8 +493,8 @@
   - "Domain Overview"
   - "Domain Overview"
   "topic_labels":
+  - "Evaluation"
   - "NLP Applications"
-  - "retrieval augmented generation"
 - "title": "Large language models for information retrieval: A survey"
   "unique_context_marker": "[57]"
   "block_ids":
@@ -502,15 +502,15 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Retrieval"
 - "title": "HYDRA: Model Factorization Framework for Black-Box LLM Personalization"
   "unique_context_marker": "[58]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "Downstream Tasks"
-  - "retrieval augmented generation"
+  - "Other Topic"
+  - "Input-Layer Integration"

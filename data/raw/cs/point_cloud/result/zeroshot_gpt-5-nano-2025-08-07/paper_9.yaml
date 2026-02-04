@@ -29,7 +29,7 @@
   - "Domain Overview"
   - "Metrics Utilization"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Raw point-based representations"
   - "Raw point-based representations"
   - "Raw point supervised architectures"
 - "title": "deep learning on 3D point clouds"
@@ -39,7 +39,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Convolution-based operators"
 - "title": "SnapNet: 3D point cloud semantic labeling with 2D deep segmentation networks"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -47,7 +47,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based segmentation"
 - "title": "Combining forecasts: A review and annotated bibliography"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -55,15 +55,15 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Hybrid fusion methods"
 - "title": "Blender - a 3D modelling and rendering package"
   "unique_context_marker": "[7]"
   "block_ids":
   - 7
   "intent_labels":
-  - "Resource Utilization"
+  - "Other Intent"
   "topic_labels":
-  - "Other Topic"
+  - "Mesh-based representations"
 - "title": "ImageNet: A large-scale hierarchical image database"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -71,7 +71,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Projection-based representations"
 - "title": "PyTorch Lightning"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -95,7 +95,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Graph-based neural models"
 - "title": "SEMANTIC3D.NET: A new large-scale point cloud classification benchmark"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -114,7 +114,7 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Hybrid fusion methods"
 - "title": "3D reconstruction from photographs by CMP SfM web service"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -130,7 +130,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Weakly and unsupervised segmentation"
 - "title": "Towards Semantic Segmentation of Urban-Scale 3D Point Clouds: A Dataset, Benchmarks and Challenges"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -138,7 +138,7 @@
   - 10
   "intent_labels":
   - "Domain Overview"
-  - "Hyperparameter Utilization"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Raw point-based representations"
   - "Raw point supervised architectures"
@@ -149,7 +149,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Mesh-based representations"
 - "title": "Microsoft coco: Common objects in context"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -157,7 +157,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Projection-based representations"
 - "title": "Deep Learning-Based Damage Detection from Aerial SfM Point Clouds"
   "unique_context_marker": "[19]"
   "block_ids":
@@ -165,7 +165,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Weakly and unsupervised segmentation"
 - "title": "UAV for 3D mapping applications: a review"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -173,7 +173,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based representations"
 - "title": "Contextual classification of lidar data and building object detection in urban areas"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -197,7 +197,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Mesh-based representations"
 - "title": "Pointnet: Deep learning on point sets for 3d classification and segmentation"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -218,14 +218,14 @@
   - 18
   "intent_labels":
   - "Other Intent"
-  - "Model/Architecture Adoption"
+  - "Result Comparison"
   - "Prior Methods"
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Raw point supervised architectures"
   - "Raw point supervised architectures"
-  - "Hierarchical structures"
   - "Raw point supervised architectures"
+  - "Other Topic"
 - "title": "Reality Capture"
   "unique_context_marker": "[26]"
   "block_ids":
@@ -243,7 +243,7 @@
   - "Other Intent"
   - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Hierarchical structures"
   - "Raw point-based representations"
 - "title": "A survey of path following control strategies for UAVs focused on quadrotors"
   "unique_context_marker": "[28]"
@@ -252,7 +252,7 @@
   "intent_labels":
   - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Other Topic"
+  - "Projection-based representations"
 - "title": "Deep learning in neural networks: An overview"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -268,7 +268,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based segmentation"
 - "title": "Splatnet: Sparse lattice networks for point cloud processing"
   "unique_context_marker": "[31]"
   "block_ids":
@@ -276,7 +276,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based segmentation"
 - "title": "Toronto-3D: A Large-scale Mobile LiDAR Dataset for Semantic Segmentation of Urban Roadways"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -286,7 +286,7 @@
   - "Other Intent"
   - "Domain Overview"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Transformer-based attention models"
   - "Raw point-based representations"
 - "title": "DALES: A Large-scale Aerial LiDAR Data Set for Semantic Segmentation"
   "unique_context_marker": "[33]"
@@ -343,7 +343,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Transformer-based attention models"
 - "title": "Voxelnet: End-to-end learning for point cloud based 3d object detection"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -351,7 +351,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Semantic Segmentation: Approaches"
+  - "Volumetric voxelization"
 - "title": "DublinCity: Annotated LiDAR Point Cloud and its Applications"
   "unique_context_marker": "[41]"
   "block_ids":

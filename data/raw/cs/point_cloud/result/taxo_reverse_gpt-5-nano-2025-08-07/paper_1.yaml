@@ -6,17 +6,17 @@
   "intent_labels":
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - null
 - "title": "Homogeneous vector bundles and g-equivariant convolutional neural networks"
   "unique_context_marker": "[2]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Vn-transformer: Rotation-equivariant attention for vector neurons"
   "unique_context_marker": "[3]"
@@ -24,17 +24,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Working memory"
   "unique_context_marker": "[4]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Working memory: Theories, models, and controversies"
@@ -42,7 +42,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "End-to-end algorithm synthesis with recurrent networks: Logical extrapolation without overthinking"
@@ -50,7 +50,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Slim: Self-supervised lidar scene flow and motion segmentation"
@@ -58,7 +58,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Pointflownet: Learning representations for 3d scene flow estimation from point clouds"
@@ -66,7 +66,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Shapenet: An information-rich 3d model repository"
@@ -75,7 +75,7 @@
   - 10
   - 11
   "intent_labels":
-  - "Benchmark Utilization"
+  - null
   - "Resource Utilization"
   "topic_labels":
   - null
@@ -85,7 +85,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Equivariant point network for 3d point cloud analysis"
@@ -94,17 +94,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "4dcontrast: Contrastive learning with dynamic correspondences for 3d scene understanding"
   "unique_context_marker": "[12]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Bae-net: Branched autoencoder for shape co-segmentation"
@@ -114,17 +114,17 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Hierarchical structures"
 - "title": "A general theory of equivariant cnns on homogeneous spaces"
   "unique_context_marker": "[14]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Vector neurons: A general framework for so (3)-equivariant networks"
   "unique_context_marker": "[15]"
@@ -135,23 +135,23 @@
   - 8
   - 10
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   - null
   - "Model/Architecture Adoption"
   - "Result Comparison"
   "topic_labels":
-  - "Graph-based neural models"
   - null
   - null
+  - null
+  - "Pointwise MLP architectures"
   - "Raw point supervised architectures"
-  - null
 - "title": "Nice: Non-linear independent components estimation"
   "unique_context_marker": "[16]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Density estimation using real nvp"
@@ -159,7 +159,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Robust change detection based on neural descriptor fields"
@@ -167,7 +167,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Se (3)-transformers: 3d roto-translation equivariant attention networks"
@@ -176,10 +176,10 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Fast r-cnn"
   "unique_context_marker": "[20]"
@@ -202,9 +202,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Sequential RNN-based models"
 - "title": "Regularisation of neural networks by enforcing lipschitz continuity"
   "unique_context_marker": "[23]"
   "block_ids":
@@ -212,13 +212,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "Nonparametric object and parts modeling with lie group dynamics"
   "unique_context_marker": "[24]"
   "block_ids":
   - 11
   "intent_labels":
-  - "Result Comparison"
+  - null
   "topic_labels":
   - null
 - "title": "Mask r-cnn"
@@ -234,7 +234,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Denoising diffusion probabilistic models"
@@ -242,25 +242,25 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Generative modeling pretraining"
 - "title": "Long short-term memory"
   "unique_context_marker": "[28]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Sequential RNN-based models"
 - "title": "Multibodysync: Multi-body segmentation and motion estimation via 3d scan synchronization"
   "unique_context_marker": "[29]"
   "block_ids":
   - 2
   - 11
   "intent_labels":
+  - "Prior Methods"
   - null
-  - "Benchmark Utilization"
   "topic_labels":
   - null
   - null
@@ -269,7 +269,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Screwnet: Category-independent articulation model estimation from depth images using screw theory"
@@ -277,7 +277,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Pointgroup: Dual-set point grouping for 3d instance segmentation"
@@ -285,15 +285,15 @@
   "block_ids":
   - 11
   "intent_labels":
-  - "Result Comparison"
+  - null
   "topic_labels":
-  - "Other Topic"
+  - null
 - "title": "Ditto: Building digital twins of articulated objects from interaction"
   "unique_context_marker": "[33]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Evidence that recurrent circuits are critical to the ventral stream’s execution of core object recognition behavior"
@@ -301,7 +301,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Shape-pose disentanglement using se (3)-equivariant vector neurons"
@@ -310,17 +310,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Unsupervised pose-aware part decomposition for 3d articulated objects"
   "unique_context_marker": "[36]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Glow: Generative flow with invertible 1x1 convolutions"
@@ -328,7 +328,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "On the generalization of equivariance and convolution in neural networks to the action of compact groups"
@@ -337,17 +337,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Cadex: Learning canonical deformation coordinate space for dynamic surface representation via neural homeomorphism"
   "unique_context_marker": "[39]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Efem: Equivariant neural field expectation maximization for 3d object segmentation without scene supervision"
@@ -356,8 +356,8 @@
   - 2
   - 11
   "intent_labels":
+  - "Prior Methods"
   - null
-  - "Benchmark Utilization"
   "topic_labels":
   - null
   - null
@@ -367,17 +367,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Self-point-flow: Self-supervised scene flow estimation from point clouds with optimal transport and random walk"
   "unique_context_marker": "[42]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Leveraging se (3) equivariance for self-supervised category-level object pose estimation from point clouds"
@@ -385,7 +385,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Bridging the gaps between residual learning, recurrent neural networks and visual cortex"
@@ -393,7 +393,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Coarse-to-fine point cloud registration with se (3)-equivariant representations"
@@ -401,7 +401,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "3dcnn-dqn-rnn: A deep reinforcement learning framework for semantic parsing of large-scale 3d point clouds"
@@ -411,13 +411,13 @@
   "intent_labels":
   - null
   "topic_labels":
-  - null
+  - "Other Topic"
 - "title": "Flownet3d: Learning scene flow in 3d point clouds"
   "unique_context_marker": "[47]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Meteornet: Deep learning on dynamic 3d point cloud sequences"
@@ -426,8 +426,8 @@
   - 2
   - 11
   "intent_labels":
+  - "Prior Methods"
   - null
-  - "Result Comparison"
   "topic_labels":
   - null
   - "Raw point supervised architectures"
@@ -436,7 +436,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Diffusion probabilistic models for 3d point cloud generation"
@@ -444,15 +444,15 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Generative modeling pretraining"
 - "title": "Partnet: A large-scale benchmark for fine-grained and hierarchical part-level 3d object understanding"
   "unique_context_marker": "[51]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Benchmark Utilization"
+  - null
   "topic_labels":
   - null
 - "title": "A-sdf: Learning disentangled signed distance functions for articulated shape representation"
@@ -460,7 +460,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "So (3)-pose: So (3)-equivariance learning for 6d object pose estimation"
@@ -468,7 +468,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "A functional approach to rotation equivariant non-linearities for tensor field networks"
@@ -477,17 +477,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Flot: Scene flow on point clouds guided by optimal transport"
   "unique_context_marker": "[55]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Pointnet: Deep learning on point sets for 3d classification and segmentation"
@@ -497,13 +497,13 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - null
+  - "Raw point supervised architectures"
 - "title": "Pointnet++: Deep hierarchical feature learning on point sets in a metric space"
   "unique_context_marker": "[57]"
   "block_ids":
   - 11
   "intent_labels":
-  - "Result Comparison"
+  - null
   "topic_labels":
   - "Raw point supervised architectures"
 - "title": "Variational inference with normalizing flows"
@@ -511,7 +511,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Equivariant descriptor fields: Se (3)-equivariant energy-based models for end-to-end visual robotic manipulation learning"
@@ -519,7 +519,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Condor: Self-supervised canonicalization of 3d pose for partial shapes"
@@ -527,7 +527,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Can you learn an algorithm? generalizing from easy to hard problems with recurrent networks"
@@ -535,7 +535,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Neural descriptor fields: Se (3)-equivariant object representations for manipulation"
@@ -543,7 +543,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Denoising diffusion implicit models"
@@ -551,31 +551,31 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Generative modeling pretraining"
 - "title": "Generative modeling by estimating gradients of the data distribution"
   "unique_context_marker": "[64]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Generative modeling pretraining"
 - "title": "Score-based generative modeling through stochastic differential equations"
   "unique_context_marker": "[65]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Generative modeling pretraining"
 - "title": "Ogc: Unsupervised 3d object segmentation from rigid dynamics of point clouds"
   "unique_context_marker": "[66]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Diffuscene: Scene graph denoising diffusion probabilistic model for generative indoor scene synthesis"
@@ -583,7 +583,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Adversarial lipschitz regularization"
@@ -593,13 +593,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "Self-supervised learning of lidar segmentation for autonomous indoor navigation"
   "unique_context_marker": "[69]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Tensor field networks: Rotation-and translation-equivariant neural networks for 3d point clouds"
@@ -608,10 +608,10 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Lipschitz regularity of deep neural networks: analysis and efficient estimation"
   "unique_context_marker": "[71]"
@@ -620,7 +620,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "Cnn-rnn: A unified framework for multi-label image classification"
   "unique_context_marker": "[72]"
   "block_ids":
@@ -644,16 +644,16 @@
   - 12
   "intent_labels":
   - "Result Comparison"
-  - null
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - null
+  - "Graph-based neural models"
   - null
 - "title": "4d unsupervised object discovery"
   "unique_context_marker": "[75]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Hierarchical grouping to optimize an objective function"
@@ -661,15 +661,15 @@
   "block_ids":
   - 11
   "intent_labels":
-  - "Result Comparison"
-  "topic_labels":
   - null
+  "topic_labels":
+  - "Raw point-based representations"
 - "title": "Lego-net: Learning regular rearrangements of objects in rooms"
   "unique_context_marker": "[77]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Coordinate independent convolutional networks–isometry and gauge equivariant convolutions on riemannian manifolds"
@@ -678,17 +678,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Neural grasp distance fields for robot manipulation"
   "unique_context_marker": "[79]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Unified fourier-based kernel and nonlinearity design for equivariant networks on homogeneous spaces"
@@ -697,17 +697,17 @@
   - 1
   - 2
   "intent_labels":
-  - "Domain Overview"
-  - null
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph-based neural models"
+  - null
   - null
 - "title": "Useek: Unsupervised se (3)-equivariant 3d keypoints for generalizable manipulation"
   "unique_context_marker": "[81]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Pointflow: 3d point cloud generation with continuous normalizing flows"
@@ -715,7 +715,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "3d recurrent neural networks with context fusion for point cloud semantic segmentation"
@@ -725,24 +725,24 @@
   "intent_labels":
   - null
   "topic_labels":
-  - null
+  - "Other Topic"
 - "title": "Deep part induction from articulated object pairs"
   "unique_context_marker": "[84]"
   "block_ids":
   - 2
   - 11
   "intent_labels":
+  - "Prior Methods"
   - null
-  - "Result Comparison"
   "topic_labels":
   - null
-  - "Weakly and unsupervised segmentation"
+  - null
 - "title": "Rotationally equivariant 3d object detection"
   "unique_context_marker": "[85]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null
 - "title": "Rethinking lipschitz neural networks and certified robustness: A boolean function perspective"
@@ -752,20 +752,20 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Raw point supervised architectures"
+  - "Raw point-based representations"
 - "title": "3d shape generation and completion through point-voxel diffusion"
   "unique_context_marker": "[87]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
-  - null
+  - "Generative modeling pretraining"
 - "title": "Correspondence-free point cloud registration with so (3)-equivariant implicit shape representations"
   "unique_context_marker": "[88]"
   "block_ids":
   - 2
   "intent_labels":
-  - null
+  - "Prior Methods"
   "topic_labels":
   - null

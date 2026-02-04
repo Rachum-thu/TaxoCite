@@ -6,7 +6,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Sentiment and opinion benchmarks"
 - "title": "Opinion mining and sentiment analysis"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -14,7 +14,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Sentiment and opinion benchmarks"
 - "title": "Twitter sentiment classification using distant supervision"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -24,7 +24,7 @@
   - "Other Intent"
   - "Prior Methods"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Deep learning foundations for text classification"
   - "Deep learning foundations for text classification"
 - "title": "Thumbs up? Sentiment classification using machine learning techniques"
   "unique_context_marker": "[4]"
@@ -41,7 +41,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Deep learning foundations for text classification"
 - "title": "NRC-Canada: Building the state-of-the-art in sentiment analysis of tweets"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -49,7 +49,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Feature extraction with linear classifiers"
 - "title": "Adaptive co-training SVM for sentiment classification on tweets"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -57,7 +57,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Feature extraction with linear classifiers"
 - "title": "Effective attention modeling for aspect-level sentiment classification"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -65,7 +65,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Recurrent and hybrid networks"
 - "title": "Long short-term memory"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -75,14 +75,14 @@
   - "Other Intent"
   - "Result Comparison"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Recurrent and hybrid networks"
   - "Recurrent and hybrid networks"
 - "title": "Learning to attend via word-aspect associative fusion for aspect-based sentiment analysis"
   "unique_context_marker": "[10]"
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Recurrent and hybrid networks"
 - "title": "Interactive attention networks for aspect-level sentiment classification"
@@ -91,7 +91,7 @@
   - 4
   - 12
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   - "Result Comparison"
   "topic_labels":
   - "Recurrent and hybrid networks"
@@ -105,7 +105,7 @@
   - "Other Intent"
   - "Result Comparison"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Recurrent and hybrid networks"
   - "Recurrent and hybrid networks"
 - "title": "Attention-over-attention neural networks for reading comprehension"
   "unique_context_marker": "[13]"
@@ -115,10 +115,10 @@
   - 7
   "intent_labels":
   - "Other Intent"
+  - "Other Intent"
   - "Prior Methods"
-  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Recurrent and hybrid networks"
   - "Recurrent and hybrid networks"
   - "Encoder-only transformers"
 - "title": "Aspect level sentiment classification with attention-over-attention neural networks"
@@ -127,7 +127,7 @@
   - 4
   - 12
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   - "Result Comparison"
   "topic_labels":
   - "Recurrent and hybrid networks"
@@ -139,9 +139,9 @@
   - 4
   "intent_labels":
   - "Other Intent"
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Recurrent and hybrid networks"
   - "Recurrent and hybrid networks"
 - "title": "Attention is all you need"
   "unique_context_marker": "[16]"
@@ -153,7 +153,7 @@
   "intent_labels":
   - "Other Intent"
   - "Other Intent"
-  - "Model/Architecture Adoption"
+  - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
   - "Encoder-only transformers"
@@ -167,7 +167,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Encoder–decoder PLMs"
 - "title": "Language models are unsupervised multitask learners"
   "unique_context_marker": "[18]"
   "block_ids": []
@@ -185,7 +185,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Encoder–decoder PLMs"
 - "title": "Distilling the knowledge in a neural network"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -193,7 +193,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Semi-supervised and adversarial adaptation"
 - "title": "Distilling task-specific knowledge from BERT into simple neural networks"
   "unique_context_marker": "[22]"
   "block_ids": []
@@ -206,7 +206,7 @@
   "intent_labels":
   - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Sentiment and opinion benchmarks"
 - "title": "ALBERT: A lite BERT for self-supervised learning of language representations"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -236,7 +236,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Encoder-only transformers"
 - "title": "Building lexicon for sentiment analysis from massive collection of html documents"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -244,7 +244,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Encoder-only transformers"
 - "title": "Semi-supervised polarity lexicon induction"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -252,7 +252,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Encoder-only transformers"
 - "title": "A maximum entropy approach to natural language processing"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -260,7 +260,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Encoder-only transformers"
 - "title": "Document-level sentiment classification: An empirical comparison between SVM and ANN"
   "unique_context_marker": "[30]"
   "block_ids":
@@ -268,14 +268,14 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Encoder-only transformers"
 - "title": "Effective LSTMs for target-dependent sentiment classification"
   "unique_context_marker": "[31]"
   "block_ids":
   - 4
   - 12
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   - "Result Comparison"
   "topic_labels":
   - "Recurrent and hybrid networks"
@@ -286,7 +286,7 @@
   - 4
   - 12
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   - "Result Comparison"
   "topic_labels":
   - "Recurrent and hybrid networks"
@@ -296,7 +296,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Graph neural methods for text"
 - "title": "A novel scheme for domain-transfer problem in the context of sentiment analysis"
@@ -304,7 +304,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Semi-supervised and adversarial adaptation"
 - "title": "Exploiting document knowledge for aspect-level sentiment classification"
@@ -312,9 +312,9 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
-  - "PLM-based fine-tuning strategies"
+  - "Recurrent and hybrid networks"
 - "title": "Aspect and opinion term extraction for hotel reviews using transfer learning and auxiliary labels"
   "unique_context_marker": "[36]"
   "block_ids": []
@@ -325,28 +325,28 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
-  - "PLM-based fine-tuning strategies"
+  - "Recurrent and hybrid networks"
 - "title": "Utilizing BERT for aspect-based sentiment analysis via constructing auxiliary sentence"
   "unique_context_marker": "[38]"
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
-  - "PLM-based fine-tuning strategies"
+  - "Encoder-only transformers"
 - "title": "BERT post-training for review reading comprehension and aspect-based sentiment analysis"
   "unique_context_marker": "[39]"
   "block_ids":
   - 4
   - 12
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   - "Result Comparison"
   "topic_labels":
-  - "PLM-based fine-tuning strategies"
   - "Encoder-only transformers"
+  - "PLM-based fine-tuning strategies"
 - "title": "Deep sparse rectifier neural networks"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -362,7 +362,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Encoder-only transformers"
 - "title": "Layer normalization"
   "unique_context_marker": "[42]"
   "block_ids":
@@ -370,7 +370,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Encoder-only transformers"
 - "title": "Target-dependent sentiment classification with BERT"
   "unique_context_marker": "[43]"
   "block_ids":
@@ -378,7 +378,7 @@
   "intent_labels":
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Feature extraction with linear classifiers"
 - "title": "Adam: A method for stochastic optimization"
   "unique_context_marker": "[44]"
   "block_ids":
@@ -389,7 +389,7 @@
   - "Hyperparameter Utilization"
   "topic_labels":
   - "PLM-based fine-tuning strategies"
-  - "Encoder-only transformers"
+  - "PLM-based fine-tuning strategies"
 - "title": "Aspect level sentiment classification with deep memory network"
   "unique_context_marker": "[45]"
   "block_ids":
@@ -421,4 +421,4 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "PLM-based fine-tuning strategies"

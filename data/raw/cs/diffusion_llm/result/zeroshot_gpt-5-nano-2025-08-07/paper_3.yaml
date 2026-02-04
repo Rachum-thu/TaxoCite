@@ -7,13 +7,13 @@
   - 3
   - 12
   "intent_labels":
+  - "Problem Formulation"
   - "Other Intent"
-  - "Prior Methods"
-  - "Background"
   - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Graph neural methods for text"
-  - "Graph neural methods for text"
+  - "Encoder-only transformers"
   - "Graph neural methods for text"
   - "Graph neural methods for text"
 - "title": "Pseudo-projective dependency parsing"
@@ -26,9 +26,9 @@
   "block_ids":
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Graph neural methods for text"
 - "title": "The CoNLL 2007 shared task on dependency parsing"
   "unique_context_marker": "[4]"
   "block_ids": []
@@ -39,9 +39,9 @@
   "block_ids":
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Graph neural methods for text"
 - "title": "Transition-based dependency parsing with stack long short-term memory"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -49,7 +49,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Graph neural methods for text"
+  - "Recurrent and hybrid networks"
 - "title": "Simple and accurate dependency parsing using bidirectional LSTM feature representations"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -73,9 +73,9 @@
   - 7
   - 12
   "intent_labels":
-  - "Other Intent"
   - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
+  - "Result Comparison"
   - "Model/Architecture Adoption"
   - "Hyperparameter Utilization"
   - "Prior Methods"
@@ -85,15 +85,15 @@
   - "Graph neural methods for text"
   - "Graph neural methods for text"
   - "Graph neural methods for text"
-  - "Encoder-only transformers"
+  - "Graph neural methods for text"
 - "title": "Stack-pointer networks for dependency parsing"
   "unique_context_marker": "[10]"
   "block_ids":
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Graph neural methods for text"
 - "title": "Self-attentive biaffine dependency parsing"
   "unique_context_marker": "[11]"
   "block_ids":
@@ -102,15 +102,15 @@
   - 3
   - 12
   "intent_labels":
-  - "Other Intent"
   - "Model/Architecture Adoption"
-  - "Background"
+  - "Other Intent"
+  - "Research Gap"
   - "Prior Methods"
   "topic_labels":
+  - "Graph neural methods for text"
+  - "Pre-trained language models"
   - "Encoder-only transformers"
-  - "Encoder-only transformers"
-  - "Encoder-only transformers"
-  - "Encoder-only transformers"
+  - "Pre-trained language models"
 - "title": "A graph-based model for joint chinese word segmentation and dependency parsing"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -120,17 +120,17 @@
   - 11
   - 12
   "intent_labels":
+  - "Model/Architecture Adoption"
   - "Other Intent"
   - "Prior Methods"
-  - "Result Comparison"
-  - "Prior Methods"
+  - "Model/Architecture Adoption"
   - "Prior Methods"
   "topic_labels":
-  - "Encoder-only transformers"
-  - "Other Topic"
+  - "Encoder–decoder PLMs"
   - "Graph neural methods for text"
   - "Graph neural methods for text"
-  - "Encoder-only transformers"
+  - "Graph neural methods for text"
+  - "Graph neural methods for text"
 - "title": "Character-level chinese dependency parsing"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -139,15 +139,15 @@
   - 10
   - 12
   "intent_labels":
-  - "Other Intent"
-  - "Benchmark Utilization"
-  - "Result Comparison"
-  - "Domain Overview"
+  - "Prior Methods"
+  - "Setting/Protocal Adoption"
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
   - "Recurrent and hybrid networks"
   - "Datasets and evaluation methodology"
   - "Graph neural methods for text"
-  - "Recurrent and hybrid networks"
+  - "Other Topics"
 - "title": "Character-level dependencies in chinese: Usefulness and learning"
   "unique_context_marker": "[14]"
   "block_ids": []
@@ -164,22 +164,22 @@
   - 0
   - 12
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Pre-trained language models"
-  - "Recurrent and hybrid networks"
+  - "Graph neural methods for text"
+  - "Graph neural methods for text"
 - "title": "Deep contextualized word representations"
   "unique_context_marker": "[17]"
   "block_ids":
   - 0
   - 2
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Encoder-only transformers"
   - "Pre-trained language models"
+  - "Recurrent and hybrid networks"
 - "title": "BERT: Pre-training of deep bidirectional transformers for language understanding"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -187,9 +187,9 @@
   - 2
   - 7
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Model/Architecture Adoption"
-  - "Resource Utilization"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Pre-trained language models"
   - "Encoder-only transformers"
@@ -200,27 +200,27 @@
   - 0
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Algorithm/Principle Adoption"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Deep learning foundations for text classification"
   - "Other Topics"
+  - "Deep learning foundations for text classification"
 - "title": "Joint chinese word segmentation and part-of-speech tagging via two-way attentions of auto-analyzed knowledge"
   "unique_context_marker": "[20]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "PLM-based fine-tuning strategies"
+  - "Pre-trained language models"
 - "title": "BERT and PALs: Projected attention layers for efficient adaptation in multi-task learning"
   "unique_context_marker": "[21]"
   "block_ids":
   - 0
   - 2
   "intent_labels":
-  - "Other Intent"
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "PLM-based fine-tuning strategies"
   - "PLM-based fine-tuning strategies"
@@ -230,8 +230,8 @@
   - 0
   - 2
   "intent_labels":
-  - "Other Intent"
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "PLM-based fine-tuning strategies"
   - "PLM-based fine-tuning strategies"
@@ -242,13 +242,13 @@
   - 3
   - 7
   "intent_labels":
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
   - "Algorithm/Principle Adoption"
   "topic_labels":
+  - "Long-context and memory extensions"
+  - "Encoder-only transformers"
   - "Encoder–decoder PLMs"
-  - "Encoder-only transformers"
-  - "Encoder-only transformers"
 - "title": "A simple and effective neural model for joint word segmentation and POS tagging"
   "unique_context_marker": "[24]"
   "block_ids":
@@ -278,15 +278,15 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "PLM-based fine-tuning strategies"
+  - "Encoder-only transformers"
 - "title": "Self-attention with relative position representations"
   "unique_context_marker": "[28]"
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Long-context and memory extensions"
 - "title": "Transformer-XL: Attentive language models beyond a fixed-length context"
@@ -294,7 +294,7 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Long-context and memory extensions"
 - "title": "Non-projective dependency parsing using spanning tree algorithms"
@@ -336,7 +336,7 @@
   - 11
   - 12
   "intent_labels":
-  - "Result Comparison"
+  - "Prior Methods"
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
@@ -354,7 +354,7 @@
   - 10
   - 12
   "intent_labels":
-  - "Result Comparison"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
   - "Graph neural methods for text"
@@ -366,7 +366,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Other Topics"
+  - "Graph neural methods for text"
 - "title": "Is POS tagging necessary or even helpful for neural dependency parsing?"
   "unique_context_marker": "[38]"
   "block_ids":
@@ -388,7 +388,7 @@
   "block_ids":
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Graph neural methods for text"
 - "title": "Transition-based dependency parsing with rich non-local features"
@@ -398,7 +398,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Recurrent and hybrid networks"
+  - "Other Topics"
 - "title": "Globally normalized transition-based neural networks"
   "unique_context_marker": "[42]"
   "block_ids": []
@@ -411,7 +411,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Recurrent and hybrid networks"
+  - "Other Topics"
 - "title": "Distilling an ensemble of greedy dependency parsers into one MST parser"
   "unique_context_marker": "[44]"
   "block_ids":
@@ -425,9 +425,9 @@
   "block_ids":
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph neural methods for text"
+  - "Recurrent and hybrid networks"
 - "title": "Deep contextualized word embeddings in transition-based and graph-based dependency parsing–A tale of two parsers revisited"
   "unique_context_marker": "[46]"
   "block_ids":
@@ -435,20 +435,20 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Pre-trained language models"
 - "title": "A maximum entropy chinese character-based parser"
   "unique_context_marker": "[47]"
   "block_ids":
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Recurrent and hybrid networks"
+  - "Other Topics"
 - "title": "Chinese parsing exploiting characters"
   "unique_context_marker": "[48]"
   "block_ids":
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Recurrent and hybrid networks"
+  - "Other Topics"

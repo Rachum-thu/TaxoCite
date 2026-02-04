@@ -12,7 +12,7 @@
   - 12
   "intent_labels":
   - "Prior Methods"
-  - "Domain Overview"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
   - "Short- to medium-range global prediction"
@@ -29,50 +29,50 @@
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Other Topic"
   - "Generative models: GANs and diffusion"
-  - "Generative models: GANs and diffusion"
+  - "Other Topic"
 - "title": "Fengwu: Pushing the skillful global medium-range weather forecast beyond 10 days lead"
   "unique_context_marker": "[4]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Subseasonal-to-seasonal and climate projection"
 - "title": "Fuxi-s2s: An accurate machine learning model for global subseasonal forecasts"
   "unique_context_marker": "[5]"
   "block_ids":
   - 2
   - 12
   "intent_labels":
-  - "Domain Overview"
   - "Prior Methods"
+  - "Background"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Graph neural networks for Earth systems"
   - "Subseasonal-to-seasonal and climate projection"
 - "title": "FuXi: A cascade machine learning forecasting system for 15-day global weather forecast"
   "unique_context_marker": "[6]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Generative models: GANs and diffusion"
 - "title": "Archesweather: An efficient ai weather forecasting model at 1.5° resolution"
   "unique_context_marker": "[7]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Generative models: GANs and diffusion"
+  - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "Advances in the subseasonal prediction of extreme events: Relevant case studies across the globe"
   "unique_context_marker": "[8]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prospective Application"
+  - "Domain Overview"
   "topic_labels":
   - "Subseasonal-to-seasonal and climate projection"
 - "title": "An image is worth 16x16 words: Transformers for image recognition at scale"
@@ -88,7 +88,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Short- to medium-range global prediction"
 - "title": "IFS Documentation CY41R1 - Part V: The Ensemble Prediction System"
@@ -136,17 +136,17 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Gridded spatio-temporal fields"
 - "title": "Forecasting global weather with graph neural networks"
   "unique_context_marker": "[17]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Graph neural networks for Earth systems"
+  - "Transformers for climate modeling"
 - "title": "Adam: A method for stochastic optimization"
   "unique_context_marker": "[18]"
   "block_ids": []
@@ -167,13 +167,13 @@
   - 12
   - 14
   "intent_labels":
-  - "Domain Overview"
   - "Prior Methods"
+  - "Background"
   - "Result Comparison"
   "topic_labels":
-  - "Multi-interval ensembling via randomized rollouts"
   - "Subseasonal-to-seasonal and climate projection"
-  - "Generative models: GANs and diffusion"
+  - "Subseasonal-to-seasonal and climate projection"
+  - "Other Topic"
 - "title": "Uvim: A unified modeling approach for vision with learned guiding codes"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -190,12 +190,12 @@
   - 12
   "intent_labels":
   - "Prior Methods"
-  - "Domain Overview"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
+  - "Short- to medium-range global prediction"
   - "Graph neural networks for Earth systems"
-  - "Graph neural networks for Earth systems"
-  - "Graph neural networks for Earth systems"
+  - "Generative models: GANs and diffusion"
 - "title": "Ifs upgrade brings many improvements and unifies medium-range resolutions"
   "unique_context_marker": "[23]"
   "block_ids":
@@ -203,13 +203,13 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Multi-interval ensembling via randomized rollouts"
+  - "Short- to medium-range global prediction"
 - "title": "Aifs-ecmwf’s data-driven forecasting system"
   "unique_context_marker": "[24]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Multi-interval ensembling via randomized rollouts"
 - "title": "Mage: Masked generative encoder to unify representation learning and image synthesis"
@@ -226,11 +226,11 @@
   - 6
   - 10
   "intent_labels":
-  - "Prior Methods"
-  - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Probabilistic forecasting with diffusion or variational objectives"
   - "Generative models: GANs and diffusion"
+  - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "Forced and free variations of weather and climate"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -238,7 +238,7 @@
   "intent_labels":
   - "Problem Formulation"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Continuous lead-time conditioning"
 - "title": "Progress in subseasonal to seasonal prediction through a joint weather and climate community effort"
   "unique_context_marker": "[28]"
   "block_ids":
@@ -246,23 +246,23 @@
   "intent_labels":
   - "Problem Formulation"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Iterative dynamics forecasting"
 - "title": "Subseasonalclimateusa: a dataset for subseasonal forecasting and benchmarking"
   "unique_context_marker": "[29]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Short- to medium-range global prediction"
 - "title": "Boosting weather forecast via generative superensemble"
   "unique_context_marker": "[30]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Generative models: GANs and diffusion"
+  - "Transformers for climate modeling"
 - "title": "Chaosbench: A multi-channel, physics-based benchmark for subseasonal-to-seasonal climate prediction"
   "unique_context_marker": "[31]"
   "block_ids":
@@ -270,12 +270,12 @@
   - 2
   - 11
   "intent_labels":
+  - "Research Gap"
   - "Benchmark Utilization"
-  - "Domain Overview"
   - "Benchmark Utilization"
   "topic_labels":
   - "Subseasonal-to-seasonal and climate projection"
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Transformers for climate modeling"
   - "Subseasonal-to-seasonal and climate projection"
 - "title": "ClimaX: A foundation model for weather and climate"
   "unique_context_marker": "[32]"
@@ -283,11 +283,11 @@
   - 2
   - 12
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Transformers for climate modeling"
-  - "Transformers for climate modeling"
+  - "Uncertainty and inference strategies"
+  - "Self- and semi-supervised learning for climate"
 - "title": "Scaling transformer neural networks for skillful and reliable medium-range weather forecasting"
   "unique_context_marker": "[33]"
   "block_ids":
@@ -296,18 +296,18 @@
   - 12
   "intent_labels":
   - "Prior Methods"
-  - "Domain Overview"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
   - "Short- to medium-range global prediction"
-  - "Transformers for climate modeling"
-  - "Short- to medium-range global prediction"
+  - "Subseasonal-to-seasonal and climate projection"
+  - "Subseasonal-to-seasonal and climate projection"
 - "title": "Probabilistic weather forecasting with hierarchical graph neural networks"
   "unique_context_marker": "[34]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Generative models: GANs and diffusion"
 - "title": "FourCastNet: A global data-driven high-resolution weather model using adaptive Fourier neural operators"
@@ -315,9 +315,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Time series representations"
 - "title": "The subseasonal experiment (subx): A multimodel subseasonal prediction experiment"
   "unique_context_marker": "[36]"
   "block_ids":
@@ -333,13 +333,13 @@
   - 12
   - 13
   "intent_labels":
-  - "Domain Overview"
   - "Prior Methods"
+  - "Background"
   - "Result Comparison"
   "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
   - "Generative models: GANs and diffusion"
-  - "Generative models: GANs and diffusion"
-  - "Generative models: GANs and diffusion"
+  - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "Zero-shot text-to-image generation"
   "unique_context_marker": "[38]"
   "block_ids":
@@ -388,9 +388,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Self- and semi-supervised learning for climate"
+  - "Short- to medium-range global prediction"
 - "title": "Givt: Generative infinite-vocabulary transformers"
   "unique_context_marker": "[44]"
   "block_ids":
@@ -398,7 +398,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Generative models: GANs and diffusion"
 - "title": "Neural discrete representation learning"
   "unique_context_marker": "[45]"
   "block_ids":
@@ -420,17 +420,17 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "The subseasonal to seasonal (s2s) prediction project database"
   "unique_context_marker": "[48]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Gridded spatio-temporal fields"
+  - "Generative models: GANs and diffusion"
 - "title": "The modelling infrastructure of the Integrated Forecasting System: Recent advances and future challenges"
   "unique_context_marker": "[49]"
   "block_ids":
@@ -444,23 +444,23 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Supervised pretraining and finetuning of foundation models"
+  - "Probabilistic forecasting with diffusion or variational objectives"
 - "title": "Potential applications of subseasonal-to-seasonal (s2s) predictions"
   "unique_context_marker": "[51]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prospective Application"
   "topic_labels":
-  - "Subseasonal-to-seasonal and climate projection"
+  - "Weather pattern detection and understanding"
 - "title": "Advances in the application and utility of subseasonal-to-seasonal predictions"
   "unique_context_marker": "[52]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Prospective Application"
   "topic_labels":
   - "Subseasonal-to-seasonal and climate projection"
 - "title": "The met office global coupled model 2.0 (gc2) configuration"
@@ -488,5 +488,5 @@
   - "Algorithm/Principle Adoption"
   - "Prior Methods"
   "topic_labels":
-  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Generative models: GANs and diffusion"
   - "Generative models: GANs and diffusion"

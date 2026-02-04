@@ -4,9 +4,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Importance of Problem"
+  - "Problem Formulation"
   "topic_labels":
-  - "Raw point-based representations"
+  - "Volumetric voxelization"
 - "title": "Variational learning of inducing variables in sparse gaussian processes"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -31,7 +31,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
 - "title": "Real-time spatio-temporal lidar point cloud compression"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -39,7 +39,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
 - "title": "Real-time point cloud compression"
   "unique_context_marker": "[5]"
   "block_ids":
@@ -47,7 +47,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
 - "title": "Using neighbouring nodes for the compression of octrees representing the geometry of point clouds"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -55,7 +55,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
 - "title": "Graph-based compression of dynamic 3d point cloud sequences"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -63,7 +63,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
 - "title": "Octree-based progressive geometry coding of point clouds"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -71,7 +71,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
 - "title": "Octsqueeze: Octree-structured entropy model for lidar compression"
   "unique_context_marker": "[9]"
   "block_ids":
@@ -79,7 +79,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
 - "title": "Survey on deep learning-based point cloud compression"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -87,7 +87,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Raw point-based representations"
 - "title": "Deep compression for dense point cloud maps"
   "unique_context_marker": "[11]"
   "block_ids":
@@ -95,7 +95,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Raw point-based representations"
 - "title": "Deep autoencoder-based lossy geometry compression for point clouds"
   "unique_context_marker": "[12]"
   "block_ids":
@@ -103,7 +103,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based representations"
+  - "Raw point-based representations"
 - "title": "Real-time information-theoretic exploration with gaussian mixture model maps"
   "unique_context_marker": "[13]"
   "block_ids":
@@ -113,14 +113,14 @@
   - 8
   "intent_labels":
   - "Prior Methods"
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   - "Result Comparison"
   - "Result Comparison"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
   - "Projection-based representations"
   - "Volumetric voxelization"
-  - "Raw point-based representations"
+  - "Volumetric voxelization"
 - "title": "Variable resolution occupancy mapping using gaussian mixture models"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -130,7 +130,7 @@
   - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
   - "Volumetric voxelization"
 - "title": "Communication-efficient planning and mapping for multi-robot exploration in large environments"
   "unique_context_marker": "[15]"
@@ -141,7 +141,7 @@
   - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Projection-based representations"
+  - "Volumetric voxelization"
   - "Volumetric voxelization"
 - "title": "Gaussian Processes for Machine Learning"
   "unique_context_marker": "[16]"
@@ -237,8 +237,8 @@
   - 3
   - 5
   "intent_labels":
+  - "Domain Overview"
   - "Prior Methods"
-  - "Background"
   "topic_labels":
   - "Raw point-based representations"
   - "Projection-based representations"
@@ -265,7 +265,7 @@
   "intent_labels":
   - "Resource Utilization"
   "topic_labels":
-  - "Generative modeling pretraining"
+  - "Volumetric voxelization"
 - "title": "Octomap: An efficient probabilistic 3d mapping framework based on octrees"
   "unique_context_marker": "[31]"
   "block_ids":

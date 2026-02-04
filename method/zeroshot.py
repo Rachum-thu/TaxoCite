@@ -90,12 +90,16 @@ def main():
 
         block_ids_to_process.append(block_id)
 
-    # Batch process with LLM
+    # Batch process with LLM (intent and topic in parallel)
+    from concurrent.futures import ThreadPoolExecutor
     llm = ChatOpenAI(model=args.model, reasoning_effort="medium")
     structured_llm = llm.with_structured_output(CitationClassification)
 
-    intent_outputs = structured_llm.batch(intent_prompts, config={"max_concurrency": 32})
-    topic_outputs = structured_llm.batch(topic_prompts, config={"max_concurrency": 32})
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        intent_future = executor.submit(structured_llm.batch, intent_prompts, {"max_concurrency": 32})
+        topic_future = executor.submit(structured_llm.batch, topic_prompts, {"max_concurrency": 32})
+        intent_outputs = intent_future.result()
+        topic_outputs = topic_future.result()
 
     # Fill results with validation
     for block_id, intent_output, topic_output in zip(block_ids_to_process, intent_outputs, topic_outputs):

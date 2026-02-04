@@ -5,30 +5,30 @@
   - 0
   - 6
   "intent_labels":
-  - "Other Intent"
-  - "Problem Formulation"
+  - "Prospective Application"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Topic and news categorization corpora"
-  - "Graph neural methods for text"
+  - "PLM-based fine-tuning strategies"
 - "title": "Parabel: Partitioned label trees for extreme classification with application to dynamic search advertising"
   "unique_context_marker": "[2]"
   "block_ids":
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
   - "Graph neural methods for text"
-  - "Feature extraction with linear classifiers"
+  - "Label-aware and prototype methods"
 - "title": "Deep neural networks for YouTube recommendations"
   "unique_context_marker": "[3]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Other Intent"
+  - "Prospective Application"
   "topic_labels":
-  - "Other Topics"
+  - "Topic and news categorization corpora"
 - "title": "PECOS: Prediction for enormous and correlated output spaces"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -38,15 +38,15 @@
   - 7
   - 10
   "intent_labels":
+  - "Prior Methods"
   - "Other Intent"
-  - "Algorithm/Principle Adoption"
   - "Other Intent"
   - "Model/Architecture Adoption"
   - "Result Comparison"
   "topic_labels":
-  - "Graph neural methods for text"
   - "Label-aware and prototype methods"
-  - "Label-aware and prototype methods"
+  - "Other Topic"
+  - "Other Topic"
   - "Feature extraction with linear classifiers"
   - "Feature extraction with linear classifiers"
 - "title": "Taming pretrained transformers for extreme multi-label text classification"
@@ -56,13 +56,13 @@
   - 1
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   - "Background"
   "topic_labels":
   - "Label-aware and prototype methods"
   - "PLM-based fine-tuning strategies"
-  - "Encoder-only transformers"
+  - "Feature extraction with linear classifiers"
 - "title": "LightXML: Transformer with dynamic negative sampling for high-performance extreme multi-label text classification"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -70,13 +70,13 @@
   - 1
   - 10
   "intent_labels":
-  - "Other Intent"
   - "Prior Methods"
-  - "Background"
+  - "Prior Methods"
+  - "Result Comparison"
   "topic_labels":
   - "Label-aware and prototype methods"
   - "PLM-based fine-tuning strategies"
-  - "Feature extraction with linear classifiers"
+  - "Deep learning foundations for text classification"
 - "title": "Fast multi-resolution transformer fine-tuning for extreme multi-label text classification"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -89,22 +89,22 @@
   - 11
   - 12
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
   - "Benchmark Utilization"
   - "Setting/Protocal Adoption"
   - "Result Comparison"
-  - "Setting/Protocal Adoption"
-  - "Algorithm/Principle Adoption"
+  - "Result Comparison"
+  - "Other Intent"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Label-aware and prototype methods"
   - "PLM-based fine-tuning strategies"
   - "Contrastive representation learning"
   - "Encoder-only transformers"
-  - "Accuracy, precision–recall, and F1 assessment"
   - "Encoder-only transformers"
   - "Encoder-only transformers"
+  - "Other Topic"
   - "Other Topic"
 - "title": "Distributed representations of words and phrases and their compositionality"
   "unique_context_marker": "[8]"
@@ -112,40 +112,40 @@
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Deep learning foundations for text classification"
-  - "Deep learning foundations for text classification"
+  - "Label-aware and prototype methods"
+  - "Convolutional approaches"
 - "title": "Efficient estimation of word representations in vector space"
   "unique_context_marker": "[9]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Label-aware and prototype methods"
 - "title": "FastXML: A fast, accurate and stable tree-classifier for extreme multi-label learning"
   "unique_context_marker": "[10]"
   "block_ids":
   - 0
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
-  - "Graph neural methods for text"
+  - "Deep learning foundations for text classification"
+  - "Label-aware and prototype methods"
 - "title": "Sparse local embeddings for extreme multi-label classification"
   "unique_context_marker": "[11]"
   "block_ids":
   - 0
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
+  - "Deep learning foundations for text classification"
   - "Deep learning foundations for text classification"
 - "title": "Extreme multi-label loss functions for recommendation, tagging, ranking & other missing label applications"
   "unique_context_marker": "[12]"
@@ -153,10 +153,10 @@
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
+  - "Deep learning foundations for text classification"
   - "Feature extraction with linear classifiers"
 - "title": "PD-Sparse: A primal and dual sparse approach to extreme multiclass and multilabel classification"
   "unique_context_marker": "[13]"
@@ -164,29 +164,29 @@
   - 0
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
+  - "Pre-trained language models"
   - "Feature extraction with linear classifiers"
 - "title": "PPDsparse: A parallel primal-dual sparse method for extreme classification"
   "unique_context_marker": "[14]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
+  - "Pre-trained language models"
 - "title": "DiSMEC: Distributed sparse machines for extreme multi-label classification"
   "unique_context_marker": "[15]"
   "block_ids":
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
+  - "Pre-trained language models"
   - "Feature extraction with linear classifiers"
 - "title": "AnnexML: Approximate nearest neighbor search for extreme multi-label classification"
   "unique_context_marker": "[16]"
@@ -194,84 +194,84 @@
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
-  - "Feature extraction with linear classifiers"
+  - "Encoder-only transformers"
+  - "Label-aware and prototype methods"
 - "title": "CRAFTML, An efficient clustering-based random forest for extreme multi-label learning"
   "unique_context_marker": "[17]"
   "block_ids":
   - 0
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
+  - "Encoder-only transformers"
 - "title": "A no-regret generalization of hierarchical softmax to extreme multi-label classification"
   "unique_context_marker": "[18]"
   "block_ids":
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
-  - "Feature extraction with linear classifiers"
+  - "Encoder-only transformers"
+  - "Deep learning foundations for text classification"
 - "title": "SLICE: Scalable linear extreme classifiers trained on 100 million labels for related searches"
   "unique_context_marker": "[19]"
   "block_ids":
   - 0
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
-  - "Feature extraction with linear classifiers"
+  - "Contrastive representation learning"
+  - "Deep learning foundations for text classification"
 - "title": "BONSAI-diverse and shallow trees for extreme multi-label classification"
   "unique_context_marker": "[20]"
   "block_ids":
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
-  - "Feature extraction with linear classifiers"
+  - "Contrastive representation learning"
+  - "Deep learning foundations for text classification"
 - "title": "SiameseXML: Siamese networks meet extreme classifiers with 100m labels"
   "unique_context_marker": "[21]"
   "block_ids":
   - 0
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
-  - "Graph neural methods for text"
+  - "Contrastive representation learning"
+  - "PLM-based fine-tuning strategies"
 - "title": "DeepXML: A deep extreme multi-label learning framework applied to short text documents"
   "unique_context_marker": "[22]"
   "block_ids":
   - 0
   - 1
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
-  - "Feature extraction with linear classifiers"
-  - "Deep learning foundations for text classification"
+  - "Contrastive representation learning"
+  - "PLM-based fine-tuning strategies"
 - "title": "Deep learning for extreme multi-label text classification"
   "unique_context_marker": "[23]"
   "block_ids":
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Recurrent and hybrid networks"
+  - "Contrastive representation learning"
   - "Convolutional approaches"
 - "title": "AttentionXML: Label tree-based attention-aware deep model for high-performance extreme multi-label text classification"
   "unique_context_marker": "[24]"
@@ -279,11 +279,11 @@
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
+  - "Contrastive representation learning"
   - "Recurrent and hybrid networks"
-  - "Deep learning foundations for text classification"
 - "title": "Pretrained generalized autoregressive model with adaptive probabilistic label clusters for extreme multi-label text classification"
   "unique_context_marker": "[25]"
   "block_ids":
@@ -291,11 +291,11 @@
   - 1
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Recurrent and hybrid networks"
+  - "Contrastive representation learning"
   - "PLM-based fine-tuning strategies"
   - "Decoder-only transformers"
 - "title": "CascadeXML: Rethinking transformers for end-to-end multi-resolution training in extreme multi-label classification"
@@ -303,16 +303,16 @@
   "block_ids":
   - 0
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
-  - "Encoder-only transformers"
+  - "Pre-trained language models"
 - "title": "Sentence-T5: Scalable sentence encoders from pre-trained text-to-text models"
   "unique_context_marker": "[27]"
   "block_ids":
   - 0
   - 10
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   - "Resource Utilization"
   "topic_labels":
   - "Encoder-only transformers"
@@ -324,7 +324,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "PLM-based fine-tuning strategies"
+  - "Other Topics"
 - "title": "Accelerating extreme classification via adaptive feature agglomeration"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -484,7 +484,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Contrastive representation learning"
 - "title": "RoBERTa: A robustly optimized BERT pretraining approach"
   "unique_context_marker": "[49]"
   "block_ids":
@@ -492,7 +492,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Contrastive representation learning"
 - "title": "XLNet: Generalized autoregressive pretraining for language understanding"
   "unique_context_marker": "[50]"
   "block_ids":
@@ -500,7 +500,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Deep learning foundations for text classification"
+  - "Contrastive representation learning"
 - "title": "Learning deep structure-preserving image-text embeddings"
   "unique_context_marker": "[51]"
   "block_ids":
@@ -508,7 +508,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "Stacked cross attention for image-text matching"
   "unique_context_marker": "[52]"
   "block_ids":
@@ -516,7 +516,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "UNITER: Universal image-text representation learning"
   "unique_context_marker": "[53]"
   "block_ids":
@@ -524,7 +524,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "LXMERT: Learning cross-modality encoder representations from transformers"
   "unique_context_marker": "[54]"
   "block_ids":
@@ -532,7 +532,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "AttnGAN: Fine-grained text to image generation with attentional generative adversarial networks"
   "unique_context_marker": "[55]"
   "block_ids":
@@ -540,7 +540,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "DM-GAN: Dynamic memory generative adversarial networks for text-to-image synthesis"
   "unique_context_marker": "[56]"
   "block_ids":
@@ -548,7 +548,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "Semantics disentangling for text-to-image generation"
   "unique_context_marker": "[57]"
   "block_ids":
@@ -556,7 +556,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "Cross-modal contrastive learning for text-to-image generation"
   "unique_context_marker": "[58]"
   "block_ids":
@@ -564,7 +564,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "Improving text-to-image synthesis using contrastive learning"
   "unique_context_marker": "[59]"
   "block_ids":
@@ -572,7 +572,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Other Topics"
+  - "Contrastive representation learning"
 - "title": "Momentum contrast for unsupervised visual representation learning"
   "unique_context_marker": "[60]"
   "block_ids":
@@ -646,7 +646,7 @@
   - "Benchmark Utilization"
   - "Metrics Utilization"
   "topic_labels":
-  - "Datasets and evaluation methodology"
+  - "Topic and news categorization corpora"
   - "Accuracy, precision–recall, and F1 assessment"
 - "title": "BERT: Pre-training of deep bidirectional transformers for language understanding"
   "unique_context_marker": "[69]"

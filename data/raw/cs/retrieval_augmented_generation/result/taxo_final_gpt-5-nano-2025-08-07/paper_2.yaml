@@ -7,12 +7,12 @@
   - 9
   "intent_labels":
   - "Resource Utilization"
-  - "Prior Methods"
-  - "Prior Methods"
+  - "Domain Overview"
+  - "Research Gap"
   "topic_labels":
   - "Parameter-Inaccessible Generators (Black-box)"
   - "Sequential Training"
-  - "Training Strategies"
+  - "Sequential Training"
 - "title": "Query Refinement Prompts for Closed-Book Long-Form Question Answering"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -35,7 +35,7 @@
   "intent_labels":
   - "Metrics Utilization"
   - "Algorithm/Principle Adoption"
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Generation Quality"
   - "Independent Training"
@@ -57,7 +57,7 @@
   - "Domain Overview"
   - "Prior Methods"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "NLP Applications"
   - "Intermediate-Layer Integration"
 - "title": "Language models are few-shot learners"
   "unique_context_marker": "[7]"
@@ -72,7 +72,7 @@
   "block_ids":
   - 11
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Metrics Utilization"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "FacTool: Factuality Detection in Generative AI–A Tool Augmented Framework for Multi-Task and Multi-Domain Scenarios"
@@ -80,9 +80,9 @@
   "block_ids":
   - 9
   "intent_labels":
-  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   "topic_labels":
-  - "Generation Quality"
+  - "Evaluation Aspects and Tools"
 - "title": "Deep reinforcement learning from human preferences"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -129,7 +129,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Problem Formulation"
+  - "Research Gap"
   "topic_labels":
   - "Generation Quality"
 - "title": "How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection"
@@ -158,7 +158,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Parameter-Inaccessible Generators (Black-box)"
 - "title": "Unsupervised dense information retrieval with contrastive learning"
   "unique_context_marker": "[18]"
   "block_ids":
@@ -172,7 +172,7 @@
   "block_ids":
   - 11
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Metrics Utilization"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Triviaqa: A large scale distantly supervised challenge dataset for reading comprehension"
@@ -192,8 +192,8 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
+  - "Parameter-Inaccessible Generators (Black-box)"
   - "Evaluation Aspects and Tools"
-  - "Generation Quality"
 - "title": "Dense passage retrieval for open-domain question answering"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -215,7 +215,7 @@
   "block_ids":
   - 9
   "intent_labels":
-  - "Prior Methods"
+  - "Setting/Protocal Adoption"
   "topic_labels":
   - "Generation Quality"
 - "title": "Aquamuse: Automatically generating datasets for query-based multi-document summarization"
@@ -223,7 +223,7 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Domain Overview"
+  - "Problem Formulation"
   "topic_labels":
   - "Context Curation and Compression"
 - "title": "Natural questions: a benchmark for question answering research"
@@ -243,16 +243,16 @@
   - "Prior Methods"
   - "Prior Methods"
   "topic_labels":
+  - "Parameter-Inaccessible Generators (Black-box)"
   - "Evaluation Aspects and Tools"
-  - "Generation Quality"
 - "title": "Evaluating verifiability in generative search engines"
   "unique_context_marker": "[28]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Problem Formulation"
+  - "Research Gap"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Generation Quality"
 - "title": "WebGLM: Towards An Efficient Web-Enhanced Question Answering System with Human Preferences"
   "unique_context_marker": "[29]"
   "block_ids":
@@ -268,11 +268,11 @@
   - "Prior Methods"
   - "Prior Methods"
   - "Resource Utilization"
-  - "Benchmark Utilization"
+  - "Prior Methods"
   "topic_labels":
   - "Parameter-Accessible Generators (White-box)"
   - "NLP Applications"
-  - "Retrieval Granularity"
+  - "Retriever Type"
   - "Input-Layer Integration"
   - "NLP Applications"
   - "Retrieval Integration for Generation"
@@ -281,7 +281,7 @@
   "block_ids":
   - 11
   "intent_labels":
-  - "Setting/Protocal Adoption"
+  - "Metrics Utilization"
   "topic_labels":
   - "Evaluation Aspects and Tools"
 - "title": "Teaching language models to support answers with verified quotes"
@@ -289,9 +289,9 @@
   "block_ids":
   - 1
   "intent_labels":
-  - "Problem Formulation"
+  - "Research Gap"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "NLP Applications"
 - "title": "Augmented language models: a survey"
   "unique_context_marker": "[32]"
   "block_ids":
@@ -299,7 +299,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "retrieval augmented generation"
+  - "Input-Layer Integration"
 - "title": "FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation"
   "unique_context_marker": "[33]"
   "block_ids":
@@ -310,7 +310,7 @@
   - "Prior Methods"
   "topic_labels":
   - "Evaluation Aspects and Tools"
-  - "Generation Quality"
+  - "Evaluation Aspects and Tools"
 - "title": "WebGPT: Browser-assisted question-answering with human feedback"
   "unique_context_marker": "[34]"
   "block_ids":
@@ -319,7 +319,7 @@
   - 5
   - 11
   "intent_labels":
-  - "Problem Formulation"
+  - "Research Gap"
   - "Prior Methods"
   - "Prior Methods"
   - "Result Comparison"
@@ -335,7 +335,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Parameter-Inaccessible Generators (Black-box)"
 - "title": "Training language models to follow instructions with human feedback"
   "unique_context_marker": "[36]"
   "block_ids":
@@ -349,10 +349,10 @@
   - "Prior Methods"
   - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Evaluation Aspects and Tools"
+  - "Parameter-Inaccessible Generators (Black-box)"
   - "Independent Training"
   - "Sequential Training"
-  - "Independent Training"
+  - "Sequential Training"
 - "title": "WebCPM: Interactive Web Search for Chinese Long-form Question Answering"
   "unique_context_marker": "[37]"
   "block_ids":
@@ -366,10 +366,10 @@
   - "Domain Overview"
   - "Prior Methods"
   - "Resource Utilization"
-  - "Result Comparison"
+  - "Prior Methods"
   "topic_labels":
   - "NLP Applications"
-  - "Context Curation and Compression"
+  - "Retrieval Granularity"
   - "Input-Layer Integration"
   - "NLP Applications"
   - "Retrieval Integration for Generation"
@@ -395,7 +395,7 @@
   - 1
   - 3
   "intent_labels":
-  - "Problem Formulation"
+  - "Prior Methods"
   - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Training Strategies"
@@ -473,9 +473,9 @@
   - 9
   - 14
   "intent_labels":
-  - "Problem Formulation"
-  - "Prior Methods"
-  - "Prior Methods"
+  - "Research Gap"
+  - "Algorithm/Principle Adoption"
+  - "Background"
   "topic_labels":
   - "Training Strategies"
   - "Training Strategies"
@@ -493,7 +493,7 @@
   "block_ids":
   - 9
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Training Strategies"
 - "title": "AlignScore: Evaluating Factual Consistency with a Unified Alignment Function"
@@ -501,6 +501,6 @@
   "block_ids":
   - 3
   "intent_labels":
-  - "Metrics Utilization"
+  - "Prior Methods"
   "topic_labels":
   - "Evaluation Aspects and Tools"

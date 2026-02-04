@@ -1,0 +1,850 @@
+title: 'PRUC : P-Regions with User-Defined Constraint'
+blocks:
+- block_id: 0
+  content: 'This paper introduces a generalized spatial regionalization problem, namely, PRUC (𝑃-Regions with User-defined
+    Constraint) that partitions spatial areas into homogeneous regions. PRUC accounts for user-defined constraints imposed
+    over aggregate region properties. We show that PRUC is an NP-Hard problem. To solve PRUC, we introduce GSLO (Global Search
+    with Local Optimization), a parallel stochastic regionalization algorithm. GSLO is composed of two phases: (1) Global
+    Search that initially partitions areas into regions that satisfy a user-defined constraint, and (2) Local Optimization
+    that further improves the quality of the partitioning with respect to intra-region similarity. We conduct an extensive
+    experimental study using real datasets to evaluate the performance of GSLO. Experimental results show that GSLO is up
+    to 100× faster than the state-of-the-art algorithms. GSLO provides partitioning that is up to 6× better with respect to
+    intra-region similarity. Furthermore, GSLO is able to handle 4× larger datasets than the state-of-the-art algorithms.'
+  citations: []
+- block_id: 1
+  content: "Spatial regionalization is an important problem that aims at partitioning spatial areas into regions based on\
+    \ specific criteria. Spatial areas assigned to a region need to be spatially contiguous. Spatial regionalization has been\
+    \ adopted in numerous applications and domains, such as economics, e.g., imbalance in economic development [44], urban\
+    \ planning [24, 56], e.g., resource allocation in urban construction [24], environmental science [54, 55], e.g., understanding\
+    \ of environmental patterns in different geographical locations [55].\n\nSpatial regionalization has multiple variations\
+    \ that are studied in the literature [3, 4, 6, 8, 9, 34, 35]. The \U0001D45D-regions problem [15, 17] is a popular spatial\
+    \ regionalization problem that partitions areas into \U0001D45D regions while maximizing the intra-region similarity with\
+    \ respect to a numerical attribute. For example, in urban planning, each area could be a municipality, and a region is\
+    \ a group of spatial contiguous municipalities. Maximization of the similarity of household income among municipalities\
+    \ within regions is an example of the numerical attribute. One important requirement of spatial regionalization is to\
+    \ account for user-defined constraints over regions. A typical use case in urban planning is to partition areas into a\
+    \ predefined number of regions where the total population of every region exceeds a specific threshold. Existing variations\
+    \ of the \U0001D45D-regions problem do not support user-defined constraints, which limit its applicability to various\
+    \ domains and a plethora of use cases.\n\nIn this paper, we formalize a generalized spatial regionalization problem, namely,\
+    \ PRUC (\U0001D443-Regions with User-defined Constraint). PRUC aims to partition a set of areas into a predefined number\
+    \ of regions p while maximizing the similarity over a specific attribute, e.g., the household income. In PRUC, each region\
+    \ needs to satisfy a user-defined constraint on some aggregate attribute, e.g., the total population of each region needs\
+    \ to exceed a specific threshold.\n\nPRUC is a generalization of the \U0001D45D-regions problem. The reason is that PRUC\
+    \ has the same optimization goal as the \U0001D45D-regions problem, but it enforces an additional user-defined threshold\
+    \ constraint on each region. The new input user-defined constraint in PRUC has introduced several challenges on building\
+    \ initial regions. First, existing techniques have a high probability, up to 80%, of producing regions that do not satisfy\
+    \ the input constraint. Second, producing valid solutions requires significant shuffling of spatial areas among initial\
+    \ regions so that invalid regions become valid but not the opposite. This adds a restrictive requirement on the spatial\
+    \ connectivity as regions that are vulnerable to spatial disconnection with shuffling retain the high probability of producing\
+    \ invalid solutions. Third, the additional overhead of producing valid solutions inflates the scalability problem and\
+    \ makes it harder to handle large datasets.\n\nTo address these challenges, we propose an efficient parallel algorithm\
+    \ called GSLO (Global Search with Local Optimization) to solve PRUC at scale. GSLO is stochastic and its results may vary\
+    \ on different runs. GSLO is composed of two phases: (1) Global Search and (2) Local Optimization. The Global Search phase\
+    \ proposes novel techniques to find a partitioning that satisfies the user-defined constraint with high probability of\
+    \ success. The regions grown in GSLO are robust against spatial disconnection and have a high probability of surviving\
+    \ the shuffling phase. The shuffling phase consists of two complementary steps that boost the probability of success.\
+    \ The Local Optimization phase employs parallel stages that incrementally improve the quality of the partitioning with\
+    \ respect to the similarity properties within each region.\n\nThere are two main approaches to build partitions, top-down\
+    \ edge-cut and bottom-up seeding. Top-down edge cut approaches [3, 4] are time-consuming and less flexible. They are time-consuming\
+    \ because they evaluate the effect of each edge cut on the entire graph and less flexible because once the edges are cut,\
+    \ there is no following reassignment of areas to regions to further optimize the objective of the regionalization. GSLO\
+    \ is a bottom-up seeding-based algorithm that can efficiently grow regions around seed areas locally, which breaks down\
+    \ the big problem into several smaller ones. The novel contributions of this paper are summarized as follows:\n\n- We\
+    \ introduce a generalized spatial regionalization problem, namely, \U0001D443-regions with User-defined Constraint (PRUC).\n\
+    - We show that PRUC is an NP-Hard problem.\n- We develop GSLO, an efficient parallel algorithm that solves PRUC with several\
+    \ novel techniques as follows.\n  - A general seeding strategy that does not require any domain knowledge.\n  - A region\
+    \ growth algorithm that maximizes the flexibility of the assignment of areas to regions.\n  - Two novel complementary\
+    \ inter-region shuffling strategies that increase the ability of finding a feasible solution.\n  - Heuristic search strategies\
+    \ to speed up optimizing the final solution and provide region-level parallelization.\n- We conduct an extensive experimental\
+    \ evaluation using real datasets.\n\nOur extensive experimental study shows that GSLO runs up to 100× faster, achieves\
+    \ up to 6× better solution quality, and scales up to 4× larger datasets than the state-of-the-art algorithms. The rest\
+    \ of this paper is organized as follows: Section 2 presents the related work on spatial regionalization. Section 3 defines\
+    \ the problem, and Section 4 proves it is an NP-hard problem. Section 5 details our proposed algorithm GSLO. Section 6\
+    \ analyzes the complexity of GSLO. Section 7 presents an extensive experimental evaluation and Section 8 concludes the\
+    \ paper."
+  citations:
+  - marker: '[44]'
+    intent_label: Prospective Application
+    topic_label: regionalization
+  - marker: '[24, 56]'
+    intent_label: Prospective Application
+    topic_label: regionalization
+  - marker: '[24]'
+    intent_label: Prospective Application
+    topic_label: regionalization
+  - marker: '[54, 55]'
+    intent_label: Prospective Application
+    topic_label: regionalization
+  - marker: '[55]'
+    intent_label: Prospective Application
+    topic_label: regionalization
+  - marker: '[3, 4, 6, 8, 9, 34, 35]'
+    intent_label: Prior Methods
+    topic_label: regionalization
+  - marker: '[15, 17]'
+    intent_label: Problem Formulation
+    topic_label: p-regions formulations
+  - marker: '[3, 4]'
+    intent_label: Prior Methods
+    topic_label: Top-down divisive edge-removal methods
+- block_id: 2
+  content: 'Spatial regionalization [3, 4, 8, 9, 14, 16, 27, 34] refers to the problem of grouping spatial areas into multiple
+    regions that are spatially contiguous. There are several variations of the spatial regionalization problem. The 𝑝-regions
+    problem [15] finds 𝑝 regions that maximize the similarity between areas within a region. The 𝑝-compact regions problem
+    [35] finds 𝑝 regions that maximize the spatial compactness. The max-𝑝 regions problem [14] computes a maximal-sized partitioning
+    that maximizes the similarity between areas within a region. PRUC is a generalization of the 𝑝-regions problem that enforces
+    user-defined constraints.
+
+
+    Traditional clustering algorithms, e.g., k-means [37], are not directly applicable in spatial regionalization problems,
+    as they are mainly designed for points rather than polygons and they do not enforce spatial contiguity that is required
+    in spatial regionalization. Some techniques have tried to adapt them for regionalization in different contexts [18, 40,
+    51]. However, the lack of enforcing spatial contiguity constraints early in the algorithm makes it harder to scale for
+    large datasets. To this end, the following approaches have been proposed to address spatial regionalization: (1) linear
+    programming, (2) graph partitioning, and (3) seeding.
+
+
+    Duque et al. [15] transforms a spatial regionalization problem into a mixed integer programming (MIP) problem that can
+    be solved using software package such as CPLEX [12]. However, this approach works only for tiny datasets. Hence, this
+    approach is not suited to address PRUC over large inputs.
+
+
+    Graph-partitioning is used in SKATER [3] and SKATER-CON [4] as the state-of-the-art techniques to address the 𝑝-regions
+    problem. In this approach, graph nodes represent spatial areas and edges connect spatially contiguous areas. In SKATER,
+    a minimum spanning tree (MST) is computed from the graph. The MST is then split into 𝑝 subtrees, each corresponding to
+    one of the 𝑝 regions. However, the greedy approach adopted in MST generation results in suboptimal regions with low quality.
+    Also, SKATER is computationally expensive and cannot handle large inputs. SKATERCON [4] enhances SKATER by generating
+    multiple random spanning trees (RST). SKATER is then applied to all RSTs to generate multiple regionalization results.
+    The different results are combined into a single solution using a consensus-based method [26]. SKATERCON is slower than
+    SKATER, and cannot handle large inputs. Neither SKATER nor SKATERCON can be directly applied to solve PRUC as they do
+    not support user-defined constraints.
+
+
+    Seeding is an important category of spatial regionalization algorithms. In seeding, multiple spatial areas are chosen
+    as seeds for spatial regions. Then, regions grow around seeds by incrementally adding neighboring areas. REGAL [9] and
+    SPATIAL [8] are two seeding algorithms that have been tailored to solve the school redistricting problem, so they cannot
+    be used to solve PRUC. The reason is that they do not support general user-defined constraints. MERGE [35] is a seeding
+    framework for solving the 𝑝-compact regions problem. However, MERGE cannot be used to solve PRUC as it is tailored to
+    the 𝑝-compact regions problem and does not support user-defined constraints as well.
+
+
+    Recently, parallelization has been adopted to speedup spatial regionalization algorithms. Laura et al. [33] introduced
+    a parallel algorithm to solve the 𝑝-compact-regions problem. Also, Sindhu et al. [48] used a parallel algorithm to address
+    the max-𝑝 regions problem. Similarly, GSLO is a parallel algorithm to make the best use of multi-core environments.'
+  citations:
+  - marker: '[3, 4, 8, 9, 14, 16, 27, 34]'
+    intent_label: Domain Overview
+    topic_label: regionalization
+  - marker: '[15]'
+    intent_label: Research Gap
+    topic_label: p-regions formulations
+  - marker: '[35]'
+    intent_label: Research Gap
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[14]'
+    intent_label: Domain Overview
+    topic_label: max-p regions formulations
+  - marker: '[37]'
+    intent_label: Research Gap
+    topic_label: Conventional clustering with post hoc contiguity checks
+  - marker: '[18, 40, 51]'
+    intent_label: Research Gap
+    topic_label: Conventional clustering with post hoc contiguity checks
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Exact optimization models
+  - marker: '[3]'
+    intent_label: Research Gap
+    topic_label: Top-down divisive edge-removal methods
+  - marker: '[4]'
+    intent_label: Research Gap
+    topic_label: Top-down divisive edge-removal methods
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Heuristic concentration and model reduction
+  - marker: '[9]'
+    intent_label: Research Gap
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[8]'
+    intent_label: Research Gap
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[33]'
+    intent_label: Prior Methods
+    topic_label: regionalization
+  - marker: '[48]'
+    intent_label: Prior Methods
+    topic_label: max-p regions formulations
+- block_id: 3
+  content: 'In this section, we give a formal definition of PRUC. Table 2 summarizes the notations used throughout this paper.
+    Spatial regionalization is the problem of partitioning spatial areas into non-overlapping regions while satisfying specific
+    constrains. An area, say 𝑎, is a spatial polygon that is represented by a set of geographical coordinates, i.e., longitude
+    and latitude. Two areas are neighbors if they share a common border. The list of neighbor areas of an area, say 𝑎𝑖, is
+    represented as 𝑎𝑖.𝑁𝐵𝑅𝐴.
+
+
+    A region, say 𝑟, is a set of spatially contiguous areas {𝑎𝑖, 𝑎𝑗, ...}. Each 𝑟 has a unique identifier 𝑟.𝑖𝑑. Figure 1,
+    shows spatial areas that are partitioned into regions, where areas having the same color constitute a region. Each spatial
+    area is associated with numerical attributes, e.g., population and household income as shown in Table 1. We denote the
+    attribute used to quantify the similarity among areas as the similarity attribute, i.e., 𝑎𝑖.𝑠𝑖𝑚. For example, in Figure
+    1, the average household income of an area is the similarity attribute. This attribute is used to group areas into regions
+    having similar household income. We call the attribute used in region constraints the extensive attribute. The extensive
+    attribute of an area, say 𝑎𝑖, is represented as 𝑎𝑖.𝑒𝑥𝑡. In Figure 1, 𝑎𝑖.𝑒𝑥𝑡 is the population. For example, 𝑎1.𝑒𝑥𝑡 = 210.
+    The region to which an area, say 𝑎, belongs to is termed 𝑎.𝑟. The aggregate extensive attribute of region 𝑟 is represented
+    as 𝑟.𝑒𝑥𝑡, that is defined as the sum of the extensive attribute over all the areas in the region. In Figure 1, the extensive
+    attribute of the green region refers to the total population of this region, which is computed as 𝑟𝑔𝑟𝑒𝑒𝑛.𝑒𝑥𝑡 = 𝑎5.𝑒𝑥𝑡
+    + 𝑎6.𝑒𝑥𝑡 + 𝑎7.𝑒𝑥𝑡 + 𝑎8.𝑒𝑥𝑡 = 610.
+
+
+    The set of neighbor areas of a region 𝑟, i.e., 𝑟.𝑁𝐵𝑅𝐴, is defined as the set of areas that do not belong to 𝑟 and are
+    neighbor to at least one area in 𝑟. In Figure 1, 𝑟𝑟𝑒𝑑.𝑁𝐵𝑅𝐴 = {𝑎5, 𝑎6, 𝑎7, 𝑎8}. Formally, 𝑟.𝑁𝐵𝑅𝐴 = {𝑎 | ∃𝑎𝑖 (𝑎𝑖.𝑟 = 𝑟.𝑖𝑑
+    ∧ 𝑎.𝑟 ≠ 𝑎𝑖.𝑟 ∧ 𝑎𝑖 ∈ 𝑎.𝑁𝐵𝑅𝐴)}.
+
+
+    The set of neighbor regions of an area, i.e., 𝑎.𝑁𝐵𝑅𝑅, is defined as the set of regions that have at least one area 𝑎𝑖
+    within the region that is a neighbor area of 𝑎. In Figure 1, the neighbor regions of 𝑎6 = {𝑟𝑟𝑒𝑑, 𝑟𝑏𝑙𝑢𝑒}. Formally, 𝑎.𝑁𝐵𝑅𝑅
+    = {𝑟 | ∃𝑎𝑖 (𝑎𝑖.𝑟 = 𝑟.𝑖𝑑 ∧ 𝑎.𝑟 ≠ 𝑟.𝑖𝑑 ∧ 𝑎𝑖 ∈ 𝑎.𝑁𝐵𝑅𝐴)}.
+
+
+    The set of margin areas of a region, say 𝑟, is defined as the set of areas that have at least one neighbor area that belongs
+    to a neighbor region or is unassigned. In Figure 1, all of the areas in 𝑟𝑟𝑒𝑑 are margin areas because they have at least
+    one neighbor area that belongs to a neighbor region. Formally, 𝑟.𝑚𝑎𝑟𝑔𝑖𝑛 = {𝑎 | 𝑎.𝑟 = 𝑟.𝑖𝑑 ∧ ∃𝑎𝑖 (𝑎𝑖 ∈ 𝑎.𝑁𝐵𝑅𝐴 ∧ 𝑎𝑖.𝑟 ≠
+    𝑎.𝑟)}.
+
+
+    An area is considered an articulation area if removing this area disconnects its region, i.e., areas of the region are
+    not contiguous. The set of articulation areas in 𝑟 is represented as 𝑟.𝑎𝑟𝑡. In Figure 1, 𝑟𝑟𝑒𝑑.𝑎𝑟𝑡 = {𝑎2, 𝑎3}, since removing
+    any of them breaks the region’s contiguity.
+
+
+    A user-defined constraint is a numerical constraint that all regions must satisfy. In Figure 1, the user-defined constraint
+    is that the aggregate population of each region must be at least 500. A region is incomplete if it does not satisfy the
+    user-defined constraint and complete if it does.
+
+
+    A partition, say 𝑃, of a set of areas is the set of regions {𝑟1, 𝑟2, ..., 𝑟𝑝} that includes all areas. Each area belongs
+    to only one region. 𝑃 is feasible if all its regions are complete, i.e., satisfy the user-defined constraint.
+
+
+    Heterogeneity is inversely proportional to the similarity among areas. The heterogeneity of 𝑎𝑖 and 𝑎𝑗 reflects the degree
+    of dissimilarity between 𝑎𝑖 and 𝑎𝑗 and it is defined as the absolute difference between the similarity attribute of the
+    two areas:
+
+    ℎ(𝑎𝑖, 𝑎𝑗) = |𝑎𝑖.𝑠𝑖𝑚 − 𝑎𝑗.𝑠𝑖𝑚|
+
+    The heterogeneity of a region, say 𝑟, is defined as the heterogeneity sum of all pairs of areas in 𝑟:
+
+    ℎ(𝑟) = ∑︁ ∀𝑖<𝑗,𝑎𝑖.𝑟=𝑎𝑗.𝑟=𝑟.𝑖𝑑 ℎ(𝑎𝑖, 𝑎𝑗)
+
+    The heterogeneity of a partition ℎ(𝑃) is defined as the sum of the heterogeneity of all the regions: ℎ(𝑃) = ∑︁ ∀𝑟 ∈ 𝑃
+    ℎ(𝑟).
+
+
+    A good partition has low heterogeneity and high intra-region similarity.
+
+
+    PRUC Problem. P-Regions with User-Defined Constraint (PRUC) problem is formally defined as follows: Given: (1) A set of
+    𝑛 areas: 𝐴 = {𝑎1, 𝑎2, ..., 𝑎𝑛}. (2) An integer 𝑝. (3) A threshold 𝑇. PRUC finds a partition of regions 𝑃 = {𝑟1, 𝑟2, ...,
+    𝑟𝑝} of size 𝑝, where each region 𝑟𝑖 is a non-empty set of spatially continuous areas, |𝑟𝑖| ≥ 1, so that: (i) 𝑟𝑖 ∩ 𝑟𝑗 =
+    Φ, ∀𝑟𝑖, 𝑟𝑗 ∈ 𝑃 ∧ 𝑖 ≠ 𝑗, i.e., all regions are disjoint. (ii) ⋃𝑝𝑖=1 𝑟𝑖 = 𝐴. (iii) 𝑟𝑖.𝑒𝑥𝑡 > 𝑇. (iv) The heterogeneity of
+    𝑃, ℎ(𝑃), is minimum.'
+  citations: []
+- block_id: 4
+  content: 'In this section, we provide a proof for the NP-hardness of PRUC problem using a reduction from the Node-attributed
+    Spatial Graph Partitioning (NSGP) problem [6]. NSGP is an NP-Hard problem that aims to partition a node-attributed spatial
+    graph into 𝑘 subgraphs. The number of nodes in each subgraph must exceed a specific threshold. The nodes of this graph
+    represent spatial locations and each node has an associated set of attributes. The objective of the NSGP is to minimize
+    the heterogeneity of the generated subgraphs and the number of edges with endpoints belonging to different subgraphs.
+
+
+    Let 𝑋 be an instance of NSGP problem and 𝑋 = (𝐴, 𝐸, 𝑁, 𝑘, 𝑠, 𝑔) where 𝐴 is the set of spatial areas, 𝐸 is the set of neighborhood
+    relations, 𝑁 is the set of node attributes, 𝑘 is the number of subgraphs, 𝑠 is the minimum number of nodes in a subgraph,
+    and 𝑔 is the optimization goal of NSGP. Let 𝑌 be an instance of PRUC problem and 𝑌 = (𝐴, 𝑝, 𝑇, 𝑓) where 𝐴 is the set of
+    spatial areas, 𝑝 is the predefined number of regions, and 𝑇 is the user-defined threshold. 𝑓 is the optimization goal
+    of PRUC. We make 𝑓 to be the same as 𝑔 (Note that changing the optimization goal in PRUC would not affect the way it works).
+    We set the extensive attribute of each area in 𝐴 to 1, and set 𝑝 equal to 𝑘 in the NSGP problem. Thus 𝑋 is a special case
+    of 𝑌, and we construct 𝑌 from 𝑋 in polynomial time, hence the proof.'
+  citations:
+  - marker: '[6]'
+    intent_label: Problem Formulation
+    topic_label: p-regions formulations
+- block_id: 5
+  content: We introduce Global Search with Local Optimization (GSLO), a two-phase algorithm to efficiently address PRUC. The
+    Global Search phase aims to find a feasible partition. Local optimization aims to further improve the heterogeneity over
+    the partition without violating the user-defined constraint.
+  citations: []
+- block_id: 6
+  content: 'The Global Search phase aims to find a feasible partition with high probability of success. This phase is divided
+    into the following steps: Seed Identification, Region Growth, Enclaves Assignment, Inter-region Update, and Indirect Flow
+    Push. Each step is optimized to increase the probability of successfully finding a feasible partition. The rest of this
+    section details each step.
+
+
+    #### 5.1.1 Seed Identification
+
+    A seed, say 𝑠, is a set of 𝑝 areas, i.e., 𝑠 = [𝑎1, ...𝑎𝑝]. Regions incrementally grow by attaching unassigned neighbor
+    areas to the seed areas. The seeding-based regionalization literature [8, 9, 14, 33–35, 53] either selects seed areas
+    randomly [14, 33–35, 53] or selects the seed areas manually according to problem-specific guidelines [8, 9]. In this section,
+    we propose a general seeding method that does not require any domain knowledge. Having seed areas close to each other
+    can restrict the growth of regions and increase the probability of failure. Hence, the objective is to select a seed whose
+    areas are scattered. The distance between 𝑎𝑖 and 𝑎𝑗 refers to the euclidean distance between the centroids of 𝑎𝑖 and 𝑎𝑗
+    and is represented as 𝑑𝑖𝑠𝑡(𝑎𝑖, 𝑎𝑗). The quality 𝑞(𝑠) of a seed 𝑠 is defined as the minimum euclidean distance between
+    the centroids of all pairs of areas in 𝑠.
+
+
+    𝑞(𝑠) = min 𝑎𝑖 ∈𝑠 ∧ 𝑎𝑗 ∈𝑠 ∧ 𝑖≠𝑗 𝑑𝑖𝑠𝑡(𝑎𝑖, 𝑎𝑗)
+
+
+    The objective is to maximize 𝑞(𝑠). First, 𝑝 areas are selected randomly as the seed. The pair of seed areas having the
+    least pairwise distance, say (𝑎𝑖, 𝑎𝑗), is identified. Then, an area that does not belong to the seed is chosen at random
+    to replace one of the areas (𝑎𝑖, 𝑎𝑗). The replacement takes place only when there is improvement in 𝑞(𝑠). The last step
+    is repeated 𝑚 times, where 𝑚 is a user-defined parameter.
+
+
+    The above Seed Identification algorithm assumes no islands present in the dataset, i.e., there is only one connected component.
+    To support datasets with islands, first, we run a graph traversal algorithm on the spatial neighborhood graph to detect
+    different connected components. We then compute the total extensive attribute on each connected component. If the total
+    extensive attribute of any island is less than the user-defined constraint value, then the current user-defined constraint
+    cannot be solved. Otherwise, the connected components are sorted in ascending order according to their total extensive
+    attribute, i.e., ∀0 < 𝑖 < 𝑗 ≤ 𝐶, 𝑐𝑐𝑖.𝑒𝑥𝑡 ≤ 𝑐𝑐𝑗.𝑒𝑥𝑡, where 𝐶 is the number of connected components, 𝑐𝑐𝑖 is the 𝑖th component,
+    and 𝑐𝑐𝑖.𝑒𝑥𝑡 is 𝑐𝑐𝑖’s extensive attribute. Starting from 𝑐𝑐1, for each component 𝑐𝑐𝑖, we put a number of seed areas proportional
+    to the ratio of 𝑐𝑐𝑖.𝑒𝑥𝑡 divided by the total extensive attribute of the whole input, where at least one seed area is placed
+    in each component 𝑐𝑐𝑖. In each connected component, we perform a number of iterations that are proportional to its number
+    of seed areas to scatter seed areas in space as described above.
+
+
+    The Seed Identification phase aims to find spatially scattered seed areas. There are several metrics that can be used
+    to quantify seed quality, i.e., scatteredness of the seed, e.g., sum of pairwise distance or minimum pairwise distance
+    between seed areas. We choose minimum pairwise distance between seed areas as it guarantees that no pair of seed areas
+    are close to each other. Other metrics may result in nearby seed areas that restrict region growth. Figure 4 shows that
+    as the seed quality monotonically increases, the heterogeneity of the partition improves and converges to an optimal value.
+
+
+    Complexity analysis. Seed identification performs 𝑚 iterations to improve the seed quality. The number of seed areas is
+    𝑝, each iteration takes 𝑂(𝑝2) time, which gives a total time of 𝑂(𝑚𝑝2).
+
+
+    Remark 5.1. Time complexity of Seed Identification is 𝑂(𝑚𝑝2).
+
+
+    #### 5.1.2 Region Growth
+
+    After the Seed Identification step, the seed areas become the initial 𝑝 regions that will subsequently grow. A growing
+    step of a region, say 𝑟, adds one of the unassigned areas from neighbor areas, i.e., 𝑟.𝑁𝐵𝑅𝐴 to 𝑟. A region 𝑟 stops growing
+    when: (1) 𝑟 satisfies the user-defined constraint, i.e., becomes a complete region, or (2) all the neighbor areas of 𝑟
+    are assigned to other regions. If the user-defined constraint is not met for a region, the region is marked incomplete.
+    The region with the least extensive attribute is chosen for each growing step in order to achieve a balanced distribution
+    on the extensive attribute over each region.
+
+
+    Having many articulation areas in regions restricts the movement of areas across regions. This hinders the ability to
+    find a feasible partition or the refinement of the partition in Local Optimization. So, a main objective of this step
+    is minimizing the number of articulation areas in the partition. We define the robustness of a region, say 𝑟, to be the
+    number of areas in its margin, i.e., 𝑟.𝑚𝑎𝑟𝑔𝑖𝑛 divided by the number of articulation areas in 𝑟.𝑚𝑎𝑟𝑔𝑖𝑛. The greater the
+    robustness of a region, the less likely 𝑟 becomes disconnected while attempting to move an area to the neighbor region.
+
+
+    Region Growth algorithm grows regions while attempting to increase their robustness. A basic approach would be to iterate
+    over all the unassigned areas of 𝑟.𝑁𝐵𝑅𝐴 and choose the area that gives the greatest increase in the robustness of 𝑟. However,
+    identifying the articulation areas for every growing step is rather expensive. To this end, we adopt an approximate approach
+    to find areas to be added to regions that improves the robustness of regions. We define the connectivity between a region
+    𝑟 and an area 𝑎 as the number of neighbor areas of 𝑎 that belong to 𝑟.
+
+
+    𝑐𝑜𝑛𝑛(𝑎, 𝑟) = |{𝑎𝑖 | 𝑎𝑖.𝑟 = 𝑟.𝑖𝑑 ∧ 𝑎𝑖 ∈ 𝑎.𝑁𝐵𝑅𝐴}|
+
+
+    Region Growth algorithm grows a region, say 𝑟, by choosing the neighbor area, say 𝑎, that has the greatest connectivity,
+    i.e., 𝑐𝑜𝑛𝑛(𝑎, 𝑟). We call this area 𝑎𝑟𝑏𝑒𝑠𝑡. Ties are broken arbitrarily.
+
+
+    Region Growth phase aims at building robust regions that provide reassignment flexibility rather than focusing only on
+    heterogeneity. Region robustness is achieved by reducing the number of articulation areas. So, the region sustains its
+    spatial connectivity even after moving areas to another region. This allows flexibility in area reassignments across regions
+    in subsequent phases of GSLO, and leads to improved effectiveness and heterogeneity.
+
+
+    Complexity analysis. The Region Growth phase incrementally grows the regions from the seed areas. Assume 𝑐(𝑟) denotes
+    the number of areas in region 𝑟, and 𝑟𝑖 denotes the region that is selected to grow in the 𝑖th iteration. In each iteration,
+    retrieving the region with the minimum 𝑟.𝑒𝑥𝑡 takes 𝑂(𝑝). For a growing region 𝑟, we need to evaluate all its unassigned
+    neighbor areas. Spatial neighborhood relations of areas are represented with a planar graph where nodes are areas and
+    an edge exists between any pair of neighbor areas. Since the average degree of the vertices in a planar graph is strictly
+    less than six [50], this implies: (i) the size of 𝑟.𝑁𝐵𝑅𝐴 is 𝑂(6𝑐(𝑟)) = 𝑂(𝑐(𝑟)), and (ii) computing 𝑐𝑜𝑛𝑛(𝑎, 𝑟), for 𝑎 ∈
+    𝑟.𝑁𝐵𝑅𝐴, is 𝑂(1). Meanwhile, computing the heterogeneity increase of 𝑎 to 𝑟 requires time 𝑂(𝑐(𝑟)) because we need to compute
+    the heterogeneity between 𝑎 and all areas in 𝑟. Consequently, in each iteration, growing a region 𝑟 takes time 𝑂(𝑐(𝑟))
+    + 𝑂(𝑝). Region Growth phase performs in total 𝑂(𝑛) iterations, each adds an area to a region. Then, the total runtime
+    of Region Growth phase is (∑𝑛𝑖=1 𝑂(𝑐(𝑟𝑖)) + 𝑂(𝑝)), where 1 < 𝑐(𝑟𝑖) < 𝑛, which is 𝑂(𝑛2) + 𝑂(𝑛𝑝) = 𝑂(𝑛2).
+
+
+    Remark 5.2. Time complexity of Region Growth phase is 𝑂(𝑛2).
+
+
+    #### 5.1.3 Enclaves Assignment
+
+    After the Region Growth step, some areas may remain unassigned. The reason is that Region Growth of a region terminates
+    when it satisfies the user-defined constraint. This can prevent some areas from being assigned to regions. We name the
+    remaining unassigned areas enclaves. In Enclaves Assignment, all enclaves are identified and processed one by one. The
+    intuition of Enclaves Assignment is rather straightforward. An enclave area is assigned to a region that minimizes heterogeneity
+    increase to keep the overall heterogeneity score at its minimum level before the Local Optimization phase. If an enclave,
+    say 𝑎, is surrounded by only enclaves, it can not be assigned to any neighbor region at this moment. The assignment of
+    𝑎 is delayed until some or all surrounding enclaves have been assigned to regions. If 𝑎 is surrounded by one or more complete
+    regions, we assign this enclave to the region with the minimum heterogeneity increase [14].
+
+
+    Complexity analysis. In Enclaves Assignment, there are 𝑣 enclaves, 𝑣 < 𝑛. Retrieving the next enclave to process takes
+    𝑂(𝑣). Processing each enclave is 𝑂(𝑛), in the worst case, to compute heterogeneity increase to all neighboring regions.
+    This gives time complexity 𝑂(𝑣 + 𝑛) for processing a single enclave, which is 𝑂(𝑣 * (𝑣 + 𝑛)) = 𝑂(𝑣2 + 𝑣𝑛) for 𝑣 enclaves.
+    As 𝑣 < 𝑛, i.e., 𝑣 = 𝑂(𝑛), the phase complexity is bounded by 𝑂(𝑛2) in its worst case.
+
+
+    Remark 5.3. Time complexity of Enclaves Assignment is 𝑂(𝑛2).
+
+
+    #### 5.1.4 Inter-region Update
+
+    After the Enclaves Assignment step, all areas are assigned to regions. However, incomplete regions, i.e., regions that
+    fail to satisfy the user-defined constraint, might still exist. This step attempts to render all regions complete by moving
+    some areas from complete regions to neighbor incomplete regions. First, incomplete regions are identified and added to
+    a queue. Then, for every incomplete region 𝑟𝑖, all its complete neighbor regions are identified. The Inter-region Update
+    algorithm attempts to make 𝑟𝑖 complete by moving an area 𝑎 from one of 𝑟′𝑖’s complete neighbor region to 𝑟𝑖. The region
+    that donates an area is called 𝑟𝑑𝑜𝑛𝑜𝑟 and the region that receives that area is called 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟. A move is defined as
+    a triple (𝑎, 𝑟𝑑𝑜𝑛𝑜𝑟, 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟).
+
+
+    For a given 𝑟𝑑𝑜𝑛𝑜𝑟 and a given 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟, Area 𝑎 from 𝑟𝑑𝑜𝑛𝑜𝑟 is movable if it satisfies all the following properties:
+
+    - 𝑎 is not an articulation area for 𝑟𝑑𝑜𝑛𝑜𝑟, i.e., 𝑎 ∉ 𝑟𝑑𝑜𝑛𝑜𝑟.𝑎𝑟𝑡.
+
+    - 𝑎 is a neighbor area of 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟, i.e., 𝑎 ∈ 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟.𝑁𝐵𝑅𝐴.
+
+
+    The articulation areas of a region are identified using Tarjan algorithm [45] to speedup excluding invalid moves that
+    cause spatial disconnection. The above conditions do not prevent moves that switch complete regions to incomplete regions,
+    which is an incorrect switch. However, this gives more flexibility and higher scalability to this step to fill incomplete
+    regions. In case this incorrect switch happens for some regions, they are switched back to complete regions in the following
+    step that indirectly flow extra areas from complete regions to all other incomplete regions.
+
+
+    Algorithm 1 describes the Inter-region Update step. In each iteration, we dequeue an incomplete region and consider it
+    as 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟. If 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟 does not have a complete neighbor region, then we add the 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟 back to the queue to be
+    processed later. Otherwise, the 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟’s complete neighbor regions are sorted based on the extensive attribute in descending
+    order. Suppose the sorted complete neighbor regions are {𝑟𝑎, 𝑟𝑏, 𝑟𝑐, ...}, we attempt to consider neighbor region with
+    largest extensive attribute 𝑟𝑎 as the 𝑟𝑑𝑜𝑛𝑜𝑟 and try to find the movable area from 𝑟𝑑𝑜𝑛𝑜𝑟 to 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟 that has the largest
+    extensive attribute. If the list of movable areas is empty, then we turn to the region with the second-largest extensive
+    attribute 𝑟𝑏, and so on. If no movable area is found among all the complete neighbor regions, then we put the current
+    𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟 back to the queue to be processed later and start the next iteration. If 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟 is still incomplete after
+    the move, then we add 𝑟𝑟𝑒𝑐𝑒𝑖𝑣𝑒𝑟 back to the queue. If 𝑟𝑑𝑜𝑛𝑜𝑟 becomes incomplete after the move, then we add 𝑟𝑑𝑜𝑛𝑜𝑟 to
+    the queue as well. This procedure is repeated until a feasible partition is found or the maximum of 𝑛 iterations allowed
+    has been exhausted without finding a feasible partition.
+
+
+    Complexity analysis. In each iteration, for an incomplete region 𝑟, retrieving neighbor regions is 𝑂(𝑐(𝑟)) = 𝑂(𝑛) and
+    sorting them is 𝑂(𝑝 log 𝑝). Applying Tarjan algorithm takes 𝑂(𝑐(𝑟) + 𝑒(𝑟)), where 𝑒(𝑟) denotes the number of edges within
+    a spatial neighborhood graph 𝐺 for region 𝑟’s areas. As region 𝑟 is also a planar graph, it has 𝑒(𝑟) ≤ 3𝑐(𝑟) − 6 [50],
+    so 𝑒(𝑟) = 𝑂(𝑐(𝑟)), and applying Tarjan algorithm is 𝑂(𝑐(𝑟))) = 𝑂(𝑛). Moving an area 𝑎 from a donor region 𝑟′ to a receiver
+    region 𝑟 takes 𝑂(𝑐(𝑟) + 𝑐(𝑟′)) = 𝑂(𝑛) time to locate 𝑎 and compute heterogeneity changes of 𝑟 and 𝑟′. The same applies
+    if multiple donor regions are explored. Then, the runtime of a single iteration is 𝑂(𝑝 log 𝑝 + 𝑛). For 𝑛 iterations, the
+    overall complexity is 𝑂(𝑛2 + 𝑛𝑝 log 𝑝).
+
+
+    Remark 5.4. Time complexity of Inter-region Update is 𝑂(𝑛2 + 𝑛𝑝 log 𝑝).
+
+
+    #### 5.1.5 Indirect Flow Push
+
+    If there are remaining incomplete regions after Inter-region Update, then Indirect Flow Push is adopted to attempt transforming
+    these regions into complete. In Inter-region Update, after an incomplete region 𝑟𝑖 is converted to a complete region,
+    it might serve as a donor region for some other incomplete neighbor region since it has now become complete. However,
+    moving an area from 𝑟𝑖 to its neighbor incomplete regions would likely make 𝑟𝑖 incomplete again because the extensive
+    attribute of 𝑟𝑖 is just above the threshold. In this case 𝑟𝑖 is converted back to incomplete again. Those incomplete regions
+    could frequently change status between complete and incomplete. This makes it hard for all the incomplete regions to become
+    complete regions. We call this phenomena the chained-flipping problem.
+
+
+    We propose Indirect Flow Push to solve the chained-flipping problem. This phase is entered only if Inter-region Update
+    does not find a feasible partition. The chained-flipping problem is caused by starting from incomplete regions and borrowing
+    areas from neighbor complete regions. In Indirect Flow Push, instead of starting from incomplete regions and borrowing
+    areas from the neighbor complete regions, we start with the complete regions with the largest extensive attribute and
+    push its margin areas to neighbor regions that need them.
+
+
+    The partition of regions is considered as a flow network where regions are considered as nodes and extensive attribute
+    is considered as flow. We push the flow through the network to ensure that there is a balanced distribution of extensive
+    attribute over the regions. Each region in the flow network is assigned a state from the following:
+
+    - Unprocessed (UP): This is the initial state of a region. This region has at least two neighbor regions that it could
+    donate areas to or receive areas from.
+
+    - Exhausted-incomplete (EI): This is an incomplete region having only one neighbor region that it can donate areas to
+    or receive areas from.
+
+    - Exhausted-complete (EC): This is a complete region having only one neighbor region that it can donate areas to or receive
+    areas from.
+
+    - Processed (P): This is the final state of a region. This region cannot donate or receive other areas.
+
+
+    Initially, all the regions are labeled as UP. Notice that regions with only one neighbor region are labeled as EC or EI
+    according to their satisfaction of the user-defined constraint. The Indirect Flow Push step keeps track of all incomplete
+    regions. At any stage, if the partition no longer contains incomplete region, this step terminates.
+
+
+    We define the movable boundary between 𝑟1 and 𝑟2 MBDRY(𝑟1, 𝑟2) to be the set of areas 𝐴 where each area 𝑎 in 𝐴 needs to
+    satisfy the following properties:
+
+    - 𝑎 belongs to 𝑟1, i.e., 𝑎.𝑟 = 𝑟1.𝑖𝑑, and neighbor to 𝑟2, i.e., 𝑎 ∈ 𝑟2.𝑁𝐵𝑅𝐴.
+
+    - Removing 𝑎 from 𝑟1 would not make 𝑟1 incomplete, i.e., 𝑟1.𝑒𝑥𝑡 − 𝑎.𝑒𝑥𝑡 > threshold.
+
+    - 𝑎 is not an articulation area for 𝑟1, i.e., 𝑎 ∉ 𝑟1.𝑎𝑟𝑡.
+
+
+    In this phase, for a given 𝑀𝐵𝐷𝑅𝑌(𝑟1, 𝑟2), the best area in 𝑀𝐵𝐷𝑅𝑌(𝑟1, 𝑟2) to move from 𝑟1 to 𝑟2 is defined as the area
+    𝑎𝑏𝑒𝑠𝑡 that maximizes 𝑐𝑜𝑛𝑛(𝑎𝑏𝑒𝑠𝑡, 𝑟2) − 𝑐𝑜𝑛𝑛(𝑎𝑏𝑒𝑠𝑡, 𝑟1). Ties are broken arbitrarily. The area chosen to be moved from
+    𝑟1 to 𝑟2 has the most connections to areas in 𝑟2 compared to 𝑟1. Notice that this move may not result in the best heterogeneity
+    improvement because the objective here is to ensure high robustness of regions. This allows areas to move without disconnecting
+    regions.
+
+
+    Then, in each iteration, if there are UP regions, we select the UP region with the largest extensive attribute to be processed
+    and name it as 𝑟𝑠𝑒𝑙𝑒𝑐𝑡. If there are no UP regions but EC regions, then we choose the EC region with the largest extensive
+    attribute. If there are no UP or EC regions while having incomplete regions, then GSLO fails to identify a feasible partition
+    of the input areas.
+
+
+    Algorithm 2 describes Indirect Flow Push and proceeds as follows: In each iteration, if 𝑟𝑠𝑒𝑙𝑒𝑐𝑡 has EC neighbor regions,
+    we select the EC neighbor region with the largest extensive attribute, say 𝑟𝑔 and we compute 𝑀𝐵𝐷𝑅𝑌(𝑟𝑔, 𝑟𝑠𝑒𝑙𝑒𝑐𝑡). If 𝑀𝐵𝐷𝑅𝑌(𝑟𝑔,
+    𝑟𝑠𝑒𝑙𝑒𝑐𝑡) is empty, then 𝑟𝑔 is transformed to P. The reason is that 𝑟𝑔 is complete and cannot afford to donate any other
+    area. Otherwise, we move 𝑎𝑏𝑒𝑠𝑡 from 𝑟𝑔 to 𝑟𝑠𝑒𝑙𝑒𝑐𝑡. If 𝑟𝑠𝑒𝑙𝑒𝑐𝑡 has EI neighbor regions, we take the EI neighbor region
+    with the least extensive attribute, say 𝑟𝑠 and we compute 𝑀𝐵𝐷𝑅𝑌(𝑟𝑠𝑒𝑙𝑒𝑐𝑡, 𝑟𝑠). If 𝑀𝐵𝐷𝑅𝑌(𝑟𝑠𝑒𝑙𝑒𝑐𝑡, 𝑟𝑠) is empty, and 𝑟𝑠 is
+    still incomplete, then the last chance of making 𝑟𝑠 complete has been exhausted. In this case, Indirect Flow Push step
+    fails. Otherwise, we move 𝑎𝑏𝑒𝑠𝑡 from 𝑟𝑠𝑒𝑙𝑒𝑐𝑡 to 𝑟𝑠. If 𝑟𝑠 becomes complete after this move, then 𝑟𝑠 is transformed into
+    P. Notice that when the EI neighbor region receives an area from 𝑟𝑠𝑒𝑙𝑒𝑐𝑡, one or more new NON-P neighbor regions of this
+    EI region might be introduced. If this is the case, this EI region converts to UP as it now has two or more NON-P neighbor
+    regions. If 𝑟𝑠𝑒𝑙𝑒𝑐𝑡 does not have any EC or EI neighbor regions, then we choose the UP neighbor region with the least
+    extensive attribute, say 𝑟′𝑠, where 𝑀𝐵𝐷𝑅𝑌(𝑟𝑠𝑒𝑙𝑒𝑐𝑡, 𝑟′𝑠) is not empty. If no movable area is found after all the neighbor
+    UP regions are exhausted, 𝑟𝑠𝑒𝑙𝑒𝑐𝑡 converts to P. If 𝑀𝐵𝐷𝑅𝑌(𝑟𝑠𝑒𝑙𝑒𝑐𝑡, 𝑟′𝑠) is not empty, we move 𝑎𝑏𝑒𝑠𝑡 from 𝑟𝑠𝑒𝑙𝑒𝑐𝑡 to 𝑟′𝑠.
+
+
+    For a given 𝑟𝑠𝑒𝑙𝑒𝑐𝑡, we give priority to EC and EI neighbor regions. This is the only opportunity for these regions to
+    exchange an area with 𝑟𝑠𝑒𝑙𝑒𝑐𝑡. For a neighbor EC region, we move the EC region’s margin areas to 𝑟𝑠𝑒𝑙𝑒𝑐𝑡 until any further
+    move would disconnect the EC region or make the EC region incomplete. This is because we want the total extensive attribute
+    of this region to be just above the threshold. After the processing of 𝑟𝑠𝑒𝑙𝑒𝑐𝑡, all the redundant extensive attribute
+    in this EC neighbor region would become stagnant, as this EC neighbor region will convert to P. For an EI neighbor region,
+    𝑟𝑠𝑒𝑙𝑒𝑐𝑡 is the last opportunity to make it complete. Once 𝑟𝑠𝑒𝑙𝑒𝑐𝑡 finishes processing, the EI neighbor region will not
+    have a chance to exchange an area with its neighbor regions. EI region is converted to P once it becomes complete. We
+    can think of areas within regions as flow that is being pushed from regions that have high extensive attribute to regions
+    that have low extensive attribute. The state diagram of the Indirect Flow Push step is shown in Figure 3.
+
+
+    Complexity analysis. It takes 𝑂(𝑝) to find the neighbor region 𝑟 that has either the minimum or the maximum extensive
+    attribute. Then, computing 𝑀𝐵𝐷𝑅𝑌(𝑟, 𝑟′), using Tarjan algorithm, takes 𝑂(𝑐(𝑟)). Filtering out all the areas in 𝑟 that
+    make 𝑟 incomplete when removed or not in 𝑟.𝑁𝐵𝑅𝐴 also takes 𝑂(𝑐(𝑟)). Last of all, evaluating 𝑐𝑜𝑛𝑛(𝑎, 𝑟) and 𝑐𝑜𝑛𝑛(𝑎, 𝑟′)
+    for the remaining areas that takes 𝑂(𝑐(𝑟)), since there are (𝑐(𝑟)) areas in the boundary and computing 𝑐𝑜𝑛𝑛(.) is 𝑂(1)
+    due to the average constant degree of a node in a spatial neighborhood graph, which is a planar graph. Also, computing
+    the heterogeneity variation on 𝑟 and 𝑟′ takes time 𝑂(𝑐(𝑟) + 𝑐(𝑟′)). Therefore, each move takes 𝑂(𝑐(𝑟) + 𝑐(𝑟′)) + 𝑂(𝑝)
+    = 𝑂(𝑛). Each area could be moved at most 𝑂(𝑝) times because an area never has a chance to be moved back to the same region
+    where it comes from and there are in total 𝑛 areas. Consequently, the overall time complexity of Indirect Flow Push is
+    𝑂(𝑛)𝑂(𝑛𝑝) = 𝑂(𝑛2𝑝).
+
+
+    Remark 5.5. Time complexity of Indirect Flow Push is 𝑂(𝑛2𝑝).'
+  citations:
+  - marker: '[14]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Heterogeneity objective functions
+  - marker: '[8, 9, 14, 33–35, 53]'
+    intent_label: Prior Methods
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[14, 33–35, 53]'
+    intent_label: Prior Methods
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[8, 9]'
+    intent_label: Prior Methods
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[50]'
+    intent_label: Domain Overview
+    topic_label: Bottom-up seeded agglomeration
+  - marker: '[45]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Heuristic models with explicit contiguity
+- block_id: 7
+  content: 'If a feasible partition is found in the Global Search phase, Local Optimization is applied to further improve
+    the heterogeneity over the partition. Most regionalization algorithms [8, 9, 14, 34, 35, 53] include an optimization phase
+    that improves the objective function by changing the membership of the border areas of the regions using heuristic searching
+    strategies. Some regionalization algorithms [8, 9, 14] perform an extremely expensive exhaustive search of all possible
+    reassignments of border areas just to pick only one reassignment step. This makes it hard to use on large datasets.
+
+
+    The Local Search in [53] has superior performance for the following reasons: (1) Local Search identifies movable areas
+    instead of all the possible moves, (2) Local Search does not recalculate a new set of movable areas until the previous
+    list has been exhausted. This makes Local Search efficient in improving the overall heterogeneity of the partition without
+    performing extremely expensive computations that do not scale up for large data. An area 𝑎 within region 𝑟 is movable
+    if: (i) 𝑎 is on the margin of 𝑟, (ii) 𝑎 is not an articulation area of 𝑟, (iii) 𝑟 remains complete after the area 𝑎 is
+    removed. In each iteration, all the movable areas are put into a list. A random area is chosen to be moved to the neighbor
+    region with the minimum heterogeneity. If the move decreases the heterogeneity over the current partition, then the move
+    is accepted. Otherwise, the acceptance of the move is determined by the Boltzmann probability [31]. After a move is performed,
+    all the areas belonging to the donor region and the receiver region are removed from the list. The heuristic does not
+    identify the movable areas again unless the list of movable areas has been exhausted.
+
+
+    We further extend this heuristic to speed up the searching process and improve the optimization goal. First, for each
+    selected movable unit, we reassign it to the neighboring region that results in the minimum heterogeneity increase instead
+    of the neighboring region that has the minimum heterogeneity. Second, we parallelize Local Search by searching for movable
+    areas of regions concurrently. Third, we adopt Tarjan algorithm [45] to find all the articulation areas that are not allowed
+    to move. These improvements lead to 100x faster search in Local Optimization.
+
+
+    Complexity analysis. In Local Optimization, parallelly locating all the movable areas using Tarjan algorithm from each
+    region takes ∑𝑝𝑖=1 𝑂(𝑐(𝑟𝑖)/T) = 𝑂(𝑛/T) where T is the number of threads available in the parallel environment. After each
+    move, areas from donor and receiver regions are removed from the list. So, on average, 𝑝2/2 moves are performed. For each
+    move, computing the heterogeneity change and selecting receiver region for reassigning area 𝑎 in 𝑎.𝑁𝐵𝑅𝑅 takes time ∑|𝑎.𝑁𝐵𝑅𝑟|𝑖=1
+    𝑐(𝑟𝑖) = 𝑂(𝑛). Consequently, each move attempt takes time 𝑂(𝑛) + 𝑂(𝑛/T)/𝑝2 = 𝑂(𝑛). So, the overall runtime of Local Optimization
+    is 𝛼𝑂(𝑛), where 𝛼 is the number of total move attempts and 𝑂(𝑛) is the cost for each move attempt.
+
+
+    Remark 5.6. Time complexity of Local Optimization is 𝑂(𝛼𝑛).'
+  citations:
+  - marker: '[45]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[8, 9, 14, 34, 35, 53]'
+    intent_label: Prior Methods
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[8, 9, 14]'
+    intent_label: Research Gap
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[53]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Local search with area swaps and metaheuristics
+  - marker: '[31]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Local search with area swaps and metaheuristics
+- block_id: 8
+  content: 'This section gives time and space complexity of GSLO. According to Remark 5.1, Remark 5.2, Remark 5.3, Remark
+    5.4, Remark 5.5, and Remark 5.6, the overall time complexity of GSLO is 𝑂(𝑛2𝑝 + 𝑚𝑝2 + 𝛼𝑛), where 𝛼 is the actual number
+    of move attempts in the Local Optimization and 𝑚 is the maximum number of iterations during Seed Identification. The value
+    of 𝛼 is mainly affected by the number of iterations in Local Optimization (𝐼𝐿𝑂), i.e., the maximum number of non-improving
+    moves allowed. Empirically, the value of 𝛼 is 1-2 orders of magnitude of 𝐼𝐿𝑂 parameter value (Table 3).
+
+
+    The space complexity of GSLO is 𝑂(𝑛). The input stores each area and its corresponding attributes, i.e., extensive attributes,
+    similarity attributes, marginal coordinates and etc, which takes 𝑂(𝑛) storage. GSLO stores the neighbor areas of each
+    input area. Since the spatial neighborhood is a planar graph, the number of neighbors is strictly less than six [50].
+    Consequently, storing the neighbors takes 6 * 𝑂(𝑛) = 𝑂(𝑛) space. On the region level, for each region 𝑟, we need to store
+    𝑟.𝑚𝑎𝑟𝑔𝑖𝑛 and 𝑟.𝑁𝐵𝑅𝐴. Note that ∑𝑝𝑖=1 𝑟𝑖.𝑚𝑎𝑟𝑔𝑖𝑛 = 𝑂(𝑛) and ∑𝑝𝑖=1 𝑟𝑖.𝑁𝐵𝑅𝐴 = 𝑂(𝑛). Consequently, the overall space complexity
+    of GSLO is 𝑂(𝑛).'
+  citations:
+  - marker: '[50]'
+    intent_label: Domain Overview
+    topic_label: Heuristic models with explicit contiguity
+- block_id: 9
+  content: 'In this section, we present extensive experimental evaluation to demonstrate the efficiency of GSLO. We use the
+    following datasets: (1) TIGER shapefile dataset [10], and (2) Health, Income and Diversity dataset [19]. The TIGER dataset
+    is a real dataset of the census tracts of individual states within the United States [10]. Each item in the TIGER dataset
+    is a spatial polygon of census tract with multiple numerical attributes. The size of the dataset used in the experiments
+    ranges from 2k to 40k spatial polygons, which is an order of magnitude larger than any dataset used in evaluating regionalization
+    to the best of our knowledge. In our experiments, we consider the ALAND, which represents the current land area of a census
+    tract, as the extensive attribute. Also, we consider AWATER, which represents the current water area of a census tract,
+    as the similarity attribute.
+
+
+    The Health, Income and Diversity dataset [19] has 3k elements. Each item in this dataset is a county within the United
+    States that is associated with multiple numerical attributes. We consider cz_pop2000 as the extensive attribute and it
+    represents the population of U.S. counties. We consider ratio as the similarity attribute and it represents each county’s
+    median income divided by the state’s median income. For both datasets, all the island areas are removed. All experiments
+    are based on Java 14 implementation using an Intel Xeon(R) server with CPU E5-2637 v4 (3.50 GHz) and 128GB RAM running
+    Ubuntu 16.04. Table 3 summarizes the parameters used throughout the experimental evaluation. The bold values indicate
+    the default setting for each parameter.
+
+
+    Our evaluation metrics are: (1) heterogeneity, (2) runtime, and (3) effectiveness, i.e., the probability of finding a
+    feasible partition. The heterogeneity is calculated as the mean value from feasible partitions. If no feasible partition
+    is generated among all the runs, then the heterogeneity is represented as 𝑖𝑛𝑓. The number of runs in all experiments is
+    100 except for that the number of runs in the scalability test is 10 to avoid extremely long experimentation time.
+
+
+    We compare GSLO against four alternatives: (1) SKATER [3], (2) SKATERCON [4], (3) GS, and (4) Greedy. SKATER and SKATERCON
+    are the state-of-the-art algorithms for the 𝑝-regions problem. GS is GSLO without Local Optimization. Greedy is a greedy
+    baseline algorithm that proceeds as follows: (i) randomly select 𝑝 seed areas, (ii) select the region with the least extensive
+    attribute to grow by adding a neighboring area that results in the minimum heterogeneity increase, (iii) regions stop
+    growing once the user-defined constraint has been satisfied or there are no neighboring areas, (iv) enclaves are assigned
+    similar to GSLO.
+
+
+    Notice that SKATER and SKATERCON cannot directly solve PRUC because they do not consider user-defined constrains as described
+    in Section 2. We modify SKATER and SKATERCON into SKATER* and SKATERCON*, respectively, to allow them to solve PRUC. SKATER*
+    changes the tree-partitioning phase in SKATER as follows: The edge selection in SKATER* adopts the edge selection from
+    SKATER. However, SKATER* enforces that the edge chosen to be split must be feasible, i.e., the subtrees produced by the
+    split must exceed the threshold of the extensive attribute. SKATER* splits the tree in each iteration by choosing the
+    edge cut that brings the greatest heterogeneity reduction among all feasible edge cuts. SKATERCON is modified to SKATERCON*
+    by using SKATER* instead of SKATER and parallelizing the generation of spanning trees. The execution of SKATER* is also
+    parallelized. Additionally, the subgraph with the largest extensive attribute is given the highest priority for partitioning
+    in the last step of SKATERCON*. The runtime complexity for SKATER* is 𝑂(𝑛3𝑝) and the runtime complexity for SKATERCON*
+    is 𝑂(𝛽𝑛3𝑝) where 𝑛 is the total number of spatial areas in the input, 𝑝 is the predefined number of regions, and 𝛽 is
+    the number of random spanning trees in SKATERCON*.'
+  citations:
+  - marker: '[3]'
+    intent_label: Result Comparison
+    topic_label: Top-down divisive edge-removal methods
+  - marker: '[4]'
+    intent_label: Result Comparison
+    topic_label: Top-down divisive edge-removal methods
+  - marker: '[10]'
+    intent_label: Benchmark Utilization
+    topic_label: regionalization
+  - marker: '[19]'
+    intent_label: Benchmark Utilization
+    topic_label: regionalization
+- block_id: 10
+  content: 'In this section, we experimentally identify the optimal values for the parameters of GSLO.
+
+
+    Number of Iterations in Seed Identification Figure 4 shows the heterogeneity and the runtime of GSLO under different number
+    of iterations in Seed Identification (ISI) on the TIGER dataset. This figure shows that increasing the number of iterations
+    results in improvement in the seed quality and the overall heterogeneity. Note that the seed quality is defined as the
+    minimum area-area pair distance, which is discussed in Section 5.1.1 and only applicable for Seed Identification in GSLO.
+    However, increasing the number of iterations increases the runtime of GSLO. We set the number of iterations to 1DS as
+    it results in a balance between heterogeneity and overall runtime. Also, we compare our seeding strategy with random seeding
+    and k-means++ [2] seeding, denoted as GSLO-random and GSLO-kmeans++, respectively. k-means++ seeding is reported as the
+    lowest error seeding for k-means clustering [43]. Figure 4(c) shows that around 1DS, GSLO seeding, random seeding, and
+    k-means++ seeding achieve nearly the same runtime. Regarding heterogeneity, GSLO seeding slightly outperforms random seeding
+    and k-means++ seeding. Figure 4(b) shows that the best heterogeneity GSLO obtained around 1DS, i.e., the optimal setting
+    as discussed above, achieves 11.1% better heterogeneity compared to random seeding and 4% better heterogeneity compared
+    to k-means++ seeding, which demonstrates the superiority of our Seed Identification.
+
+
+    Iterations in Local Optimization Iterations in Local Optimization (ILO) refer to the maximum number of non-improving moves
+    allowed in Local Optimization that is describe in 5.2. Figure 5 shows the heterogeneity and runtime under different ILO
+    using the TIGER dataset. We see that the heterogeneity improves as the number of iterations in Local Optimization increases.
+    However, the overall runtime also increases as ILO increases. We set the number of iterations in Local Optimization to
+    1DS, i.e., the size of the dataset, as it achieves a good balance between runtime and heterogeneity in Local Optimization.'
+  citations:
+  - marker: '[2]'
+    intent_label: Result Comparison
+    topic_label: Compactness-driven location–allocation approaches
+  - marker: '[43]'
+    intent_label: Prior Methods
+    topic_label: Compactness-driven location–allocation approaches
+- block_id: 11
+  content: 'This section analyzes the performance of GSLO under different parameter settings.
+
+
+    #### 7.2.1 Time Breakdown Analysis
+
+    Figure 6 provides time breakdown analysis of GSLO under the TIGER dataset that shows the average runtime of each phase
+    under different 𝑝. The figure shows that the runtime of Local Optimization dominates the runtime of GSLO and it decreases
+    as 𝑝 increases since larger 𝑝 means less flexibility to reassign the border areas without violating the user-defined constraint.
+    Seed Identification runtime increases slightly as 𝑝 increases because more seed areas are involved. Region Growth runtime
+    increases as 𝑝 increases because there are more regions to grow. Enclaves Assignment runtime decreases as 𝑝 increases
+    because there are fewer enclaves to assign. Also, the runtime of Inter-region Update and Indirect Flow increases as 𝑝
+    increases because a larger 𝑝 results in a higher probability of generating incomplete regions and thus a higher probability
+    of invoking both steps. Note that in this experiment the average runtime is computed from solved cases only. When 𝑝 =
+    50, no feasible partition is found.
+
+
+    #### 7.2.2 Exploring Island Dataset
+
+    In this section, we experimentally explore the efficiency of GSLO over a dataset containing islands. We use a dataset
+    that consists of two connected components of size 3k, and 0.2k, respectively. SKATER* and SKATERCON* do not support islands
+    because the input for both must be a connected spatial neighborhood graph. Thus, we compare GSLO with Greedy. Figure 7
+    shows that GSLO consistently achieves better heterogeneity and effectiveness than Greedy in all cases. Notice that when
+    𝑝 > 10, Greedy does not find a feasible partition at all, whereas GSLO finds the feasible partition with high probability
+    in all solvable cases. GSLO’s high effectiveness results from all phases of GSLO that take the extensive attribute into
+    consideration.
+
+
+    #### 7.2.3 The effect of the number of regions p
+
+    Figure 8a, Figure 8b, and Figure 8c show the performance of all alternatives under different 𝑝 using the TIGER dataset.
+    Note that the effectiveness of SKATER* is either 0 or 1 because SKATER* is deterministic. The result shows that GSLO consistently
+    achieves the best heterogeneity and effectiveness. For the TIGER dataset, GSLO achieves up to 5.22× improvement in heterogeneity
+    compared to GS, which demonstrates the efficiency of Local Optimization to further optimize the heterogeneity. GSLO achieves
+    up to 9× improvement in heterogeneity compared to Greedy. Although the runtime in Greedy is the smallest among all, the
+    worst effectiveness and heterogeneity make it impractical to use. Greedy has bad effectiveness because it does not balance
+    the extensive attribute across different regions, and has bad heterogeneity because it makes local greedy decisions when
+    growing regions, which leads to suboptimal solutions. GSLO achieves up to 4.3× improvement in heterogeneity compared to
+    SKATER* and up to 8.8× improvement compared to SKATERCON*. Moreover, GSLO is up to 90.6× faster than SKATER* and up to
+    229.7× faster than SKATERCON*. Figure 8d, Figure 8e, and Figure 8f show that using the HID dataset, GSLO achieves up to
+    2.24× better heterogeneity compared to GS, and up to 31.6% improvement in heterogeneity compared to Greedy. GSLO achieves
+    up to 21.5% improvement in heterogeneity compared to SKATER* and up to 52.3% improvement compared to SKATERCON*. With
+    respect to runtime, GSLO is up to 97.1× faster than SKATER* and up to 244.7× faster than SKATERCON*. The percentage of
+    heterogeneity reduction in the TIGER dataset of GSLO compared to the other baseline algorithms is much greater than in
+    the HID dataset. This is because the similarity attribute in the TIGER dataset has a greater range and variance, thus
+    different partitions constructed from the TIGER dataset have greater difference regarding heterogeneity compared to the
+    HID dataset where the similarity attribute has closer values. Due to the fact that Greedy is inefficient and GS is part
+    of GSLO, in the following experiments we will only compare GSLO with SKATER* and SKATERCON*.
+
+
+    Notice that the runtime of SKATER* and SKATERCON* increases as 𝑝 increases. Furthermore, SKATERCON* has a higher runtime
+    than SKATER* as SKATER* is a phase of SKATERCON*. However, GSLO requires less runtime as 𝑝 increases. The reason is that,
+    as 𝑝 increases, the number of areas that can move between regions in Local Optimization is smaller. Hence, the number
+    of possible moves is also smaller. This results in less runtime. Notice that GSLO is able to early detect that there is
+    no feasible solution to the input problem up to 302.6× faster than SKATER* and SKATERCON*. The reason is that GSLO is
+    able to make an early decision about the feasibility of the input problem in the Global Search phase.
+
+
+    With respect to runtime, GSLO outperforms SKATER* and SKATERCON*, because GSLO is a seeding-based algorithm that incrementally
+    grows regions around seed areas. However, SKATER* and SKATERCON* require finding successive expensive edge cuts on the
+    input graph. From a theoretical perspective, the time complexity of SKATER* and SKATERCON* is cubic in 𝑛 while the time
+    complexity of GSLO is quadratic in 𝑛. This gives GSLO a consistent edge over SKATER* and SKATERCON*. GSLO achieves superior
+    heterogeneity due to the Local Optimization step that reassigns areas to regions to improve the overall heterogeneity,
+    whereas in SKATER* and SKATERCON*, once a partition is generated, no adjustment is made to further optimize the heterogeneity.
+    GSLO has higher effectiveness due to Inter-region Update and Indirect Flow Push phases that produce complete regions.
+    SKATER* and SKATERCON* do not have these abilities.
+
+
+    #### 7.2.4 The effect of varying the threshold
+
+    Figure 9 shows the heterogeneity, runtime, and effectiveness of GSLO, SKATER*, and SKATERCON* under different threshold
+    values in the TIGER and HID datasets. Figure 9a, Figure 9b, and Figure 9c show that, under the TIGER dataset, GSLO achieves
+    up to 6.1× better heterogeneity than SKATER* and up to 8.6× better heterogeneity than SKATERCON*. Additionally, GSLO is
+    up to 26× faster than SKATER* and up to 74.5× faster than SKATERCON*. Figure 9d, Figure 9e, and Figure 9f show that, under
+    the HID dataset, GSLO achieves up to 12.8% better heterogeneity than SKATER* and up to 48.1% better heterogeneity than
+    SKATERCON*. GSLO is up to 37.5× faster than SKATER* and up to 95.9× faster than SKATERCON* under the HID dataset. GSLO
+    achieves the best effectiveness in both datasets. The reason behind the good performance is similar to the one explained
+    in Section 7.2.3.
+
+
+    #### 7.2.5 Using GSLO to Solve the 𝑝-regions problem
+
+    When the threshold value is set to 0, PRUC resembles the basic 𝑝-regions problem [15]. In this experiment, we compare
+    GSLO to SKATER and SKATERCON when solving the 𝑝-regions problem. Figure 10 illustrates that GSLO achieves better results
+    than both SKATER and SKATERCON for both heterogeneity and runtime. Under the TIGER dataset, GSLO achieves up to 4.1× better
+    heterogeneity than SKATER and 8.7× better heterogeneity than SKATERCON. In addition, GSLO is up to 31.2× faster than SKATER
+    and up to 73.2× faster than SKATERCON. Under the HID dataset, GSLO achieves up to 22% better heterogeneity than SKATER
+    and up to 23.3% better heterogeneity than SKATERCON. Moreover, GSLO is up to 180.9× faster than SKATER and up to 425×
+    faster than SKATERCON.
+
+
+    #### 7.2.6 The scalability of GSLO
+
+    Figure 11 demonstrates the scalability of GSLO compared to SKATER* and SKATERCON* on the TIGER dataset of different sizes.
+    Within a predefined time limit, i.e., 4 hours, GSLO can handle up to 40k dataset while SKATER* and SKATERCON* can only
+    handle up to 10k. Furthermore, GSLO achieves up to 5× better heterogeneity than SKATER* and SKATERCON*. This experiment
+    shows that GSLO can handle up to 4× larger datasets than SKATER* and SKATERCON*.'
+  citations:
+  - marker: '[15]'
+    intent_label: Problem Formulation
+    topic_label: p-regions formulations
+- block_id: 12
+  content: In this paper, we introduce PRUC, a generalized version of the 𝑝-regions problem that accounts for user-defined
+    constraints. We develop an efficient parallel stochastic solution to PRUC which is divided into Global Search and Local
+    Optimization. Experimental results show that GSLO is up to more than 100× faster and achieves up to 6× better heterogeneity
+    than the state-of-the-art algorithms. In addition, GSLO solves the original 𝑝-regions problem with up to 4× better heterogeneity
+    than existing algorithms. With respect to future work, we plan to use GSLO to solve other spatial regionalization problems,
+    e.g., 𝑝-compact region problem [35], school redistricting problem [8, 9], Node-attributed Spatial Graph Partitioning [6],
+    and MAX-P regions problem [14]. Also, we plan to investigate the support of incremental changes to the properties of input
+    areas and multiple user-defined constraints.
+  citations:
+  - marker: '[35]'
+    intent_label: Prospective Application
+    topic_label: p-regions formulations
+  - marker: '[14]'
+    intent_label: Prospective Application
+    topic_label: max-p regions formulations
+  - marker: '[6]'
+    intent_label: Prospective Application
+    topic_label: Contiguity-aware graph embeddings with attribute and interaction signals
+  - marker: '[8, 9]'
+    intent_label: Prospective Application
+    topic_label: p-regions formulations

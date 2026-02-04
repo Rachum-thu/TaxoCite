@@ -6,7 +6,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Input Representations and Modalities"
+  - "Raw point-based representations"
 - "title": "PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -233,9 +233,9 @@
   - 4
   - 12
   "intent_labels":
-  - "Other Intent"
   - "Prior Methods"
-  - "Prospective Application"
+  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Projection-based representations"
   - "Hybrid multi-modal representations"
@@ -245,7 +245,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Spherical Deformable U-Net: Application to Cortical Surface Parcellation and Development Prediction"
@@ -253,7 +253,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Other Intent"
+  - "Prior Methods"
   "topic_labels":
   - "Projection-based representations"
 - "title": "FFTs for the 2-Sphere-Improvements and Variations"
@@ -377,7 +377,7 @@
   "block_ids":
   - 7
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Background"
   "topic_labels":
   - "Projection-based segmentation"
 - "title": "LiDARNet: A Boundary-Aware Domain Adaptation Model for Point Cloud Semantic Segmentation"
@@ -387,4 +387,4 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Projection-based segmentation"
+  - "Projection-based representations"

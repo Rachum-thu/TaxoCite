@@ -6,7 +6,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Other Topics"
 - "title": "Exploring Transformer Text Generation for Medical Dataset Augmentation"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -14,7 +14,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Other Topics"
 - "title": "Enriching Word Vectors with Subword Information"
   "unique_context_marker": "[3]"
   "block_ids":
@@ -22,7 +22,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Pre-trained language models"
+  - "Decoder-only transformers"
 - "title": "The TREC 2005 Terabyte Track"
   "unique_context_marker": "[4]"
   "block_ids":
@@ -38,7 +38,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Other Topics"
 - "title": "Direct vs. indirect evaluation of distributional thesauri"
   "unique_context_marker": "[6]"
   "block_ids":
@@ -73,7 +73,7 @@
   "intent_labels":
   - "Result Comparison"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Retrieval- and knowledge-augmented prompting"
 - "title": "Overview of the Second Text Retrieval Conference (TREC-2)"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -105,7 +105,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Sentiment and opinion benchmarks"
 - "title": "NPRF: A Neural Pseudo Relevance Feedback Framework for Ad-hoc Information Retrieval"
   "unique_context_marker": "[14]"
   "block_ids":
@@ -121,13 +121,13 @@
   - 10
   - 18
   "intent_labels":
-  - "Prior Methods"
   - "Result Comparison"
   - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
-  - "Decoder-only transformers"
   - "Other Topics"
-  - "Decoder-only transformers"
+  - "Other Topics"
+  - "Pre-trained language models"
 - "title": "Lower-bounding Term Frequency Normalization"
   "unique_context_marker": "[16]"
   "block_ids":
@@ -143,13 +143,13 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Other Topics"
 - "title": "Combining the Language Model and Inference Network Approaches to Retrieval"
   "unique_context_marker": "[18]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   "topic_labels":
   - "Other Topics"
 - "title": "Distributed Representations of Words and Phrases and their Compositionality"
@@ -180,8 +180,8 @@
   - "Result Comparison"
   "topic_labels":
   - "Encoder-only transformers"
-  - "Pre-trained language models"
-  - "Decoder-only transformers"
+  - "Retrieval- and knowledge-augmented prompting"
+  - "Retrieval- and knowledge-augmented prompting"
 - "title": "From doc2query to docTTTTTquery"
   "unique_context_marker": "[22]"
   "block_ids":
@@ -213,7 +213,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Other Topics"
 - "title": "GloVe: Global Vectors for Word Representation"
   "unique_context_marker": "[26]"
   "block_ids":
@@ -256,21 +256,21 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Other Topics"
 - "title": "DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter"
   "unique_context_marker": "[31]"
   "block_ids":
   - 18
   "intent_labels":
-  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Decoder-only transformers"
+  - "Other Topics"
 - "title": "Indri: A language-model based search engine for complex queries"
   "unique_context_marker": "[32]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Resource Utilization"
   "topic_labels":
   - "Other Topics"
 - "title": "BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models"
@@ -279,17 +279,17 @@
   - 8
   - 18
   "intent_labels":
-  - "Prior Methods"
-  - "Prior Methods"
+  - "Result Comparison"
+  - "Domain Overview"
   "topic_labels":
-  - "Pre-trained language models"
   - "Decoder-only transformers"
+  - "Pre-trained language models"
 - "title": "Attention is All you Need"
   "unique_context_marker": "[34]"
   "block_ids":
   - 6
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Decoder-only transformers"
 - "title": "Overview of the TREC 2004 Robust Track"
@@ -315,16 +315,16 @@
   - 18
   "intent_labels":
   - "Result Comparison"
-  - "Research Gap"
+  - "Domain Overview"
   "topic_labels":
+  - "Retrieval- and knowledge-augmented prompting"
   - "Pre-trained language models"
-  - "Prompt-driven classification paradigms"
 - "title": "A study of smoothing methods for language models applied to ad hoc information retrieval"
   "unique_context_marker": "[38]"
   "block_ids":
   - 10
   "intent_labels":
-  - "Model/Architecture Adoption"
+  - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Other Topics"
 - "title": "BERT-QE: Contextualized Query Expansion for Document Re-ranking"

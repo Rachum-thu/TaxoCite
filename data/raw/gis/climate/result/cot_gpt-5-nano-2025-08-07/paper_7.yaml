@@ -1,0 +1,460 @@
+"citations":
+- "title": "The origins of computer weather prediction and climate modeling"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Short- to medium-range global prediction"
+- "title": "FourCastNet: A Global Data-driven High-resolution Weather Model using Adaptive Fourier Neural Operators"
+  "unique_context_marker": "[2]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Pangu-Weather: A 3D High-Resolution Model for Fast and Accurate Global Weather Forecast"
+  "unique_context_marker": "[3]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "GraphCast: Learning skillful medium-range global weather forecasting"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+- "title": "FourCastNet: Accelerating Global High-Resolution Weather Forecasting using Adaptive Fourier Neural Operators"
+  "unique_context_marker": "[5]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Probabilistic weather forecasting with machine learning"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 1
+  - 2
+  - 6
+  "intent_labels":
+  - "Prior Methods"
+  - "Result Comparison"
+  - "Result Comparison"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+  - "Short- to medium-range global prediction"
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Huge Ensembles Part I: Design of Ensemble Weather Forecasts using Spherical Fourier Neural Operators"
+  "unique_context_marker": "[7]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Huge Ensembles Part II: Properties of a Huge Ensemble of Hindcasts Generated with Spherical Fourier Neural Operators"
+  "unique_context_marker": "[8]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Sub-seasonal forecasting with a large ensemble of deep-learning weather prediction models"
+  "unique_context_marker": "[9]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Spherical Fourier Neural Operators: Learning Stable Dynamics on the Sphere"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Architecture families for climate modeling"
+- "title": "ACE: A fast, skillful learned global atmospheric model for climate prediction"
+  "unique_context_marker": "[11]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Advancing Parsimonious Deep Learning Weather Prediction Using the HEALPix Mesh"
+  "unique_context_marker": "[12]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Lucie: A lightweight uncoupled climate emulator with long-term stability and physical consistency for o(1000)-member ensembles"
+  "unique_context_marker": "[13]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "A deep learning earth system model for efficient simulation of the observed climate"
+  "unique_context_marker": "[14]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Dynamical errors in machine learning forecasts"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Challenges and future directions"
+- "title": "Neural General Circulation Models for Weather and Climate"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 1
+  - 3
+  "intent_labels":
+  - "Prior Methods"
+  - "Prior Methods"
+  "topic_labels":
+  - "Architecture families for climate modeling"
+  - "Physics-informed objectives and constraints"
+- "title": "WeatherBench 2: A benchmark for the next generation of data-driven global weather models"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Learning and training strategies"
+- "title": "A Practical Probabilistic Benchmark for AI Weather Models"
+  "unique_context_marker": "[18]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Fixing the Double Penalty in Data-Driven Weather Forecasting Through a Modified Spherical Harmonic Loss Function"
+  "unique_context_marker": "[19]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "AtmoRep: A stochastic model of atmosphere dynamics using large scale representation learning"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Physics-informed objectives and constraints"
+- "title": "Continuous Ensemble Weather Forecasting with Diffusion models"
+  "unique_context_marker": "[21]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "AIFS-CRPS: Ensemble forecasting using a model trained with a loss function based on the Continuous Ranked Probability Score"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 1
+  - 3
+  - 4
+  - 6
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
+  - "Research Gap"
+  - "Result Comparison"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+  - "Physics-informed objectives and constraints"
+  - "Architecture families for climate modeling"
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Denoising Diffusion Probabilistic Models"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Generative models: GANs and diffusion"
+- "title": "Strictly Proper Scoring Rules, Prediction, and Estimation"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Numerical techniques for global atmospheric models"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Domain Overview"
+  - "Research Gap"
+  "topic_labels":
+  - "Challenges and future directions"
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Attention Is All You Need"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Transformers for climate modeling"
+- "title": "Learning mesh-based simulation with graph networks"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Graph neural networks for Earth systems"
+- "title": "Scaling laws for neural language models"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 1
+  - 5
+  "intent_labels":
+  - "Prior Methods"
+  - "Domain Overview"
+  "topic_labels":
+  - "Learning and training strategies"
+  - "Learning and training strategies"
+- "title": "Evaluation of ECMWF forecasts"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - "Result Comparison"
+  "topic_labels":
+  - "Short- to medium-range global prediction"
+- "title": "Stochastic Parametrization and Model Uncertainty"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Probabilistic forecasting with diffusion or variational objectives"
+- "title": "Scalable and Equivariant Spherical CNNs by Discrete-Continuous (DISCO) Convolutions"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Architecture families for climate modeling"
+- "title": "Neural Operators with Localized Integral and Differential Kernels"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Architecture families for climate modeling"
+- "title": "A ConvNet for the 2020s"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Architecture families for climate modeling"
+- "title": "Gaussian Error Linear Units (GELUs)"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Architecture families for climate modeling"
+- "title": "Automatic Cross-Replica Sharding of Weight Update in Data-Parallel Training"
+  "unique_context_marker": "[35]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "DeepSpeed: System Optimizations Enable Training Deep Learning Models with Over 100 Billion Parameters"
+  "unique_context_marker": "[36]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "ZeRO: Memory Optimizations Toward Training Trillion Parameter Models"
+  "unique_context_marker": "[37]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "GPT-4 Technical Report"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Transformers for climate modeling"
+- "title": "The Llama 3 Herd of Models"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Transformers for climate modeling"
+- "title": "The ERA5 global reanalysis"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 5
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Gridded spatio-temporal fields"
+- "title": "Data-driven ensemble forecasting with the AIFS"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - "Result Comparison"
+  "topic_labels":
+  - "Short- to medium-range global prediction"
+- "title": "Consistency Models"
+  "unique_context_marker": "[42]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Generative Adversarial Networks"
+  "unique_context_marker": "[43]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Computing Fourier Transforms and Convolutions on the 2-Sphere"
+  "unique_context_marker": "[44]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "A novel sampling theorem on the sphere"
+  "unique_context_marker": "[45]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "A method for numerical integration on an automatic computer"
+  "unique_context_marker": "[46]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Calculation of Gauss quadrature rules"
+  "unique_context_marker": "[47]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Group Equivariant Convolutional Networks"
+  "unique_context_marker": "[48]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Efficient spherical harmonic transforms aimed at pseudospectral numerical simulations"
+  "unique_context_marker": "[49]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Efficient Generalized Spherical CNNs"
+  "unique_context_marker": "[50]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Nodal High-Order Discontinuous Galerkin Methods for the Spherical Shallow Water Equations"
+  "unique_context_marker": "[51]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Numerical Methods for Conservation Laws"
+  "unique_context_marker": "[52]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "U-Net: Convolutional Networks for Biomedical Image Segmentation"
+  "unique_context_marker": "[53]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "On the use of windows for harmonic analysis with the discrete Fourier transform"
+  "unique_context_marker": "[54]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "PyTorch: An Imperative Style, High-Performance Deep Learning Library"
+  "unique_context_marker": "[55]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Butterfly Factorization"
+  "unique_context_marker": "[56]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Accurate medium-range global weather forecasting with 3D neural networks"
+  "unique_context_marker": "[57]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "FuXi: a cascade machine learning forecasting system for 15-day global weather forecast"
+  "unique_context_marker": "[58]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Going deeper with Image Transformers"
+  "unique_context_marker": "[59]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification"
+  "unique_context_marker": "[60]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Exploring the design space of deep-learning-based weather forecasting systems"
+  "unique_context_marker": "[61]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Alias-Free Generative Adversarial Networks"
+  "unique_context_marker": "[62]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Why should ensemble spread match the RMSE of the ensemble mean?"
+  "unique_context_marker": "[63]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Strictly Proper Scoring Rules, Prediction, and Estimation"
+  "unique_context_marker": "[64]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Estimation of the Continuous Ranked Probability Score with Limited Information and Applications to Ensemble Weather Forecasts"
+  "unique_context_marker": "[65]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Adam: A Method for Stochastic Optimization"
+  "unique_context_marker": "[66]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Data Assimilation in the Geosciences - An overview on methods, issues and perspectives"
+  "unique_context_marker": "[67]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Neural Networks for Postprocessing Ensemble Weather Forecasts"
+  "unique_context_marker": "[68]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "A Machine Learning-Based Global Atmospheric Forecast Model"
+  "unique_context_marker": "[69]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Interpretation of Rank Histograms for Verifying Ensemble Forecasts"
+  "unique_context_marker": "[70]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "A theory for the atmospheric energy spectrum: Depth-limited temperature anomalies at the tropopause"
+  "unique_context_marker": "[71]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Pytorch fsdp: Experiences on scaling fully sharded data parallel"
+  "unique_context_marker": "[72]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []

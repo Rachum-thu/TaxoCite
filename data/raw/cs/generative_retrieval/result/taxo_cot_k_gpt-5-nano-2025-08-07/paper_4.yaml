@@ -1,0 +1,596 @@
+"citations":
+- "title": "The unfairness of popularity bias in recommendation"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Background"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Domain Overview"
+    - "Domain Overview"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Dynamic corpora and incremental updates"
+    - "Architectural and decoding innovations"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+- "title": "Similarity estimation techniques from rounding algorithms"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Wide & deep learning for recommender systems"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Domain Overview"
+    - "Model/Architecture Adoption"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Generative document retrieval"
+    - "Architectural and decoding innovations"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+- "title": "Deep neural networks for youtube recommendations"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Domain Overview"
+    - "Algorithm/Principle Adoption"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Architectural and decoding innovations"
+    - "Architectural and decoding innovations"
+    - "Document identifiers: learnable representations"
+    - "Generative document retrieval"
+- "title": "Autoregressive entity retrieval"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Transformers4rec: Bridging the gap between nlp and sequential/session-based recommendation"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - - "Domain Overview"
+    - "Model/Architecture Adoption"
+    - "Domain Overview"
+    - "Prior Methods"
+    - "Prior Methods"
+  - []
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Document identifiers: learnable representations"
+    - "Architectural and decoding innovations"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+  - []
+- "title": "Bert: Pre-training of deep bidirectional transformers for language understanding"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Recommendation as language processing (rlp): A unified pretrain, personalized prompt & predict paradigm (p5)"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 1
+  - 2
+  - 7
+  "intent_labels":
+  - - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Prior Methods"
+  - []
+  - []
+  "topic_labels":
+  - []
+  - - "Document identifiers: text-based"
+    - "Document identifiers: numeric-based"
+    - "Document identifiers: text-based"
+    - "Document identifiers: text-based"
+    - "Document identifiers: text-based"
+  - []
+- "title": "The netflix recommender system: Algorithms, business value, and innovation"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Domain Overview"
+    - "Algorithm/Principle Adoption"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Evaluation of generative document retrieval"
+    - "Architectural and decoding innovations"
+    - "Evaluation of generative document retrieval"
+    - "Generative document retrieval"
+- "title": "Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - []
+  "topic_labels":
+  - - "Evaluation of generative document retrieval"
+    - "Evaluation"
+    - "Evaluation of generative document retrieval"
+    - "Evaluation of generative document retrieval"
+    - "Evaluation"
+- "title": "Session-based recommendations with recurrent neural networks"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 1
+  - 2
+  - 7
+  "intent_labels":
+  - - "Prior Methods"
+    - "Background"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - []
+  - []
+  "topic_labels":
+  - []
+  - []
+  - []
+- "title": "Learning vector-quantized item representation for transferable sequential recommenders"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - - "Document identifiers: learnable representations"
+    - "Document identifiers: learnable representations"
+    - "Document identifiers: numeric-based"
+    - "Document identifiers: learnable representations"
+    - "Document identifiers: numeric-based"
+- "title": "Approximate nearest neighbors: towards removing the curse of dimensionality"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Locality-preserving hashing in multidimensional spaces"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Product quantization for nearest neighbor search"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Learning to embed categorical features without embedding tables for recommendation"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Prior Methods"
+    - "Benchmark Utilization"
+    - "Prior Methods"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - []
+- "title": "Self-attentive sequential recommendation"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 1
+  - 2
+  - 7
+  "intent_labels":
+  - - "Prior Methods"
+    - "Metrics Utilization"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - []
+  - []
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Incremental learning on dynamic corpora"
+    - "Architectural and decoding innovations"
+    - "Evaluation of generative document retrieval"
+    - "Generative document retrieval"
+  - []
+  - []
+- "title": "A music recommendation system with a dynamic k-means clustering algorithm"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Domain Overview"
+    - "Benchmark Utilization"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Evaluation of generative document retrieval"
+    - "Architectural and decoding innovations"
+    - "Document identifiers: learnable representations"
+    - "Generative document retrieval"
+- "title": "Matrix factorization techniques for recommender systems"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Prior Methods"
+    - "Result Comparison"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Evaluation of generative document retrieval"
+    - "Architectural and decoding innovations"
+    - "Incremental learning on dynamic corpora"
+    - "Generative document retrieval"
+- "title": "The case for learned index structures"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - - "Generative document retrieval"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+- "title": "Autoregressive image generation using residual quantization"
+  "unique_context_marker": "[21]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Contextualized generative retrieval"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Generative retrieval for long sequences"
+  "unique_context_marker": "[23]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Neural attentive session-based recommendation"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - - "Prior Methods"
+    - "Model/Architecture Adoption"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - []
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Document identifiers: learnable representations"
+    - "Architectural and decoding innovations"
+    - "Evaluation of generative document retrieval"
+    - "Generative document retrieval"
+  - []
+- "title": "Hierarchical gating networks for sequential recommendation"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Feedback loop and bias amplification in recommender systems"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Background"
+    - "Model/Architecture Adoption"
+    - "Prior Methods"
+    - "Background"
+    - "Problem Formulation"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Dynamic corpora and incremental updates"
+    - "Architectural and decoding innovations"
+    - "Evaluation of generative document retrieval"
+    - "Generative document retrieval"
+- "title": "Sentence-t5: Scalable sentence encoders from pre-trained text-to-text models"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 1
+  - 4
+  - 6
+  "intent_labels":
+  - - "Model/Architecture Adoption"
+    - "Domain Overview"
+    - "Model/Architecture Adoption"
+    - "Model/Architecture Adoption"
+    - "Model/Architecture Adoption"
+  - []
+  - []
+  "topic_labels":
+  - []
+  - []
+  - - "Document identifiers: learnable representations"
+    - "Document identifiers: learnable representations"
+    - "Document identifiers: learnable representations"
+    - "Document identifiers: learnable representations"
+    - "Document identifiers: numeric-based"
+- "title": "Scaling up models and data with t5x and seqio"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - []
+  "topic_labels":
+  - - "Architectural and decoding innovations"
+    - "Architectural and decoding innovations"
+    - "Architectural and decoding innovations"
+    - "Architectural and decoding innovations"
+    - "Architectural and decoding innovations"
+- "title": "Neural machine translation of rare words with subword units"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - - "Document identifiers: text-based"
+    - "Document identifiers: text-based"
+    - "Document identifiers: text-based"
+    - "Document identifiers: text-based"
+    - "Document identifiers: text-based"
+- "title": "Neural machine translation of rare words with subword units"
+  "unique_context_marker": "[30]"
+  "block_ids": []
+  "intent_labels": []
+  "topic_labels": []
+- "title": "Better generalization with semantic ids: A case study in ranking for recommendations"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 2
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Bert4rec: Sequential recommendation with bidirectional encoder representations from transformer"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 1
+  - 2
+  - 7
+  "intent_labels":
+  - - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - []
+  - []
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Architectural and decoding innovations"
+    - "Architectural and decoding innovations"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+  - []
+  - []
+- "title": "Personalized top-n sequential recommendation via convolutional sequence embedding"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 1
+  - 7
+  "intent_labels":
+  - - "Prior Methods"
+    - "Model/Architecture Adoption"
+    - "Background"
+    - "Domain Overview"
+    - "Prior Methods"
+  - []
+  "topic_labels":
+  - []
+  - []
+- "title": "Transformer memory as a differentiable search index"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 1
+  - 2
+  - 4
+  "intent_labels":
+  - - "Model/Architecture Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Prior Methods"
+    - "Background"
+    - "Prior Methods"
+  - []
+  - []
+  "topic_labels":
+  - []
+  - []
+  - []
+- "title": "Neural discrete representation learning"
+  "unique_context_marker": "[35]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Attention is all you need"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Model/Architecture Adoption"
+    - "Setting/Protocal Adoption"
+    - "Model/Architecture Adoption"
+    - "Model/Architecture Adoption"
+    - "Model/Architecture Adoption"
+  "topic_labels":
+  - []
+- "title": "A neural corpus indexer for document retrieval"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 2
+  - 4
+  "intent_labels":
+  - []
+  - []
+  "topic_labels":
+  - []
+  - []
+- "title": "Feature hashing for large scale multitask learning"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+    - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - - "Identifier design and decoding constraints"
+    - "Document identifiers: numeric-based"
+    - "Identifier design and decoding constraints"
+    - "Document identifiers: numeric-based"
+    - "Identifier design and decoding constraints"
+- "title": "Sampling-bias-corrected neural modeling for large corpus item recommendations"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Prior Methods"
+    - "Resource Utilization"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Dynamic corpora and incremental updates"
+    - "Architectural and decoding innovations"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+- "title": "Soundstream: An end-to-end neural audio codec"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - []
+  "topic_labels":
+  - []
+- "title": "Next item recommendation with self-attention"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 1
+  - 2
+  "intent_labels":
+  - - "Prior Methods"
+    - "Result Comparison"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - []
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Document identifiers: numeric-based"
+    - "Architectural and decoding innovations"
+    - "Generative document retrieval"
+    - "Generative document retrieval"
+  - []
+- "title": "Feature-level deeper self-attention network for sequential recommendation"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 1
+  - 7
+  "intent_labels":
+  - - "Prior Methods"
+    - "Domain Overview"
+    - "Background"
+    - "Background"
+    - "Prior Methods"
+  - []
+  "topic_labels":
+  - []
+  - []
+- "title": "Recommending what video to watch next: a multitask ranking system"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - - "Domain Overview"
+    - "Metrics Utilization"
+    - "Domain Overview"
+    - "Domain Overview"
+    - "Domain Overview"
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Generative document retrieval"
+    - "Architectural and decoding innovations"
+    - "Incremental learning on dynamic corpora"
+    - "Generative document retrieval"
+- "title": "S3-rec: Self-supervised learning for sequential recommendation with mutual information maximization"
+  "unique_context_marker": "[44]"
+  "block_ids":
+  - 1
+  - 2
+  - 7
+  "intent_labels":
+  - - "Prior Methods"
+    - "Background"
+    - "Prior Methods"
+    - "Prior Methods"
+    - "Prior Methods"
+  - []
+  - []
+  "topic_labels":
+  - - "Document identifiers: numeric-based"
+    - "Generative document retrieval"
+    - "Architectural and decoding innovations"
+    - "Evaluation of generative document retrieval"
+    - "Generative document retrieval"
+  - - "Training strategies and data augmentation"
+    - "Training strategies and data augmentation"
+    - "Training strategies and data augmentation"
+    - "Training strategies and data augmentation"
+    - "Training strategies and data augmentation"
+  - []

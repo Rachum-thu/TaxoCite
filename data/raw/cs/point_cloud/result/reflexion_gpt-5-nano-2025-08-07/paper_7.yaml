@@ -63,13 +63,13 @@
   "intent_labels":
   - "Other Intent"
   - "Prior Methods"
-  - "Other Intent"
+  - "Result Comparison"
   - "Model/Architecture Adoption"
   "topic_labels":
   - "Other Topic"
   - "Other Topic"
   - "Other Topic"
-  - "Hybrid multi-modal representations"
+  - "Transformer-based attention models"
 - "title": "Learning the best pooling strategy for visual semantic embedding"
   "unique_context_marker": "[8]"
   "block_ids":
@@ -79,7 +79,7 @@
   "intent_labels":
   - "Other Intent"
   - "Prior Methods"
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Other Topic"
   - "Other Topic"
@@ -91,7 +91,7 @@
   - 14
   "intent_labels":
   - "Other Intent"
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Other Topic"
   - "Other Topic"
@@ -112,7 +112,7 @@
   "intent_labels":
   - "Other Intent"
   - "Prior Methods"
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Other Topic"
   - "Other Topic"
@@ -124,7 +124,7 @@
   - 14
   "intent_labels":
   - "Other Intent"
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Other Topic"
   - "Other Topic"
@@ -139,11 +139,11 @@
   - "Other Intent"
   - "Domain Overview"
   - "Benchmark Utilization"
-  - "Other Intent"
+  - "Benchmark Utilization"
   "topic_labels":
   - "Other Topic"
   - "Contrastive and cross-modal objectives"
-  - "Other Topic"
+  - "Self-supervised and Cross-modal Pretraining"
   - "Other Topic"
 - "title": "Referit3d: Neural listeners for fine-grained 3d object identification in real-world scenes"
   "unique_context_marker": "[14]"
@@ -156,11 +156,11 @@
   - "Other Intent"
   - "Domain Overview"
   - "Benchmark Utilization"
-  - "Other Intent"
+  - "Benchmark Utilization"
   "topic_labels":
   - "Other Topic"
   - "Contrastive and cross-modal objectives"
-  - "Other Topic"
+  - "Self-supervised and Cross-modal Pretraining"
   - "Other Topic"
 - "title": "Ll3da: Visual interactive instruction tuning for omni-3d understanding reasoning and planning"
   "unique_context_marker": "[15]"
@@ -170,11 +170,11 @@
   - 14
   "intent_labels":
   - "Other Intent"
-  - "Prior Methods"
-  - "Other Intent"
+  - "Research Gap"
+  - "Benchmark Utilization"
   "topic_labels":
   - "Other Topic"
-  - "Other Topic"
+  - "Self-supervised and Cross-modal Pretraining"
   - "Other Topic"
 - "title": "Deep learning on point clouds and its application: A survey"
   "unique_context_marker": "[16]"
@@ -191,7 +191,7 @@
   - 14
   "intent_labels":
   - "Other Intent"
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Other Topic"
   - "Other Topic"
@@ -208,7 +208,7 @@
   "block_ids":
   - 14
   "intent_labels":
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Other Topic"
 - "title": "Fine-grained image-text matching by cross-modal hard aligning network"
@@ -218,7 +218,7 @@
   - 14
   "intent_labels":
   - "Prior Methods"
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Other Topic"
   - "Other Topic"
@@ -230,7 +230,7 @@
   - 15
   "intent_labels":
   - "Prior Methods"
-  - "Other Intent"
+  - "Result Comparison"
   - "Result Comparison"
   "topic_labels":
   - "Other Topic"
@@ -299,7 +299,7 @@
   - 14
   "intent_labels":
   - "Prior Methods"
-  - "Other Intent"
+  - "Metrics Utilization"
   "topic_labels":
   - "Other Topic"
   - "Other Topic"
@@ -308,7 +308,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Contrastive and cross-modal objectives"
 - "title": "Text2shape: Generating shapes from natural language by learning joint embeddings"
@@ -316,7 +316,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Other Intent"
   "topic_labels":
   - "Contrastive and cross-modal objectives"
 - "title": "Scannet: Richly-annotated 3d reconstructions of indoor scenes"
@@ -328,10 +328,10 @@
   "intent_labels":
   - "Domain Overview"
   - "Resource Utilization"
-  - "Other Intent"
+  - "Benchmark Utilization"
   "topic_labels":
   - "Contrastive and cross-modal objectives"
-  - "Other Topic"
+  - "Self-supervised and Cross-modal Pretraining"
   - "Other Topic"
 - "title": "Instancerefer: Cooperative holistic understanding for visual grounding on point clouds through instance multi-level contextual referring"
   "unique_context_marker": "[33]"
@@ -354,7 +354,7 @@
   "block_ids":
   - 4
   "intent_labels":
-  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Contrastive and cross-modal objectives"
 - "title": "Context-aware alignment and mutual masking for 3d-language pre-training"
@@ -370,7 +370,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Research Gap"
+  - "Importance of Problem"
   "topic_labels":
   - "Contrastive and cross-modal objectives"
 - "title": "Conceptual captions: A cleaned, hypernymed, image alt-text dataset for automatic image captioning"
@@ -378,7 +378,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Research Gap"
+  - "Importance of Problem"
   "topic_labels":
   - "Contrastive and cross-modal objectives"
 - "title": "Scanqa: 3d question answering for spatial scene understanding"
@@ -388,7 +388,7 @@
   "intent_labels":
   - "Benchmark Utilization"
   "topic_labels":
-  - "Other Topic"
+  - "Self-supervised and Cross-modal Pretraining"
 - "title": "Attention is all you need"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -396,10 +396,10 @@
   - 11
   "intent_labels":
   - "Model/Architecture Adoption"
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Raw point-based representations"
   - "Transformer-based attention models"
+  - "Contrastive and cross-modal objectives"
 - "title": "Cross-modal retrieval with partially mismatched pairs"
   "unique_context_marker": "[41]"
   "block_ids":
@@ -408,7 +408,7 @@
   - 16
   "intent_labels":
   - "Algorithm/Principle Adoption"
-  - "Other Intent"
+  - "Result Comparison"
   - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Contrastive and cross-modal objectives"
@@ -419,7 +419,7 @@
   "block_ids":
   - 14
   "intent_labels":
-  - "Other Intent"
+  - "Result Comparison"
   "topic_labels":
   - "Other Topic"
 - "title": "Esa: External space attention aggregation for image-text retrieval"
@@ -429,7 +429,7 @@
   - 15
   - 16
   "intent_labels":
-  - "Other Intent"
+  - "Result Comparison"
   - "Result Comparison"
   - "Model/Architecture Adoption"
   "topic_labels":
@@ -457,7 +457,7 @@
   "block_ids":
   - 14
   "intent_labels":
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Other Topic"
 - "title": "Learning phrase representations using rnn encoder-decoder for statistical machine translation"
@@ -465,7 +465,7 @@
   "block_ids":
   - 14
   "intent_labels":
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Other Topic"
 - "title": "Bert: Pre-training of deep bidirectional transformers for language understanding"
@@ -473,6 +473,6 @@
   "block_ids":
   - 14
   "intent_labels":
-  - "Other Intent"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Other Topic"

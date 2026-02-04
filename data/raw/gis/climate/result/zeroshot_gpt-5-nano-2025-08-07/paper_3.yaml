@@ -6,76 +6,76 @@
   - 4
   - 5
   "intent_labels":
+  - "Domain Overview"
   - "Algorithm/Principle Adoption"
-  - "Other Intent"
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Short- to medium-range global prediction"
+  - "Challenges and future directions"
   - "Physics-informed objectives and constraints"
-  - "Other Topic"
+  - "Physics-informed objectives and constraints"
 - "title": "Accurate medium-range global weather forecasting with 3D neural networks"
   "unique_context_marker": "[2]"
   "block_ids":
   - 2
   - 8
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   - "Metrics Utilization"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Physics-informed objectives and constraints"
   - "Other Topic"
 - "title": "FengWu: Pushing the Skillful Global Medium-range Weather Forecast beyond 10 Days Lead"
   "unique_context_marker": "[3]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Physics-informed objectives and constraints"
 - "title": "Symbolic genetic algorithm for discovering open-form partial differential equations (SGA-PDE)"
   "unique_context_marker": "[4]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Physics-informed objectives and constraints"
+  - "Continuous lead-time conditioning"
 - "title": "Adaptive fourier neural operators: Efficient token mixers for transformers"
   "unique_context_marker": "[5]"
   "block_ids":
   - 2
   - 10
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   - "Model/Architecture Adoption"
   "topic_labels":
-  - "Architecture families for climate modeling"
+  - "Physics-informed objectives and constraints"
   - "Transformers for climate modeling"
 - "title": "Joint air quality and weather prediction based on multi-adversarial spatiotemporal networks"
   "unique_context_marker": "[6]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Architecture families for climate modeling"
+  - "Physics-informed objectives and constraints"
 - "title": "A short-term wind speed prediction method utilizing novel hybrid deep learning algorithms to correct numerical weather forecasting"
   "unique_context_marker": "[7]"
   "block_ids":
   - 2
   - 10
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   - "Result Comparison"
   "topic_labels":
-  - "Architecture families for climate modeling"
-  - "Recurrent networks and ConvLSTM"
+  - "Downscaling and super-resolution"
+  - "Short- to medium-range global prediction"
 - "title": "The ERA5 global reanalysis"
   "unique_context_marker": "[8]"
   "block_ids":
   - 1
   "intent_labels":
-  - "Resource Utilization"
+  - "Other Intent"
   "topic_labels":
   - "Gridded spatio-temporal fields"
 - "title": "An improved deep belief network based hybrid forecasting method for wind power"
@@ -83,9 +83,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Architecture families for climate modeling"
+  - "Forecasting and simulation tasks"
 - "title": "An Efficient Content-aware Downsampling-based Video Compression Framework"
   "unique_context_marker": "[10]"
   "block_ids":
@@ -108,7 +108,7 @@
   - 2
   - 6
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   - "Model/Architecture Adoption"
   "topic_labels":
   - "Physics-informed objectives and constraints"
@@ -118,36 +118,36 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
-  - "Physics-informed objectives and constraints"
+  - "Transformers for climate modeling"
 - "title": "GraphCast: Learning skillful medium-range global weather forecasting"
   "unique_context_marker": "[14]"
   "block_ids":
   - 2
   - 10
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   - "Result Comparison"
   "topic_labels":
-  - "Graph neural networks for Earth systems"
+  - "Supervised pretraining and finetuning of foundation models"
   - "Graph neural networks for Earth systems"
 - "title": "Numerical weather prediction correction strategy for short-term wind power forecasting based on bidirectional gated recurrent unit and XGBoost"
   "unique_context_marker": "[15]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Recurrent networks and ConvLSTM"
+  - "Architecture families for climate modeling"
 - "title": "Fourier neural operator for parametric partial differential equations"
   "unique_context_marker": "[16]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
-  - "Architecture families for climate modeling"
+  - "Physics-informed objectives and constraints"
 - "title": "Physics-informed neural operator for learning partial differential equations"
   "unique_context_marker": "[17]"
   "block_ids":
@@ -161,17 +161,17 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Architecture families for climate modeling"
+  - "Transformers for climate modeling"
 - "title": "Conditional local convolution for spatio-temporal meteorological forecasting"
   "unique_context_marker": "[19]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Graph neural networks for Earth systems"
+  - "Recurrent networks and ConvLSTM"
 - "title": "Climate downscaling using YNet: A deep convolutional network with skip connections and fusion"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -185,15 +185,15 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Short- to medium-range global prediction"
+  - "Forecasting and simulation tasks"
 - "title": "Physics-guided discovery of highly nonlinear parametric partial differential equations"
   "unique_context_marker": "[22]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Physics-informed objectives and constraints"
 - "title": "Learning differential operators for interpretable time series modeling"
@@ -201,7 +201,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Physics-informed objectives and constraints"
 - "title": "ClimaX: A foundation model for weather and climate"
@@ -210,30 +210,30 @@
   - 2
   - 10
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   - "Result Comparison"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Architecture families for climate modeling"
   - "Transformers for climate modeling"
 - "title": "ClimateLearn: Benchmarking Machine Learning for Weather and Climate Modeling"
   "unique_context_marker": "[25]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Transformers for climate modeling"
+  - "Self- and semi-supervised learning for climate"
 - "title": "Downscaling earth system models with deep learning"
   "unique_context_marker": "[26]"
   "block_ids":
   - 2
   - 9
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   - "Result Comparison"
   "topic_labels":
-  - "Downscaling and super-resolution"
-  - "Downscaling and super-resolution"
+  - "Graph neural networks for Earth systems"
+  - "Graph neural networks for Earth systems"
 - "title": "Reconstructing high resolution ESM data through a novel fast super resolution convolutional neural network (FSRCNN)"
   "unique_context_marker": "[27]"
   "block_ids":
@@ -249,11 +249,11 @@
   - 2
   - 10
   "intent_labels":
-  - "Domain Overview"
-  - "Algorithm/Principle Adoption"
+  - "Other Intent"
+  - "Model/Architecture Adoption"
   - "Result Comparison"
   "topic_labels":
-  - "Forecasting and simulation tasks"
+  - "Short- to medium-range global prediction"
   - "Architecture families for climate modeling"
   - "Transformers for climate modeling"
 - "title": "Gencast: Diffusion-based ensemble forecasting for medium-range weather"
@@ -261,9 +261,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Architecture families for climate modeling"
+  - "Direct forecasting"
 - "title": "Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations"
   "unique_context_marker": "[30]"
   "block_ids":
@@ -272,8 +272,8 @@
   - 6
   - 10
   "intent_labels":
+  - "Other Intent"
   - "Prior Methods"
-  - "Algorithm/Principle Adoption"
   - "Model/Architecture Adoption"
   - "Result Comparison"
   "topic_labels":
@@ -286,7 +286,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Benchmark Utilization"
   "topic_labels":
   - "Supervised pretraining and finetuning of foundation models"
 - "title": "ResDeepD: A residual super-resolution network for deep downscaling of daily precipitation over India"
@@ -312,7 +312,7 @@
   "intent_labels":
   - "Domain Overview"
   "topic_labels":
-  - "Physics-informed objectives and constraints"
+  - "Other Topic"
 - "title": "Deepsd: Generating high resolution climate change projections through single image super-resolution"
   "unique_context_marker": "[35]"
   "block_ids":
@@ -320,19 +320,19 @@
   - 2
   - 9
   "intent_labels":
+  - "Other Intent"
   - "Domain Overview"
-  - "Algorithm/Principle Adoption"
   - "Result Comparison"
   "topic_labels":
   - "Downscaling and super-resolution"
-  - "Downscaling and super-resolution"
+  - "Interpretability and causal reasoning in learned models"
   - "Downscaling and super-resolution"
 - "title": "ClimODE: Climate and Weather Forecasting with Physics-informed Neural ODEs"
   "unique_context_marker": "[36]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Physics-informed objectives and constraints"
 - "title": "Deep uncertainty quantification: A machine learning approach for weather forecasting"
@@ -340,28 +340,28 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Architecture families for climate modeling"
+  - "Transformers for climate modeling"
 - "title": "Improving data-driven global weather prediction using deep convolutional neural networks on a cubed sphere"
   "unique_context_marker": "[38]"
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Domain Overview"
   "topic_labels":
-  - "Architecture families for climate modeling"
+  - "Gridded spatio-temporal fields"
 - "title": "Interpretable weather forecasting for worldwide stations with a unified deep model"
   "unique_context_marker": "[39]"
   "block_ids":
   - 1
   - 2
   "intent_labels":
+  - "Other Intent"
   - "Domain Overview"
-  - "Algorithm/Principle Adoption"
   "topic_labels":
-  - "Forecasting and simulation tasks"
-  - "Transformers for climate modeling"
+  - "Short- to medium-range global prediction"
+  - "Time series representations"
 - "title": "Connecting the dots: Multivariate time series forecasting with graph neural networks"
   "unique_context_marker": "[40]"
   "block_ids":
@@ -375,7 +375,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
   "topic_labels":
   - "Physics-informed objectives and constraints"
 - "title": "Correcting the bias of daily satellite precipitation estimates in tropical regions using deep neural network"

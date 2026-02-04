@@ -4,9 +4,9 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
-  - "Input Representations and Modalities"
+  - "Raw point-based representations"
 - "title": "PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation"
   "unique_context_marker": "[2]"
   "block_ids":
@@ -46,7 +46,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Volumetric voxelization"
+  - "Hybrid multi-modal representations"
 - "title": "RangeNet++: Fast and Accurate LiDAR Semantic Segmentation"
   "unique_context_marker": "[7]"
   "block_ids":
@@ -70,7 +70,7 @@
   - "Result Comparison"
   "topic_labels":
   - "Projection-based representations"
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based segmentation"
   - "Projection-based segmentation"
 - "title": "SqueezeSeg: Convolutional Neural Nets with Recurrent CRF for Real-Time Road-Object Segmentation from 3D LiDAR Point Cloud"
   "unique_context_marker": "[9]"
@@ -151,7 +151,7 @@
   - "Prior Methods"
   - "Result Comparison"
   "topic_labels":
-  - "Self-supervised and Cross-modal Pretraining"
+  - "Weakly and unsupervised segmentation"
   - "Projection-based segmentation"
 - "title": "CPGNet: Cascade Point-Grid Fusion Network for Real-Time LiDAR Semantic Segmentation"
   "unique_context_marker": "[18]"
@@ -168,7 +168,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Convolution-based operators"
+  - "Hybrid multi-modal representations"
 - "title": "TORNADO-Net: multiview total variation semantic segmentation with Diamond inception module"
   "unique_context_marker": "[20]"
   "block_ids":
@@ -179,7 +179,7 @@
   - "Algorithm/Principle Adoption"
   "topic_labels":
   - "Projection-based representations"
-  - "Semantic Segmentation: Approaches"
+  - "Projection-based segmentation"
 - "title": "RangeBird: Multi View Panoptic Segmentation of 3D Point Clouds with Neighborhood Attention"
   "unique_context_marker": "[21]"
   "block_ids":
@@ -194,8 +194,8 @@
   - 2
   - 5
   "intent_labels":
-  - "Domain Overview"
-  - "Algorithm/Principle Adoption"
+  - "Prior Methods"
+  - "Prior Methods"
   "topic_labels":
   - "Projection-based representations"
   - "Convolution-based operators"
@@ -215,7 +215,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Rotation-invariant autoencoders for signals on spheres"
@@ -223,7 +223,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Research Gap"
+  - "Prior Methods"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Spherical Multi-Modal Place Recognition for Heterogeneous Sensor Systems"
@@ -233,9 +233,9 @@
   - 4
   - 12
   "intent_labels":
-  - "Domain Overview"
   - "Prior Methods"
-  - "Prospective Application"
+  - "Prior Methods"
+  - "Domain Overview"
   "topic_labels":
   - "Projection-based representations"
   - "Hybrid multi-modal representations"
@@ -245,7 +245,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Projection-based representations"
 - "title": "Spherical Deformable U-Net: Application to Cortical Surface Parcellation and Development Prediction"
@@ -253,7 +253,7 @@
   "block_ids":
   - 2
   "intent_labels":
-  - "Domain Overview"
+  - "Prior Methods"
   "topic_labels":
   - "Projection-based representations"
 - "title": "FFTs for the 2-Sphere-Improvements and Variations"
@@ -280,7 +280,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Model/Architecture Adoption"
   "topic_labels":
   - "Convolution-based operators"
 - "title": "FFTs on the Rotation Group"
@@ -304,7 +304,7 @@
   "block_ids":
   - 5
   "intent_labels":
-  - "Algorithm/Principle Adoption"
+  - "Background"
   "topic_labels":
   - "Convolution-based operators"
 - "title": "nuScenes: A multimodal dataset for autonomous driving"
@@ -379,7 +379,7 @@
   "intent_labels":
   - "Prior Methods"
   "topic_labels":
-  - "Projection-based segmentation"
+  - "Semantic Segmentation: Approaches"
 - "title": "LiDARNet: A Boundary-Aware Domain Adaptation Model for Point Cloud Semantic Segmentation"
   "unique_context_marker": "[43]"
   "block_ids":
