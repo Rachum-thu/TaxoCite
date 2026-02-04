@@ -1,0 +1,819 @@
+title: 'MEgo2Vec: Embedding Matched Ego Networks for User Alignment Across Social
+  Networks'
+abstract: 'Aligning users across multiple heterogeneous social networks is a fundamental
+  issue in many data mining applications. Methods that incorporate user attributes
+  and network structure have received much attention. However, most of them suffer
+  from error propagation or the noise from diverse neighbors in the network. To effectively
+  model the influence from neighbors, we propose a graph neural network to directly
+  represent the ego networks of two users to be aligned into an embedding, based on
+  which we predict the alignment label. Three major mechanisms in the model are designed
+  to unitedly represent different attributes, distinguish different neighbors and
+  capture the structure information of the ego networks respectively.
+
+
+  Systematically, we evaluate the proposed model on a number of academia and social
+  networking datasets with collected alignment labels. Experimental results show that
+  the proposed model achieves significantly better performance than the state-of-the-art
+  comparison methods (+3.12-30.57% in terms of F1 score).'
+abstract_is_verbatim: true
+segmented_markdown: '# MEgo2Vec: Embedding Matched Ego Networks for User Alignment
+  Across Social Networks
+
+
+  ## Abstract
+
+  <block id="0">
+
+  Aligning users across multiple heterogeneous social networks is a fundamental issue
+  in many data mining applications. Methods that incorporate user attributes and network
+  structure have received much attention. However, most of them suffer from error
+  propagation or the noise from diverse neighbors in the network. To effectively model
+  the influence from neighbors, we propose a graph neural network to directly represent
+  the ego networks of two users to be aligned into an embedding, based on which we
+  predict the alignment label. Three major mechanisms in the model are designed to
+  unitedly represent different attributes, distinguish different neighbors and capture
+  the structure information of the ego networks respectively.
+
+
+  Systematically, we evaluate the proposed model on a number of academia and social
+  networking datasets with collected alignment labels. Experimental results show that
+  the proposed model achieves significantly better performance than the state-of-the-art
+  comparison methods (+3.12-30.57% in terms of F1 score).
+
+
+  </block>
+
+  ## 1 INTRODUCTION
+
+  <block id="1">
+
+  The proliferation of heterogeneous social media platforms, such as Facebook, Twitter,
+  LinkedIn, Instagram, etc., enables us to satisfy our different interests. A study
+  conducted by IPG Media Lab shows that over 50% US adults use more than one social
+  media platform. Aligning the same users across different social networks has recently
+  been attracting considerable attention, as it can provide a comprehensive view of
+  users’ profile, and then benefit many applications. For example, linking users of
+  a E-Commerce system and a social media platform can enable product recommendation
+  from the E-Commerce system to the social media platform, and linking users across
+  different social networks can tell us how the information is diffused between them.
+
+
+  One intuitive way to align same users across social networks is to compare the profile
+  attributes such as name, affiliation, description, etc. However, the profile attributes
+  usually cannot provide sufficient evidence. For example, in Figure 1, it is difficult
+  to determine that v1 and u1 are the same person only according to their names “W.
+  Wang" and “Wei Wang". Fortunately, the neighbors of the two users in their respective
+  ego networks may provide additional clues. Among the neighbors of v1 and u1, “Shi
+  YL" from “Peking University" and ‘Shi Yuan-Le" from “PKU" have a high possibility
+  to be a same person, similarly for “J. Li" being interested in “machine learning"
+  and “J. Li" being interested in “deep learning". The clues would be more powerful
+  if there are more potential same neighbor pairs. In the Figure, the neighbors of
+  v1 and u1 that have a high possibility to be the same person are linked by black
+  dashed lines. In practice, most of the neighbor pairs are unlabeled, which prevents
+  us from directly calculating the metrics like Jaccard’s coefficient or Adamic/Adar
+  based on the shared neighbors as that proposed in [7, 8, 26, 30]. One way to leverage
+  the unlabeled information is to estimate the possibility that a user pair can be
+  matched, based on which we can update the matching scores of its neighbor pairs
+  [9, 27, 28]. For example, SiGMa [9] proposed an unsupervised method to iteratively
+  propagate the matching scores from a confidential seed set of user pairs to their
+  neighbor pairs. COSNET [28] proposed a supervised method to infer the marginal probabilities
+  that two users can be matched based on the attributes of the two users and the marginal
+  probabilities of their neighbor pairs. Essentially, to predict the label of a user
+  pair, they both need to infer the labels of its neighbor pairs, and this may cause
+  error propagations during the iterative process.
+
+
+  Despite existing studies on user alignment [7–9, 26–28, 30], the problem still poses
+  several unsolved challenges. First, how to unitedly model profile similarity? Traditional
+  methods usually compare different profile attributes by human defined metrics, such
+  as Jaro-Winkler similarity [25], TF-IDF based cosine similarity [7, 20], etc. However,
+  they cannot capture the semantics of different literal strings. Thus, a unified
+  way with little effort of feature engineering to better represent different profile
+  attributes is worth studying. Second, How to deal with diverse neighbors in different
+  social networks? The neighbors of a user in different networks can be very diverse
+  due to the various purposes of different social media platforms. For instance, people
+  use Twitter to communicate with friends and obtain information, while they use LinkedIn
+  to find a job. Leveraging all neighbors’ information without distinction may contrarily
+  bring in additional noise. Third, How to incorporate the influence of network topologies?
+  Different topologies of ego networks may exert different effects. For example, in
+  Figure 1, neighbor pair (v3; u3) is linked to another neighbor pair (v4; u4), i.e.,
+  v3 is v4’s friend in Gs and u3 is u4’s friend in Gt. The linkage reduces the possibility
+  that v3 is wrongly matched to u3, and v4 is wrongly matched to u4, and it further
+  provides strong evidence that v1 and u1 are the same person, compared with the situation
+  that (v3; u3) and (v4; u4) are not linked.
+
+
+  To deal with the above challenges, we formalize the task of user alignment across
+  social networks as a classification problem using the ego networks of two users
+  as input. We propose a graph neural network model—MEgo2Vec to represent the matched
+  ego network between the two users into a low-dimensional real-valued representation,
+  based on which we align the users. The representation includes two parts, one is
+  embedded from the attributes of the target user pairs and their neighbor pairs,
+  the other is embedded from the topologies of the matched ego network. Specifically,
+  first, to unitedly model the profile attributes, we adopt a multi-view embedding
+  mechanism to represent the character-view and word-view features for an attribute
+  together. Second, to tackle the issue of diverse neighbors in different networks,
+  we adopt attention mechanisms to convolve neighbors’ attributes, so as to distinguish
+  their influence. Three attentions are proposed to respectively consider the individual
+  characteristics of each user in a pair, the similarity between two users in a pair,
+  and the relationship of a neighbor pair with the user pair to be predicted. Third,
+  to capture the influence of network topologies, we adopt a CNN network to convolve
+  the adjacency matrix of the matched ego network.
+
+
+  The main contributions can be summarized as:
+
+  - We propose MEgo2Vec (embed the Matched Ego network to a vector), a novel graph
+  neural network model, to formalize our problem as a unified optimization framework.
+
+  - The multi-view node embedding can model the literal and semantic characteristics
+  of different attributes unitedly; the attention mechanism can distinguish the effects
+  of different neighbors to alleviate error propagations; structure embedding can
+  capture the influence of different topologies.
+
+  - Experiments on a number of academia and social networking datasets demonstrate
+  that the proposed model compares favorably classification accuracy (+3.12-30.57%
+  in terms of F1 score) against the state-of-the-art models for user alignment task.
+
+
+  </block>
+
+  ## 2 RELATED WORK
+
+  <block id="2">
+
+  User Alignment. One intuitive way to align users across social networks is to compare
+  users’ attributes, among which name is the most important one. Many attempts have
+  been made to study how to leverage user names [11, 13, 17, 24, 25]. For example,
+  Zafarani et al. dealt with user names by adding or removing their prefix/postfix
+  [24]. They further made a comprehensive study of the habits when users select names
+  [25]. For other attributes like the post contents of users, Kong et al. [7] calculated
+  the cosine similarity of the bag-of-words vectors weighted by TF-IDF.
+
+
+  However, user attributes may be missed or not strong enough to indicate a user’s
+  identity. Thus a lot of research utilizes the network structure to enhance the prediction
+  performance. Some of them calculated the metrics like Jaccard’s coefficient or Adamic/Adar
+  based on the number of the shared neighbors [7, 30]. However, most of the neighbor
+  pairs are unlabeled, preventing us from calculating the above metrics. Some methods
+  such as IONE [12] and PALE [15] learned user embeddings by encoding the structure
+  information of the network but totally ignored user attributes, and it is not easy
+  to add user attributes into their models.
+
+
+  Several research incorporates both user attributes and unlabeled neighbor pairs
+  together. For example, Lacoste et al. solved the problem by an unsupervised propagation
+  method [9], where the similarities of the attributes in the method are defined empirically.
+  Zhong et al. proposed an unsupervised co-training algorithm to incorporate attributes
+  and relationships with the neighbor pairs together [29]. Zhang et al. further formulated
+  the propagation process based on attributes and network topologies from an optimization
+  perspective [27], but only one attribute can be considered in their model. Zhang
+  et al. proposed a supervised model—COSNET to iteratively infer the labels of the
+  unlabeled pairs and update the model based on the inferred labels and the user attributes
+  [28]. However, error propagations may be introduced in above methods. This paper
+  aims at investigating a supervised method that avoids label propagation, but directly
+  represents a pair of users by their attributes, their neighbors’ attributes and
+  the network structure among the neighbors, and then aligns the users based on the
+  learned representations.
+
+
+  Neural Networks on Graphs. Substantial research has been done on modeling the graph-structured
+  input by neural networks. Shallow models such as DeepWalk [18], LINE [21] and node2vec
+  [5] learn node embeddings via the prediction of the first-order or high-order neighbors.
+  Graph neural networks (GNNs) were proposed as a generalization of the recursive
+  neural networks, which assign a state to each node in a graph based on the states
+  of neighboring nodes [4, 19]. Recently, Li et al. improved GNNs using gated recurrent
+  units and also extended the output to sequences [10].
+
+
+  Several works studied how to generalize convolutions to graph data [1, 3, 6, 16,
+  23]. For example, Niepert et al. [16] generated a representation for a selected
+  sequence of nodes that covers large parts of a given graph, and then used CNN to
+  predict the label of the graph. Duvenaud et al. defined convolutions directly on
+  graphs and learned node degree-specific weight matrix [3]. Thomas et al. considered
+  a single weight matrix per layer and dealt with varying node degrees by an appropriate
+  normalization of the adjacency matrix [6]. Veličković et al. [23] introduced the
+  attention mechanism into the graph convolutional networks to distinguish the influence
+  of the neighbors. Inspired by these recent works, we propose a graph neural network
+  model to align users in two networks. Most of the recent work on graph convolutional
+  networks feed the whole graph as the input, which hinders the mini-batch training
+  process. The proposed method in this paper, on the contrary, is performed on ego
+  networks of two nodes, which is able to adapt to mini-batch training and thus can
+  be conducted efficiently.
+
+
+  </block>
+
+  ## 3 PROBLEM DEFINITION
+
+  <block id="3">
+
+  In this section, we will provide necessary definitions and then formally formulate
+  the problem. Let G = (V ; A; P) denote an undirected attribute augmented social
+  network, where V is set of users. Notation A represents a jV j × jV j adjacency
+  matrix with an element aij indicating there is a relationship between vi and vj.
+  Notation P represents a jV j × d property (attribute) matrix with an element pik
+  indicating the k-th attribute of the i-th user in G.
+
+
+  Definition 3.1. Ego Network. Given a user vi ∈ V, we use Gi = (Vi; Ai; Pi) ⊆ G to
+  denote vi’s ego network, where Vi ⊆ V contains the focal node vi (i.e., the node
+  in the center) and vi’s first-order neighbors in G. Notation Ai ⊆ A is the adjacency
+  matrix representing the relationships between the users in Vi and Pi represents
+  an jVi j × d attribute matrix of the users in Vi.
+
+
+  We only consider first-order neighbors, out of the consideration of the computational
+  efficiency and the assumption that high-order neighbors usually provide weak evidence
+  on identifying a user. We assume that two users are more likely to be the same person,
+  if there are more neighbors in their respective ego networks that have a high possibility
+  to be matched as the same person. Based on the intuition, we define matched ego
+  network as:
+
+
+  Definition 3.2. Matched Ego Network. Suppose we have a source network Gs and a target
+  network Gt. Given two users vi ∈ Gs and ui ∈ Gt, we denote vi’s ego network as Gs_i
+  and ui’s ego network as Gt_i. Then we construct a matched ego network GM_i = (V
+  M_i ; AM_i ; PM_i ) with each node in it as a pair of users from the two ego networks
+  by the following steps:
+
+
+  (1) Add the pair of users (vi ; ui ) into V M_i as the focal pair.
+
+
+  (2) Find all the potential matched neighbors of vi and ui, and add them into V M_i
+  as the neighbor pairs (More explanations are as follows).
+
+
+  (3) Add an edge between (vi ; ui ) and each neighbor pair. Additionally, add an
+  edge between two neighbor pairs (vj ; uj ) and (vk ; uk ) if there is an edge between
+  vj and vk in Gs, and also an edge between uj and uk in Gt. Notation AM_i is the
+  adjacency matrix of GM_i.
+
+
+  (4) Notation PM_i represents an jV M_i j × 2d attribute matrix with each row pj
+  as a concatenation of vj’s attributes p(vj) and uj’s attributes p(uj), i.e., pj
+  = (p(vj); p(uj)).
+
+
+  We will explain what are the potential matched neighbors, and why and how they are
+  constructed. The potential matched neighbors are the neighbor pairs that have some
+  possibility to be matched, and they are filtered from all possible pairs of the
+  neighbors. Due to the various purposes of different social media platforms, the
+  neighbors in two ego networks may be very diverse. Directly using all pairs of neighbors
+  as evidence to align users may introduce much noise. Thus we propose an attention
+  based mechanism to distinguish different neighbor pairs in our model (See details
+  in Section 4). To improve the computational efficiency, before resorting to the
+  model, we can easily select the most useful neighbor pairs by heuristic rules [28].
+  This paper simply selects the neighbor pairs if their names are similar, i.e., the
+  Jaro-Winkler similarity of the two names is larger than a threshold, as the potential
+  matched pairs. We also restrict the neighbor pairs to satisfy the one-to-one mapping
+  constraint as Kong et al. did in [7], based on the same assumption that a user usually
+  maintains one major account in each social media platform. Thus the constructed
+  matched ego network has no more than min{jV s_i j; jV t_i j} user pairs. We use
+  N M_i to represent the set of the neighbor pairs of (vi ; ui ) including (vi ; ui
+  ) itself.
+
+
+  Problem 1. User Alignment across Social Networks: Given a set of matched ego networks
+  {GM_i = (V M_i ; EM_i)} constructed from a pair of a source network Gs and a target
+  network Gt, we aim at learning a predictive function
+
+  f : GM_i = (V M_i ; EM_i ) → yi
+
+  to predict whether vi and ui belong to the same person in the real world, where
+  yi is a binary value, with 1 indicating vi and ui are the same person, and 0 otherwise.
+
+
+  </block>
+
+  ## 4 METHODOLOGY
+
+  <block id="4">
+
+
+  </block>
+
+  ### 4.1 Overview
+
+  <block id="5">
+
+  We argue that the above defined classification performance can be improved if the
+  node attributes and the structure of the matched ego network are elaborately represented.
+  The overview process of the proposed method is shown in Figure 2.
+
+
+  Candidate Generation. In practice, the number of all the user pairs across two networks
+  is very large. Thus, we need to generate candidate user pairs from all the pairs.
+  Following [17, 28], we only keep the user pairs if their names are similar to each
+  other (Cf. Section 5 for the details).
+
+
+  Matched Ego Network Construction. For each candidate pair (v1; u1), we extract their
+  ego networks Gs_1 and Gt_1 from their respective networks, and construct a matched
+  ego network GM_1 according to definition 3.2. Note that a matching between two users
+  only indicates that they have the potential possibility to be a same person, but
+  the true label is usually unknown.
+
+
+  Matched Ego Network Embedding. We take the attributes of all the node pairs in GM_1
+  and the adjacency matrix of GM_1 as the input of the proposed model—MEgo2Vec whose
+  output is an embedding. The model consists of two components: attribute embedding
+  and structure embedding. The component of attribute embedding adopts the attributes
+  as input, and generates two embeddings Hv1 and Hu1 for v1 and u1. Specifically,
+  we first generate an embedding vector for each user in GM_1 based on his/her attributes
+  by the proposed multi-view node embedding mechanism, and then update the embeddings
+  of the focal pair (v1; u1) through convolving their neighbors’ embeddings by the
+  proposed attention mechanism. The component of the structure embedding adopts the
+  adjacency matrix AM_1 as input, normalizes and convolves AM_1 into another embedding
+  t1 (Section 4.3).
+
+
+  Finally, we predict the label of (v1; u1) based on the combination of the attribute
+  embeddings and the structure embedding, and calculate the loss according to the
+  ground truth. We will explain the details of different components as follows.
+
+
+  </block>
+
+  ### 4.2 Attribute Embedding
+
+  <block id="6">
+
+  Node Embedding. Many works demonstrate the effectiveness of CNN in representing
+  texts [14]. However, in our task, there are multiple attributes for each user, and
+  different attributes present different characteristics when they are used to determine
+  whether two users are the same person or not. For example, in our datasets, more
+  than 70% users change a few characters in their nicknames on different social media
+  platforms. In this case, although the whole words of their names are totally different,
+  the characters in those names are highly correlated. But for other attributes of
+  long texts such as research interests, words may make more effects than characters.
+  To model both the literal and semantic characteristics of the attributes unitedly,
+  we propose a multi-view node embedding strategy. We will introduce the details as
+  below.
+
+
+  We divide each attribute into a list of words. For each word in an attribute, we
+  firstly represent it as an embedding vector, named as word-view embedding. Then
+  we divide the word into a list of characters, represent each character as an embedding
+  vector, convolve all the character embeddings by a CNN network and output an embedding
+  as the word’s character-view embedding. The word-view and character-view embeddings
+  are concatenated as the final embedding for a word. Then the sequence of the word
+  embeddings in an attribute are convolved by another CNN network to output the final
+  embedding for the attribute. Finally, we use an attribute pooling strategy to aggregate
+  the embeddings of all the attributes of a node together as the node embedding:
+
+  vi = sum_{k=1..d} aik γk ;
+
+  where aik represents the embedding of the k-th attribute of user vi, γk ∈ R is the
+  corresponding weighting parameter to be learned, d is the number of attributes of
+  a user and vi is the K-dimension embedding learned for user vi. Figure 3 illustrates
+  the above multi-view node embedding mechanism, where all the attributes are dealt
+  with in the same way as name.
+
+
+  Social Convolution. To determine whether two users can be aligned or not, the missing
+  attributes or the attributes that are not distinguishable enough usually cannot
+  provide sufficient evidence. But additional evidence may be obtained from the attributes
+  of the neighbors. Thus after we obtain the embedding for each node based on their
+  own attributes, we further smooth each node’s embedding by their neighbors’ embeddings.
+
+
+  The general idea of social convolution is that, for the focal pair (vi ; ui ) to
+  be predicted, we convolve the above obtained embeddings of all its neighbor pairs
+  {(vj ; uj ) : j ∈ N M_i} (including the embeddings of the focal pair itself, i.e.,
+  (vi ; ui)) into new embeddings of the focal pair:
+
+  (Hvi ; Hui) = c({(vj ; uj ) : j ∈ N M_i});
+
+  where Hvi ; Hui ∈ R^K. The convolution operation c(·) can be defined in various
+  ways. A straightforward way to define c(·) is to average the embeddings of all the
+  neighbors together, i.e.,
+
+  Hvi = (1 / |N M_i|) ∑_{j∈N M_i} vj ; Hui = (1 / |N M_i|) ∑_{j∈N M_i} uj.
+
+
+  However, different neighbor pairs may exert different effects. For aligning two
+  users, some neighbor pairs may provide strong evidence, while others may bring in
+  additional noise. Although we have already filtered out most of the neighbors pairs
+  if their names are totally different when constructing the matched ego network for
+  a focal pair, the rule to filter neighbor pairs is heuristic and is very likely
+  to keep the wrongly matched neighbor pairs in the matched ego network. Thus, it
+  is necessary to distinguish the effects from different neighbor pairs. Recently,
+  the attention mechanism used in neural networks is a well-adopted way to achieve
+  the goal [2]. Inspired by this, we propose using attention mechanisms to realize
+  the social convolution operation c(·).
+
+
+  Essentially, attention mechanism is introduced to determine the contribution of
+  a neighbor pair to the focal pair. Formally, given the embeddings of a neighbor
+  pair (vj ; uj ) and the embeddings of the focal pair (vi ; ui ), we perform a shared
+  attentional mechanism g : R^K × R^K × R^K × R^K → R on the four input embedding
+  vectors to calculate the attention coefficient:
+
+  eji = g(vj ; uj ; vi ; ui);
+
+  where eji indicates the contribution of (vj ; uj ) on predicting whether vi and
+  ui are the same person or not. Then we apply the softmax function to obtain the
+  normalized coefficients across all the neighbor pairs of (vi ; ui):
+
+  αji = softmax_j(eji) = exp(eji) / ∑_{j′∈N M_i} exp(ej′i).
+
+
+  The normalized coefficients are used to compute a linear combination of the embedding
+  vectors corresponding to them. Then we apply a non-linear function σ(·) on the linear
+  combination, which is regarded as a final embedding vector for a user:
+
+  Hvi = σ( ∑_{j∈N M_i} αji vj ); Hui = σ( ∑_{j∈N M_i} αji uj ).
+
+
+  We design the attention mechanisms based on the knowledge in vj, uj, vi and ui.
+  Three specific attention mechanisms are proposed progressively by considering individual
+  features of each user in a neighbor pair (feature attention), the similarity between
+  two users in a neighbor pair (difference attention) and the relationship of a neighbor
+  pair with the focal pair (relation attention).
+
+
+  - Feature Attention. The assumption of feature attention is that a neighbor pair
+  (vj ; uj ) makes more contribution on inferring the label of the focal pair (vi
+  ; ui ) if the features of vj and uj are more discriminative. For example, the neighbor
+  pair with the same name "Jaspher Wang" benefits more on predicting the label of
+  (vi ; ui ) than the neighbor pair with the same name "Wei Wang", as the name "Jaspher
+  Wang" is more unique than "Wei Wang". According to this assumption, we calculate
+  the attention coefficient based on the concatenation of the embeddings of the neighbors
+  in a pair:
+
+  eji = W^T [vj ; uj] + b;
+
+  where notations W and b in this and the following equations are the model parameters
+  to be learned. The concatenation of the embeddings reserves the features of the
+  two users.
+
+
+  - Difference Attention. The assumption of difference attention is that a neighbor
+  pair (vj ; uj ) takes a more important role on predicting the label of (vi ; ui
+  ) if the two neighbors vj and uj are more similar to each other. Under this assumption,
+  we calculate the attention coefficient solely based on the difference between the
+  embeddings of the neighbors:
+
+  eji = W^T |vj − uj| + b;
+
+  where we use the difference between two embeddings to represent whether two neighbors
+  are similar or not.
+
+
+  - Relation Attention. The assumption of relation attention is that a neighbor pair
+  (vj ; uj ) takes more effects on determining the label of (vi ; ui ) if the relationship
+  between user vj and vi in Gs share the same semantics with the relationship between
+  user uj and ui in Gt. For example, if we already know user x in Twitter is aligned
+  to user a in MySpace, and user y in Twitter is aligned to user b in MySpace, suppose
+  x shares the same interest with y in Twitter, then most probably a also shares the
+  same interest with b in MySpace. Under this assumption, we calculate the attention
+  coefficient by comparing the difference between the embeddings of two users in two
+  networks:
+
+  eji = W^T || vj − vi | − | uj − ui || + b;
+
+  where we use the difference between two users, e.g., |vj − vi|, to represent the
+  semantics of the relationship between the users vj and vi, and then use the difference
+  between the relationship semantics to represent whether the two relationships are
+  similar or not.
+
+
+  We can also consider the knowledge used in all the three attention mechanisms and
+  unify them in one equation:
+
+  eji = W^T [vj ; uj ; |vj − uj|; || vj − vi | − | uj − ui ||] + b.
+
+
+  The unified attention mechanism is used in our final model.
+
+
+  </block>
+
+  ### 4.3 Structure Embedding
+
+  <block id="7">
+
+  Different from attribute embedding, the component of structure embedding aims at
+  embedding the structure information of the matched ego network to predict the label
+  of the focal pair. The intuition is two users are more likely to be the same person
+  if they have more potential matched neighbor pairs, and furthermore, if there are
+  more neighbors know each other. For example, the focal pair (v1; u1) has three potentially
+  matched neighbor pairs, which provides significant evidence on predicting the label
+  of (v1; u1). In addition, neighbor pair (v4; u4) is linked to neighbor pair (v3;
+  u3), i.e., v4 knows v3 and u4 knows u3, which further improves the probability that
+  v1 and u1 are the same person. The links between neighbor pairs reflect the structural
+  characteristics of the matched ego network, which can benefit the predicting task.
+  From the example, we can see that the structural roles of different neighbor pairs
+  are different when they are used to infer the label of a focal pair. The core problem
+  of leveraging the structure information is to map the network structure to an embedding
+  vector such that the neighbor pairs with similar structural roles in different matched
+  ego networks are positioned similarly in the corresponding embedding vectors. Inspired
+  by [16], we address the problem by firstly normalizing the adjacency matrix of the
+  input matched ego network and then applying a convolutional neural network on the
+  normalized graph to learn an embedding vector for the graph.
+
+
+  Normalization. Normalization aims at finding an order of the neighbor pairs in each
+  matched ego network to reserve the relative position of the neighbor pairs. The
+  basic idea is two neighbor pairs in different matched ego networks can be located
+  at the similar position of the respective adjacency matrix if their structural roles
+  within the matched ego networks are similar. Intuitively, a neighbor pair can be
+  ranked higher if it is more closer to the focal pair. Multiple similarity metrics
+  defined on graphs can be used to measure the distance between two nodes such as
+  common neighbors, Jaccard Coefficient, SimRank, etc.
+
+
+  Structure Convolution. After we obtain a ranked list of node pairs in GM_i, we get
+  a new adjacency matrix ÂM_i with the indexing of the node pairs correspond to the
+  ranked pairs. Then we apply a convolutional neural network on the normalized adjacency
+  matrix ÂM_i to learn an embedding vector for the adjacency matrix. Specifically,
+  we firstly pad dummy node pairs to the adjacency matrix if the size of the pairs
+  is smaller than a predefined number L, and discard the pairs with indexing larger
+  than L; then we reshape the adjacency matrix to a L × L-dimension vector, and apply
+  H different L × L-dimension convolutional kernels with 1 stride, to output H-dimension
+  embedding vector ti.
+
+
+  </block>
+
+  ### 4.4 Objective Function
+
+  <block id="8">
+
+  For each focal pair (vi ; ui), we concatenate the difference between their attribute
+  embeddings Hvi and Hui, i.e., |Hvi − Hui| and the structure embedding ti. Then we
+  apply a function f such as the full connection operation on the concatenation to
+  predict the matching score ŷi = f(|Hvi − Hui|; ti). Finally we define the objective
+  function as the cross entropy loss of the true label and the predicted score:
+
+  L = (1 / n) ∑_{i=1..n} CrossEntropy( f(|Hvi − Hui|; ti); yi );
+
+  where n is the total number of labeled user pairs.
+
+
+  </block>
+
+  ## 5 EXPERIMENTS
+
+  <block id="9">
+
+
+  </block>
+
+  ### 5.1 Experimental Settings
+
+  <block id="10">
+
+  Datasets. We collect three Academia networks and two SNS networks. Academia consists
+  of networks collected from Aminer [22], an academic searching and mining service,
+  LinkedIn, a business-and employment-oriented professional social network, and VideoLectures,
+  the world’s biggest academic online video repository. SNS consists of Twitter, a
+  well-known microblogging social platform, and MySpace, a social networking website
+  for users to share blogs, photos and music.
+
+
+  Training Data. An instance is a pair of users from two different networks, where
+  a positive instance means the two users belong to a same person, while a negative
+  instance indicates they are different persons. For the training data constructed
+  across SNS networks, the positive instances were collected by Perito et. al using
+  Google Profile Service (GPS) [17]. GPS allows users to provide their accounts on
+  different online social networks, and the accounts from same users can be treated
+  as positive instances. For those constructed across academia networks, the positive
+  instances were provided by the users in Aminer.org, where users can input the links
+  of their LinkedIn and VideoLectures profile pages in their Aminer profile pages.
+  Negative instances should be constructed as they cannot be directly collected by
+  existing services. Following the assumption that a user usually maintains one major
+  account in each platform [7], we get that in most cases the users appeared in positive
+  instances cannot be aligned to others users. Thus we sample several negative instances
+  for each positive instances. Specifically, for each positive instance (vi ; ui)
+  where vi is from Gs and ui is from Gt, we randomly sample several negative partners
+  from Gt for vi, and several negative partners from Gs for ui. All the negative instances
+  are sampled from the generated candidate pairs. Finally, we keep the ratio between
+  positive and negative instances as about 1:10 and collect 33,981, 34,060 and 35,080
+  training instances for Aminer-LinkedIn, Aminer-VideoLectures and Twitter-MySpace
+  respectively.
+
+
+  For the academia networks, we select the profile attributes of name, affiliation,
+  education and research interests/skills to compare. Although there are many attributes
+  in SNS networks, most of the attributes are extremely sparse. Thus we only choose
+  screen name, account name and locations to compare for users in the training data
+  of SNS networks.
+
+
+  Baseline Methods. The comparison methods include:
+
+  - Exact Name Match (ENM): considers a user pair collected from two networks as a
+  positive instance if the name of a user is an exact match to that of the other user
+  in the pair. A user in one network may match to multiple users with same names in
+  the other network.
+
+  - SVM: defines the features as the Jaro-Winkler similarity of two names, the edit
+  distance of two names, and the cosine similarity between the TF-IDF weighted word
+  vectors of other attributes.
+
+  - SVM+N: averages the values for each feature in SVM over all the neighbor pairs
+  in a matched ego network as additional features.
+
+  - SiGMa [9]: begins from a seed set of user pairs (output by Name-Match and then
+  filtered out the most common names) and iteratively augments the seed set by propagating
+  the matching scores (predicted by SVM) through the two input networks.
+
+  - COSNET [28]: is a factor graph model that incorporates the attributes of two users
+  as local factors (the same as SVM), and the relationships between user pairs as
+  correlation factors. The intuition is two linked user pairs tend to have the same
+  labels.
+
+  - MEgo2Vec: is the proposed model that incorporates the multi-view node embedding,
+  unified attention mechanism and the structure embedding together.
+
+
+  Variants of Our Model. We try seven variants of MEgo2Vec to evaluate the effectiveness
+  of different components one by one.
+
+
+  Multi-view Node Embedding: To evaluate the effect of the multi-view node embedding
+  component, we ignore the components of attention based social convolution and structure
+  embedding, and only embed the attributes of the focal pair itself. The model is
+  denoted as MEgo2Vec_cw. Additionally, we try word-view and character-view embeddings
+  separately, and denote them as MEgo2Vec_w and MEgo2Vec_c respectively.
+
+
+  Social Convolution: Based on MEgo2Vec_cw, we add the attribute embeddings of neighbor
+  pairs to evaluate the effect of the attention based social convolution component.
+  The model utilizes the unified attention mechanism and ignores the structure embedding,
+  and is denoted as MEgo2Vec_u. Additionally, we try the feature attention, difference
+  attention and relation attention mechanisms separately, and denote them as MEgo2Vec_f,
+  MEgo2Vec_d and MEgo2Vec_r respectively. We also simply average the attribute embeddings
+  of neighbor pairs and denote it as MEgo2Vec_a.
+
+
+  Structure Embedding: Based on MEgo2Vec_u, we add the structure embedding result
+  to evaluate the effect of the structure embedding component. The model is denoted
+  as MEgo2Vec and is also the final proposed model.
+
+
+  Evaluation Strategies. We evaluate all the comparison methods in terms of Precision,
+  Recall and F1-Measure.
+
+
+  Implementation Details. We implement the model by TensorFlow and run the code on
+  an Enterprise Linux Server with 6 Intel(R) Xeon(R) CPU cores (E5-2699 and 56G memory)
+  and 1 NVIDIA Tesla P40 GPU core (24G memory).
+
+
+  For the academia networks, we select the candidate pairs if they share the same
+  firstname, and the same initials of the lastname. For the SNS networks, we select
+  the candidate pairs if their screen names or account names share at least four 2-grams.
+  When generating a matched ego network, the threshold to filter neighbor pairs is
+  set as 0.8. In node embedding component, the dimension of word, character and attribute
+  embedding is set as 64, 32 and 192 respectively. In social convolution component,
+  the maximal number of neighbor pairs in a matched ego network is restricted to 14.
+  Then we pad dummy neighbor pairs if the size of the pairs is smaller than 14, and
+  discard additional pairs otherwise. In structure embedding component, we use common
+  neighbors as the similarity metric to conduct graph normalization. Notation L denotes
+  the maximal number of neighbor pairs, and is also set as 14. The dimension H, i.e.,
+  the output channel of CNN network, is set as 64. The learning rate of the model
+  is set as 0.001. The size B of a mini-batch is 100.
+
+
+  </block>
+
+  ### 5.2 Performance Analysis
+
+  <block id="11">
+
+  Overall Prediction Performance. The proposed method performs clearly better than
+  the comparison baselines on all datasets (+3.12-30.57% in terms of F1 score). Our
+  method improves more F1 on the two academia datasets than on the SNS dataset, as
+  the attributes of the academia dataset are much richer than those of the SNS dataset,
+  which indicates neural networks are more suitable for the complex input dataset.
+  ENM is essentially a rough rule and performs poorly, as on one hand, it totally
+  ignores the positive instances with different names, and on the other hand, different
+  users with same names are wrongly identified as the same users. SVM ignores the
+  network information and defines features by human experience, which is not comprehensive
+  enough to represent the attributes. SVM+N leverages the attributes of neighbors,
+  but it does not distinguish the effects of different neighbors. SiGMa results in
+  high precision but suffers from a low recall. Because the overlap between the input
+  two networks is low, leading it not easy to propagate the matching scores from the
+  seeds to other pairs. COSNET essentially propagates the inferred labels in the whole
+  matched network, thus it may suffer from error propagation. Besides, the features
+  in COSNET is also human defined. MEgo2Vec uses a graph neural network to embed the
+  neighbors’ attributes and the structure information, which can capture both the
+  literal and semantic characteristics of the attributes, and meanwhile alleviate
+  error propagations through the network.
+
+
+  On the academia datasets, processing 100 mini-batches requires 150 seconds, and
+  best validation F1 is reached after 20-40 epochs (about 270 mini-batches per epoch)
+  through the data, which requires 2-3 hours of training. On Twitter-MySpace, as the
+  attributes are extremely sparse, i.e., features are not sufficient, processing 100
+  mini-batches requires 25 seconds, but best validation F1 is reached after 100-120
+  epochs (281 mini-batches per epoch), which requires 2 hours of training.
+
+
+  Multi-view Node Embedding Effect. We compare two single view models—MEgo2Vec_w and
+  MEgo2Vec_c with the multi-view model MEgo2Vec_cw. MEgo2Vec_cw performs better than
+  MEgo2Vec_w (+1.69-2.48% in F1) and MEgo2Vec_c (+1.03-2.03% in F1), which demonstrates
+  the strength of the multi-view embedding mechanism when representing the node attributes.
+  MEgo2Vec_c performs better than MEgo2Vec_w, as the similarity between the characters
+  of names takes the most important role among all the attributes. Compared with MEgo2Vec_w,
+  MEgo2Vec_c improves more F1 on Twitter-MySpace than on Aminer-LinkedIn, as other
+  attributes except name are extremely sparse on the SNS dataset, thus characters
+  in names dominate the effect.
+
+
+  Neighbor Pair Effect. To verify the effect of social convolution component, based
+  on MEgo2Vec_cw, we add the neighbors’ attribute embeddings by the unified attention
+  mechanism and find that the model MEgo2Vec_u performs much better than MEgo2Vec_cw
+  (+2.60-3.00% in F1). We further evaluate the instances with and without neighbors
+  separately on Aminer-LinkedIn. If predicted by MEgo2Vec_u instead of MEgo2Vec_cw,
+  the performance is improved notably for the instances with neighbors, but it is
+  almost not improved for those without neighbors. The results indicate that the neighbors’
+  information captured by our method can indeed benefit the task.
+
+
+  Social Convolution Effect. We compare the three attention mechanisms MEgo2Vec_d,
+  MEgo2Vec_f and MEgo2Vec_r. MEgo2Vec_r and MEgo2Vec_d perform better than MEgo2Vec_f
+  on academic networks, as relation attention and difference attention determine the
+  contribution of a neighbor pair by comparing two neighbors’ difference or two relations’
+  difference, while feature attention only considers the features of a user, but ignores
+  the difference between two users. But on Twitter-MySpace, since the attributes in
+  the SNS networks are quite sparse except name, the relationships between users are
+  not so easy to describe, making MEgo2Vec_f perform better than the other attentions.
+  When combining the three attention mechanisms as MEgo2Vec_u does, the performance
+  is better than each individual attention mechanism. MEgo2Vec_a averages neighbors’
+  embeddings. It performs almost the same as MEgo2Vec_cw that totally ignores neighbors’
+  information. The results indicate that neighbor pairs may bring in noise and it
+  is necessary to carefully utilize the neighbors’ information by attention mechanism.
+
+
+  Structure Embedding Effect. Based on MEgo2Vec_u, we add the structure embedding,
+  and denote it as our final model MEgo2Vec. The results show that the performance
+  can be improved by 0.48-1.36% in terms of F1, which indicates that the structure
+  information of the matched ego network is effectively modeled by the structure embedding
+  component, and can indeed benefit the alignment task. But the effect is not so significant,
+  as the connections between neighbor pairs in the collected datasets are sparse.
+
+
+  </block>
+
+  ### 5.3 Case Study
+
+  <block id="12">
+
+  Attention Coefficients. We analyze the attention coefficients learned by the proposed
+  attention mechanisms. A case for predicting whether two “Osmar R. Zaiane"s in two
+  ego networks are the same person or not shows that certain neighbor pairs make larger
+  contributions according to the learned attention weights. For example, a neighbor
+  pair named Russell Greiner makes one of the biggest contributions among all the
+  neighbor pairs except the focal pair itself. Because Russell shares the same affiliation
+  with Osmar, and also gets the same degree of computer science (inferred from their
+  educations) with Osmar in the first ego network. And in the second ego network,
+  Russell Greiner gets the same degree of computer science with Osmar, and also shares
+  the same interest like “machine learning" and “computer science" with Osmar. The
+  relationship between Russell and Osmar in the first network is quite similar to
+  the relationship between them in the second network. If calculated by MEgo2Vec_d,
+  Russell also makes more contribution than other pairs, because the two “Russell
+  Greiner"s share the similar educations and interests.
+
+
+  Node Embedding Visualization. Visualization of the node embeddings before the social
+  convolution operation, i.e., (vi ; ui), and the embeddings after the social convolution
+  operation, i.e., (Hvi ; Hui), by MEgo2Vec_u for selected positive and negative instances
+  with neighbors shows that for positive instances, the two users in a pair become
+  more similar to each other after the social convolution operation, but for the negative
+  instances, the two users in a pair do not tend to be more similar after the social
+  convolution operation, which indicates that the proposed model can effectively leverage
+  the neighbor pairs to align users.
+
+
+  Structure Embedding. A user pair that is correctly predicted as the same person
+  by MEgo2Vec, but is wrongly predicted by MEgo2Vec_u, illustrates the effect of structure
+  embedding. The case is difficult to be predicted because, firstly, the attributes
+  of one network is totally missing, and even the name of the two users are not very
+  similar; secondly, although there are two potentially matched neighbor pairs, their
+  attributes are very sparse in one network, thus cannot provide enough evidence.
+  Fortunately, two neighbors know each other in their respective networks, which is
+  an important clue to indicate that the two users are the same person. The structure
+  information can be well captured by the structure embedding component of our model.
+
+
+  </block>
+
+  ## 6 CONCLUSION
+
+  <block id="13">
+
+  We present the first attempt to solve the problem of user alignment by a graph neural
+  network model, which predicts whether two users can be aligned or not by matching
+  and embedding their ego networks. The model deals with the issue of diverse neighbors
+  by distinguishing them using attention mechanisms. Meanwhile, it captures both the
+  literal and semantic characteristics of the attributes by a multi-view embedding
+  mechanism, and also captures the structure of the matched ego network through normalizing
+  and convolving the adjacency matrix. The experimental results on different genres
+  of datasets validate the effectiveness of the model.
+
+  </block>'

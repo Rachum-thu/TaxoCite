@@ -1,0 +1,482 @@
+title: Neural text generation for query expansion in information retrieval
+blocks:
+- block_id: 0
+  content: 'Expanding users’ query is a well-known way to improve the performance of document retrieval systems. Several approaches
+    have been proposed in the literature, and some of them are considered as yielding state-of-the-art results in Information
+    Retrieval. In this paper, we explore the use of text generation to automatically expand the queries. We rely on a well-known
+    neural generative model, OpenAI’s GPT-2, that comes with pre-trained models for English but can also be fine-tuned on
+    specific corpora. Through different experiments and several datasets, we show that text generation is a very effective
+    way to improve the performance of an IR system, with a large margin (+10 %MAP gains), and that it outperforms strong baselines
+    also relying on query expansion (RM3). This conceptually simple approach can easily be implemented on any IR system thanks
+    to the availability of GPT code and models.
+
+
+    KEYWORDS
+
+    Information Retrieval, Neural text generation, Neural language models, Query expansion, GPT2, Data-augmentation'
+  citations: []
+- block_id: 1
+  content: 'In the Information Retrieval (IR) traditional setting, a user expresses his information needs with the help of
+    a query. Yet, it is sometimes difficult to match the query with the documents, for instance because of the query vocabulary
+    may differ from the documents. Especially when the query is short, the performance of the system is usually poor, as it
+    is difficult to detect the precise focus of the information need, and the relative importance of the query terms. Query
+    expansion aims at tackling these problems by transforming the short query into a larger text (or set of words) that makes
+    it easier to match documents from the collection. The main difficulty of query expansion is obviously to add only relevant
+    terms to the
+
+
+    initial query. Several techniques have been proposed in the literature, based on linguistic resources (e.g. synonym lists)
+    or based on the documents themselves (e.g. pseudo-relevance feedback).
+
+
+    In this paper, we explore the use of recent text generation models to expand queries. We experimentally demonstrate that
+    the recent advances in neural generation can dramatically improve ad-hoc retrieval, even when dealing with specialized
+    domains. More precisely, through different experiments, we show that:
+
+
+    (1) texts artificially generated from the query can be used for query expansion;
+
+    (2) this approach does not only provide new terms to the query, but also a better estimate of their relative weights;
+
+    (3) in addition, it also provides a better estimate of the importance (i.e. weight) of original query words;
+
+    (4) this approach can also be used on specialized domains.
+
+
+    The paper is structured as follows. After a presentation of the related work (Sect. 2), Section 3 details the different
+    components of our approach. Several experiments are then detailed in Section 4. Last, some concluding remarks are given
+    in Section 5.'
+  citations: []
+- block_id: 2
+  content: Query expansion is a well-established technique to try to improve the performance of an IR system. Adding new terms
+    to the query is expected to specifically improve recall, yet, since the query is, hopefully, better formulated, it may
+    also improve the top rank results and be beneficial to precision. One might classify the existing automatic approaches
+    based on the resources used to expand the query.
+  citations: []
+- block_id: 3
+  content: 'One obvious way to expand a query is to add semantically related terms to it (synonyms or sharing other semantic
+    relations like hyponyms, quasi-synonyms, meronyms...). Existing lexical resources can be used to add, for each query term,
+    a list of semantically related terms; yet, one has to deal with different problems: existence of lexical resources for
+    the collection language, or for the specific domain of the collection, choice of the appropriateness of certain relations,
+    need of sense disambiguation for polysemous words... WordNet [20] is among the best-known resources for English (general
+    domain language) and have been used with mitigated results at first [36], but later shown to be effective [6, inter alia].'
+  citations:
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[36]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+- block_id: 4
+  content: Another category of studies considers only a small set of documents to help to expand or reformulate the query.
+    To be automatic, they replace the user feedback by the hypothesis that the best ranked documents retrieved with the original
+    query are relevant and may contain useful semantic information [30]. It is interesting to note that in this case, not
+    only semantically relevant terms are extracted, but also distributional/statistical information on them and on the original
+    query terms. In this category, Rocchio, developed in the 60’s for vector space model was among the first one popularized
+    [17]. One of the current best known approach is RM3, which was developed in the framework of language model based IR systems
+    [1]. It is often reported to yield the best results in ad-hoc retrieval tasks, even compared with recent neural models
+    [15]. Neural approaches have also been proposed to integrate pseudo-relevance feedback information [14], yet, as it is
+    reported by the authors, the results are still lower than traditional models with query expansion.
+  citations:
+  - marker: '[1]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[14]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[15]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[17]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[30]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+- block_id: 5
+  content: 'Distributional thesauri have also been exploited to enrich queries. Since they can be built from the document
+    collection (or from a large corpus with similar characteristics), they are suited to the domain, the vocabulary... Traditional
+    techniques to build these thesauri have obtained good results for query expansion [6]. Neural approaches, that is, word
+    embedding approaches are now widely used to build such semantic resources. In the recent years, static embeddings (word2vec
+    [19], Glove [26] or FastText [3] to name a few) were also used in IR, in particular to enrich the query. Indeed, these
+    trainable dense representations make it easy to find new words that are semantically close to query words.
+
+
+    Even more recently, dynamic word representations obtained with transformer-based architectures, such as BERT [ 8] or GPT
+    [27], have been proposed. They build a representation for each word according to its context, and this ability have been
+    exploited to obtain competitive results in IR tasks [7, 12, inter alia]. BERT has been also used for query expansion in
+    the framework of a neural IR system [21, 39], for instance based on reranking [24]. While these studies show promising
+    results, it is worth noting that the RM3 method for pseudo-relevance feedback, while simpler, still competes with or even
+    outperforms most of these neural-based models (both Glove-based or equivalent and BERT-based and equivalent), as noted
+    in [21].'
+  citations:
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Pre-trained language models
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Encoder-only transformers
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Pre-trained language models
+  - marker: '[19]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[21]'
+    intent_label: Research Gap
+    topic_label: Encoder-only transformers
+  - marker: '[24]'
+    intent_label: Prior Methods
+    topic_label: Encoder-only transformers
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: Decoder-only transformers
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Encoder-only transformers
+- block_id: 6
+  content: 'In this paper, we propose to use constrained text generation to expand queries. In this approach, the original
+    query is used as a seed (or prompt) for a generative model which will output texts that are, hopefully, related to the
+    query. While text generation with language model is not new, the performance of neural models based on transformers [34]
+    makes this task realistic.
+
+
+    In this paper, we use the Generative Pre-Trained Transformers (GPT) models. These neural models are learned by auto-regression,
+    which means that they are unsupervisedly trained to predict the next token (word) given the previous ones. They are built
+    from stacked transformers (precisely, decoders) that are trained on a large corpus. The second version, GPT-2 [27], contains
+    between twelve layers (smallest model) up to 60 layers (largest model) of transformers with twelve self-attention heads
+    of 64 dimensions. Given that, GPT-2 has 1.5 billion parameters for its largest pre-trained model, released in Nov. 2019.
+    It has been trained on a specially crafted corpus named WebText which contains more than 8M documents from Reddit (i.e.
+    mostly English and general domain language such as discussion on press articles).
+
+
+    A newer version, GPT-3, has been released in July 2020; it is much more larger (175 billion parameters) and outperforms
+    GPT-2 on any tested task. Yet, the access given to this model (through a restricted API), the size of this model (which
+    makes fine-tuning impossible) and the problems arising on how to engineer the prompt to perform the expected generation
+    task, made GPT-2 preferable for this piece of work.
+
+
+    To the best of our knowledge, using generative models to expand queries has not been explored before. Yet, using GPT for
+    data augmentation in other NLP tasks has recently received lots of attention. For instance, generation is exploited in
+    relation extraction tasks [25], or text classification tasks like sentiment classification [13], re-admission prediction
+    and phenotypic classification [2] or fake news detection [5].'
+  citations:
+  - marker: '[2]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[13]'
+    intent_label: Prior Methods
+    topic_label: Sentiment and opinion benchmarks
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[27]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Decoder-only transformers
+  - marker: '[34]'
+    intent_label: Domain Overview
+    topic_label: Decoder-only transformers
+- block_id: 7
+  content: In this section, a complete overview of the proposed expansion approach is first given. Additional details about
+    the generative models and their adaptation are given in Section 3.2. The IR systems used in our experiments are presented
+    in Section 3.3.
+  citations: []
+- block_id: 8
+  content: 'As it was previously explained, our approach is very simple as it relies on existing tools and techniques. From
+    a query, multiple texts are generated by a GPT-2 model using the query as the seed. Note that the generation process is
+    not deterministic (if some parameters such as top_k and temperature are correctly set; see next sub-section), and thus,
+    even with the same seed, the generated texts are different. The generation of a large number of texts allows to have a
+    large coverage of the vocabulary related to the query and a good estimation of the relative importance of words by their
+    frequency in the generated texts. In the experiments reported below, 100 texts of 512 words (more precisely, tokens) per
+    query are generated, unless specified otherwise (see Section 4.6). These texts are concatenated and considered as the
+    expansion for the query. In our experiments, this new, very large, query is then fed to a simple BM25+ IR system (which
+    are still state-of-the-art models, even compared with pure neural IR systems [33]), but it could obviously be used in
+    any other IR system. Note that the only task done on-line (at query time) is the generation, which corresponds to the
+    inference step of the neural language models to generate texts. The training or fine-tuning of the model itself is done
+    off-line.
+
+
+    An example of a text generated from a query (query 701 from the GOV2 collection) is presented in Fig. 2. As one can see,
+    the generated text, while completely invented (note the barrel prices), is relevant for the query. It contains many terms,
+    absent from the original query, that are more or less closely related to the information need. More specifically, this
+    generated text provides:
+
+    • synonyms and orthographic variants (United States for the query term U.S.),
+
+    • meronyms-metonyms (barrel for oil),
+
+    • hypernyms (energy for oil),
+
+    • more generally any paradigmatic relations (consumer, producer for industry),
+
+    • and syntagmatic relations (production for oil).
+
+
+    It is worth noting that such texts also give a valuable information about the relative frequency of each terms (contrary
+    to thesauri or embeddings); this frequency information is an interesting cue to value the importance of a term.'
+  citations:
+  - marker: '[33]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+- block_id: 9
+  content: 'GPT-2 comes with several pre-trained models, having different size in terms of parameters (from 124M to 1.5B).
+    As it was previously said, their training data was news-oriented general domain language. The largest model was used for
+    two of the tested collections (see below). While these all-purpose models are fine for IR collections whose documents
+    are also general domain language, it may not be appropriate for domain-specific IR collections. In the experiment reported
+    in the next section, we use the ohsumed collection, consisting of medical documents. For this collection, we have fine-tuned
+    the GPT-2 355M model on the documents of the collection in order to adapt the language model to the specific medical syntax
+    and vocabulary. We use Transformers library of HuggingFace. The fine-tuning was stopped after reaching a plateau in terms
+    of perplexity of the model (in practice it corresponds to 250,000 samples processed). Other parameters (batch size, optimizer,
+    learning rate...) were set to their defaults. Although a larger set of medical documents could be used (from Pubmed® for
+    instance), this small fine-tuned model is expected to be more suited to generate useful documents to enrich the query.
+
+
+    Concerning the generation of texts, for reproducibity purposes, here are the main GPT-2 parameters used (please refer
+    to HuggingFace Transformers1 and GPT-2 documentations2): length=512, temperature=0.5, top_p=0.95, top_k = 40.'
+  citations: []
+- block_id: 10
+  content: In the experiments reported in the next section, we use two IR models. The first one is BM25+ [16], a variant of
+    BM25 [29]. The parameters k1, k3, b andδwere kept at their default value (resp. 1.2, 1000, 0.75, 1). It is implemented
+    as a custom modification of the gensim toolkit [28]. The second IR model is Language modeling with Dirichlet smoothing
+    [38] as implemented in Indri 3 [18, 32]. The smoothing parameterµis set to 2 500 (a usual default value). Both models
+    are regarded as yielding state-of-the-art performance for bag-of-words representation [15]. For RM3 expansion, we also
+    rely on the Indri implementation; the results reported in the next section corresponds to the best performing parameters
+    tested for each collection (number of documents considered for pseudo-relevance feedback, number of terms kept, mixing
+    parameterλ).
+  citations:
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[16]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[18]'
+    intent_label: Resource Utilization
+    topic_label: Other Topics
+  - marker: '[28]'
+    intent_label: Resource Utilization
+    topic_label: Other Topics
+  - marker: '[29]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[32]'
+    intent_label: Resource Utilization
+    topic_label: Other Topics
+  - marker: '[38]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+- block_id: 11
+  content: This section is dedicated to the experimental validation of the proposed query expansion approach. After a presentation
+    of our experimental settings, we show the results on several collections (Sect. 4.2 and 4.3). We also present additional
+    experiments about the interest of the frequency given by the generated text (Sect. 4.5) and about the influence of the
+    number of generated texts (Sect. 4.6).
+  citations: []
+- block_id: 12
+  content: 'Four IR collections are used in our experiments: Tipster [10] , Robust [35], GOV2 [4] and ohsumed [11]. Some basic
+    statistics are given in Tab. 2.
+
+
+    Tipster was used in TREC-2. The documents are articles from newspaper, patents and specialized press (computer related)
+    in English. The queries are composed of several parts, including the query itself and a narrative detailing the relevance
+    criteria; in the experiments reported below, only the actual query part is used.
+
+
+    The Robust collection consists of 528,000 news articles from Tipster disks 4 and 5; there 250 topics (301-450, 601-700).
+    As for the published work, we use the titles as queries.
+
+
+    GOV2 is a large collection of Web pages crawled from the .gov domain and used in several TREC tracks. In the experiments
+    reported below, 150 queries from TREC 2004-2006 ad-hoc retrieval tasks are used; as for Tipster, only the actual query
+    part is used (i.e. description and narrative fields are not included in the query).
+
+
+    Ohsumed contains bibliographical notices from Medline and queries from the TREC-9 filtering task. Its interest for our
+    experiments is that it deals with a specialized domain, hence it contains a specific vocabulary.
+
+
+    Performance are assessed with standard scores: Precision at different thresholds (P@x), R-precision (R-prec), Mean Average
+    Precision (MAP) on 1,000 first retrieved documents. When needed, a paired t-test with p = 0.05 is performed to assess
+    the statistical significance of the difference between systems.'
+  citations:
+  - marker: '[4]'
+    intent_label: Benchmark Utilization
+    topic_label: Other Topics
+  - marker: '[10]'
+    intent_label: Benchmark Utilization
+    topic_label: Other Topics
+  - marker: '[11]'
+    intent_label: Benchmark Utilization
+    topic_label: Other Topics
+  - marker: '[35]'
+    intent_label: Benchmark Utilization
+    topic_label: Other Topics
+- block_id: 13
+  content: 'Tables 3 and 4 respectively present the results for the general-language collections Tipster and GOV2. For comparison
+    purposes, we indicate the results of BM25+ with and without RM3 expansion, Indri’s Language Model (LM) with and without
+    RM3 expansion. Note that the RM3 expansion are strong baselines, as they achieve state-of-the-art performance, even compared
+    with neural techniques (incl. static embedding or contextualized embedding-based expansion) [21, 37]. Moreover, the results
+    reported here are for the best-performing RM3 parameters: for BM25+, this is 100 terms from the top 30 documents on Tipster
+    and 80 terms on the top 10 documents on GOV2 ; for LM on Tipster, this is 100 terms from the top 20 documents, and 100
+    terms for the top 10 documents GOV2. The statistical significance is computed by comparing with the BM25+ + RM3 (noted
+    with †) and LM+RM3 baselines (noted with a ∗).
+
+
+    On both collections, and on every performance measure, expanding the queries with the generated texts brings important
+    gains compared with the system without expansion. Also, our approach outperforms RM3 expansion in almost every situation,
+    and with a large margin on MAP, R-prec and precision on the top-ranked documents (P@5, P@10).'
+  citations:
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Pre-trained language models
+  - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Pre-trained language models
+- block_id: 14
+  content: 'The same setting is used on the ohsumed collection. For these medical-oriented IR dataset, we report two versions
+    of our approach: one is using the pre-trained model as before, and one relies on a model fine-tuned on the documents of
+    the collection. The best performing setting for RM3 is 100 terms for the top 15 documents for BM25+ and 80 terms for the
+    top 10 documents for LM. The results are reported in Tab. 5.
+
+
+    Here again, the GPT-based expansion significantly improves the results of the IR system and outperforms RM3 expansion.
+    Yet, the gains are lower than for the two previous collections. This difference can be explained by the following factors:
+
+
+    (1) the queries are longer more complex and more specific (as can be seen in Tab. 2, few documents are relevant);
+
+    (2) the generation model is not sufficiently suited to the documents.
+
+
+    Concerning this latter reason, we can indeed see the interest of fine-tuning the generation model, but better results
+    may be obtained by using a larger set of medical documents, or adopting different fine-tuning parameters (in particular
+    the number of epoch/samples processed, see Sect. 3.2). Unfortunately, defining a priori the best parameters for our IR
+    task is not possible and the cost of the fine-tuning process makes it impossible to test a wide range of possible values.'
+  citations: []
+- block_id: 15
+  content: 'In this section, we position our approach with respect to other expansion approaches that have been proposed in
+    the literature. For this experiment, we use the Robust dataset to make our results comparable with published results;
+    we also re-employ the same evaluation performance scores as in [21]. For this experiment, we use the Pyserini framework4
+    which comes with the pre-indexed Robust collection, we thus rely on its BM25 and RM3 implementations. Our GPT2-based expansions
+    have been generated as before with the pre-trained (non fine-tuned) large model. In Table 6 we report the performance
+    of our approach, the results of CEQE and its variants [21], as well as the various baselines proposed in [21], including
+    an expansion based on Glove embeddings (static-embed) [9] and a variant that has its vocabulary limited to terms appearing
+    in the pseudo-relevance feedback documents (static-embed-PRF); see [21] for details. The BM25 parameters are 0.9 and 0.4
+    as recommended by Pyserini for Robust; in our experiments, the best performing RM3 parameters are 70 terms from the top
+    10 documents.
+
+
+    There are some slight differences between our baselines (BM25, BM25+RM3) and those of [21], maybe due to differences in
+    the tokenizing and stemming processes of the IR frameworks. Nonetheless, the GPT-based expansion yields the best results,
+    with significant improvement over the BM25+RM3 baseline and several points above the best CEQE configuration.'
+  citations:
+  - marker: '[9]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[21]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+- block_id: 16
+  content: 'One of the interest of having complete texts that are generated is that we can collect information on the relative
+    importance of words, to the contrary of expanding queries with a thesaurus. To observe the impact of the number of occurrences
+    in the generated texts, we evaluate the effect of keeping the k most frequent terms of the generated texts and either
+    weighting them by their frequency (as done usually by BM25) or by giving a fixed weight (1/k). The results for different
+    values of k are presented in Fig. 3.
+
+
+    One can observe that adding terms to the query with a fixed weight slightly improves the MAP, but most of the gain is
+    indeed brought by a proper weighting based on the frequency of the term in the generated documents. This is a big advantage
+    of having proper texts, generated and tailored for the query, instead of related terms taken from a thesaurus or computed
+    from an embedding. It also worth noting that the maximum MAP is reached with about 100 terms; this is interesting for
+    a fair comparison with RM3 since this is also the typical numbers of terms yielding the best results in our experiments.
+
+
+    In the next experiment, we also examine how the generated texts can help to re-weight the initial query terms. The idea
+    is that queries are often too short to get relevant information about the relative importance of each query term (often,
+    each of them occurs only once, that is c(t, q) = 1). In this experiment, there is no query expansion, since only the initial
+    query terms are kept, but we use their frequency in the generated texts to compute the BM25+ weight wq. The results are
+    reported in Tab. 7 and compared with the usual weighting (i.e. BM25 weight with the frequency from the original query).
+    It appears that there is indeed a small improvement of the MAP (+2% absolute gain), that is more noticeable at high document-cutoff
+    values. These two experiments demonstrate the usefulness of dealing with full texts and not only word-to-word similarity
+    since the texts provide relevant frequency information.'
+  citations: []
+- block_id: 17
+  content: 'Text generation with large neural models has a non negligible computing cost: with our settings, for one query,
+    about 40 texts (of 512 tokens) are simultaneously generated in about 5 seconds on one Tesla V100 GPU card. Thus, it is
+    interesting to see how many generated texts are necessary and more generally what is the influence of the size of the
+    expansion on the IR performance. Of course, the size of the generated texts (can be set as a parameter of the generation
+    process) is also to be considered.
+
+
+    The MAP obtained for up to 100 generated texts per query is presented. For each number n of texts, 5 runs are performed
+    (ie. 5 sets of n texts are generated for each query, and the 5 MAP are averaged). One can observe that a plateau is rapidly
+    reached at around 20 texts per query; it represents about 10,000 words. It means that good performance can be yielded
+    with a limited time and computing cost.'
+  citations: []
+- block_id: 18
+  content: 'Neural approaches are increasingly used in IR, with mitigated results, especially when compared with "traditional"
+    bag-of-word approaches [15, 33, 37]. Here, the neural part is successfully used outside of a "traditional" IR system (but
+    note that it could be used with any IR systems, since it simply enriches the query). The expansion approach presented
+    in this paper is simple and easy to implement (thanks to the availability of the GPT models and code) while offering impressive
+    gains. The same approach could be used with other IR systems (neural or not), other approaches to enrich the query, and
+    more sophisticated post-processing (such as re-ranking techniques).
+
+
+    Lot of parameters could be further optimized, especially on the GPT model side (to influence the "creativity" of the text
+    generation), and the fine-tuning capabilities should also be explored more thoroughly (influence of bigger specialized
+    corpus if available, precise mix between pre-trained and fine-tuning, etc.). The recent availability of GPT-35 makes it
+    possible to even get greater gains thanks to the alleged high quality of its outputs, but necessitates to change the fine-tuning
+    paradigm (used for OHSUMED here) to a prompt engineering paradigm. Last, let us note that the generation time of the artificial
+    texts and the necessary GPU power may appear as a problem for some industrial contexts. Yet, these costs are not untractable
+    (see Sect. 4.6) and can be dealt with one GPU card and a few seconds of additional processing time. Moreover, model reduction
+    techniques, such as distillation [31], or TPUs could further reduce this generation time and its computational cost.
+
+
+    This whole approach also offers many research avenues: in this work, we have used text generation as a way to perform
+    data augmentation on the query side, but it could also be used to augment the representation of the documents (even if
+    in practice, the cost is still prohibitive on large collection, as seen with the doc2query and docTTTTTquery models [22,
+    23]). All machine-learning (neural or not) approaches based on pseudo-relevance feedback to train their model could instead
+    use similar text generation with the advantage that they would not be limited by the number of potential relevant documents
+    in the shortlist. And of course, similar data-augmentation strategy could be used for other tasks than document retrieval.
+
+
+    More fundamentally, the recent improvements of text generation also question the relevance of the document retrieval task.
+    Indeed, it is possible to envision systems that will be able to generate one unique document answering the user’s information
+    need, similarly to question-answering. If the generative model is trained on the document collection, the generated document
+    will serve as a summary (which is one of the popular applications of GPT-x models) of the relevant documents. Yet, the
+    current limitations of the models tested in this paper make them far from being suited for this ultimate task: the generated
+    documents do deal with the subject of the query, and thus use a relevant vocabulary, but do not provide accurate, factual
+    information (as seen in the Example in Fig. 2 about the price of oil barrels).'
+  citations:
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[22]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[23]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[31]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[33]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Other Topics

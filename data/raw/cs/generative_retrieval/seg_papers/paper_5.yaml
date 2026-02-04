@@ -1,0 +1,838 @@
+title: Generative Retrieval with Semantic Tree-Structured Identifiers and Contrastive
+  Learning
+abstract: In recommender systems, the retrieval phase is at the first stage and of
+  paramount importance, requiring both effectiveness and very high efficiency. Recently,
+  generative retrieval methods such as DSI and NCI, offering the benefit of end-to-end
+  differentiability, have become an emerging paradigm for document retrieval with
+  notable performance improvement, suggesting their potential applicability in recommendation
+  scenarios. A fundamental limitation of these methods is their approach of generating
+  item identifiers as text inputs, which fails to capture the intrinsic semantics
+  of item identifiers as indices. The structural aspects of identifiers are only considered
+  in construction and ignored during training. In addition, generative retrieval methods
+  often generate imbalanced tree structures and yield identifiers with inconsistent
+  lengths, leading to increased item inference time and sub-optimal performance. We
+  introduce a novel generative retrieval framework named SEATER, which learns SEmAntic
+  Tree-structured item identifiERs using an encoder-decoder structure. To optimize
+  the structure of item identifiers, SEATER incorporates two contrastive learning
+  tasks to ensure the alignment of token embeddings and the ranking orders of similar
+  identifiers. In addition, SEATER devises a balanced 𝑘-ary tree structure of item
+  identifiers, thus ensuring consistent semantic granularity and inference efficiency.
+  Extensive experiments on three public datasets and an industrial dataset have demonstrated
+  that SEATER outperforms a number of state-of-the-art models significantly.
+abstract_is_verbatim: true
+segmented_markdown: '# Generative Retrieval with Semantic Tree-Structured Identifiers
+  and Contrastive Learning
+
+
+  ## Abstract
+
+  <block id="0">
+
+  In recommender systems, the retrieval phase is at the first stage and of paramount
+  importance, requiring both effectiveness and very high efficiency. Recently, generative
+  retrieval methods such as DSI and NCI, offering the benefit of end-to-end differentiability,
+  have become an emerging paradigm for document retrieval with notable performance
+  improvement, suggesting their potential applicability in recommendation scenarios.
+  A fundamental limitation of these methods is their approach of generating item identifiers
+  as text inputs, which fails to capture the intrinsic semantics of item identifiers
+  as indices. The structural aspects of identifiers are only considered in construction
+  and ignored during training. In addition, generative retrieval methods often generate
+  imbalanced tree structures and yield identifiers with inconsistent lengths, leading
+  to increased item inference time and sub-optimal performance. We introduce a novel
+  generative retrieval framework named SEATER, which learns SEmAntic Tree-structured
+  item identifiERs using an encoder-decoder structure. To optimize the structure of
+  item identifiers, SEATER incorporates two contrastive learning tasks to ensure the
+  alignment of token embeddings and the ranking orders of similar identifiers. In
+  addition, SEATER devises a balanced 𝑘-ary tree structure of item identifiers, thus
+  ensuring consistent semantic granularity and inference efficiency. Extensive experiments
+  on three public datasets and an industrial dataset have demonstrated that SEATER
+  outperforms a number of state-of-the-art models significantly.
+
+
+  </block>
+
+  ## 1 Introduction
+
+  <block id="1">
+
+  Modern recommendation systems (RS) predominantly use a two-stage retrieve-then-rank
+  strategy [5]. During retrieval, a small subset of items (hundreds) is chosen from
+  a vast item pool (millions). Considering the large scale of the entire pool, efficiency
+  is vital for the retrieval model. Moreover, the success of the ranking model depends
+  on the quality of retrieved items, highlighting the importance of retrieval effectiveness.
+  Traditional models leverage dual-encoder architectures and Approximate Nearest Neighbor
+  (ANN) algorithms. Initially, retrieval models represent users with a single vector
+  [5, 13]. Subsequent studies [3, 16, 29] notice the inadequacy of single, finite-length
+  vector representations, leading to the introduction of multi-vector retrieval. These
+  approaches leverage multiple vectors to better express user interests and continue
+  using ANN across multiple vectors for inference. However, the inner product of ANN
+  theoretically requires a strong assumption for the Euclidean space, which may not
+  be satisfied in practical applications. Hence, developing a model capable of capturing
+  complex interactions, adequately representing user interests, and ensuring efficiency
+  is a direction worth exploring.
+
+
+  To achieve this goal, tree-based indexing models like TDM [33] and JTM [32] from
+  Alibaba have been introduced. They estimate interaction probabilities using deep
+  models and achieve affordable efficiency by retrieving over tree-based indices,
+  rather than the entire item pool. A recent trend in search [24, 26] views retrieval
+  as a generation task. These models use transformer memory as a differentiable index
+  and decode document IDs autoregressively as texts. The latest work TIGER [21] utilizes
+  similar architectures for RS. They construct codebooks (so-called identifiers in
+  this paper) to represent items and estimate interaction probabilities using the
+  product probabilities predicted by transformers.
+
+
+  Despite their achievements, these generative models cannot meet the efficiency requirement
+  for large-scale applications and their performance can be improved. Regarding effectiveness,
+  these works treat identifier tokens purely as texts, optimizing with cross-entropy
+  loss loosely related to the indexing structures, neglecting the inherent characteristics
+  of such structures. The structural aspects are only considered when constructing
+  identifiers and are not integrated into the loss function during training. In terms
+  of efficiency, imbalanced tree-structured identifiers in DSI and NCI can result
+  in increased and inconsistent inference time for items. The multiple transformer
+  layers in TIGER increase the computational burden during inference.
+
+
+  To address such problems, we propose a generative model for the recommendation,
+  namely SEATER, which learns SEmAntic Tree-structured item identifiERs via contrastive
+  learning. We leverage an encoder-decoder model which encodes user interests and
+  decodes probably the next items. The decoder represents items into equal-length
+  identifiers with consistent semantics within the same level. SEATER assigns balanced
+  𝑘-ary tree-structured identifiers to items and learns semantics and hierarchies
+  of identifier tokens through contrastive learning tasks. We construct such identifiers
+  based on collaborative filtering information to incorporate prior knowledge. During
+  training, we design two contrastive learning tasks to help the model comprehend
+  the structure of item identifiers. Considering that each token represents an individual
+  set of items, each identifier token has distinct semantics. The hierarchical relationship
+  and inter-token dependency are inherent properties of such tree-structured indices.
+  However, relying solely on user-item interactions for learning these complicated
+  associations is challenging. It is necessary to introduce additional tasks to learn
+  this structural information. We integrate two contrastive learning tasks in addition
+  to the generation task. The first task employs the infoNCE loss, aligning token
+  embeddings based on their hierarchical positions. The second task leverages a triplet
+  loss, instructing the model to differentiate between similar identifiers. In this
+  way, SEATER obtains both efficiency and effectiveness for item retrieval in RS.
+  Extensive experiments across four datasets validate the effectiveness of the proposed
+  model.
+
+
+  In summary, our main contributions are as follows:
+
+  - We introduce a generative framework, SEATER, for the retrieval phase of recommendation.
+  We elaborate on the construction of identifiers, structural optimization based on
+  contrastive learning.
+
+  - Utilizing two contrastive learning tasks, the model captures the semantics of
+  the tokens and the hierarchies within the tree structure. Both tasks optimize identifiers’
+  structures.
+
+  - The balanced 𝑘-ary tree structure ensures consistent semantic granularity for
+  tokens at the same level and significantly reduces inference time compared with
+  other tree-structured methods.
+
+  - Extensive experiments on three public datasets and an industrial dataset have
+  demonstrated that SEATER significantly outperforms several state-of-the-art (SOTA)
+  methods, including dual-encoder, tree-based indexing, and generative methods.
+
+
+  </block>
+
+  ## 2 RELATED WORK
+
+  <block id="2">
+
+  Retrieval in Recommender Systems. In RS, the retrieval phase selects a subset of
+  items from a vast corpus. For efficiency, the industry often uses dual-encoder models
+  to represent users and items as vectors [3–5, 16, 18, 29]. And user preferences
+  towards items are estimated through the inner product of vectors, which can be accelerated
+  by ANN search for inference. The initial dual-encoder models represented users with
+  a single vector [5, 9, 13]. Subsequent studies [3, 4, 16, 29], observed the limitations
+  of expressing with a finite-length single vector and introduced multi-vector user
+  interest modeling, continuing to utilize ANN search for inference. An alternate
+  research direction aims to enable more intricate models with complex interaction
+  estimation. TDM [33] and JTM [32] proposed by Alibaba involve tree-based indexing
+  with advanced deep models, thereby facilitating more accurate estimation. RecForest
+  [6] constructs a forest by creating multiple trees and integrates a transformer-based
+  structure for routing operations. Similar to those studies, this paper seeks to
+  retrieve items in a generative manner and optimize item identifiers from the indices
+  perspective.
+
+
+  Generative Retrieval. In document retrieval, researchers have investigated using
+  pre-trained language models to generate various types of document identifiers. For
+  example, DSI [24] and NCI [26] utilize the T5 [20] model to produce hierarchical
+  document IDs, while SEAL [2] (with BART [15] backbone) and ULTRON [31] (using T5)
+  use titles or substrings as identifiers. AutoTSG [28] and NOVO [27], also based
+  on T5, employ term-sets and n-gram sets as identifiers. There are studies exploring
+  the identifier structures, such as GenRet [23] and LTRGR [17]. Generative document
+  retrieval has been expanded to various fields. IRGen [30] uses a ViT-based model
+  for image search, while TIGER [21] employs the T5-based architecture for RS. However,
+  due to the resource-intensive nature of multiple transformer layers, these studies
+  are ill-suited for large-scale item retrieval in RS. Different from them, this paper
+  delves into the use of more parameter-efficient models for generative retrieval
+  in such systems. Also, there are previous works utilizing the generative nature
+  of language models for recommendation, including P5 [7, 10], TIGER [21], and GPTRec
+  [19]. These approaches, after establishing item identifiers, also known as codebooks,
+  do not optimize these identifiers’ structures. Ideally, the models would optimize
+  the identifiers related to corresponding indices. Towards this end, this paper learns
+  the inherent hierarchy and relationships of identifier structures with the help
+  of contrastive learning.
+
+
+  </block>
+
+  ## 3 Method
+
+  <block id="3">
+
+
+  </block>
+
+  ### 3.1 Overview
+
+  <block id="4">
+
+  Suppose a user 𝑢 ∈ U accesses a retrieval system, and the system returns a list
+  of candidates with each item 𝑣 ∈ I, where U and I denote the entire sets of users
+  and items respectively. Let’s use 𝒙 = [𝑥1, · · ·, 𝑥𝑡] ∈ X to denote the historically
+  interacted items of user 𝑢. In generative retrieval, the identifier of each item
+  𝑣 ∈ I is represented as a token sequence 𝒚 = [𝑦1, · · ·, 𝑦𝑙] ∈ Y, where 𝑙 is the
+  length of the identifier. The goal of the generative retrieval model is learning
+  a mapping 𝑓 : X → Y, which takes a user’s interacted item sequence as input and
+  generates a sequence of tokens (candidate identifiers).
+
+
+  The retrieval model feeds the user’s behavior 𝒙 into the encoder. Following this,
+  the decoder employs an auto-regressive method to generate the item identifier 𝒚
+  step by step. The probability of interaction between user 𝑢 and item 𝑣 is estimated
+  as:
+
+  𝑝(𝑢, 𝑣) = ∏_{𝑖=1}^{𝑙} 𝑝(𝑦𝑖 |𝒙, 𝑦1, 𝑦2, . . . , 𝑦𝑖−1)
+
+  where 𝑙 denotes the length of item identifiers. To assign items with semantic representations,
+  we convert all items into uniform-length identifiers. Identifier tokens capture
+  item information from coarse to fine granularity, spanning from the beginning to
+  the end. We use a multi-task learning approach to optimize both the model and identifiers.
+  The sequence-to-sequence task directs the model to generate valid identifiers, while
+  the two contrastive learning tasks aid in grasping semantics and relationships among
+  identifier tokens.
+
+
+  </block>
+
+  ### 3.2 Retrieval Model
+
+  <block id="5">
+
+
+  #### 3.2.1 Encoder-Decoder Architecture
+
+  For the retrieval model, we employ the standard Transformer architecture [25]. Detailed
+  Transformer structure specifics are omitted for brevity.
+
+
+  We leverage the Transformer encoder to capture user interests from behavior sequences:
+
+  X = Encoder(𝑥1, 𝑥2, · · ·, 𝑥𝑡),
+
+  where X ∈ R^{𝑡×𝑑} denotes the encoder hidden states of user interaction history
+  𝒙 = [𝑥1, 𝑥2, · · ·, 𝑥𝑡], 𝑡 denotes the number of interacted items. The embeddings
+  of 𝑡 items serve as inputs to the encoder.
+
+
+  We exploit the Transformer decoder to model user-item interaction and predict the
+  interaction probability in an auto-regressive manner. The decoder’s hidden states
+  are calculated as follows:
+
+  Y = Decoder(𝒙, 𝑦1, 𝑦2, . . . , 𝑦𝑙),
+
+  where Y ∈ R^{𝑙×𝑑} denotes the decoder hidden states of item identifier 𝒚 = [𝑦1,
+  𝑦2, · · ·, 𝑦𝑙], 𝑙 is the length of the item identifier. The embeddings of identifiers
+  serve as inputs to the decoder.
+
+
+  In our study, we refrained from stacking numerous Transformer layers, e.g., 12 Transformer
+  blocks in T5-Base [20]. We used just one layer to maintain efficiency in large-scale
+  item retrieval contexts. In Section 5.5, we show that more layers indeed help the
+  performance, with potential loss of efficiency.
+
+
+  The probability at step 𝑖 can be modeled by softmax value of the 𝑖-th decoder hidden
+  state y𝑖 and candidate tokens C:
+
+  𝑝(𝑦𝑖 |𝒙, 𝑦1, 𝑦2, . . . , 𝑦𝑖−1) = exp(y_i^⊺ e_{y_i}) / Σ_{y_i'' ∈ C} exp(y_i^⊺ e_{y_i''}),
+
+  where y𝑖 ∈ R^𝑑 denotes the 𝑖-th vector in Y ∈ R^{𝑙×𝑑}, e_{y_i} ∈ R^𝑑 denotes the
+  embedding for token 𝑦𝑖, and C is the set of all possible next tokens of size 𝑘 given
+  the prefix [𝑦1, 𝑦2, . . . , 𝑦𝑖−1]. This approach estimates interaction probability
+  through product probabilities. The cross-attention mechanism and the decoder structure
+  provide a comprehensive capture of interaction estimation beyond the inner product
+  of dual-encoder models. Likewise, user interests are represented using a matrice
+  X that incorporates the full historical sequence, as opposed to limited-length vectors.
+  This method significantly improves the expressive power for user interests compared
+  to the dual-encoder models.
+
+
+  #### 3.2.2 Item Identifiers
+
+  Considering SEATER retrieves items using identifiers, the identifiers’ construction
+  is crucial. We have established a balanced tree structure to provide equal-length
+  identifiers for the retrieval task, which offers numerous advantages.
+
+
+  SEATER utilizes a balanced 𝑘-ary tree structure to construct identifiers for items
+  within set I. To incorporate prior knowledge, we leverage a hierarchical clustering
+  method with the constrained k-means [1] algorithm, to convert items into identifiers.
+  Given an item set 𝐼 to be indexed, we recursively cluster items into equal-size
+  𝑘 groups until each group has fewer than 𝑘 items. Detailed identifier tree construction
+  can be found in Algorithm 1. We employ item embeddings 𝑋_{1:𝑁} extracted from trained
+  SASREC [13] as the foundation for hierarchical clustering, leading to identifiers
+  with collaborative filtering insights. We assign unique tokens for each clustered
+  node because each node represents distinct item sets.
+
+
+  We present a toy example to clarify our method. A mouse, the 8-th item in set I,
+  is mapping into the identifier [13, 15, 8], where special tokens (start and end)
+  are omitted. For instance, token ‘8’ representing item 8 and token ‘15’ denoting
+  items 7 and 8. Tokens’ semantic granularity differs by layer: the leaf layer conveys
+  item-specific details, the penultimate layer captures information from a set of
+  𝑘 items, and the topmost token embodies the whole item set’s semantics. Thus, we
+  allocate unique embeddings to individual tokens.
+
+
+  Formally, we embed all identifiers and items in an embedding table E ∈ R^{M×d},
+  where M is the number of identifier tokens. In other words, each tree node has unique
+  token embedding. Note that the identifier tokens at the leaf layer have a one-to-one
+  correspondence with items. We share embeddings between these tokens and items. Given
+  N as the item count, our identifiers add (M − N) d extra embeddings compared to
+  item embeddings. The fact M − N ≪ N causes an affordable increase in space overhead.
+
+
+  Our construction method offers several distinct advantages: (1) All items are mapped
+  into equal-length identifiers due to the balanced tree structure. The equal-length
+  identifiers ensure that tokens at the same level possess consistent hierarchical
+  semantics. In an imbalanced tree, an item’s identifier might end at the third level
+  while another extends to the fifth. This causes varied semantic granularity among
+  third-level tokens. Furthermore, a balanced tree ensures shorter maximum identifier
+  lengths (tree depth) than an imbalanced tree. This results in faster inference speed
+  and equivalent processing time for all items. (2) We build the identifier tree with
+  item embeddings from a different retrieval model. Using item embeddings informed
+  by collaborative filtering, the identifiers effectively capture prior knowledge
+  for recommendations. Items with similar user interactions tend to have similar identifiers,
+  i.e., shared prefixes. Importantly, using these embeddings doesn’t add extra training
+  loads. This aligns with industry practices where multiple models are used for multi-path
+  retrieval, so there’s no added training cost beyond SEATER. For instance, a company
+  may simultaneously employ models like SASRec [13] and SEATER. Hence, using SASRec
+  embedding does not necessitate additional overhead.
+
+
+  ```text
+
+  Algorithm 1: Constructing equal-length identifiers.
+
+  Input: Item embeddings X1:N, number of items N, number of branches k.
+
+  Output: Semantic item indexes L1:N
+
+  1 Function ConstructIdentifiers(X) :
+
+  2 # Min(Max) size of each cluster
+
+  3 MinSize ← ⌊ |X|/k ⌋, MaxSize← ⌊ |X|/k ⌋ + 1
+
+  4 C1:k ← Constrained-Kmeans(X, MaxSize, MinSize)
+
+  5 J ← empty list
+
+  6 # Recursively clustering for each cluster
+
+  7 For i = 0 to k − 1 do
+
+  8  Jcurrent ← [i] * |Ci+1|
+
+  9  if |Ci+1 | > k then
+
+  10   Jrest ← ConstructIdentifiers(Ci+1)
+
+  11  else
+
+  12   Jrest ← [ 0, . . . , |Ci+1 | − 1]
+
+  13  end if
+
+  14  Jcluster ← ConcatString(Jcurrent, Jrest)
+
+  15  J ← J.AppendElements(Jcluster)
+
+  16  J ← ReorderToOriginal(J, X , C1:k)
+
+  17 # Upon finishing clustering, assign unique IDs for each tree node
+
+  18 if |X| = N then
+
+  19  i ← N + 1, visited ← empty dict, L ← J.copy()
+
+  20  For r = 1 to N do
+
+  21   # Each leaf node is encoded using its item ID
+
+  22   Lr,last column ← r
+
+  23   # Assign IDs to all non-leaf nodes
+
+  24   For l = 1 to penultimate column do
+
+  25    if Jr,1:l in visited then
+
+  26     Lr, l ← visited( Jr,1:l )
+
+  27    else
+
+  28     Lr, l ← i, visited( Jr,1:l ) ← i
+
+  29     i ← i + 1
+
+  30    end if
+
+  31 return L
+
+  ```
+
+
+  </block>
+
+  ### 3.3 Training
+
+  <block id="6">
+
+  Traditional recommendation models rely on user-item interaction data for training.
+  In generative retrieval, where both the model and indices (item identifiers) are
+  trained, we should also consider the indices’ structure for training. To tackle
+  this, we propose a multi-task learning scheme with two contrastive learning tasks
+  and a generation task.
+
+
+  #### 3.3.1 Generation Loss
+
+  We formulate the retrieval task as a sequence-to-sequence generation task for decoding
+  item identifiers. To generate valid item identifiers, following [24, 26], we employ
+  the sequence-to-sequence cross-entropy loss with teacher forcing. Given a training
+  sample (𝒙, 𝒚), the loss function can be written as follows:
+
+  L_{gen} = − Σ_{i=1}^{l} log 𝑝(𝑦𝑖 |𝒙, 𝑦1, 𝑦2, . . . , 𝑦𝑖−1),
+
+  where 𝒙 denotes the user history, and 𝒚 denotes the next interacted item’s identifier.
+
+
+  #### 3.3.2 Alignment Loss
+
+  Given that each token has distinct semantics and inter-token relationships exist,
+  we utilize contrastive learning to learn identifiers from the indices perspective.
+
+
+  As depicted by the tree-structured identifiers, the parent token encapsulates its
+  child tokens, as one can only access the child tokens through the parent token.
+  In tree-building, we group items into 𝑘 clusters to form 𝑘 child tokens. Thus, semantically,
+  the parent token should align closely with the centroid of its child tokens. Towards
+  this end, we devise a contrastive learning objective. Given a token 𝑗, we employ
+  the infoNCE loss to minimize the distance between it and its parent token 𝑝, while
+  maximizing the distance between it and the in-batch negative instances:
+
+  L_{ali} = − log [ exp(cos(e_j, e_p)/τ) / Σ_{k ∈ B\j} exp(cos(e_j, e_k)/τ) ],
+
+  where temperature τ is a hyper-parameter. The parent token 𝑝 is viewed as the positive
+  instance for token 𝑗. Other tokens in the same batch B, excluding the child and
+  parent of 𝑗, are viewed as negatives. This loss pulls the representations of tokens
+  with parent-child relationships closer and pushes the representations of unrelated
+  tokens apart.
+
+
+  #### 3.3.3 Ranking Loss
+
+  The generative model compares candidate identifiers during inference. Different
+  identifier tokens index various items. In this way, the model needs to discern subtle
+  differences between similar identifiers. We select identifiers with varying prefix
+  lengths compared to the ground truth to guide the model in ranking them using a
+  contrastive learning task. The varying prefix lengths imply the distinction of different
+  identifiers within hierarchies.
+
+
+  For each ground truth identifier 𝒚+, we randomly sample 𝑞 similar identifiers, denoted
+  as 𝒚−_{1}, 𝒚−_{2}, · · ·, 𝒚−_{q}. We select 𝑞 samples with 𝑞 different shared prefix
+  lengths from 𝒚+. These samples indicate related items with diverse similarity levels.
+  Then, we teach the model to rank these 𝑞 + 1 identifiers. In specific, for each
+  sample (𝒙, 𝒚), we can get the representation vector of encoder hidden states z_𝒙
+  ∈ R^𝑑 and decoder hidden states z_𝒚 ∈ R^𝑑:
+
+  z_𝒙 = MEAN(X), z_𝒚 = MEAN(Y),
+
+  where MEAN denotes the mean pooling, X and Y are obtained from equations above.
+  After obtaining hidden states, we rank different identifiers in pairs to instruct
+  the model on the ranking order among these 𝑞 + 1 identifiers. The paired identifiers
+  constitute the set Q, where |Q| = C2_{𝑞+1}. For any pair (𝒚†, 𝒚‡) in Q, we rank
+  the sample with more identical prefix tokens with 𝒚+ higher. We employ the triplet
+  loss to steer the model toward learning the desired ranking orders:
+
+  L_{rank} = Σ_{(𝒚†,𝒚‡) ∈ Q} max(0, s(z_𝒙, z_{𝒚†}) − s(z_𝒙, z_{𝒚‡}) + ξ),
+
+  where s is a similarity function, and ξ denotes a positive margin value. Here, 𝒚‡
+  denotes the sample with more tokens in common with 𝒚+, and 𝒚† for the one with fewer.
+  We set ξ as an adaptive value, ξ = β * ( num(𝒚‡) − num(𝒚†) ), to reflect rank differences
+  in different pairs, where β is a hyper-parameter set to a small positive value,
+  and num(𝒚) denotes the number of identical tokens between 𝒚 and 𝒚+. The function
+  s is defined as: s(p, q) = σ(p^T W_s q), where σ denotes the sigmoid activation
+  function, and the introduction of parameters W_s ensures the similarity estimation
+  can be more flexible.
+
+
+  #### 3.3.4 Multi-task Training
+
+  Finally, we train our model in an end-to-end manner under a multi-task learning
+  scheme:
+
+  L = L_{gen} + λ_a L_{ali} + λ_r L_{rank},
+
+  where λ_a and λ_r are hyper-parameters to balance different tasks. We also introduce
+  L2 regularization to avoid over-fitting, which is omitted here for conciseness.
+
+
+  </block>
+
+  ### 3.4 Inference
+
+  <block id="7">
+
+  In the inference phase, our objective is to extract the top n items from the entire
+  candidate set. To achieve this, we employ a constrained beam search mechanism on
+  the decoder module, specifically targeting tree-based identifiers, following NCI
+  [26]. This ensures that the model’s decoding aligns with the designated prefix tree,
+  yielding valid identifiers.
+
+
+  </block>
+
+  ## 4 Discussion
+
+  <block id="8">
+
+
+  </block>
+
+  ### 4.1 Comparison with Existing Work
+
+  <block id="9">
+
+  Generative retrieval is an emerging research direction. We are at the forefront
+  of incorporating the optimization of identifier structural information into the
+  training phase of RS.
+
+
+  DSI [24] and NCI [26] pioneer in learning a generative model to map a string query
+  to relevant docids for document retrieval. They discover that tree-structured identifiers
+  can establish structured information for candidate sets. TIGER [21], GPTRec [19],
+  and P5 [7, 11] employ text, user-item interactions, or historical sequences as prior
+  knowledge, utilizing distinct indexing methods, e.g., RQ-VAE and SVD. They consider
+  the structure of identifiers in the construction phase, yet neglect it during the
+  training process. The user-item interactions are insufficient for the model to learn
+  complex structured information. SEATER optimizes structured information based on
+  these findings. We construct a balanced tree to map items to equal-length identifiers,
+  ensuring semantic consistency at each layer and enabling more efficient inference
+  with reduced tree depth. We also introduce two contrastive learning tasks to the
+  model training to aid in understanding the structure of the identifiers. Furthermore,
+  SEATER achieves superior performance with just 1 transformer layer (with more parameters,
+  SEATER can be better), whereas previous works required multiple layers, such as
+  TIGER with 4 layers and P5 with 6 layers.
+
+
+  </block>
+
+  ### 4.2 Efficiency Analyses
+
+  <block id="10">
+
+  We list complexity analysis of representative works with tree-structured identifiers,
+  validating that structures of item identifiers in SEATER are more efficient.
+
+
+  Regarding space complexity, our emphasis is on the storage cost of identifiers.
+  Given that current recommendation systems inherently require storing an item embedding
+  table of size N d (N: the item count), our evaluation concentrates on the extra
+  space introduced by identifiers. In SEATER, identifiers’ leaf tokens share embeddings
+  of corresponding items; only non-leaf tokens add to additional space overhead. Due
+  to the structure of a balanced tree, the number of non-leaf tokens can be cumulatively
+  calculated per layer: 1 + k + k^2 · · · + ⌈N/k⌉/k + ⌈N/k⌉ = k ⌈N/k⌉ − 1 / (k − 1).
+  If N is the power of k, then k ⌈N/k⌉ − 1 / (k − 1) = N − 1 / (k − 1). In our experiments,
+  k is set to 8 or 16. Consequently, the additional space cost (N − 1)/(k − 1) d introduced
+  by identifiers is significantly smaller compared to N d (size of item embedding
+  table).
+
+
+  To reduce time complexity, we leverage beam search during decoding. In real-world
+  applications, intermediary encoder outputs in SEATER can be efficiently precomputed
+  and stored, as shown in previous works. The bottleneck during inference is the beam
+  search over identifiers. Compared to TDM’s binary tree and RecForest’s multiple
+  trees, SEATER evidently shows an advantage in inference speed. Although DSI and
+  NCI share a similar tree construction method with SEATER, their inference steps
+  often amount to several times greater than SEATER. Due to their utilization of an
+  imbalanced tree structure for identifiers, the max length of identifiers often is
+  a constant multiple of log_k N, and the max length critically influences inference
+  speed. Therefore, SEATER demonstrates a superior inference time relative to other
+  tree-based and generative models.
+
+
+  </block>
+
+  ## 5 Experiment
+
+  <block id="11">
+
+
+  </block>
+
+  ### 5.1 Experimental Setup
+
+  <block id="12">
+
+  We adhere to standard practices [3, 6, 29, 33] for item retrieval by choosing suitable
+  datasets, baselines, and evaluation metrics.
+
+
+  #### 5.1.1 Dataset
+
+  We have selected the following three public datasets: 1) Yelp: adopted from the
+  2018 edition of the Yelp challenge. The dataset encompasses business activities
+  that occurred on the Yelp platform. 2) Books: The Amazon review dataset [8], adopting
+  the ‘Books’ subset. 3) News: The MIND dataset is a benchmark for news recommendation.
+  We adopt the ‘MIND-small’ subset.
+
+
+  To evaluate our model in a real-world situation, we collected an industrial large-scale
+  dataset from a commercial app. 4) Micro-Video: we randomly selected 0.75 million
+  users who used a micro-video app over two weeks in 2023. The historical behaviors
+  have been recorded. Unlike other public datasets, this industrial dataset has not
+  undergone any filtering and exhibits high sparsity that aligns with real industrial
+  scenarios.
+
+
+  #### 5.1.2 Evaluation Metrics & Protocol
+
+  Following common practices [3, 6, 29], we divide each dataset into three parts,
+  i.e., training/validation/test sets by partitioning the users in a ratio of 8:1:1.
+  For evaluation, we take the first 80% historical behaviors as context and the remaining
+  20% as ground truth. We strictly adhere to the evaluation framework in [3]. As for
+  metrics, we employ three widely used metrics, including Hit Ratio (HR), Normalized
+  Discounted Cumulative Gain (NDCG), and Recall (R). Metrics are calculated based
+  on the top 20/50 recommended candidates (e.g., HR@20). We calculated them according
+  to the ranking of items and reported the average results.
+
+
+  #### 5.1.3 Baseline and Implementation Details
+
+  We compare our model with SOTA models for item retrieval. The mainstream models
+  commonly adopt a dual-encoder architecture: (1) YoutubeDNN (Y-DNN) [5]; (2) GRU4Rec
+  [9]; (3) MIND [16]; (4) ComiRec [3] (the ComiRec-SA variant); (5) SASREC [13]; (6)
+  BERT4REC [22]; (7) Re4 [29]. We also include models with tree-based indexing: (8)
+  TDM [33]; (9) RecForest [6]. Furthermore, we include latest generative recommendation
+  models: (10) GPTRec [19] (the GPTRec-TopK variant); (11) TIGER [21] (implemented
+  with 4 layers, the same as the original paper).
+
+
+  We also compare SEATER with DSI and NCI. Since DSI and NCI are primarily designed
+  for search, leveraging textual query information as encoder input and built upon
+  T5, they are not directly suitable for recommendation settings. SEATER’s distinction
+  with them stems from its approach to employing identifiers and the additional losses.
+  To compare with DSI and NCI, we adapted SEATER by omitting the supplementary losses
+  and adopting identifier structures from DSI and NCI.
+
+
+  For baselines, we tune the hyper-parameters following the suggestions in the original
+  papers. For SASREC and the five dual-encoder models, we train them using the sampled
+  softmax loss [3], commonly adopted for the matching phase, setting the negative
+  sample size to 1280. For other baseline models, we adopt the loss functions and
+  training procedures described in the original papers. For all models, the dimension
+  of item embeddings is set to 64. All the dual-encoder and transformer-based models
+  make predictions based on brute-force retrieval, which involves calculating the
+  probability over all items. For fair competition, we use the same item embeddings
+  to build indexes for both SEATER and RecForest. Considering that TIGER requires
+  using item text information to construct codebooks, and only the MIND dataset provides
+  texts of items, we leveraged the SASREC embeddings for other datasets. As for TDM,
+  RecForest, and SEATER, they predict based on beam search over item indexes, where
+  we set the beam size to 50 for all of them.
+
+
+  We tune the hyper-parameters of SEATER as follows: the number of layers for encoder
+  and decoder is set to 1; the values of loss coefficients, i.e., λ_a and λ_r, are
+  searched from [1e-2, 9e-2] with step 2e-2; the L2 regularization weight is searched
+  from [1e-4, 1e-5, 1e-6, 1e-7]; the number of tree branches k is searched in [2,
+  4, 8, 16, 32]; the number of sampled identifiers q is set to 4; the margin value
+  β is searched in [0.01, 0.001, 0.0001]. We use Adam [14] for optimization with a
+  learning rate of 0.001, and adopt early stop training to avoid over-fitting.
+
+
+  </block>
+
+  ### 5.2 Overall Performance
+
+  <block id="13">
+
+  SEATER achieves the best performance on all datasets. SEATER consistently outperforms
+  baselines of various types by a large margin. Specifically, the relative improvements
+  in R@50 on the Yelp, News, Books, and Micro-Video datasets are 6.45%, 5.43%, 11.56%,
+  and 25.50%, respectively. These results underscore SEATER’s effectiveness.
+
+
+  SEATER significantly outperforms dual-encoder models and tree-based indexing models.
+  Compared with dual-encoder models like SASREC, SEATER’s improvement primarily stems
+  from its generative decoding method, which models interaction probabilities more
+  precisely than the inner product used by dual-encoder models. SEATER’s improvement
+  over models like ComiRec and Re4, which use multiple vectors to express user interests,
+  confirms that expressing user interests through behavioral sequences provides a
+  more comprehensive and thorough representation than using compressed vectors. Additionally,
+  SEATER surpasses models employing contrastive learning to enhance user interest
+  representation, such as Re4, validating the effectiveness of optimizing identifiers
+  as indices.
+
+
+  SEATER surpasses other generative methods in overall comparisons. TIGER utilizes
+  4 layers of encoder-decoder, while SEATER, with only 1 layer, still achieves superior
+  performance after significantly reducing resource consumption, validating the efficiency
+  of SEATER. Moreover, on sparser and larger datasets, the improvement of SEATER is
+  larger. The results indicate SEATER is better suitable for industrial applications.
+  The improvement over TIGER and GPTRec also validates the effectiveness of enhancing
+  the structure of item identifiers in SEATER, i.e., the balanced tree structure and
+  contrastive learning tasks for understanding structural information.
+
+
+  </block>
+
+  ### 5.3 Ablation Study
+
+  <block id="14">
+
+  We evaluated the performance impact of SEATER’s components via an ablation study.
+
+
+  To assess the efficacy of the proposed losses L_{rank} and L_{ali}, we test the
+  following variants: excluding both loss terms; removing L_{rank} only; removing
+  L_{ali} only. Both loss functions demonstrate a favorable influence on the model
+  performance. Removing either one individually leads to a decline in overall performance.
+  Further, eliminating the ranking among negative samples within L_{rank} leads to
+  worse performance than the full model but better than removing L_{rank} entirely.
+  These phenomena illustrate that both loss functions aid the model in comprehending
+  the tree structure of identifiers, such as the inter-token relationships and hierarchies
+  within the tokens.
+
+
+  To compare SEATER with DSI and NCI, we created variants that leverage the imbalanced
+  tree construction, token embedding allocation methods, and decoder structures from
+  DSI and NCI. A significant decline in performance is noted in both variants compared
+  with SEATER, exhibiting an average performance drop exceeding 10%. This phenomenon
+  validates the effectiveness of a balanced structure and suggests that shared embeddings
+  for identifier tokens limit performance, especially in large-scale recommendation
+  scenarios.
+
+
+  </block>
+
+  ### 5.4 Study on Item Identifiers
+
+  <block id="15">
+
+
+  #### 5.4.1 Impact of Different Item Identifiers
+
+  To verify our statements in Section 3.2.2, we investigated the impact of tree balance
+  and the utilization of different embeddings on model performance. As for tree balance,
+  we utilized constrained k-means for a balanced tree and k-means for an imbalanced
+  tree. As for embeddings used for hierarchical clustering, we explored employing
+  SASREC’s item embeddings, obtaining embeddings from items’ textual descriptions
+  using BERT, and randomly initialized embeddings. Owing to the exclusive presence
+  of items’ textual descriptions in the News dataset, we conducted experiments on
+  this particular dataset. For BERT embeddings, we concatenated the category, subcategory,
+  title, and abstract of the news articles within the News dataset to form the input
+  for BERT. Subsequently, we extracted the embedding of the [CLS] token and employed
+  it as the corresponding item embedding. For randomly initialized embeddings, we
+  create them with random samples from a uniform distribution.
+
+
+  We observed that utilizing a balanced tree yields performance improvements compared
+  to using an imbalanced tree when employing identical sources of item embeddings.
+  This is because a balanced tree ensures that tokens at the same level carry consistent
+  semantic granularity, thereby capturing similar semantics within one layer. We also
+  observed that employing the item embeddings from SASREC yields optimal performance.
+  This is attributed to its alignment with collaborative filtering information, rendering
+  it more suitable for recommendation tasks. Utilizing random identifiers yields the
+  poorest performance, as it fails to impart any information gain to the identifiers.
+
+
+  #### 5.4.2 Effect of Branch Number k
+
+  The variation in branch number k leads to a corresponding alteration in the length
+  l of the item identifier. As k increases, l decreases. We adjusted the size of k
+  and recorded the corresponding values of l along with the model’s performance. This
+  experiment employed two datasets, Yelp and Books, with varying item quantities.
+
+
+  We observe that as k increases from 2 to 8 on the Yelp dataset (or 2 to 16 on the
+  Books dataset), the model’s performance reaches its peak, while further increasing
+  k leads to a decline in performance. The performance improvement resulting from
+  increasing k can be attributed to the reduction in identifier length l. As the beam
+  search for inference cannot guarantee the selection of the correct next tokens at
+  every step, a greater number of beam search steps (larger l) increases the probability
+  of ultimate errors (due to cumulative errors). The decline in model performance
+  as k increases beyond the optimal point is attributed to the fact that l remains
+  relatively unchanged while k continues to increase. The beam search selects the
+  top b options from b * k candidate results at each step. The increase of k amplifies
+  the difficulty of beam search at every step, while l results in a relatively unchanged
+  total number of steps. Hence, both large and small values of k can lead to a decline
+  in model performance.
+
+
+  </block>
+
+  ### 5.5 Analysis on Parameter Count
+
+  <block id="16">
+
+  We investigated the impact of the number of encoder-decoder layers. We observed
+  distinct patterns across datasets of varying scales. Experiments were conducted
+  on a small-scale dense dataset, Yelp, and a large-scale sparse dataset, Books.
+
+
+  When the number of layers increases from 1 to 3, the performance is further improved
+  on the Yelp dataset. However, as the model’s depth continues to increase, performance
+  gradually deteriorates. We discovered that this phenomenon is attributed to the
+  smaller scale of the Yelp dataset, where overfitting occurs as the model’s depth
+  increases. On the Books dataset, by increasing the model depth, there is a continuous
+  improvement in the model’s performance. We posit that this is because a larger parameter
+  count enhances the model’s expressive capability on this dataset of a larger scale.
+  Increasing the number of layers leads to a linear growth in computational complexity.
+  Thus, considering the lower speed of deeper models, we find that 1-layer models
+  can strike a satisfactory balance between performance and efficiency, as they have
+  already attained competitive performance compared with other baselines. Deepening
+  the number of model layers is a promising direction for future research.
+
+
+  </block>
+
+  ## 6 Conclusion
+
+  <block id="17">
+
+  In this paper, we propose a generative retrieval model, namely SEATER, for recommendation.
+  With contrastive learning tasks and balanced identifiers, SEATER achieves both efficiency
+  and effectiveness by enhancing the structure of item identifiers. With the help
+  of two contrastive learning tasks, SEATER captures the nuances of identifier tokens,
+  including unique semantics, hierarchies, and inter-token relationships. Specifically,
+  SEATER aligns token embeddings based on their hierarchical positions using the infoNCE
+  loss and directs the model to rank similar identifiers in desired orders using the
+  triplet loss. SEATER exploits a balanced 𝑘-ary tree structure for identifiers, leading
+  to rational semantic space allocation and fast inference speed. This balanced structure
+  maintains semantic consistency within the same level while different levels correlate
+  to varying semantic granularities. Detailed analyses of time and space complexities
+  validate the efficiency of the proposed model, enabling its application on large-scale
+  retrieval. Extensive experiments on three public datasets and an industrial dataset
+  verify that SEATER consistently outperforms SOTA models of various types.
+
+  </block>'

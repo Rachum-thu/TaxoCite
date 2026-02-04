@@ -1,0 +1,482 @@
+title: 'KNN-SC: Novel Spectral Clustering Algorithm Using k-Nearest Neighbors'
+blocks:
+- block_id: 0
+  content: Spectral clustering is a well-known graph-theoretic clustering algorithm. Although spectral clustering has several
+    desirable advantages (such as the capability of discovering non-convex clusters and applicability to any data type), it
+    often leads to incorrect clustering results because of high sensitivity to noise points. In this study, we propose a robust
+    spectral clustering algorithm known as KNN-SC that can discover exact clusters by decreasing the influence of noise points.
+    To achieve this goal, we present a novel approach that filters out potential noise points by estimating the density difference
+    between data points using k-nearest neighbors. In addition, we introduce a novel method for generating a similarity graph
+    in which various densities of data points are effectively represented by expanding the nearest neighbor graph. Experimental
+    results on synthetic and real-world datasets demonstrate that KNN-SC achieves significant performance improvement over
+    many state-of-the-art spectral clustering algorithms.
+  citations: []
+- block_id: 1
+  content: 'Clustering is an unsupervised data mining technique that partitions unlabeled data points into different groups
+    based on their similarity. Over the last three decades, many clustering algorithms have been proposed, and these algorithms
+    have achieved significant results in applications across multiple domains. We can categorize clustering algorithms into
+    partitioning, hierarchical, graph-theoretic, model, and density-based approaches [1].
+
+
+    Considering the various clustering algorithms, spectral clustering [2] is a well-known graph-theoretic clustering algorithm.
+    It generates a similarity graph for data points and embeds the data points into an eigenspace spanned by k eigenvectors
+    through eigendecomposition on the similarity graph. By clustering the data points embedded in the eigenspace, non-convex
+    clusters can be discovered. Particularly, spectral clustering can be easily applied to any data type because it relies
+    only on the similarity graph [3]. Practically, it is widely applied in various fields such as network analysis [4], [5],
+    computer vision [6], [7], and pattern recognition [8]–[11]. However, spectral clustering has a critical limitation that
+    it leads to incorrect clusters because of high sensitivity to noise points [3].
+
+
+    An example is illustrated in Fig. 1. For a dataset consisting of two moon shape clusters shown in Fig. 1a, the result
+    of spectral clustering is exactly the same as the ground truth clusters. On the contrary, spectral clustering discovers
+    completely incorrect clusters when some noise points are added to the same dataset as shown in Fig. 1b. Considering that
+    noise points often define inter-cluster relationships that disturb exact clustering, these noise points corrupt a similarity
+    graph of data points, and when the corrupted similarity graph embeds the data points into the eigenspace, spectral clustering
+    leads to incorrect clustering results.
+
+
+    To address this issue, many researchers have proposed new clustering approaches, which are extensions of spectral clustering.
+    One representative clustering approach [12]–[16] incorporates spectral clustering into density-based clustering. The density-based
+    spectral clustering approach aims to discover clusters consisting of data points with similar densities. The clusters
+    discovered by the density-based spectral clustering are robust to noise points because the noise points are typically
+    sparse; therefore, they have no similar density to the data points included in the clusters. Consequently, the density-based
+    spectral clustering approach discovers clusters that are robust to noise points using a similarity graph that represents
+    the relationships between data points with similar densities. However, as the number of noise points increases, the density
+    of the clusters is deformed, which may lead to incorrect clustering results. Other representative approaches [3], [17]–[19]
+    proposed methods to learn a graph representation that minimizes the influence of noise points on the clustering result.
+    To do this, many researchers have proposed optimization techniques for estimating and pruning noise points. However, similar
+    to the density-based spectral clustering approaches, graph learning representation techniques are negatively influenced
+    by the number of noise points. Specifically, the increased number of noise points reduces the sparsity of the data points
+    and eventually corrupts the similarity graph, often leading to incorrect clustering results. Furthermore, because these
+    approaches must assign all the data points to specific clusters, the noise points are treated as regular data points rather
+    than outliers.
+
+
+    In this study, we propose a novel spectral clustering algorithm using k-nearest neighbors known as KNN-SC. KNN-SC first
+    generates a nearest neighbor graph and uses a statistical method to estimate the density difference between vertices to
+    filter the potential noise points. Thereafter, it expands the nearest neighbor graph based on the local density of each
+    vertex to generate a density-based similarity graph, representing a density-based clustering structure. Finally, the KNN-SC
+    discovers clusters using spectral clustering optimized to maximize the average density of clusters for the similarity
+    graph. Therefore, it effectively improves the clustering performance and robustness against noise points by combining
+    the advantages of the density-based spectral clustering and potential noise detection approaches. In addition, we demonstrate
+    that the proposed method is robust against the number of noise points using extensive experiments.
+
+
+    The main contributions of this study are summarized below.
+
+
+    (1) By utilizing a density estimator based on the k-nearest neighbors and a statistical method, we can explicitly filter
+    out potential noise points without the learning process of a graph representation.
+
+
+    (2) We introduce a novel method that generates a density-based similarity graph representing the adaptive density-based
+    relationships between data points using the nearest neighbor graph and k-nearest neighbors.
+
+
+    (3) We propose a robust spectral clustering algorithm, KNN-SC, which overcomes the shortcomings of the existing algorithms.
+
+
+    (4) We provide experimental evaluations conducted on synthetic and real-world datasets to demonstrate the performance
+    of the KNN-SC.
+
+
+    The rest of this study is organized as follows. Section II reviews the related studies. Section III introduces the foundational
+    definitions and details of the proposed algorithm. Section IV compares the performance of KNN-SC to other clustering algorithms
+    using several synthetic and real-world datasets, and Section V concludes the article.'
+  citations:
+  - marker: '[1]'
+    intent_label: Domain Overview
+    topic_label: Other Topics
+  - marker: '[2]'
+    intent_label: Domain Overview
+    topic_label: Other Topics
+  - marker: '[3]'
+    intent_label: Research Gap
+    topic_label: Other Topics
+  - marker: '[4]'
+    intent_label: Prospective Application
+    topic_label: Other Topics
+  - marker: '[5]'
+    intent_label: Prospective Application
+    topic_label: Other Topics
+  - marker: '[6]'
+    intent_label: Prospective Application
+    topic_label: Other Topics
+  - marker: '[7]'
+    intent_label: Prospective Application
+    topic_label: Other Topics
+  - marker: '[8]'
+    intent_label: Prospective Application
+    topic_label: Other Topics
+  - marker: '[11]'
+    intent_label: Prospective Application
+    topic_label: Other Topics
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[16]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[17]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[19]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+- block_id: 2
+  content: In this section, we describe the basic concepts of spectral clustering and the definitions used in our study. Furthermore,
+    we review the existing clustering algorithms to address the aforementioned issue of spectral clustering in Section I.
+  citations: []
+- block_id: 3
+  content: 'Spectral clustering can be summarized in three steps [3]. First, it generates a similarity graph G = (V, E). Whereas
+    various strategies for generating the similarity graph exist, we focus on an ϵ-neighborhood graph using the radius ϵ.
+    Thus, the set of edges E is defined as { (i, j) | d(vi, vj) ≤ ϵ, vi, vj ∈ V, 1 ≤ i, j ≤ m, i ≠ j }, where d(vi, vj) is
+    the Euclidean distance between the vertices, V is the set of vertices, and m is the number of data points. Here, the similarity
+    graph can be represented by a symmetric adjacency matrix A ∈ {0, 1}m×m. Each element ai,j (1 ≤ i, j ≤ m) of the adjacency
+    matrix A is 1 if (i, j) ∈ E; if otherwise, it is zero.
+
+
+    Second, a solution of the minimized ratio-cut or normalized cut for the similarity graph G, an objective of spectral clustering,
+    is obtained. For example, an approximation of the ratio-cut is obtained using the trace minimization problem for the eigendecomposition
+    of a Laplacian matrix L of the adjacency matrix A:
+
+
+    min_{H ∈ R^{m×k}} Tr(H^T L H) s.t. H^T H = I
+
+    L = D − A (1)
+
+
+    where Tr(·) denotes the trace operator, m is the number of data points, k is the rank of the eigendecomposition, D is
+    a diagonal degree matrix whose elements are column-wise sums of A (i.e., aii = ∑_j sij), and H ∈ R^{m×k} is the solution
+    of the trace minimization problem in which the eigenvectors corresponding to the k-smallest eigenvalues of the Laplacian
+    matrix L are concatenated. The normalization of A changes the Laplacian matrix L to a symmetric (D^{-1/2} L D^{1/2}) or
+    random walk (D^{-1} L) Laplacian matrix.
+
+
+    Finally, the existing clustering algorithms (e.g., k-means [20]), are applied to the spectral embedding set H to discover
+    the final clusters.'
+  citations:
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+- block_id: 4
+  content: 'Various algorithms have been introduced to improve spectral clustering by alleviating issues related to noise
+    points. One representative approach of these algorithms is to learn a graph representation (such as a similarity graph
+    and an affinity matrix) to minimize the influence of noise points on the clustering result [3], [17]–[19], [21]–[23].
+    This approach strengthens the robustness against noise points by iteratively updating the graph representation based on
+    the clustering results until an optimal solution is obtained. For example, Bojchevski et al. [3] proposed a robust spectral
+    clustering algorithm (known as RSC) that minimized the influence of potential noise points by decomposing a similarity
+    graph into two latent graphs: good and corrupted graphs. Specifically, they optimized a trace minimization problem on
+    a good graph by updating the potential noise points corresponding to the corrupted graph. Thereafter, they minimized the
+    influence of the potential noise points by performing spectral clustering on the good graph only. Other studies [17]–[19],
+    [21] have proposed feature selection algorithms that minimized the influence of noise points using subspace learning.
+    Zhu et al. [21] utilized the Frobenius norm and half-quadratic optimization to learn an affinity matrix from a low-dimensional
+    space of the original data. This optimized affinity matrix represents an ideal clustering structure that removes the influence
+    of noise points and redundant features.
+
+
+    The other approach is to incorporate ideas of the density-based clustering algorithms, such as utilizing a similarity
+    computed by density estimation techniques [12]–[16], [24]. These algorithms [12], [14], [15], [24] reduce the influence
+    of noise points by generating a similarity graph using the density-sensitive similarity. Beauchemin [13] proposed a new
+    density-based similarity matrix through density estimation using k-means with subbagging. Hess et al. [16] presented a
+    technique for optimizing the eigenvectors of a similarity graph to discover clusters with a large average density. By
+    performing this optimization, an appropriate density for each cluster is automatically determined, and considering this
+    process, the clustering structure becomes robust against noise points (see [16] for details).
+
+
+    Recently, researchers have proposed an approach that employs deep learning for spectral clustering [25]–[27]. For example,
+    Tian et al. [25] proposed a deep learning-based spectral clustering algorithm that significantly improved the clustering
+    performance by extracting latent representations using an autoencoder. Yang et al. [27] proposed a dual autoencoder network
+    to extract robust latent representations of noise points and to discover the optimal clusters through deep spectral clustering.'
+  citations:
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[13]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[14]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[16]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[17]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[19]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[23]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[24]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: Other Topics
+- block_id: 5
+  content: The proposed algorithm aims to generate an accurate similarity graph from the data points. As mentioned in Section
+    II, traditional spectral clustering discovers clusters based on the eigenvectors obtained by decomposing the similarity
+    graph. However, the similarity graph is easily corrupted by noise points, leading to incorrect clustering as shown in
+    Fig. 1b. Therefore, considering the influence of noise points, we propose a novel approach that generates a density-based
+    similarity graph using k-nearest neighbors to handle the noise points. We first identify locally dense data points as
+    core vertices by utilizing the properties of the nearest neighbor graph. Thereafter, we filter out the potential noise
+    points based on two assumptions. (i) The density of a noise point differs significantly from the average density of the
+    data points, and (ii) the density of a noise point differs significantly from that of the neighbors that are not noise
+    points. Subsequently, we generated a similarity graph by adaptively expanding the nearest neighbor graph based on the
+    density of each core vertex. Because the similarity graph consists of vertices corresponding to the data points that are
+    not filtered as potential noise points, the proposed algorithm can perform clustering by decreasing the influence of noise
+    points.
+  citations: []
+- block_id: 6
+  content: 'First, we generate a nearest neighbor graph to identify locally dense data points as core vertices.
+
+
+    Let X be a set of m data points in the d-dimensional space of real values (i.e., ∀x ∈ X: x ∈ R^d). The nearest neighbor
+    graph is denoted by G_nn = (V, E), where V is a set of vertices corresponding to the data points, E is a set of edges
+    between each vertex v_i ∈ V and its nearest neighbor, and the weight w(i, j) of (i, j) ∈ E is the Euclidean distance d(v_i,
+    v_j) between vertices v_i and v_j. As shown in Fig. 2, the nearest neighbor graph is composed of connected components
+    that include at least one pair of vertices which are nearest neighbors to each other. For example, the nearest neighbor
+    graph is composed of six connected components, and pairs of vertices (v1, v2), (v8, v9), (v10, v11), (v15, v16), (v18,
+    v19), and (v20, v21) are nearest neighbors to each other. In addition, because such pairs of vertices have the smallest
+    weights among the edges of each connected component, they can be locally dense data points. Based on the properties of
+    the nearest neighbor graph, we define pairs of vertices that are nearest neighbors to each other as core vertices. On
+    the contrary, considering the nearest neighbor graph, as the path from a vertex to a core vertex increases, this vertex
+    becomes locally sparse because the distance from its nearest neighbor increases. Based on the density-based clustering
+    paradigm that considers locally dense data points separated by locally sparse data points as clusters, we identify locally
+    sparse vertices and prune all edges of these vertices from the nearest neighbor graph.
+
+
+    To identify the locally sparse vertices, we utilize the Z-test, a statistical technique that probabilistically evaluates
+    whether two sample sets are similar to each other in a normal distribution. Generally, because a dense vertex is close
+    to its neighbors and a sparse vertex is opposite, it is possible to effectively identify a locally sparse vertex by comparing
+    the distribution of k-nearest neighbors for each vertex. Let the set of k-nearest neighbors of vertex v_i be N^k_i. The
+    Z-test for two vertices (v_i and v_j) is defined as follows:
+
+
+    Z(v_i, v_j) = ( ∑_{u_i ∈ N^k_i} dist(v_i, u_i) − ∑_{u_j ∈ N^k_j} dist(v_j, u_j) ) / k √(σ^2(v_i) + σ^2(v_j)), (2)
+
+
+    where Z(·) denotes a test statistic score, which is the result of the Z-test for the two vertices, and σ^2(·) is the standard
+    deviation of the distances between the vertex and its k-nearest neighbors.
+
+
+    According to the statistical interpretation, when two sample sets are similar, Z is small, and in the opposite case, Z
+    is large. Particularly, it is possible to calculate a confidence interval (CI) probabilistically, representing the statistical
+    similarity of the two sample sets from Z. Typically, the two sample sets have a statistically significant similarity at
+    a 95% confidence interval, indicating that Z is less than or equal to two. Hence, in this study, we consider all pairs
+    of vertices for which Z is larger than two as dissimilar. Alternatively, we prune ∀(i, j) ∈ E, satisfying δ(v_i, v_j)
+    > 2. We have visualized the nearest-neighbor graph in an undirected graph to reduce the visual complexity. The red vertices
+    represent the core vertices, the blue vertices indicate vertices with similar distance distributions for the core vertices,
+    and the green vertices indicate locally sparse vertices identified by Eq. (2).
+
+
+    Generating the nearest neighbor graph for a dataset enables us to identify the connected components composed of data points
+    with similar densities. These connected components correspond to the initial clusters of a given dataset. However, if
+    there are noise points in the dataset, the connected components can be incorrectly generated for the noise points, considering
+    them as core vertices. Because our proposed algorithm generates a density-based similarity graph by combining the connected
+    components, noise points can corrupt the similarity graph. Therefore, we filter out the connected components whose potential
+    noise points are the core vertices to address this corruption on the similarity graph. To filter out the potential noise
+    points, we first define the local density of a vertex v_i ∈ V, denoted by d(v_i), as the average distance from its k-nearest
+    neighbors, indicating that d(v_i) = ∑_{u_i ∈ N^k_i} dist(v_i, u_i) / k. Thereafter, we filter out the potential noise
+    points based on two assumptions. (i) The density of a noise point differs significantly from the average density of data
+    points because the noise point is relatively sparse; (ii) the density of a noise point differs significantly from that
+    of neighbors that are not noise points. Therefore, we define two density difference measures: global density difference
+    (GDD) and local density difference (LDD). The GDD is the difference between the density of a vertex v_i ∈ V and the average
+    density of all the data points. LDD is the average density difference between a vertex v_i ∈ V and its neighbors. The
+    GDD and LDD are defined by the following equations:
+
+
+    GDD_i = ( d(v_i) − \bar{d}(X) ) / \bar{d}(X), (3)
+
+    LDD_i = (1/k) ∑_{u_i ∈ N^k_i} | d(v_i) − d(u_i) | / d(u_i), (4)
+
+
+    where d(X) = { d(x) | x ∈ X }, \bar{d}(X) is the average of d(X), and |·| is the absolute value function.
+
+
+    Because the vertices with large GDDs are sparse compared to those with small GDDs and the vertices with large LDDs are
+    not similar to their neighbors, we can prioritize the potential noise points by aligning the core vertices using the sum
+    of GDD and LDD. Considering the aligned core vertices, we sequentially filter out the high-priority potential noise points
+    using the parameter ρ, which is the maximum threshold of the density difference between the data points that can create
+    a cluster. The core vertices, which are not noise points, have small GDDs and LDDs because they are generally similar
+    to each other, whereas the noise points have large GDDs and LDDs. Regarding this nature of the noise point, the parameter
+    ρ can be easily determined the parameter ρ by selecting the sum of GDD and LDD with the largest gradient for the aligned
+    core vertices.
+
+
+    By filtering out the potential noise points, the connected components of the nearest neighbor graph are refined to consist
+    of similar vertices. However, the nearest neighbor graph cannot sufficiently represent the similarity relationships between
+    the vertices because there are no edges between the connected components. Therefore, we expand the nearest neighbor graph
+    by adding new edges between the connected components with similar densities to generate a similarity graph. Let G_i^{cc}
+    = (V_i, E_i) be a connected component of the nearest neighbor graph G_nn = (V, E) and v_i^{core} be its core vertex. We
+    define the approximate density of a connected component as the density of its core vertex, that is, d(v_i^{core}), because
+    the vertices of the connected components are similar to each other. Thereafter, we add new edges to the two vertices (v_i
+    and u), satisfying dist(v_i, u) ≤ d(v_i^{core}), v_i ∈ V_i, u ∈ V, to expand the nearest neighbor graph. Each connected
+    component expands adaptively according to its density, and the vertices connected by edges have similar densities. This
+    expanded nearest neighbor graph is our proposed similarity graph, which can sufficiently represent the similarity relationships
+    between vertices. We used this graph to conduct spectral clustering.'
+  citations: []
+- block_id: 7
+  content: 'The clustering process of KNN-SC can be divided into three key steps: (i) filter out potential noise points from
+    a dataset, (ii) generate a similarity graph, and (iii) apply optimized spectral clustering to discover clusters with the
+    maximum average density.
+
+
+    Algorithm 1 describes the main procedures of KNN-SC and the detailed process of step (iii). We generate the proposed similarity
+    graph in lines 1-2. Considering lines 3-5, we apply eigendecomposition after normalizing the similarity graph to calculate
+    its eigenvalues λ and eigenvectors H. Regarding line 6, we discover optimal clusters from the similarity graph through
+    k-means by utilizing a simple projection introduced in [16]. Algorithm 2 performs step (i) by finding the core vertices
+    and connected components of the nearest neighbor graph and filtering out the potential noise points based on Eqs. (2),
+    (3), and (4). Finally, Algorithm 3 fulfills step (ii) by adaptively expanding the nearest neighbor graph based on the
+    local densities of the core vertices.
+
+
+    Algorithms 2 and 3 demonstrate the advantages of KNN-SC over the other spectral clustering algorithms because they use
+    the properties of the nearest neighbor graph to alleviate the clustering corruption caused by the potential noise points
+    and they reflect various densities of core vertices in the similarity graph.'
+  citations:
+  - marker: '[16]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Other Topics
+- block_id: 8
+  content: 'To illustrate the clustering results of KNN-SC, we conducted experiments on the synthetic and real-world datasets
+    and compared the performance with those of other state-of-the-art clustering algorithms, including k-means [20], spectral
+    clustering (SC) [2], RSC [3], and SPECTACL [16]. To ensure the validity of the experimental results, we used the scikit-learn
+    Python library (k-means and SC) and the source code provided by the author (RSC and SPECTACL). KNN-SC was implemented
+    in the Python programming language. All the algorithms were run on a machine that was equipped with a 3.2-GHz Intel CPU
+    and 32 GB of memory, and the operating system was Windows 10 64 bit. To measure the clustering performance for each algorithm,
+    we used two well-known evaluation metrics: normalized mutual information (NMI) [28] and adjusted rand index (ARI) [29].
+    The NMI is a measure used to evaluate clustering quality based on information theory. It is able to compare different
+    clustering algorithms that have different numbers of clusters. However, the NMI may lead to erroneous evaluation because
+    the number of clusters increases owing to the finite size effect [30]. Hence, we evaluated the clustering algorithms utilizing
+    the ARI, which calculates the similarity between the ground truth labels and clustering results based on all the pairwise
+    comparisons.'
+  citations:
+  - marker: '[2]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[3]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[16]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[20]'
+    intent_label: Result Comparison
+    topic_label: Other Topics
+  - marker: '[28]'
+    intent_label: Metrics Utilization
+    topic_label: Datasets and evaluation methodology
+  - marker: '[29]'
+    intent_label: Metrics Utilization
+    topic_label: Datasets and evaluation methodology
+  - marker: '[30]'
+    intent_label: Metrics Utilization
+    topic_label: Datasets and evaluation methodology
+- block_id: 9
+  content: 'Here, we evaluate the effectiveness of our algorithm using three synthetic datasets with different shapes. The
+    three synthetic datasets were moons, blobs, and mixed shapes. These datasets were generated using the scikit-learn Python
+    library. Particularly, to evaluate the robustness of our algorithm against noise points, we added internal and external
+    noise points to each synthetic dataset. The internal noise point is Gaussian, as provided by the noise parameter of the
+    scikit-learn Python library that adjusts the distribution of data points in a cluster. Considering each shape specification,
+    we generated ten datasets by increasing the noise parameter from 0 to 0.225 in increments of 0.025. The external noise
+    points are a set of random data points that are not included in any cluster. We also generated ten datasets for each shape
+    specification by adding external noise points equal to the ratio of the noise parameter to the number of original data
+    points. The moon and blob shape datasets have 1000 data points, and the mixed shape dataset has 1400 data points.
+
+
+    To compare the best performance of the five clustering algorithms, we iteratively conducted experiments by increasing
+    the parameters of each clustering algorithm. Considering SC, we adopted the traditional k-nearest neighbor graph as the
+    similarity graph, and gradually increased the parameter k by one from 2 to 400. The RSC uses a parameter θ, a constraint
+    for maximal number of corruptions. We also increased θ by one from 0 to 1000. SPECTACL uses an ϵ-neighborhood graph as
+    the similarity graph, and we gradually increased the radius parameter ϵ by 0.001 from 0.001 to 3. Our KNN-SC uses two
+    parameters, k and ρ. We increased k by one from 2 to 400, and set ρ to be the sum of GDD and LDD with the largest gradient
+    of the aligned core vertices as mentioned in Section III-A. The number of clusters c for the five clustering algorithms,
+    including k-means, was set to be equal to the ground truth ones. Through these iterations, we determined the parameters
+    for which the clustering algorithms had the best ARI.
+
+
+    From these experiments, we can observe that KNN-SC typically achieves the highest ARI, showing the least variance of ARIs
+    against the noise points. Although KNN-SC has a noticeable ARI degradation when the internal noise points are greater
+    than 0.15, it is relatively robust to the noise points because the ARI fluctuates less than the other clustering algorithms.
+    KNN-SC detects the trajectory of moons, whereas the other clustering algorithms cut both moons into half. We can also
+    observe that all the algorithms achieve high ARIs on the blobs dataset, which is the easiest to cluster. Particularly
+    interesting is the result of SPECTACL on a mixed dataset in which clusters of two shapes, such as moon and blob, are combined.
+    We can easily observe that SPECTACL can detect the trajectories of the moons. However, because the similarity graph generated
+    with a fixed radius ϵ is corrupted by internal noise points, blob-shaped clusters are also corrupted. On the contrary,
+    KNN-SC is robust against internal noise points by generating a similarity graph with radius adaptive to the densities
+    of the core vertices. In addition, because KNN-SC identifies and filters out external noise points as potential noise
+    points, it has noise-independent performance. In contrast, other clustering algorithms have lower ARIs as the number of
+    noise points increases. SPECTACL tends to regard external noise points as a cluster; nevertheless, it often fails like
+    the moons dataset.'
+  citations: []
+- block_id: 10
+  content: 'Here, we use ten real-world datasets of varying sizes, densities, and dimensionalities. These datasets were taken
+    from the UCI dataset repository [31]. All the real-world datasets were normalized in advance.
+
+
+    To evaluate the clustering performance on real-world datasets, we used both evaluation metrics, ARI, and NMI. The parameters
+    of the clustering algorithms were determined in a similar way to the experiments on synthetic datasets.
+
+
+    KNN-SC outperforms the other algorithms for all the real-world datasets. More importantly, KNN-SC has significantly higher
+    ARI and NMI than the other clustering algorithms, regardless of the dimensionality of the dataset and the number of clusters.
+
+
+    KNN-SC can intuitively cluster similar human faces and detect noise points using the direction of the face and gaze, or
+    whether glasses are worn.
+
+
+    To evaluate the parameter sensitivity of KNN-SC, we also conducted experiments by changing the two parameters, k and ρ,
+    on nine real-world datasets, excluding the Faces dataset. Parameters k and ρ are increased by 1 and 0.1, respectively,
+    until we achieve the best ARIs for real-world datasets.
+
+
+    There is no significant variance in the ARI, even if the parameters are changed for the seven datasets: Banknote, Wine,
+    Ecoil, Seeds, Ionosphere, Leaf, and Vehicle. We can only observe that the ARI is notably changed on the Iris and Sonar
+    datasets. Particularly, the ARI is more sensitive to parameter k than parameter ρ because parameter k determines the densities
+    of the core vertices in KNN-SC, and a threshold parameter ρ is affected by the parameter k.
+
+
+    Considering these experiments, we observe that the KNN-SC is not sensitive to the parameters. In addition, if we determine
+    parameter k first, then the parameter ρ can be easily determined.'
+  citations:
+  - marker: '[31]'
+    intent_label: Benchmark Utilization
+    topic_label: Other Topics
+- block_id: 11
+  content: 'In this article, we introduced a new spectral clustering algorithm known as KNN-SC, which is robust against noise
+    points. Utilizing the properties of the nearest neighbor graph, we determine the locally dense data points that can represent
+    the density variations of the dataset. Thereafter, we filter out the potential noise points that corrupt a similarity
+    graph by estimating the difference in the density between the data points based on the k-nearest neighbors. Moreover,
+    we decrease the influence of noise points by generating a similarity graph representing the adaptive density-based relationships
+    between data points. Therefore, we can significantly reduce the sensitivity of spectral clustering to noise points.
+
+
+    The results of comparative experiments show that KNN-SC is the most robust to noise points on the synthetic datasets,
+    competing with k-means, spectral clustering, RSC, and SPECTACL. Moreover, the superiority of KNN-SC over other clustering
+    algorithms was demonstrated using several synthetic and real-world datasets. Particularly, the experiment on the Faces
+    dataset illustrates the usefulness of KNN-SC in the field of computer vision.
+
+
+    In the future, we will optimize the proposed algorithm for extremely skewed or sparse datasets. Furthermore, we will apply
+    KNN-SC to various application fields.'
+  citations: []

@@ -1,0 +1,416 @@
+# Listwise Generative Retrieval Models via a Sequential Learning Process
+
+## Abstract
+Recently, a novel generative retrieval (GR) paradigm has been proposed, where a single sequence-to-sequence model is learned to directly generate a list of relevant document identifiers (docids) given a query. Existing GR models commonly employ maximum likelihood estimation (MLE) for optimization: this involves maximizing the likelihood of a single relevant docid given an input query, with the assumption that the likelihood for each docid is independent of the other docids in the list. We refer to these models as the pointwise approach in this paper. While the pointwise approach has been shown to be effective in the context of GR, it is considered sub-optimal due to its disregard for the fundamental principle that ranking involves making predictions about lists. In this paper, we address this limitation by introducing an alternative listwise approach, which empowers the GR model to optimize the relevance at the docid list level. Specifically, we view the generation of a ranked docid list as a sequence learning process: at each step we learn a subset of parameters that maximizes the corresponding generation likelihood of the i-th docid given the (preceding) top i − 1 docids. To formalize the sequence learning process, we design a positional conditional probability for GR. To alleviate the potential impact of beam search on the generation quality during inference, we perform relevance calibration on the generation likelihood of model-generated docids according to relevance grades. We conduct extensive experiments on representative binary and multi-graded relevance datasets. Our empirical results demonstrate that our method outperforms state-of-the-art GR baselines in terms of retrieval performance.
+
+## 1 INTRODUCTION
+Document retrieval plays a critical role in many information retrieval (IR) related tasks, e.g., web search [19, 70] and question answering [33, 80]. It aims to return an initial set of potentially relevant documents from a large-scale document repository when given a query. Recently, a new retrieval paradigm called generative retrieval (GR) [69] for document retrieval has been proposed. The key idea is to fully parameterize different components of indexing and retrieval within a single consolidated model, in which the information of all the documents in a corpus is encoded into the model parameters. In essence, this paradigm formalizes the document retrieval task as a sequence-to-sequence (Seq2Seq) problem that directly maps string queries to relevant document identifiers (docids). Following the initial publication by Metzler et al. [69], many subsequent investigations [10, 15, 22, 84, 87, 105] have showcased the potential of this novel paradigm. In comparison to traditional dense retrieval [9, 63, 71, 99], GR has several advantages:
+
+(i) During training, such a consolidated model can be optimized directly in an end-to-end manner towards a global objective. By generating docids token-by-token in an autoregressive fashion and conditioning them on the query, we can capture fine-grained interactions between the query and the document.
+
+(ii) During inference, the need for a complicated explicit index structure is eliminated. Instead, docid generation is performed using a vocabulary with tens of thousands of words, aligned with identifiers of all the documents in the corpus. Such autoregressive decoding significantly reduces the memory space and computational costs.
+
+The majority of existing GR models relies on the standard Seq2Seq objective, i.e., maximum likelihood estimation (MLE) [31, 51] with teacher forcing for learning. That is, during training, a number of queries are provided; each query is associated with a perfect ranked list of docids (in descending order of relevance scores); GR models operate in a pointwise manner. For example, existing works mainly focus on maximizing the likelihood of individual docids at a time. The final ranking is achieved by simply sorting the list based on the generated likelihood scores of these docids. In essence, the score assigned to each docid is independent of the other docids for a given query. This approach suffers from several issues: First, the learning objective under the MLE criterion is formalized as minimizing errors in generation of docids, rather than minimizing errors in rankings of docids, making it inconsistent with evaluation metrics like nDCG [38]. Second, given a query, the assumption that the query-docid pairs are generated independently and identically distributed (i.i.d.) is a strong assumption. Thirdly, the number of query-docid pairs can vary greatly from one query to another, leading to a GR model that is biased towards queries with a larger number of docid pairs [11].
+
+In this paper, we design a novel listwise approach to GR, in which docid lists instead of individual docids are used as instances in learning. Inspired by listwise learning-to-rank [11, 48, 91], it is crucial to effectively capture the difference between a ranked list of docids produced by a GR model and the ranked list given as the ground truth. To formalize the listwise loss function for GR, our key idea is to view the problem of generating a ranked list of relevant docids as a sequential learning process: in each step we target to maximize the corresponding stepwise probability distribution. Specifically, at step 1, we aim to maximize the probability distribution that the top-1 docid is generated. At step i > 1, we maximize the i-th probability distribution given the top i − 1 docids. Leveraging the characteristics of GR, we define the probability distribution as the output sequence likelihood of generating each docid, token-by-token in an autoregressive fashion, and conditioned on the given query. To solve the sequential learning problem, we transform it into a single-objective optimization problem via linear scalarization, in which the position importance in ranking is highlighted [48]. By assigning appropriate weights to different ranking positions, the final listwise loss function can effectively emphasize the significance of each position and optimize the overall objective accordingly. We refer to the GR model using the listwise loss function as ListGR.
+
+At inference time, the trained ListGR model uses beam search to generate a ranked list of potentially-relevant docids, which are based on possibly erroneous previous steps. However, in the proposed listwise loss function, the predictive probability of each reference docid is maximized given the gold sub-sequence before it. To solve this decoding inconsistency problem, we propose to perform relevance calibration to re-train the model with a relevance calibration objective. This objective aims to calibrate the likelihood of generated candidate docids to better align with ground-truth ranked lists according to their relevance grades to the query.
+
+Our main contributions are the following:
+
+(i) To the best of our knowledge, this is the first proposal for a listwise approach specifically designed for GR.
+
+(ii) We formulate a listwise learning objective for GR, by directly minimizing the expected loss defined on the predicted docid list and the ground-truth list, and taking into account position information.
+
+(iii) Our experimental results on five representative retrieval datasets demonstrate the effectiveness of our method, particularly on datasets with multi-graded relevance. Compared to the current state-of-the-art pointwise GR method, NCI, our approach achieves a significant improvement of 15.8% in terms of nDCG@5 on the ClueWeb 200K dataset.
+
+The remainder of the paper is structured as follows. Section 2 introduces preliminary concepts necessary for understanding the proposed method. Section 3 outlines the details of our proposed method. Section 4 describes the experimental setup. Section 5 presents the experimental results and analysis, highlighting the performance of our method compared to existing approaches. Section 6 presents an overview of related work in the field. Finally, Section 7 provides a summary of the paper and discusses limitations and potential future research directions.
+
+## 2 PRELIMINARIES
+We first recall the basic idea of the GR paradigm and of listwise algorithms that have been widely adopted in learning-to-rank.
+
+### 2.1 Generative retrieval
+Generative retrieval (GR) aims to directly generate a ranked list of docids for a given query using a text-to-text model. In the following, we summarize the model architecture, training, and inference process of GR.
+
+#### 2.1.1 Model architecture.
+In existing approaches, the GR model, represented as gθ, usually makes use of a transformer-based encoder-decoder architecture to answer queries. The encoder is responsible for processing the input sequence, i.e., query or document, and extracting meaningful representations to capture the essential topics. Based on the representation produced by the encoder, the decoder is responsible for generating the target docid.
+
+#### 2.1.2 Document identifiers (docids).
+Tay et al. [84] propose two primary document identifiers to represent documents:
+
+(i) Arbitrary unique integers without explicit semantic connections to the corresponding documents [84].
+
+(ii) Structured semantic numbers that carry semantic associations with the documents, often obtained through techniques like hierarchical k-means clustering [84, 87].
+
+Incorporating semantic associations between docids and documents improves the retrieval process [10, 22, 84, 87]. In this work, we adopt the structured semantic numbers for docid representation and we leave a detail discussion of the docid generation process to Section 4.5. Recently, alternative forms of docids such as n-grams and titles have been proposed. A comprehensive explanation of these docids can be found in Section 6.
+
+#### 2.1.3 Training and optimization.
+Maximum likelihood estimation (MLE) is widely employed in current GR methods to optimize two main tasks, i.e., the indexing task and the retrieval task, via maximizing the likelihood estimation of the target docid, given a document or query.
+
+Indexing task. To memorize the corpus, the GR model gθ takes the document d in the document set D as the input, and outputs its corresponding docid id in the docid set ID with MLE optimization algorithm, defined as,
+
+LIndexing(D, ID; gθ) = − ∑_{d ∈ D} log P(id | d; gθ),
+
+where P(id | d; gθ) is the likelihood of generation docid id,
+
+P(id | d; gθ) = ∏_{t ∈ [1,|id|]} P(w_t | d, w_{<t}; gθ),
+
+where w_t is the i-th ground-truth token in the id, and w_{<t} represents the tokens before the i-th one in the id.
+
+Retrieval task. A query q in the query set Q can have one or multiple associated docids, and these docids may possess varying degrees of relevance. For q, it has a ground-truth docid list, π_q = [id(1), id(2), ...], in descending order of relevance, where id(1) is the docid ranked at the first position, and id(2) is the docid ranked at the second position, and so on. We denote the set of relevant docids for all the queries Q as π_Q. Relevance grades for documents are non-negative integers. A relevance grade of 0 indicates that the document is irrelevant to the query. The higher the integer value, the greater the relevance of the document to the given query. And M(d) denotes the relevance grade of the document d to a query. To achieve the retrieval task effectively, the GR model also leverages MLE to learn how to map the query q in the query set Q to relevant docids, defined as,
+
+LRetrieval(Q, π_Q; gθ) = − ∑_{q ∈ Q, id ∈ π_q} log P(id | q; gθ),
+
+where P(id | q; gθ) is similar to above, defined as
+
+P(id | q; gθ) = ∏_{t ∈ [1,|id|]} P(w_t | q, w_{<t}; gθ).
+
+Finally, the total loss incurred during training a GR model is a combination of the indexing loss and the retrieval loss, i.e.,
+
+LTotal(Q, D, ID) = LIndexing(D, ID; gθ) + LRetrieval(Q, π_Q; gθ).
+
+#### 2.1.4 Inference.
+During inference, given a query, the GR model usually uses beam search [45] to generate the top-n ranked docids in an autoregressive manner, in descending order based on the conditional probability of each output. Note that, when generating the next token, the model relies on the former generated token, rather than the ground-truth token.
+
+#### 2.1.5 Discussion.
+In current GR methods, MLE is primarily used to train query-docid pairs, which is a pointwise approach. This approach, however, is limited in its ability to support the model in generating the single most relevant docid even when a query has multiple relevant docids. During inference, the goal of the retrieval task is to obtain a ranked docid list, where the docids are ordered based on their relevance to the query. The pointwise approach fails to guarantee an optimal ordering of docids within the list.
+
+To address this limitation and enhance the capability of the GR model to generate a high-quality ranked docid list, this work focuses on modeling and optimizing the relevance at the list level. By shifting the optimization objective from a pointwise perspective to a listwise perspective, we aim to further improve the overall effectiveness of the GR models.
+
+### 2.2 ListMLE algorithm
+In learning-to-rank (LTR), listwise approaches emphasize optimizing the entire ranked list of items for overall ranking performance. Listwise approaches recognize that the order in which items are presented in the list is crucial for accurate ranking. In the following, we describe a related algorithm for our work, including listMLE and position-aware listMLE.
+
+#### 2.2.1 ListMLE.
+Formally, suppose x = {d1, ..., dn} ∈ X is the subset of corpus D to be further ranked, obtained from an initial document retrieval step. And π_y = [y1, ..., yn] ∈ Y is the corresponding ground-truth permutation of these documents, where y_i is the position of d_i, and y^{-1}(i) is the index identifier of documents in the i-th position of π_y. Listwise LTR aims to learn a ranking function h_ψ : X → Y, where ψ are the function parameters and H is the corresponding function space (i.e., h ∈ H), that can minimize the expected risk.
+
+ListMLE [91] is a widely-used framework for listwise ranking that introduces a parameterized exponential probability distribution over all possible permutations, given the ranking function h_ψ. And it leverages negative log likelihood of the ground truth list as the loss function, defined as:
+
+L(x, π_y; h_ψ) = − log P(π_y | x; h_ψ).
+
+According to the Plackett-Luce model [64, 75], which is a distribution over permutations π_y,
+
+P(π_y | x; h_ψ) = ∏_{i=1}^n exp(h_ψ(x_{y^{-1}(i)})) / (∑_{k=i}^n exp(h_ψ(x_{y^{-1}(k)}))).
+
+The probability of a list can be deconstructed into the product of stepwise conditional probabilities. Each i-th conditional probability represents the likelihood of a document being ranked at the i-th position, given that the preceding documents are ranked appropriately up to that point. i.e.,
+
+P(π_y | x; h_ψ) = P(y^{-1}(1), ..., y^{-1}(n) | x; h_ψ)
+= P(y^{-1}(1) | x; h_ψ) ∏_{i=2}^n P(y^{-1}(i) | x, y^{-1}(1), ..., y^{-1}(i−1); h_ψ),
+
+where
+
+P(y^{-1}(1) | x; h_ψ) = exp(h_ψ(x_{y^{-1}(1)})) / ∑_{k=1}^n exp(h_ψ(x_{y^{-1}(k)})),
+
+P(y^{-1}(i) | x, y^{-1}(1), ..., y^{-1}(i−1); h_ψ) = exp(h_ψ(x_{y^{-1}(i)})) / ∑_{k=i}^n exp(h_ψ(x_{y^{-1}(k)})), ∀ i = 2, ..., n.
+
+#### 2.2.2 Position-aware ListMLE.
+ListMLE, despite its effectiveness, ignores the significance of position importance [48]. Recognizing the impact of item positions for ranking, an advanced listwise ranking algorithm called position-aware ListMLE [p-ListMLE, 48] has been developed to take into account position information. p-ListMLE considers the ranking process as a sequential procedure: it operates by maximizing the probability of correctly ranking the top 1 document with a weight assigned to the top position. Subsequently, it focuses on maximizing the probability of correctly ranking the i-th document, considering the corresponding position weight, assuming that the top i − 1 documents have been ranked correctly. This loss function of the process is formally defined as:
+
+L_p(x, π_y; h_ψ) = − α(1) log P(y^{-1}(1) | x; h_ψ) − ∑_{i=2}^n α(i) log P(y^{-1}(i) | x, y^{-1}(1), ..., y^{-1}(i−1); h_ψ),
+
+where α(·) is a decreasing function, i.e., α(i) > α(i + 1).
+
+To ensure consistency with the target metric, such as normalized discounted cumulative gain (NDCG), α(·) is defined as the gain function α(i) = Gain(i) = 2^{n−i} − 1, which assigns larger weights to documents with higher relevance grades. Combining the Plackett-Luce model with the above loss, the optimization objective is to minimize the following likelihood loss function:
+
+L_p(x, π_y; h_ψ) = ∑_{i=1}^n α(i) [−h_ψ(x_{y^{-1}(i)}) + log ∑_{k=i}^n exp(h_ψ(x_{y^{-1}(k)}))].
+
+## 3 OUR APPROACH
+In this section, we present novel listwise generative retrieval models via a sequential learning process. We first provide an overview of our method and then describe the training and re-training stages in detail.
+
+### 3.1 Overview
+In this paper, we propose a listwise GR approach (ListGR for short), in which docid lists instead of individual docids are used as instances in learning. ListGR includes a two-stage optimization process, i.e., training with position-aware ListMLE and re-training with relevance calibration. To accurately represent listwise relevance, we first establish the position-aware conditional probability of a docid ranked at a particular position with respect to a given query, and employ position-aware ListMLE [48] to train the GR model. To address the decoding inconsistency between the proposed listwise loss function and the beam search decoding, we further retrain the model with relevance calibration techniques for a generated docid list.
+
+### 3.2 Training with listwise loss function
+Inspired by listwise LTR algorithms [11, 48, 91], our key idea is to view the docid ranking problem as a sequential learning process, with each step targeting to maximize the corresponding stepwise probability distribution. In the following, we firstly define the conditional probability distribution of each ground-truth docid with each step, and then apply it to model the ranking list.
+
+#### 3.2.1 Positional conditional probability.
+Given a query and its ground-truth docid list π_q, for each docid id(i) in the list, we first obtain the estimated log-probability of generating id(i) for the given query (based on the MLE likelihood), regardless of the position of id(i), and perform length normalization, denoted as,
+
+\tilde{P}(id(i) | q; gθ) = log ∏_{t ∈ [1,|id(i)|]} P(w_t | q, w_{<t}; gθ) / |id(i)|,
+
+where w_t is the t-th ground-truth token in the id(i), w_{<t} represents the tokens before the t-th one in the id(i). Based on this, we further define the positional likelihood, that is, the probability of generation of id(i) being ranked at position i. More specifically, it is the conditional probability distribution of the GR model generating the ground-truth docids from the i-th to the n-th, conditioned on the query. It also represents that the preceding i − 1 docids are generated at the right positions. The sequential learning process for docid ranking can be summarized as follows:
+
+Step 1: Maximizing the following top-1 positional conditional probability:
+
+P(id(1) | q; gθ) = exp(\tilde{P}(id(1) | q; gθ)) / ∑_{j=1}^n exp(\tilde{P}(id(j) | q; gθ)).
+
+Please note that the length-normalized log-probability only considers the generation of id(i) conditioned on the query without considering its ranking position in the list, while the positional conditional probability requires id(i) to be ranked at the i-th position.
+
+Step i: For i = 2, ..., n, we maximize the following i-th positional conditional probability,
+
+P(id(i) | q, id(1), ..., id(i−1); gθ) = exp(\tilde{P}(id(i) | q; gθ)) / ∑_{j=i}^n exp(\tilde{P}(id(j) | q; gθ)).
+
+The learning process ends at step n + 1.
+
+#### 3.2.2 Listwise probability with position importance.
+To transform the above sequential optimization problem into a single-objective optimization problem, we define the likelihood of the ground-truth docid list π_q for a query. The likelihood of generating π_q is defined as the product of positional conditional probabilities of different docids. Higher positions are more important and, therefore, we assign the corresponding positional conditional probabilities with higher weights. Therefore, for a query q, the optimization problem is to minimize the probability of generating π_q with negative log likelihood as follows:
+
+min_{gθ} − log P(π_q | q; gθ) = −α(1) log P(id(1) | q; gθ) − ∑_{i=2}^n α(i) log P(id(i) | q, id(1), ..., id(i−1); gθ),
+
+where the weight α(·) is a decreasing function; following [48], we set α(i) = 2^{n−i} − 1. Incorporating the probability based on the Plackett-Luce model into the above optimization problem, we obtain the final listwise loss function:
+
+L_List(q, π_q; gθ) = ∑_{i=1}^n α(i) [−\tilde{P}(id(i) | q; gθ) + log ∑_{k=i}^n exp(\tilde{P}(id(k) | q; gθ))].
+
+The total loss function of a query set Q is L_List(Q, π_Q; gθ) = ∑_{q ∈ Q} L_List(q, π_q; gθ).
+
+Discussions. For retrieval tasks, our listwise approach L_List is different from the pointwise approach used in existing GR works. (i) The existing pointwise approach aims to maximize the likelihood probability of generating relevant docids with MLE for a query. Simultaneously, it suppresses the probability of other irrelevant tokens. When dealing with multi-graded relevance datasets, this method treats docids of different relevance grades as equally important. (ii) In contrast, our listwise approach, L_List (Eq. above) maximizes the likelihood probability of the ground-truth docid list. Additionally, it assigns corresponding positional weights to different docids based on their relevance grades using p-ListMLE. This enables the model to have better discriminative ability for fine-grained relevance grades. Therefore, our approach aligns more closely with the goal of GR, which is to generate a relevant docid list given a query.
+
+#### 3.2.3 Training loss.
+To model the aforementioned listwise relevance, the GR model also needs to learn the fundamental indexing task with the loss defined in the indexing equation and the retrieval task with the MLE retrieval loss. Taken together, the total loss for the training stage is defined as:
+
+L_Training(Q, D, ID, π_Q; gθ) = L_List(Q, π_Q; gθ) + L_Indexing(D, ID; gθ) + L_Retrieval(Q, π_Q; gθ).
+
+### 3.3 Re-training with relevance calibration
+After training with a listwise loss function, the GR model gains a better discriminative ability for ranked lists of docids than the previous pointwise approach. However, a decoding inconsistency problem arises [8]. During training, the proposed listwise loss leverages the preceding ground-truth tokens to generate the subsequent token. During inference, the model relies solely on the preceding generated tokens without access to ground-truth tokens. This decoding inconsistency may result in the generated list not being ideal in terms of its ranking according to relevance. Besides, larger beam sizes would cause shorter lengths and worse generation quality [95, 103].
+
+To further improve the quality of the ranked list, we propose to calibrate the generated list, in which the key idea is to align candidates’ likelihoods according to their relevance grades to the query. Specifically, we utilize the model trained with L_Training for re-retraining, denoted as \hat{g}_θ. And for a given query q ∈ Q, a ranked docid list is generated with the beam search strategy, denoted as \hat{π}_q = [\hat{id}(1), ..., \hat{id}(n)]. We perform both token-level calibration and sequence-level relevance calibration as follows.
+
+#### 3.3.1 Token-level relevance calibration.
+For correctly predicted docids, tokens within docids with higher relevance grades are assigned with higher likelihood weights. For incorrectly predicted docids, the generation probability of their tokens should approach zero. Formally, we define the token-level relevance calibration loss as,
+
+L_Token(Q, \hat{π}_Q; \hat{g}_θ) = − ∑_{q ∈ Q} ∑_{\hat{id} ∈ \hat{π}_q} ∑_{w_t ∈ \hat{id}} P_true(w_t | q, w_{<t}) log P(w_t | q, w_{<t}; \hat{g}_θ),
+
+where w_t is the t-th generated token in \hat{id}, w_{<t} represents tokens before the t-th token, and \hat{π}_Q is the generated docid list for all queries in Q. Moreover, P_true(w_t | q, w_{<t}) is the weight of generating token w_t computed as follows, given two different candidate docids in π_q, \hat{id}(i) and \hat{id}(j):
+
+P_true(w_t | q, w_{<t}) = 
+  1 − 1 / (M(\hat{id}(i)) + 1)^2, ∀ w_t ∈ \hat{id}(i), if \hat{id}(i) ∈ π_q and \hat{id}(i) ∈ \hat{π}_q;
+  β, ∀ w_t ∈ \hat{id}(i), if \hat{id}(i) ∉ π_q;
+  P_true(w_t | q, w_{<t}) > P_true(w_m | q, w_{<m}), ∀ w_t ∈ \hat{id}(i) ∈ \hat{π}_q, w_m ∈ \hat{id}(j) ∈ \hat{π}_q, if M(\hat{id}(i)) > M(\hat{id}(j)).
+
+where β is a hyperparameter close to zero, and M(\hat{id}(i)) is the relevance grade of \hat{id}(i). Additionally, w_m represents the m-th token of \hat{id}(j), and w_{<m} represents tokens before the m-th token in \hat{id}(j). The effect of each condition is as follows:
+
+(i) For the first condition, if the generated \hat{id}(i) is in the ground-truth ranking list π_q, we assign a higher weight P_true to this docid, to support its generation. Specifically, this weight is a value less than 1, directly proportional to the relevance grade of the ground-truth label. The higher the relevance grade of the docid, the closer this weight is to 1.
+
+(ii) For the second condition, if the predicted \hat{id}(i) does not belong to the ground truth docid list, we assign a small weight to suppress its generation. Specifically, this weight β is a small value less than 1, approaching 0.
+
+(iii) For the third condition, for any two docids in the candidate docid list, \hat{id}(i) and \hat{id}(j), both belonging to the ground truth ranking list, we adjust their relative weights based on their ground-truth relevance grades. If the relevance grade of \hat{id}(i) is higher than that of \hat{id}(j), then the tokens of \hat{id}(i) should have higher weights compared to weights of \hat{id}(j).
+
+#### 3.3.2 Sequence-level relevance calibration.
+Differences in generation probabilities among distinct docids should correspond to differences in their relevance grades. Docids with higher relevance grades should be prioritized, resulting in a higher likelihood of being ranked higher and generated. Therefore, the sequence-level relevance calibration loss is,
+
+L_Seq(Q, \hat{π}_Q; \hat{g}_θ) = ∑_{i} ∑_{j>i} max(0, \hat{g}_θ(\hat{id}(j)) − \hat{g}_θ(\hat{id}(i)) + λ_i^j),
+
+where \hat{g}_θ(\hat{id}(i)) is P(\hat{id}(i) | q; \hat{g}_θ) normalized by docid length, i.e.,
+
+\hat{g}_θ(\hat{id}(i)) = log P(\hat{id}(i) | q; \hat{g}_θ) / (|\hat{id}(i)|^α),
+
+where α is the length penalty hyperparameter, ∀ i, j, 1 < i < j ≤ n, and λ_i^j is the margin multiplied by the difference in rank position between the docids, i.e., λ_i^j = (j − i) λ.
+
+#### 3.3.3 Re-training loss.
+The final loss of the relevance calibration is defined as:
+
+L_Re-training(Q, \hat{π}_Q; \hat{g}_θ) = L_Token(Q, \hat{π}_Q; \hat{g}_θ) + γ L_Seq(Q, \hat{π}_Q; \hat{g}_θ),
+
+where γ is the hyperparameter of balancing the two losses.
+
+In summary, our model is first trained using the listwise loss and then used to decode ranked docid lists for training queries. After re-training the model using the relevance calibration loss, inference is performed according to the approach described earlier.
+
+Adaption to binary relevance data. For binary relevance data, since the relevant docids for a query have the same relevance grade, a query may have one or multiple ground-truth docid lists, each containing only one relevant docid, i.e., the top-1 docid. Therefore, in the first training stage, the corresponding position weight α(1) in the listwise loss is set to 0 (α(i) = 2^{(n−i)} − 1). Consequently, the total training loss reduces into the indexing plus retrieval MLE loss. For binary relevance data, this is acceptable since it only contains docids with the same relevance grade. Our main improvement for the binary relevance data is the relevance calibration in the re-training stage. It could further optimize the generated candidate docid list, according to docids’ relevance grade to the query. In future work, we will explore designing alternative weight functions to enable list-level enhancement for binary relevance data in the first stage as well.
+
+## 4 EXPERIMENTAL SETTINGS
+In this section, we present the experimental settings, including datasets, baselines, model variants, evaluation metrics, and implementation details.
+
+### 4.1 Datasets
+We utilize five widely-used ad-hoc retrieval datasets:
+
+(i) ClueWeb09-B (ClueWeb) [18] is a large-scale web collection containing over 50 million documents. The topics are gathered from the TREC Web Tracks conducted from 2009 to 2011.
+
+(ii) Gov2 [17] consists of approximately 150 queries and 25 million documents collected from the .gov domain web pages. The topics are accumulated from the TREC Terabyte Tracks from 2004 to 2006.
+
+(iii) Robust04 [86] comprises 250 queries and 0.5 million news articles. The topics of the queries are collected from the TREC 2004 Robust Track.
+
+(iv) MS MARCO Document Ranking (MS MARCO) [70] is a comprehensive benchmark dataset for web document retrieval.
+
+(v) Natural Questions (NQ) [46] includes natural language questions as queries and Wikipedia articles as documents. Following previous GR studies [10, 84, 87], we perform experiments on the NQ320K version of the dataset, containing 307,000 query-document pairs.
+
+Dataset preprocessing. For multi-graded relevance datasets, i.e., ClueWeb, Gov2, and Robust04 datasets, they are annotated with multi-graded relevance labels, indicating varying degrees of matching with the query intent or information need. Akin to [84], we sample subsets of the original ClueWeb, Gov2, and Robust04 corpora, each of size 200K, for our subsequent experiments. These sampled subsets are referred to as ClueWeb 200K, Gov 200K, and Robust 200K, respectively. The sampling process involves selecting annotated documents first and then randomly choosing additional documents from the remaining corpus, resulting in a total of 200K documents.
+
+For binary relevance datasets, i.e., MS MARCO and NQ datasets, they have documents labeled with binary relevance, indicating whether a document is relevant or irrelevant to a query. For the MS MARCO dataset, following [16, 105], we sample a sub-dataset, MS MARCO 100K, consisting of 100K documents, 97K training queries and 3K queries for testing. We sample the training and testing queries from the original training set and development set, respectively. For the NQ320K dataset, following [87], we utilize its open-source preprocessing code. It removes special characters from the documents and performs cleaning and concatenation based on the document structure, such as titles, abstracts, and body text.
+
+### 4.2 Baselines
+We first compare our method with traditional retrieval baselines commonly used for document retrieval tasks, including sparse retrieval and dense retrieval methods. The sparse retrieval baselines are:
+
+(i) BM25 [79] is an effective term-based sparse retrieval method, that represents the classical probabilistic retrieval model.
+
+(ii) DocT5Query [73] generates a set of pseudo-queries for each document by a finetuned T5 [77], and then expand the document with these pseudo-queries.
+
+(iii) SPLADE [26, 27] uses a BERT to encode the document into a sparse lexical representation.
+
+The dense retrieval baselines are:
+
+(i) DPR [41] is a BERT-based dual-encoder model using dense embeddings for text blocks.
+
+(ii) ANCE [93] periodically refreshes the ANN indexer and adopts hard negatives for training a RoBERTa-based dual-encoder model.
+
+(iii) RepBERT [99] is a BERT-based two-tower model. And it takes the in-batch negative sampling technique. RepBERT leverages the representation learning capabilities of BERT to represent the query and document, enhancing dense retrieval performance.
+
+Further, we explore several advanced GR methods that are trained in a pointwise manner:
+
+(i) DSI-Num [84] uses arbitrary unique numbers as docids. And it uses the MLE loss based on query-docid pairs and document-docid pairs.
+
+(ii) DSI-Sem [84] generates docids by concatenating category numbers obtained through a hierarchical k-means clustering algorithm. This results in similar documents having similar docids. It shares the same training objective as DSI-Num.
+
+(iii) DSI-QG [105] utilizes pairs of pseudo-queries and docids for indexing. The pseudo-queries are generated conditioned on the document using docT5query [73]. Similar to DSI-Num, arbitrary unique numbers are used as docids. DSI-QG can be viewed as DSI-Num with data augmentation techniques.
+
+(iv) NCI [87] replaces the arbitrary unique numbers with semantic structured numbers, similar to DSI-Sem. It uses pairs of pseudo-queries and docids, as well as pairs of leading contents of original documents and docids, to train the model. NCI further designs a prefix-aware decoder, which can distinguish the different meanings of the same number in different positions. NCI can be viewed as the DSI-Sem with data augmentation techniques.
+
+(v) GENRE [22] retrieves a Wikipedia article by generating its title, specifically designed for the NQ dataset. Due to the absence of titles or incomplete titles in other datasets, we did not experiment with GENRE on those datasets.
+
+(vi) SEAL [10] uses arbitrary n-grams in documents as docids and retrieves documents based on an FM-index during inference.
+
+The GR baselines all optimize indexing and retrieval tasks with MLE, so they can all be considered pointwise approaches.
+
+### 4.3 Model variants
+We employ some degraded ListGR models to investigate the effect of our proposed mechanisms:
+
+(i) ListGR_pListMLE only trains the model using the listwise training loss, and omits the re-training stage.
+
+(ii) ListGR_ListMLE replaces the position-wise loss in ListGR_pListMLE with the ListMLE loss, without considering the position information of docids.
+
+(iii) ListGR_Retrain first trains the model using indexing and retrieval loss during the training stage. Then, we perform relevance calibration over the decoded candidate docid lists during the re-training stage.
+
+(iv) ListGR_tok_pListMLE first trains the model using the full training loss, and then re-trains the model with the token-level relevance calibration.
+
+(v) ListGR_seq_pListMLE first trains the model using the full training loss, and then re-trains the model with the sequence-level relevance calibration.
+
+(vi) ListGR−aug first trains the model without augmented data, and then perform relevance calibration during the re-training stage.
+
+### 4.4 Evaluation metrics
+For datasets with multi-graded relevance labels, i.e., ClueWeb 200K, Gov 200K, and Robust 200K, we perform 5-fold cross-validation to prevent overfitting while maintaining an adequate number of training instances. The topic titles are used as queries, and the queries are randomly divided into 5 folds. The model parameters are tuned on 4 out of 5 folds, and the remaining fold is used for evaluation. This process is repeated 5 times, with each fold serving as the evaluation set once. The final performance is computed by averaging the results from all tested folds. The evaluation metrics used in this study are normalized discounted cumulative gain (nDCG@K) with K = {5, 20}, expected reciprocal rank (ERR@20), and precision at rank 20 (P@20), following [13, 32, 66].
+
+For datasets with binary relevance labels, i.e., MS MARCO 100K and NQ320K, we adopt the evaluation metrics used in the original DSI model [84] and subsequent studies [10, 87, 105]. Specifically, we use mean reciprocal rank (MRR @K) with K = {3, 20} and hit ratio (Hits @K) with K = {1, 10}. The performance results are reported on the validation set since the MS MARCO and NQ leaderboards impose restrictions on submission frequency, following [66, 84].
+
+### 4.5 Implementation details
+Model architecture. Following existing GR works [84, 87, 105], we utilize the T5-base model as the backbone for ListGR and the baseline models, for a fair comparison. This particular T5-base model is equipped with a hidden size of 768, a feed-forward layer size of 12, a total of 12 self-attention heads, and a configuration consisting of 12 transformer layers.
+
+Baseline implementation. For BM25, we use the Pyserini [59] implementation for this baseline. For DSI-Num and DSI-Sem, we re-implement these baselines since the source code is unavailable. For other baselines, we use the publicly available source code for experiments.
+
+Docid generation. For the docids used in our work, we leverage semantic structured numbers [84, 87]. Specifically, we apply the hierarchical k-means algorithm introduced in [84] over the document embeddings, which are generated through a 12-layer BERT model with pre-trained parameters, following [84, 87]. First, we cluster all documents into 10 clusters. Then, we recursively apply the clustering algorithm for each cluster that consists of more than 100 documents. The result obtained at each level is used as input for the next level, ensuring a well-organized and manageable clustering process. Finally, for each document, all category numbers obtained at each level are concatenated sequentially as its final docid.
+
+Construction of docid lists. In the five datasets there exist multiple docids at the same relevance grade with respect to a query. During training, we can construct multiple ground-truth docid lists for the query using permutations. The length of the list is determined by the highest annotated relevance grade with respect to the query. Docids within the list are arranged in descending order of relevance grade.
+
+Hyperparameters. Both ListGR and the reproduced baselines are implemented using HuggingFace transformers. For multi-graded relevance datasets, during the training process, we employ the Adam optimizer with a linear warm-up strategy that spans the initial 10% of steps. Our chosen learning rate is set to 6e-5, with a label smoothing factor of 0.01 and a weight decay rate of 0.01. Furthermore, the sequence length of documents is fixed at 512. For binary relevance datasets, the hyperparameter settings are as follows: learning rate is 0.001, batch size is 80, and training steps of 100K. We also adopt Adam optimizer with a linear warm-up strategy that spans the initial 200K steps, label smoothing factor of 0.001, and weight decay rate of 0.02. For all datasets, the maximum number of training steps is capped at 100K, and a batch size of 80 is utilized. To facilitate the training of ListGR, we make use of eight NVIDIA Tesla A100 40GB GPUs, ensuring efficient computation and faster convergence.
+
+Training, re-training and inference. During the training stage, for multi-graded relevance datasets, we set relevance margin λ and docid length penalty α as 0.001 and 0.6, respectively. And during the re-training stage, we set γ used in the re-training loss to 100, and β used in the token-level calibration to 0.002. For all datasets, to address the limited availability of supervised data, we employ a data augmentation technique that is widely used in existing GR work [16, 76, 82, 83, 87]. Furthermore, following [16, 76, 82, 87], we generate a set of pseudo-queries for all documents to construct additional query-docid pairs for augmentation. Specifically, for MS MARCO 100K, we directly use a publicly trained DocT5query model on the MS MARCO corpus to generate 20 pseudo-queries for each document. For other datasets, we fine-tune a DocT5query model with labeled query-document pairs for them to generate 20 pseudo-queries for training. DSI-QG, NCI, and our ListGR use same pseudo-queries to enhance the training for a fair comparison. During inference, we construct a decimal trie to constrain the model to decode integers with only 20 beams.
+
+## 5 EXPERIMENTAL RESULTS
+In this section, we report and analyze the experimental results to demonstrate the effectiveness of the proposed ListGR. We target the following research questions:
+
+(RQ1) How does ListGR perform compared with strong retrieval baselines across different relevance scenarios?
+
+(RQ2) How do the training and re-training stages of ListGR affect the retrieval performance?
+
+(RQ3) How does ListGR perform in low-resource settings?
+
+(RQ4) How does the number of relevance grades affect the retrieval performance during training?
+
+(RQ5) How do the model size and beam size affect the efficiency of retrieval?
+
+(RQ6) Can we better understand how different models perform via some case studies?
+
+### 5.1 Baseline comparison
+To answer RQ1, we compare ListGR with several representative traditional retrieval methods and some advanced GR methods, in both multi-graded and binary relevance scenarios.
+
+#### 5.1.1 Results on multi-graded relevance.
+We analyze results in three parts.
+
+The performance of traditional retrieval baselines. (i) On the three multi-graded datasets, the dense retrieval baseline ANCE outperforms DPR, RepBERT, and sparse retrieval baselines. The reason may be attributed to its ability to learn rich semantic information, and the strategy of using negative samples that aids in acquiring stronger discriminative capabilities than sparse retrieval baselines. (ii) RepBERT exhibits slightly lower performance than BM25 on Gov 200K and Robust 200K, which aligns with findings reported in previous studies [62, 65, 98]. The sub-optimal performance of RepBERT in learning effective query and document representations might be primarily attributed to the limited size of the training set available in Gov 200K and Robust 200K.
+
+The performance of generative retrieval baselines. (i) DSI-Sem surpasses the performance of DSI-Num, while SEAL exhibits even higher performance than DSI-Sem. DSI-Num, DSI-Sem and SEAL use random integers, semantic structured clustering numbers, and n-grams from the documents, respectively. The integration of docids with stronger semantic associations to the document content can significantly enhance the indexing and retrieval effectiveness of GR. This observation aligns with findings reported in previous studies such as [10, 22, 84]. (ii) DSI-QG demonstrates superior performance compared to DSI-Num, DSI-Sem, and SEAL, indicating the advantages gained by employing data augmentation techniques that generate additional query-docid pairs. (iii) NCI outperforms DSI-QG due to its use of semantic structured numbers and the presence of the prefix-aware decoder, which effectively distinguishes the meanings of the same numbers in distinct positions within the clustering numerals. (iv) NCI and DSI-QG perform slightly better than ANCE, indicating that using pseudo-queries to enhance learning is crucial for GR models. This has been validated in [76] as well.
+
+The performance of ListGR. By adopting a listwise approach in which lists of docids are used as “instances” in learning, ListGR achieves significantly better performance than existing generative retrieval baselines that work in a pointwise manner. Specifically, on the ClueWeb 200K dataset, ListGR outperforms NCI by 15.8% in terms of nDCG@5. On the Gov 200K dataset, ListGR surpasses NCI by 7.4% in terms of ERR@20. On the Robust 200K dataset, ListGR surpasses NCI by 6.8% in terms of nDCG@5. Furthermore, this outcome suggests that the inclusion of additional relevance levels within the annotated data, such as ClueWeb 200K, yields substantial benefits for ListGR. By incorporating more comprehensive relevance information, ListGR can effectively learn and accurately assess the relevance order among the docid list.
+
+#### 5.1.2 Results on binary relevance.
+For the binary relevance datasets, where the positional weight of relevant docids is zero, the training stage only utilizes the indexing and retrieval loss. Based on this, the trained model undergoes relevance calibration. We observe the following: (i) The three dense retrieval baselines outperform sparse retrieval baselines. This could be attributed to the availability of abundant labeled query-document pairs in these two datasets. It helps dense models learn dense representations and captures the semantic relationship between queries and documents. (ii) DSI-Num and DSI-Sem perform worse than dense retrieval baselines, e.g., RepBERT, DPR and ANCE on both binary relevance datasets. This suggests that learning both indexing and retrieval tasks simultaneously through these two types of docids and MLE is still challenging. (iii) SEAL shows better performance than vanilla DSI methods, i.e., DSI-Num and DSI-Sem. The reason might be that SEAL uses n-grams from the documents as docids. This type of docid contains more explicit semantics, which helps the model learn better than numeric docids. (iv) Moreover, both DSI-QG and NCI outperform SEAL, DSI-Num and DSI-Sem, indicating that data augmentation methods, such as transforming documents into pseudo-queries for learning, contribute significantly to the improvement. (v) ListGR outperforms the best-performing GR baseline, NCI, on both binary relevance datasets. Specifically, ListGR achieves improvements of 6.8% in terms of MRR@3 on MS MARCO 100K. This indicates that relevance calibration has the ability to correct inappropriate ordering of docid lists generated by beam search decoding.
+
+### 5.2 Ablation study
+In this section, to answer RQ2, we conduct an ablation analysis on three multi-graded relevance datasets to quantitatively assess the impact of each component in ListGR. For the binary relevance datasets, the training stage lacks listwise loss, so that ListGR and ListGR_Retrain are the same in this setting; therefore, we did not analyze the performance on binary relevance datasets in this context. We have the following observations:
+
+Listwise loss. (i) ListGR_Retrain, only using the re-training stage leads to significantly lower performance than ListGR. Additionally, in the training stage, ListGR_pListMLE and ListGR_ListMLE combining a listwise loss with an indexing and retrieval loss improves the retrieval performance over NCI. These results indicate that modeling the ranked docid list explicitly is crucial for better retrieval performance, as using MLE alone does not capture the relationships between docids. (ii) ListGR_pListMLE performs better than ListGR_ListMLE, highlighting the importance of position weights in ranking, aligning with the observations in [48]. (iii) ListGR−aug significantly outperforms SEAL. It demonstrates that our listwise approach, even without data augmentation, can assist the GR model in learning stronger discriminative ability for relevance.
+
+Relevance calibration. (i) By removing relevance calibration, ListGR_pListMLE and ListGR_ListMLE have a significant drop in performance compared to ListGR. This suggests that beam search decoding has an impact on the inference effectiveness of GR. (ii) Additionally, both ListGR_tok_pListMLE and ListGR_seq_pListMLE, built upon ListGR_pListMLE, show improved performance. This indicates that further relevance calibration to candidate docids is essential. (iii) Furthermore, we observe that the performance of ListGR_tok_pListMLE and ListGR_seq_pListMLE is similar, suggesting that both sequence-level and token-level relevance calibration are crucial for the GR model. These results demonstrate that adjusting the generation probabilities of docids in the candidate docid list generated by the trained model contributes to generating more accurate ranking positions in the list.
+
+### 5.3 Low-resource settings
+In this section, to answer RQ3, during training, we simulate a low-resource retrieval scenario by randomly sampling a fixed and limited number of queries from the training set. More specifically, for the purpose of comparing ListGR and NCI, we randomly sample 15, 30, 45, and 60 queries from the ClueWeb 200K, Gov 200K, and Robust 200K datasets. For the MS MARCO 100K and NQ320K datasets, we randomly sample 2K, 4K, 6K, and 8K queries.
+
+We observe the following: (i) On multi-graded relevance datasets, ListGR outperforms NCI, which suggests that ListGR is capable of modeling the relevance of docid lists using limited information. (ii) Similarly, on binary relevance datasets, ListGR achieves better performance than NCI, indicating that the relevance calibration stage can further enhance the model’s ability to recognize the relevance order of docids within the list, even under the pointwise training objective. (iii) ListGR exhibits superior performance compared to a strong BM25 baseline on most datasets. For example, on the ClueWeb 200K dataset, ListGR achieves comparable performance with 58 queries in terms of nDCG@20, while on the MS MARCO 100K dataset, ListGR performs well with only 8% queries, i.e., 7.8K queries in terms of MRR@20.
+
+### 5.4 Analysis of the relevance grades
+To answer RQ4, we conduct an analysis by controlling the number of relevance grades employed in the listwise loss during the training phase. This investigation assesses the influence of different numbers of relevance grades on the performance of ListGR.
+
+Specifically, we conduct experiments on the ClueWeb 200K dataset using three, two, and one relevance grades in the listwise loss, respectively. For the case of using two relevance grades, we further divide it into three scenarios: using 2- and 3-grades, using 1- and 3-grades, and using 1- and 2-grades for training. Using only one relevance grade data is equivalent to training with MLE alone, which has the same effect as ListGR_Retrain. During testing, we uniformly use the original testing set consistently across all the aforementioned scenarios.
+
+We observe the following: (i) On the same dataset, increasing the number of relevance grades used in the listwise loss during the training stage leads to better performance. For example, using three relevance grades yields a higher nDCG@20 value than using two or one relevance grades only. This could be because providing more relevance labels allows the model to learn more comprehensive and fine-grained differences in relevance. (ii) Among the scenarios using two relevance levels, incorporating 3-graded data results in better performance. For instance, both scenarios using 2- and 3-grades, and using 1- and 3-grades have higher nDCG@20 values than the scenario using 1- and 2-grades. This suggests that docids with higher relevance grades may carry more importance in the list, and learning these docids contributes to better docid list generation.
+
+### 5.5 Efficiency analysis
+To answer RQ5, we analyze the efficiency using an NVIDIA A100-40GB GPU. It is important to note that the inference speed of ListGR is influenced by two factors: model capacity and beam size. In order to provide comprehensive insights, we have included the latency and throughput measures for various settings. Specifically, latency refers to the time it takes for a retrieval model to process a query. And throughput represents the speed at which a retrieval model can process a certain number of queries within a second. For latency, we randomly sampled multiple batches of queries, measured the total time for inference, and then divided it by the number of queries to obtain latency. For throughput, we also randomly sampled multiple batches of queries, measured the average number of queries inferred in 1 second, and obtained the throughput.
+
+In terms of latency and throughput, ListGR demonstrates promising performance for certain near-real-time applications. The latency of ListGR is comparable to that of DSI [84] when using the same model size and beam size, as both approaches employ beam search with transformer decoders. Similar phenomena is observed in [87]. BM25 has higher retrieval efficiency, but due to a lack of semantic matching, its retrieval performance is lower. RepBERT has lower efficiency because it performs brute-force search based on dense vectors, making it more time-consuming.
+
+### 5.6 Case study
+To answer RQ6, we perform case studies from two perspectives. First, we scrutinize the docid lists generated by various methods for a given query. Second, we employ visualization techniques to assess the representations of the query and its candidate documents.
+
+Textual analysis. We take a sample from the test set of ClueWeb 200K and compare the top-5 docid lists predicted by ListGR and NCI. Since both models use semantic structured numbers as docids, we also summarize the topics of the corresponding documents for better understanding and analysis of the differences. Given the query “horse hooves”, docids predicted by ListGR align with their respective relevance labels. However, NCI fails to predict any docids with a relevance level of 3 and struggles to distinguish the relative order of docids with relevance levels 2 and 1. This indicates that the objective of modeling the docid list in ListGR contributes to generating accurate and high-quality docid lists in GR.
+
+Visual analysis. To deepen our understanding of ListGR, we employ t-SNE [85] for visualizing the distributions of query and document representations in the semantic space. Expanding on the previous query sample, we create a t-SNE plot to compare the representations of the sampled query and its top-100 candidate documents generated by the encoder output of ListGR and the best-performing GR baseline, NCI.
+
+For ListGR, documents with higher relevance levels are closer to the query, while irrelevant documents are located far away. In the case of NCI, 1-grade relevant documents are closest to the query, while 2- and 3-grade relevant documents are much further away. This demonstrates that ListGR has the ability to differentiate the relevance of docids in a more fine-grained manner in the docid list.
+
+## 6 RELATED WORK
+In this section, we review related work, including the traditional document retrieval, pre-trained language models, and generative retrieval.
+
+### 6.1 Traditional document retrieval
+Document retrieval has traditionally followed an “index-retrieve” paradigm, where documents are indexed and then retrieved based on a query. This paradigm has resulted in two main approaches to document retrieval, namely sparse retrieval and dense retrieval.
+
+#### 6.1.1 Sparse retrieval.
+Sparse retrieval methods represent queries and documents using sparse vectors. These methods rely on exact matching to compute similarity scores between queries and documents. In sparse retrieval, the focus is on identifying the presence or absence of specific query terms within documents. Two typical methods in this category are BM25 [79] and the query likelihood model [50]. BM25 takes into account factors such as document length, term frequency, and inverse document frequency to rank documents based on the occurrence of query terms within each document. The query likelihood model [50], on the other hand, leverages a generative model and estimates the probability of generating the query terms given a document. Documents are then ranked based on their likelihood of generating the query. However, these approaches solely consider statistical information and do not incorporate semantic information. To overcome this limitation, several studies [5–7, 20, 28, 104] have utilized word embeddings to reweight the importance of terms. For example, HDCT [21] focuses on long documents. It first utilizes BERT to generate contextual term representations, which are then used to estimate passage-level term weights. Subsequently, these passage-level term weights are aggregated using a weighted sum to obtain document-level term weights. DeepTR [104] constructs a feature vector for query terms and employs a regression model to map these feature vectors to the ground truth weights of terms.
+
+Limitations. Sparse retrieval methods offer computational efficiency due to their reliance on exact matching. They are particularly useful in large-scale retrieval scenarios where the number of documents is substantial. However, these methods often lack the ability to capture semantic relationships and contextual information between query terms and documents, which can limit their retrieval performance.
+
+#### 6.1.2 Dense retrieval.
+Unlike sparse retrieval methods that rely on exact matching, which gives rise to the vocabulary mismatch problem [29, 102], dense retrieval focuses on capturing semantic relationships and contextual information [35, 63, 92, 97, 99]. It represents both queries and documents as continuous, dense vectors in a high-dimensional semantic space, to calculate similarity, i.e., using the dot product or cosine similarity as the relevance score.
+
+To enhance the efficiency of dense retrieval, approximate nearest neighbor search methods [4, 9] are employed. These methods accelerate the retrieval process by finding approximate nearest neighbors instead of exact matches. In addition, numerous pre-trained models and techniques have been leveraged to further improve the performance of dense retrieval [1, 12, 33, 42, 53, 71]. For instance, DC-BERT [71] employs dual BERT encoders. In the lower layers, an online BERT encoder is responsible for encoding the query once, while an offline BERT encoder pre-encodes all the documents and stores their term representations in a cache. The obtained contextual term representations are fed into high-layer transformer interaction, initialized by the last few layers of the pre-trained BERT. These approaches take advantage of pre-trained models and advanced techniques to enhance the quality of dense retrieval and can capture more nuanced and subtle semantic relationships between words and phrases in queries and documents, which are often challenging for sparse retrieval methods. To enhance performance, the ranking module is also often leveraged. In this work, we focus only on the “index-retrieve” stage, leaving ranking enhancement for future work. To improve efficiency, approximate nearest neighbor algorithms [30, 39, 93] and various sampling methods [35, 94] have been proposed.
+
+Limitations. Despite the promising performance of the “index-retrieve” paradigm in dense retrieval, there are limitations that need to be addressed: (i) During training, a query encoder and a document encoder are utilized to generate representations for the query and the document, respectively. However, the independence of these encoders restricts the depth of interactions between the representations, thus posing a risk of missing information. Furthermore, the discrete modules in the system cannot be optimized in an end-to-end manner, resulting in sub-optimal performance. (ii) During inference, the query is required to search for relevant documents across the entire corpus. Although efficiency-enhancing strategies are available, such as approximate nearest neighbor search, these methods may sacrifice some semantic information in the process. These limitations highlight the need for further advancements to explore more efficient methods that can retain important semantic information during the retrieval process.
+
+### 6.2 Pre-trained language models
+Pre-trained models have revolutionized natural language processing tasks by leveraging large-scale unsupervised training on vast amounts of text data, with pre-training and fine-tuning techniques [1, 3, 24, 37, 43, 44, 49, 56, 88, 89]. Usually, these models are trained to learn contextualized representations of words, sentences, or documents, which capture rich semantic and syntactic information. Pre-trained models can be broadly classified into two categories, namely discriminative models and generative models.
+
+#### 6.2.1 Discriminative pre-trained models.
+Discriminative pre-trained models are primarily designed for tasks that involve classification, regression, or any other form of prediction. Examples of discriminative models include BERT [23], RoBERTa [61], and SpanBERT [40]. Further, they are widely used in IR, for example, BERT is used to re-weight term weights [20, 21, 104] in sparse retrieval. Furthermore, dual BERT architectures are used to learn dense query and document representations to support fine-grained semantic interaction [1, 33, 42, 53, 71] in dense retrieval. To bridge the gap between general pre-trained language models and downstream retrieval tasks, some studies [54, 66–68, 92] have proposed specialized pre-training tasks for the retrieval.
+
+#### 6.2.2 Generative pre-trained models.
+In addition to discriminative pre-trained models, there has been a growing focus on generative pre-trained models and techniques [2, 36, 47, 60, 77, 100, 101] for text generation. Generative models typically use autoregressive modeling techniques, such as language modeling, where they predict the next word or token in a sequence based on the previous context. Examples of generative models include GPT [74], BART [55], T5 [77]. They have also been researched and applied in IR, for example, T5 is utilized to generate queries for a document. These synthetic queries are then appended to the original documents, creating an “expanded document” to enhance document retrieval [73]. And in [72], given a document, the conditional likelihood of generating queries using GPT serves as the relevance score, which is used for ranking. And dos Santos et al. [25] propose that, given a query and document, T5 concatenates them as input and produces either a “True” or “False” token as output; if the query is relevant to the document, it outputs “True” and proceeds to calculate the generation probability as the relevance score; if the query is irrelevant, it outputs “False”.
+
+Limitations. While these explorations with generative models have shown some improvements in information retrieval, some work still revolve around matching queries with documents. This method faces limitations when it comes to dealing with a substantial volume of documents, and it incurs a high computational burden.
+
+### 6.3 Generative retrieval
+In order to further develop the capabilities of generative models, a new retrieval paradigm based on generative models has been proposed, called generative retrieval (GR) [69]. GR aims to directly generate relevant docids for a given query. GR methods parameterize the corpus information, by replacing the traditional external index by a training process that learns the mapping from documents to their corresponding document identifiers (docids). Building upon this framework, researchers have proposed various approaches [10, 14, 15, 22, 52, 57, 78, 82, 84, 87, 96]. GR needs to learn a Seq2Seq model that address two key tasks simultaneously, namely indexing and retrieval.
+
+#### 6.3.1 Indexing task.
+In GR this task is aimed at establishing associations between documents and docids. For the document identifiers, in addition to the two primary approaches described in Section 2 – arbitrary unique integers and structured semantic numbers – there are other types of identifiers. Document titles have garnered considerable attention as they possess inherent semantic relevance [15]. However, methods that use document titles heavily rely on the availability of specific document metadata, limiting their applicability. To address this limitation, some approaches have explored using all n-grams within a passage as its docid [10]. Moreover, the utilization of pseudo-queries generated from the documents as docids has shown significant improvements in retrieval performance [83]. This is because such docids can represent key information about the documents to some extent. Ren et al. [78] leverage tokenized URLs as docids, which may contain key phrases of documents. To provide a more comprehensive representation of the document’s information, Li et al. [57] use multiple docids to represent a single document.
+
+To encode the entire corpus, existing approaches primarily employ a Seq2Seq framework, where the original document is taken as input, and the corresponding docid is generated as the output. In this way, the index is embedded within the model parameters, and indexing becomes an integral part of the model training process. Building on [84], we adopt a straightforward input-to-target approach, explicitly associating document tokens with their corresponding docids.
+
+#### 6.3.2 Retrieval task.
+In GR this task focuses on mapping queries to relevant docids. Current GR models typically employ a teacher forcing approach [34, 58, 90], maximizing the likelihood of the output sequence conditioned on the input query. If a query has multiple relevant docids, it learns multiple query-docid pairs.
+
+Building upon this blueprint, the first exploration of the GR paradigm was undertaken by GENRE [22]. GENRE utilized the unique titles of Wikipedia articles as document identifiers and employed the BART model [55] to directly generate a list of relevant article titles for a given query using constrained beam search, with a prefix tree of all article titles. This method surpassed some traditional pipelined approaches across various tasks based on Wikipedia. Subsequent research efforts [10, 15, 84, 87, 105] have continued to investigate and enhance the GR paradigm. For example, Zeng et al. [96] design a multi-stage training strategy to generalize GR from moderate-scale datasets [46] to large-scale datasets [70].
+
+Advantages. The GR paradigm offers several advantages: (i) It enables end-to-end optimization, allowing the model to be trained towards the global objective. This means that the entire retrieval process, including both document representation and ranking, can be optimized jointly. (ii) During inference, given a query, the generative model generates docids based on a small-sized vocabulary with beam search. This approach improves retrieval efficiency by eliminating the need for a heavy traditional index, where all documents in the corpus need to be matched against the query for dense retrieval methods.
+
+Limitations. There are several limitations to the GR paradigm. For example, existing work optimizes the model with query-docid pairs by straightforward MLE, which only supports finding the most relevant docids. For queries with multiple relevant docids with multiple relevance grades, the relative order of these relevant docids in the ranked list is randomized, resulting in sub-optimal overall relevance of the ranked list. In this work, we optimize the ranked docid list in a listwise manner and calibrate the generation probabilities of docids within the ranked docid list generated by a beam search-based strategy. To the best of our knowledge, this work is the first attempt to perform listwise optimization in GR.
+
+## 7 CONCLUSION AND FUTURE WORK
+In this paper, to better align with practical retrieval needs of generating a ranked list of results in response to a query, we propose to directly model ranked docid lists in generative retrieval, so that docid lists instead of individual docids are used as instances in learning. Inspired by position-aware ListMLE in LTR, and considering the characteristics of GR, we maximize the i-th conditional likelihood of a Plackett-Luce model given the top i − 1 docids. Furthermore, to address the issue of beam search decoding in GR, we design relevance calibration to optimize the order of docids in the list. By conducting comprehensive experiments, we have substantiated that our approach exhibits superior effectiveness compared to existing GR methods.
+
+ListGR has several limitations that give rise to interesting lines of future work:
+
+(i) This work represents our initial exploration of listwise GR, and there are many other listwise approaches [11, 91] in the LTR literature. In the future, we will continue to explore and optimize this work from multiple perspectives. For example, we will investigate how to design position weights in the loss function from a theoretical perspective to make it more suitable for specific use cases. Additionally, we may generate the entire list using a single beam instead of multiple beams, in order to alleviate the impact of beam search decoding on performance.
+
+(ii) In this study, we did not extensively address the design of docids. It is worth noting that the choice of docids can significantly impact both the learning process and retrieval effectiveness. Similar to most existing GR approaches, we assumed that docids are unrelated to the retrieval model and did not optimize them. It is desirable to incorporate the generation and optimization of docids into the model optimization process, allowing for joint learning of docids that are well-suited for GR.
+
+(iii) The paper emphasizes modeling relevance at the list level but acknowledges that relevance should not be the sole focus [81]. LM-based search systems prioritize technology over user-centric aspects, necessitating further development in user interaction and personalization modules. Addressing bias and ensuring controllable and trustworthy search systems are also important topics, along with traceability and interpretability of retrieval structures.
+
+## REPRODUCIBILITY
+To facilitate reproducibility in this paper, we have only used open datasets. Detailed experimental results and settings are available at https://github.com/lightningtyb/ListGR.

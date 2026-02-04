@@ -1,0 +1,784 @@
+# Generative Retrieval as Multi-Vector Dense Retrieval
+
+## ABSTRACT
+Generative retrieval generates identifiers of relevant documents in
+an end-to-end manner using a sequence-to-sequence architecture
+for a given query. The relation between generative retrieval and
+other retrieval methods, especially those based on matching within
+dense retrieval models, is not yet fully comprehended. Prior work
+has demonstrated that generative retrieval with atomic identifiers is
+equivalent to single-vector dense retrieval. Accordingly, generative
+retrieval exhibits behavior analogous to hierarchical search within
+a tree index in dense retrieval when using hierarchical semantic
+identifiers. However, prior work focuses solely on the retrieval
+stage without considering the deep interactions within the decoder
+of generative retrieval.
+In this paper, we fill this gap by demonstrating that generative
+retrieval and multi-vector dense retrieval share the same framework
+for measuring the relevance to a query of a document. Specifically,
+we examine the attention layer and prediction head of generative
+retrieval, revealing that generative retrieval can be understood
+as a special case of multi-vector dense retrieval. Both methods
+compute relevance as a sum of products of query and document
+vectors and an alignment matrix. We then explore how generative
+retrieval applies this framework, employing distinct strategies for
+computing document token vectors and the alignment matrix. We
+have conducted experiments to verify our conclusions and show
+that both paradigms exhibit commonalities of term matching in
+their alignment matrix.
+
+1 INTRODUCTION
+In recent years, the advent of pre-trained language models has
+catalyzed the popularity of neural-based retrieval models within
+the information retrieval community [14, 15, 31, 34, 41].
+
+Neural-based retrieval models. Dense retrieval (DR), as one of
+the effective neural-based retrieval methods, has achieved the state-
+of-the-art ranking performance on multiple benchmarks [14, 15, 31].
+Several approaches have been proposed to use multiple vectors to
+represent documents or queries, a.k.a., multi-vector dense retrieval
+(MVDR) [15, 34, 51].
+
+Recently, generative retrieval (GR) has emerged as a new paradigm
+in information retrieval. It aims to generate identifiers of
+relevant documents for a given query directly and parametrizes the
+indexing, retrieval, and ranking process in dense retrieval systems
+into a single model. GR adopts a sequence-to-sequence architecture
+model and is trained to directly map queries to their relevant
+document identifiers.
+
+Generative retrieval vs. dense retrieval. Dense retrieval models
+typically employ encoders, e.g., BERT [6], for encoding both queries
+and documents, while the generative retrieval model adopts an en-
+coder for query encoding and a decoder for identifier generation.
+Despite their superficial differences, dense retrieval and generative
+retrieval share key characteristics in their query-document rele-
+vance computations. When the two methods use document identi-
+fiers such as sub-strings, titles, or semantic IDs as representations
+for documents, relevance to a query of a document is computed as
+the dot product of two vectors in both methods. Dense retrieval in-
+volves using the direct product of the query vectors and document
+vectors as the relevance, while generative retrieval leverages the
+product of the last latent state from the decoder at each position
+with the prediction head, a.k.a., the word embedding lookup table.
+Consequently, a natural question that arises in this context:
+How is generative retrieval related to dense retrieval?
+
+Although GR has shown promising results in various benchmarks
+as a new end-to-end retrieval paradigm [19, 25, 38, 42, 44], rel-
+atively few publications have closely examined how GR models
+work. Nguyen and Yates [29] have shown that GR using atomic iden-
+tifiers can be viewed as a variant of bi-encoders for dense retrieval
+because the word embedding lookup table in generative retrieval
+works exactly the same as the flat index in dense retrieval. Thus,
+we can partially respond to the above question that GR with atomic
+identifiers is single-vector dense retrieval. Although atomic identi-
+fiers are considered non-mainstream in GR, it offers an insightful
+perspective on the matter. Nguyen and Yates [29] also discuss that
+GR with hierarchical semantic identifiers exhibits behavior similar
+to hierarchical search within a tree index in dense retrieval. How-
+ever, their discussion focuses only on the retrieval stage without
+rigorously considering deep interactions within the decoder.
+
+Generative retrieval as multi-vector dense retrieval. In this
+work, we connect generative retrieval to a state-of-the-art dense
+retrieval method, multi-vector dense retrieval, in a rigorous way.
+We illustrate that these two methods exhibit commonalities in their
+training targets and a shared focus on semantic matching. We first
+examine the attention layer and the prediction head of GR and
+show that the logits in the loss function can be reformulated to
+a product of document word embeddings, query token vectors,
+and attention matrix in Section 4. This corresponds to the unified
+MVDR framework introduced in [18, 34]. In Section 5 we explore the
+distinct document encoding and alignment strategy in GR. Specif-
+ically, our discussion includes (i) its simple document encoding
+and how prefix-aware weight-adaptive (PAWA) decoding [42] and
+non-parametric (NP)-decoding [17] apply to our framework (Sec-
+tion 5.1), and (ii) the distinct alignment strategy employed by GR
+compared to MVDR and its properties (Section 5.2).
+
+Our discovery provides reliable explanations of how GR can ex-
+press query-document relevance. By explaining how the GR method
+models the query-document relevance, we can further understand
+how GR is fundamentally different from dense retrieval methods
+and adds to the spectrum of neural-based retrieval models. The
+connection we present provides the variants of GR methods with a
+theoretical foundation for further improvement.
+
+Contributions. Our main contributions in this paper are:
+(1) We offer new insights into GR from the perspective of MVDR
+by showing that these methods share the same framework for
+measuring query-document relevance.
+(2) We explore how GR applies this framework, employing distinct
+strategies for document encoding and the alignment matrix.
+(3) We also conduct extensive analytical experiments based on the
+framework to verify our conclusions and illustrate the term-
+matching phenomenon and properties of different alignment
+directions in both paradigms.
+
+2 RELATED WORK
+Multi-vector dense retrieval (MVDR) can be seen as a generaliza-
+tion of single-vector dual encoder models [14, 15]. Instead of encod-
+ing the complete content of both query and documents into a single
+low-dimensional vector, MVDR uses fine-grained token-level mod-
+eling for scoring. Existing MVDR models such as ColBERT [15] com-
+pute query-document relevance by selecting the highest-scoring
+document token for each query token and aggregating the scores.
+The postponed token-level interactions allow us to efficiently apply
+the model for retrieval, benefiting the effectiveness of modeling
+fine-grained interactions. MVDR overcomes the limited expressiv-
+ity of single-vector retrieval and achieves significantly better results
+across various benchmarks [14, 15, 18, 24, 31, 34]. However, due to
+the cost of storing vectors for each document token, it is challenging
+to scale the approach to large collections [10, 15, 18, 34].
+
+Generative retrieval (GR) is an emerging paradigm in informa-
+tion retrieval [19, 33, 36, 41, 42, 47]. It leverages generative models to
+directly generate identifiers of relevant documents. This approach
+originated with [2, 41] and has garnered considerable attention [see,
+e.g., 40]. Currently, all implementations of the generative retrieval
+paradigm adhere to an encoder-decoder transformer architecture,
+e.g., T5 [35] and BART [20]. In this method, documents are ini-
+tially associated with a concise token sequence that serves as an
+identifier. The model is then trained to predict this token sequence
+autoregressively, using conventional cross-entropy loss.
+
+One notable advantage of the generative retrieval model is its
+streamlined end-to-end architecture, which requires significantly
+less disk storage space compared to other retrieval methods. How-
+ever, it is important to note that due to the limited supervision of
+each token, the generative retrieval may not achieve comparable
+performance when compared to dense retrieval [33, 46].
+
+Connecting dense retrieval and generative retrieval. Nguyen
+and Yates [29] show that GR with atomic identifiers is equivalent
+to single-vector dense retrieval. They compare the inferential pro-
+cesses of DR with a tree index and GR with hierarchical identifiers.
+However, the former is just an optimized version of the original DR
+without changing the semantic matching method, while the latter
+also considers the predicted IDs and the query in each generation
+step, which greatly affects how GR would express the relevance,
+but this is ignored in [29]. Yuan et al. [46] empirically analyze the
+error rate at each generation step of GR and identify the problem of
+poor memory accuracy for fine-grained features compared with DR.
+They straightforwardly integrated GR and DR into a new coarse-to-
+fine retrieval paradigm, combining their respective strengths, but
+circumvented an in-depth discussion of the connection between
+them.
+
+In this work, we address the limitations listed above by showing
+that GR expresses query-document relevance in the same way as
+MVDR. This connection is rigorously derived from the decoder of
+GR and can be applied to many identifiers.
+
+3 PRELIMINARIES
+In this section, we formulate our task and introduce key notation
+and the mainstream framework of MVDR models.
+
+Task definition. We formulate the retrieval task as ranking by rele-
+vance score. Given a query q, we aim to retrieve relevant documents
+d in D by ranking them by their relevance rel(d, q) to q.
+
+Notations. Table 1 lists the main notation used in the paper. We
+denote the word embedding lookup table in the decoder as E and
+the vocabulary set as V. Each document d comprises M tokens. To
+ensure uniform length, padding tokens are added or excess tokens
+are truncated from each document. The word embedding matrix
+of d is denoted as Ed = [ed1, . . . , edM ] ∈ R^d × M, and the latent
+token vector matrix after encoding is D = [d1, . . . , dM ] ∈ R^d × M.
+Each query q with N tokens has token vectors Q = [q1, . . . , qN ] ∈
+R^d × N after encoding, similar to the documents.
+
+Framework for MVDR. Following [18, 34], MVDR methods can
+be represented as a unified framework, in which the relevance
+between query q and document d is given by:
+
+rel(d, q) = 1/Z sum(D^T Q ⊙ A) = 1/Z ∑_{i,j} d_i^T q_j A_{i j},
+
+where A is the alignment matrix that controls whether a document
+and query token pair can be matched and contribute to the rele-
+vance, and Z = ∑_i ∑_j A_{i j} is used for normalization and is dropped in
+many MVDR methods.
+
+Alignment strategy. Different MVDR models adopt different align-
+ment strategies, and, thus, a different alignment matrix A. It is
+often computed using heuristic algorithms, such as lexical exact
+match [12], top-1 relevant token match [15], single-vector align-
+ment [14, 26], or sparse unary salience [34].
+
+Contrastive loss used in MVDR. MVDR methods usually use
+contrastive loss as the training target, where negative documents
+are used. For a query q and target document d, the loss is computed
+as
+
+L(d, q) = − log ( exp rel(d, q) / ∑_{d- ∈ D^-} exp rel(d-, q) ),
+
+where D^- is the collected negative set.
+
+4 IN-DEPTH ANALYSIS OF GENERATIVE RETRIEVAL
+To address the question posed in Section 1, this section conducts a
+detailed analysis of GR. Specifically, we first illustrate the model
+architecture and training loss of the GR (Section 4.1). Subsequently,
+we derive that the training target of GR falls into the framework of
+MVDR (Section 4.2):
+
+L(d, q) ∝ sum(Ė_d^T Q ⊙ A),
+
+where Ė_d, Q and A correspond to D, Q and A in Eq. (1).
+
+### 4.1 Model architecture and training loss
+Model architecture. We focus on the transformer sequence-to-
+sequence architecture utilized in GR, more precisely, the encoder-
+decoder structure. Within this framework, the encoder primarily
+targets processing the input query, while the decoder is tasked with
+predicting document identifiers.
+
+The decoder component consists of stacks of self-attention, cross-
+attention, and feed-forward layers. We particularly underscore the
+significance of the cross-attention layers, as they facilitate interac-
+tion between query tokens and document tokens.
+
+To predict the document token di at the i-th position, we compute
+the cross attention weights between query token vectors Q and
+\^{d}_{i-1} from the previous attention layers at position (i−1) as follows:
+
+α_i = softmax(Q^T W \^{d}_{i-1}),
+
+where softmax(·) denotes the column-wise softmax function, W ∈
+R^{d×d} is the product of the attention matrices W_K and W_Q, i.e.,
+W = W_K^T W_Q, and α_i ∈ R^N.
+
+Consequently, the output of the cross-attention layer is
+
+h_i = W_V Q α_i ∈ R^d.
+
+For simplicity, we ignore the non-linear activation functions, and
+the linear maps in the feedforward layers can be absorbed in atten-
+tion weights, e.g., W_V. Therefore, h_i serves as the prediction head
+for generating the next token.
+
+Training loss. The loss function to minimize at position i is for-
+mulated as:
+
+L_i(d, q) = − log ( exp e_{d_i}^T h_i / ∑_{v ∈ V} exp e_v^T h_i )
+
+= − e_{d_i}^T h_i + log ∑_{v ∈ V} exp e_v^T h_i.
+
+### 4.2 GR has the same framework as MVDR
+Next, we demonstrate that GR shares a similar framework with
+MVDR, namely, that the logits within the loss function can be
+reformulated as a product of document word embeddings, query
+token vectors, and attention matrix. This formulation corresponds
+to Eq. (1).
+
+In particular, as we employ teacher-forcing supervision, ground-
+truth document identifiers are directly fed into the decoder, and
+token vectors at all positions are computed simultaneously. Based
+on this configuration, the overall loss is given by:
+
+L(d, q) = ∑_{i ∈ [M]} log p(d_i | d_{i-1}, . . . , d_0, q)
+
+= ∑_{i ∈ [M]} L_i(d, q)
+
+= ∑_{i ∈ [M]} [ − e_{d_i}^T h_i + log ∑_{v ∈ V} exp e_v^T h_i ],
+
+where d_0 could be some special token such as [BOS] or the [CLS]
+token vector from the query.
+
+When utilizing the sampled softmax loss, which involves em-
+ploying several negative tokens instead of the entire set of tokens
+in the lookup embedding table, the loss exhibits a similar structure
+to the contrastive loss used in DR and MVDR. Consequently, we
+treat the dot product of embedding e_{d_i} and token vector h_i,
+i.e., e_{d_i}^T h_i, as the final relevance score at position i. Further insights
+into the reason are elaborated in Appendix A. We plug in the dot
+product with the computing of h_i from Eq. (5) and obtain:
+
+rel(d, q) = ∑_{i ∈ [M]} e_{d_i}^T h_i
+
+= ∑_{i ∈ [M]} e_{d_i}^T W_V Q α_i
+
+= ∑_{i ∈ [M]} ∑_{j ∈ [N]} \tilde{e}_{d_i}^T q_j α_{i j}
+
+= sum(Ė_d^T Q ⊙ A),
+
+where \tilde{e}_{d_i}^T = e_{d_i}^T W_V, Ė_d^T = E_d^T W_V, A = [α_1, . . . , α_M]^T ∈
+R^{M×N}, and ⊙ is the element-wise matrix product operation.
+
+Further, we have a more detailed computation
+
+rel(d, q) = sum(Ė_d^T Q ⊙ A)
+
+= sum(Ė_d^T Q ⊙ softmax(\^{D}_{-1}^T W^T Q)),
+
+where \^{D}_{-1} = [\^{d}_0, \^{d}_1, . . . , \^{d}_{M-1}] is the output from the previous
+layer with the right-shifted document tokens as model input.
+
+In conclusion, we observe a similar framework from GR to
+MVDR, rel(d, q) = sum(Ė_d^T Q ⊙ A), where the relevance is repre-
+sented by an interaction of multiple “token vectors,” i.e., Ė_d and
+Q, from both query and document and aligned by a matrix A.
+
+5 COMPARISON BETWEEN MVDR AND GR
+To further explore how GR is related to MVDR, we build upon the
+unified framework of relevance computation for GR and MVDR
+derived in the previous section. We conduct a comprehensive anal-
+ysis of both methods, focusing specifically on their similarities and
+disparities in terms of the document encoding and the design of
+the alignment matrix.
+
+5.1 Document encoding
+One of the noticeable differences between GR and MVDR is in
+the document encoding. As depicted in Figure 1, MVDR utilizes
+more expressive contextualized token vectors D = [d1, . . . , dM]
+for each position. In contrast, GR only attends each query token to
+a simple word embedding e_{d_i} that does not hold any contextual
+information about the document. This was considered a severe
+compromise for the extremely lightweight modeling and storage
+of GR. To address this imbalance in modeling capacity, several
+studies [17, 42] have proposed novel decoding methods. Wang et al.
+[42] introduce the prefix-aware weight-adaptive (PAWA) decoding
+method, while Lee et al. [17] propose the non-parametric (NP)
+decoding. We incorporate these methods into our framework and
+show how they fundamentally improve the encoding compared
+with MVDR.
+
+PAWA enhances the document encoding from Ė_d to Ė_d ˜D'.
+PAWA [42] aims to improve the embedding modeling for distin-
+guishing different semantics of a token ID at different positions.
+Unlike the standard transformer, which uses a static embedding
+lookup table for every position, PAWA generates different embed-
+ding tables at each generation step. PAWA consists of a transformer
+decoder and an adaptive projection layer E ∈ R^{M × |V| × d × d}. The
+projection matrix of token v at the i-th position is
+
+E_{i,v} = E[i, v, :, :] ∈ R^{d×d}.
+
+Here, E can be seen as a generalized version of the embedding
+lookup table that uses a matrix E_{i,v} to represent each token v. To
+get the generated embedding vector for token v at the i-th position,
+PAWA decoder first uses the transformer decoder to process the
+document into a set of latent vectors D' = [d'_1, . . . , d'_M ] ∈ R^{d×M}.
+Then it multiplies the projection matrix E_{i,v} with the latent vector
+d'_i and gets the final embedding vector e_{i,v} = E_{i,v} d'_i.
+
+Therefore, we have the logit e_v^T h_i in loss Eq. (10) replaced by
+e_{i,v}^T h_i = d'_i^T E_{i,v}^T h_i:
+
+L(d, q) = ∑_{i ∈ [M]} [ − d'_i^T E_{i,d_i}^T h_i + log ∑_{v ∈ V} exp d'_i^T E_{i,v}^T h_i ].
+
+With a similar derivation as in Section 4.2, the relevance can be
+established as
+
+rel(d, q) = sum(˜D'^T Ė_d^T Q ⊙ A),
+
+where
+
+˜D' = diag(d'_1, d'_2, ..., d'_M) ∈ R^{(d×M) × M},
+
+and Ė_d = W_V^T [E_{1,d1}, . . . , E_{M,dM}] ∈ R^{d × (d × M)}.
+
+As we can see, PAWA multiplies the term Ė_d^T Q with contex-
+tualized document token vectors ˜D', which greatly improves the
+expressivity of document encoding.
+
+NP-decoding directly replaces Ė_d with D. Lee et al. [17] em-
+ploy an approach akin to contextualized sparse retrieval methods,
+leveraging token vectors encoded by the Contextualized Embed-
+ding Encoder (CE Encoder, [17]), referred to as contextualized token
+embeddings. This set of vectors, denoted as D in our notation,
+serves as the embedding table for the decoder. Both the Base and
+Async nonparametric decoding methods in [17] can be reformu-
+lated within our framework as:
+
+rel(d, q) = sum(D^T Q ⊙ A),
+
+where D is the token vectors of documents either pre-computed (as
+done by the pre-trained T5 model and frozen in the Base method)
+or gradually updated (by the encoder of the GR model every N
+epochs in the Async method) during the training of the GR model.
+
+While the NP-decoding method shares the same document en-
+coding with MVDR, two significant differences exist:
+
+(1) In NP-decoding, D is mostly frozen and detached from training,
+causing training imbalance compared to MVDR. Q and A in
+NP-decoding are fully trained, while D remains frozen.
+
+(2) Due to GR computing logits for the entire vocabulary in each
+generation step, there’s a need to reduce the large storage foot-
+print of D to save computation. NP-decoding methods address
+this by using clustering to compress token vectors. MVDR, on
+the other side, achieves lower inference time through a sparse
+alignment strategy.
+
+5.2 Alignment strategy
+In addition to document encoding, the alignment matrix represents
+a crucial distinction between GR and MVDR methods. This matrix
+plays a decisive role in shaping the divergent inference procedures
+employed in retrieval. In this section, we analyze the alignment
+matrix, denoted as A within our unified framework, in terms of
+sparsity, alignment direction, and some common properties.
+
+#### 5.2.1 The concept of “alignment” in both methods.
+The concept of “alignment” has garnered significant attention in MVDR
+[9, 18, 23, 34]. We will briefly introduce the alignment problem in MVDR
+models, and claim that the alignment matrix of the GR method, as
+asserted in our framework Eq. (16), indeed exhibits similar align-
+ment functionality to MVDR models.
+
+Token alignment involves determining whether tokens from the
+query and document should be matched lexically or semantically. It
+essentially represents another formulation of the “term mismatch
+problem” [10, 15, 34, 50]. The prevailing strategy considered op-
+timal at present is the all-to-all soft alignment strategy in MVDR
+models [15, 34], which eliminates the lexical form match restriction.
+GR methods leverage the transformer architecture that origi-
+nated in NLP, and the concept of “alignment” has been extensively
+discussed in the domain of neural machine translation [3, 5, 21, 22],
+focusing on the alignment between tokens in source and target
+sentences. The attention mechanism, as a core component, com-
+putes the alignment matrix and proves highly effective in capturing
+alignment between source and target sentences [5, 13, 45, 48]. The-
+oretical works [8, 32] have further validated the phenomenon of
+copying behavior, forming a foundational basis for the alignment
+ability.
+
+We conclude that, in GR methods, the attention matrix is able to
+capture the alignment between the query and the document, akin
+to the alignment matrix observed in MVDR methods.
+
+#### 5.2.2 Different sparsity and learnability: sparse vs. dense and learned
+alignment matrices.
+The alignment matrices of MVDR and GR differ in sparsity and learnability.
+MVDR typically employs a sparse alignment matrix for maximum efficiency during inference. In contrast, GR utilizes a dense and fully learnable alignment matrix derived from the computationally intensive attention mechanism.
+
+For MVDR methods, the sparse alignment matrix is often com-
+puted using heuristic algorithms [12, 15, 34]. Taking ColBERT [15]
+as an example, it selects the most relevant document token for each
+query token. The relevance score between document d and query
+q is computed as
+
+rel(d, q) = sum(D^T Q ⊙ A) = ∑_{j ∈ [N]} max_{i ∈ [M]} d_i^T q_j = ∑_{j ∈ [N]} rel(d, q_j),
+
+where A is a sparse alignment matrix with only one non-zero
+element for each column (A_{i j} = 1 if d_i^T q_j = max_{i ∈ [M]} d_i^T q_j;
+A_{i j} = 0 otherwise). The sum-max operation is highly parallelizable,
+ensuring efficiency during inference.
+
+For GR methods, the alignment matrix is computed through
+the attention mechanism, considering all possible pairs of query
+and document tokens, as shown in Eq. (16).
+
+The dense alignment matrix is highly expressive and trainable.
+While not suitable for exact relevance score computation in in-
+ference for each query-document pair, efficient approximate al-
+gorithms such as greedy search or beam search can be used to
+retrieve the top-k documents. These decoding algorithms rely on
+the following decomposition:
+
+rel(d, q) = ∑_{i ∈ [M]} sum( \tilde{e}_{d_i}^T Q α_i ) = ∑_{i ∈ [M]} rel(d_i, q),
+
+where rel(d_i, q) is conditioned on d_0, . . . , d_{i-1}, approximating the
+search for the most relevant document d to finding the most relevant
+token d_i at each position i.
+
+#### 5.2.3 Different alignment directions: query-to-document vs. document-
+to-query alignment.
+Beyond differences in the sparsity and learnability of the alignment matrix, MVDR and GR exhibit distinctions in their alignment directions.
+
+Eq. (21) reveals that MVDR’s relevance score can be decomposed
+into the sum of relevance scores for each query token and its aligned
+document token. In this context, we consider the alignment matrix
+in MVDR as query-to-document alignment. Each query token
+individually aligns to a document token, seeking the optimal match
+during retrieval. Mathematically, the alignment matrix is computed
+column-wise and represents a one-hot vector for each column.
+
+Conversely, the relevance score of GR, as depicted in Eq. (22), is
+the sum of relevance scores for each document token and its softly
+aligned query token. Here, we categorize the alignment matrix in
+GR as document-to-query alignment. Each document token is
+considered individually to focus attention on the most relevant
+query token. The alignment matrix is computed row-wise with a
+softmax(·) operation to normalize attention weights in each row.
+
+Document-to-query alignment may seem counter-intuitive for
+a retrieval task, as we do not know the target documents while
+predicting. As a solution, GR pre-computes the alignment strategy
+for the document token d_i (to be predicted) using previous document
+tokens d_0, . . . , d_{i-1} and thus can retrieve the next token that best
+aligns with the desired next alignment strategy.
+
+#### 5.2.4 Low-rank nature of both alignment matrices.
+In analyzing the shared characteristics of the two alignment matrices, it is demonstrated that both matrices exhibit a low-rank property.
+
+MVDR model, e.g., AligneR [34], integrates the pairwise align-
+ment matrix with unary salience, given by
+
+A = \tilde{A} ⊙ u_d u_q^T.
+
+Here, \tilde{A} ∈ R^{M×N} signifies the pairwise alignment matrix, deter-
+mining the alignment of query and document tokens. The sparse
+token weights, u_d ∈ R^M and u_q ∈ R^N, decide whether a token
+requires alignment. Notably, the alignment matrix A contains a
+low-rank component u_d u_q^T that influences the alignment strategy.
+
+In the case of GR methods, the alignment matrix is computed
+using an attention mechanism, which inherently results in a low-
+rank matrix. A lemma provides evidence of this low-rank property.
+
+Lemma 5.1. For a matrix A = softmax(D^T W Q), there exists a
+rank-one matrix R such that
+
+||A − R|| ≤ 4 γ ||W||,
+
+where the term γ depends on the matrix entries.
+
+From this lemma, we can conclude that both MVDR and GR meth-
+ods reveal a rank-one component in their alignment matrices.
+
+#### 5.2.5 Decomposition of both relevance scores.
+In this subsection, we show that the relevance score computation in both MVDR and GR
+models can be decomposed into query and document components.
+
+The MVDR method employs a bi-encoder architecture, wherein
+query and document tokens are modeled separately. This architec-
+ture can easily be regarded as a decomposition of the relevance
+score between the query and document:
+
+rel(d, q) = sum(D^T Q ⊙ A) = sum(top-1(D^T Q)),
+
+where top-1(·) is the operator that selects the maximum value in
+each column of the matrix.
+
+In the subsequent lemma, we establish that the relevance score
+of GR cannot only be decomposed but also be kernelized, implying
+the existence of a kernel function capable of processing both query
+vectors and document vectors to compute the score:
+
+Lemma 5.2. For simplicity, let rel(d, q) = sum(D^T Q ⊙ A), where
+A = softmax(D^T Q). It can be kernelized as
+
+rel(d, q) = ∑_{i,j} d_i^T q_j A_{i j}
+= ∑_{i,j} d_i^T q_j softmax(d_i^T Q)_j
+= ∑_{i,j} 1/p_{i j} tr( F(d_i)^T F(q_j) ),
+
+where F(x) = x φ(x)^T, and p_{i j} is a term that depends on d_i and
+q_j. We choose elu(·) as the kernel function φ(·).
+
+Furthermore, by applying the trace inequality, we can approxi-
+mately decompose the relevance score as
+
+rel(d, q) ≤ ∑_{i,j} 1/(\hat{p}_i \hat{p}_j) sqrt( tr( F(d_i)^T F(d_i) ) ) sqrt( tr( F(q_j)^T F(q_j) ) ).
+
+From this lemma, we can conclude that both relevance scores in
+MVDR and GR methods can be decomposed. The decomposition
+of MVDR is more straightforward, and the kernelization of GR is
+more complicated. Both kernelizations would provide possibilities
+for new retrieval strategies.
+
+5.3 Upshot
+In summary, our findings indicate that certain studies enhance
+the modeling capacity of GR by employing more expressive docu-
+ment encoding, akin to MVDR. Furthermore, GR employs a distinct
+alignment direction, but it also exhibits similar low-rank and de-
+composition properties with MVDR.
+
+6 EXPERIMENTAL SETUP
+Next, we seek experimental confirmation that generative retrieval
+and multi-vector dense retrieval share the same framework for mea-
+suring relevance to a query of a document, as derived in Section 4.
+
+6.1 Datasets
+We conduct experiments on two well-known datasets, NQ [16] and
+MS MARCO [28]. We use the same settings and processed datasets
+as Sun et al. [38], and we summarize the statistics of the datasets.
+
+NQ320k. NQ320K is a popular dataset for evaluating retrieval
+models [14, 25, 41, 42]. It is based on the Natural Questions (NQ)
+dataset [16]. NQ320k consists of 320k query-document pairs, where
+the documents are gathered from Wikipedia pages, and the queries
+are natural language questions.
+
+MS MARCO. MS MARCO document retrieval dataset is a collection
+of queries and web pages from Bing searches. Like NQ320k and
+following [38], we sample a subset of documents from the labeled
+documents and use their corresponding queries for training. We
+evaluate the models on the queries of the MS MARCO dev set and
+retrieval on the sampled document subset.
+
+6.2 Base models
+As we aim to provide a new perspective on GR as MVDR, we con-
+sider representative models from both paradigms, i.e., SEAL [1] for
+GR and ColBERT [15] for MVDR. For a fair comparison, we repro-
+duce both methods using the T5 architecture [35]. We have made
+several changes to adapt ColBERT and SEAL to their T5 variants:
+
+- T5-ColBERT. We use in-batch negative samples instead of the
+pair-wise samples in the official ColBERTv1 implementation. We
+set the batch size to 256 and train 5 epochs. The details of our T5
+variant ColBERT are in Appendix D.
+
+- T5-SEAL. We use the Huggingface transformers library [43] to
+train the model. We use the constructed query-to-span data for
+training and each span has a length of 10 sampled according to
+Bevilacqua et al. [1]. The learning rate is set to 1e-3 and the batch
+size is 256.
+
+6.3 Inference settings
+We consider two inference settings: end-to-end and reranking.
+
+End-to-end retrieval setting. Both methods can perform an end-
+to-end retrieval on the corpus for a given query.
+
+- T5-ColBERT maintains a large vector pool of all document token
+vectors after training. During inference, it first retrieves for each
+query token vector, the k-nearest document token vectors in the
+vector pool, resulting in N × k retrieved vectors. These vectors
+are from at most N × k different documents which are used as
+candidates. It then computes the exact relevance score for each
+candidate document and performs the final rerank.
+
+- T5-SEAL directly uses its generative style inference with the help
+of constrained beam search to predict valid document identifiers,
+i.e., n-grams from the documents.
+
+Rerank setting. Since we are focusing on relevance computing
+in the training target, we introduce a rerank setting that removes
+the influence of different approximated inference strategies. As
+stated in some previous work [18, 25], both MVDR and GR have
+discrepancies between training and inference. The approximated
+retrieval methods are largely different from the training target
+and may decrease the performance of the trained retrievers. In the
+rerank setting, we collect 100 documents retrieved by BM25 [37]
+together with the ground-truth document as the candidate set for
+each query. As in the training stage, we take both the query and
+each candidate document as the input of the model and use the
+relevance computing in Section 3 and 4.
+
+7 EXPERIMENTAL ANALYSES
+
+### 7.1 Performance of different alignment directions
+As described in Section 5.2.3, MVDR and GR exhibit different align-
+ment directions, i.e., query-to-document and document-to-query
+alignment. We aim to look at how alignment directions affect re-
+trieval performance. We first conduct experiments in the rerank
+setting to show the performance gap between MVDR and GR. MVDR
+with the original alignment strategy has a much better performance
+than GR. To compare the alignment directions of MVDR and GR,
+we have designed a model MVDR (q←d) that integrates the fea-
+tures of both, i.e., expressive document encoding from MVDR and
+document-to-query alignment strategy from GR. The performance
+of the new model is roughly intermediate between the other two.
+Note that the designed experimental model MVDR (q←d) can only
+be used in a rerank setting. We conclude that query-to-document
+alignment is preferred for reranking.
+
+### 7.2 Term matching in alignment
+As we have discussed in Section 5.2.1, alignment is essentially a
+term-matching problem. In this section, we design an experiment
+to observe the extent of term matching in the two methods, and we
+find both methods exhibit a preference for exact term matching in
+their alignment.
+
+Exact match of MVDR in query-to-document direction. We
+calculate the exact matching rate between document token IDs and
+each query token ID during the alignment process, which we refer
+to as the “hard exact match rate.” We also define a “soft exact match
+rate” which is the alignment score corresponding to the exact match
+query-document token pairs. The alignment score is defined as the
+element in the alignment matrix. As MVDR uses a sparse align-
+ment matrix, we apply column-wise softmax(·) to A and use the
+element as the alignment score. We average the rate over candidate
+documents for each query token and categorize the query tokens
+according to their IDF. We assume that IDF approximates the term
+importance as is done in [11]. From the result, we can see that MVDR
+chooses exactly matched document tokens in 11.4% on average. Also,
+we notice that rare query tokens have not received much attention during alignment. This observation suggests that MVDR may prioritize commonly occurring query tokens in its alignment process, potentially overlooking or underemphasizing the importance of rare query tokens.
+
+Exact match of MVDR and GR in document-to-query direc-
+tion. We have devised an experiment to investigate the alignment
+in the opposite direction, i.e., document-to-query. As GR is not
+trained with hard alignment, we only examine the soft exact match
+rate of both methods. The computation of the exact match rate is similar except that it is computed for each document token. From the results, we have discerned a consistent trend: as the importance of tokens increases, the rate of exact matches also tends to rise. We think this is because it is hard for the rare query token to match among many common tokens since the document is much longer than the query. When we look at each document token, it will be easier to match among fewer query tokens. We also conduct experiments on MS MARCO and have similar results.
+
+### 7.3 Improved document encoding
+In Section 5.1, we include two popular document encoding methods,
+PAWA and NP-decoding, into our framework. To demonstrate the
+improvement of these two methods, we compare the performance
+of GR with and without them. PAWA is typically used in
+GR with short semantic identifiers due to its high computational
+complexity during generation. Thus, we compare it with DSI [41]
+with semantic identifiers. Note that all these models use the same
+architecture (T5-base [35]) and similar training procedures without
+data augmentation, e.g., synthetic query-doc pairs generation, etc.
+*-PAWA and *-NP can be seen as a naive approach to using the two
+enhancing methods to the base GR models. From the experiments,
+we see that both PAWA and NP-decoding can greatly improve the
+performance and achieve similar results compared with T5-ColBERT on
+Recall@1. However, there is still a large gap in terms of Recall@10.
+The implementation of the additional decoding modules is only
+an approximation for reducing the cost of time and storage as dis-
+cussed in Section 5.1. This, together with the alignment direction,
+may be a cause of the performance gap between GR equipped with
+these document encodings and MVDR.
+
+### 7.4 Low-rank nature of alignment matrix
+In Section 5.2.4, we show that the alignment matrix in GR also has
+a low-rank property in Lemma 5.1. As MVDR using alignment ma-
+trix already contains a low-rank component, we only conduct
+experiments to verify GR. Since the γ in Lemma 5.1 is hard to attain,
+we illustrate the relation between ||W|| and ||A − R||. We can see that the inequality is loose and ||A − R|| is much lower than ||W||. We also show the relative error of the approximation of R. The error is relatively low on average, which indicates the low-rank nature of the alignment matrix of GR.
+
+### 7.5 Case study of the alignment matrix
+We chose a specific case from the dataset NQ320k to show what
+the alignment matrix looks like. Since the document is too long for demonstration, we simplify and extract a sub-sentence containing the answer to the query. In MVDR, we have observed
+a pronounced phenomenon of exact matches. The song name and people’s names are completely matched with high scores. In GR, this phenomenon is less obvious, but each document
+token has more attention on the people’s name and song name.
+
+### 7.6 Upshot
+We verify the existence of “exact term match,” a specific alignment
+scenario, in both paradigms. We also show the superiority of the
+alignment direction in MVDR. The improved document encoding
+and the low-rank nature of the alignment matrix are validated.
+
+8 LIMITATIONS
+We have examined the training target of GR and have connected it
+with MVDR, but we have not discussed whether relevance comput-
+ing can be generalized to the generative style inference. We have
+not considered the multi-layer interactions in the cross-attention
+between query and document for simplicity.
+
+Our framework does not discuss how query-generation augmen-
+tation reduces the discrepancy [54]. We aim to study how different
+architectures and identifier designs will affect the alignment and
+generalization during inference in future works.
+
+9 CONCLUSION
+In this paper, we have offered new insights into GR from the per-
+spective of MVDR that both paradigms share the same frameworks
+for measuring the relevance between a query and a document.
+Both paradigms compute relevance as a sum of products of query
+and document vectors and an alignment matrix. We have explored
+how GR applies this framework and differs from MVDR. We have
+shown that GR has simpler document encoding and an alignment
+strategy with different sparsity and direction. They also share a
+low-rank property and can be decomposed into query and docu-
+ment components. We have conducted extensive experiments to
+verify our conclusions and found that both methods have com-
+monalities of term matching in the alignment. We also found that
+query-to-document alignment direction has better performance
+than document-to-query.
+
+Based on our findings, practitioners in the field may consider
+leveraging the shared frameworks highlighted in this study to un-
+derstand and develop new GR methods, and pay more attention to
+the classic term matching problem underlying GR models.
+
+As to future work, we will continue to study how multi-layer
+attention may affect the framework. The difference in the general-
+ization properties for new documents between DR and GR [4, 27,
+29, 52] based on our framework is also an important aspect deserving
+further investigation. We will continue to discover new relations in
+the GR paradigm and provide more insights into the methodology.

@@ -1,0 +1,181 @@
+# Identifying Emotion Labels From Psychiatric Social Texts Using a Bi-Directional LSTM-CNN Model
+
+## ABSTRACT
+Discussion features in online communities can be effectively used to diagnose depression and allow other users or experts to provide self-help resources to those in need. Automatic emotion identification models can quickly and effectively highlight indicators of emotional stress in the text of such discussions. Such communities also provide patients with important knowledge to help better understand their condition. This study proposes a deep learning framework combining word embeddings, bi-directional long short-term memory (Bi-LSTM), and convolutional neural networks (CNN) to identify emotion labels from psychiatric social texts. The Bi-LSTM is a powerful mechanism for extracting features from sequential data in which a sentence consists of multiple words in a particular sequence. CNN is another powerful feature extractor which can convolute many blocks to capture important features. Our proposed deep learning framework also applies word representation techniques to represent semantic relationships between words. The paper thus combines two powerful feature extraction methods with word embedding to automatically identify indicators of emotional stress. Experimental results show that our proposed framework outperformed other models using traditional feature extraction such as bag-of-words (BOW), latent semantic analysis (LSA), independent component analysis (ICA), and LSA +ICA.
+
+## I. INTRODUCTION
+Rather than seek professional help, people suffering from mental illness or emotional strain often turn to online communities in search of advice or a sense of human intimacy and understanding. In recent years, many online services have been developed to provide such people with a means for identifying and understanding the issues they face, and for finding helpful resources. Sufferers interact with these services through written texts and comments about their feelings, and qualified therapists who monitor these services then provide replies and appropriate suggestions.
+
+However, such services suffer from an imbalance between ‘‘clients’’ and ‘‘providers’’. Combined with the asynchronous nature of such communication, clients may wait for considerable lengths of time between replies, which not only reduces the potential benefit of engaging with the service but can also increase client anxiety. Excessive response delay increases the potential of self-harm or other negative behavior on the part of the client. A system that automatically parses client comments to identify particular emotions and their respective severity would allow providers to quickly identify clients in crisis, allowing them to prioritize responses, and thus, potentially avert undesirable outcomes. Such a system could also help provide a macro view of the relative prevalence of various emotional and psychological issues among service clients [1].
+
+Healthcare-oriented web-based services draw many text-based queries related to depression. Psychiatrists and therapists reviewing and replying to these queries label them appropriately to represent the particular type of depression indicated. This paper seeks to automatically label such texts with appropriate emotion labels [2], thus reducing therapist workload and response latency. Table 1 shows an example text annotated with three emotion labels [3], depression, insomnia, and suicide. This example shows the difficulty of detecting and labeling multiple emotions in the field of sentiment analysis.
+
+This paper uses deep learning models as neural networks (NNs) to resolve the issue of multiple label classification. Word embeddings, convolutional neural networks (CNN), and long short-term memory (LSTM) NNs are used to build a powerful classifier to identify emotion labels. These models have been successfully applied in a wide range of categorization tasks and are used here to develop a powerful classifying mechanism for multiple emotion labels within psychiatric social texts based on the classification performance of two factors: word embeddings and neural network architectures.
+
+This paper has three main contributions. First, this study is the first work to use NN-based methods to address multiple emotion classification for psychiatric social texts, which can reduce the workload and response latency of psychiatrists and therapists. Second, the proposed framework outperforms other models using traditional feature extraction such as bag-of-words (BOW), latent semantic analysis (LSA), independent component analysis (ICA), and LSA +ICA. Third, different NN models are evaluated, providing a baseline result to facilitate future research on emotion classification for psychiatric social texts.
+
+The remainder of this paper is organized as follows. Section II reviews the relevant literature. Section III describes the proposed model for multiple emotion classification. Section IV explains the generation of the psychiatric social text dataset and summarizes the experimental results. Conclusions and directions for future work are presented in Section V.
+
+## II. LITERATURE REVIEW
+
+### A. EMOTION LABELING
+Natural language processing and text mining techniques have been widely applied to analyzing the emotional content of text. Yu et al. [4] built Chinese affective resources for two dimensions of emotion labeling, valence and arousal in their dataset. Therefore, they not only consider the valence of positive/negative but also obtain arousal of high/low. Wu et al. [5] proposed a categorization approach to filter significant association language features, capturing important discrimination information and, incrementally improving feature precision by removing noise. Multiple labeling can be divided into two methods, problem transformation and algorithm adaptation [6], [7]. In the former, the problem is transformed into multiple classification problems (e.g., binary problems) which are then solved using many classifiers [8]–[10]. The latter modifies the existing algorithm to a new classifier that better fits the current dataset. However, unlike problem transformation, algorithm adaptation can avoid information loss when transforming multiple classification problems into multiple binary classifier problems [11]–[14].
+
+Cui et al. [15] addressed problem-insensitivity to the order of n-grams. Their model used distributed semantic features of part-of-speech (POS) sequences to improve the quality of sentiment analysis. Fattach [16] compared different term weighting schemes with a combination of multiple classifiers for sentiment analysis, with results that outperformed state-of-the-art term weighting schemes. Xiong et al. [17] used the word-pair sentiment-topic model for the review of short texts. They assumed that all words in a sentence are related to the same topic. Zhou et al. [18] used the stack bi-directional long short-term memory (Bi-LSTM) model for sentiment analysis of Chinese microblogs, which also use a word2vec model to capture the semantic features of words. Their experimental result showed that the stack models outperform single-layer LSTM. Xu et al. [19] proposed that the extended sentiment dictionary with a naive Bayesian field classifier improved accuracy in review sentiment classification on two datasets on online retail and travel websites. Xia et al. [20] used the conditional random field algorithm to extract features from review texts, and a support vector machine was used to classify the sentiment classification of the review. Almeida et al. [21] used an ensemble of methods to identify multiple sentiment classifications to explore the wide range of multi-label solutions, outperforming other traditional algorithms on two real datasets. However, the problem of multiple emotion labeling is another major issue in the fields of NLP and text mining.
+
+### B. WORD EMBEDDINGS
+Many studies have explored the use of word presentation approaches to capture textual semantics and syntax. The word representation approach is based on knowledge repositories such as WordNet, a lexical database annotated by linguists [22]. However, this approach requires laborious manual annotation of word relations, and results are subject to annotator subjectivity, complicating the automatic computation of word similarity [23]. One traditional word representation is the corpus-based one-hot representation, also called the bag-of-words approach, in which each word is represented by a vector [24]. The word co-occurrence matrix is another representation approach that measures the semantic relation of the context between a range of words in a sentence with a given window size. Rohde et al. [25] used the singular value decomposition (SVD) approach to reduce the dimension size for a co-occurrence matrix, but new words cannot be added into SVD.
+
+In past years, a distributed word representation learning method, known as word embeddings [26]–[31] has been developed to represent words as low-dimensional dense vectors of real numbers using neural network architectures. Word embeddings can efficiently capture semantic and syntactic contextual information from very large datasets. The neural network language model (NNLM) is a pioneering work that learns word embeddings based on word contexts [26]. Word2vec [27], [28] is a popular method that uses a simple single-layer neural network architecture to learn word embeddings which aim to predict target words based on contexts. GloVe [29] is another word embedding learning method that GloVe constructs word embeddings using overall statistics to probe the underlying co-occurrence statistics of the corpus. In addition to the above general-purpose word embeddings, some researchers have suggested retrofitting the pre-trained word vectors using additional knowledge resources to enhance specific downstream applications [30], [31].
+
+Recently, the attention mechanism has [been] used in language modeling approaches such as BERT [32] and GPT-2 [33] for word representation. BERT and GPT-2 are transformer-based models [34] in which BERT only uses the encoder of transformer, and GPT-2 uses the decoder of transformer. In the transformer, both encoder and decoder use the self-attention layer to learn the attention weights for all hidden status. The attention mechanism is a powerful learning approach in neural network models for many NLP tasks.
+
+### C. DEEP LEARNING
+Deep learning (DL) frameworks provide powerful learning mechanisms for many types of research and applications. Deep NN is multiple feedforward NNs and generally use the approximation theorem to approximate any complex continuous function given enough neurons to build a NN model [35]–[41]. Neural networks have been used to solve many NLP tasks [42]. Recurrent neural networks (RNN) have been used with good effect on text-based data. A simple RNN is a short-term memory using backpropagation through time for model optimization through backward computation, and cannot be applied to long data sequences. RNN can use two advanced cells to capture long-term memory: long short-term memory (LSTM) and gated recurrent units (GRU). LSTM is an extension of RNN and has achieved excellent performance in various tasks, especially long sequential problems. It uses three gates to extract hidden features through time, including a forget gate, an input gate, and an output gate. If the current word is different from the previous word, the information will be forgotten by the forget gate. The input gate is used to determine the information of the current word to be output. The output gate is used to determine the information of the current word to be output. Therefore, these three gates allow data to enter, exit or delete through a forward loop process and avoid vanishing gradients, especially in long sequential texts. Rao et al. [43] proposed an LSTM model with sentence representations to build a document sentiment classification model. Their proposed model outperformed other state-of-the-art models on three publicly available document-level review datasets. Wang et al. [44] proposed a stacked residual LSTM model to predict sentiment intensity for a given text. According to their experimental results, LSTM with additional stack layers can successfully obtain high classification performance.
+
+Many studies have used bi-directional LSTM to extract effective features. Xie et al. [45] used Bi-LSTM as a classifier to extract variable feature length, finding that Bi-LSTM significantly outperformed the INTERSPEECH 2010 features on the CASIA database. He et al. [49] proposed two implementations of LSTM for review data of Arabic Hotels: a character-level bi-directional LSTM along with a conditional random field classifier (Bi-LSTM-CRF), and an aspect-based LSTM considered as attention expressions. GRU has also been widely applied. Li et al. [47] proposed a bi-directional gated recurrent unit NN model (BiGRU-LA) for sentiment analysis for tourism review sentiment classification. They used a topic model (lda2vec) and an attention mechanism in their BiGRU-LA model, where lda2vec is used to discover all the main topics in a review corpus. Tian et al. [48] proposed an attention aware bi-GRU-based framework for sentiment analysis, using bi-GRU to account for complicated interaction and obtain the weight of keywords for sentiment apprehension.
+
+Using a more advanced model, many researchers use recurrent neural networks with convolutional neural networks to solve many tasks [49]–[51]. The Bi-LSTM-CNN model has been used for named entity recognition in Indonesian, which features four classes including person, organization, location, and event [52]. Song et al. [53] proposed two models: Bi-LSTM-CNN and CNN-LSTM, which proceed in reverse order to each other. The two models outperformed many baseline models. Their experimental results show the CNN-LSTM model outperforms CNN-LSTM and other models.
+
+However, many deep learning models have been applied to many tasks and obtained significant performance. In recent years, the hybrid deep learning frameworks such as CNN-LSTM and LSTM-CNN are very useful for text feature extraction. Therefore, we use the hybrid framework to extract the text feature and predict the multiple emotion labels.
+
+## III. BI-LSTM-CNN MODEL FOR EMOTION LABEL IDENTIFICATION
+We propose a deep learning framework for multiple emotion label identification using two powerful feature extractors with a word presentation approach. The two extractors are recurrent neural networks and convolutional neural networks used for feature extractions, and word embeddings are used to capture the relationship between each word pair for representation. The goal of our proposed deep learning framework is to obtain the optimal model parameters θ ∗, which is defined as:
+
+θ ∗ = arg min
+θ
+L(θ ) (1)
+
+where θ ∗ is the optimal model parameters to be weighted by gradient-based optimization.
+
+Figure 1 shows the overall framework for emotion label identification. We propose a deep neural network model comprising six layers of neural networks including a word embedding layer, a Bi-LSTM layer, a CNN layer, a max-pooling layer, a hidden layer, and an inference layer. (1) The word embedding layer (E) is used to learn the word vector. (2) The Bi-LSTM layer serves as a feature extractor (L) to extract the features of each word vector; it can read a sentence through both forward and backward passes. (3) The CNN layer is a feature extractor used to convolute the hidden features of Bi-LSTM; it can capture local important features in a sentence using a fixed window size. (4) The max-pooling operation (P) selects the maximum value of each convoluted feature to obtain the most important feature. (5) The hidden layer is an FNN used to map the maximum hidden feature to a new hidden feature vector. (6) Finally, the inference layer is used to predict the probabilities of different emotion labels.
+
+Below we describe the three major models used to build our proposed Bi-LSTM-CNN classifier:
+
+### A. WORD EMBEDDINGS TRAINING
+The GloVe approach is used to train word embeddings from a larger Chinese corpus and domain corpus. The GloVe algorithm optimizes the co-occurrence probability of words i and j and is performed on aggregated global word-word co-occurrence statistics from a larger corpus. In this paper, we use the GloVe tool to create the word embeddings for the next emotion label detection.
+
+### B. EXTRACTOR OF BI-LSTM NEURAL NETWORK
+This section seeks to capture the meaningful hidden features from each word in the query sentence using word embeddings pre-trained from the GloVe model. The bi-directional long short-term memory (Bi-LSTM) is a powerful extraction model for sequence data [54]. Therefore, we propose a Bi-LSTM model to extract hidden features by capturing raw text information due to the long length of sentences in psychiatric social texts. Psychiatric social texts include multiple emotion labels, so the Bi-LSTM is used to capture multiple features by forward and backward mapping. The Bi-LSTM is used to map word embedding of the sequence S = [w1, w2, . . . , wT ] into a hidden feature HL = [hL1, hL2, . . . , hLT ].
+
+Since each word is represented using word vectors from word embeddings, to compute a hidden representation of each word, the hLt = [⃗hLt, ←hLt] is the concatenated output of the Bi-LSTM, where ⃗hLt is a forward LSTM over a sequence S = [e1, e2, . . . , eT ] and ←hLt is a backward LSTM over a sequence S = [wT, wT−1, . . . , w1].
+
+The monodirectional LSTM is computed as follows :
+fLt = σ (wf [hLt−1, wt] + bf ) (2)
+
+iLt = σ (wi[hLt−1, wt] + bi) (3)
+
+oLt = σ (wo[hLt−1, wt] + bo) (4)
+
+˜cLt = tanh(wc[hLt−1, wt] + bc) (5)
+
+cLt = fLt ⊗ cLt−1 + (1 − iLt) ⊗ ˜cLt (6)
+
+hLt = oLt ⊗ tanh(cLt) (7)
+
+where [ hLt−1, wt ] ∈ Rws+hs is a concatenation vector of the previously hidden state hLt−1 and the current word embedding as input et. wf, wi, wo, ws ∈ Rhs×(hs+ws), and bf , bi, bo, bs ∈ Rhs are learnable parameters. σ and ⊗ are respectively a logistic sigmoid function and an elementwise multiplication. The tanh is a tanh function as activation.
+
+### C. CNN EXTRACTOR WITH MAX-POOLING
+All words are encoded by a Bi-LSTM feature extractor. A convolution operation involves a filter wcnn ∈ Rk×hs, which is applied to a window of k hidden features to produce a new hidden feature [55]. This paper designs multiple filters for the CNN layer because different filter sizes can capture different meaningful features. For example, a convoluted hidden feature cci is generated from a window of hidden features hLi:i+k−1.:
+
+cci = σ (wcnn · hLi:i+k−1 + bcnn) (8)
+
+where cci ∈ R is a convoluted feature. bcnn ∈ R is the bias term. wcnn and bcnn ∈ R are learnable parameters. σ is a rectified linear unit (ReLU) function. The CNN is applied to each hidden feature in the Bi-LSTM hidden feature {hL1:k, hL2:k+1, ... hLi:i−k+1} to produce a feature map
+
+cc = [cc1, cc1, ... , ccT−k+1] (9)
+
+with cc ∈ RT−k+1. In this case, we apply a max-overtime pooling operation over the hidden features and capture the most important feature ˆc = max{cc} as the feature corresponding to each filter. The framework uses multiple filters (with varying windows sizes) to obtain multiple CNN-Max-Pooling filters’ features as follows :
+
+hc = [ˆc1, ˆc2, ... , ˆcm] (10)
+
+where hc denotes the concatenation hidden features which concatenate all features from each filter.
+
+### D. FNN HIDDEN FEATURE EXTRACTION AND OUTPUT PREDICTION
+To predict the emotion labels, we use a fully connected neural network to extract the hidden feature from the hidden feature of CNN with max-pooling. The extracted hidden feature by FNN is defined as :
+
+hf1 = wf1 hc + bf1 (11)
+
+where, hf1 ∈ Rhs is a new hidden feature mapping, and wf1 ∈ Rhs×m and bcnn ∈ Rhs are trainable parameters. The last FNN layer of our proposed framework predicts the probabilities of various emotion labels and is defined as :
+
+ˆy = σ (wout hf1 + bout) (12)
+
+where ˆy ∈ Rl is the predictive probabilities of the emotion label, wout ∈ Rhs×1 and bcnn ∈ R are trainable parameters, and σ is a sigmoid function.
+
+### E. MODEL TRAINING
+The previous section describes how to build the Bi-LSTM-CNN model and there are many parameters of Bi-LSTM-CNN. In this section, the model training uses the gradient-based optimization approach to optimize our proposed Bi-LSTM-CNN model and to obtain a better predicting model. Therefore, we use the log-likelihood method to measure the model performance of training in multiple emotion label classifications. In this case, each label of the multiple emotion labels uses a Bi-LSTM-CNN model to train a specific binary classifier. The negative log-likelihood function L for the model parameters of the proposed neural network is defined as:
+
+L(θ ) = −
+n∑
+i=1
+y(i) log ˆy(i) + (1 − y(i)) log[1 − ˆy(i)] (13)
+
+where θ is all parameters in our proposed deep neural network model. We use the Nadam optimizer to optimize the model parameters according to negative log-likelihood loss.
+
+## IV. EXPERIMENTAL RESULTS
+This section describes the experimental setup and results including the query dataset, comparative classifiers, evaluation metrics and classification performance comparisons.
+
+### A. DATASET
+A corpus of 1,711 psychiatric social texts was collected from the PsychPark website (http://www.psychpark.org); a virtual psychiatric clinic maintained by a group of volunteer professionals, including psychiatrists, psychologists, social workers, etc., [56]. Each text is originally an e-mail submitted by a web visitor about his/her psychiatric problems. The professionals then assign one or multiple emotion labels to each e-mail and de-identify them to periodically update the online dataset. Table 2 shows the proportions of the emotion labels in the corpus, counted for each text. In the evaluation, 274 samples of the texts were randomly selected as a validation set for hyper-parameter tuning of all classifiers, and 343 samples were randomly selected as a test set. The remaining 1,094 samples were used for model training. In addition, an extra resource of Wikipedia Chinese text corpus is used to train word embeddings to obtain a more general semantic relationship for each word. However, the out of vocabulary issue is a considerable problem when using only the Wikipedia corpus because of the general nature of these words. Therefore, we combine the Wikipedia dataset with the psychiatric social texts to train word embeddings. Following training, each word has a vector which reflects the meaningful relationship between itself and each other word. These word embeddings capture the general semantic relationship from the Wikipedia corpus and specific domain relationship from the psychiatric social texts.
+
+### B. CLASSIFIERS
+To evaluate our proposed Bi-LSTM-CNN model in the multiple emotion labeling problem, we built and compared four classifiers CNN, LSTM, LSTM-CNN, and Bi-LSTM-CNN. Each CNN and LSTM was implemented using a single layer structure.
+
+CNN: This simple classifier only uses the CNN model with a max-pooling operation to extract hidden features and predict emotion labels.
+
+LSTM: This simple classifier only uses the single directional LSTM model to extract hidden features, and we select the last hidden feature of LSTM to predict emotion labels.
+
+LSTM-CNN: This combined classifier uses the single directional LSTM and CNN to extract hidden features. In addition, this LSTM model only selects the last encoded hidden feature to predict emotion labels.
+
+Bi-LSTM-CNN: This relatively complex classifier is our proposed deep learning framework using CNN and Bi-LSTM feature extraction.
+
+### C. EVALUATION METRICS
+To identify multiple emotion labels contained in the testing examples, each emotion label presented in Table 2 was used to train seven classifiers in the training phase. For the classifiers presented above, we built a multiclass classifier to output the probabilities of the emotion labels and used a threshold of 0.5 to determine positive labels. That is, each text may have more than one emotion label depending on whether or not the probability output by their corresponding classifiers exceeds the threshold of 0.5. The metrics used for performance evaluation included recall, precision, and F-measure defined as:
+
+recalli = number of labels correctly classified
+number of label i in gold standard (14)
+
+precisioni = number of label i correctly classified
+number of label i by the classifier (15)
+
+f1i = 2(precisioni × recalli)
+precisioni + recalli (16)
+
+The above metrics are used to evaluate each emotion binary classification. To evaluate multiple emotion labels, we use the macro averaging method to compute overall metrics for the seven emotion labels. The three macro metrics are defined as:
+
+macro_recall = 1
+7
+7∑
+i=1
+recalli (17)
+
+macro_precision = 1
+7
+7∑
+i=1
+precisioni (18)
+
+macro_f1 = 1
+7
+7∑
+i=1
+f1i (19)
+
+### D. MODEL PARAMETERS SETUP
+As summarized in Table 3, our proposed deep learning framework features six hyper-parameters: word embedding size, maximum sentence length, batch size, hidden size of CNN, kernel size of CNN and hidden size of FNN. To deal with varying sentence length, a zero-padding method is used to fix the sentence length at 500. That is, sentences with fewer than 500 words are padded with a zero value, whereas those exceeding a maximum value of 500 words are ignored.
+
+### E. CLASSIFICATION PERFORMANCE COMPARISONS ON WORD EMBEDDINGS
+Chinese texts from Wikipedia were used to train word embeddings. All experiments used 300 dimensions in each classifier for word embedding training. First, we compared the performances of each classifier on the Chinese Wikipedia corpus and domain text corpus. Table 4 shows the emotion label classification performance in the validation set, both with and without the extra corpus. The training corpus combining Wikipedia and the domain improves the performance of all four classifiers by an average of 0.025. Among the four classifiers, our proposed Bi-LSTM-CNN performs the best. Thus, the additional corpus provides a slight improvement to classification performance. However, the extra words from the domain corpus training data provide more information, and thus, increase the macro_f1 metric.
+
+The word2vec model is a very popular word representation approach, and we used it here for additional word embedding training. The experiments on the validation set used the four classifiers and the same training dataset (combined Chinese Wikipedia and psychiatric social texts), and the results are shown in Table 5. Here, we design 5 different dimension sizes to evaluate classification performance for two models of word embeddings, with dimension sizes for all experiments set to 100, 150, 200, 250 and 300. Table 4 shows that the GloVe word embeddings training model performs best in 19 of the 20 experiments. Our proposed Bi-LSTM-CNN classifier provides the best classification performance, resulting in 0.664, 0.667, 0.683, 0.683 and 0.688 macro_f1 for respective dimension sizes of 100, 150, 200, 250 and 300, where the 300 is the best dimension size. The average macro_f1 of the four classifiers using GloVe are 0.654, 0.432, 0.664 and 0.677. The experimental results indicate combining the Chinese Wikipedia corpus and the domain Chinese texts improves classification performance over single corpora because word embeddings trained on the domain texts alone only obtain a limited relationship among the domain texts and do not provide sufficient information. The supplemental corpus can be used to define common relationships between these words, and the domain data can be tuned to the word relationship to capture the domain information. However, in this paper, word2vec does not outperform GloVe because we need to detect emotion labels from a longer sentence, but word2vec performs well in capturing local relationships in short sentences. This paper seeks to assign emotion labels to words in a sentence. Word embedding using the GloVe approach is performed on aggregated global word-word cooccurrence statistics from a corpus. Therefore, the GloVe approach can capture more relationship information within each sentence. Therefore, the GloVe approach outperforms word2vec.
+
+### F. CLASSIFICATION PERFORMANCE COMPARISONS FOR DIFFERENT NUMBER OF FILTERS
+This experiment compares performance with different number of filters. Figure 2 shows the classiﬁcation performance of Bi-LSTM-CNN with GloVe, with results showing that using two filters sized 3 and 5 obtain the best performance.
+
+### G. CLASSIFICATION PERFORMANCE COMPARISONS AGAINST OTHER CLASSIFIERS
+Table 6 shows the classification performance results for the seven emotion labels in the test set. Our proposed Bi-LSTM-CNN classifier obtains a 0.71 average macro_f1, which is a respective 0.23, 0.14, 0.1 and 0.07 improvement over pure SVM, LSA-SVM, ICA-SVM and LSA +ICA-SVM. Two emotion labels (depression and insomnia) show approximate results using the proposed classifier and the LSA+ICA-SVM classifier. However, our proposed Bi-LSTM-CNN provides the maximum improvement (0.18) for the drug label. Overall, Bi-LSTM-CNN obtains significant improvements over these powerful neural network models. In addition, the micro f1 (macro_f1) of our proposed classifier is 0.72, and also outperforms the other classifiers. Therefore, the deep learning framework was successfully used for emotion label classification. We also performed classification using bi-directional LSTM-CNN and single directional LSTM-CNN. The Bi-LSTM-CNN classifier outperformed the LSTM-CNN classifier in emotion label classification since the learning direction of LSTM is the key learning component.
+
+### H. DISCUSSION
+The single directional LSTM model learns from left to right, so the last hidden feature produces a higher gradient value on the last word of a query. However, psychiatric social text queries have multiple emotion labels; thus, the last hidden feature of the single directional LSTM gives more weight to the last emotion label. For example, Table 7 shows two emotion labels in a psychiatric social query: depression and insomnia. Sentence 2 describes the sleeping state, indicating a problem related to insomnia. Sentence 3 describes issues related to feeling, thinking, and handling daily activities, suggesting depression. However, the single directional LSTM classifies the text as belonging to depression only due to the left to right inference processing. Using the bi-directional LSTM, this query is found to belong to both insomnia and depression. Bi-directional LSTM helps avoid additional weighting on the words related to the last emotion label because it can obtain words related to both the first and last emotion label.
+
+## V. CONCLUSION AND FUTURE WORK
+We proposed a deep learning model to assign emotion labels to psychiatric social texts. The proposed Bi-directional LSTM-CNN combines word embedding, long short-term memory networks, and convolutional neural networks to extract the hidden features. The major decision hidden features are obtained from the previous hidden features by CNN, and the word hidden features are obtained from the word embeddings. The abstractive hidden features are then successfully used to identify emotion labels. Therefore, the pipeline feature extraction processes, such as word embedding layer, bi-directional LSTM layer, and CNN layer extract many important features and provide high detection performance. Experimental results show that the proposed deep learning model significantly improved performance over other conventional models. Our proposed model using pretrained word embeddings through the GloVe model outperformed random initial word embeddings. Future work will focus on other deep learning approaches such as the attention-based model and tree-LSTM to improve performance and will include additional sentiment corpora to allow the system to capture more sentiment information.

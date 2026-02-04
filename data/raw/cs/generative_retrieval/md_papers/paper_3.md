@@ -1,0 +1,175 @@
+# DiffusionRet: Diffusion-Enhanced Generative Retriever using Constrained Decoding
+
+## Abstract
+Generative retrieval, which maps from a query to its relevant document identifiers (docids), has recently emerged as a new information retrieval (IR) paradigm, however, having suffered from 1) the lack of the intermediate reasoning step, caused by the manner of merely using a query to perform the docids generation or hierarchical classification, and 2) the pretrain-finetune discrepancy, coming from the use of the artificial symbols of docids. To address these limitations, we propose a novel approach of using document generation from a query as an intermediate step before retrieval, thus presenting diffusion-enhanced generative retrieval (DiffusionRet), which consists of two processing steps: 1) diffusion-based document generation, which employs the sequence-to-sequence diffusion model to produce a pseudo-document sample from a query and is expected to be semantically close to a relevant document. 2) N-gram-based generative retrieval, which uses another sequence-to-sequence model to generate n-grams appearing in the collection index for linking a generated sample to an original document. Experimental results on the MS MARCO and Natural Questions datasets show that the proposed DiffusionRet significantly outperforms all existing generative retrieval methods, leading to state-of-the-art performance, even with much a smaller number of parameters.
+
+## 1 Introduction
+Generative retrieval methods have emerged as powerful IR paradigms (Tay et al., 2022; Zhou et al., 2022; Wang et al., 2022; Chen et al., 2022a; Ren et al., 2023; Bevilacqua et al., 2022; Tang et al., 2023a), by employing sequence-to-sequence models to map a query to relevant docids, showing promising results compared with dense retrieval based on dual encoders (Karpukhin et al., 2020; Ni et al., 2022). In generative retrieval, because all the required information and knowledge for indexing and retrieval are maintained in parametric memory, retrieval is conducted efficiently at the inference stage by a decoder, without requiring other inverted index structures or tools for the nearest neighbor search, such as FAISS (Johnson et al., 2019).
+
+However, the classical methods of existing generative retrieval mostly produce only docids at inference time, much shorter than normal sentences, while no other content is generated (Tay et al., 2022; Zhuang et al., 2022; Wang et al., 2022). Lacking an intermediate reasoning step, it is unclear what detailed reasoning steps proceed during decoding-based hierarchical classification or docids generation, which is likely far from the improved approach based on the chain-of-thought (Wei et al., 2022; Trivedi et al., 2023). Additionally, generative retrieval extensively uses artificial symbols of docids for target sequences. As noted in (Ren et al., 2023), however, these docid-like symbols are only seen during the finetuning but are unseen at the pretraining stage, thus causing the pretrain-finetune discrepancy, largely limiting the effect of transfer learning, which is arguably important when exploiting pretrained models.
+
+To address these limitations, we establish the document generation stage as a key intermediate reasoning step, that directly generates the “actual content” of a document relevant to a given query. Once a document is generated, we use it as a new document-level query, generate N-grams restricted to those occurring in the collection, and use them to identify its original source document.
+
+To generate such a pseudo query-relevant document, the diffusion model emerges as a noticeably promising alternative to the parameter-intensive large language models (LLM) (Li et al., 2022b), surpassing some GPT variants even with a much smaller parameter scale, as in (Gong et al., 2023; Yuan et al., 2022; Gao et al., 2022b; Li et al., 2023a; Tang et al., 2023b; Bi et al., 2023). Pursuing the use of the reasoning chain of document-ngrams as an intermediate step, inspired by the aforementioned notable parameter efficiency of diffusion models, we propose a two-stage diffusion-enhanced generative retrieval (DiffusionRet) model, which consists of two processing steps, as follows:
+
+- Diffusion-based document generation, which extensively applies the sequence-to-sequence diffusion model (Gong et al., 2023; Yuan et al., 2022) to generate pseudo-documents for an input query, similar to text-based semantic inpainting, where full contents of a document are infilled given a query as a context. Although a pseudo-document is not the same as the original one, it is expected that it will look like real documents in length, format, and content, and contain semantically enriched content of an original query. By providing a useful intermediate representation with this enriched information, a generated pseudo-document allows us to perform in-depth semantic matching at the document-to-document level in subsequent retrieval. Furthermore, like (Ren et al., 2023), the data distribution mismatch between the training and inference, an issue faced by the classical generative retrieval, is somehow effectively handled by putting the “intermediate reasoning step”, as the subsequent retrieval phase takes not queries but extended pseudo-documents produced by the diffusion model, whose lengths and formats exhibits the regularity, aligning closely with those observed during indexing phase.
+
+- N-gram-based generative retrieval, which takes a pseudo-document resulting from the diffusion model and generates n-grams based on (Bevilacqua et al., 2022), another sequence-to-sequence model where decoding is restricted to the set of FM-indexed n-grams in the collection. Given the experimental evidence of the effect of n-gram length in (Bevilacqua et al., 2022) that shorter n-grams are less informative, we empirically consider long n-grams with a length of 30, more likely to be unique to a specific document. Using n-gram identifiers, our generative retrieval model does not suffer from the pretrain-finetune discrepancy because special tokens such as docids are not necessary.
+
+To the best of our knowledge, this is the first study where the diffusion model is deployed to generate a realistic document sample for the IR task.
+
+Our contributions are summarized as follows: 1) we propose DiffusionRet, a two-stage generative retrieval model based on the reasoning chain of document-ngram, without requiring special tokens such as docids, 2) we apply a diffusion model for document generation as a textual version of the semantic inpainting, 3) The proposed DiffusionRet shows a state-of-the-art performance on the MS MARCO and Natural Questions (NQ) datasets.
+
+## 2 Related Works
+
+### 2.1 Diffusion Models for Text Generation
+Diffusion models (Sohl-Dickstein et al., 2015; Song and Ermon, 2019; Ho et al., 2020; Yang et al., 2022) have emerged as new and prominent approaches exhibiting remarkable performances such as the generation of high-quality images, particularly in computer vision tasks (Saharia et al., 2022; Li et al., 2022a; Lugmayr et al., 2022). Recently, diffusion models have been extensively studied for text generation tasks (Li et al., 2022b; Gong et al., 2023; He et al., 2022; Yuan et al., 2022; Ye et al., 2023). DiffusionLM (Li et al., 2022b) presents one of the earlier diffusion models for controlled text generation, but its controlling settings are limited to simplified conditions, such as parts-of-speech and syntax trees. DiffuSeq (Gong et al., 2023) extends the diffusion model to sequence-to-sequence tasks, enabling fine-grained controlled generation using a text source as the control condition. More recently, SeqDiffuSeq (Yuan et al., 2022) extended DiffusionLM to a sequence-to-sequence setting by equipping it with a self-conditioning technique (Chen et al., 2022b; Strudel et al., 2022) and by proposing a novel adaptive noisy schedule. In this study, we extensively utilize SeqDiffuSeq to generate document samples for the IR problem, because it is a more advanced variant, whereas other advanced diffusion models could be deployed in our proposed method.
+
+### 2.2 Generative Retrieval
+Generative retrieval (Metzler et al., 2021; Tay et al., 2022; Wang et al., 2022; Sun et al., 2023; Zhuang et al., 2022; Tang et al., 2023a; Zhou et al., 2022; Bevilacqua et al., 2022; Chen et al., 2022a, 2023; Ren et al., 2023), also called the Differentiable Search Index (DSI) (Tay et al., 2022), has emerged as a new IR framework, integrating both the indexing and retrieval in a single text-to-text transformer without requiring an external index. Starting with the pioneering work of DSI (Tay et al., 2022) which trained T5 models to directly generate docids from a query, some studies adopted separate query generation modules to store mapping knowledge in the model parameters (Zhuang et al., 2022; Wang et al., 2022).
+
+Instead of using a sequence of docids for each document, DynamicRetriever (Zhou et al., 2022) proposed a method that leverages the document embeddings resulting from the pretrained dual encoder to initialize the output embeddings of docids in the decoder and then finetunes the encoder-decoder to capture the query-docid relations.
+
+Numerous studies have used semantically interpretable docids, without relying on artificial tokens for docids (Tang et al., 2023a; Bevilacqua et al., 2022; Chen et al., 2022a, 2023; Ren et al., 2023). SE-DSI (Tang et al., 2023a) proposed semantically more meaningful docids based on query generation and adopted rehearsal strategies to better associate a document with its docids. There are also some recent works based on pre-trained language models. SEAL (Bevilacqua et al., 2022) generates n-grams based on the FM-index (Ferragina and Manzini, 2000) to constrain the decoding of the autoregressive model to restrict the search space of the n-grams. CorpusBrain (Chen et al., 2022a) uses the Wikipedia article titles as docids to perform multiple pre-training tasks to encode knowledge in the corpus for handling a variety of downstream knowledge-intensive tasks. UGR (Chen et al., 2023) exploits n-gram-based identifiers to unify different retrieval tasks into a single generative form and employs a prompt learning strategy to enable better generalization across different tasks. MINDER (Li et al., 2023b) introduced novel synthetic identifiers generated from a passage’s content and proposed multi-view identifiers based on three different types – titles, sub-strings, and synthetic identifiers (i.e., pseudo-queries) – to facilitate the holistic views of passages.
+
+For document-level generation, query2doc (Wang et al., 2023) proposes a query expansion method by few-shot prompting LLMs to generate pseudo-documents. However, the performance of query2doc is significantly influenced by the model size, as they mentioned that the model shows the best when combined with the largest LLMs (i.e., 175B) while small models yield only slight improvements. Unlike query2doc with this dependence on LLMs, our diffusion-based generation enables to generate high quality pseudo-document with considerably fewer model parameters.
+
+The work most similar to ours is TOME (Ren et al., 2023), which also proposes a two-stage approach by first generating pseudo-documents. However, their second-stage retrieval deployed Web URLs as docids, which are semantically less meaningful than our use of n-grams. Moreover, we use diffusion models for document generation, which significantly reduce the parameter size (i.e., 103M parameters), compared to their case, which uses either T5-3B or T5-large. The experimental results show that DiffusionRet leads to noticeable improvements over TOME in the MS MARCO dataset.
+
+## 3 Method
+Figure 1 presents the overall architecture of DiffusionRet used to form a document-ngram reasoning chain, consisting of 1) diffusion-based document generation and 2) ngram-based generative retrieval. Formally, suppose that a query is given as x, C = {d1, ···, dN} is a collection of documents where di is i-th document, V is a vocabulary set of tokens, n is the maximum length of the sequence, and k is the fixed length of n-grams to be generated. DiffusionRet sequentially performs Diffu(·), the diffusion-based document generation, and the n-gram generation, Genngram(·) to compute the relevance score of a document d ∈ C as follows:
+
+q ∼ Diffu(x)  
+Q = Genngram(q)  
+Score(d, x) = RQ(d, q) (1)
+
+where Diffu(·) is the reverse process of the sequence-to-sequence diffusion model of (Yuan et al., 2022), Genngram(·) and RQ(·) are the constrained decoding process and the scoring function of (Bevilacqua et al., 2022), respectively. The generated document and n-grams (i.e., q and Q) are used as key representations for intermediate reasoning in DiffusionRet.
+
+### 3.1 Diffusion-based Document Generation
+For Diffu(x), we deploy SeqDiffuSeq (Yuan et al., 2022), a variant of the sequence-to-sequence diffusion model, for controlled generation at a given x. The diffusion process consists of 1) the forward diffusion process, which gradually adds random noise to fit into a standard Gaussian distribution at the final time step, and 2) the reverse denoising process, which gradually denoises random noise to generate a synthetic sample.
+
+Forward process Suppose a document in C to be diffused is provided as an array of one-hot vectors, i.e., d ∈ R^{n×|V|}. Unlike continuous diffusion models, d is first converted to a list of continuous vectors on the embedding spaces using Emb(d), as adopted by (Li et al., 2022b):
+
+q(y0 | d) = N(y0; Emb(d), β0 I) (2)
+
+where βt is a hyperparameter referring to the amount of noise added at the time step t, Emb(d) is a trainable embedding function defined as Emb(d) = [ Emb(d1), ···, Emb(dn) ], in which di refers to i-th token of d. The diffusion process of the subsequent time steps is the same as the standard one; for each time step t ∈ {1, ···, T}, the diffusion injects the random noise using the distribution q(yt | yt−1) = N(yt; √αt yt−1, (1 − αt) I).
+
+Reverse process In the reverse process, the denoising model generates a sample yt−1 conditioned on both yt and x, using the denoising distribution pθ as follows:
+
+pθ(yt−1 | yt, x) = N(yt−1; µθ(yt, x, t), βt I)  
+µθ(yt, x, t) = At ED0_θ(yt, x, t) + Bt yt (3)
+
+where ED0_θ(yt, x, t) is the denoising function based on the encoder-decoder architecture, that takes x in the encoder and denoises the noisy output embeddings yt in the decoder, and At and Bt are functions of αt and βt. Importantly, when t = 0, the rounding mechanism (Li et al., 2022b) is applied on the generated hidden vector ˜y0, which is mapped back to the nearest token in the embedding space by the rounding function Round(˜y0) = argmax_d pθ(d | ˜y0) where pθ(d | ˜y0) is the multiplications of the softmax distributions over tokens after projecting ˜y0 using the embedding matrix, and d is a list of one-hot vectors.
+
+In summary, Diffu(x) is the function that repeatedly applies the denoising steps and rounding mechanism at the final timestep, as follows:
+
+˜yT ∼ N(0, I)  
+˜yt−1 ∼ pθ(yt−1 | ˜yt, x)  
+q = Round(˜y0) (4)
+
+The self-conditioning of (Chen et al., 2022b; Yuan et al., 2022) is also incorporated into the denoising function ED0_θ(yt, x, t), in a manner that the former prediction ˜yt is further concatenated with the noisy sample yt.
+
+We train the denoising function ED0_θ(·) and embedding parameters using the training objective of (Yuan et al., 2022).
+
+### 3.2 N-gram-based Generative Retrieval
+The remaining part is to apply Genngram(·) and RQ(·) for retrieving an original document from the sampled pseudo-document q ∼ Diffu(x). Following (Bevilacqua et al., 2022), we first train a sequence-to-sequence model to generate n-grams on FM-indices of (Ferragina and Manzini, 2000), referred to as Genngram(·). Suppose that Q is a set of n-grams resulting from Genngram(q), where each n-gram occurs at least once in the given collection C. Then, we compute RQ(d, q), the relevance score of a document d ∈ C by checking how d is matched well with the generated n-grams Q.
+
+For each fixed-length n-gram g ∈ Q with |g| = k, we first compute its normalized frequency from the FM-index as follows:
+
+P(g) = c(g, C) / Σ_{d ∈ C} |d| (5)
+
+where c(g, C) is the frequency of the n-gram g in the collection and |d| is the length of document. Now, let P(g | q) be the generative probability of g obtained by the decoder. The n-gram weight function is defined as follows (Bevilacqua et al., 2022):
+
+w(g, q) = max(0, log ( P(g | q) (1 − P(g)) / (P(g) (1 − P(g | q))) ))
+
+For each document d ∈ C, we obtain Q(d) ⊆ Q a set of the n-grams with the highest weights that do not overlap each other in the document, so that maximizes Σ_{g ∈ Q(d)} w(g, q).
+
+Finally, the relevance score of d is the weighted sum of all n-grams in Q(d) as follows:
+
+RQ(d, q) = Σ_{g ∈ Q(d)} w(g, q) γ ( 1 − κ | set(g) ∩ C(g) | / | set(g) | ) (6)
+
+where γ, κ are hyperparameters, set(g) is the set of tokens in g, and C(g) is the coverage set, the union of all other n-grams in Q with a higher score, defined as follows:
+
+C(g) = ⋃_{g' ∈ Q, p(g' | q) > p(g | q)} set(g') (7)
+
+Details of the constrained decoding for Genngram(q) using the FM-index are described in the implementation details. It is also worth noting that SEAL (Bevilacqua et al., 2022) uses uniformly sampled spans from documents in the collection as unsupervised samples to train, aiming to expose the model to more pieces of evidence. In our setting, the generated documents contain semantically-rich contextual information; thus, we do not require such additional data.
+
+## 4 Experiments
+
+### 4.1 Datasets
+We conducted experiments using two datasets: MS MARCO (Nguyen et al., 2016) and Natural Questions (Kwiatkowski et al., 2019).
+
+MS MARCO. MS MARCO dataset was collected from Bing search queries and the corresponding web page documents. For the passage retrieval task, the full collection contains approximately 500k query-document pairs. For a fair comparison with previous works, we sample the 100k subset following (Zhuang et al., 2022; Ren et al., 2023) for training, referred to as MS MARCO 100k. For evaluation, we use the full dev set containing 6980 query-document pair samples. We also test our model on a 300k subset to explore the zero-shot setting of the diffusion model.
+
+Natural Questions. Natural Questions dataset was collected from natural language questions and Wikipedia pages using Google. We use the processed dataset following NCI (Wang et al., 2022) and SEAL (Bevilacqua et al., 2022), which contains approximately 307k query-document training pairs. For evaluation, we also use the full dev set for evaluation containing 7830 test samples, referred to as NQ 320k.
+
+### 4.2 Evaluation Metrics
+We report the Hits@1 and Hits@10 metrics, indicating the retrieval success rates of the top-1 and top-10 documents in the ranking list among all evaluation samples, respectively.
+
+### 4.3 Baseline
+We selected a subset of prevalent sparse/dense retrieval methods and a set of the recently proposed generative retrieval methods as baselines for comparison.
+
+For sparse retrieval methods:
+- BM25 (Yang et al., 2017) is a classical sparse retrieval model that evaluates the similarity between queries and documents based on TF-IDF for retrieval.
+- docT5query (Nogueira et al., 2019) is another strong sparse retrieval method based on document expansion that first predicts possible related queries based on the document, concatenates them to the end of the document, and then performs the BM25 retrieval.
+
+For dense retrieval methods:
+- DPR (Karpukhin et al., 2020) is the most representative dual-encoder model based on FAISS index (Johnson et al., 2019).
+- ANCE (Xiong et al., 2021) is a dual-encoder model using hard negative samples for training, based on an approximate nearest neighbor search.
+
+For generative retrieval methods:
+- DSI (Tay et al., 2022) is a pioneering work on generative retrieval that jointly trains indexing and retrieval tasks based on the T5 (Raffel et al., 2020) model.
+- DSI-QG (Zhuang et al., 2022), in addition to DSI, generates multiple queries for documents for data augmentation and trains indexing models with those generated queries to tackle the data distribution mismatch in DSI.
+- SE-DSI (Tang et al., 2023a) is another work based on DSI that uses learning strategies from Cognitive Psychology to induce a semantic-enhanced DSI model.
+- SEAL (Bevilacqua et al., 2022) is a generative retrieval model generating n-grams of documents from a query to enable retrieval, and our second-stage retrieval model is highly based on this work.
+- NCI (Wang et al., 2022), referring to a Neural Corpus Indexer, adopts multiple query generation strategies and a prefix-aware weight-adaptive decoder to improve the retrieval model.
+- TOME (Ren et al., 2023) is a two-stage generative retrieval method partially similar to our architecture, but it uses the T5 model to generate documents, and the generated documents are used in another T5 model to generate possible web URLs, with the URL as the document identifier.
+- GenRet (Sun et al., 2023) is a generative retrieval method that learns to tokenize documents into short discrete representations to define document identifiers better using a discrete auto-encoding approach.
+
+For comparison, we present the results reported in the original papers as baseline performance. When multiple same-method performances are mentioned in other studies, we report the best performance.
+
+### 4.4 Implementation Details
+Data Augmentation. To train DiffusionRet, we applied data augmentation by directly performing query generation or adopting existing generated queries. For the MS MARCO 100k dataset, we used the model in the docT5query (Nogueira et al., 2019) pre-trained on the MS MARCO dataset, to generate 5 corresponding queries for each training document. For the NQ 320k dataset, we used the same dataset as previous studies (Wang et al., 2022; Bevilacqua et al., 2022), where 10 queries were generated for each training document.
+
+Training Diffusion Model. To train the diffusion model for document generation in Section 3.1, we followed the work of SeqDiffuSeq (Yuan et al., 2022) using a 12 layers encoder-decoder Transformer (Vaswani et al., 2017) model as the backbone. We set the diffusion steps to 2,000, as in most previous works (Li et al., 2022b; Gong et al., 2023; Yuan et al., 2022).
+
+Training Retrieval Model. To train the generative retrieval model in Section 3.2, SEAL (Bevilacqua et al., 2022) was adopted but under modified settings for our case. In our training dataset, we built a set of pairs of (pseudo-document, n-gram), where a generated pseudo-document is a source sequence, while target n-grams are sampled from the original ground truth document, not from the generated one. Beyond the use of short n-grams, we gathered 10, 30-long n-grams from the original document using SEAL’s sample strategy. For each pseudo-document, we sampled 10 target n-grams of sequence length 30 from the corresponding ground truth document using SEAL’s sample strategy.
+
+For the MS MARCO 100k dataset, we performed a sampling process of the diffusion model on the original 100k queries, obtained a set of 100k generated pseudo-documents, and finetuned the BART-large model (Lewis et al., 2019). For the NQ 320k dataset, we sampled pseudo-documents from the original 307k queries for training data and finetuned the model from SEAL’s NQ checkpoint, where other parameter settings remain the same as those of (Bevilacqua et al., 2022).
+
+Inference. Given a query, DiffusionRet first applies the diffusion model to generate a pseudo-document and then performs constrained decoding of the generative retrieval model to generate a set of long n-grams, as in Eq. (1). The FM-index was built on the union of the training and dev sets to restrict the decoding search space, as in SEAL (Bevilacqua et al., 2022). During the constrained decoding, we prepend an original query to a pseudo-document to improve performance.
+
+## 5 Results and Analysis
+
+### 5.1 Main Results
+Results on MS MARCO 100k. DiffusionRet significantly outperforms all other baseline methods for sparse/dense retrieval and generative retrieval.
+
+Results on NQ 320k. DiffusionRet method achieves superior results on Hits@1 metric over all baseline methods in previous works. For Hits@10, DiffusionRet substantially outperforms most generative retrieval methods, including SEAL, but underperforms compared to DSI-QG (Zhuang et al., 2022). The relatively weak performance on the NQ 320k dataset compared to the case of MS MARCO 100k is possibly because the diffusion model may require a large parameter size for document generation as the number of documents in the collection increases. In this study, we use a vanilla Transformer backbone with few parameters, which might be insufficient for generating longer documents from a shorter query, particularly when the collection size is large, compared with other simple generation tasks (such as question generation and text simplification). A valuable future direction would be to handle low-quality pseudo-documents by improving the current settings of DiffusionRet.
+
+### 5.2 Ablation Study
+We conduct ablation studies to analyze the DiffusionRet strategies.
+
+We examine the effects of removing either an original query or a generated document when formalizing an extended query for the generated retrieval. “Query” indicates whether an original query x is prepended to a generated document q; and “gen-doc” whether a generated document is provided for forming a final query for the n-gram generation.
+
+The runs using a generated document lead to significant improvements compared to that with only an original query. When using only an original query, the performances are largely poor on both datasets. The results confirm that the setting of DiffusionRet using both the generated document and original query is effective.
+
+### 5.3 Expansion of Diffusion Model to Unseen Documents on MS MARCO 300K
+We further evaluate whether DiffusionRet’s diffusion model is robust for other unseen documents. To extend the document space, we take a subset of 300k pairs, called MS MARCO 300K, i.e., the number of documents is 300k. We use the current diffusion model trained using 100k examples and apply it to the remaining 200k unseen queries to generate 200k pseudo-documents. We use these 300k data to train the retrieval model and build the FM-index decoding space. The results indicate that DiffusionRet, even in an enlarged document search space, yields the best results in terms of Hits@10 and outperforms the other baseline models in Hits@1, except for TOME.
+
+### 5.4 Comparison of Diffusion Models with Small Language Models
+To further examine whether the diffusion model improves small language models (SLM) in generating pseudo-documents, we select a T5-base (Raffel et al., 2020) model as a SLM, which has roughly twice the number of parameters (220M) compared to the diffusion model, and train it for the first document generation stage on MS MARCO 100k. The diffusion model significantly outperforms the T5-base model, confirming that diffusion models are able to generate high-quality pseudo-documents in a parameter-efficient manner. The T5-base model is not effective in generating pseudo-documents, failing to improve the baseline in the setting using the generated documents alone, whereas the diffusion model consistently achieves marked improvements irrespective of whether an original query is appended or not.
+
+### 5.5 Comparison of Model Parameter Size
+To further demonstrate the parameter efficiency of DiffusionRet, we summarize the model parameter sizes, comparing with those in related works. DiffusionRet uses a 12-layer Transformer model with 103M parameters for the diffusion model backbone and a BART-large model with 406M parameters as the generative retrieval model. DiffusionRet has the smallest parameter size and reduces the required size of TOME consisting of a document generation model based on T5-large and a URL generation model based on T5-base.
+
+## 6 Conclusion
+In this paper, we proposed DiffusionRet, a two-stage architecture consisting of diffusion-based document generation and n-gram-based generative retrieval. Extensive experiments on the MS MARCO and NQ datasets showed that DiffusionRet achieved state-of-the-art performances in terms of Hits@1, outperforming most existing retrieval models. Further analysis confirmed that the use of generated documents as a final query was the key component to bring about those significant improvements.
+
+In future work, we would like to invent a full-fledged diffusion model to jointly generate and retrieve without requiring a subsequent retrieval component. Furthermore, we would also jointly perform a document generation and retrieval in a single transformer model by viewing document generation as the chain-of-thought (Wei et al., 2022). We would simplify refining n-gram-based generative retrieval such that the generation and retrieval components are less separated. Comparing the full-fledged diffusion-based generate-then-retrieval model with popular LLMs would be interesting and inspire future research.
+
+## Limitations
+Although the diffusion model has the advantage of few parameters, it performs thousands of diffusion steps to sample the data during inference, slowing the inference speed. Although the adopted work (Yuan et al., 2022) considerably improved the inference speed, it is still non-trivial for us to perform extensive sampling of the original training set to construct the training data for our retrieval model. Incorporating some studies including the consistency model (Song et al., 2023) based on ordinary differential equations (ODEs) which can significantly accelerate the inference would be a valuable future work.
+
+Another limitation is the two-stage style, performing generation and retrieval in a cascaded manner. While generative retrieval provides an elegant framework that integrates indexing and retrieval into the transformer’s parameters, DiffusionRet uses two different types of models for generation and retrieval. Thus, an arguably desirable approach is to unify the two stages in a single diffusion model or a unified transformer without losing the principled and elegant manner of generative retrieval.
+
+In addition, our current experiments show the major performances without analyzing the parts with more errors, helping us to move a step towards promising future directions. As we establish two stage components, it is possible to evaluate the generation and retrieval modules separately, which is worthy of future research. In particular, we need to explore the relationship between the parameter sizes of diffusion model and collection size. This is helpful in determining the situation required to increase the parameter size of the diffusion model.
