@@ -79,14 +79,14 @@ blocks:
     the codebase.'
   citations:
   - marker: '[Chen et al., 2023b]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Joint Vision–Language Backbones
   - marker: '[Chen et al., 2023a]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Joint Vision–Language Backbones
   - marker: '[Zhan et al., 2023b]'
-    intent_label: Prior Methods
-    topic_label: Evaluation Baselines and Tooling
+    intent_label: Domain Overview
+    topic_label: Joint Vision–Language Backbones
   - marker: '[Liu et al., 2023]'
     intent_label: Prior Methods
     topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
@@ -131,7 +131,7 @@ blocks:
     topic_label: Temporal and Multimodal Variants
   - marker: '[Xiong et al., 2022]'
     intent_label: Research Gap
-    topic_label: Task Formulations in RS
+    topic_label: Domain Shift and Data Scarcity Effects
 - block_id: 4
   content: With the rise of advanced LLMs, ChatGPT [OpenAI, 2022], LLaMA [Touvron et al., 2023a], GPT-4 [OpenAI, 2023], and
     Vicuna [Chiang et al., 2023] have shown remarkable abilities in various language tasks. BLIP-2 [Li et al., 2023] extends
@@ -152,7 +152,7 @@ blocks:
     topic_label: Structured Spatial Outputs
   - marker: '[Liu et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Feature-Level and Representation Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[OpenAI, 2022]'
     intent_label: Prior Methods
     topic_label: Language Models and Tokenization
@@ -167,16 +167,16 @@ blocks:
     topic_label: Language Models and Tokenization
   - marker: '[Li et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Feature-Level and Representation Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[Zhu et al., 2023]'
     intent_label: Prior Methods
-    topic_label: Feature-Level and Representation Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[Wang et al., 2023]'
     intent_label: Prior Methods
     topic_label: Structured Spatial Outputs
   - marker: '[Hu et al., 2023]'
     intent_label: Research Gap
-    topic_label: Image-Level Understanding
+    topic_label: Task Formulations in RS
 - block_id: 5
   content: The purpose of instruction tuning is to enhance the instruction following ability of the model. Drawing inspiration
     from LLMs in instruction tuning, LLaVA [Liu et al., 2023] fine-tunes the model based on synthetic multi-modal instruction-following
@@ -195,13 +195,13 @@ blocks:
     intent_label: Prior Methods
     topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[Liu et al., 2023]'
-    intent_label: Research Gap
+    intent_label: Prior Methods
     topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[Wang et al., 2023]'
     intent_label: Prior Methods
     topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[Dai et al., 2023]'
-    intent_label: Research Gap
+    intent_label: Prior Methods
     topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
 - block_id: 6
   content: ''

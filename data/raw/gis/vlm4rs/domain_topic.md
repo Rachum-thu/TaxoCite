@@ -97,7 +97,7 @@
 **Description:** Training models on multiple remote sensing tasks or objectives simultaneously.
 
 ## Spatial Interaction and Constraints
-**Description:** Inference-time constraints on spatial queries and model responses, independent of training procedures.
+**Description:** Constraints on spatial queries and model responses.
 
 ### Spatially Constrained Querying
 **Description:** Reasoning over specified locations, regions, or spatial extents.

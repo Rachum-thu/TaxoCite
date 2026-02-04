@@ -127,16 +127,16 @@ blocks:
     topic_label: Other Topics
   - marker: '[2]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[3]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[4]'
     intent_label: Prospective Application
     topic_label: Object-Level Understanding
   - marker: '[5]'
-    intent_label: Prior Methods
-    topic_label: Feature-Level and Representation Fusion
+    intent_label: Domain Overview
+    topic_label: Image-Level Understanding
   - marker: '[6]'
     intent_label: Prior Methods
     topic_label: Image-Level Understanding
@@ -148,27 +148,27 @@ blocks:
     topic_label: Other Topics
   - marker: '[9]'
     intent_label: Prior Methods
-    topic_label: Vision Encoder Choices and Scales
+    topic_label: Pixel-Level and Dense Outputs
   - marker: '[10]'
     intent_label: Prior Methods
     topic_label: Vision Encoder Choices and Scales
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[12]'
-    intent_label: Prior Methods
-    topic_label: Public Remote Sensing Benchmarks
+    intent_label: Domain Overview
+    topic_label: Object-Level Understanding
   - marker: '[13]'
     intent_label: Prior Methods
-    topic_label: Object-Level Understanding
+    topic_label: Other Topics
   - marker: '[14]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Pixel-Level and Dense Outputs
   - marker: '[15]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Public Remote Sensing Benchmarks
   - marker: '[16]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Pixel-Level and Dense Outputs
   - marker: '[17]'
     intent_label: Prior Methods
@@ -184,10 +184,10 @@ blocks:
     topic_label: Pixel-Level and Dense Outputs
   - marker: '[21]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding
+    topic_label: Representation Learning Backbones for RS
   - marker: '[22]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding
+    topic_label: Representation Learning Backbones for RS
   - marker: '[23]'
     intent_label: Prior Methods
     topic_label: Feature-Level and Representation Fusion
@@ -202,7 +202,7 @@ blocks:
     topic_label: Feature-Level and Representation Fusion
   - marker: '[27]'
     intent_label: Prior Methods
-    topic_label: Language-Conditioned or Semantic Fusion
+    topic_label: Other Topics
   - marker: '[28]'
     intent_label: Research Gap
     topic_label: Domain Shift and Data Scarcity Effects
@@ -411,7 +411,7 @@ blocks:
     topic_label: Vision Encoder Choices and Scales
   - marker: '[10]'
     intent_label: Resource Utilization
-    topic_label: Vision Encoder Choices and Scales
+    topic_label: Other Topics
   - marker: '[17]'
     intent_label: Prior Methods
     topic_label: Vision Encoder Choices and Scales
@@ -426,7 +426,7 @@ blocks:
     topic_label: Language Models and Tokenization
   - marker: '[35]'
     intent_label: Resource Utilization
-    topic_label: Language Models and Tokenization
+    topic_label: Other Topics
   - marker: '[36]'
     intent_label: Prior Methods
     topic_label: Language Models and Tokenization
@@ -569,16 +569,16 @@ blocks:
     intent_label: Prior Methods
     topic_label: Manual Expert or Crowdsourced Annotation
   - marker: '[33]'
-    intent_label: Prior Methods
+    intent_label: Research Gap
     topic_label: Output Consistency and Error Characteristics
   - marker: '[38]'
-    intent_label: Prior Methods
+    intent_label: Research Gap
     topic_label: Output Consistency and Error Characteristics
   - marker: '[39]'
     intent_label: Domain Overview
     topic_label: Domain Shift and Data Scarcity Effects
   - marker: '[40]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Domain Shift and Data Scarcity Effects
   - marker: '[41]'
     intent_label: Prior Methods
@@ -604,7 +604,7 @@ blocks:
   citations:
   - marker: '[24]'
     intent_label: Prior Methods
-    topic_label: Language-Conditioned or Semantic Fusion
+    topic_label: Training and Adaptation Regimes
   - marker: '[33]'
     intent_label: Prior Methods
     topic_label: Answer Space Constraints

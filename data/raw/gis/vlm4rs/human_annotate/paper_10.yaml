@@ -46,11 +46,11 @@ blocks:
     research and opening new avenues for research in RS visual grounding.'
   citations:
   - marker: '[27]'
-    intent_label: Resource Utilization
-    topic_label: Public Remote Sensing Benchmarks
+    intent_label: Domain Overview
+    topic_label: Object-Level Understanding
   - marker: '[38]'
-    intent_label: Resource Utilization
-    topic_label: Public Remote Sensing Benchmarks
+    intent_label: Domain Overview
+    topic_label: Object-Level Understanding
   - marker: '[12]'
     intent_label: Domain Overview
     topic_label: Public Remote Sensing Benchmarks
@@ -61,16 +61,16 @@ blocks:
     intent_label: Domain Overview
     topic_label: Public Remote Sensing Benchmarks
   - marker: '[7]'
-    intent_label: Resource Utilization
-    topic_label: Public Remote Sensing Benchmarks
+    intent_label: Domain Overview
+    topic_label: Object-Level Understanding
   - marker: '[37]'
-    intent_label: Research Gap
+    intent_label: Domain Overview
     topic_label: Pixel-Level and Dense Outputs
   - marker: '[30]'
     intent_label: Prospective Application
-    topic_label: Other Topics
+    topic_label: Task Formulations in RS
   - marker: '[17]'
-    intent_label: Research Gap
+    intent_label: Domain Overview 
     topic_label: Pixel-Level and Dense Outputs
   - marker: '[28]'
     intent_label: Research Gap
@@ -89,7 +89,7 @@ blocks:
     topic_label: Joint Vision–Language Backbones
   - marker: '[4]'
     intent_label: Research Gap
-    topic_label: Language Models and Tokenization
+    topic_label: Structured Spatial Outputs
   - marker: '[14]'
     intent_label: Resource Utilization
     topic_label: Public Remote Sensing Benchmarks
@@ -126,16 +126,16 @@ blocks:
   citations:
   - marker: '[38]'
     intent_label: Prior Methods
-    topic_label: Object-Level Understanding
+    topic_label: Spatio-Temporal Representation Alignment
   - marker: '[7]'
     intent_label: Research Gap
     topic_label: Object-Level Understanding
   - marker: '[37]'
-    intent_label: Prior Methods
+    intent_label: Domain Overview
     topic_label: Public Remote Sensing Benchmarks
   - marker: '[17]'
     intent_label: Prior Methods
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Scale, Spatial Complexity, and Resolution Effects
   - marker: '[4]'
     intent_label: Prior Methods
     topic_label: Joint Vision–Language Backbones
@@ -156,19 +156,19 @@ blocks:
     topic_label: Image-Level Understanding
   - marker: '[10]'
     intent_label: Prior Methods
-    topic_label: Object-Level Understanding
+    topic_label: Language-Conditioned or Semantic Fusion
   - marker: '[13]'
     intent_label: Prior Methods
-    topic_label: Object-Level Understanding
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[3]'
     intent_label: Prior Methods
-    topic_label: Object-Level Understanding
+    topic_label: Structured Spatial Outputs
   - marker: '[8]'
     intent_label: Prior Methods
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Structured Spatial Outputs
   - marker: '[23]'
     intent_label: Prior Methods
     topic_label: Joint Vision–Language Backbones
@@ -180,7 +180,7 @@ blocks:
     topic_label: Joint Vision–Language Backbones
   - marker: '[39]'
     intent_label: Prior Methods
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Structured Spatial Outputs
   - marker: '[32]'
     intent_label: Domain Overview
     topic_label: Image-Level Understanding
@@ -235,13 +235,13 @@ blocks:
   citations:
   - marker: '[3]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Language Models and Tokenization
+    topic_label: Hybrid Supervision and Consistency Losses
   - marker: '[44]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Object-Level Understanding
+    topic_label: Hybrid Supervision and Consistency Losses
   - marker: '[9]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Pixel-Level and Dense Outputs
+    topic_label: Computational and Data-Scale Constraints
 - block_id: 4
   content: 'We propose a hybrid supervision that simultaneously utilizes Text-HBB, Text-OBB, and Text-Mask to comprehensively
     enhance the visual grounding capabilities of VLMs. First, we adopt a basic supervised learning paradigm to train three
@@ -350,16 +350,16 @@ blocks:
   citations:
   - marker: '[7]'
     intent_label: Result Comparison
-    topic_label: Evaluation Baselines and Tooling
+    topic_label: Joint Vision–Language Backbones
   - marker: '[1]'
     intent_label: Result Comparison
     topic_label: Joint Vision–Language Backbones
   - marker: '[22]'
     intent_label: Result Comparison
-    topic_label: Evaluation Baselines and Tooling
+    topic_label: Evaluation Protocols and Diagnostics
   - marker: '[40]'
     intent_label: Result Comparison
-    topic_label: Evaluation Baselines and Tooling
+    topic_label: Evaluation Protocols and Diagnostics
   - marker: '[14, 22]'
     intent_label: Setting/Protocal Adoption
     topic_label: Spatial Performance Metrics
@@ -374,7 +374,7 @@ blocks:
     set.'
   citations:
   - marker: '[7]'
-    intent_label: Setting/Protocal Adoption
+    intent_label: Metrics Utilization
     topic_label: Spatial Performance Metrics
   - marker: '[36]'
     intent_label: Metrics Utilization
@@ -418,8 +418,8 @@ blocks:
     increase the inference time and training difficulty.'
   citations:
   - marker: '[9]'
-    intent_label: Result Comparison
-    topic_label: Pixel-Level and Dense Outputs
+    intent_label: Prior Methods
+    topic_label: Structured Spatial Outputs
 - block_id: 11
   content: Qualitative comparisons between GeoGround and GeoChat include HBBs and OBBs. It can be observed that GeoGround
     consistently demonstrates superior localization accuracy, whether handling simple or relatively complex referential expressions.

@@ -186,7 +186,7 @@ blocks:
     topic_label: Language- or Instruction-Derived RS Supervision
   - marker: '[20]'
     intent_label: Prior Methods
-    topic_label: Public Remote Sensing Benchmarks
+    topic_label: Public Remote Sensing Benchmarks 
   - marker: '[21]'
     intent_label: Prior Methods
     topic_label: Public Remote Sensing Benchmarks
@@ -210,7 +210,7 @@ blocks:
   citations:
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Parameter-Efficient Adaptation
+    topic_label: Representation Learning Backbones for RS
   - marker: '[7]'
     intent_label: Prior Methods
     topic_label: Joint Vision–Language Backbones
@@ -231,13 +231,13 @@ blocks:
     topic_label: Other Topics
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: Image-Level Understanding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[24]'
     intent_label: Prior Methods
     topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[25]'
     intent_label: Prior Methods
-    topic_label: Multi-Task and Joint Training
+    topic_label: Training and Adaptation Regimes
 - block_id: 5
   content: 'Most existing remote sensing VLM datasets focus primarily on basic descriptions of objects in a scene, typically
     providing only information about the objects present. While these datasets serve a purpose in supporting fundamental tasks

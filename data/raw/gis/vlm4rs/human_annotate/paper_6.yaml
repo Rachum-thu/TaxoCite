@@ -59,7 +59,7 @@ blocks:
     topic_label: Region-Level Understanding
   - marker: '[14]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
+    topic_label: Knowledge- and Context-Augmented
   - marker: '[15]'
     intent_label: Algorithm/Principle Adoption
     topic_label: Hybrid Supervision and Consistency Losses
@@ -67,8 +67,8 @@ blocks:
     intent_label: Algorithm/Principle Adoption
     topic_label: Training and Adaptation Regimes
   - marker: '[17]'
-    intent_label: Domain Overview
-    topic_label: Other Topics
+    intent_label: Research Gap
+    topic_label: Output Consistency and Error Characteristics
 - block_id: 2
   content: The overall architecture of GeoReason is illustrated in Fig. 2. It bridges the gap between raw perception and cognitive
     reasoning through a logic-driven curation pipeline and a consistency-reinforced training strategy.
@@ -104,13 +104,13 @@ blocks:
   citations:
   - marker: '[18]'
     intent_label: Resource Utilization
-    topic_label: Public Remote Sensing Benchmarks
+    topic_label: RS Dataset Usage and Construction
   - marker: '[19]'
     intent_label: Resource Utilization
-    topic_label: Public Remote Sensing Benchmarks
+    topic_label: RS Dataset Usage and Construction
   - marker: '[20]'
-    intent_label: Domain Overview
-    topic_label: Region-Level Understanding
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Knowledge- and Context-Augmented
 - block_id: 4
   content: 'To internalize the deductive capabilities of GeoReason-Bench, we develop a two-stage training pipeline (Fig. 2
     middle). Stage 1 employs Supervised Knowledge Initialization to equip the model with foundational reasoning syntax and
