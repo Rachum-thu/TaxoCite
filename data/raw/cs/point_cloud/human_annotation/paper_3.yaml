@@ -1,0 +1,636 @@
+title: 'DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity
+  Understanding'
+blocks:
+- block_id: 0
+  content: Despite LiDAR (Light Detection and Ranging) being an effective privacy-preserving alternative to RGB cameras to
+    perceive human activities, it remains largely underexplored in the context of multi-modal contrastive pre-training for
+    human activity understanding (e.g., human activity recognition (HAR), retrieval, or person re-identification (RE-ID)).
+    To close this gap, our work explores learning the correspondence between LiDAR point clouds, human skeleton poses, IMU
+    data, and text in a joint embedding space. More specifically, we present DeSPITE, a Deep Skeleton-Pointcloud-IMU-Text
+    Embedding model, which effectively learns a joint embedding space across these four modalities. At the heart of our empirical
+    exploration, we have combined the existing LIPD and Babel datasets, which enabled us to synchronize data of all four modalities,
+    allowing us to explore the learning of a new joint embedding space. Our experiments demonstrate novel human activity understanding
+    tasks for point cloud sequences enabled through DeSPITE, including Skeleton↔Pointcloud↔IMU matching, retrieval, and temporal
+    moment retrieval. Furthermore, we show that DeSPITE is an effective pre-training strategy for point cloud HAR through
+    experiments in MSR-Action3D and HMPEAR.
+  citations: []
+- block_id: 1
+  content: 'A key challenge in multi-modal human activity understanding tasks, such as human activity recognition (HAR), human
+    pose estimation (HPE), retrieval, or person re-identification (RE-ID) “in the wild” is obtaining paired sensor data for
+    each individual in a multi-person scene (e.g., IMU with human poses, point clouds, or RGB videos). Prior work has studied
+    RGB-IMU matching for identity-aware tracking/RE-ID [4, 20], RGB-IMU matching for video retrieval [39], and IMU-Skeleton
+    Pose matching [57] to correct IMU drift in multi-modal HPE. However, existing methods primarily focus on RGB-centric modalities,
+    limiting applicability to privacy-sensitive scenarios like healthcare and surveillance, where RGB cameras may not be able
+    to be deployed.
+
+
+    To address privacy concerns, silhouette masks [37, 38] or skeletons [1] have been proposed to anonymize detected individuals
+    from RGB video. While effective, these anonymization techniques still come with the limitation that they require post-processing
+    and short-term storage of the raw RGB data. In contrast, LiDAR is a privacy-preserving alternative, with proven capabilities
+    for multi-modal HAR (e.g., [29, 61]) and HPE (e.g., [24, 48]). However, matching skeleton or IMU signals to LiDAR-based
+    point cloud sequences is underexplored.
+
+
+    Beyond matching, recent advances in multi-modal contrastive learning, such as ImageBind [15], IMU2CLIP [39], BabelTower
+    [8], MotionCLIP [54], or LAVIMO [63] have demonstrated the power and benefits of cross-modal alignment for human activity
+    understanding. These models learn a shared embedding space, enabling cross-modality matching, retrieval, and effective
+    neural network pre-training for downstream tasks. Despite their success, they all use RGB data as a main visual modality
+    to bind the learned representations. Extending this line of research, our paper asks the important research question What
+    happens if we only depend on LiDAR in multi-modal contrastive learning as the main visual modality?, which has not been
+    studied before.
+
+
+    We present DeSPITE, a Deep Skeleton-Pointcloud-IMU-Text Embedding model. Inspired by CLIP [46], ImageBind [15], and IMU2CLIP
+    [39], DeSPITE learns a shared embedding space with a contrastive loss based on InfoNCE [41] between paired sequences of
+    point cloud ↔ skeleton ↔ IMU ↔ text data. Unlike prior works leveraging frozen text or RGB data embeddings as a binding
+    modality (e.g., IMU2CLIP [39], MotionCLIP [54], LAVIMO [63]), our primary goal is not to demonstrate modality alignment
+    to text. Instead, we present novel applications for point cloud-based human activity sequences that were not possible
+    before, enabled by unifying these modalities into a joint embedding space.
+
+
+    After successful alignment in a shared embedding space, DeSPITE and its variants (e.g., DeSPIE) allow novel and useful
+    applications between point cloud, IMU, and skeleton data: (a) Person Re-ID by matching a snippet of, e.g., IMU data to
+    the correct point cloud snippet, or a skeleton snippet to point cloud sequences, (b) Temporal moment retrieval/search
+    in a video with skeletons, IMU, or a point cloud as query, (c) pre-training modality specific encoders for human activity
+    recognition, and (d) retrieval of each modality through each modality from a large motion database.
+
+
+    To train and evaluate DeSPITE, we construct LIPD-Babel, a dataset aligning point clouds, IMU, skeletons, and text by integrating
+    the LIPD dataset [48] with the text annotations from Babel [45]. LIPD-Babel enables two key evaluations: (1) LIPD-Babel-v1
+    for cross-modal matching and retrieval, demonstrating DeSPITE and DeSPIE’s ability to align point clouds, skeletons, and
+    IMU signals, and (2) LIPD-Babel-v2 for contrastive pre-training, where DeSPITE and DeSPIE improve single-modality HAR,
+    surpassing SOTA on HMPEAR [29] and MSR-Action3D [27].
+
+
+    Our contributions are as follows. (i) DeSPITE: A Deep Skeleton-Pointcloud-IMU-Text Embedding model that enables cross-modal
+    matching and retrieval tasks between point clouds, IMU, and skeletons, unlocking applications that were previously impossible,
+    and we will release the resulting pre-trained encoders, code, and data for future research. (ii) We show that DeSPITE
+    is an effective contrastive pre-training strategy for single-modality HAR, demonstrating new state-of-the-art performance.
+    (iii) LIPD-Babel, a new dataset for privacy-preserving multi-modal learning, with versions LIPD-Babel-v1 tailored for
+    matching, retrieval tasks, and LIPD-Babel-v2 tailored for HAR.'
+  citations:
+  - marker: '[1]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[4]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[24]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[27]'
+    intent_label: Benchmark Utilization
+    topic_label: Raw point-based representations
+  - marker: '[29]'
+    intent_label: Benchmark Utilization
+    topic_label: Hybrid multi-modal representations
+  - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Projection-based representations
+  - marker: '[38]'
+    intent_label: Prior Methods
+    topic_label: Projection-based representations
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[41]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[45]'
+    intent_label: Resource Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[46]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[48]'
+    intent_label: Resource Utilization
+    topic_label: Raw point-based representations
+  - marker: '[54]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[57]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[61]'
+    intent_label: Prior Methods
+    topic_label: Hybrid multi-modal representations
+  - marker: '[63]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 2
+  content: ''
+  citations: []
+- block_id: 3
+  content: Recent works have explored unified embedding spaces across sensor modalities. ImageBind [15] binds six modalities
+    using image-text pairs, while IMU2CLIP [39] and MotionCLIP [54] align IMU and skeleton data with CLIP’s image-text space.
+    LAVIMO [63] improves skeleton-video-text retrieval, and BabelTower [8] incrementally aligns six sensing modalities, reducing
+    reliance on RGB. Unlike these works, we focus exclusively on privacy-preserving modalities, introducing LiDAR into a joint
+    embedding space with IMU and skeletons. This enables novel retrieval tasks (LiDAR↔IMU, LiDAR↔Skeleton) and serves as an
+    effective pre-training strategy for point cloud-based HAR.
+  citations:
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[54]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[63]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 4
+  content: While countless general purpose embedding models and foundation models have emerged in the last years for RGB images/videos,
+    natural language, or audio (e.g, ImageBind [15], DinoV2 [42], SAM2 [47], CLIP [46], BERT [9]), pre-trained general-purpose
+    models for (LiDAR) point cloud HAR do not exist yet due to a lack of the same amount of data. To this day, pre-training
+    mainly happens through self-supervision on a small number of datasets or the same dataset before fine-tuning for point
+    cloud HAR. Self-supervision includes temporal order prediction from shuffling in [53, 58], contrastive learning on masked
+    sequences [18, 52], temporal structure prediction [51], or knowledge distillation [64]. All these methods have been shown
+    to improve the performance after fine-tuning for HAR compared to training from scratch. Different from these works, we
+    show that multi-modal contrastive learning between point clouds and other closely related modalities (i.e., skeleton pose
+    and IMU data) leads to improved HAR performance after fine-tuning, showing new possibilities for future research in point
+    cloud HAR.
+  citations:
+  - marker: '[9]'
+    intent_label: Domain Overview
+    topic_label: Masked autoencoding and tokenization
+  - marker: '[15]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[18]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[42]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[46]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[47]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[51]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[52]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[53]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[58]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[64]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 5
+  content: Cross-modal matching assigns a data point from one modality to its correct counterpart in another. Key applications
+    include audio-visual association [17, 23], IMU-based matching to human pose, RGB, or silhouette masks [37, 39, 57], or
+    text-to-motion retrieval [44, 63]. Person Re-ID via IMU signals has been explored in RGB videos [4, 28], silhouette masks
+    [37, 38], and skeletons [1, 57]. Retrieval tasks also exist between skeletons and text [44], skeletons and RGB [63], and
+    IMU and RGB [39], with prior works exploring temporal moment retrieval and database retrieval. However, LiDAR-based cross-modal
+    retrieval remains largely unexplored. Our work extends these approaches by aligning LiDAR, IMU, and skeleton data, enabling
+    novel retrieval tasks such as LiDAR↔Skeleton and LiDAR↔IMU. We further extend IMU interpretability via RGB video retrieval
+    [39] to point cloud and skeleton retrieval, unlocking a new effective way to interpret IMU signals.
+  citations:
+  - marker: '[1]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[4]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[17]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[23]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[28]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[37]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[38]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[44]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[57]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[63]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 6
+  content: Early point cloud HAR datasets, like MSR-Action3D [27] and NTU-RGB+D [30, 50] are derived from depth maps and have
+    been foundational in advancing state-of-the-art methods in the field. Datasets with real LiDAR point clouds of human activities
+    are rare. One of the only datasets for human activity recognition are HuCenLife [61], and the recent HMPEAR [29] and MM-Fi
+    [62] datasets. Motivated by multi-modal LiDAR and IMU-based HPE, several datasets have been proposed recently, such as
+    LidarCap [24] and LIPD [48]. In particular, LIPD is a large-scale dataset with human motions of LiDAR point clouds, human
+    skeletons, and IMU data, but without activity annotations. It is a mix of synthetic and real data, where a big part comes
+    from AMASS [36], a large-scale human motion capture dataset. On top of AMASS, Babel [45] and HumanML3D [16] added natural
+    language annotations. For our study, we combine LIPD with its corresponding subset in AMASS to a new dataset, LIPD-Babel,
+    which enriches LIPD through partial human activity annotations. This leads to a large pre-training data resource between
+    human skeletons, IMU, LiDAR point clouds, and text, which we can leverage to explore contrastive learning between these
+    modalities.
+  citations:
+  - marker: '[16]'
+    intent_label: Domain Overview
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[24]'
+    intent_label: Domain Overview
+    topic_label: Hybrid multi-modal representations
+  - marker: '[27]'
+    intent_label: Domain Overview
+    topic_label: Projection-based representations
+  - marker: '[29]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[30]'
+    intent_label: Domain Overview
+    topic_label: Projection-based representations
+  - marker: '[36]'
+    intent_label: Resource Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[45]'
+    intent_label: Resource Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[48]'
+    intent_label: Resource Utilization
+    topic_label: Hybrid multi-modal representations
+  - marker: '[50]'
+    intent_label: Domain Overview
+    topic_label: Projection-based representations
+  - marker: '[61]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[62]'
+    intent_label: Resource Utilization
+    topic_label: Raw point-based representations
+- block_id: 7
+  content: ''
+  citations: []
+- block_id: 8
+  content: 'The goal of this work is to learn a joint embedding space that aligns human motion observed through different
+    privacy-preserving modalities. More specifically, we present DeSPITE, a Deep Skeleton-Pointcloud-IMU-Text Embedding model,
+    which effectively learns a joint embedding space across these four respective modalities through a contrastive loss based
+    on InfoNCE [41].
+
+
+    We train several versions of DeSPITE, where we vary the number of modalities (DeSIE, DeSPE, DePIE, DePITE, ...). When
+    all modalities are used, the text embeddings of CLIP serve as a binding modality, which has been shown to be effective
+    in several recent related works for modalities that capture human motion, such as IMU data and human skeletons [1, 15,
+    35, 39, 54, 63].
+
+
+    We want to emphasize that the primary goal of DeSPITE is not to show that we can bind skeleton, point cloud, or IMU data
+    to CLIP text embeddings (this has been demonstrated before with, e.g., ImageBind [15], IMU2CLIP [39], MotionCLIP [54],
+    or BabelTower [8]). Instead, our main goal is to present several novel unexplored applications for human activity point
+    cloud sequences that emerge when we unify these modalities into a joint embedding space.'
+  citations:
+  - marker: '[1]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[35]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[41]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[54]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[63]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 9
+  content: 'Human motions represented through LiDAR point clouds, IMU time series, and human pose skeleton data have an inherent
+    correspondence. We leverage this property to learn a joint embedding space where similar sequences of human motions are
+    close and different sequences are far apart.
+
+
+    Given a point cloud sequence Xpc := {pc1, . . . , pcT}, with pci ∈ RN×3, an IMU sequence Ximu := {imu1, . . . , imuT},
+    with imui ∈ RC, and a human pose sequence Xpose := {pose1, . . . , poseT}, with posei ∈ R24×3 representing 3D positions
+    of 24 skeletal joints, we aim to train neural networks to encode Xpc, Ximu, and Xpose into a shared embedding space. We
+    denote these neural networks as encoders
+
+
+    fpc : RT×N×3 → Re,
+
+    fimu : RT×C → Re,
+
+    fpose : RT×24×3 → Re
+
+
+    which map the input sequences to embeddings zpc = fpc(Xpc), zimu = fimu(Ximu), and zpose = fpose(Xpose), where zpc, zimu,
+    zpose ∈ Re.
+
+
+    Furthermore, we work with the setting where a natural language description Xtext is not provided for each respective (Xpc,
+    Xpose, Ximu) triple. For this reason, the loss for text descriptions is only computed on the subset of the elements in
+    each batch where we have a corresponding quadruple (Xpc, Xpose, Ximu, Xtext, tm), where tm ∈ B represents a boolean mask
+    if there exists a text description Xtext. In this way, we can effectively ignore the respective elements in the batch
+    B that do not have text descriptions when computing our alignment loss.
+
+
+    Following previous works like CLIP [46], ImageBind [15], MotionCLIP [54], and IMU2CLIP [39], we optimize our encoders
+    using a contrastive objective based on InfoNCE [41]. For a batch of B paired samples, we obtain a boolean mask and embeddings
+    (zi_pc, zi_imu, zi_pose, zi_text, tmi)_{i=1}^B, where zi_text is obtained from a frozen CLIP text encoder. For batch elements
+    without text pairings, we set tmi to 0 and use a dummy embedding; tmi is set to 1 otherwise. The similarity between embeddings
+    is defined using the cosine similarity:
+
+
+    sim(za, zb) = za · zb / (||za|| ||zb||),
+
+
+    where za, zb ∈ {zpc, zimu, zpose, ztext}. The contrastive loss for each pair (i, j) in the batch is defined as follows:
+
+
+    Li_{a→b} = − log exp(sim(zi_a, zi_b)/τ) / Σ_{j=1}^B exp(sim(zi_a, zj_b)/τ)
+
+
+    where a, b ∈ {pc, imu, pose, text} and τ > 0 is a (learnable) temperature hyperparameter. Symmetrically, we compute the
+    loss in both directions by swapping the roles of the modalities, i.e., Li_{a→b} and Li_{b→a}, which leads to:
+
+
+    Li_{a,b} = 1/2 (Li_{a→b} + Li_{b→a})
+
+
+    As our main goal is to align zpc, zimu, zpose, we employ two different losses. First, we bind the subset of paired zpc,
+    zimu, zpose with the respective text embeddings xtext:
+
+
+    Li_text = Σ_{i=1}^B tmi Σ_{a∈M} Li_{a,text}
+
+
+    where tmi serves as a mask to ignore the elements in the batch without text pairings for this loss. Second, each individual
+    sensing modality pair M* := {(pc, imu), (pc, pose), (imu, pose)} is optimized to be close to each other:
+
+
+    Li_M = Σ_{i=1}^B Σ_{(a,b)∈M*} Li_{a,b}
+
+
+    In both Ltext and LM, we do not weight each modality individually. Finally, we combine both losses to enforce aligning
+    embeddings from the corresponding point cloud, IMU, and pose sequences while constraining them to take small steps toward
+    the text embedding space of CLIP. With M := {pc, imu, skeleton} being the set of modalities to align and M* their respective
+    desired pairings, we optimize the following final loss function for each batch:
+
+
+    Li_total = α Ltext + β LM
+
+
+    where α = 0.5, β = 0.5 equally weight both loss terms.
+
+
+    In our experiments, we train models of all possible modality combinations, which requires an according change to the modality
+    set M and the respective pairings M* (e.g., training only DeSPE, then M := {skeleton, pointcloud}). Finally, when training
+    a model like DeSPE without text pairings, the overall loss simplifies to Equation 5, so that Li_total = LM.'
+  citations:
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[41]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[46]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[54]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 10
+  content: 'We evaluate the effectiveness of DeSPITE and its variants on the following tasks: Modality matching, temporal
+    moment retrieval using a different modality as a query, pre-training for point cloud human activity recognition, and several
+    qualitative evaluations.'
+  citations: []
+- block_id: 11
+  content: 'We train our method on a merged version of LIPD [48] and Babel [45] (denoted as Babel+LIPD), where we map the
+    text annotations from Babel to the AMASS [36] subsets present in LIPD. In this way, we are able to construct a large-scale
+    dataset of real and synthetic LiDAR point cloud, IMU, and skeleton data with text annotations. To be more specific, we
+    construct two versions of LIPD-Babel. First LIPD-Babel-v1, where we use the official train-test split of LIPD, including
+    DIP [21] and TotalCapture (TC) [55]. Second LIPD-Babel-v2, where we use the train-val split of Babel for the AMASS subsets,
+    and add all the remaining data of LIPD to the training set. As LIPD is provided in 10 FPS, we downsample the Babel annotations
+    to 10 FPS. After preprocessing the whole dataset with sliding windows of length 24, we obtain 502,958 / 85,551 training/testing
+    windows for LIPD-Babel-v1, from which 85,551 training windows have text annotations, and 403,430 / 58,802 train/test windows
+    for LIPD-Babel-v2, with 135,699 text training windows and 58,802 test annotations.
+
+
+    Regarding downstream task performance for HAR, we evaluate our approach on HMPEAR [29], MSR-Action3D [27], and our Babel-LIPD-v2
+    train/test split that only includes Babel sequences. Both HMPEAR and MSR-Action3D include domain shifts, where HMPEAR
+    uses a different kind of LiDAR sensor, and MSR-Action3D has very dense point clouds derived from depth maps.'
+  citations:
+  - marker: '[21]'
+    intent_label: Resource Utilization
+    topic_label: Hybrid multi-modal representations
+  - marker: '[27]'
+    intent_label: Benchmark Utilization
+    topic_label: Raw point-based representations
+  - marker: '[29]'
+    intent_label: Benchmark Utilization
+    topic_label: Raw point-based representations
+  - marker: '[36]'
+    intent_label: Resource Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[45]'
+    intent_label: Resource Utilization
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[48]'
+    intent_label: Resource Utilization
+    topic_label: Hybrid multi-modal representations
+  - marker: '[55]'
+    intent_label: Resource Utilization
+    topic_label: Hybrid multi-modal representations
+- block_id: 12
+  content: "We use the following tasks to evaluate the performance of DeSPITE (and its variants) and enable future research\
+    \ to compare against our baselines. Throughout all models in our experiments, all hyperparameters are kept the same.\n\
+    \nTask 1. Matching between Modalities  \nIn multi-person scenes, matching IMU data to detected individuals in point cloud\
+    \ sequences is a challenging upstream task, which has not been explored before. This task can be generalized to an any-to-any\
+    \ modality matching problem, which we even further evaluate with this task. We evaluate all modality combinations IMU\
+    \ ↔ PC, IMU ↔ Skeleton, and PC ↔ Skeleton. For each test set (LIPD-Test, TC, DIP), we generate 1000 artificial multi-person\
+    \ scenes (following designs in prior works [37, 40]). This is achieved by randomly sampling n sequences from the test\
+    \ set first and then sampling a respective subsequence, leading to n artificial subjects carrying out an activity simultaneously.\
+    \ The number of subjects per scene varies n ∈ (2, 4, 8, 12, 16, 20, 24, 28, 32), simulating different real-world scenarios.\
+    \ Given n subjects, we report matching accuracy through argmax on the cosine similarities per row between all candidates.\n\
+    \nTask 2. Temporal Moment Retrieval between Modalities  \nGiven a short snippet in one modality, the goal is to retrieve\
+    \ the corresponding temporal moment in the sequence observed with another modality. This task has been explored for, e.g.,\
+    \ IMU-RGB [39] and skeleton-text [44], but not yet for LiDAR point clouds, IMU, and skeletons. We evaluate this on the\
+    \ three held-out test sets of LIPD (LIPD-Test, TC, DIP) using Recall@k (k = 1, 10, 20, 50) shots across all modality combinations.\
+    \ Performance is measured by computing the cosine similarity scores for all possible query-target pairs in all individual\
+    \ test set sequences and returning the top-k similar frame indices. For each query, we compute the difference between\
+    \ all top-k returned time points against the ground truth. A retrieval is considered to be correct if it is within 10\
+    \ frames (∼ 1.5 sec) of the ground truth. As the final score, the mean over all recall@k scores of all sequences for a\
+    \ dataset is reported.\n\nTask 3. Pre-Training for Human Activity Recognition  \nWe evaluate cross-modal pre-training\
+    \ for point clouds, IMUs, and skeletons via linear/non-linear probing and fine-tuning. HAR pre-training/testing is done\
+    \ on LIPD-Babel-v2, with additional point cloud testing on HMEPAR and MSR-Action3D. Results follow standard metrics: clip\
+    \ segment accuracy for MSR-Action3D, segment accuracy for HMEPAR and LIPD-Babel-v2 (excluding transition labels). We do\
+    \ not evaluate with additional skeleton/IMU datasets, since transfer learning is strongly limited by serious dataset-specific\
+    \ variations in joints and different IMU channel counts for these modalities.\n\nTask 4. Retrieval between Modalities\
+    \ from Database  \nWe qualitatively evaluate retrieval from a “large database” between Point Cloud ↔ IMU, IMU ↔ Skeleton,\
+    \ and Point Cloud ↔ Skeleton. This enables motion analysis across representations, aiding interpretability (e.g., skeletons\
+    \ or point clouds simplify IMU visualization)."
+  citations:
+  - marker: '[37]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[39]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[40]'
+    intent_label: Setting/Protocal Adoption
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[44]'
+    intent_label: Prior Methods
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 13
+  content: For point clouds, we use the PST-Transformer [13] with a SimCLR-based projection head [6]. IMU is encoded with
+    a 2-layer LSTM [19], skeletons with the ACTOR encoder [43], and text with a frozen CLIP text encoder [46]. All models
+    are pre-trained for 145 epochs with 512-d embeddings, Adam optimizer [22], lr=1e-4, batch size 1024. We subsample 256-points
+    using farthest point downsampling (FPD) on each frame and use 24-frame windows as input to all models. Augmentations (random
+    translation, scaling, Gaussian noise) are employed during training to prevent overfitting. For a fair comparison, we only
+    use the weights from epoch 145 across all models. HAR fine-tuning roughly follows [13], with batch size 24, 35 epochs
+    (SGD [49], warmup to lr=0.01, 0.1 decay at epochs 20, 30). In HMPEAR, we subsample 1024 points using FPD and use 24-frame
+    windows. In MSR-Action3D, we follow the standard 2048-point, 24-frame window setting.
+  citations:
+  - marker: '[6]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Projection-based representations
+  - marker: '[13]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Transformer-based attention models
+  - marker: '[19]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Sequential RNN-based models
+  - marker: '[22]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[43]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Transformer-based attention models
+  - marker: '[46]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Contrastive and cross-modal objectives
+  - marker: '[49]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 14
+  content: Our experiments reveal that models trained with text (i.e., DeSPITE, DePITE, DeSITE, DeSPTE) in almost all scenarios
+    perform worse than models trained solely on the modalities alone (i.e., DeSPE, DePIE, DeSIE, DESPIE), showing that this
+    task does not benefit from text embeddings. Second, we find that matching between IMU, point clouds, and skeletons can
+    be effectively learned, showing up to perfect matching scores for a smaller number of subjects. In comparison, a larger
+    number of subjects, as expected, becomes more challenging.
+  citations: []
+- block_id: 15
+  content: 'We observe the same result for temporal moment retrieval as for matching: All models trained with text perform
+    worse than models trained solely on the modalities alone. Second, our evaluation demonstrates that temporal moment retrieval
+    can be solved the best between IMU ↔ Skeleton, where DeSIE demonstrates that training between both modalities alone is
+    very effective. The runner-up is Pointcloud ↔ Skeleton where DeSPIE and DeSPE achieve almost identical performance. Finally,
+    our experiments reveal that the most challenging problem is IMU ↔ Point cloud matching, allowing future work to propose
+    more effective solutions.'
+  citations: []
+- block_id: 16
+  content: 'The pre-trained embeddings of all versions of DeSPITE can be fine-tuned for HAR. We compare our approach against
+    the recent state-of-the-art on MSR-Action3D, HMPEAR, and perform ablations on the LIPD-Babel-v2 split.
+
+
+    MSR-Action3D: Fine-tuning DeSPITE, DeSPIE, or DePITE embeddings surpasses all current state-of-the-art point cloud HAR
+    pre-training methods, despite encountering a domain shift from 256 to 2048 points. Our approach, combined with PST-Transformer,
+    even outperforms PvNext [59] and MAMBA4D [31] and nearly matches KAN-HyperpointNet [7].
+
+
+    HMPEAR: We achieve new SOTA on HMPEAR, outperforming all prior point cloud, RGB, and multi-modal approaches. While our
+    setup uses twice the frames of previous methods, pretraining PST-Transformer in the same setup with DeSPITE, DeSPIE, or
+    DePITE improves its performance by nearly 4%, demonstrating the effectiveness for HAR pre-training.
+
+
+    LIPD-Babel-v2: All our models outperform baselines (PST-Transformer, LSTM, ACTOR) when trained from scratch on LIPD-Babel-v2.
+    We explore various freezing strategies, as well as linear/non-linear probing and projection heads, with detailed ablations
+    in the supplementary material. Only the best results of DePITE, DeSPIE, and DeSPITE are reported, which consistently achieve
+    strong performance across all three datasets.
+
+
+    Notably, across MSR-Action3D and HMPEAR, DeSPITE, DeSPIE, and DePITE consistently achieve the best performance, underlining
+    the advantage of pre-training with more modalities. Furthermore, different from the results for matching and temporal
+    moment retrieval, we find that training with text benefits the fine-tuning performance for HAR.'
+  citations:
+  - marker: '[7]'
+    intent_label: Result Comparison
+    topic_label: Pointwise MLP architectures
+  - marker: '[31]'
+    intent_label: Result Comparison
+    topic_label: Sequential RNN-based models
+  - marker: '[59]'
+    intent_label: Result Comparison
+    topic_label: Convolution-based operators
+- block_id: 17
+  content: Using TSNE [56], we analyze the learned embedding space of DeSPITE and DeSPIE. Embeddings of the same sequence
+    per modality (skeletons, point clouds, IMU) show strong cross-modal alignment, although DeSPIE demonstrates tighter associations.
+    Extending this to multiple sequences reveals distinct clusters that indicate semantic motion encoding. However, DeSPIE’s
+    embeddings are more distinct, qualitatively supporting our retrieval findings and confirming that text embeddings negatively
+    affect matching and temporal moment retrieval performance.
+  citations:
+  - marker: '[56]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 18
+  content: 'We can interpret IMU signals using our method by querying a large motion database like AMASS or LIPD. We show
+    retrievals of skeletons from AMASS and point clouds from LIPD using IMU as a query, also showing the ground truth. The
+    retrievals semantically capture the motion performed by the IMU signal, allowing us to understand that the IMU signal
+    corresponds to walking while turning, doing a lunge, and forward stretch, respectively. Extending IMU2CLIP [39], our method
+    can help interpret IMU signals with skeletons and point cloud sequences.
+
+
+    Corresponding retrievals between skeleton and point clouds show that a pedestrian performing a “lunge” motion is captured
+    effectively by the retrieved skeletons from the AMASS database. A pedestrian performing a t-pose and then moving his arm
+    into a normal standing position is followed by the retrieved point clouds from the LIPD database, showing a learned correspondence
+    of motion between both modalities. Different motion sequences are retrieved with different point cloud densities.'
+  citations:
+  - marker: '[39]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Contrastive and cross-modal objectives
+- block_id: 19
+  content: We illustrate how an encoded IMU query can retrieve relevant moments in a point cloud video. We visualize cosine
+    similarity across a long sequence containing diverse activities, with peaks aligning precisely with the ground truth timestamps.
+    Despite no explicit training for this, our approach identifies repeated instances of a person standing still, highlighting
+    the ability of DeSPITE to encode semantic meaning for certain activities within the embedding space.
+  citations: []
+- block_id: 20
+  content: We introduce DeSPITE, a Deep Skeleton-Pointcloud-IMU-Text Embedding model, enabling novel cross-modal tasks such
+    as matching for re-identification, temporal moment retrieval, and retrieval across modalities. Unlike prior RGB-centric
+    approaches, DeSPITE leverages LiDAR point clouds as the primary visual modality for contrastive learning. On the constructed
+    LIPD-Babel dataset, we establish strong baselines for these tasks, providing a foundation for future comparisons. Additionally,
+    we demonstrate that contrastive pre-training for HAR with DeSPITE achieves new state-of-the-art performance on MSR-Action3D
+    and HMPEAR. Our findings highlight that text-enhanced embeddings benefit HAR but slightly limit retrieval performance
+    compared to text-free variants. This work paves the way for general-purpose LiDAR-based video encoders for human activity
+    understanding.
+  citations: []

@@ -1,0 +1,515 @@
+title: Light-Weight Pointcloud Representation with Sparse Gaussian Process
+blocks:
+- block_id: 0
+  content: This paper presents a framework to represent high-ﬁdelity pointcloud sensor observations for efﬁcient communication
+    and storage. The proposed approach exploits Sparse Gaussian Process to encode pointcloud into a compact form. Our approach
+    represents both the free space and the occupied space using only one model (one 2D Sparse Gaussian Process) instead of
+    the existing two-model framework (two 3D Gaussian Mixture Models). We achieve this by proposing a variance-based sampling
+    technique that effectively discriminates between the free and occupied space. The new representation requires less memory
+    footprint and can be transmitted across limited-bandwidth communication channels. The framework is extensively evaluated
+    in simulation and it is also demonstrated using a real mobile robot equipped with a 3D LiDAR. Our method results in a
+    70∼100 times reduction in the communication rate compared to sending the raw pointcloud.
+  citations: []
+- block_id: 1
+  content: 'With the rapid advancement of LiDAR technology, we now can build maps with remarkably high resolution. For example,
+    each full scan of an only 16-channel 3D LiDAR can give us 57600 points in the pointcloud that represents the surrounding
+    obstacles. However, a price for using the high resolution LiDAR is the computation, storage, and communication costs when
+    mapping the environments. While one might be able to upgrade the computation and storage by using a high performance computer
+    system, the communication usually becomes a bottleneck due to the low communication bandwidth available. In practice,
+    the low bandwidth communication is considered as a major challenge for many robotics applications such as occupancy mapping
+    of underwater and subterranean environments (caves, tunnels, mines, etc), search-and-rescue missions in disaster scenarios
+    with a degraded communication infrastructure, and planetary exploration missions [1]. The low bandwidth can prevent a
+    robot from real-time sharing its sensor observations, and this can signiﬁcantly degrade the system responsiveness if the
+    robot needs to follow or interact with external control or supervision platforms. This work tackles the problem of sharing
+    high-ﬁdelity 3D pointcloud through a limited bandwidth communication channel.
+
+
+    The system we consider consists of a robot (the scout) equipped with a LiDAR and a communication apparatus, and deployed
+    in a low-bandwidth environment. The scout sends the observations that it acquires to a base for building the occupancy
+    map of the environment, see Fig. 1. Our approach exploits the Variational Sparse Gaussian Process (VSGP) [2] as a generative
+    model to represent the pointcloud in a compact form. This lightweight representation is transmitted through low-bandwidth
+    communication to the base where the original pointcloud is reconstructed. Extensive evaluations reveal that our approach
+    results in a 70∼100 times reduction in the memory as well as the communication rate required to transmit pointcloud data.
+    For example, a scene of a simulated mine tunnel, where its raw pointcloud requires around 750 KB of memory, can be represented
+    using only 6 KB of memory and transmit through limited-bandwidth communication. On the receiver side of the communication
+    channel, the compact representation is used to reconstruct the original pointcloud. An occupancy map of the scene can
+    be built using the reconstructed pointcloud.'
+  citations:
+  - marker: '[1]'
+    intent_label: Prospective Application
+    topic_label: Raw point-based representations
+  - marker: '[2]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Generative modeling pretraining
+- block_id: 2
+  content: 'Pointcloud compression algorithms have been investigated in recent years to cope with the demands to store and
+    communicate the high-precision 3D points [3]. For example, the space partitioning trees approaches that exploit the 3D
+    correlation between pointcloud points are widely used to compress the pointcloud data [4]–[9]. Recently, deep learning
+    based approaches were also proposed to leverage data and learn or encode the pointcloud compression [10]–[12]. Different
+    from these frameworks, the probabilistic approaches exploit the compactness of the distributions to compress 3D sensor
+    observation. For instance, Gaussian Mixture Models (GMM) [13]–[15] have been proposed as a generative model to encode
+    3D occupancy map. The GMM approach encodes the 3D data as a mixture of Gaussian densities to represent the occupied and
+    free spaces around the robot.
+
+
+    Gaussian Process (GP) has been proven to be an excellent framework to model spatial phenomena or features in a continuous
+    domain [16]–[18]. Unfortunately, the standard GP has a cubic time complexity and this results in very limited scalability
+    to large datasets. Methods for reducing the computing burdens of GPs have been previously investigated. For example, GP
+    regressions can be done in a real-time fashion where the problem can be estimated locally with local data [19]. Sparse
+    GPs (SGPs) [20]–[26] tackle the computational complexity of the normal GP through leveraging the Bayesian rule with a
+    sequential construction of the most relevant subset of the data.
+
+
+    We propose a new probabilistic pointcloud compression approach which is based on the VSGP [2] and inspired by the GMM
+    approach. While the GMM shares the accumulated sensory information as a set of accumulated Gaussian densities which are
+    sampled and used as an occupancy map of the environment, in contrast, the proposed approach relies on sharing of immediate
+    sensor observation to be reconstructed on the other side of the communication channel for further processing based on
+    the required task (e.g. 3D mapping, object recognition, tracking, etc).
+
+
+    This proposed VSGP-based approach offers a few advantages over the recent GMM approach: while the GMM approach uses two
+    3D GMMs to fit the occupied and free points [13]–[15], our approach uses only one 2D VSGP to fit all the occupancy surface,
+    including both the occupied and free points. The primary reason that our approach uses one VSGP instead of two is that
+    we are using the variance calculated by the VSGP at each sampled point during the reconstruction process to decide if
+    it belongs to the occupied or the free space. Therefore, the proposed approach results in a more compact representation
+    of the sensor observation, which requires less memory than the GMM approach and, as a consequence, leads to a lower communication
+    rate.'
+  citations:
+  - marker: '[2]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Raw point-based representations
+  - marker: '[3]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[4]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[5]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[7]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[9]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[10]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[13]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[14]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[15]'
+    intent_label: Prior Methods
+    topic_label: Volumetric voxelization
+  - marker: '[16]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[17]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[18]'
+    intent_label: Domain Overview
+    topic_label: Raw point-based representations
+  - marker: '[19]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[21]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[22]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[23]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[24]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[25]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+  - marker: '[26]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+- block_id: 3
+  content: 'GP is a non-parametric model described by a mean function m(x), and a co-variance function (kernel) k(x,x′), where
+    x is the GP input [27]:
+
+    f (x)∼ GP
+
+    (
+
+    m(x),k
+
+    (
+
+    x,x′))
+
+    . (1)
+
+
+    Considering a data set D ={(xi,yi)}N
+
+    i=1 with N training inputs x and their corresponding scalar outputs (observations) y. After training the GP using the
+    data set D, the output y∗ for any new query x∗ can be estimated using the GP prediction:
+
+    p(y∗|y) = N(y∗|my(x∗),ky(x∗,x∗) +σ 2), (2)
+
+    where my(x) and ky(x,x′) are the posterior mean and covariance functions [2]. The GP prediction equation depends on the
+    values of the hyperparameters (Θ, σ 2) where Θ is the kernel parameters and σ 2 is the noise variance.
+
+
+    The computation complexity of a full GP is O(N3). In order to reduce the computation complexity, different approximation
+    methods were proposed in the literature by considering only M input points to represent the entire training data [27].
+    These input points are called the inducing points Xm and their corresponding values of the underlying function f (x) are
+    called the inducing variables f m. Replacing the entire data set with only the M-inducing inputs leads to the SGP which
+    has a computational complexity of O(NM 2). Titsias [2] proposed a variational learning framework to jointly estimate the
+    kernel hyperparameters and the inducing points. Titsias’ framework approximates the true exact posterior of a GP p( f|y,
+    Θ) by a variational posterior distribution q( f , fm),
+
+    q( f , fm) = p( f| fm)φ ( fm), (3)
+
+    where φ ( fm) is the free variational Gaussian distribution. The Kullback-Leibler (KL) divergence is used to describe
+    the discrepancy between the approximated and the true posteriors. Minimizing the KL divergence between the approximated
+    and the true posteriors KL[q( f , fm)||p( f|y, Θ)] is equivalent to maximizing the variational lower bound of the true
+    log marginal likelihood:
+
+    FV (Xm) = log
+
+    [
+
+    N
+
+    (
+
+    y| 0, σ 2I + Qnn
+
+    )]
+
+    − 1
+
+    2σ 2 Tr( ˜K),
+
+    Qnn = KnmK−1
+
+    mmKmn,
+
+    ˜K = Cov(f| fm) = Knn− KnmK−1
+
+    mmKmn,
+
+    (4)
+
+    where FV (Xm) is the variational objective function, Tr( ˜K) is a regularization trace term, Knn is the original n×n covariance
+    matrix, Kmm is m× m covariance matrix on the inducing inputs, Knm is n×m cross-covariance matrix between training and
+    inducing points, and Knm = KT
+
+    mn. More details on VSGP can be found in Titsias’s work [2].'
+  citations:
+  - marker: '[2]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Raw point-based representations
+  - marker: '[27]'
+    intent_label: Prior Methods
+    topic_label: Raw point-based representations
+- block_id: 4
+  content: 'The proposed approach exploits the VSGP as a generative model to encode 3D pointcloud. The VSGP is selected among
+    different approximation approaches of GP due to the following reasons: i) The variational approximation distinguishes
+    between the inducing points M (as a variational parameter) and the kernel hyperparameters (Θ, σ ). ii) The regularization
+    term Tr ( ˜K) in the variational objective function (Eq. (4)) regularizes the hyperparameters to avoid over-fitting of
+    the data. iii) The variational approximation offers a discrete optimization scheme for selecting the inducing inputs Xm
+    from the original data.'
+  citations: []
+- block_id: 5
+  content: 'Inspired by [13], we project the occupied points observed by a ranging sensor, e.g., LiDAR, onto a circular surface
+    around the sensor origin with a predefined radius roc. This surface is called occupancy surface. In our approach, the
+    sensor observation is defined in the spherical coordinate system, where any observed point xi is described by the tuple
+    (θi, αi, ri) which represents the azimuth, elevation, and radius values, respectively. Also, any pointcloud data can be
+    converted from the cartesian coordinates (xi, yi, zi) to the spherical coordinates (θi, αi, ri) using the following equations:
+
+    ri =
+
+    √
+
+    x2
+
+    i + y2
+
+    i + z2
+
+    i , θi = tan−1(yi,xi), αi = cos−1(zi/ri).
+
+    (5)
+
+
+    All observed points that lie outside the circular occupancy surface (with a radius ri > roc) or on the surface (with a
+    radius ri = roc) are neglected and considered as free space. The rest of the points that are inside the circular surface
+    (with a radius ri < roc) are projected on the occupancy surface and called the occupied points. Therefore, the occupancy
+    surface radius roc acts as the maximum range of the sensor. Each occupied point xi on the surface is deﬁned by two attributes:
+    the azimuth and elevation angles xi = (θi, αi), and assigned an occupancy value f (xi) that is a function of the point
+    radius ri. The probability of occupancy f (xi) at each point on the occupancy surface is modeled by a VSGP:
+
+    f (x)∼ VSGP
+
+    (
+
+    m(x),k
+
+    (
+
+    x,x′))
+
+    . (6)
+
+
+    Considering noisy measurements, we add a white noise ε to the occupancy function f (x), so the observed occupancy is described
+    as yi = f (xi) + ε where ε follows a Gaussian distribution N(0, σ 2
+
+    n ). The final model of the occupancy surface is a 2D VSGP where the input is the azimuth and elevation angles, x∈{ (θ
+    , α)}n
+
+    i=1, and the corresponding output is the expected occupancy yi. The three main components of the final VSGP are:
+
+
+    1) Zero-Mean Function m (x): There are different formulas to describe the relationship between the occupancy of a point
+    f (xi) on the occupancy surface and its radius ri [13]. For example, one candidate is f (xi) = 1/ri where ri is bounded
+    by the minimum and the maximum range of the sensor rmin < ri < rmax = roc, where rmin > 0. Our approach relates the occupancy
+    of a point f (xi) to its radius ri by the following equation f (xi) = roc − ri. This mapping between the occupancy and
+    the radius of a point is compatible with the previous assumption that the occupancy surface radius roc represents the
+    maximum range of the sensor. Moreover, this mapping is encoded in our VSGP model as a zero-mean function m(x) = 0 that
+    sets the occupancy value of the non-observed points to zero. This mapping behavior mimics the mechanism of the LiDAR itself.
+
+
+    2) Rational Quadratic (RQ) Kernel: The RQ kernel is selected because a GP prior with an RQ kernel is expected to have
+    functions that vary across different length scales. This quality of the RQ kernel copes with the nature of the occupancy
+    surface, specifically in unstructured environments where a range of diverse length scales is required, i.e.,
+
+    kRQ
+
+    (
+
+    x,x′)
+
+    = σ 2
+
+    (
+
+    1 + (x− x′)2
+
+    2αℓ2
+
+    )−α
+
+    , (7)
+
+    where σ 2
+
+    f is the signal variance, l is the length-scale, and α sets the relative weighting of large and small scale variations.
+    The RQ covariance function is more expressive in terms of modeling the occupancy surface than the most commonly used Squared
+    Exponential (SE) covariance function. This can be reasoned by the fact that the RQ kernel (when α and l > 0) is equivalent
+    to a scale mixture of SE kernels with mixed characteristic length-scales [27]. In practice, we take into account the resolution
+    of LiDAR along both the azimuth and elevation axes to initiate different length-scales along each axis to reflect the
+    LiDAR resolution.
+
+
+    3) Inducing Points Selection: The variational learning framework proposed in [2] jointly optimizes the variational parameters
+    (inducing points) and the hyperparameters ( Θ, σ) through a variational Expectation-Maximization (EM) algorithm. In general,
+    the original discrete optimization framework [2] suggests having an incremental set of the inducing points, so that during
+    the Expectation step (E-step) a point from the input data is added to the inducing points set to maximize the variational
+    objective function FV and minimize the KL divergence between the true and approximated posteriors KL[q( f )||p( f|y, Θ)].
+    Then the hyperparameters are updated during the Maximization step (M-step).
+
+
+    Since LiDAR’s field of view is limited within a certain range, the projection of the observed points on the circular surface
+    leads to a limited input domain for the VSGP. In our case, the azimuth and the elevation axes are limited to (−π to π)
+    and (−15◦ to 15◦), respectively. The limited input domain is used to initiate a fixed number of inducing points at evenly
+    distributed locations on the occupied part of the occupancy surface. In this way, a different combination of the points
+    is selected at each E-step to maximize the variational objective function FV and minimize the KL divergence. Then the
+    hyperparameters are updated during the M-step. The number of the inducing points M is chosen to compromise the computational
+    and memory complexity on one side and the accuracy of the reconstructed pointcloud on the other side. More inducing points
+    result in higher computations complexity O(NM 2), larger memory to store the encoded observation, and higher bandwidth
+    to transfer it. However, more inducing points increase the accuracy of the reconstructed pointcloud. We chose M=500 inducing
+    points to keep the average deviation between the reconstructed pointcloud and the original pointcloud under 15 cm. After
+    the training phase on the scout side is completed, the selected inducing points are combined together with the hyperparameters
+    values of the VSGP and are transmitted from the scout to the base.'
+  citations:
+  - marker: '[2]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Projection-based representations
+  - marker: '[13]'
+    intent_label: Algorithm/Principle Adoption
+    topic_label: Projection-based representations
+  - marker: '[27]'
+    intent_label: Domain Overview
+    topic_label: Projection-based representations
+- block_id: 6
+  content: 'On the base side, the inducing points and the values of the hyperparameters, which are received from the scout,
+    are used to reconstruct the original occupancy surface. The reconstruction is done through a GP configured with the same
+    kernel (RQ) and likelihood (Gaussian) as the VSGP on the scout side. The base GP is trained on the inducing points and
+    has a computation complexity of O(M3) where M is the number of the inducing points, so we refer it as a sparse GP (SGP)
+    and refer the reconstructed occupancy surface as the SGP occupancy surface. A grid of query points x∗ ={(θ , α)}K
+
+    i=1 with the same resolution of the LiDAR along the azimuth and the elevation axes is generated to reconstruct the original
+    pointcloud from the SGP occupancy surface. If up-sampling of the pointcloud is required for any reason, a query grid with
+    higher resolution can be used for the reconstruction process. The SGP occupancy surface is used to predict the occupancy
+    f (xi) of each point xi of the query grid x∗. The occupancy is converted back to the spherical radius ri = roc− f (xi)
+    to restore the 3D spherical coordinates of each point.
+
+
+    One advantage of the GP and its variants over other modeling techniques is the uncertainty (variance) associated with
+    the predicted value at any query point. Considering the VSGP model of the occupancy surface on the scout side, the variance
+    associated with the occupied points is low compared to the variance related to the free points. Selecting the inducing
+    points as a set from the original occupied points maintains low-variance values for the occupied part of the reconstructed
+    SGP occupancy surface on the base side. Therefore, the variance value associated with any point on the reconstructed SGP
+    occupancy surface is used to predict if that point belongs to the occupied or the free part of the occupancy surface.
+    We use a variance threshold Vth as a judging criterion. In fact, the variance related to the occupancy surface is different
+    from one observation to another, and it is affected by both the number of observed (occupied) points and their distribution
+    over the occupancy surface. Therefore, we chose the variance threshold Vth as a variable that changes with the distribution
+    of the variance over the occupied and free parts of the occupancy surface. Vth is defined as a linear combination of the
+    variance mean vm and standard deviation vstd over the surface, i.e., Vth = Km∗ vm + Kstd∗ vstd where Km and Kstd are constants.
+    These two constants are tuned by first setting Vth = vm (Km = 1 , Kstd = 0), then we increase Kstd and decrease Km gradually
+    till we get the values that give the highest accuracy for the reconstructed SGP pointcloud (considering a fixed number
+    of inducing points). Our sampling-based approach is capable of discriminating between the free points that most likely
+    belong to the free part of the SGP occupancy surface and the occupied points that belong to the occupied part of the SGP
+    occupancy surface. After removing the free part of the SGP occupancy surface, the Cartesian coordinates of the occupied
+    points are calculated using the inverse form of Eq. (5) to restore the original point cloud.'
+  citations: []
+- block_id: 7
+  content: 'The proposed approach is implemented in Python3 on top of GPflow-v2 [28] and TensorFlow-v2.4 [29] under ROS framework
+    [30]. Both real-time simulation and real-time demonstration were considered to evaluate the proposed approach. In both
+    the simulation and the hardware experiments, a VLP-16 LiDAR was used with a maximum range of 10 m, a frequency of 4 Hz,
+    and a resolution of (0.1◦,2◦) along the azimuth and the elevation axis, respectively. This configuration results in a
+    maximum pointcloud size of 57600 points. The query grid, which is used to sample the SGP occupancy surface on the base
+    side, has the same resolution as the VLP-16 LiDAR. A 3D occupancy grid map with a resolution of 5 cm is generated from
+    the reconstructed SGP pointcloud through Octomap [31].
+
+
+    We investigate the performance of our framework and compare it with the GMM approach [13]–[15]. While the GMM approach
+    tackles the occupancy mapping problem as a whole, our approach focuses on compressing sensor observations through limited-bandwidth
+    communication channels. To be able to compare the two approaches, we implemented the GMM approach in such a way that it
+    is used to encode one sensor observation at a time instead of generating an entire occupancy map. We compared our approach
+    with two versions of the GMM approach: i) A CPU-based implementation of GMM that follows the same guidelines of [13].
+    ii) An upgraded GPU-based implementation of GMM. We implemented the GPU-GMM to have a fair computation comparison with
+    our VSGP approach which runs on GPU.'
+  citations:
+  - marker: '[13]'
+    intent_label: Result Comparison
+    topic_label: Point Cloud Registration
+  - marker: '[14]'
+    intent_label: Result Comparison
+    topic_label: Point Cloud Registration
+  - marker: '[15]'
+    intent_label: Result Comparison
+    topic_label: Point Cloud Registration
+  - marker: '[28]'
+    intent_label: Resource Utilization
+    topic_label: Raw point-based representations
+  - marker: '[29]'
+    intent_label: Resource Utilization
+    topic_label: Raw point-based representations
+  - marker: '[30]'
+    intent_label: Resource Utilization
+    topic_label: Raw point-based representations
+  - marker: '[31]'
+    intent_label: Resource Utilization
+    topic_label: Volumetric voxelization
+- block_id: 8
+  content: '1) Simulation Setup: The simulation setup consists of two machines that communicate to each other over WiFi: The
+    first machine, where the scout and the environment are simulated, is an Intel® Core™ i7 NUC11 PC equipped with 64 GB RAM
+    and 6 GB Geforce RTX2060 GPU. The second machine, which acts as the base, is an Intel® Core™ i7 Alienware Laptop equipped
+    with 32 GB RAM and 8 GB Geforce RTX2080 GPU. Both are connected using a 2.4 GHz WiFi router. The network flow is monitored
+    using the ifstat tool to evaluate the communication performance. The mine tunnel of the cpr inspection world, which is
+    developed by ClearPath robotics, is used as our simulation environment. This environment is selected because it represents
+    one of the targeted low-bandwidth subterranean environments. The mine tunnel part of the cpr inspection world fits in
+    a rectangular area with an approximated area of 30×65m2, the tunnel length is around 135 m. The ground elevation and the
+    height of the tunnel are different from one place to another. The ClearPath Jackal robot is used as the scout. The proposed
+    approach was evaluated through 20 real-time simulation trials. In each trial, the robot starts at the beginning of the
+    cave and follows a predefined path along the mine using way-point based navigation.
+
+
+    2) Simulation Results: We evaluate the performance of our approach based on the reduction in the memory and the communication
+    rate required to transmit the sensor observations between the scout and the base. The VSGP representation requires only
+    1514 floating points (FP) to represent the entire pointcloud (3 FP for each inducing point (3x500) + 6 FP for robot pose
+    + 6 FP for the hyperparameters). This value is less than the memory needed by the GMM approach which requires ∼ 2000 FP
+    (10 FP for each component (10x200) distributed as 6 FP for covariance + 3 FP for mean + 1 FP for weight) [13]. We send
+    the robot pose to the base because our approach encodes the observation relative to the robot body frame, while the GMM
+    approach first transforms the observation from the robot body frame to a global frame using the robot current pose and
+    then sends the encoded Gaussians densities with respect to the global frame.
+
+
+    To quantify the accuracy of the reconstructed SGP pointcloud, we use the Root Mean Square Deviation (RMSD) between the
+    radius predicted by our approach and the actual radius of each point on the occupancy surface.
+
+    RMSD =
+
+    √
+
+    ∑N
+
+    i=1 (ri− ˆri)2
+
+    N , (8)
+
+    where N is the size of the pointcloud, ri is the actual radius at (θi, αi), and ˆri is the estimated radius value at the
+    same point (θi, αi). The RMSD for VSGP and GMM models was evaluated over observations (each observation has around 10
+    K to 50 K points). The memory required to store one observation can be calculated by multiplying the number of inducing
+    points by 3 and multiplying the number of components by 10. For example, 500-inducing points VSGP results in an average
+    RMSD value for each point of 9 cm with a standard deviation of 10 cm. This corresponds to an average RMSD of 11 cm with
+    a standard deviation of 25 cm for a 200-components GMM.
+
+
+    Increasing the number of the VSGP-inducing points or the number of the GMM-components results in smaller RMSD (higher
+    accuracy). The RMSD values associated with VSGP have a smaller standard deviation than the GMM’s. An intensive evaluation
+    of the training and the prediction phases shows that the proposed approach outperforms both the CPU and GPU implementation
+    of the GMM approach in terms of training time. Prediction time versus the number of inducing points was also evaluated.
+    For a matching pair of GMM and VSGP in terms of memory and accuracy, GMM has a less sampling time than the paired VSGP.
+    However, the pointcloud reconstruction process of the VSGP is more convenient than the GMM approach because: when sampling
+    from a GMM, we get a sample (from a distribution) with random values (θs, αs, rs), so we do not have control over the
+    location of the sample on the occupancy surface (θs, αs). In contrast, for the VSGP approach, we predict the radius value
+    rs for a certain point on the occupancy surface defined by (θs, αs). So, we have control over the point location on the
+    occupancy surface. While constructing the 3D octomap of the tunnel environment using the scout-base scheme, the average
+    communication rate was 1750 KB/S, 25.8 KB/S, and 18.2 KB/S for sending raw point clouds, GMM encoded data, and VSGP encoded
+    data respectively. The accumulated data sent through the network is reduced from 840 MB for sending raw pointcloud to
+    12.4 MB in case of GMM and 8.7 MB in case of VSGP. This indicates a compression ratio of ∼ 96 (840 /8.7 ∼ 1750/18.2).'
+  citations:
+  - marker: '[13]'
+    intent_label: Result Comparison
+    topic_label: Raw point-based representations
+- block_id: 9
+  content: A Jackal mobile robot, equipped with a VLP-16 LiDAR and NUC11 PC, was used as the scout, while the Alienware laptop
+    was used as the base. The demonstration was conducted in an indoor environment, where the VSGP-encoded pointcloud data
+    was sent from the scout to the base to generate a 3D Octomap of the building from the SGP reconstructed pointcloud in
+    real-time. The communication rate dropped from around 560 KB for transmitting raw pointcloud to around 8 KB for transmitting
+    the encoded VSGP (this ratio is equivalent to 70 times smaller rate). The communication rate of the hardware experiment
+    is low compared to the simulation experiment because the LiDAR resolution was halved during the hardware experiment. The
+    total amount of data transmitted at the end of each trial was around 100 MB for sending raw pointcloud and only around
+    1.4 MB for sending the VSGP encoded observation.
+  citations: []
+- block_id: 10
+  content: In this paper, we introduce a lightweight representation for the 3D pointcloud using the VSGP. This representation
+    allows high-ﬁdelity observations to be efﬁciently stored and transmitted through limited-bandwidth communication channels.
+    Based on the results of the simulation and hardware experiments, our approach results in around 70-100 times smaller size
+    representation of the sensor observation. This compact representation can facilitate many of the robotics applications
+    which are limited by the communication bandwidth such as subterranean and underwater exploration, search and rescue missions,
+    and planetary exploration. In addition, our approach can also be beneficial in the context of multi-robot collaboration
+    where a number of robots are required to share high-volume information (3D pointcloud) through low-bandwidth channels.
+  citations: []

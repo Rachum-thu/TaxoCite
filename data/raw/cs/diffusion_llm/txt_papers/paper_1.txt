@@ -1,0 +1,1457 @@
+. 
+. 
+Latest updates: hps://dl.acm.org/doi/10.1145/3269206.3271705
+. 
+. 
+RESEARCH-ARTICLE
+MEgo2Vec: Embedding Matched Ego Networks for User Alignment
+Across Social Networks
+JING ZHANG, Renmin University of China, Beijing, China
+. 
+BO CHEN, Renmin University of China, Beijing, China
+. 
+XIANMING WANG, Renmin University of China, Beijing, China
+. 
+HONG CHEN, Renmin University of China, Beijing, China
+. 
+CUIPING LI, Renmin University of China, Beijing, China
+. 
+FENGMEI JIN, Renmin University of China, Beijing, China
+. 
+View all
+. 
+. 
+Open Access Support provided by:
+. 
+Renmin University of China
+. 
+Peking University
+. 
+Tsinghua University
+. 
+PDF Download
+3269206.3271705.pdf
+31 January 2026
+Total Citations: 62
+Total Downloads: 944
+. 
+. 
+Published: 17 October 2018
+. 
+. 
+Citation in BibTeX format
+. 
+. 
+CIKM '18: The 27th ACM International
+Conference on Information and
+Knowledge Management
+October 22 - 26, 2018
+Torino, Italy
+. 
+. 
+Conference Sponsors:
+SIGIR
+SIGWEB
+CIKM '18: Proceedings of the 27th ACM International Conference on Information and Knowledge Management (October 2018)
+hps://doi.org/10.1145/3269206.3271705
+ISBN: 9781450360142
+.
+MEgo2V
+ec: Embedding Matched Ego Networks for User
+Alignment Across Social Networks ∗
+Jing Zhang, Bo Chen, Xianming Wang
+Information School, Renmin University of China
+{zhang-jing,bochen,wxm}@ruc.edu.cn
+Hong Chen*, Cuiping Li, Fengmei Jin
+Information School, Renmin University of China
+{chong,licuiping,jinfm}@ruc.edu.cn
+Guojie Song
+MOE Key Laboratory of Machine Perception, PKU
+gjsong@pku.edu.cn
+Yutao Zhang
+Tsinghua University
+yt-zhang13@mails.tsinghua.edu.cn
+ABSTRACT
+Aligning users across multiple heterogeneous social networks is
+a fundamental issue in many data mining applications. Methods
+that incorporate user attributes and network structure have re-
+ceived much attention. However, most of them suffer from error
+propagation or the noise from diverse neighbors in the network.
+To effectively model the influence from neighbors, we propose a
+graph neural network to directly represent the ego networks of
+two users to be aligned into an embedding, based on which we
+predict the alignment label. Three major mechanisms in the model
+are designed to unitedly represent different attributes, distinguish
+different neighbors and capture the structure information of the
+ego networks respectively.
+Systematically, we evaluate the proposed model on a number
+of academia and social networking datasets with collected align-
+ment labels. Experimental results show that the proposed model
+achieves significantly better performance than the state-of-the-art
+comparison methods (+3.12-30.57% in terms of F1 score).
+CCS CONCEPTS
+• Information systems → Entity resolution;
+KEYWORDS
+Social network; Network Integration; User Linkage
+ACM Reference Format:
+Jing Zhang, Bo Chen, Xianming Wang, Hong Chen*, Cuiping Li, Fengmei
+Jin, Guojie Song, and Yutao Zhang. 2018. MEgo2Vec: Embedding Matched
+Ego Networks for User Alignment Across Social Networks. In The 27th
+ACM International Conference on Information and Knowledge Management
+(CIKM ’18), October 22–26, 2018, Torino, Italy. ACM, New York, NY, USA,
+10 pages. https://doi.org/10.1145/3269206.3271705
+1 INTRODUCTION
+The proliferation of heterogeneous social media platforms, such as
+Facebook, Twitter, LinkedIn, Instagram, etc., enables us to satisfy
+∗Pr
+oduces the permission block, and copyright information
+Permission
+to make digital or hard copies of part or all of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for third-party components of this work must be honored.
+For all other uses, contact the owner/author(s).
+CIKM ’18, October 22–26, 2018, Torino, Italy
+© 2018 Copyright held by the owner/author(s).
+ACM ISBN 978-1-4503-6014-2/18/10. . . $15.00
+https://doi.org/10.1145/3269206.3271705
+?
+W. Wang Wei Wang
+ComputerScience
+J.Li
+machine
+learning
+J.Li
+deeplearning ShiYuan-Le
+PKU
+ShiYL
+PekingUniversity
+PengYang
+PanYang
+EricZhang
+v1 u1
+u4v4 v3
+u3
+v5
+v2 u2
+Gs Gt
+Figur
+e 1: Illustration of the user alignment task. Given two
+networks G s and G t , we aim at aligning user v1 from G s and user
+u1 from G t . The lines between users within each network represent
+the relationships between users. The lines between users across the
+two networks denote whether two users are aligned or not, where
+the black dashed lines mean they may be the same person, but the
+actual labels are unknown, and the red solid line represents the
+alignment between the target users to be predicted.
+our different interests. A study conducted by IPG Media Lab shows
+that over 50% US adults use more than one social media platform 1.
+Aligning the same users across different social networks has re-
+cently been attracting considerable attention, as it can provide a
+comprehensive view of users’ profile, and then benefit many appli-
+cations. For example, linking users of a E-Commerce system and
+a social media platform can enable product recommendation from
+the E-Commerce system to the social media platform, and linking
+users across different social networks can tell us how the informa-
+tion is diffused between them.
+One intuitive way to align same users across social networks is
+to compare the profile attributes such as name, affiliation, descrip-
+tion, etc. However, the profile attributes usually cannot provide
+sufficient evidence. For example, in Figure 1, it is difficult to deter-
+mine that v1 and u1 are the same person only according to their
+names “W. Wang" and “Wei Wang". Fortunately, the neighbors of
+the two users in their respective ego networks 2 may provide ad-
+ditional clues. Among the neighbors of v1 and u1, “Shi YL" from
+“Peking University" and ‘Shi Yuan-Le" from “PKU" have a high pos-
+sibility to be a same person, similarly for “J. Li" being interested
+1https://w
+ww.ipglab.com/wp-content/uploads/2014/05/A-Network-for-Every-
+Interest-140-Proof_IPG-Whitepaper.pdf
+2An ego network consists of a focal node (“ego") and the nodes to whom ego is directly
+connected to plus the ties between them.
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+327
+CIKM ’18, October 22–26, 2018, Torino, Italy Zhang et al.
+in “machine learning" and “J. Li" being interested in “deep learn-
+ing". The clues would be more powerful if there are more potential
+same neighbor pairs. In the Figure, the neighbors of v1 and u1 that
+have a high possibility to be the same person are linked by black
+dashed lines. In practice, most of the neighbor pairs are unlabeled,
+which prevents us from directly calculating the metrics like Jac-
+card’s coefficient or Adamic/Adar based on the shared neighbors
+as that proposed in [7, 8, 26, 30]. One way to leverage the unla-
+beled information is to estimate the possibility that a user pair can
+be matched, based on which we can update the matching scores of
+its neighbor pairs [9, 27, 28]. For example, SiGMa [9] proposed an
+unsupervised method to iteratively propagate the matching scores
+from a confidential seed set of user pairs to their neighbor pairs.
+COSNET [28] proposed a supervised method to infer the marginal
+probabilities that two users can be matched based on the attributes
+of the two users and the marginal probabilities of their neighbor
+pairs. Essentially, to predict the label of a user pair, they both need
+to infer the labels of its neighbor pairs, and this may cause error
+propagations during the iterative process.
+Despite existing studies on user alignment [7–9, 26–28, 30], the
+problem still poses several unsolved challenges. First,how to unit-
+edly model profile similarity?Traditional methods usually com-
+pare different profile attributes by human defined metrics, such as
+Jaro-Winkler similarity [25], TF-IDF based cosine similarity [7, 20],
+etc. However, they cannot capture the semantics of different literal
+strings. Thus, a unified way with little effort of feature engineer-
+ing to better represent different profile attributes is worth study-
+ing. Second, How to deal with diverse neighbors in different
+social networks? The neighbors of a user in different networks
+can be very diverse due to the various purposes of different social
+media platforms. For instance, people use Twitter to communicate
+with friends and obtain information, while they use LinkedIn to
+find a job. Leveraging all neighbors’ information without distinc-
+tion may contrarily bring in additional noise. Third,How to incor-
+porate the influence of network topologies? Different topolo-
+gies of ego networks may exert different effects. For example, in
+Figure 1, neighbor pair (v3; u3) is linked to another neighbor pair
+(v4; u4), i.e., v3 is v4’s friend in Gs and u3 is u4’s friend in Gt . The
+linkage reduces the possibility that v3 is wrongly matched to u3,
+and v4 is wrongly matched to u4, and it further provides strong
+evidence that v1 and u1 are the same person, compared with the
+situation that (v3; u3) and (v4; u4) are not linked.
+To deal with the above challenges, we formalize the task of user
+alignment across social networks as a classification problem using
+the ego networks of two users as input. We propose a graph neural
+network model—MEgo2Vec to represent the matched ego network
+between the two users into a low-dimensional real-valued repre-
+sentation, based on which we align the users. The representation
+includes two parts, one is embedded from the attributes of the tar-
+get user pairs and their neighbor pairs, the other is embedded from
+the topologies of the matched ego network. Specifically, first, to
+unitedly model the profile attributes, we adopt a multi-view
+embedding mechanism to represent the character-view and word-
+view features for an attribute together. Second,to tackle the issue
+of diverse neighbors in different networks, we adopt attention
+mechanisms to convolve neighbors’ attributes, so as to distinguish
+their influence. Three attentions are proposed to respectively con-
+sider the individual characteristics of each user in a pair, the simi-
+larity between two users in a pair, and the relationship of a neigh-
+bor pair with the user pair to be predicted. Third, to capture the
+influence of network topologies , we adopt a CNN network to
+convolve the adjacency matrix of the matched ego network.
+The main contributions can be summarized as:
+ We propose MEgo2Vec (embed the M
+atche
+d Ego netw
+ork to
+a vector
+), a novel graph neural network model, to formalize
+our problem as a unified optimization framework.
+ The multi-view node embedding can model the literal and
+semantic characteristics of different attributes unitedly; the
+attention mechanism can distinguish the effects of different
+neighbors to alleviate error propagations; structure embed-
+ding can capture the influence of different topologies.
+ Experiments on a number of academia and social network-
+ing datasets demonstrate that the proposed model compares
+favorably classification accuracy (+3.12-30.57% in terms of
+F1 score) against the state-of-the-art models for user align-
+ment task.
+2 RELATED WORK
+User Alignment. One intuitive way to align users across social
+networks is to compare users’ attributes, among which name is
+the most important one. Many attempts have been made to study
+how to leverage user names [11, 13, 17, 24, 25]. For example, Za-
+farani et al. dealt with user names by adding or removing their
+prefix/postfix [24]. They further made a comprehensive study of
+the habits when users select names [25]. For other attributes like
+the post contents of users, Kong et al. [7] calculated the cosine sim-
+ilarity of the bag-of-words vectors weighted by TF-IDF.
+However, user attributes may be missed or not strong enough to
+indicate a user’s identity. Thus a lot of research utilizes the network
+structure to enhance the prediction performance. Some of them cal-
+culated the metrics like Jaccard’s coefficient or Adamic/Adar based
+on the number of the shared neighbors [7, 30]. However, most of
+the neighbor pairs are unlabeled, preventing us from calculating
+the above metrics. Some methods such as IONE [12] and PALE [15]
+learned user embeddings by encoding the structure information of
+the network but totally ignored user attributes, and it is not easy
+to add user attributes into their models.
+Several research incorporates both user attributes and unlabeled
+neighbor pairs together. For example, Lacoste et al. solved the prob-
+lem by an unsupervised propagation method [9], where the sim-
+ilarities of the attributes in the method are defined empirically.
+Zhong et al. proposed an unsupervised co-training algorithm to
+incorporate attributes and relationships with the neighbor pairs
+together [29]. Zhang et al. further formulated the propagation pro-
+cess based on attributes and network topologies from an optimiza-
+tion perspective [27], but only one attribute can be considered in
+their model. Zhang et al. proposed a supervised model—COSNET
+to iteratively infer the labels of the unlabeled pairs and update the
+model based on the inferred labels and the user attributes [28].
+However, error propagations may be introduced in above meth-
+ods. This paper aims at investigating a supervised method that
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+328
+MEgo2V ec: Embedding Matched Ego Networks for User Alignment Across Social Networks CIKM ’18, October 22–26, 2018, Torino, Italy
+avoids label propagation, but directly represents a pair of users by
+their attributes, their neighbors’ attributes and the network struc-
+ture among the neighbors, and then aligns the users based on the
+learned representations.
+Neural Networks on Graphs. Substantial research has been done
+on modeling the graph-structured input by neural networks. Shal-
+low models such as DeepWalk [18], LINE [21] and node2vec [5]
+learn node embeddings via the prediction of the first-order or high-
+order neighbors. Graph neural networks (GNNs) were proposed as
+a generalization of the recursive neural networks, which assign a
+state to each node in a graph based on the states of neighboring
+nodes [4, 19]. Recently, Li et al. improved GNNs using gated recur-
+rent units and also extended the output to sequences [10].
+Several works studied how to generalize convolutions to graph
+data [1, 3, 6, 16, 23]. For example, Niepert et al. [16] generated a
+representation for a selected sequence of nodes that covers large
+parts of a given graph, and then used CNN to predict the label of
+the graph. Duvenaud et al. defined convolutions directly on graphs
+and learned node degree-specific weight matrix. [3]. Thomas et al.
+considered a single weight matrix per layer and dealt with vary-
+ing node degrees by an appropriate normalization of the adjacency
+matrix [6]. Veličković et al. [23] introduced the attention mech-
+anism into the graph convolutional networks to distinguish the
+influence of the neighbors. Inspired by these recent works, we pro-
+pose a graph neural network model to align users in two networks.
+Most of the recent work on graph convolutional networks feed the
+whole graph as the input, which hinders the mini-batch training
+process. The proposed method in this paper, on the contrary, is
+performed on ego networks of two nodes, which is able to adapt
+to mini-batch training and thus can be conducted efficiently.
+3 PROBLEM DEFINITION
+In this section, we will provide necessary definitions and then for-
+mally formulate the problem. Let G = (V ; A; P) denote an undi-
+rected attribute augmented social network3, whereV is set of users.
+Notation A represents a jV j  jV j adjacency matrix with an element
+ai j indicating there is a relationship between vi and vj . Notation
+P represents a jV j  d property (attribute) matrix with an element
+pik indicating the k-th attribute of the i-th user in G.
+Definition 3.1. Ego Network. Given a user vi 2 V , we use
+Gi = (Vi ; Ai ; Pi )  G to denote vi ’s ego network, where Vi  V
+contains the focal node vi (i.e., the node in the center) and vi ’s
+first-order neighbors in G. Notation Ai  A is the adjacency ma-
+trix representing the relationships between the users in Vi and Pi
+represents an jVi j  d attribute matrix of the users in Vi .
+We only consider first-order neighbors, out of the consideration
+of the computational efficiency and the assumption that high-order
+neighbors usually provide weak evidence on identifying a user. We
+assume that two users are more likely to be the same person, if
+there are more neighbors in their respective ego networks that
+have a high possibility to be matched as the same person. Based
+on the intuition, we define matched ego network as:
+3W
+e simply ignore the direction of a directed relationship as it is found to be not very
+useful in the task.
+Definition 3.2. Matched Ego Network. Suppose we have a source
+network Gs and a target network Gt . Given two users vi 2 Gs
+and ui 2 Gt , we denote vi ’s ego network as Gs
+i and ui ’s ego net-
+work as Gt
+i . Then we construct a matched ego network GM
+i =
+(V M
+i ; AM
+i ; PM
+i ) with each node in it as a pair of users from the two
+ego networks by the following steps:
+(1) Add the pair of users (vi ; ui ) into V M
+i as the focal pair.
+(2) Find all the potential matched neighbors of vi and ui , and
+add them into V M
+i as the neighbor pairs (More explanations
+are as follows).
+(3) Add an edge between (vi ; ui ) and each neighbor pair. Ad-
+ditionally, add an edge between two neighbor pairs (vj ; uj )
+and (vk ; uk ) if there is an edge betweenvj and vk in Gs , and
+also an edge between uj and uk in Gt . Notation AM
+i is the
+adjacency matrix of GM
+i .
+(4) Notation PM
+i represents an jV M
+i j  2d attribute matrix with
+each row pj as a concatenation of vj ’s attributes p(vj ) and
+uj ’s attributes p(uj ), i.e., pj = (p(vj ); p(uj )) .
+We will explain what are the potential matched neighbors, and
+why and how they are constructed. The potential matched neigh-
+bors are the neighbor pairs that have some possibility to be matched,
+and they are filtered from all possible pairs of the neighbors. Due
+to the various purposes of different social media platforms, the
+neighbors in two ego networks may be very diverse. Directly us-
+ing all pairs of neighbors as evidence to align users may introduce
+much noise. Thus we propose an attention based mechanism to dis-
+tinguish different neighbor pairs in our model (See details in Sec-
+tion 4). To improve the computational efficiency, before resorting
+to the model, we can easily select the most useful neighbor pairs by
+heuristic rules [28]. This paper simply selects the neighbor pairs if
+their names are similar, i.e., the Jaro-Winkler similarity of the two
+names is larger than a threshold, as the potential matched pairs. We
+also restrict the neighbor pairs to satisfy the one-to-one mapping
+constraint as Kong et al. did in [7], based on the same assumption
+that a user usually maintains one major account in each social me-
+dia platform. Thus the constructed matched ego network has no
+more than minfjV s
+i j; jV t
+i jg user pairs. We use N M
+i to represent the
+set of the neighbor pairs of (vi ; ui ) including (vi ; ui ) itself.
+Problem 1. User Alignment across Social Networks: Given a
+set of matched ego networks fGM
+i = (V M
+i ; EM
+i )g constructed from
+a pair of a source network Gs and a target network Gt , we aim at
+learning a predictive function
+f : GM
+i = (V M
+i ; EM
+i ) ! yi (1)
+to predict whether vi and ui belong to the same person in the real
+world, where yi is a binary value, with 1 indicating vi and ui are the
+same person, and 0 otherwise.
+4 METHODOLOGY
+4.1 Overview
+We argue that the above defined classification performance can be
+improved if the node attributes and the structure of the matched
+ego network are elaborately represented. The overview process of
+the proposed method is shown in Figure 2.
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+329
+CIKM ’18, October 22–26, 2018, Torino, Italy Zhang et al.
+v2
+<latexit sha1_base64="tdSyA1c9yXdlmxalAX6Zc9Tcyg8=">AAACFnicbVBNS8NAEN34WeNX1aOXxSJ4sSRF0GPBi8cK9gOaEjabSbt0s4m7m0IJ/RVe/CtePCjiVbz5b9ymBbX1wcDjvRlm5gUpZ0o7zpe1srq2vrFZ2rK3d3b39ssHhy2VZJJCkyY8kZ2AKOBMQFMzzaGTSiBxwKEdDK+nfnsEUrFE3OlxCr2Y9AWLGCXaSH753Augz0QO91mhTOyRX8OeSEQWByBtD0T4Y/rlilN1CuBl4s5JBc3R8MufXpjQLAahKSdKdV0n1b2cSM0oh4ntZQpSQoekD11DBYlB9fLirQk+NUqIo0SaEhoX6u+JnMRKjePAdMZED9SiNxX/87qZjq56ORNppkHQ2aIo41gneJoRDpkEqvnYEEIlM7diOiCSUG2StE0I7uLLy6RVq7pO1b2tVeoX8zhK6BidoDPkoktURzeogZqIogf0hF7Qq/VoPVtv1vusdcWazxyhP7A+vgFS2qAK</latexit><latexit sha1_base64="tdSyA1c9yXdlmxalAX6Zc9Tcyg8=">AAACFnicbVBNS8NAEN34WeNX1aOXxSJ4sSRF0GPBi8cK9gOaEjabSbt0s4m7m0IJ/RVe/CtePCjiVbz5b9ymBbX1wcDjvRlm5gUpZ0o7zpe1srq2vrFZ2rK3d3b39ssHhy2VZJJCkyY8kZ2AKOBMQFMzzaGTSiBxwKEdDK+nfnsEUrFE3OlxCr2Y9AWLGCXaSH753Augz0QO91mhTOyRX8OeSEQWByBtD0T4Y/rlilN1CuBl4s5JBc3R8MufXpjQLAahKSdKdV0n1b2cSM0oh4ntZQpSQoekD11DBYlB9fLirQk+NUqIo0SaEhoX6u+JnMRKjePAdMZED9SiNxX/87qZjq56ORNppkHQ2aIo41gneJoRDpkEqvnYEEIlM7diOiCSUG2StE0I7uLLy6RVq7pO1b2tVeoX8zhK6BidoDPkoktURzeogZqIogf0hF7Qq/VoPVtv1vusdcWazxyhP7A+vgFS2qAK</latexit><latexit sha1_base64="tdSyA1c9yXdlmxalAX6Zc9Tcyg8=">AAACFnicbVBNS8NAEN34WeNX1aOXxSJ4sSRF0GPBi8cK9gOaEjabSbt0s4m7m0IJ/RVe/CtePCjiVbz5b9ymBbX1wcDjvRlm5gUpZ0o7zpe1srq2vrFZ2rK3d3b39ssHhy2VZJJCkyY8kZ2AKOBMQFMzzaGTSiBxwKEdDK+nfnsEUrFE3OlxCr2Y9AWLGCXaSH753Augz0QO91mhTOyRX8OeSEQWByBtD0T4Y/rlilN1CuBl4s5JBc3R8MufXpjQLAahKSdKdV0n1b2cSM0oh4ntZQpSQoekD11DBYlB9fLirQk+NUqIo0SaEhoX6u+JnMRKjePAdMZED9SiNxX/87qZjq56ORNppkHQ2aIo41gneJoRDpkEqvnYEEIlM7diOiCSUG2StE0I7uLLy6RVq7pO1b2tVeoX8zhK6BidoDPkoktURzeogZqIogf0hF7Qq/VoPVtv1vusdcWazxyhP7A+vgFS2qAK</latexit><latexit sha1_base64="tdSyA1c9yXdlmxalAX6Zc9Tcyg8=">AAACFnicbVBNS8NAEN34WeNX1aOXxSJ4sSRF0GPBi8cK9gOaEjabSbt0s4m7m0IJ/RVe/CtePCjiVbz5b9ymBbX1wcDjvRlm5gUpZ0o7zpe1srq2vrFZ2rK3d3b39ssHhy2VZJJCkyY8kZ2AKOBMQFMzzaGTSiBxwKEdDK+nfnsEUrFE3OlxCr2Y9AWLGCXaSH753Augz0QO91mhTOyRX8OeSEQWByBtD0T4Y/rlilN1CuBl4s5JBc3R8MufXpjQLAahKSdKdV0n1b2cSM0oh4ntZQpSQoekD11DBYlB9fLirQk+NUqIo0SaEhoX6u+JnMRKjePAdMZED9SiNxX/87qZjq56ORNppkHQ2aIo41gneJoRDpkEqvnYEEIlM7diOiCSUG2StE0I7uLLy6RVq7pO1b2tVeoX8zhK6BidoDPkoktURzeogZqIogf0hF7Qq/VoPVtv1vusdcWazxyhP7A+vgFS2qAK</latexit>
+v1
+<latexit sha1_base64="Wj+H0M+Bd2CLC/0g2fZ/DelVDMA=">AAAB7HicbVBNS8NAEJ3Ur1q/qh69LLaCp5IUQY8FLx4rmLbQhrLZTtqlm03Y3RRK6W/w4kERr/4gb/4bt20O2vpg4PHeDDPzwlRwbVz32ylsbe/s7hX3SweHR8cn5dOzlk4yxdBniUhUJ6QaBZfoG24EdlKFNA4FtsPx/cJvT1BpnsgnM00xiOlQ8ogzaqzkVyd9r9ovV9yauwTZJF5OKpCj2S9/9QYJy2KUhgmqdddzUxPMqDKcCZyXepnGlLIxHWLXUklj1MFseeycXFllQKJE2ZKGLNXfEzMaaz2NQ9sZUzPS695C/M/rZia6C2ZcpplByVaLokwQk5DF52TAFTIjppZQpri9lbARVZQZm0/JhuCtv7xJWvWa59a8x3qlcZPHUYQLuIRr8OAWGvAATfCBAYdneIU3RzovzrvzsWotOPnMOfyB8/kDvFaN6g==</latexit><latexit sha1_base64="Wj+H0M+Bd2CLC/0g2fZ/DelVDMA=">AAAB7HicbVBNS8NAEJ3Ur1q/qh69LLaCp5IUQY8FLx4rmLbQhrLZTtqlm03Y3RRK6W/w4kERr/4gb/4bt20O2vpg4PHeDDPzwlRwbVz32ylsbe/s7hX3SweHR8cn5dOzlk4yxdBniUhUJ6QaBZfoG24EdlKFNA4FtsPx/cJvT1BpnsgnM00xiOlQ8ogzaqzkVyd9r9ovV9yauwTZJF5OKpCj2S9/9QYJy2KUhgmqdddzUxPMqDKcCZyXepnGlLIxHWLXUklj1MFseeycXFllQKJE2ZKGLNXfEzMaaz2NQ9sZUzPS695C/M/rZia6C2ZcpplByVaLokwQk5DF52TAFTIjppZQpri9lbARVZQZm0/JhuCtv7xJWvWa59a8x3qlcZPHUYQLuIRr8OAWGvAATfCBAYdneIU3RzovzrvzsWotOPnMOfyB8/kDvFaN6g==</latexit><latexit sha1_base64="Wj+H0M+Bd2CLC/0g2fZ/DelVDMA=">AAAB7HicbVBNS8NAEJ3Ur1q/qh69LLaCp5IUQY8FLx4rmLbQhrLZTtqlm03Y3RRK6W/w4kERr/4gb/4bt20O2vpg4PHeDDPzwlRwbVz32ylsbe/s7hX3SweHR8cn5dOzlk4yxdBniUhUJ6QaBZfoG24EdlKFNA4FtsPx/cJvT1BpnsgnM00xiOlQ8ogzaqzkVyd9r9ovV9yauwTZJF5OKpCj2S9/9QYJy2KUhgmqdddzUxPMqDKcCZyXepnGlLIxHWLXUklj1MFseeycXFllQKJE2ZKGLNXfEzMaaz2NQ9sZUzPS695C/M/rZia6C2ZcpplByVaLokwQk5DF52TAFTIjppZQpri9lbARVZQZm0/JhuCtv7xJWvWa59a8x3qlcZPHUYQLuIRr8OAWGvAATfCBAYdneIU3RzovzrvzsWotOPnMOfyB8/kDvFaN6g==</latexit><latexit sha1_base64="Wj+H0M+Bd2CLC/0g2fZ/DelVDMA=">AAAB7HicbVBNS8NAEJ3Ur1q/qh69LLaCp5IUQY8FLx4rmLbQhrLZTtqlm03Y3RRK6W/w4kERr/4gb/4bt20O2vpg4PHeDDPzwlRwbVz32ylsbe/s7hX3SweHR8cn5dOzlk4yxdBniUhUJ6QaBZfoG24EdlKFNA4FtsPx/cJvT1BpnsgnM00xiOlQ8ogzaqzkVyd9r9ovV9yauwTZJF5OKpCj2S9/9QYJy2KUhgmqdddzUxPMqDKcCZyXepnGlLIxHWLXUklj1MFseeycXFllQKJE2ZKGLNXfEzMaaz2NQ9sZUzPS695C/M/rZia6C2ZcpplByVaLokwQk5DF52TAFTIjppZQpri9lbARVZQZm0/JhuCtv7xJWvWa59a8x3qlcZPHUYQLuIRr8OAWGvAATfCBAYdneIU3RzovzrvzsWotOPnMOfyB8/kDvFaN6g==</latexit>
+v3
+<latexit sha1_base64="qluPCX0gWLtE8GA2fQTHoUUNgzw=">AAACFnicbVBNS8NAEN3Urxq/qh69LBbBiyWpgh4LXjxWsB/QlLDZTNulm03c3RRK6K/w4l/x4kERr+LNf+M2LaitDwYe780wMy9IOFPacb6swsrq2vpGcdPe2t7Z3SvtHzRVnEoKDRrzWLYDooAzAQ3NNId2IoFEAYdWMLye+q0RSMVicafHCXQj0hesxyjRRvJLZ14AfSYyuE9zZWKP/HPsiVikUQDS9kCEP6ZfKjsVJwdeJu6clNEcdb/06YUxTSMQmnKiVMd1Et3NiNSMcpjYXqogIXRI+tAxVJAIVDfL35rgE6OEuBdLU0LjXP09kZFIqXEUmM6I6IFa9Kbif14n1b2rbsZEkmoQdLaol3KsYzzNCIdMAtV8bAihkplbMR0QSag2SdomBHfx5WXSrFZcp+LeVsu1i3kcRXSEjtEpctElqqEbVEcNRNEDekIv6NV6tJ6tN+t91lqw5jOH6A+sj29Ud6AL</latexit><latexit sha1_base64="qluPCX0gWLtE8GA2fQTHoUUNgzw=">AAACFnicbVBNS8NAEN3Urxq/qh69LBbBiyWpgh4LXjxWsB/QlLDZTNulm03c3RRK6K/w4l/x4kERr+LNf+M2LaitDwYe780wMy9IOFPacb6swsrq2vpGcdPe2t7Z3SvtHzRVnEoKDRrzWLYDooAzAQ3NNId2IoFEAYdWMLye+q0RSMVicafHCXQj0hesxyjRRvJLZ14AfSYyuE9zZWKP/HPsiVikUQDS9kCEP6ZfKjsVJwdeJu6clNEcdb/06YUxTSMQmnKiVMd1Et3NiNSMcpjYXqogIXRI+tAxVJAIVDfL35rgE6OEuBdLU0LjXP09kZFIqXEUmM6I6IFa9Kbif14n1b2rbsZEkmoQdLaol3KsYzzNCIdMAtV8bAihkplbMR0QSag2SdomBHfx5WXSrFZcp+LeVsu1i3kcRXSEjtEpctElqqEbVEcNRNEDekIv6NV6tJ6tN+t91lqw5jOH6A+sj29Ud6AL</latexit><latexit sha1_base64="qluPCX0gWLtE8GA2fQTHoUUNgzw=">AAACFnicbVBNS8NAEN3Urxq/qh69LBbBiyWpgh4LXjxWsB/QlLDZTNulm03c3RRK6K/w4l/x4kERr+LNf+M2LaitDwYe780wMy9IOFPacb6swsrq2vpGcdPe2t7Z3SvtHzRVnEoKDRrzWLYDooAzAQ3NNId2IoFEAYdWMLye+q0RSMVicafHCXQj0hesxyjRRvJLZ14AfSYyuE9zZWKP/HPsiVikUQDS9kCEP6ZfKjsVJwdeJu6clNEcdb/06YUxTSMQmnKiVMd1Et3NiNSMcpjYXqogIXRI+tAxVJAIVDfL35rgE6OEuBdLU0LjXP09kZFIqXEUmM6I6IFa9Kbif14n1b2rbsZEkmoQdLaol3KsYzzNCIdMAtV8bAihkplbMR0QSag2SdomBHfx5WXSrFZcp+LeVsu1i3kcRXSEjtEpctElqqEbVEcNRNEDekIv6NV6tJ6tN+t91lqw5jOH6A+sj29Ud6AL</latexit><latexit sha1_base64="qluPCX0gWLtE8GA2fQTHoUUNgzw=">AAACFnicbVBNS8NAEN3Urxq/qh69LBbBiyWpgh4LXjxWsB/QlLDZTNulm03c3RRK6K/w4l/x4kERr+LNf+M2LaitDwYe780wMy9IOFPacb6swsrq2vpGcdPe2t7Z3SvtHzRVnEoKDRrzWLYDooAzAQ3NNId2IoFEAYdWMLye+q0RSMVicafHCXQj0hesxyjRRvJLZ14AfSYyuE9zZWKP/HPsiVikUQDS9kCEP6ZfKjsVJwdeJu6clNEcdb/06YUxTSMQmnKiVMd1Et3NiNSMcpjYXqogIXRI+tAxVJAIVDfL35rgE6OEuBdLU0LjXP09kZFIqXEUmM6I6IFa9Kbif14n1b2rbsZEkmoQdLaol3KsYzzNCIdMAtV8bAihkplbMR0QSag2SdomBHfx5WXSrFZcp+LeVsu1i3kcRXSEjtEpctElqqEbVEcNRNEDekIv6NV6tJ6tN+t91lqw5jOH6A+sj29Ud6AL</latexit>
+v4
+<latexit sha1_base64="c4wYMkXN5HGiHYD3HWLGJdSiF3U=">AAACFnicbVBNS8NAEN3Urxq/oh69LBbBiyUpBT0WvHisYD+gCWWznbZLN5u4uymU0F/hxb/ixYMiXsWb/8ZtWlBbHww83pthZl6YcKa0635ZhbX1jc2t4ra9s7u3f+AcHjVVnEoKDRrzWLZDooAzAQ3NNId2IoFEIYdWOLqe+a0xSMVicacnCQQRGQjWZ5RoI3WdCz+EARMZ3Ke5MrXH3Sr2RSzSKARp+yB6P2bXKbllNwdeJd6ClNAC9a7z6fdimkYgNOVEqY7nJjrIiNSMcpjafqogIXREBtAxVJAIVJDlb03xmVF6uB9LU0LjXP09kZFIqUkUms6I6KFa9mbif14n1f2rIGMiSTUIOl/UTznWMZ5lhHtMAtV8YgihkplbMR0SSag2SdomBG/55VXSrJQ9t+zdVkq16iKOIjpBp+gceegS1dANqqMGougBPaEX9Go9Ws/Wm/U+by1Yi5lj9AfWxzdWFKAM</latexit><latexit sha1_base64="c4wYMkXN5HGiHYD3HWLGJdSiF3U=">AAACFnicbVBNS8NAEN3Urxq/oh69LBbBiyUpBT0WvHisYD+gCWWznbZLN5u4uymU0F/hxb/ixYMiXsWb/8ZtWlBbHww83pthZl6YcKa0635ZhbX1jc2t4ra9s7u3f+AcHjVVnEoKDRrzWLZDooAzAQ3NNId2IoFEIYdWOLqe+a0xSMVicacnCQQRGQjWZ5RoI3WdCz+EARMZ3Ke5MrXH3Sr2RSzSKARp+yB6P2bXKbllNwdeJd6ClNAC9a7z6fdimkYgNOVEqY7nJjrIiNSMcpjafqogIXREBtAxVJAIVJDlb03xmVF6uB9LU0LjXP09kZFIqUkUms6I6KFa9mbif14n1f2rIGMiSTUIOl/UTznWMZ5lhHtMAtV8YgihkplbMR0SSag2SdomBG/55VXSrJQ9t+zdVkq16iKOIjpBp+gceegS1dANqqMGougBPaEX9Go9Ws/Wm/U+by1Yi5lj9AfWxzdWFKAM</latexit><latexit sha1_base64="c4wYMkXN5HGiHYD3HWLGJdSiF3U=">AAACFnicbVBNS8NAEN3Urxq/oh69LBbBiyUpBT0WvHisYD+gCWWznbZLN5u4uymU0F/hxb/ixYMiXsWb/8ZtWlBbHww83pthZl6YcKa0635ZhbX1jc2t4ra9s7u3f+AcHjVVnEoKDRrzWLZDooAzAQ3NNId2IoFEIYdWOLqe+a0xSMVicacnCQQRGQjWZ5RoI3WdCz+EARMZ3Ke5MrXH3Sr2RSzSKARp+yB6P2bXKbllNwdeJd6ClNAC9a7z6fdimkYgNOVEqY7nJjrIiNSMcpjafqogIXREBtAxVJAIVJDlb03xmVF6uB9LU0LjXP09kZFIqUkUms6I6KFa9mbif14n1f2rIGMiSTUIOl/UTznWMZ5lhHtMAtV8YgihkplbMR0SSag2SdomBG/55VXSrJQ9t+zdVkq16iKOIjpBp+gceegS1dANqqMGougBPaEX9Go9Ws/Wm/U+by1Yi5lj9AfWxzdWFKAM</latexit><latexit sha1_base64="c4wYMkXN5HGiHYD3HWLGJdSiF3U=">AAACFnicbVBNS8NAEN3Urxq/oh69LBbBiyUpBT0WvHisYD+gCWWznbZLN5u4uymU0F/hxb/ixYMiXsWb/8ZtWlBbHww83pthZl6YcKa0635ZhbX1jc2t4ra9s7u3f+AcHjVVnEoKDRrzWLZDooAzAQ3NNId2IoFEIYdWOLqe+a0xSMVicacnCQQRGQjWZ5RoI3WdCz+EARMZ3Ke5MrXH3Sr2RSzSKARp+yB6P2bXKbllNwdeJd6ClNAC9a7z6fdimkYgNOVEqY7nJjrIiNSMcpjafqogIXREBtAxVJAIVJDlb03xmVF6uB9LU0LjXP09kZFIqUkUms6I6KFa9mbif14n1f2rIGMiSTUIOl/UTznWMZ5lhHtMAtV8YgihkplbMR0SSag2SdomBG/55VXSrJQ9t+zdVkq16iKOIjpBp+gceegS1dANqqMGougBPaEX9Go9Ws/Wm/U+by1Yi5lj9AfWxzdWFKAM</latexit>
+v5
+<latexit sha1_base64="zKuTyUAQYRiw6fyvzMkB8jl9+1o=">AAACFnicbVBNS8NAEN3Urxq/qh69LBbBiyUpih4LXjxWsB/QlLDZTNulm03c3RRK6K/w4l/x4kERr+LNf+M2LaitDwYe780wMy9IOFPacb6swsrq2vpGcdPe2t7Z3SvtHzRVnEoKDRrzWLYDooAzAQ3NNId2IoFEAYdWMLye+q0RSMVicafHCXQj0hesxyjRRvJLZ14AfSYyuE9zZWKP/AvsiVikUQDS9kCEP6ZfKjsVJwdeJu6clNEcdb/06YUxTSMQmnKiVMd1Et3NiNSMcpjYXqogIXRI+tAxVJAIVDfL35rgE6OEuBdLU0LjXP09kZFIqXEUmM6I6IFa9Kbif14n1b2rbsZEkmoQdLaol3KsYzzNCIdMAtV8bAihkplbMR0QSag2SdomBHfx5WXSrFZcp+LeVsu183kcRXSEjtEpctElqqEbVEcNRNEDekIv6NV6tJ6tN+t91lqw5jOH6A+sj29XsaAN</latexit><latexit sha1_base64="zKuTyUAQYRiw6fyvzMkB8jl9+1o=">AAACFnicbVBNS8NAEN3Urxq/qh69LBbBiyUpih4LXjxWsB/QlLDZTNulm03c3RRK6K/w4l/x4kERr+LNf+M2LaitDwYe780wMy9IOFPacb6swsrq2vpGcdPe2t7Z3SvtHzRVnEoKDRrzWLYDooAzAQ3NNId2IoFEAYdWMLye+q0RSMVicafHCXQj0hesxyjRRvJLZ14AfSYyuE9zZWKP/AvsiVikUQDS9kCEP6ZfKjsVJwdeJu6clNEcdb/06YUxTSMQmnKiVMd1Et3NiNSMcpjYXqogIXRI+tAxVJAIVDfL35rgE6OEuBdLU0LjXP09kZFIqXEUmM6I6IFa9Kbif14n1b2rbsZEkmoQdLaol3KsYzzNCIdMAtV8bAihkplbMR0QSag2SdomBHfx5WXSrFZcp+LeVsu183kcRXSEjtEpctElqqEbVEcNRNEDekIv6NV6tJ6tN+t91lqw5jOH6A+sj29XsaAN</latexit><latexit sha1_base64="zKuTyUAQYRiw6fyvzMkB8jl9+1o=">AAACFnicbVBNS8NAEN3Urxq/qh69LBbBiyUpih4LXjxWsB/QlLDZTNulm03c3RRK6K/w4l/x4kERr+LNf+M2LaitDwYe780wMy9IOFPacb6swsrq2vpGcdPe2t7Z3SvtHzRVnEoKDRrzWLYDooAzAQ3NNId2IoFEAYdWMLye+q0RSMVicafHCXQj0hesxyjRRvJLZ14AfSYyuE9zZWKP/AvsiVikUQDS9kCEP6ZfKjsVJwdeJu6clNEcdb/06YUxTSMQmnKiVMd1Et3NiNSMcpjYXqogIXRI+tAxVJAIVDfL35rgE6OEuBdLU0LjXP09kZFIqXEUmM6I6IFa9Kbif14n1b2rbsZEkmoQdLaol3KsYzzNCIdMAtV8bAihkplbMR0QSag2SdomBHfx5WXSrFZcp+LeVsu183kcRXSEjtEpctElqqEbVEcNRNEDekIv6NV6tJ6tN+t91lqw5jOH6A+sj29XsaAN</latexit><latexit sha1_base64="zKuTyUAQYRiw6fyvzMkB8jl9+1o=">AAACFnicbVBNS8NAEN3Urxq/qh69LBbBiyUpih4LXjxWsB/QlLDZTNulm03c3RRK6K/w4l/x4kERr+LNf+M2LaitDwYe780wMy9IOFPacb6swsrq2vpGcdPe2t7Z3SvtHzRVnEoKDRrzWLYDooAzAQ3NNId2IoFEAYdWMLye+q0RSMVicafHCXQj0hesxyjRRvJLZ14AfSYyuE9zZWKP/AvsiVikUQDS9kCEP6ZfKjsVJwdeJu6clNEcdb/06YUxTSMQmnKiVMd1Et3NiNSMcpjYXqogIXRI+tAxVJAIVDfL35rgE6OEuBdLU0LjXP09kZFIqXEUmM6I6IFa9Kbif14n1b2rbsZEkmoQdLaol3KsYzzNCIdMAtV8bAihkplbMR0QSag2SdomBHfx5WXSrFZcp+LeVsu183kcRXSEjtEpctElqqEbVEcNRNEDekIv6NV6tJ6tN+t91lqw5jOH6A+sj29XsaAN</latexit>
+u1
+<latexit sha1_base64="gp4adw0W1xOSSudjXHjZHLZf6Wk=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEPg5EIkwcgXQDEL0fMyyVvYqXAy8Tf07KaI56WPoMegk1MQhNOVGq43up7mZEakY5TNzAKEgJHZEBdCwVJAbVzfK3JvjEKj3cT6QtoXGu/p7ISKzUOI5sZ0z0UC16U/E/r2N0/7KbMZEaDYLOFvUNxzrB04xwj0mgmo8tIVQyeyumQyIJ1TZJ14bgL768TJrViu9V/JtquXY+j6OIjtAxOkU+ukA1dI3qqIEoekBP6AW9Oo/Os/PmvM9aC8585hD9gfPxDU+eoAg=</latexit><latexit sha1_base64="gp4adw0W1xOSSudjXHjZHLZf6Wk=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEPg5EIkwcgXQDEL0fMyyVvYqXAy8Tf07KaI56WPoMegk1MQhNOVGq43up7mZEakY5TNzAKEgJHZEBdCwVJAbVzfK3JvjEKj3cT6QtoXGu/p7ISKzUOI5sZ0z0UC16U/E/r2N0/7KbMZEaDYLOFvUNxzrB04xwj0mgmo8tIVQyeyumQyIJ1TZJ14bgL768TJrViu9V/JtquXY+j6OIjtAxOkU+ukA1dI3qqIEoekBP6AW9Oo/Os/PmvM9aC8585hD9gfPxDU+eoAg=</latexit><latexit sha1_base64="gp4adw0W1xOSSudjXHjZHLZf6Wk=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEPg5EIkwcgXQDEL0fMyyVvYqXAy8Tf07KaI56WPoMegk1MQhNOVGq43up7mZEakY5TNzAKEgJHZEBdCwVJAbVzfK3JvjEKj3cT6QtoXGu/p7ISKzUOI5sZ0z0UC16U/E/r2N0/7KbMZEaDYLOFvUNxzrB04xwj0mgmo8tIVQyeyumQyIJ1TZJ14bgL768TJrViu9V/JtquXY+j6OIjtAxOkU+ukA1dI3qqIEoekBP6AW9Oo/Os/PmvM9aC8585hD9gfPxDU+eoAg=</latexit><latexit sha1_base64="gp4adw0W1xOSSudjXHjZHLZf6Wk=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEPg5EIkwcgXQDEL0fMyyVvYqXAy8Tf07KaI56WPoMegk1MQhNOVGq43up7mZEakY5TNzAKEgJHZEBdCwVJAbVzfK3JvjEKj3cT6QtoXGu/p7ISKzUOI5sZ0z0UC16U/E/r2N0/7KbMZEaDYLOFvUNxzrB04xwj0mgmo8tIVQyeyumQyIJ1TZJ14bgL768TJrViu9V/JtquXY+j6OIjtAxOkU+ukA1dI3qqIEoekBP6AW9Oo/Os/PmvM9aC8585hD9gfPxDU+eoAg=</latexit>
+u2
+<latexit sha1_base64="VRNicZjerxhPAiBc+cnOQsX/0BQ=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEVRyIRJg4AukGIHo/ZlgqexUvB14m/pyU0Rz1sPQZ9BJqYhCacqJUx/dS3c2I1IxymLiBUZASOiID6FgqSAyqm+VvTfCJVXq4n0hbQuNc/T2RkVipcRzZzpjooVr0puJ/Xsfo/mU3YyI1GgSdLeobjnWCpxnhHpNANR9bQqhk9lZMh0QSqm2Srg3BX3x5mTSrFd+r+DfVcu18HkcRHaFjdIp8dIFq6BrVUQNR9ICe0At6dR6dZ+fNeZ+1Fpz5zCH6A+fjG1E7oAk=</latexit><latexit sha1_base64="VRNicZjerxhPAiBc+cnOQsX/0BQ=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEVRyIRJg4AukGIHo/ZlgqexUvB14m/pyU0Rz1sPQZ9BJqYhCacqJUx/dS3c2I1IxymLiBUZASOiID6FgqSAyqm+VvTfCJVXq4n0hbQuNc/T2RkVipcRzZzpjooVr0puJ/Xsfo/mU3YyI1GgSdLeobjnWCpxnhHpNANR9bQqhk9lZMh0QSqm2Srg3BX3x5mTSrFd+r+DfVcu18HkcRHaFjdIp8dIFq6BrVUQNR9ICe0At6dR6dZ+fNeZ+1Fpz5zCH6A+fjG1E7oAk=</latexit><latexit sha1_base64="VRNicZjerxhPAiBc+cnOQsX/0BQ=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEVRyIRJg4AukGIHo/ZlgqexUvB14m/pyU0Rz1sPQZ9BJqYhCacqJUx/dS3c2I1IxymLiBUZASOiID6FgqSAyqm+VvTfCJVXq4n0hbQuNc/T2RkVipcRzZzpjooVr0puJ/Xsfo/mU3YyI1GgSdLeobjnWCpxnhHpNANR9bQqhk9lZMh0QSqm2Srg3BX3x5mTSrFd+r+DfVcu18HkcRHaFjdIp8dIFq6BrVUQNR9ICe0At6dR6dZ+fNeZ+1Fpz5zCH6A+fjG1E7oAk=</latexit><latexit sha1_base64="VRNicZjerxhPAiBc+cnOQsX/0BQ=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEVRyIRJg4AukGIHo/ZlgqexUvB14m/pyU0Rz1sPQZ9BJqYhCacqJUx/dS3c2I1IxymLiBUZASOiID6FgqSAyqm+VvTfCJVXq4n0hbQuNc/T2RkVipcRzZzpjooVr0puJ/Xsfo/mU3YyI1GgSdLeobjnWCpxnhHpNANR9bQqhk9lZMh0QSqm2Srg3BX3x5mTSrFd+r+DfVcu18HkcRHaFjdIp8dIFq6BrVUQNR9ICe0At6dR6dZ+fNeZ+1Fpz5zCH6A+fjG1E7oAk=</latexit>
+u3
+<latexit sha1_base64="UGz/z65hDMy5Ayp4AT1iLYJXuF4=">AAACFnicbVDJSgNBEO1xjeM26tFLYxC8GGaioMeAF48RzAKZMPR0KkmTnp6xFyEM+Qov/ooXD4p4FW/+jZ0F1MQHBY/3qqiqF2ecKe37X87S8srq2nphw93c2t7Z9fb26yo1kkKNpjyVzZgo4ExATTPNoZlJIEnMoREPrsZ+4x6kYqm41cMM2gnpCdZllGgrRd5pGEOPiRzuzEQZuSY6w6FIhUlikG4IovNjRl7RL/kT4EUSzEgRzVCNvM+wk1KTgNCUE6VagZ/pdk6kZpTDyA2NgozQAelBy1JBElDtfPLWCB9bpYO7qbQlNJ6ovydykig1TGLbmRDdV/PeWPzPaxndvWznTGRGg6DTRV3DsU7xOCPcYRKo5kNLCJXM3oppn0hCtU3StSEE8y8vknq5FPil4KZcrJzP4iigQ3SETlCALlAFXaMqqiGKHtATekGvzqPz7Lw579PWJWc2c4D+wPn4BlLYoAo=</latexit><latexit sha1_base64="UGz/z65hDMy5Ayp4AT1iLYJXuF4=">AAACFnicbVDJSgNBEO1xjeM26tFLYxC8GGaioMeAF48RzAKZMPR0KkmTnp6xFyEM+Qov/ooXD4p4FW/+jZ0F1MQHBY/3qqiqF2ecKe37X87S8srq2nphw93c2t7Z9fb26yo1kkKNpjyVzZgo4ExATTPNoZlJIEnMoREPrsZ+4x6kYqm41cMM2gnpCdZllGgrRd5pGEOPiRzuzEQZuSY6w6FIhUlikG4IovNjRl7RL/kT4EUSzEgRzVCNvM+wk1KTgNCUE6VagZ/pdk6kZpTDyA2NgozQAelBy1JBElDtfPLWCB9bpYO7qbQlNJ6ovydykig1TGLbmRDdV/PeWPzPaxndvWznTGRGg6DTRV3DsU7xOCPcYRKo5kNLCJXM3oppn0hCtU3StSEE8y8vknq5FPil4KZcrJzP4iigQ3SETlCALlAFXaMqqiGKHtATekGvzqPz7Lw579PWJWc2c4D+wPn4BlLYoAo=</latexit><latexit sha1_base64="UGz/z65hDMy5Ayp4AT1iLYJXuF4=">AAACFnicbVDJSgNBEO1xjeM26tFLYxC8GGaioMeAF48RzAKZMPR0KkmTnp6xFyEM+Qov/ooXD4p4FW/+jZ0F1MQHBY/3qqiqF2ecKe37X87S8srq2nphw93c2t7Z9fb26yo1kkKNpjyVzZgo4ExATTPNoZlJIEnMoREPrsZ+4x6kYqm41cMM2gnpCdZllGgrRd5pGEOPiRzuzEQZuSY6w6FIhUlikG4IovNjRl7RL/kT4EUSzEgRzVCNvM+wk1KTgNCUE6VagZ/pdk6kZpTDyA2NgozQAelBy1JBElDtfPLWCB9bpYO7qbQlNJ6ovydykig1TGLbmRDdV/PeWPzPaxndvWznTGRGg6DTRV3DsU7xOCPcYRKo5kNLCJXM3oppn0hCtU3StSEE8y8vknq5FPil4KZcrJzP4iigQ3SETlCALlAFXaMqqiGKHtATekGvzqPz7Lw579PWJWc2c4D+wPn4BlLYoAo=</latexit><latexit sha1_base64="UGz/z65hDMy5Ayp4AT1iLYJXuF4=">AAACFnicbVDJSgNBEO1xjeM26tFLYxC8GGaioMeAF48RzAKZMPR0KkmTnp6xFyEM+Qov/ooXD4p4FW/+jZ0F1MQHBY/3qqiqF2ecKe37X87S8srq2nphw93c2t7Z9fb26yo1kkKNpjyVzZgo4ExATTPNoZlJIEnMoREPrsZ+4x6kYqm41cMM2gnpCdZllGgrRd5pGEOPiRzuzEQZuSY6w6FIhUlikG4IovNjRl7RL/kT4EUSzEgRzVCNvM+wk1KTgNCUE6VagZ/pdk6kZpTDyA2NgozQAelBy1JBElDtfPLWCB9bpYO7qbQlNJ6ovydykig1TGLbmRDdV/PeWPzPaxndvWznTGRGg6DTRV3DsU7xOCPcYRKo5kNLCJXM3oppn0hCtU3StSEE8y8vknq5FPil4KZcrJzP4iigQ3SETlCALlAFXaMqqiGKHtATekGvzqPz7Lw579PWJWc2c4D+wPn4BlLYoAo=</latexit>
+u4
+<latexit sha1_base64="5DAGrlEXQj/k4tV037Ef+XGQ/dY=">AAACFnicbVDJSgNBEO1xjeMW9eilMQheDDMhoMeAF48RzAKZMPT0VJImPT1jL0IY8hVe/BUvHhTxKt78GzsLqIkPCh7vVVFVL8o4U9rzvpyV1bX1jc3Clru9s7u3Xzw4bKrUSAoNmvJUtiOigDMBDc00h3YmgSQRh1Y0vJr4rXuQiqXiVo8y6CakL1iPUaKtFBbPgwj6TORwZ6bK2DVhFQciFSaJQLoBiPjHDIslr+xNgZeJPyclNEc9LH4GcUpNAkJTTpTq+F6muzmRmlEOYzcwCjJCh6QPHUsFSUB18+lbY3xqlRj3UmlLaDxVf0/kJFFqlES2MyF6oBa9ifif1zG6d9nNmciMBkFni3qGY53iSUY4ZhKo5iNLCJXM3orpgEhCtU3StSH4iy8vk2al7Htl/6ZSqlXncRTQMTpBZ8hHF6iGrlEdNRBFD+gJvaBX59F5dt6c91nrijOfOUJ/4Hx8A1R1oAs=</latexit><latexit sha1_base64="5DAGrlEXQj/k4tV037Ef+XGQ/dY=">AAACFnicbVDJSgNBEO1xjeMW9eilMQheDDMhoMeAF48RzAKZMPT0VJImPT1jL0IY8hVe/BUvHhTxKt78GzsLqIkPCh7vVVFVL8o4U9rzvpyV1bX1jc3Clru9s7u3Xzw4bKrUSAoNmvJUtiOigDMBDc00h3YmgSQRh1Y0vJr4rXuQiqXiVo8y6CakL1iPUaKtFBbPgwj6TORwZ6bK2DVhFQciFSaJQLoBiPjHDIslr+xNgZeJPyclNEc9LH4GcUpNAkJTTpTq+F6muzmRmlEOYzcwCjJCh6QPHUsFSUB18+lbY3xqlRj3UmlLaDxVf0/kJFFqlES2MyF6oBa9ifif1zG6d9nNmciMBkFni3qGY53iSUY4ZhKo5iNLCJXM3orpgEhCtU3StSH4iy8vk2al7Htl/6ZSqlXncRTQMTpBZ8hHF6iGrlEdNRBFD+gJvaBX59F5dt6c91nrijOfOUJ/4Hx8A1R1oAs=</latexit><latexit sha1_base64="5DAGrlEXQj/k4tV037Ef+XGQ/dY=">AAACFnicbVDJSgNBEO1xjeMW9eilMQheDDMhoMeAF48RzAKZMPT0VJImPT1jL0IY8hVe/BUvHhTxKt78GzsLqIkPCh7vVVFVL8o4U9rzvpyV1bX1jc3Clru9s7u3Xzw4bKrUSAoNmvJUtiOigDMBDc00h3YmgSQRh1Y0vJr4rXuQiqXiVo8y6CakL1iPUaKtFBbPgwj6TORwZ6bK2DVhFQciFSaJQLoBiPjHDIslr+xNgZeJPyclNEc9LH4GcUpNAkJTTpTq+F6muzmRmlEOYzcwCjJCh6QPHUsFSUB18+lbY3xqlRj3UmlLaDxVf0/kJFFqlES2MyF6oBa9ifif1zG6d9nNmciMBkFni3qGY53iSUY4ZhKo5iNLCJXM3orpgEhCtU3StSH4iy8vk2al7Htl/6ZSqlXncRTQMTpBZ8hHF6iGrlEdNRBFD+gJvaBX59F5dt6c91nrijOfOUJ/4Hx8A1R1oAs=</latexit><latexit sha1_base64="5DAGrlEXQj/k4tV037Ef+XGQ/dY=">AAACFnicbVDJSgNBEO1xjeMW9eilMQheDDMhoMeAF48RzAKZMPT0VJImPT1jL0IY8hVe/BUvHhTxKt78GzsLqIkPCh7vVVFVL8o4U9rzvpyV1bX1jc3Clru9s7u3Xzw4bKrUSAoNmvJUtiOigDMBDc00h3YmgSQRh1Y0vJr4rXuQiqXiVo8y6CakL1iPUaKtFBbPgwj6TORwZ6bK2DVhFQciFSaJQLoBiPjHDIslr+xNgZeJPyclNEc9LH4GcUpNAkJTTpTq+F6muzmRmlEOYzcwCjJCh6QPHUsFSUB18+lbY3xqlRj3UmlLaDxVf0/kJFFqlES2MyF6oBa9ifif1zG6d9nNmciMBkFni3qGY53iSUY4ZhKo5iNLCJXM3orpgEhCtU3StSH4iy8vk2al7Htl/6ZSqlXncRTQMTpBZ8hHF6iGrlEdNRBFD+gJvaBX59F5dt6c91nrijOfOUJ/4Hx8A1R1oAs=</latexit>
+v1u1
+<latexit sha1_base64="piN/P88AjaSW5CbuI5awxFwPyTI=">AAACGXicbVDLSgNBEJyNr7i+oh69DAbBU9jNRY8BPXiMYB6QDcvspJMMmZ1d5xEIS37Di7/ixYMiHvXk3zjZBNTEgoaiqpvurijlTGnP+3IKa+sbm1vFbXdnd2//oHR41FSJkRQaNOGJbEdEAWcCGpppDu1UAokjDq1odDXzW2OQiiXiTk9S6MZkIFifUaKtFJa8IIIBExncm1yZuuPQN6GPA5EIE0cg3QBE78cPS2Wv4uXAq8RfkDJaoB6WPoJeQk0MQlNOlOr4Xqq7GZGaUQ5TNzAKUkJHZAAdSwWJQXWz/LMpPrNKD/cTaUtonKu/JzISKzWJI9sZEz1Uy95M/M/rGN2/7GZMpEaDoPNFfcOxTvAsJtxjEqjmE0sIlczeiumQSEK1DdO1IfjLL6+SZrXiexX/tlquXS/iKKITdIrOkY8uUA3doDpqIIoe0BN6Qa/Oo/PsvDnv89aCs5g5Rn/gfH4DhAmhPA==</latexit><latexit sha1_base64="piN/P88AjaSW5CbuI5awxFwPyTI=">AAACGXicbVDLSgNBEJyNr7i+oh69DAbBU9jNRY8BPXiMYB6QDcvspJMMmZ1d5xEIS37Di7/ixYMiHvXk3zjZBNTEgoaiqpvurijlTGnP+3IKa+sbm1vFbXdnd2//oHR41FSJkRQaNOGJbEdEAWcCGpppDu1UAokjDq1odDXzW2OQiiXiTk9S6MZkIFifUaKtFJa8IIIBExncm1yZuuPQN6GPA5EIE0cg3QBE78cPS2Wv4uXAq8RfkDJaoB6WPoJeQk0MQlNOlOr4Xqq7GZGaUQ5TNzAKUkJHZAAdSwWJQXWz/LMpPrNKD/cTaUtonKu/JzISKzWJI9sZEz1Uy95M/M/rGN2/7GZMpEaDoPNFfcOxTvAsJtxjEqjmE0sIlczeiumQSEK1DdO1IfjLL6+SZrXiexX/tlquXS/iKKITdIrOkY8uUA3doDpqIIoe0BN6Qa/Oo/PsvDnv89aCs5g5Rn/gfH4DhAmhPA==</latexit><latexit sha1_base64="piN/P88AjaSW5CbuI5awxFwPyTI=">AAACGXicbVDLSgNBEJyNr7i+oh69DAbBU9jNRY8BPXiMYB6QDcvspJMMmZ1d5xEIS37Di7/ixYMiHvXk3zjZBNTEgoaiqpvurijlTGnP+3IKa+sbm1vFbXdnd2//oHR41FSJkRQaNOGJbEdEAWcCGpppDu1UAokjDq1odDXzW2OQiiXiTk9S6MZkIFifUaKtFJa8IIIBExncm1yZuuPQN6GPA5EIE0cg3QBE78cPS2Wv4uXAq8RfkDJaoB6WPoJeQk0MQlNOlOr4Xqq7GZGaUQ5TNzAKUkJHZAAdSwWJQXWz/LMpPrNKD/cTaUtonKu/JzISKzWJI9sZEz1Uy95M/M/rGN2/7GZMpEaDoPNFfcOxTvAsJtxjEqjmE0sIlczeiumQSEK1DdO1IfjLL6+SZrXiexX/tlquXS/iKKITdIrOkY8uUA3doDpqIIoe0BN6Qa/Oo/PsvDnv89aCs5g5Rn/gfH4DhAmhPA==</latexit><latexit sha1_base64="piN/P88AjaSW5CbuI5awxFwPyTI=">AAACGXicbVDLSgNBEJyNr7i+oh69DAbBU9jNRY8BPXiMYB6QDcvspJMMmZ1d5xEIS37Di7/ixYMiHvXk3zjZBNTEgoaiqpvurijlTGnP+3IKa+sbm1vFbXdnd2//oHR41FSJkRQaNOGJbEdEAWcCGpppDu1UAokjDq1odDXzW2OQiiXiTk9S6MZkIFifUaKtFJa8IIIBExncm1yZuuPQN6GPA5EIE0cg3QBE78cPS2Wv4uXAq8RfkDJaoB6WPoJeQk0MQlNOlOr4Xqq7GZGaUQ5TNzAKUkJHZAAdSwWJQXWz/LMpPrNKD/cTaUtonKu/JzISKzWJI9sZEz1Uy95M/M/rGN2/7GZMpEaDoPNFfcOxTvAsJtxjEqjmE0sIlczeiumQSEK1DdO1IfjLL6+SZrXiexX/tlquXS/iKKITdIrOkY8uUA3doDpqIIoe0BN6Qa/Oo/PsvDnv89aCs5g5Rn/gfH4DhAmhPA==</latexit>
+v2u2
+<latexit sha1_base64="lRaYR0UDMmNR3KwGVWvTQy8jcg8=">AAACGXicbVDLSgNBEJyNr7i+oh69DAbBU9gNgh4DXjxGMA/IhmV20kmGzM6u8wiEJb/hxV/x4kERj3ryb5xsAmpiQUNR1U13V5RyprTnfTmFtfWNza3itruzu7d/UDo8aqrESAoNmvBEtiOigDMBDc00h3YqgcQRh1Y0up75rTFIxRJxpycpdGMyEKzPKNFWCkteEMGAiQzuTa5M3XFYNWEVByIRJo5AugGI3o8flspexcuBV4m/IGW0QD0sfQS9hJoYhKacKNXxvVR3MyI1oxymbmAUpISOyAA6lgoSg+pm+WdTfGaVHu4n0pbQOFd/T2QkVmoSR7YzJnqolr2Z+J/XMbp/1c2YSI0GQeeL+oZjneBZTLjHJFDNJ5YQKpm9FdMhkYRqG6ZrQ/CXX14lzWrF9yr+bbVcu1jEUUQn6BSdIx9dohq6QXXUQBQ9oCf0gl6dR+fZeXPe560FZzFzjP7A+fwGgnahLg==</latexit><latexit sha1_base64="lRaYR0UDMmNR3KwGVWvTQy8jcg8=">AAACGXicbVDLSgNBEJyNr7i+oh69DAbBU9gNgh4DXjxGMA/IhmV20kmGzM6u8wiEJb/hxV/x4kERj3ryb5xsAmpiQUNR1U13V5RyprTnfTmFtfWNza3itruzu7d/UDo8aqrESAoNmvBEtiOigDMBDc00h3YqgcQRh1Y0up75rTFIxRJxpycpdGMyEKzPKNFWCkteEMGAiQzuTa5M3XFYNWEVByIRJo5AugGI3o8flspexcuBV4m/IGW0QD0sfQS9hJoYhKacKNXxvVR3MyI1oxymbmAUpISOyAA6lgoSg+pm+WdTfGaVHu4n0pbQOFd/T2QkVmoSR7YzJnqolr2Z+J/XMbp/1c2YSI0GQeeL+oZjneBZTLjHJFDNJ5YQKpm9FdMhkYRqG6ZrQ/CXX14lzWrF9yr+bbVcu1jEUUQn6BSdIx9dohq6QXXUQBQ9oCf0gl6dR+fZeXPe560FZzFzjP7A+fwGgnahLg==</latexit><latexit sha1_base64="lRaYR0UDMmNR3KwGVWvTQy8jcg8=">AAACGXicbVDLSgNBEJyNr7i+oh69DAbBU9gNgh4DXjxGMA/IhmV20kmGzM6u8wiEJb/hxV/x4kERj3ryb5xsAmpiQUNR1U13V5RyprTnfTmFtfWNza3itruzu7d/UDo8aqrESAoNmvBEtiOigDMBDc00h3YqgcQRh1Y0up75rTFIxRJxpycpdGMyEKzPKNFWCkteEMGAiQzuTa5M3XFYNWEVByIRJo5AugGI3o8flspexcuBV4m/IGW0QD0sfQS9hJoYhKacKNXxvVR3MyI1oxymbmAUpISOyAA6lgoSg+pm+WdTfGaVHu4n0pbQOFd/T2QkVmoSR7YzJnqolr2Z+J/XMbp/1c2YSI0GQeeL+oZjneBZTLjHJFDNJ5YQKpm9FdMhkYRqG6ZrQ/CXX14lzWrF9yr+bbVcu1jEUUQn6BSdIx9dohq6QXXUQBQ9oCf0gl6dR+fZeXPe560FZzFzjP7A+fwGgnahLg==</latexit><latexit sha1_base64="lRaYR0UDMmNR3KwGVWvTQy8jcg8=">AAACGXicbVDLSgNBEJyNr7i+oh69DAbBU9gNgh4DXjxGMA/IhmV20kmGzM6u8wiEJb/hxV/x4kERj3ryb5xsAmpiQUNR1U13V5RyprTnfTmFtfWNza3itruzu7d/UDo8aqrESAoNmvBEtiOigDMBDc00h3YqgcQRh1Y0up75rTFIxRJxpycpdGMyEKzPKNFWCkteEMGAiQzuTa5M3XFYNWEVByIRJo5AugGI3o8flspexcuBV4m/IGW0QD0sfQS9hJoYhKacKNXxvVR3MyI1oxymbmAUpISOyAA6lgoSg+pm+WdTfGaVHu4n0pbQOFd/T2QkVmoSR7YzJnqolr2Z+J/XMbp/1c2YSI0GQeeL+oZjneBZTLjHJFDNJ5YQKpm9FdMhkYRqG6ZrQ/CXX14lzWrF9yr+bbVcu1jEUUQn6BSdIx9dohq6QXXUQBQ9oCf0gl6dR+fZeXPe560FZzFzjP7A+fwGgnahLg==</latexit>
+v3u3
+<latexit sha1_base64="iYBclgXtTY6DoeVwIoL6ggjEJKk=">AAACGXicbVDJSgNBEO2JWxy3qEcvjUHwFGYSQY8BLx4jmAUyYejpVJImPT1jL4Ew5De8+CtePCjiUU/+jZ0F1MQHBY/3qqiqF6WcKe15X05ubX1jcyu/7e7s7u0fFA6PGioxkkKdJjyRrYgo4ExAXTPNoZVKIHHEoRkNr6d+cwRSsUTc6XEKnZj0BesxSrSVwoIXRNBnIoN7M1Mm7iismLCCA5EIE0cg3QBE98cPC0Wv5M2AV4m/IEW0QC0sfATdhJoYhKacKNX2vVR3MiI1oxwmbmAUpIQOSR/algoSg+pks88m+MwqXdxLpC2h8Uz9PZGRWKlxHNnOmOiBWvam4n9e2+jeVSdjIjUaBJ0v6hmOdYKnMeEuk0A1H1tCqGT2VkwHRBKqbZiuDcFffnmVNMol3yv5t+Vi9WIRRx6doFN0jnx0iaroBtVQHVH0gJ7QC3p1Hp1n5815n7fmnMXMMfoD5/MbhbOhMA==</latexit><latexit sha1_base64="iYBclgXtTY6DoeVwIoL6ggjEJKk=">AAACGXicbVDJSgNBEO2JWxy3qEcvjUHwFGYSQY8BLx4jmAUyYejpVJImPT1jL4Ew5De8+CtePCjiUU/+jZ0F1MQHBY/3qqiqF6WcKe15X05ubX1jcyu/7e7s7u0fFA6PGioxkkKdJjyRrYgo4ExAXTPNoZVKIHHEoRkNr6d+cwRSsUTc6XEKnZj0BesxSrSVwoIXRNBnIoN7M1Mm7iismLCCA5EIE0cg3QBE98cPC0Wv5M2AV4m/IEW0QC0sfATdhJoYhKacKNX2vVR3MiI1oxwmbmAUpIQOSR/algoSg+pks88m+MwqXdxLpC2h8Uz9PZGRWKlxHNnOmOiBWvam4n9e2+jeVSdjIjUaBJ0v6hmOdYKnMeEuk0A1H1tCqGT2VkwHRBKqbZiuDcFffnmVNMol3yv5t+Vi9WIRRx6doFN0jnx0iaroBtVQHVH0gJ7QC3p1Hp1n5815n7fmnMXMMfoD5/MbhbOhMA==</latexit><latexit sha1_base64="iYBclgXtTY6DoeVwIoL6ggjEJKk=">AAACGXicbVDJSgNBEO2JWxy3qEcvjUHwFGYSQY8BLx4jmAUyYejpVJImPT1jL4Ew5De8+CtePCjiUU/+jZ0F1MQHBY/3qqiqF6WcKe15X05ubX1jcyu/7e7s7u0fFA6PGioxkkKdJjyRrYgo4ExAXTPNoZVKIHHEoRkNr6d+cwRSsUTc6XEKnZj0BesxSrSVwoIXRNBnIoN7M1Mm7iismLCCA5EIE0cg3QBE98cPC0Wv5M2AV4m/IEW0QC0sfATdhJoYhKacKNX2vVR3MiI1oxwmbmAUpIQOSR/algoSg+pks88m+MwqXdxLpC2h8Uz9PZGRWKlxHNnOmOiBWvam4n9e2+jeVSdjIjUaBJ0v6hmOdYKnMeEuk0A1H1tCqGT2VkwHRBKqbZiuDcFffnmVNMol3yv5t+Vi9WIRRx6doFN0jnx0iaroBtVQHVH0gJ7QC3p1Hp1n5815n7fmnMXMMfoD5/MbhbOhMA==</latexit><latexit sha1_base64="iYBclgXtTY6DoeVwIoL6ggjEJKk=">AAACGXicbVDJSgNBEO2JWxy3qEcvjUHwFGYSQY8BLx4jmAUyYejpVJImPT1jL4Ew5De8+CtePCjiUU/+jZ0F1MQHBY/3qqiqF6WcKe15X05ubX1jcyu/7e7s7u0fFA6PGioxkkKdJjyRrYgo4ExAXTPNoZVKIHHEoRkNr6d+cwRSsUTc6XEKnZj0BesxSrSVwoIXRNBnIoN7M1Mm7iismLCCA5EIE0cg3QBE98cPC0Wv5M2AV4m/IEW0QC0sfATdhJoYhKacKNX2vVR3MiI1oxwmbmAUpIQOSR/algoSg+pks88m+MwqXdxLpC2h8Uz9PZGRWKlxHNnOmOiBWvam4n9e2+jeVSdjIjUaBJ0v6hmOdYKnMeEuk0A1H1tCqGT2VkwHRBKqbZiuDcFffnmVNMol3yv5t+Vi9WIRRx6doFN0jnx0iaroBtVQHVH0gJ7QC3p1Hp1n5815n7fmnMXMMfoD5/MbhbOhMA==</latexit>
+v4u4
+<latexit sha1_base64="FJsw0xv8hmXb96WcNHHdmiXGS20=">AAACGXicbVDLSgNBEJz1GddX1KOXwSB4CrshoMeAF48RzAOyYZmddJIhs7PrPAJhyW948Ve8eFDEo578GyfJgppY0FBUddPdFaWcKe15X87a+sbm1nZhx93d2z84LB4dN1ViJIUGTXgi2xFRwJmAhmaaQzuVQOKIQysaXc/81hikYom405MUujEZCNZnlGgrhUUviGDARAb3Zq5M3XFYNWEVByIRJo5AugGI3o8fFkte2ZsDrxI/JyWUox4WP4JeQk0MQlNOlOr4Xqq7GZGaUQ5TNzAKUkJHZAAdSwWJQXWz+WdTfG6VHu4n0pbQeK7+nshIrNQkjmxnTPRQLXsz8T+vY3T/qpsxkRoNgi4W9Q3HOsGzmHCPSaCaTywhVDJ7K6ZDIgnVNkzXhuAvv7xKmpWy75X920qpVs3jKKBTdIYukI8uUQ3doDpqIIoe0BN6Qa/Oo/PsvDnvi9Y1J585QX/gfH4DiPChMg==</latexit><latexit sha1_base64="FJsw0xv8hmXb96WcNHHdmiXGS20=">AAACGXicbVDLSgNBEJz1GddX1KOXwSB4CrshoMeAF48RzAOyYZmddJIhs7PrPAJhyW948Ve8eFDEo578GyfJgppY0FBUddPdFaWcKe15X87a+sbm1nZhx93d2z84LB4dN1ViJIUGTXgi2xFRwJmAhmaaQzuVQOKIQysaXc/81hikYom405MUujEZCNZnlGgrhUUviGDARAb3Zq5M3XFYNWEVByIRJo5AugGI3o8fFkte2ZsDrxI/JyWUox4WP4JeQk0MQlNOlOr4Xqq7GZGaUQ5TNzAKUkJHZAAdSwWJQXWz+WdTfG6VHu4n0pbQeK7+nshIrNQkjmxnTPRQLXsz8T+vY3T/qpsxkRoNgi4W9Q3HOsGzmHCPSaCaTywhVDJ7K6ZDIgnVNkzXhuAvv7xKmpWy75X920qpVs3jKKBTdIYukI8uUQ3doDpqIIoe0BN6Qa/Oo/PsvDnvi9Y1J585QX/gfH4DiPChMg==</latexit><latexit sha1_base64="FJsw0xv8hmXb96WcNHHdmiXGS20=">AAACGXicbVDLSgNBEJz1GddX1KOXwSB4CrshoMeAF48RzAOyYZmddJIhs7PrPAJhyW948Ve8eFDEo578GyfJgppY0FBUddPdFaWcKe15X87a+sbm1nZhx93d2z84LB4dN1ViJIUGTXgi2xFRwJmAhmaaQzuVQOKIQysaXc/81hikYom405MUujEZCNZnlGgrhUUviGDARAb3Zq5M3XFYNWEVByIRJo5AugGI3o8fFkte2ZsDrxI/JyWUox4WP4JeQk0MQlNOlOr4Xqq7GZGaUQ5TNzAKUkJHZAAdSwWJQXWz+WdTfG6VHu4n0pbQeK7+nshIrNQkjmxnTPRQLXsz8T+vY3T/qpsxkRoNgi4W9Q3HOsGzmHCPSaCaTywhVDJ7K6ZDIgnVNkzXhuAvv7xKmpWy75X920qpVs3jKKBTdIYukI8uUQ3doDpqIIoe0BN6Qa/Oo/PsvDnvi9Y1J585QX/gfH4DiPChMg==</latexit><latexit sha1_base64="FJsw0xv8hmXb96WcNHHdmiXGS20=">AAACGXicbVDLSgNBEJz1GddX1KOXwSB4CrshoMeAF48RzAOyYZmddJIhs7PrPAJhyW948Ve8eFDEo578GyfJgppY0FBUddPdFaWcKe15X87a+sbm1nZhx93d2z84LB4dN1ViJIUGTXgi2xFRwJmAhmaaQzuVQOKIQysaXc/81hikYom405MUujEZCNZnlGgrhUUviGDARAb3Zq5M3XFYNWEVByIRJo5AugGI3o8fFkte2ZsDrxI/JyWUox4WP4JeQk0MQlNOlOr4Xqq7GZGaUQ5TNzAKUkJHZAAdSwWJQXWz+WdTfG6VHu4n0pbQeK7+nshIrNQkjmxnTPRQLXsz8T+vY3T/qpsxkRoNgi4W9Q3HOsGzmHCPSaCaTywhVDJ7K6ZDIgnVNkzXhuAvv7xKmpWy75X920qpVs3jKKBTdIYukI8uUQ3doDpqIIoe0BN6Qa/Oo/PsvDnvi9Y1J585QX/gfH4DiPChMg==</latexit>
+G
+s
+1
+<latexit sha1_base64="uZxTNHemjQIsvoKd0mxUmrIEIW4=">AAACGHicbVBNS8NAEN3Urxq/oh69LBbBU02KoMeCBz1WsB/Q1LLZTtulm03c3Qgl9Gd48a948aCI1978N27TgNr6YODx3gwz84KYM6Vd98sqrKyurW8UN+2t7Z3dPWf/oKGiRFKo04hHshUQBZwJqGumObRiCSQMODSD0dXMbz6CVCwSd3ocQyckA8H6jBJtpK5z5gcwYCKFhyRTJvZ117tX2BeRSMIApO2D6P3YXafklt0MeJl4OSmhHLWuM/V7EU1CEJpyolTbc2PdSYnUjHKY2H6iICZ0RAbQNlSQEFQnzR6b4BOj9HA/kqaExpn6eyIloVLjMDCdIdFDtejNxP+8dqL7l52UiTjRIOh8UT/hWEd4lhLuMQlU87EhhEpmbsV0SCSh2mRpmxC8xZeXSaNS9tyyd1spVc/zOIroCB2jU+ShC1RFN6iG6oiiJ/SC3tC79Wy9Wh/W57y1YOUzh+gPrOk3sJ6gvw==</latexit><latexit sha1_base64="uZxTNHemjQIsvoKd0mxUmrIEIW4=">AAACGHicbVBNS8NAEN3Urxq/oh69LBbBU02KoMeCBz1WsB/Q1LLZTtulm03c3Qgl9Gd48a948aCI1978N27TgNr6YODx3gwz84KYM6Vd98sqrKyurW8UN+2t7Z3dPWf/oKGiRFKo04hHshUQBZwJqGumObRiCSQMODSD0dXMbz6CVCwSd3ocQyckA8H6jBJtpK5z5gcwYCKFhyRTJvZ117tX2BeRSMIApO2D6P3YXafklt0MeJl4OSmhHLWuM/V7EU1CEJpyolTbc2PdSYnUjHKY2H6iICZ0RAbQNlSQEFQnzR6b4BOj9HA/kqaExpn6eyIloVLjMDCdIdFDtejNxP+8dqL7l52UiTjRIOh8UT/hWEd4lhLuMQlU87EhhEpmbsV0SCSh2mRpmxC8xZeXSaNS9tyyd1spVc/zOIroCB2jU+ShC1RFN6iG6oiiJ/SC3tC79Wy9Wh/W57y1YOUzh+gPrOk3sJ6gvw==</latexit><latexit sha1_base64="uZxTNHemjQIsvoKd0mxUmrIEIW4=">AAACGHicbVBNS8NAEN3Urxq/oh69LBbBU02KoMeCBz1WsB/Q1LLZTtulm03c3Qgl9Gd48a948aCI1978N27TgNr6YODx3gwz84KYM6Vd98sqrKyurW8UN+2t7Z3dPWf/oKGiRFKo04hHshUQBZwJqGumObRiCSQMODSD0dXMbz6CVCwSd3ocQyckA8H6jBJtpK5z5gcwYCKFhyRTJvZ117tX2BeRSMIApO2D6P3YXafklt0MeJl4OSmhHLWuM/V7EU1CEJpyolTbc2PdSYnUjHKY2H6iICZ0RAbQNlSQEFQnzR6b4BOj9HA/kqaExpn6eyIloVLjMDCdIdFDtejNxP+8dqL7l52UiTjRIOh8UT/hWEd4lhLuMQlU87EhhEpmbsV0SCSh2mRpmxC8xZeXSaNS9tyyd1spVc/zOIroCB2jU+ShC1RFN6iG6oiiJ/SC3tC79Wy9Wh/W57y1YOUzh+gPrOk3sJ6gvw==</latexit><latexit sha1_base64="uZxTNHemjQIsvoKd0mxUmrIEIW4=">AAACGHicbVBNS8NAEN3Urxq/oh69LBbBU02KoMeCBz1WsB/Q1LLZTtulm03c3Qgl9Gd48a948aCI1978N27TgNr6YODx3gwz84KYM6Vd98sqrKyurW8UN+2t7Z3dPWf/oKGiRFKo04hHshUQBZwJqGumObRiCSQMODSD0dXMbz6CVCwSd3ocQyckA8H6jBJtpK5z5gcwYCKFhyRTJvZ117tX2BeRSMIApO2D6P3YXafklt0MeJl4OSmhHLWuM/V7EU1CEJpyolTbc2PdSYnUjHKY2H6iICZ0RAbQNlSQEFQnzR6b4BOj9HA/kqaExpn6eyIloVLjMDCdIdFDtejNxP+8dqL7l52UiTjRIOh8UT/hWEd4lhLuMQlU87EhhEpmbsV0SCSh2mRpmxC8xZeXSaNS9tyyd1spVc/zOIroCB2jU+ShC1RFN6iG6oiiJ/SC3tC79Wy9Wh/W57y1YOUzh+gPrOk3sJ6gvw==</latexit>
+G
+t
+1
+<latexit sha1_base64="76eA6C9kDOy/NhD3x3udYB8I8ok=">AAACGHicbVBNS8NAEN3Urxq/oh69LBbBU02KoMeCBz1WsB/Q1LLZTtulm03c3Qgl9Gd48a948aCI1978N27TgNr6YODx3gwz84KYM6Vd98sqrKyurW8UN+2t7Z3dPWf/oKGiRFKo04hHshUQBZwJqGumObRiCSQMODSD0dXMbz6CVCwSd3ocQyckA8H6jBJtpK5z5gcwYCKFhyRTJvZ117vX2BeRSMIApO2D6P3YXafklt0MeJl4OSmhHLWuM/V7EU1CEJpyolTbc2PdSYnUjHKY2H6iICZ0RAbQNlSQEFQnzR6b4BOj9HA/kqaExpn6eyIloVLjMDCdIdFDtejNxP+8dqL7l52UiTjRIOh8UT/hWEd4lhLuMQlU87EhhEpmbsV0SCSh2mRpmxC8xZeXSaNS9tyyd1spVc/zOIroCB2jU+ShC1RFN6iG6oiiJ/SC3tC79Wy9Wh/W57y1YOUzh+gPrOk3sjugwA==</latexit><latexit sha1_base64="76eA6C9kDOy/NhD3x3udYB8I8ok=">AAACGHicbVBNS8NAEN3Urxq/oh69LBbBU02KoMeCBz1WsB/Q1LLZTtulm03c3Qgl9Gd48a948aCI1978N27TgNr6YODx3gwz84KYM6Vd98sqrKyurW8UN+2t7Z3dPWf/oKGiRFKo04hHshUQBZwJqGumObRiCSQMODSD0dXMbz6CVCwSd3ocQyckA8H6jBJtpK5z5gcwYCKFhyRTJvZ117vX2BeRSMIApO2D6P3YXafklt0MeJl4OSmhHLWuM/V7EU1CEJpyolTbc2PdSYnUjHKY2H6iICZ0RAbQNlSQEFQnzR6b4BOj9HA/kqaExpn6eyIloVLjMDCdIdFDtejNxP+8dqL7l52UiTjRIOh8UT/hWEd4lhLuMQlU87EhhEpmbsV0SCSh2mRpmxC8xZeXSaNS9tyyd1spVc/zOIroCB2jU+ShC1RFN6iG6oiiJ/SC3tC79Wy9Wh/W57y1YOUzh+gPrOk3sjugwA==</latexit><latexit sha1_base64="76eA6C9kDOy/NhD3x3udYB8I8ok=">AAACGHicbVBNS8NAEN3Urxq/oh69LBbBU02KoMeCBz1WsB/Q1LLZTtulm03c3Qgl9Gd48a948aCI1978N27TgNr6YODx3gwz84KYM6Vd98sqrKyurW8UN+2t7Z3dPWf/oKGiRFKo04hHshUQBZwJqGumObRiCSQMODSD0dXMbz6CVCwSd3ocQyckA8H6jBJtpK5z5gcwYCKFhyRTJvZ117vX2BeRSMIApO2D6P3YXafklt0MeJl4OSmhHLWuM/V7EU1CEJpyolTbc2PdSYnUjHKY2H6iICZ0RAbQNlSQEFQnzR6b4BOj9HA/kqaExpn6eyIloVLjMDCdIdFDtejNxP+8dqL7l52UiTjRIOh8UT/hWEd4lhLuMQlU87EhhEpmbsV0SCSh2mRpmxC8xZeXSaNS9tyyd1spVc/zOIroCB2jU+ShC1RFN6iG6oiiJ/SC3tC79Wy9Wh/W57y1YOUzh+gPrOk3sjugwA==</latexit><latexit sha1_base64="76eA6C9kDOy/NhD3x3udYB8I8ok=">AAACGHicbVBNS8NAEN3Urxq/oh69LBbBU02KoMeCBz1WsB/Q1LLZTtulm03c3Qgl9Gd48a948aCI1978N27TgNr6YODx3gwz84KYM6Vd98sqrKyurW8UN+2t7Z3dPWf/oKGiRFKo04hHshUQBZwJqGumObRiCSQMODSD0dXMbz6CVCwSd3ocQyckA8H6jBJtpK5z5gcwYCKFhyRTJvZ117vX2BeRSMIApO2D6P3YXafklt0MeJl4OSmhHLWuM/V7EU1CEJpyolTbc2PdSYnUjHKY2H6iICZ0RAbQNlSQEFQnzR6b4BOj9HA/kqaExpn6eyIloVLjMDCdIdFDtejNxP+8dqL7l52UiTjRIOh8UT/hWEd4lhLuMQlU87EhhEpmbsV0SCSh2mRpmxC8xZeXSaNS9tyyd1spVc/zOIroCB2jU+ShC1RFN6iG6oiiJ/SC3tC79Wy9Wh/W57y1YOUzh+gPrOk3sjugwA==</latexit>
+G
+M
+1
+<latexit sha1_base64="uOxdRZdo4/BOMjkRgbdvwLQeAPw=">AAACGHicbVDLSsNAFJ34rPEVdelmsAiualIEXRZc6EaoYB/QxDCZ3rZDJ5M4MxFK6Ge48VfcuFDEbXf+jdMHqK0HLhzOuZd774lSzpR23S9raXlldW29sGFvbm3v7Dp7+3WVZJJCjSY8kc2IKOBMQE0zzaGZSiBxxKER9S/HfuMRpGKJuNODFIKYdAXrMEq0kULn1I+gy0QOD9lEGdpXoXd/g32RiCyOQNo+iPaPHTpFt+ROgBeJNyNFNEM1dEZ+O6FZDEJTTpRqeW6qg5xIzSiHoe1nClJC+6QLLUMFiUEF+eSxIT42Sht3EmlKaDxRf0/kJFZqEEemMya6p+a9sfif18p05yLImUgzDYJOF3UyjnWCxynhNpNANR8YQqhk5lZMe0QSqk2WtgnBm395kdTLJc8tebflYuVsFkcBHaIjdII8dI4q6BpVUQ1R9IRe0Bt6t56tV+vD+py2LlmzmQP0B9boG3NQoJk=</latexit><latexit sha1_base64="uOxdRZdo4/BOMjkRgbdvwLQeAPw=">AAACGHicbVDLSsNAFJ34rPEVdelmsAiualIEXRZc6EaoYB/QxDCZ3rZDJ5M4MxFK6Ge48VfcuFDEbXf+jdMHqK0HLhzOuZd774lSzpR23S9raXlldW29sGFvbm3v7Dp7+3WVZJJCjSY8kc2IKOBMQE0zzaGZSiBxxKER9S/HfuMRpGKJuNODFIKYdAXrMEq0kULn1I+gy0QOD9lEGdpXoXd/g32RiCyOQNo+iPaPHTpFt+ROgBeJNyNFNEM1dEZ+O6FZDEJTTpRqeW6qg5xIzSiHoe1nClJC+6QLLUMFiUEF+eSxIT42Sht3EmlKaDxRf0/kJFZqEEemMya6p+a9sfif18p05yLImUgzDYJOF3UyjnWCxynhNpNANR8YQqhk5lZMe0QSqk2WtgnBm395kdTLJc8tebflYuVsFkcBHaIjdII8dI4q6BpVUQ1R9IRe0Bt6t56tV+vD+py2LlmzmQP0B9boG3NQoJk=</latexit><latexit sha1_base64="uOxdRZdo4/BOMjkRgbdvwLQeAPw=">AAACGHicbVDLSsNAFJ34rPEVdelmsAiualIEXRZc6EaoYB/QxDCZ3rZDJ5M4MxFK6Ge48VfcuFDEbXf+jdMHqK0HLhzOuZd774lSzpR23S9raXlldW29sGFvbm3v7Dp7+3WVZJJCjSY8kc2IKOBMQE0zzaGZSiBxxKER9S/HfuMRpGKJuNODFIKYdAXrMEq0kULn1I+gy0QOD9lEGdpXoXd/g32RiCyOQNo+iPaPHTpFt+ROgBeJNyNFNEM1dEZ+O6FZDEJTTpRqeW6qg5xIzSiHoe1nClJC+6QLLUMFiUEF+eSxIT42Sht3EmlKaDxRf0/kJFZqEEemMya6p+a9sfif18p05yLImUgzDYJOF3UyjnWCxynhNpNANR8YQqhk5lZMe0QSqk2WtgnBm395kdTLJc8tebflYuVsFkcBHaIjdII8dI4q6BpVUQ1R9IRe0Bt6t56tV+vD+py2LlmzmQP0B9boG3NQoJk=</latexit><latexit sha1_base64="uOxdRZdo4/BOMjkRgbdvwLQeAPw=">AAACGHicbVDLSsNAFJ34rPEVdelmsAiualIEXRZc6EaoYB/QxDCZ3rZDJ5M4MxFK6Ge48VfcuFDEbXf+jdMHqK0HLhzOuZd774lSzpR23S9raXlldW29sGFvbm3v7Dp7+3WVZJJCjSY8kc2IKOBMQE0zzaGZSiBxxKER9S/HfuMRpGKJuNODFIKYdAXrMEq0kULn1I+gy0QOD9lEGdpXoXd/g32RiCyOQNo+iPaPHTpFt+ROgBeJNyNFNEM1dEZ+O6FZDEJTTpRqeW6qg5xIzSiHoe1nClJC+6QLLUMFiUEF+eSxIT42Sht3EmlKaDxRf0/kJFZqEEemMya6p+a9sfif18p05yLImUgzDYJOF3UyjnWCxynhNpNANR8YQqhk5lZMe0QSqk2WtgnBm395kdTLJc8tebflYuVsFkcBHaIjdII8dI4q6BpVUQ1R9IRe0Bt6t56tV+vD+py2LlmzmQP0B9boG3NQoJk=</latexit>
+mini-batch 
+of size B
+1 1 1 1
+1 1 0 0
+1 0 1 1
+1 0 1 1
+1
+2
+3
+1 1 1 1
+1 1 1 0
+1 1 1 1
+1 0 0 1
+1
+3
+4
+2
+t1
+<latexit sha1_base64="uubE5nWdyIM5Ql3W583ikFWbRfo=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiQi6LLgxmUF+4AmlMl00g6dTMLMjVBCf8ONC0Xc+jPu/BsnbRbaemDgcM693DMnTKUw6LrfTmVjc2t7p7pb29s/ODyqH590TZJpxjsskYnuh9RwKRTvoEDJ+6nmNA4l74XTu8LvPXFtRKIecZbyIKZjJSLBKFrJ92OKkzDKcT70hvWG23QXIOvEK0kDSrSH9S9/lLAs5gqZpMYMPDfFIKcaBZN8XvMzw1PKpnTMB5YqGnMT5IvMc3JhlRGJEm2fQrJQf2/kNDZmFod2sshoVr1C/M8bZBjdBrlQaYZcseWhKJMEE1IUQEZCc4ZyZgllWtishE2opgxtTTVbgrf65XXSvWp6btN7uG60rss6qnAG53AJHtxAC+6hDR1gkMIzvMKbkzkvzrvzsRytOOXOKfyB8/kDIA6Rrg==</latexit><latexit sha1_base64="uubE5nWdyIM5Ql3W583ikFWbRfo=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiQi6LLgxmUF+4AmlMl00g6dTMLMjVBCf8ONC0Xc+jPu/BsnbRbaemDgcM693DMnTKUw6LrfTmVjc2t7p7pb29s/ODyqH590TZJpxjsskYnuh9RwKRTvoEDJ+6nmNA4l74XTu8LvPXFtRKIecZbyIKZjJSLBKFrJ92OKkzDKcT70hvWG23QXIOvEK0kDSrSH9S9/lLAs5gqZpMYMPDfFIKcaBZN8XvMzw1PKpnTMB5YqGnMT5IvMc3JhlRGJEm2fQrJQf2/kNDZmFod2sshoVr1C/M8bZBjdBrlQaYZcseWhKJMEE1IUQEZCc4ZyZgllWtishE2opgxtTTVbgrf65XXSvWp6btN7uG60rss6qnAG53AJHtxAC+6hDR1gkMIzvMKbkzkvzrvzsRytOOXOKfyB8/kDIA6Rrg==</latexit><latexit sha1_base64="uubE5nWdyIM5Ql3W583ikFWbRfo=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiQi6LLgxmUF+4AmlMl00g6dTMLMjVBCf8ONC0Xc+jPu/BsnbRbaemDgcM693DMnTKUw6LrfTmVjc2t7p7pb29s/ODyqH590TZJpxjsskYnuh9RwKRTvoEDJ+6nmNA4l74XTu8LvPXFtRKIecZbyIKZjJSLBKFrJ92OKkzDKcT70hvWG23QXIOvEK0kDSrSH9S9/lLAs5gqZpMYMPDfFIKcaBZN8XvMzw1PKpnTMB5YqGnMT5IvMc3JhlRGJEm2fQrJQf2/kNDZmFod2sshoVr1C/M8bZBjdBrlQaYZcseWhKJMEE1IUQEZCc4ZyZgllWtishE2opgxtTTVbgrf65XXSvWp6btN7uG60rss6qnAG53AJHtxAC+6hDR1gkMIzvMKbkzkvzrvzsRytOOXOKfyB8/kDIA6Rrg==</latexit><latexit sha1_base64="uubE5nWdyIM5Ql3W583ikFWbRfo=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiQi6LLgxmUF+4AmlMl00g6dTMLMjVBCf8ONC0Xc+jPu/BsnbRbaemDgcM693DMnTKUw6LrfTmVjc2t7p7pb29s/ODyqH590TZJpxjsskYnuh9RwKRTvoEDJ+6nmNA4l74XTu8LvPXFtRKIecZbyIKZjJSLBKFrJ92OKkzDKcT70hvWG23QXIOvEK0kDSrSH9S9/lLAs5gqZpMYMPDfFIKcaBZN8XvMzw1PKpnTMB5YqGnMT5IvMc3JhlRGJEm2fQrJQf2/kNDZmFod2sshoVr1C/M8bZBjdBrlQaYZcseWhKJMEE1IUQEZCc4ZyZgllWtishE2opgxtTTVbgrf65XXSvWp6btN7uG60rss6qnAG53AJHtxAC+6hDR1gkMIzvMKbkzkvzrvzsRytOOXOKfyB8/kDIA6Rrg==</latexit>
+p(v2)
+<latexit sha1_base64="h4xF+QP0hBzg1FzVjMywSYmVbv0=">AAAB+HicbVBNS8NAFHypX7V+NOrRy2IR6qUkpaDHghePFWwrtCFstpt26WYTdjeFGvpLvHhQxKs/xZv/xk2bg7YOLAwz7/FmJ0g4U9pxvq3S1vbO7l55v3JweHRctU9OeypOJaFdEvNYPgZYUc4E7WqmOX1MJMVRwGk/mN7mfn9GpWKxeNDzhHoRHgsWMoK1kXy7OoywngRhlizqM7955ds1p+EsgTaJW5AaFOj49tdwFJM0okITjpUauE6ivQxLzQini8owVTTBZIrHdGCowBFVXrYMvkCXRhmhMJbmCY2W6u+NDEdKzaPATOYx1bqXi/95g1SHN17GRJJqKsjqUJhypGOUt4BGTFKi+dwQTCQzWRGZYImJNl1VTAnu+pc3Sa/ZcJ2Ge9+qtVtFHWU4hwuogwvX0IY76EAXCKTwDK/wZj1ZL9a79bEaLVnFzhn8gfX5Az8OksE=</latexit><latexit sha1_base64="h4xF+QP0hBzg1FzVjMywSYmVbv0=">AAAB+HicbVBNS8NAFHypX7V+NOrRy2IR6qUkpaDHghePFWwrtCFstpt26WYTdjeFGvpLvHhQxKs/xZv/xk2bg7YOLAwz7/FmJ0g4U9pxvq3S1vbO7l55v3JweHRctU9OeypOJaFdEvNYPgZYUc4E7WqmOX1MJMVRwGk/mN7mfn9GpWKxeNDzhHoRHgsWMoK1kXy7OoywngRhlizqM7955ds1p+EsgTaJW5AaFOj49tdwFJM0okITjpUauE6ivQxLzQini8owVTTBZIrHdGCowBFVXrYMvkCXRhmhMJbmCY2W6u+NDEdKzaPATOYx1bqXi/95g1SHN17GRJJqKsjqUJhypGOUt4BGTFKi+dwQTCQzWRGZYImJNl1VTAnu+pc3Sa/ZcJ2Ge9+qtVtFHWU4hwuogwvX0IY76EAXCKTwDK/wZj1ZL9a79bEaLVnFzhn8gfX5Az8OksE=</latexit><latexit sha1_base64="h4xF+QP0hBzg1FzVjMywSYmVbv0=">AAAB+HicbVBNS8NAFHypX7V+NOrRy2IR6qUkpaDHghePFWwrtCFstpt26WYTdjeFGvpLvHhQxKs/xZv/xk2bg7YOLAwz7/FmJ0g4U9pxvq3S1vbO7l55v3JweHRctU9OeypOJaFdEvNYPgZYUc4E7WqmOX1MJMVRwGk/mN7mfn9GpWKxeNDzhHoRHgsWMoK1kXy7OoywngRhlizqM7955ds1p+EsgTaJW5AaFOj49tdwFJM0okITjpUauE6ivQxLzQini8owVTTBZIrHdGCowBFVXrYMvkCXRhmhMJbmCY2W6u+NDEdKzaPATOYx1bqXi/95g1SHN17GRJJqKsjqUJhypGOUt4BGTFKi+dwQTCQzWRGZYImJNl1VTAnu+pc3Sa/ZcJ2Ge9+qtVtFHWU4hwuogwvX0IY76EAXCKTwDK/wZj1ZL9a79bEaLVnFzhn8gfX5Az8OksE=</latexit><latexit sha1_base64="h4xF+QP0hBzg1FzVjMywSYmVbv0=">AAAB+HicbVBNS8NAFHypX7V+NOrRy2IR6qUkpaDHghePFWwrtCFstpt26WYTdjeFGvpLvHhQxKs/xZv/xk2bg7YOLAwz7/FmJ0g4U9pxvq3S1vbO7l55v3JweHRctU9OeypOJaFdEvNYPgZYUc4E7WqmOX1MJMVRwGk/mN7mfn9GpWKxeNDzhHoRHgsWMoK1kXy7OoywngRhlizqM7955ds1p+EsgTaJW5AaFOj49tdwFJM0okITjpUauE6ivQxLzQini8owVTTBZIrHdGCowBFVXrYMvkCXRhmhMJbmCY2W6u+NDEdKzaPATOYx1bqXi/95g1SHN17GRJJqKsjqUJhypGOUt4BGTFKi+dwQTCQzWRGZYImJNl1VTAnu+pc3Sa/ZcJ2Ge9+qtVtFHWU4hwuogwvX0IY76EAXCKTwDK/wZj1ZL9a79bEaLVnFzhn8gfX5Az8OksE=</latexit>
+p(v3)
+<latexit sha1_base64="hQUN50f4QMhcQKEC6pYB3Ymhpvc=">AAAB+HicbVDLSsNAFL3xWeujUZduBotQNyXRgi4LblxWsA9oQ5hMJ+3QySTMTAo19EvcuFDErZ/izr9x0mahrQcGDufcyz1zgoQzpR3n29rY3Nre2S3tlfcPDo8q9vFJR8WpJLRNYh7LXoAV5UzQtmaa014iKY4CTrvB5C73u1MqFYvFo54l1IvwSLCQEayN5NuVQYT1OAizZF6b+teXvl116s4CaJ24BalCgZZvfw2GMUkjKjThWKm+6yTay7DUjHA6Lw9SRRNMJnhE+4YKHFHlZYvgc3RhlCEKY2me0Gih/t7IcKTULArMZB5TrXq5+J/XT3V462VMJKmmgiwPhSlHOkZ5C2jIJCWazwzBRDKTFZExlpho01XZlOCufnmddK7qrlN3HxrVZqOoowRncA41cOEGmnAPLWgDgRSe4RXerCfrxXq3PpajG1axcwp/YH3+AECTksI=</latexit><latexit sha1_base64="hQUN50f4QMhcQKEC6pYB3Ymhpvc=">AAAB+HicbVDLSsNAFL3xWeujUZduBotQNyXRgi4LblxWsA9oQ5hMJ+3QySTMTAo19EvcuFDErZ/izr9x0mahrQcGDufcyz1zgoQzpR3n29rY3Nre2S3tlfcPDo8q9vFJR8WpJLRNYh7LXoAV5UzQtmaa014iKY4CTrvB5C73u1MqFYvFo54l1IvwSLCQEayN5NuVQYT1OAizZF6b+teXvl116s4CaJ24BalCgZZvfw2GMUkjKjThWKm+6yTay7DUjHA6Lw9SRRNMJnhE+4YKHFHlZYvgc3RhlCEKY2me0Gih/t7IcKTULArMZB5TrXq5+J/XT3V462VMJKmmgiwPhSlHOkZ5C2jIJCWazwzBRDKTFZExlpho01XZlOCufnmddK7qrlN3HxrVZqOoowRncA41cOEGmnAPLWgDgRSe4RXerCfrxXq3PpajG1axcwp/YH3+AECTksI=</latexit><latexit sha1_base64="hQUN50f4QMhcQKEC6pYB3Ymhpvc=">AAAB+HicbVDLSsNAFL3xWeujUZduBotQNyXRgi4LblxWsA9oQ5hMJ+3QySTMTAo19EvcuFDErZ/izr9x0mahrQcGDufcyz1zgoQzpR3n29rY3Nre2S3tlfcPDo8q9vFJR8WpJLRNYh7LXoAV5UzQtmaa014iKY4CTrvB5C73u1MqFYvFo54l1IvwSLCQEayN5NuVQYT1OAizZF6b+teXvl116s4CaJ24BalCgZZvfw2GMUkjKjThWKm+6yTay7DUjHA6Lw9SRRNMJnhE+4YKHFHlZYvgc3RhlCEKY2me0Gih/t7IcKTULArMZB5TrXq5+J/XT3V462VMJKmmgiwPhSlHOkZ5C2jIJCWazwzBRDKTFZExlpho01XZlOCufnmddK7qrlN3HxrVZqOoowRncA41cOEGmnAPLWgDgRSe4RXerCfrxXq3PpajG1axcwp/YH3+AECTksI=</latexit><latexit sha1_base64="hQUN50f4QMhcQKEC6pYB3Ymhpvc=">AAAB+HicbVDLSsNAFL3xWeujUZduBotQNyXRgi4LblxWsA9oQ5hMJ+3QySTMTAo19EvcuFDErZ/izr9x0mahrQcGDufcyz1zgoQzpR3n29rY3Nre2S3tlfcPDo8q9vFJR8WpJLRNYh7LXoAV5UzQtmaa014iKY4CTrvB5C73u1MqFYvFo54l1IvwSLCQEayN5NuVQYT1OAizZF6b+teXvl116s4CaJ24BalCgZZvfw2GMUkjKjThWKm+6yTay7DUjHA6Lw9SRRNMJnhE+4YKHFHlZYvgc3RhlCEKY2me0Gih/t7IcKTULArMZB5TrXq5+J/XT3V462VMJKmmgiwPhSlHOkZ5C2jIJCWazwzBRDKTFZExlpho01XZlOCufnmddK7qrlN3HxrVZqOoowRncA41cOEGmnAPLWgDgRSe4RXerCfrxXq3PpajG1axcwp/YH3+AECTksI=</latexit>
+p(v4)
+<latexit sha1_base64="lt82t7pJp2LVL9GTmQ1eTYLvQAA=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuimJFHRZcOOygn1AG8JkOmmHTiZhZlKooV/ixoUibv0Ud/6NkzYLbT0wcDjnXu6ZEyScKe0431Zpa3tnd6+8Xzk4PDqu2ienXRWnktAOiXks+wFWlDNBO5ppTvuJpDgKOO0F07vc782oVCwWj3qeUC/CY8FCRrA2km9XhxHWkyDMkkV95jevfLvmNJwl0CZxC1KDAm3f/hqOYpJGVGjCsVID10m0l2GpGeF0URmmiiaYTPGYDgwVOKLKy5bBF+jSKCMUxtI8odFS/b2R4UipeRSYyTymWvdy8T9vkOrw1suYSFJNBVkdClOOdIzyFtCISUo0nxuCiWQmKyITLDHRpquKKcFd//Im6V43XKfhPjRrrWZRRxnO4QLq4MINtOAe2tABAik8wyu8WU/Wi/VufaxGS1axcwZ/YH3+AEIYksM=</latexit><latexit sha1_base64="lt82t7pJp2LVL9GTmQ1eTYLvQAA=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuimJFHRZcOOygn1AG8JkOmmHTiZhZlKooV/ixoUibv0Ud/6NkzYLbT0wcDjnXu6ZEyScKe0431Zpa3tnd6+8Xzk4PDqu2ienXRWnktAOiXks+wFWlDNBO5ppTvuJpDgKOO0F07vc782oVCwWj3qeUC/CY8FCRrA2km9XhxHWkyDMkkV95jevfLvmNJwl0CZxC1KDAm3f/hqOYpJGVGjCsVID10m0l2GpGeF0URmmiiaYTPGYDgwVOKLKy5bBF+jSKCMUxtI8odFS/b2R4UipeRSYyTymWvdy8T9vkOrw1suYSFJNBVkdClOOdIzyFtCISUo0nxuCiWQmKyITLDHRpquKKcFd//Im6V43XKfhPjRrrWZRRxnO4QLq4MINtOAe2tABAik8wyu8WU/Wi/VufaxGS1axcwZ/YH3+AEIYksM=</latexit><latexit sha1_base64="lt82t7pJp2LVL9GTmQ1eTYLvQAA=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuimJFHRZcOOygn1AG8JkOmmHTiZhZlKooV/ixoUibv0Ud/6NkzYLbT0wcDjnXu6ZEyScKe0431Zpa3tnd6+8Xzk4PDqu2ienXRWnktAOiXks+wFWlDNBO5ppTvuJpDgKOO0F07vc782oVCwWj3qeUC/CY8FCRrA2km9XhxHWkyDMkkV95jevfLvmNJwl0CZxC1KDAm3f/hqOYpJGVGjCsVID10m0l2GpGeF0URmmiiaYTPGYDgwVOKLKy5bBF+jSKCMUxtI8odFS/b2R4UipeRSYyTymWvdy8T9vkOrw1suYSFJNBVkdClOOdIzyFtCISUo0nxuCiWQmKyITLDHRpquKKcFd//Im6V43XKfhPjRrrWZRRxnO4QLq4MINtOAe2tABAik8wyu8WU/Wi/VufaxGS1axcwZ/YH3+AEIYksM=</latexit><latexit sha1_base64="lt82t7pJp2LVL9GTmQ1eTYLvQAA=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuimJFHRZcOOygn1AG8JkOmmHTiZhZlKooV/ixoUibv0Ud/6NkzYLbT0wcDjnXu6ZEyScKe0431Zpa3tnd6+8Xzk4PDqu2ienXRWnktAOiXks+wFWlDNBO5ppTvuJpDgKOO0F07vc782oVCwWj3qeUC/CY8FCRrA2km9XhxHWkyDMkkV95jevfLvmNJwl0CZxC1KDAm3f/hqOYpJGVGjCsVID10m0l2GpGeF0URmmiiaYTPGYDgwVOKLKy5bBF+jSKCMUxtI8odFS/b2R4UipeRSYyTymWvdy8T9vkOrw1suYSFJNBVkdClOOdIzyFtCISUo0nxuCiWQmKyITLDHRpquKKcFd//Im6V43XKfhPjRrrWZRRxnO4QLq4MINtOAe2tABAik8wyu8WU/Wi/VufaxGS1axcwZ/YH3+AEIYksM=</latexit>
+p(u3)
+<latexit sha1_base64="vz8QOC8PnmsEzHYHHcVxSz0lKnk=">AAAB+HicbVDLSsNAFL2pr1ofjbp0EyxC3ZREC7osuHFZwT6gDWEynbRDJ5MwD6GGfokbF4q49VPc+TdO2iy09cDA4Zx7uWdOmDIqlet+W6WNza3tnfJuZW//4LBqHx13ZaIFJh2csET0QyQJo5x0FFWM9FNBUBwy0gunt7nfeyRC0oQ/qFlK/BiNOY0oRspIgV0dxkhNwihL53UdXF0Eds1tuAs468QrSA0KtAP7azhKsI4JV5ghKQeemyo/Q0JRzMi8MtSSpAhP0ZgMDOUoJtLPFsHnzrlRRk6UCPO4chbq740MxVLO4tBM5jHlqpeL/3kDraIbP6M81YpwvDwUaeaoxMlbcEZUEKzYzBCEBTVZHTxBAmFluqqYErzVL6+T7mXDcxvefbPWahZ1lOEUzqAOHlxDC+6gDR3AoOEZXuHNerJerHfrYzlasoqdE/gD6/MHPwySwQ==</latexit><latexit sha1_base64="vz8QOC8PnmsEzHYHHcVxSz0lKnk=">AAAB+HicbVDLSsNAFL2pr1ofjbp0EyxC3ZREC7osuHFZwT6gDWEynbRDJ5MwD6GGfokbF4q49VPc+TdO2iy09cDA4Zx7uWdOmDIqlet+W6WNza3tnfJuZW//4LBqHx13ZaIFJh2csET0QyQJo5x0FFWM9FNBUBwy0gunt7nfeyRC0oQ/qFlK/BiNOY0oRspIgV0dxkhNwihL53UdXF0Eds1tuAs468QrSA0KtAP7azhKsI4JV5ghKQeemyo/Q0JRzMi8MtSSpAhP0ZgMDOUoJtLPFsHnzrlRRk6UCPO4chbq740MxVLO4tBM5jHlqpeL/3kDraIbP6M81YpwvDwUaeaoxMlbcEZUEKzYzBCEBTVZHTxBAmFluqqYErzVL6+T7mXDcxvefbPWahZ1lOEUzqAOHlxDC+6gDR3AoOEZXuHNerJerHfrYzlasoqdE/gD6/MHPwySwQ==</latexit><latexit sha1_base64="vz8QOC8PnmsEzHYHHcVxSz0lKnk=">AAAB+HicbVDLSsNAFL2pr1ofjbp0EyxC3ZREC7osuHFZwT6gDWEynbRDJ5MwD6GGfokbF4q49VPc+TdO2iy09cDA4Zx7uWdOmDIqlet+W6WNza3tnfJuZW//4LBqHx13ZaIFJh2csET0QyQJo5x0FFWM9FNBUBwy0gunt7nfeyRC0oQ/qFlK/BiNOY0oRspIgV0dxkhNwihL53UdXF0Eds1tuAs468QrSA0KtAP7azhKsI4JV5ghKQeemyo/Q0JRzMi8MtSSpAhP0ZgMDOUoJtLPFsHnzrlRRk6UCPO4chbq740MxVLO4tBM5jHlqpeL/3kDraIbP6M81YpwvDwUaeaoxMlbcEZUEKzYzBCEBTVZHTxBAmFluqqYErzVL6+T7mXDcxvefbPWahZ1lOEUzqAOHlxDC+6gDR3AoOEZXuHNerJerHfrYzlasoqdE/gD6/MHPwySwQ==</latexit><latexit sha1_base64="vz8QOC8PnmsEzHYHHcVxSz0lKnk=">AAAB+HicbVDLSsNAFL2pr1ofjbp0EyxC3ZREC7osuHFZwT6gDWEynbRDJ5MwD6GGfokbF4q49VPc+TdO2iy09cDA4Zx7uWdOmDIqlet+W6WNza3tnfJuZW//4LBqHx13ZaIFJh2csET0QyQJo5x0FFWM9FNBUBwy0gunt7nfeyRC0oQ/qFlK/BiNOY0oRspIgV0dxkhNwihL53UdXF0Eds1tuAs468QrSA0KtAP7azhKsI4JV5ghKQeemyo/Q0JRzMi8MtSSpAhP0ZgMDOUoJtLPFsHnzrlRRk6UCPO4chbq740MxVLO4tBM5jHlqpeL/3kDraIbP6M81YpwvDwUaeaoxMlbcEZUEKzYzBCEBTVZHTxBAmFluqqYErzVL6+T7mXDcxvefbPWahZ1lOEUzqAOHlxDC+6gDR3AoOEZXuHNerJerHfrYzlasoqdE/gD6/MHPwySwQ==</latexit>
+p(u2)
+<latexit sha1_base64="j+mAJDI7nuBCa+nfMHiRKYzMvIs=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuilJKeiy4MZlBfuANoTJdNIOnTyYh1BDv8SNC0Xc+inu/BsnbRbaemDgcM693DMnSDmTynG+rdLW9s7uXnm/cnB4dFy1T057MtGC0C5JeCIGAZaUs5h2FVOcDlJBcRRw2g9mt7nff6RCsiR+UPOUehGexCxkBCsj+XZ1FGE1DcIsXdS137zy7ZrTcJZAm8QtSA0KdHz7azROiI5orAjHUg5dJ1VehoVihNNFZaQlTTGZ4QkdGhrjiEovWwZfoEujjFGYCPNihZbq740MR1LOo8BM5jHlupeL/3lDrcIbL2NxqhWNyepQqDlSCcpbQGMmKFF8bggmgpmsiEyxwESZriqmBHf9y5uk12y4TsO9b9XaraKOMpzDBdTBhWtowx10oAsENDzDK7xZT9aL9W59rEZLVrFzBn9gff4APYeSwA==</latexit><latexit sha1_base64="j+mAJDI7nuBCa+nfMHiRKYzMvIs=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuilJKeiy4MZlBfuANoTJdNIOnTyYh1BDv8SNC0Xc+inu/BsnbRbaemDgcM693DMnSDmTynG+rdLW9s7uXnm/cnB4dFy1T057MtGC0C5JeCIGAZaUs5h2FVOcDlJBcRRw2g9mt7nff6RCsiR+UPOUehGexCxkBCsj+XZ1FGE1DcIsXdS137zy7ZrTcJZAm8QtSA0KdHz7azROiI5orAjHUg5dJ1VehoVihNNFZaQlTTGZ4QkdGhrjiEovWwZfoEujjFGYCPNihZbq740MR1LOo8BM5jHlupeL/3lDrcIbL2NxqhWNyepQqDlSCcpbQGMmKFF8bggmgpmsiEyxwESZriqmBHf9y5uk12y4TsO9b9XaraKOMpzDBdTBhWtowx10oAsENDzDK7xZT9aL9W59rEZLVrFzBn9gff4APYeSwA==</latexit><latexit sha1_base64="j+mAJDI7nuBCa+nfMHiRKYzMvIs=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuilJKeiy4MZlBfuANoTJdNIOnTyYh1BDv8SNC0Xc+inu/BsnbRbaemDgcM693DMnSDmTynG+rdLW9s7uXnm/cnB4dFy1T057MtGC0C5JeCIGAZaUs5h2FVOcDlJBcRRw2g9mt7nff6RCsiR+UPOUehGexCxkBCsj+XZ1FGE1DcIsXdS137zy7ZrTcJZAm8QtSA0KdHz7azROiI5orAjHUg5dJ1VehoVihNNFZaQlTTGZ4QkdGhrjiEovWwZfoEujjFGYCPNihZbq740MR1LOo8BM5jHlupeL/3lDrcIbL2NxqhWNyepQqDlSCcpbQGMmKFF8bggmgpmsiEyxwESZriqmBHf9y5uk12y4TsO9b9XaraKOMpzDBdTBhWtowx10oAsENDzDK7xZT9aL9W59rEZLVrFzBn9gff4APYeSwA==</latexit><latexit sha1_base64="j+mAJDI7nuBCa+nfMHiRKYzMvIs=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuilJKeiy4MZlBfuANoTJdNIOnTyYh1BDv8SNC0Xc+inu/BsnbRbaemDgcM693DMnSDmTynG+rdLW9s7uXnm/cnB4dFy1T057MtGC0C5JeCIGAZaUs5h2FVOcDlJBcRRw2g9mt7nff6RCsiR+UPOUehGexCxkBCsj+XZ1FGE1DcIsXdS137zy7ZrTcJZAm8QtSA0KdHz7azROiI5orAjHUg5dJ1VehoVihNNFZaQlTTGZ4QkdGhrjiEovWwZfoEujjFGYCPNihZbq740MR1LOo8BM5jHlupeL/3lDrcIbL2NxqhWNyepQqDlSCcpbQGMmKFF8bggmgpmsiEyxwESZriqmBHf9y5uk12y4TsO9b9XaraKOMpzDBdTBhWtowx10oAsENDzDK7xZT9aL9W59rEZLVrFzBn9gff4APYeSwA==</latexit>
+p(u1)
+<latexit sha1_base64="VsuY3SAKLX8Rm//WdGnY5ngjVmM=">AAAB+HicbVDLSsNAFL3xWeujVZduBotQNyWRgi4LblxWsA9oQ5hMJ+3QySTMQ6ihX+LGhSJu/RR3/o2TNgttPTBwOOde7pkTppwp7brfzsbm1vbObmmvvH9weFSpHp90VWIkoR2S8ET2Q6woZ4J2NNOc9lNJcRxy2gunt7nfe6RSsUQ86FlK/RiPBYsYwdpKQbUyjLGehFGWzusm8C6Das1tuAugdeIVpAYF2kH1azhKiImp0IRjpQaem2o/w1Izwum8PDSKpphM8ZgOLBU4psrPFsHn6MIqIxQl0j6h0UL9vZHhWKlZHNrJPKZa9XLxP29gdHTjZ0ykRlNBlociw5FOUN4CGjFJieYzSzCRzGZFZIIlJtp2VbYleKtfXifdq4bnNrz7Zq3VLOoowRmcQx08uIYW3EEbOkDAwDO8wpvz5Lw4787HcnTDKXZO4Q+czx88ApK/</latexit><latexit sha1_base64="VsuY3SAKLX8Rm//WdGnY5ngjVmM=">AAAB+HicbVDLSsNAFL3xWeujVZduBotQNyWRgi4LblxWsA9oQ5hMJ+3QySTMQ6ihX+LGhSJu/RR3/o2TNgttPTBwOOde7pkTppwp7brfzsbm1vbObmmvvH9weFSpHp90VWIkoR2S8ET2Q6woZ4J2NNOc9lNJcRxy2gunt7nfe6RSsUQ86FlK/RiPBYsYwdpKQbUyjLGehFGWzusm8C6Das1tuAugdeIVpAYF2kH1azhKiImp0IRjpQaem2o/w1Izwum8PDSKpphM8ZgOLBU4psrPFsHn6MIqIxQl0j6h0UL9vZHhWKlZHNrJPKZa9XLxP29gdHTjZ0ykRlNBlociw5FOUN4CGjFJieYzSzCRzGZFZIIlJtp2VbYleKtfXifdq4bnNrz7Zq3VLOoowRmcQx08uIYW3EEbOkDAwDO8wpvz5Lw4787HcnTDKXZO4Q+czx88ApK/</latexit><latexit sha1_base64="VsuY3SAKLX8Rm//WdGnY5ngjVmM=">AAAB+HicbVDLSsNAFL3xWeujVZduBotQNyWRgi4LblxWsA9oQ5hMJ+3QySTMQ6ihX+LGhSJu/RR3/o2TNgttPTBwOOde7pkTppwp7brfzsbm1vbObmmvvH9weFSpHp90VWIkoR2S8ET2Q6woZ4J2NNOc9lNJcRxy2gunt7nfe6RSsUQ86FlK/RiPBYsYwdpKQbUyjLGehFGWzusm8C6Das1tuAugdeIVpAYF2kH1azhKiImp0IRjpQaem2o/w1Izwum8PDSKpphM8ZgOLBU4psrPFsHn6MIqIxQl0j6h0UL9vZHhWKlZHNrJPKZa9XLxP29gdHTjZ0ykRlNBlociw5FOUN4CGjFJieYzSzCRzGZFZIIlJtp2VbYleKtfXifdq4bnNrz7Zq3VLOoowRmcQx08uIYW3EEbOkDAwDO8wpvz5Lw4787HcnTDKXZO4Q+czx88ApK/</latexit><latexit sha1_base64="VsuY3SAKLX8Rm//WdGnY5ngjVmM=">AAAB+HicbVDLSsNAFL3xWeujVZduBotQNyWRgi4LblxWsA9oQ5hMJ+3QySTMQ6ihX+LGhSJu/RR3/o2TNgttPTBwOOde7pkTppwp7brfzsbm1vbObmmvvH9weFSpHp90VWIkoR2S8ET2Q6woZ4J2NNOc9lNJcRxy2gunt7nfe6RSsUQ86FlK/RiPBYsYwdpKQbUyjLGehFGWzusm8C6Das1tuAugdeIVpAYF2kH1azhKiImp0IRjpQaem2o/w1Izwum8PDSKpphM8ZgOLBU4psrPFsHn6MIqIxQl0j6h0UL9vZHhWKlZHNrJPKZa9XLxP29gdHTjZ0ykRlNBlociw5FOUN4CGjFJieYzSzCRzGZFZIIlJtp2VbYleKtfXifdq4bnNrz7Zq3VLOoowRmcQx08uIYW3EEbOkDAwDO8wpvz5Lw4787HcnTDKXZO4Q+czx88ApK/</latexit>
+v1
+<latexit sha1_base64="+W3gjQFGVr67cibH3DaHreSHau4=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPpTTt0Mgkzk0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMBVcG9f9dkpb2zu7e+X9ysHh0fFJ9fSso5NMMWyzRCSqF1KNgktsG24E9lKFNA4FdsPJ/cLvTlFpnsgnM0sxiOlI8ogzaqzk+zE14zDKp/OBN6jW3Lq7BNkkXkFqUKA1qH75w4RlMUrDBNW677mpCXKqDGcC5xU/05hSNqEj7FsqaYw6yJeZ5+TKKkMSJco+achS/b2R01jrWRzayUVGve4txP+8fmaiuyDnMs0MSrY6FGWCmIQsCiBDrpAZMbOEMsVtVsLGVFFmbE0VW4K3/uVN0rmpe27de2zUmo2ijjJcwCVcgwe30IQHaEEbGKTwDK/w5mTOi/PufKxGS06xcw5/4Hz+ACMckbA=</latexit><latexit sha1_base64="+W3gjQFGVr67cibH3DaHreSHau4=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPpTTt0Mgkzk0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMBVcG9f9dkpb2zu7e+X9ysHh0fFJ9fSso5NMMWyzRCSqF1KNgktsG24E9lKFNA4FdsPJ/cLvTlFpnsgnM0sxiOlI8ogzaqzk+zE14zDKp/OBN6jW3Lq7BNkkXkFqUKA1qH75w4RlMUrDBNW677mpCXKqDGcC5xU/05hSNqEj7FsqaYw6yJeZ5+TKKkMSJco+achS/b2R01jrWRzayUVGve4txP+8fmaiuyDnMs0MSrY6FGWCmIQsCiBDrpAZMbOEMsVtVsLGVFFmbE0VW4K3/uVN0rmpe27de2zUmo2ijjJcwCVcgwe30IQHaEEbGKTwDK/w5mTOi/PufKxGS06xcw5/4Hz+ACMckbA=</latexit><latexit sha1_base64="+W3gjQFGVr67cibH3DaHreSHau4=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPpTTt0Mgkzk0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMBVcG9f9dkpb2zu7e+X9ysHh0fFJ9fSso5NMMWyzRCSqF1KNgktsG24E9lKFNA4FdsPJ/cLvTlFpnsgnM0sxiOlI8ogzaqzk+zE14zDKp/OBN6jW3Lq7BNkkXkFqUKA1qH75w4RlMUrDBNW677mpCXKqDGcC5xU/05hSNqEj7FsqaYw6yJeZ5+TKKkMSJco+achS/b2R01jrWRzayUVGve4txP+8fmaiuyDnMs0MSrY6FGWCmIQsCiBDrpAZMbOEMsVtVsLGVFFmbE0VW4K3/uVN0rmpe27de2zUmo2ijjJcwCVcgwe30IQHaEEbGKTwDK/w5mTOi/PufKxGS06xcw5/4Hz+ACMckbA=</latexit><latexit sha1_base64="+W3gjQFGVr67cibH3DaHreSHau4=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPpTTt0Mgkzk0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMBVcG9f9dkpb2zu7e+X9ysHh0fFJ9fSso5NMMWyzRCSqF1KNgktsG24E9lKFNA4FdsPJ/cLvTlFpnsgnM0sxiOlI8ogzaqzk+zE14zDKp/OBN6jW3Lq7BNkkXkFqUKA1qH75w4RlMUrDBNW677mpCXKqDGcC5xU/05hSNqEj7FsqaYw6yJeZ5+TKKkMSJco+achS/b2R01jrWRzayUVGve4txP+8fmaiuyDnMs0MSrY6FGWCmIQsCiBDrpAZMbOEMsVtVsLGVFFmbE0VW4K3/uVN0rmpe27de2zUmo2ijjJcwCVcgwe30IQHaEEbGKTwDK/w5mTOi/PufKxGS06xcw5/4Hz+ACMckbA=</latexit>
+v2
+<latexit sha1_base64="L6lVscD/AFAfeuuyFgLqs1lBlws=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KUgh4LXjxWsK3QlLLZbtqlm03YfSmU0L/hxYMiXv0z3vw3btoctHVgYZh5jzc7QSKFQdf9dkpb2zu7e+X9ysHh0fFJ9fSsa+JUM95hsYz1U0ANl0LxDgqU/CnRnEaB5L1gepf7vRnXRsTqEecJH0R0rEQoGEUr+X5EcRKE2WwxbAyrNbfuLkE2iVeQGhRoD6tf/ihmacQVMkmN6XtugoOMahRM8kXFTw1PKJvSMe9bqmjEzSBbZl6QK6uMSBhr+xSSpfp7I6ORMfMosJN5RrPu5eJ/Xj/F8HaQCZWkyBVbHQpTSTAmeQFkJDRnKOeWUKaFzUrYhGrK0NZUsSV461/eJN1G3XPr3kOz1moWdZThAi7hGjy4gRbcQxs6wCCBZ3iFNyd1Xpx352M1WnKKnXP4A+fzBySgkbE=</latexit><latexit sha1_base64="L6lVscD/AFAfeuuyFgLqs1lBlws=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KUgh4LXjxWsK3QlLLZbtqlm03YfSmU0L/hxYMiXv0z3vw3btoctHVgYZh5jzc7QSKFQdf9dkpb2zu7e+X9ysHh0fFJ9fSsa+JUM95hsYz1U0ANl0LxDgqU/CnRnEaB5L1gepf7vRnXRsTqEecJH0R0rEQoGEUr+X5EcRKE2WwxbAyrNbfuLkE2iVeQGhRoD6tf/ihmacQVMkmN6XtugoOMahRM8kXFTw1PKJvSMe9bqmjEzSBbZl6QK6uMSBhr+xSSpfp7I6ORMfMosJN5RrPu5eJ/Xj/F8HaQCZWkyBVbHQpTSTAmeQFkJDRnKOeWUKaFzUrYhGrK0NZUsSV461/eJN1G3XPr3kOz1moWdZThAi7hGjy4gRbcQxs6wCCBZ3iFNyd1Xpx352M1WnKKnXP4A+fzBySgkbE=</latexit><latexit sha1_base64="L6lVscD/AFAfeuuyFgLqs1lBlws=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KUgh4LXjxWsK3QlLLZbtqlm03YfSmU0L/hxYMiXv0z3vw3btoctHVgYZh5jzc7QSKFQdf9dkpb2zu7e+X9ysHh0fFJ9fSsa+JUM95hsYz1U0ANl0LxDgqU/CnRnEaB5L1gepf7vRnXRsTqEecJH0R0rEQoGEUr+X5EcRKE2WwxbAyrNbfuLkE2iVeQGhRoD6tf/ihmacQVMkmN6XtugoOMahRM8kXFTw1PKJvSMe9bqmjEzSBbZl6QK6uMSBhr+xSSpfp7I6ORMfMosJN5RrPu5eJ/Xj/F8HaQCZWkyBVbHQpTSTAmeQFkJDRnKOeWUKaFzUrYhGrK0NZUsSV461/eJN1G3XPr3kOz1moWdZThAi7hGjy4gRbcQxs6wCCBZ3iFNyd1Xpx352M1WnKKnXP4A+fzBySgkbE=</latexit><latexit sha1_base64="L6lVscD/AFAfeuuyFgLqs1lBlws=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KUgh4LXjxWsK3QlLLZbtqlm03YfSmU0L/hxYMiXv0z3vw3btoctHVgYZh5jzc7QSKFQdf9dkpb2zu7e+X9ysHh0fFJ9fSsa+JUM95hsYz1U0ANl0LxDgqU/CnRnEaB5L1gepf7vRnXRsTqEecJH0R0rEQoGEUr+X5EcRKE2WwxbAyrNbfuLkE2iVeQGhRoD6tf/ihmacQVMkmN6XtugoOMahRM8kXFTw1PKJvSMe9bqmjEzSBbZl6QK6uMSBhr+xSSpfp7I6ORMfMosJN5RrPu5eJ/Xj/F8HaQCZWkyBVbHQpTSTAmeQFkJDRnKOeWUKaFzUrYhGrK0NZUsSV461/eJN1G3XPr3kOz1moWdZThAi7hGjy4gRbcQxs6wCCBZ3iFNyd1Xpx352M1WnKKnXP4A+fzBySgkbE=</latexit>
+v3
+<latexit sha1_base64="vl8vvYAr4+V6jf8d1aA5dqUR8fo=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5JoQY8FLx4r2FpoQtlsX9qlm03Y3RRK6N/w4kERr/4Zb/4bt20O2jqwMMy8x5udMBVcG9f9dkobm1vbO+Xdyt7+weFR9fiko5NMMWyzRCSqG1KNgktsG24EdlOFNA4FPoXju7n/NEGleSIfzTTFIKZDySPOqLGS78fUjMIon8z61/1qza27C5B14hWkBgVa/eqXP0hYFqM0TFCte56bmiCnynAmcFbxM40pZWM6xJ6lksaog3yReUYurDIgUaLsk4Ys1N8bOY21nsahnZxn1KveXPzP62Umug1yLtPMoGTLQ1EmiEnIvAAy4AqZEVNLKFPcZiVsRBVlxtZUsSV4q19eJ52ruufWvYdGrdko6ijDGZzDJXhwA024hxa0gUEKz/AKb07mvDjvzsdytOQUO6fwB87nDyYkkbI=</latexit><latexit sha1_base64="vl8vvYAr4+V6jf8d1aA5dqUR8fo=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5JoQY8FLx4r2FpoQtlsX9qlm03Y3RRK6N/w4kERr/4Zb/4bt20O2jqwMMy8x5udMBVcG9f9dkobm1vbO+Xdyt7+weFR9fiko5NMMWyzRCSqG1KNgktsG24EdlOFNA4FPoXju7n/NEGleSIfzTTFIKZDySPOqLGS78fUjMIon8z61/1qza27C5B14hWkBgVa/eqXP0hYFqM0TFCte56bmiCnynAmcFbxM40pZWM6xJ6lksaog3yReUYurDIgUaLsk4Ys1N8bOY21nsahnZxn1KveXPzP62Umug1yLtPMoGTLQ1EmiEnIvAAy4AqZEVNLKFPcZiVsRBVlxtZUsSV4q19eJ52ruufWvYdGrdko6ijDGZzDJXhwA024hxa0gUEKz/AKb07mvDjvzsdytOQUO6fwB87nDyYkkbI=</latexit><latexit sha1_base64="vl8vvYAr4+V6jf8d1aA5dqUR8fo=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5JoQY8FLx4r2FpoQtlsX9qlm03Y3RRK6N/w4kERr/4Zb/4bt20O2jqwMMy8x5udMBVcG9f9dkobm1vbO+Xdyt7+weFR9fiko5NMMWyzRCSqG1KNgktsG24EdlOFNA4FPoXju7n/NEGleSIfzTTFIKZDySPOqLGS78fUjMIon8z61/1qza27C5B14hWkBgVa/eqXP0hYFqM0TFCte56bmiCnynAmcFbxM40pZWM6xJ6lksaog3yReUYurDIgUaLsk4Ys1N8bOY21nsahnZxn1KveXPzP62Umug1yLtPMoGTLQ1EmiEnIvAAy4AqZEVNLKFPcZiVsRBVlxtZUsSV4q19eJ52ruufWvYdGrdko6ijDGZzDJXhwA024hxa0gUEKz/AKb07mvDjvzsdytOQUO6fwB87nDyYkkbI=</latexit><latexit sha1_base64="vl8vvYAr4+V6jf8d1aA5dqUR8fo=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5JoQY8FLx4r2FpoQtlsX9qlm03Y3RRK6N/w4kERr/4Zb/4bt20O2jqwMMy8x5udMBVcG9f9dkobm1vbO+Xdyt7+weFR9fiko5NMMWyzRCSqG1KNgktsG24EdlOFNA4FPoXju7n/NEGleSIfzTTFIKZDySPOqLGS78fUjMIon8z61/1qza27C5B14hWkBgVa/eqXP0hYFqM0TFCte56bmiCnynAmcFbxM40pZWM6xJ6lksaog3yReUYurDIgUaLsk4Ys1N8bOY21nsahnZxn1KveXPzP62Umug1yLtPMoGTLQ1EmiEnIvAAy4AqZEVNLKFPcZiVsRBVlxtZUsSV4q19eJ52ruufWvYdGrdko6ijDGZzDJXhwA024hxa0gUEKz/AKb07mvDjvzsdytOQUO6fwB87nDyYkkbI=</latexit>
+v4
+<latexit sha1_base64="FQiQlYSCqes0ZS9SjlH0kbXxYMc=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPppB06mYSZm0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMJXCoOt+O6Wt7Z3dvfJ+5eDw6PikenrWMUmmGW+zRCa6F1LDpVC8jQIl76Wa0ziUvBtO7hd+d8q1EYl6wlnKg5iOlIgEo2gl348pjsMon84HjUG15tbdJcgm8QpSgwKtQfXLHyYsi7lCJqkxfc9NMcipRsEkn1f8zPCUsgkd8b6lisbcBPky85xcWWVIokTbp5As1d8bOY2NmcWhnVxkNOveQvzP62cY3QW5UGmGXLHVoSiTBBOyKIAMheYM5cwSyrSwWQkbU00Z2poqtgRv/cubpHNT99y699ioNRtFHWW4gEu4Bg9uoQkP0II2MEjhGV7hzcmcF+fd+ViNlpxi5xz+wPn8ASeokbM=</latexit><latexit sha1_base64="FQiQlYSCqes0ZS9SjlH0kbXxYMc=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPppB06mYSZm0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMJXCoOt+O6Wt7Z3dvfJ+5eDw6PikenrWMUmmGW+zRCa6F1LDpVC8jQIl76Wa0ziUvBtO7hd+d8q1EYl6wlnKg5iOlIgEo2gl348pjsMon84HjUG15tbdJcgm8QpSgwKtQfXLHyYsi7lCJqkxfc9NMcipRsEkn1f8zPCUsgkd8b6lisbcBPky85xcWWVIokTbp5As1d8bOY2NmcWhnVxkNOveQvzP62cY3QW5UGmGXLHVoSiTBBOyKIAMheYM5cwSyrSwWQkbU00Z2poqtgRv/cubpHNT99y699ioNRtFHWW4gEu4Bg9uoQkP0II2MEjhGV7hzcmcF+fd+ViNlpxi5xz+wPn8ASeokbM=</latexit><latexit sha1_base64="FQiQlYSCqes0ZS9SjlH0kbXxYMc=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPppB06mYSZm0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMJXCoOt+O6Wt7Z3dvfJ+5eDw6PikenrWMUmmGW+zRCa6F1LDpVC8jQIl76Wa0ziUvBtO7hd+d8q1EYl6wlnKg5iOlIgEo2gl348pjsMon84HjUG15tbdJcgm8QpSgwKtQfXLHyYsi7lCJqkxfc9NMcipRsEkn1f8zPCUsgkd8b6lisbcBPky85xcWWVIokTbp5As1d8bOY2NmcWhnVxkNOveQvzP62cY3QW5UGmGXLHVoSiTBBOyKIAMheYM5cwSyrSwWQkbU00Z2poqtgRv/cubpHNT99y699ioNRtFHWW4gEu4Bg9uoQkP0II2MEjhGV7hzcmcF+fd+ViNlpxi5xz+wPn8ASeokbM=</latexit><latexit sha1_base64="FQiQlYSCqes0ZS9SjlH0kbXxYMc=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPppB06mYSZm0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMJXCoOt+O6Wt7Z3dvfJ+5eDw6PikenrWMUmmGW+zRCa6F1LDpVC8jQIl76Wa0ziUvBtO7hd+d8q1EYl6wlnKg5iOlIgEo2gl348pjsMon84HjUG15tbdJcgm8QpSgwKtQfXLHyYsi7lCJqkxfc9NMcipRsEkn1f8zPCUsgkd8b6lisbcBPky85xcWWVIokTbp5As1d8bOY2NmcWhnVxkNOveQvzP62cY3QW5UGmGXLHVoSiTBBOyKIAMheYM5cwSyrSwWQkbU00Z2poqtgRv/cubpHNT99y699ioNRtFHWW4gEu4Bg9uoQkP0II2MEjhGV7hzcmcF+fd+ViNlpxi5xz+wPn8ASeokbM=</latexit>
+u1
+<latexit sha1_base64="ji1SQg5HmsqTii6JDWjvXiOR67E=">AAAB83icbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuCG5cV7AM6Q8mkmTY0yQx5CGXob7hxoYhbf8adf2OmnYW2HggczrmXe3LijDNtfP/bq2xsbm3vVHdre/sHh0f145OuTq0itENSnqp+jDXlTNKOYYbTfqYoFjGnvXh6V/i9J6o0S+WjmWU0EngsWcIINk4KQ4HNJE5yOx8Gw3rDb/oLoHUSlKQBJdrD+lc4SokVVBrCsdaDwM9MlGNlGOF0XgutphkmUzymA0clFlRH+SLzHF04ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupporIVj98jrpXjUDvxk8XDda12UdVTiDc7iEAG6gBffQhg4QyOAZXuHNs96L9+59LEcrXrlzCn/gff4AIZWRrw==</latexit><latexit sha1_base64="ji1SQg5HmsqTii6JDWjvXiOR67E=">AAAB83icbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuCG5cV7AM6Q8mkmTY0yQx5CGXob7hxoYhbf8adf2OmnYW2HggczrmXe3LijDNtfP/bq2xsbm3vVHdre/sHh0f145OuTq0itENSnqp+jDXlTNKOYYbTfqYoFjGnvXh6V/i9J6o0S+WjmWU0EngsWcIINk4KQ4HNJE5yOx8Gw3rDb/oLoHUSlKQBJdrD+lc4SokVVBrCsdaDwM9MlGNlGOF0XgutphkmUzymA0clFlRH+SLzHF04ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupporIVj98jrpXjUDvxk8XDda12UdVTiDc7iEAG6gBffQhg4QyOAZXuHNs96L9+59LEcrXrlzCn/gff4AIZWRrw==</latexit><latexit sha1_base64="ji1SQg5HmsqTii6JDWjvXiOR67E=">AAAB83icbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuCG5cV7AM6Q8mkmTY0yQx5CGXob7hxoYhbf8adf2OmnYW2HggczrmXe3LijDNtfP/bq2xsbm3vVHdre/sHh0f145OuTq0itENSnqp+jDXlTNKOYYbTfqYoFjGnvXh6V/i9J6o0S+WjmWU0EngsWcIINk4KQ4HNJE5yOx8Gw3rDb/oLoHUSlKQBJdrD+lc4SokVVBrCsdaDwM9MlGNlGOF0XgutphkmUzymA0clFlRH+SLzHF04ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupporIVj98jrpXjUDvxk8XDda12UdVTiDc7iEAG6gBffQhg4QyOAZXuHNs96L9+59LEcrXrlzCn/gff4AIZWRrw==</latexit><latexit sha1_base64="ji1SQg5HmsqTii6JDWjvXiOR67E=">AAAB83icbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuCG5cV7AM6Q8mkmTY0yQx5CGXob7hxoYhbf8adf2OmnYW2HggczrmXe3LijDNtfP/bq2xsbm3vVHdre/sHh0f145OuTq0itENSnqp+jDXlTNKOYYbTfqYoFjGnvXh6V/i9J6o0S+WjmWU0EngsWcIINk4KQ4HNJE5yOx8Gw3rDb/oLoHUSlKQBJdrD+lc4SokVVBrCsdaDwM9MlGNlGOF0XgutphkmUzymA0clFlRH+SLzHF04ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupporIVj98jrpXjUDvxk8XDda12UdVTiDc7iEAG6gBffQhg4QyOAZXuHNs96L9+59LEcrXrlzCn/gff4AIZWRrw==</latexit>
+u2
+<latexit sha1_base64="aL97dYpCHA2XEMzNgF6vC3PIKGY=">AAAB83icbVDLSsNAFL2pr1pfUZduBovgqiSloMuCG5cV7AOaUCbTSTt0MgnzEErob7hxoYhbf8adf+OkzUJbDwwczrmXe+ZEGWdKe963U9na3tndq+7XDg6Pjk/c07OeSo0ktEtSnspBhBXlTNCuZprTQSYpTiJO+9HsrvD7T1QqlopHPc9omOCJYDEjWFspCBKsp1Gcm8WoOXLrXsNbAm0SvyR1KNEZuV/BOCUmoUITjpUa+l6mwxxLzQini1pgFM0wmeEJHVoqcEJVmC8zL9CVVcYoTqV9QqOl+nsjx4lS8ySyk0VGte4V4n/e0Oj4NsyZyIymgqwOxYYjnaKiADRmkhLN55ZgIpnNisgUS0y0ralmS/DXv7xJes2G7zX8h1a93SrrqMIFXMI1+HADbbiHDnSBQAbP8ApvjnFenHfnYzVaccqdc/gD5/MHIxmRsA==</latexit><latexit sha1_base64="aL97dYpCHA2XEMzNgF6vC3PIKGY=">AAAB83icbVDLSsNAFL2pr1pfUZduBovgqiSloMuCG5cV7AOaUCbTSTt0MgnzEErob7hxoYhbf8adf+OkzUJbDwwczrmXe+ZEGWdKe963U9na3tndq+7XDg6Pjk/c07OeSo0ktEtSnspBhBXlTNCuZprTQSYpTiJO+9HsrvD7T1QqlopHPc9omOCJYDEjWFspCBKsp1Gcm8WoOXLrXsNbAm0SvyR1KNEZuV/BOCUmoUITjpUa+l6mwxxLzQini1pgFM0wmeEJHVoqcEJVmC8zL9CVVcYoTqV9QqOl+nsjx4lS8ySyk0VGte4V4n/e0Oj4NsyZyIymgqwOxYYjnaKiADRmkhLN55ZgIpnNisgUS0y0ralmS/DXv7xJes2G7zX8h1a93SrrqMIFXMI1+HADbbiHDnSBQAbP8ApvjnFenHfnYzVaccqdc/gD5/MHIxmRsA==</latexit><latexit sha1_base64="aL97dYpCHA2XEMzNgF6vC3PIKGY=">AAAB83icbVDLSsNAFL2pr1pfUZduBovgqiSloMuCG5cV7AOaUCbTSTt0MgnzEErob7hxoYhbf8adf+OkzUJbDwwczrmXe+ZEGWdKe963U9na3tndq+7XDg6Pjk/c07OeSo0ktEtSnspBhBXlTNCuZprTQSYpTiJO+9HsrvD7T1QqlopHPc9omOCJYDEjWFspCBKsp1Gcm8WoOXLrXsNbAm0SvyR1KNEZuV/BOCUmoUITjpUa+l6mwxxLzQini1pgFM0wmeEJHVoqcEJVmC8zL9CVVcYoTqV9QqOl+nsjx4lS8ySyk0VGte4V4n/e0Oj4NsyZyIymgqwOxYYjnaKiADRmkhLN55ZgIpnNisgUS0y0ralmS/DXv7xJes2G7zX8h1a93SrrqMIFXMI1+HADbbiHDnSBQAbP8ApvjnFenHfnYzVaccqdc/gD5/MHIxmRsA==</latexit><latexit sha1_base64="aL97dYpCHA2XEMzNgF6vC3PIKGY=">AAAB83icbVDLSsNAFL2pr1pfUZduBovgqiSloMuCG5cV7AOaUCbTSTt0MgnzEErob7hxoYhbf8adf+OkzUJbDwwczrmXe+ZEGWdKe963U9na3tndq+7XDg6Pjk/c07OeSo0ktEtSnspBhBXlTNCuZprTQSYpTiJO+9HsrvD7T1QqlopHPc9omOCJYDEjWFspCBKsp1Gcm8WoOXLrXsNbAm0SvyR1KNEZuV/BOCUmoUITjpUa+l6mwxxLzQini1pgFM0wmeEJHVoqcEJVmC8zL9CVVcYoTqV9QqOl+nsjx4lS8ySyk0VGte4V4n/e0Oj4NsyZyIymgqwOxYYjnaKiADRmkhLN55ZgIpnNisgUS0y0ralmS/DXv7xJes2G7zX8h1a93SrrqMIFXMI1+HADbbiHDnSBQAbP8ApvjnFenHfnYzVaccqdc/gD5/MHIxmRsA==</latexit>
+u3
+<latexit sha1_base64="7c3cfRWuiBeaiswevmnssMfgAW8=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRa0GXBjcsK9gFNKJPppB06mYR5CCH0N9y4UMStP+POv3HSZqGtBwYO59zLPXPClDOlXffbqWxsbm3vVHdre/sHh0f145OeSowktEsSnshBiBXlTNCuZprTQSopjkNO++HsrvD7T1QqlohHnaU0iPFEsIgRrK3k+zHW0zDKzXx0Pao33Ka7AFonXkkaUKIzqn/544SYmApNOFZq6LmpDnIsNSOczmu+UTTFZIYndGipwDFVQb7IPEcXVhmjKJH2CY0W6u+NHMdKZXFoJ4uMatUrxP+8odHRbZAzkRpNBVkeigxHOkFFAWjMJCWaZ5ZgIpnNisgUS0y0ralmS/BWv7xOeldNz216D61Gu1XWUYUzOIdL8OAG2nAPHegCgRSe4RXeHOO8OO/Ox3K04pQ7p/AHzucPJJ2RsQ==</latexit><latexit sha1_base64="7c3cfRWuiBeaiswevmnssMfgAW8=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRa0GXBjcsK9gFNKJPppB06mYR5CCH0N9y4UMStP+POv3HSZqGtBwYO59zLPXPClDOlXffbqWxsbm3vVHdre/sHh0f145OeSowktEsSnshBiBXlTNCuZprTQSopjkNO++HsrvD7T1QqlohHnaU0iPFEsIgRrK3k+zHW0zDKzXx0Pao33Ka7AFonXkkaUKIzqn/544SYmApNOFZq6LmpDnIsNSOczmu+UTTFZIYndGipwDFVQb7IPEcXVhmjKJH2CY0W6u+NHMdKZXFoJ4uMatUrxP+8odHRbZAzkRpNBVkeigxHOkFFAWjMJCWaZ5ZgIpnNisgUS0y0ralmS/BWv7xOeldNz216D61Gu1XWUYUzOIdL8OAG2nAPHegCgRSe4RXeHOO8OO/Ox3K04pQ7p/AHzucPJJ2RsQ==</latexit><latexit sha1_base64="7c3cfRWuiBeaiswevmnssMfgAW8=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRa0GXBjcsK9gFNKJPppB06mYR5CCH0N9y4UMStP+POv3HSZqGtBwYO59zLPXPClDOlXffbqWxsbm3vVHdre/sHh0f145OeSowktEsSnshBiBXlTNCuZprTQSopjkNO++HsrvD7T1QqlohHnaU0iPFEsIgRrK3k+zHW0zDKzXx0Pao33Ka7AFonXkkaUKIzqn/544SYmApNOFZq6LmpDnIsNSOczmu+UTTFZIYndGipwDFVQb7IPEcXVhmjKJH2CY0W6u+NHMdKZXFoJ4uMatUrxP+8odHRbZAzkRpNBVkeigxHOkFFAWjMJCWaZ5ZgIpnNisgUS0y0ralmS/BWv7xOeldNz216D61Gu1XWUYUzOIdL8OAG2nAPHegCgRSe4RXeHOO8OO/Ox3K04pQ7p/AHzucPJJ2RsQ==</latexit><latexit sha1_base64="7c3cfRWuiBeaiswevmnssMfgAW8=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRa0GXBjcsK9gFNKJPppB06mYR5CCH0N9y4UMStP+POv3HSZqGtBwYO59zLPXPClDOlXffbqWxsbm3vVHdre/sHh0f145OeSowktEsSnshBiBXlTNCuZprTQSopjkNO++HsrvD7T1QqlohHnaU0iPFEsIgRrK3k+zHW0zDKzXx0Pao33Ka7AFonXkkaUKIzqn/544SYmApNOFZq6LmpDnIsNSOczmu+UTTFZIYndGipwDFVQb7IPEcXVhmjKJH2CY0W6u+NHMdKZXFoJ4uMatUrxP+8odHRbZAzkRpNBVkeigxHOkFFAWjMJCWaZ5ZgIpnNisgUS0y0ralmS/BWv7xOeldNz216D61Gu1XWUYUzOIdL8OAG2nAPHegCgRSe4RXeHOO8OO/Ox3K04pQ7p/AHzucPJJ2RsQ==</latexit>
+v1
+<latexit sha1_base64="+W3gjQFGVr67cibH3DaHreSHau4=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPpTTt0Mgkzk0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMBVcG9f9dkpb2zu7e+X9ysHh0fFJ9fSso5NMMWyzRCSqF1KNgktsG24E9lKFNA4FdsPJ/cLvTlFpnsgnM0sxiOlI8ogzaqzk+zE14zDKp/OBN6jW3Lq7BNkkXkFqUKA1qH75w4RlMUrDBNW677mpCXKqDGcC5xU/05hSNqEj7FsqaYw6yJeZ5+TKKkMSJco+achS/b2R01jrWRzayUVGve4txP+8fmaiuyDnMs0MSrY6FGWCmIQsCiBDrpAZMbOEMsVtVsLGVFFmbE0VW4K3/uVN0rmpe27de2zUmo2ijjJcwCVcgwe30IQHaEEbGKTwDK/w5mTOi/PufKxGS06xcw5/4Hz+ACMckbA=</latexit><latexit sha1_base64="+W3gjQFGVr67cibH3DaHreSHau4=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPpTTt0Mgkzk0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMBVcG9f9dkpb2zu7e+X9ysHh0fFJ9fSso5NMMWyzRCSqF1KNgktsG24E9lKFNA4FdsPJ/cLvTlFpnsgnM0sxiOlI8ogzaqzk+zE14zDKp/OBN6jW3Lq7BNkkXkFqUKA1qH75w4RlMUrDBNW677mpCXKqDGcC5xU/05hSNqEj7FsqaYw6yJeZ5+TKKkMSJco+achS/b2R01jrWRzayUVGve4txP+8fmaiuyDnMs0MSrY6FGWCmIQsCiBDrpAZMbOEMsVtVsLGVFFmbE0VW4K3/uVN0rmpe27de2zUmo2ijjJcwCVcgwe30IQHaEEbGKTwDK/w5mTOi/PufKxGS06xcw5/4Hz+ACMckbA=</latexit><latexit sha1_base64="+W3gjQFGVr67cibH3DaHreSHau4=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPpTTt0Mgkzk0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMBVcG9f9dkpb2zu7e+X9ysHh0fFJ9fSso5NMMWyzRCSqF1KNgktsG24E9lKFNA4FdsPJ/cLvTlFpnsgnM0sxiOlI8ogzaqzk+zE14zDKp/OBN6jW3Lq7BNkkXkFqUKA1qH75w4RlMUrDBNW677mpCXKqDGcC5xU/05hSNqEj7FsqaYw6yJeZ5+TKKkMSJco+achS/b2R01jrWRzayUVGve4txP+8fmaiuyDnMs0MSrY6FGWCmIQsCiBDrpAZMbOEMsVtVsLGVFFmbE0VW4K3/uVN0rmpe27de2zUmo2ijjJcwCVcgwe30IQHaEEbGKTwDK/w5mTOi/PufKxGS06xcw5/4Hz+ACMckbA=</latexit><latexit sha1_base64="+W3gjQFGVr67cibH3DaHreSHau4=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPpTTt0Mgkzk0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMBVcG9f9dkpb2zu7e+X9ysHh0fFJ9fSso5NMMWyzRCSqF1KNgktsG24E9lKFNA4FdsPJ/cLvTlFpnsgnM0sxiOlI8ogzaqzk+zE14zDKp/OBN6jW3Lq7BNkkXkFqUKA1qH75w4RlMUrDBNW677mpCXKqDGcC5xU/05hSNqEj7FsqaYw6yJeZ5+TKKkMSJco+achS/b2R01jrWRzayUVGve4txP+8fmaiuyDnMs0MSrY6FGWCmIQsCiBDrpAZMbOEMsVtVsLGVFFmbE0VW4K3/uVN0rmpe27de2zUmo2ijjJcwCVcgwe30IQHaEEbGKTwDK/w5mTOi/PufKxGS06xcw5/4Hz+ACMckbA=</latexit>
+v2
+<latexit sha1_base64="L6lVscD/AFAfeuuyFgLqs1lBlws=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KUgh4LXjxWsK3QlLLZbtqlm03YfSmU0L/hxYMiXv0z3vw3btoctHVgYZh5jzc7QSKFQdf9dkpb2zu7e+X9ysHh0fFJ9fSsa+JUM95hsYz1U0ANl0LxDgqU/CnRnEaB5L1gepf7vRnXRsTqEecJH0R0rEQoGEUr+X5EcRKE2WwxbAyrNbfuLkE2iVeQGhRoD6tf/ihmacQVMkmN6XtugoOMahRM8kXFTw1PKJvSMe9bqmjEzSBbZl6QK6uMSBhr+xSSpfp7I6ORMfMosJN5RrPu5eJ/Xj/F8HaQCZWkyBVbHQpTSTAmeQFkJDRnKOeWUKaFzUrYhGrK0NZUsSV461/eJN1G3XPr3kOz1moWdZThAi7hGjy4gRbcQxs6wCCBZ3iFNyd1Xpx352M1WnKKnXP4A+fzBySgkbE=</latexit><latexit sha1_base64="L6lVscD/AFAfeuuyFgLqs1lBlws=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KUgh4LXjxWsK3QlLLZbtqlm03YfSmU0L/hxYMiXv0z3vw3btoctHVgYZh5jzc7QSKFQdf9dkpb2zu7e+X9ysHh0fFJ9fSsa+JUM95hsYz1U0ANl0LxDgqU/CnRnEaB5L1gepf7vRnXRsTqEecJH0R0rEQoGEUr+X5EcRKE2WwxbAyrNbfuLkE2iVeQGhRoD6tf/ihmacQVMkmN6XtugoOMahRM8kXFTw1PKJvSMe9bqmjEzSBbZl6QK6uMSBhr+xSSpfp7I6ORMfMosJN5RrPu5eJ/Xj/F8HaQCZWkyBVbHQpTSTAmeQFkJDRnKOeWUKaFzUrYhGrK0NZUsSV461/eJN1G3XPr3kOz1moWdZThAi7hGjy4gRbcQxs6wCCBZ3iFNyd1Xpx352M1WnKKnXP4A+fzBySgkbE=</latexit><latexit sha1_base64="L6lVscD/AFAfeuuyFgLqs1lBlws=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KUgh4LXjxWsK3QlLLZbtqlm03YfSmU0L/hxYMiXv0z3vw3btoctHVgYZh5jzc7QSKFQdf9dkpb2zu7e+X9ysHh0fFJ9fSsa+JUM95hsYz1U0ANl0LxDgqU/CnRnEaB5L1gepf7vRnXRsTqEecJH0R0rEQoGEUr+X5EcRKE2WwxbAyrNbfuLkE2iVeQGhRoD6tf/ihmacQVMkmN6XtugoOMahRM8kXFTw1PKJvSMe9bqmjEzSBbZl6QK6uMSBhr+xSSpfp7I6ORMfMosJN5RrPu5eJ/Xj/F8HaQCZWkyBVbHQpTSTAmeQFkJDRnKOeWUKaFzUrYhGrK0NZUsSV461/eJN1G3XPr3kOz1moWdZThAi7hGjy4gRbcQxs6wCCBZ3iFNyd1Xpx352M1WnKKnXP4A+fzBySgkbE=</latexit><latexit sha1_base64="L6lVscD/AFAfeuuyFgLqs1lBlws=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5KUgh4LXjxWsK3QlLLZbtqlm03YfSmU0L/hxYMiXv0z3vw3btoctHVgYZh5jzc7QSKFQdf9dkpb2zu7e+X9ysHh0fFJ9fSsa+JUM95hsYz1U0ANl0LxDgqU/CnRnEaB5L1gepf7vRnXRsTqEecJH0R0rEQoGEUr+X5EcRKE2WwxbAyrNbfuLkE2iVeQGhRoD6tf/ihmacQVMkmN6XtugoOMahRM8kXFTw1PKJvSMe9bqmjEzSBbZl6QK6uMSBhr+xSSpfp7I6ORMfMosJN5RrPu5eJ/Xj/F8HaQCZWkyBVbHQpTSTAmeQFkJDRnKOeWUKaFzUrYhGrK0NZUsSV461/eJN1G3XPr3kOz1moWdZThAi7hGjy4gRbcQxs6wCCBZ3iFNyd1Xpx352M1WnKKnXP4A+fzBySgkbE=</latexit>
+v3
+<latexit sha1_base64="vl8vvYAr4+V6jf8d1aA5dqUR8fo=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5JoQY8FLx4r2FpoQtlsX9qlm03Y3RRK6N/w4kERr/4Zb/4bt20O2jqwMMy8x5udMBVcG9f9dkobm1vbO+Xdyt7+weFR9fiko5NMMWyzRCSqG1KNgktsG24EdlOFNA4FPoXju7n/NEGleSIfzTTFIKZDySPOqLGS78fUjMIon8z61/1qza27C5B14hWkBgVa/eqXP0hYFqM0TFCte56bmiCnynAmcFbxM40pZWM6xJ6lksaog3yReUYurDIgUaLsk4Ys1N8bOY21nsahnZxn1KveXPzP62Umug1yLtPMoGTLQ1EmiEnIvAAy4AqZEVNLKFPcZiVsRBVlxtZUsSV4q19eJ52ruufWvYdGrdko6ijDGZzDJXhwA024hxa0gUEKz/AKb07mvDjvzsdytOQUO6fwB87nDyYkkbI=</latexit><latexit sha1_base64="vl8vvYAr4+V6jf8d1aA5dqUR8fo=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5JoQY8FLx4r2FpoQtlsX9qlm03Y3RRK6N/w4kERr/4Zb/4bt20O2jqwMMy8x5udMBVcG9f9dkobm1vbO+Xdyt7+weFR9fiko5NMMWyzRCSqG1KNgktsG24EdlOFNA4FPoXju7n/NEGleSIfzTTFIKZDySPOqLGS78fUjMIon8z61/1qza27C5B14hWkBgVa/eqXP0hYFqM0TFCte56bmiCnynAmcFbxM40pZWM6xJ6lksaog3yReUYurDIgUaLsk4Ys1N8bOY21nsahnZxn1KveXPzP62Umug1yLtPMoGTLQ1EmiEnIvAAy4AqZEVNLKFPcZiVsRBVlxtZUsSV4q19eJ52ruufWvYdGrdko6ijDGZzDJXhwA024hxa0gUEKz/AKb07mvDjvzsdytOQUO6fwB87nDyYkkbI=</latexit><latexit sha1_base64="vl8vvYAr4+V6jf8d1aA5dqUR8fo=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5JoQY8FLx4r2FpoQtlsX9qlm03Y3RRK6N/w4kERr/4Zb/4bt20O2jqwMMy8x5udMBVcG9f9dkobm1vbO+Xdyt7+weFR9fiko5NMMWyzRCSqG1KNgktsG24EdlOFNA4FPoXju7n/NEGleSIfzTTFIKZDySPOqLGS78fUjMIon8z61/1qza27C5B14hWkBgVa/eqXP0hYFqM0TFCte56bmiCnynAmcFbxM40pZWM6xJ6lksaog3yReUYurDIgUaLsk4Ys1N8bOY21nsahnZxn1KveXPzP62Umug1yLtPMoGTLQ1EmiEnIvAAy4AqZEVNLKFPcZiVsRBVlxtZUsSV4q19eJ52ruufWvYdGrdko6ijDGZzDJXhwA024hxa0gUEKz/AKb07mvDjvzsdytOQUO6fwB87nDyYkkbI=</latexit><latexit sha1_base64="vl8vvYAr4+V6jf8d1aA5dqUR8fo=">AAAB83icbVBNS8NAFHypX7V+VT16WSyCp5JoQY8FLx4r2FpoQtlsX9qlm03Y3RRK6N/w4kERr/4Zb/4bt20O2jqwMMy8x5udMBVcG9f9dkobm1vbO+Xdyt7+weFR9fiko5NMMWyzRCSqG1KNgktsG24EdlOFNA4FPoXju7n/NEGleSIfzTTFIKZDySPOqLGS78fUjMIon8z61/1qza27C5B14hWkBgVa/eqXP0hYFqM0TFCte56bmiCnynAmcFbxM40pZWM6xJ6lksaog3yReUYurDIgUaLsk4Ys1N8bOY21nsahnZxn1KveXPzP62Umug1yLtPMoGTLQ1EmiEnIvAAy4AqZEVNLKFPcZiVsRBVlxtZUsSV4q19eJ52ruufWvYdGrdko6ijDGZzDJXhwA024hxa0gUEKz/AKb07mvDjvzsdytOQUO6fwB87nDyYkkbI=</latexit>
+v4
+<latexit sha1_base64="FQiQlYSCqes0ZS9SjlH0kbXxYMc=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPppB06mYSZm0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMJXCoOt+O6Wt7Z3dvfJ+5eDw6PikenrWMUmmGW+zRCa6F1LDpVC8jQIl76Wa0ziUvBtO7hd+d8q1EYl6wlnKg5iOlIgEo2gl348pjsMon84HjUG15tbdJcgm8QpSgwKtQfXLHyYsi7lCJqkxfc9NMcipRsEkn1f8zPCUsgkd8b6lisbcBPky85xcWWVIokTbp5As1d8bOY2NmcWhnVxkNOveQvzP62cY3QW5UGmGXLHVoSiTBBOyKIAMheYM5cwSyrSwWQkbU00Z2poqtgRv/cubpHNT99y699ioNRtFHWW4gEu4Bg9uoQkP0II2MEjhGV7hzcmcF+fd+ViNlpxi5xz+wPn8ASeokbM=</latexit><latexit sha1_base64="FQiQlYSCqes0ZS9SjlH0kbXxYMc=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPppB06mYSZm0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMJXCoOt+O6Wt7Z3dvfJ+5eDw6PikenrWMUmmGW+zRCa6F1LDpVC8jQIl76Wa0ziUvBtO7hd+d8q1EYl6wlnKg5iOlIgEo2gl348pjsMon84HjUG15tbdJcgm8QpSgwKtQfXLHyYsi7lCJqkxfc9NMcipRsEkn1f8zPCUsgkd8b6lisbcBPky85xcWWVIokTbp5As1d8bOY2NmcWhnVxkNOveQvzP62cY3QW5UGmGXLHVoSiTBBOyKIAMheYM5cwSyrSwWQkbU00Z2poqtgRv/cubpHNT99y699ioNRtFHWW4gEu4Bg9uoQkP0II2MEjhGV7hzcmcF+fd+ViNlpxi5xz+wPn8ASeokbM=</latexit><latexit sha1_base64="FQiQlYSCqes0ZS9SjlH0kbXxYMc=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPppB06mYSZm0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMJXCoOt+O6Wt7Z3dvfJ+5eDw6PikenrWMUmmGW+zRCa6F1LDpVC8jQIl76Wa0ziUvBtO7hd+d8q1EYl6wlnKg5iOlIgEo2gl348pjsMon84HjUG15tbdJcgm8QpSgwKtQfXLHyYsi7lCJqkxfc9NMcipRsEkn1f8zPCUsgkd8b6lisbcBPky85xcWWVIokTbp5As1d8bOY2NmcWhnVxkNOveQvzP62cY3QW5UGmGXLHVoSiTBBOyKIAMheYM5cwSyrSwWQkbU00Z2poqtgRv/cubpHNT99y699ioNRtFHWW4gEu4Bg9uoQkP0II2MEjhGV7hzcmcF+fd+ViNlpxi5xz+wPn8ASeokbM=</latexit><latexit sha1_base64="FQiQlYSCqes0ZS9SjlH0kbXxYMc=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRS0GXBjcsK9gFNKJPppB06mYSZm0IJ/Q03LhRx68+482+ctllo64GBwzn3cs+cMJXCoOt+O6Wt7Z3dvfJ+5eDw6PikenrWMUmmGW+zRCa6F1LDpVC8jQIl76Wa0ziUvBtO7hd+d8q1EYl6wlnKg5iOlIgEo2gl348pjsMon84HjUG15tbdJcgm8QpSgwKtQfXLHyYsi7lCJqkxfc9NMcipRsEkn1f8zPCUsgkd8b6lisbcBPky85xcWWVIokTbp5As1d8bOY2NmcWhnVxkNOveQvzP62cY3QW5UGmGXLHVoSiTBBOyKIAMheYM5cwSyrSwWQkbU00Z2poqtgRv/cubpHNT99y699ioNRtFHWW4gEu4Bg9uoQkP0II2MEjhGV7hzcmcF+fd+ViNlpxi5xz+wPn8ASeokbM=</latexit>
+u1
+<latexit sha1_base64="ji1SQg5HmsqTii6JDWjvXiOR67E=">AAAB83icbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuCG5cV7AM6Q8mkmTY0yQx5CGXob7hxoYhbf8adf2OmnYW2HggczrmXe3LijDNtfP/bq2xsbm3vVHdre/sHh0f145OuTq0itENSnqp+jDXlTNKOYYbTfqYoFjGnvXh6V/i9J6o0S+WjmWU0EngsWcIINk4KQ4HNJE5yOx8Gw3rDb/oLoHUSlKQBJdrD+lc4SokVVBrCsdaDwM9MlGNlGOF0XgutphkmUzymA0clFlRH+SLzHF04ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupporIVj98jrpXjUDvxk8XDda12UdVTiDc7iEAG6gBffQhg4QyOAZXuHNs96L9+59LEcrXrlzCn/gff4AIZWRrw==</latexit><latexit sha1_base64="ji1SQg5HmsqTii6JDWjvXiOR67E=">AAAB83icbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuCG5cV7AM6Q8mkmTY0yQx5CGXob7hxoYhbf8adf2OmnYW2HggczrmXe3LijDNtfP/bq2xsbm3vVHdre/sHh0f145OuTq0itENSnqp+jDXlTNKOYYbTfqYoFjGnvXh6V/i9J6o0S+WjmWU0EngsWcIINk4KQ4HNJE5yOx8Gw3rDb/oLoHUSlKQBJdrD+lc4SokVVBrCsdaDwM9MlGNlGOF0XgutphkmUzymA0clFlRH+SLzHF04ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupporIVj98jrpXjUDvxk8XDda12UdVTiDc7iEAG6gBffQhg4QyOAZXuHNs96L9+59LEcrXrlzCn/gff4AIZWRrw==</latexit><latexit sha1_base64="ji1SQg5HmsqTii6JDWjvXiOR67E=">AAAB83icbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuCG5cV7AM6Q8mkmTY0yQx5CGXob7hxoYhbf8adf2OmnYW2HggczrmXe3LijDNtfP/bq2xsbm3vVHdre/sHh0f145OuTq0itENSnqp+jDXlTNKOYYbTfqYoFjGnvXh6V/i9J6o0S+WjmWU0EngsWcIINk4KQ4HNJE5yOx8Gw3rDb/oLoHUSlKQBJdrD+lc4SokVVBrCsdaDwM9MlGNlGOF0XgutphkmUzymA0clFlRH+SLzHF04ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupporIVj98jrpXjUDvxk8XDda12UdVTiDc7iEAG6gBffQhg4QyOAZXuHNs96L9+59LEcrXrlzCn/gff4AIZWRrw==</latexit><latexit sha1_base64="ji1SQg5HmsqTii6JDWjvXiOR67E=">AAAB83icbVDLSgMxFL1TX7W+qi7dBIvgqsyIoMuCG5cV7AM6Q8mkmTY0yQx5CGXob7hxoYhbf8adf2OmnYW2HggczrmXe3LijDNtfP/bq2xsbm3vVHdre/sHh0f145OuTq0itENSnqp+jDXlTNKOYYbTfqYoFjGnvXh6V/i9J6o0S+WjmWU0EngsWcIINk4KQ4HNJE5yOx8Gw3rDb/oLoHUSlKQBJdrD+lc4SokVVBrCsdaDwM9MlGNlGOF0XgutphkmUzymA0clFlRH+SLzHF04ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupporIVj98jrpXjUDvxk8XDda12UdVTiDc7iEAG6gBffQhg4QyOAZXuHNs96L9+59LEcrXrlzCn/gff4AIZWRrw==</latexit>
+u2
+<latexit sha1_base64="aL97dYpCHA2XEMzNgF6vC3PIKGY=">AAAB83icbVDLSsNAFL2pr1pfUZduBovgqiSloMuCG5cV7AOaUCbTSTt0MgnzEErob7hxoYhbf8adf+OkzUJbDwwczrmXe+ZEGWdKe963U9na3tndq+7XDg6Pjk/c07OeSo0ktEtSnspBhBXlTNCuZprTQSYpTiJO+9HsrvD7T1QqlopHPc9omOCJYDEjWFspCBKsp1Gcm8WoOXLrXsNbAm0SvyR1KNEZuV/BOCUmoUITjpUa+l6mwxxLzQini1pgFM0wmeEJHVoqcEJVmC8zL9CVVcYoTqV9QqOl+nsjx4lS8ySyk0VGte4V4n/e0Oj4NsyZyIymgqwOxYYjnaKiADRmkhLN55ZgIpnNisgUS0y0ralmS/DXv7xJes2G7zX8h1a93SrrqMIFXMI1+HADbbiHDnSBQAbP8ApvjnFenHfnYzVaccqdc/gD5/MHIxmRsA==</latexit><latexit sha1_base64="aL97dYpCHA2XEMzNgF6vC3PIKGY=">AAAB83icbVDLSsNAFL2pr1pfUZduBovgqiSloMuCG5cV7AOaUCbTSTt0MgnzEErob7hxoYhbf8adf+OkzUJbDwwczrmXe+ZEGWdKe963U9na3tndq+7XDg6Pjk/c07OeSo0ktEtSnspBhBXlTNCuZprTQSYpTiJO+9HsrvD7T1QqlopHPc9omOCJYDEjWFspCBKsp1Gcm8WoOXLrXsNbAm0SvyR1KNEZuV/BOCUmoUITjpUa+l6mwxxLzQini1pgFM0wmeEJHVoqcEJVmC8zL9CVVcYoTqV9QqOl+nsjx4lS8ySyk0VGte4V4n/e0Oj4NsyZyIymgqwOxYYjnaKiADRmkhLN55ZgIpnNisgUS0y0ralmS/DXv7xJes2G7zX8h1a93SrrqMIFXMI1+HADbbiHDnSBQAbP8ApvjnFenHfnYzVaccqdc/gD5/MHIxmRsA==</latexit><latexit sha1_base64="aL97dYpCHA2XEMzNgF6vC3PIKGY=">AAAB83icbVDLSsNAFL2pr1pfUZduBovgqiSloMuCG5cV7AOaUCbTSTt0MgnzEErob7hxoYhbf8adf+OkzUJbDwwczrmXe+ZEGWdKe963U9na3tndq+7XDg6Pjk/c07OeSo0ktEtSnspBhBXlTNCuZprTQSYpTiJO+9HsrvD7T1QqlopHPc9omOCJYDEjWFspCBKsp1Gcm8WoOXLrXsNbAm0SvyR1KNEZuV/BOCUmoUITjpUa+l6mwxxLzQini1pgFM0wmeEJHVoqcEJVmC8zL9CVVcYoTqV9QqOl+nsjx4lS8ySyk0VGte4V4n/e0Oj4NsyZyIymgqwOxYYjnaKiADRmkhLN55ZgIpnNisgUS0y0ralmS/DXv7xJes2G7zX8h1a93SrrqMIFXMI1+HADbbiHDnSBQAbP8ApvjnFenHfnYzVaccqdc/gD5/MHIxmRsA==</latexit><latexit sha1_base64="aL97dYpCHA2XEMzNgF6vC3PIKGY=">AAAB83icbVDLSsNAFL2pr1pfUZduBovgqiSloMuCG5cV7AOaUCbTSTt0MgnzEErob7hxoYhbf8adf+OkzUJbDwwczrmXe+ZEGWdKe963U9na3tndq+7XDg6Pjk/c07OeSo0ktEtSnspBhBXlTNCuZprTQSYpTiJO+9HsrvD7T1QqlopHPc9omOCJYDEjWFspCBKsp1Gcm8WoOXLrXsNbAm0SvyR1KNEZuV/BOCUmoUITjpUa+l6mwxxLzQini1pgFM0wmeEJHVoqcEJVmC8zL9CVVcYoTqV9QqOl+nsjx4lS8ySyk0VGte4V4n/e0Oj4NsyZyIymgqwOxYYjnaKiADRmkhLN55ZgIpnNisgUS0y0ralmS/DXv7xJes2G7zX8h1a93SrrqMIFXMI1+HADbbiHDnSBQAbP8ApvjnFenHfnYzVaccqdc/gD5/MHIxmRsA==</latexit>
+u3
+<latexit sha1_base64="7c3cfRWuiBeaiswevmnssMfgAW8=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRa0GXBjcsK9gFNKJPppB06mYR5CCH0N9y4UMStP+POv3HSZqGtBwYO59zLPXPClDOlXffbqWxsbm3vVHdre/sHh0f145OeSowktEsSnshBiBXlTNCuZprTQSopjkNO++HsrvD7T1QqlohHnaU0iPFEsIgRrK3k+zHW0zDKzXx0Pao33Ka7AFonXkkaUKIzqn/544SYmApNOFZq6LmpDnIsNSOczmu+UTTFZIYndGipwDFVQb7IPEcXVhmjKJH2CY0W6u+NHMdKZXFoJ4uMatUrxP+8odHRbZAzkRpNBVkeigxHOkFFAWjMJCWaZ5ZgIpnNisgUS0y0ralmS/BWv7xOeldNz216D61Gu1XWUYUzOIdL8OAG2nAPHegCgRSe4RXeHOO8OO/Ox3K04pQ7p/AHzucPJJ2RsQ==</latexit><latexit sha1_base64="7c3cfRWuiBeaiswevmnssMfgAW8=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRa0GXBjcsK9gFNKJPppB06mYR5CCH0N9y4UMStP+POv3HSZqGtBwYO59zLPXPClDOlXffbqWxsbm3vVHdre/sHh0f145OeSowktEsSnshBiBXlTNCuZprTQSopjkNO++HsrvD7T1QqlohHnaU0iPFEsIgRrK3k+zHW0zDKzXx0Pao33Ka7AFonXkkaUKIzqn/544SYmApNOFZq6LmpDnIsNSOczmu+UTTFZIYndGipwDFVQb7IPEcXVhmjKJH2CY0W6u+NHMdKZXFoJ4uMatUrxP+8odHRbZAzkRpNBVkeigxHOkFFAWjMJCWaZ5ZgIpnNisgUS0y0ralmS/BWv7xOeldNz216D61Gu1XWUYUzOIdL8OAG2nAPHegCgRSe4RXeHOO8OO/Ox3K04pQ7p/AHzucPJJ2RsQ==</latexit><latexit sha1_base64="7c3cfRWuiBeaiswevmnssMfgAW8=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRa0GXBjcsK9gFNKJPppB06mYR5CCH0N9y4UMStP+POv3HSZqGtBwYO59zLPXPClDOlXffbqWxsbm3vVHdre/sHh0f145OeSowktEsSnshBiBXlTNCuZprTQSopjkNO++HsrvD7T1QqlohHnaU0iPFEsIgRrK3k+zHW0zDKzXx0Pao33Ka7AFonXkkaUKIzqn/544SYmApNOFZq6LmpDnIsNSOczmu+UTTFZIYndGipwDFVQb7IPEcXVhmjKJH2CY0W6u+NHMdKZXFoJ4uMatUrxP+8odHRbZAzkRpNBVkeigxHOkFFAWjMJCWaZ5ZgIpnNisgUS0y0ralmS/BWv7xOeldNz216D61Gu1XWUYUzOIdL8OAG2nAPHegCgRSe4RXeHOO8OO/Ox3K04pQ7p/AHzucPJJ2RsQ==</latexit><latexit sha1_base64="7c3cfRWuiBeaiswevmnssMfgAW8=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiRa0GXBjcsK9gFNKJPppB06mYR5CCH0N9y4UMStP+POv3HSZqGtBwYO59zLPXPClDOlXffbqWxsbm3vVHdre/sHh0f145OeSowktEsSnshBiBXlTNCuZprTQSopjkNO++HsrvD7T1QqlohHnaU0iPFEsIgRrK3k+zHW0zDKzXx0Pao33Ka7AFonXkkaUKIzqn/544SYmApNOFZq6LmpDnIsNSOczmu+UTTFZIYndGipwDFVQb7IPEcXVhmjKJH2CY0W6u+NHMdKZXFoJ4uMatUrxP+8odHRbZAzkRpNBVkeigxHOkFFAWjMJCWaZ5ZgIpnNisgUS0y0ralmS/BWv7xOeldNz216D61Gu1XWUYUzOIdL8OAG2nAPHegCgRSe4RXeHOO8OO/Ox3K04pQ7p/AHzucPJJ2RsQ==</latexit>
+u4
+<latexit sha1_base64="RIvizLOl79NYpbMzziW/fth8M54=">AAAB83icbVDLSgMxFL3js9ZX1aWbYBFclRkp6LLgxmUF+4DOUDJppg1NMkMeQhn6G25cKOLWn3Hn35hpZ6GtBwKHc+7lnpw440wb3//2Nja3tnd2K3vV/YPDo+PayWlXp1YR2iEpT1U/xppyJmnHMMNpP1MUi5jTXjy9K/zeE1WapfLRzDIaCTyWLGEEGyeFocBmEie5nQ+bw1rdb/gLoHUSlKQOJdrD2lc4SokVVBrCsdaDwM9MlGNlGOF0Xg2tphkmUzymA0clFlRH+SLzHF06ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupqorIVj98jrpXjcCvxE8NOutZllHBc7hAq4ggBtowT20oQMEMniGV3jzrPfivXsfy9ENr9w5gz/wPn8AJiGRsg==</latexit><latexit sha1_base64="RIvizLOl79NYpbMzziW/fth8M54=">AAAB83icbVDLSgMxFL3js9ZX1aWbYBFclRkp6LLgxmUF+4DOUDJppg1NMkMeQhn6G25cKOLWn3Hn35hpZ6GtBwKHc+7lnpw440wb3//2Nja3tnd2K3vV/YPDo+PayWlXp1YR2iEpT1U/xppyJmnHMMNpP1MUi5jTXjy9K/zeE1WapfLRzDIaCTyWLGEEGyeFocBmEie5nQ+bw1rdb/gLoHUSlKQOJdrD2lc4SokVVBrCsdaDwM9MlGNlGOF0Xg2tphkmUzymA0clFlRH+SLzHF06ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupqorIVj98jrpXjcCvxE8NOutZllHBc7hAq4ggBtowT20oQMEMniGV3jzrPfivXsfy9ENr9w5gz/wPn8AJiGRsg==</latexit><latexit sha1_base64="RIvizLOl79NYpbMzziW/fth8M54=">AAAB83icbVDLSgMxFL3js9ZX1aWbYBFclRkp6LLgxmUF+4DOUDJppg1NMkMeQhn6G25cKOLWn3Hn35hpZ6GtBwKHc+7lnpw440wb3//2Nja3tnd2K3vV/YPDo+PayWlXp1YR2iEpT1U/xppyJmnHMMNpP1MUi5jTXjy9K/zeE1WapfLRzDIaCTyWLGEEGyeFocBmEie5nQ+bw1rdb/gLoHUSlKQOJdrD2lc4SokVVBrCsdaDwM9MlGNlGOF0Xg2tphkmUzymA0clFlRH+SLzHF06ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupqorIVj98jrpXjcCvxE8NOutZllHBc7hAq4ggBtowT20oQMEMniGV3jzrPfivXsfy9ENr9w5gz/wPn8AJiGRsg==</latexit><latexit sha1_base64="RIvizLOl79NYpbMzziW/fth8M54=">AAAB83icbVDLSgMxFL3js9ZX1aWbYBFclRkp6LLgxmUF+4DOUDJppg1NMkMeQhn6G25cKOLWn3Hn35hpZ6GtBwKHc+7lnpw440wb3//2Nja3tnd2K3vV/YPDo+PayWlXp1YR2iEpT1U/xppyJmnHMMNpP1MUi5jTXjy9K/zeE1WapfLRzDIaCTyWLGEEGyeFocBmEie5nQ+bw1rdb/gLoHUSlKQOJdrD2lc4SokVVBrCsdaDwM9MlGNlGOF0Xg2tphkmUzymA0clFlRH+SLzHF06ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupqorIVj98jrpXjcCvxE8NOutZllHBc7hAq4ggBtowT20oQMEMniGV3jzrPfivXsfy9ENr9w5gz/wPn8AJiGRsg==</latexit>
+p(u4)
+<latexit sha1_base64="//Y3LG5OzAr5B/yxzBEBTc36kXQ=">AAAB+HicbVDLSsNAFL3xWeujVZduBotQNyWRgi4LblxWsA9oQ5hMJ+3QySTMQ6ihX+LGhSJu/RR3/o2TNgttPTBwOOde7pkTppwp7brfzsbm1vbObmmvvH9weFSpHp90VWIkoR2S8ET2Q6woZ4J2NNOc9lNJcRxy2gunt7nfe6RSsUQ86FlK/RiPBYsYwdpKQbUyjLGehFGWzusmaF4G1ZrbcBdA68QrSA0KtIPq13CUEBNToQnHSg08N9V+hqVmhNN5eWgUTTGZ4jEdWCpwTJWfLYLP0YVVRihKpH1Co4X6eyPDsVKzOLSTeUy16uXif97A6OjGz5hIjaaCLA9FhiOdoLwFNGKSEs1nlmAimc2KyARLTLTtqmxL8Fa/vE66Vw3PbXj3zVqrWdRRgjM4hzp4cA0tuIM2dICAgWd4hTfnyXlx3p2P5eiGU+ycwh84nz9AkZLC</latexit><latexit sha1_base64="//Y3LG5OzAr5B/yxzBEBTc36kXQ=">AAAB+HicbVDLSsNAFL3xWeujVZduBotQNyWRgi4LblxWsA9oQ5hMJ+3QySTMQ6ihX+LGhSJu/RR3/o2TNgttPTBwOOde7pkTppwp7brfzsbm1vbObmmvvH9weFSpHp90VWIkoR2S8ET2Q6woZ4J2NNOc9lNJcRxy2gunt7nfe6RSsUQ86FlK/RiPBYsYwdpKQbUyjLGehFGWzusmaF4G1ZrbcBdA68QrSA0KtIPq13CUEBNToQnHSg08N9V+hqVmhNN5eWgUTTGZ4jEdWCpwTJWfLYLP0YVVRihKpH1Co4X6eyPDsVKzOLSTeUy16uXif97A6OjGz5hIjaaCLA9FhiOdoLwFNGKSEs1nlmAimc2KyARLTLTtqmxL8Fa/vE66Vw3PbXj3zVqrWdRRgjM4hzp4cA0tuIM2dICAgWd4hTfnyXlx3p2P5eiGU+ycwh84nz9AkZLC</latexit><latexit sha1_base64="//Y3LG5OzAr5B/yxzBEBTc36kXQ=">AAAB+HicbVDLSsNAFL3xWeujVZduBotQNyWRgi4LblxWsA9oQ5hMJ+3QySTMQ6ihX+LGhSJu/RR3/o2TNgttPTBwOOde7pkTppwp7brfzsbm1vbObmmvvH9weFSpHp90VWIkoR2S8ET2Q6woZ4J2NNOc9lNJcRxy2gunt7nfe6RSsUQ86FlK/RiPBYsYwdpKQbUyjLGehFGWzusmaF4G1ZrbcBdA68QrSA0KtIPq13CUEBNToQnHSg08N9V+hqVmhNN5eWgUTTGZ4jEdWCpwTJWfLYLP0YVVRihKpH1Co4X6eyPDsVKzOLSTeUy16uXif97A6OjGz5hIjaaCLA9FhiOdoLwFNGKSEs1nlmAimc2KyARLTLTtqmxL8Fa/vE66Vw3PbXj3zVqrWdRRgjM4hzp4cA0tuIM2dICAgWd4hTfnyXlx3p2P5eiGU+ycwh84nz9AkZLC</latexit><latexit sha1_base64="//Y3LG5OzAr5B/yxzBEBTc36kXQ=">AAAB+HicbVDLSsNAFL3xWeujVZduBotQNyWRgi4LblxWsA9oQ5hMJ+3QySTMQ6ihX+LGhSJu/RR3/o2TNgttPTBwOOde7pkTppwp7brfzsbm1vbObmmvvH9weFSpHp90VWIkoR2S8ET2Q6woZ4J2NNOc9lNJcRxy2gunt7nfe6RSsUQ86FlK/RiPBYsYwdpKQbUyjLGehFGWzusmaF4G1ZrbcBdA68QrSA0KtIPq13CUEBNToQnHSg08N9V+hqVmhNN5eWgUTTGZ4jEdWCpwTJWfLYLP0YVVRihKpH1Co4X6eyPDsVKzOLSTeUy16uXif97A6OjGz5hIjaaCLA9FhiOdoLwFNGKSEs1nlmAimc2KyARLTLTtqmxL8Fa/vE66Vw3PbXj3zVqrWdRRgjM4hzp4cA0tuIM2dICAgWd4hTfnyXlx3p2P5eiGU+ycwh84nz9AkZLC</latexit>
+u4
+<latexit sha1_base64="RIvizLOl79NYpbMzziW/fth8M54=">AAAB83icbVDLSgMxFL3js9ZX1aWbYBFclRkp6LLgxmUF+4DOUDJppg1NMkMeQhn6G25cKOLWn3Hn35hpZ6GtBwKHc+7lnpw440wb3//2Nja3tnd2K3vV/YPDo+PayWlXp1YR2iEpT1U/xppyJmnHMMNpP1MUi5jTXjy9K/zeE1WapfLRzDIaCTyWLGEEGyeFocBmEie5nQ+bw1rdb/gLoHUSlKQOJdrD2lc4SokVVBrCsdaDwM9MlGNlGOF0Xg2tphkmUzymA0clFlRH+SLzHF06ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupqorIVj98jrpXjcCvxE8NOutZllHBc7hAq4ggBtowT20oQMEMniGV3jzrPfivXsfy9ENr9w5gz/wPn8AJiGRsg==</latexit><latexit sha1_base64="RIvizLOl79NYpbMzziW/fth8M54=">AAAB83icbVDLSgMxFL3js9ZX1aWbYBFclRkp6LLgxmUF+4DOUDJppg1NMkMeQhn6G25cKOLWn3Hn35hpZ6GtBwKHc+7lnpw440wb3//2Nja3tnd2K3vV/YPDo+PayWlXp1YR2iEpT1U/xppyJmnHMMNpP1MUi5jTXjy9K/zeE1WapfLRzDIaCTyWLGEEGyeFocBmEie5nQ+bw1rdb/gLoHUSlKQOJdrD2lc4SokVVBrCsdaDwM9MlGNlGOF0Xg2tphkmUzymA0clFlRH+SLzHF06ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupqorIVj98jrpXjcCvxE8NOutZllHBc7hAq4ggBtowT20oQMEMniGV3jzrPfivXsfy9ENr9w5gz/wPn8AJiGRsg==</latexit><latexit sha1_base64="RIvizLOl79NYpbMzziW/fth8M54=">AAAB83icbVDLSgMxFL3js9ZX1aWbYBFclRkp6LLgxmUF+4DOUDJppg1NMkMeQhn6G25cKOLWn3Hn35hpZ6GtBwKHc+7lnpw440wb3//2Nja3tnd2K3vV/YPDo+PayWlXp1YR2iEpT1U/xppyJmnHMMNpP1MUi5jTXjy9K/zeE1WapfLRzDIaCTyWLGEEGyeFocBmEie5nQ+bw1rdb/gLoHUSlKQOJdrD2lc4SokVVBrCsdaDwM9MlGNlGOF0Xg2tphkmUzymA0clFlRH+SLzHF06ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupqorIVj98jrpXjcCvxE8NOutZllHBc7hAq4ggBtowT20oQMEMniGV3jzrPfivXsfy9ENr9w5gz/wPn8AJiGRsg==</latexit><latexit sha1_base64="RIvizLOl79NYpbMzziW/fth8M54=">AAAB83icbVDLSgMxFL3js9ZX1aWbYBFclRkp6LLgxmUF+4DOUDJppg1NMkMeQhn6G25cKOLWn3Hn35hpZ6GtBwKHc+7lnpw440wb3//2Nja3tnd2K3vV/YPDo+PayWlXp1YR2iEpT1U/xppyJmnHMMNpP1MUi5jTXjy9K/zeE1WapfLRzDIaCTyWLGEEGyeFocBmEie5nQ+bw1rdb/gLoHUSlKQOJdrD2lc4SokVVBrCsdaDwM9MlGNlGOF0Xg2tphkmUzymA0clFlRH+SLzHF06ZYSSVLknDVqovzdyLLSeidhNFhn1qleI/3kDa5LbKGcys4ZKsjyUWI5MiooC0IgpSgyfOYKJYi4rIhOsMDGupqorIVj98jrpXjcCvxE8NOutZllHBc7hAq4ggBtowT20oQMEMniGV3jzrPfivXsfy9ENr9w5gz/wPn8AJiGRsg==</latexit>
+|ev1 eu1|
+<latexit sha1_base64="Y91eXEMGKCp1gCXQtR164pq0zoI=">AAACJ3icbVDLSsNAFJ3UV62vqEs3wSK4sSRS0JUU3LisYB/QljCZ3LRDJw9mJpWS5m/c+CtuBBXRpX/iJM1C2x4YOHPuudx7jxMxKqRpfmultfWNza3ydmVnd2//QD88aosw5gRaJGQh7zpYAKMBtCSVDLoRB+w7DDrO+DardybABQ2DBzmNYODjYUA9SrBUkq3fzPqP1AVJmQtJ38dy5HjJJE1tK/+E3E0u0soKT5x5ZrZeNWtmDmOZWAWpogJNW3/ruyGJfQgkYViInmVGcpBgLilhoCbFAiJMxngIPUUD7IMYJPmdqXGmFNfwQq5eII1c/duRYF+Iqe8oZ7alWKxl4qpaL5be9SChQRRLCMh8kBczQ4ZGFprhUg5EsqkimHCqdjXICHNMpIq2okKwFk9eJu3LmmXWrPt6tVEv4iijE3SKzpGFrlAD3aEmaiGCntALekcf2rP2qn1qX3NrSSt6jtE/aD+/pz2oMA==</latexit><latexit sha1_base64="Y91eXEMGKCp1gCXQtR164pq0zoI=">AAACJ3icbVDLSsNAFJ3UV62vqEs3wSK4sSRS0JUU3LisYB/QljCZ3LRDJw9mJpWS5m/c+CtuBBXRpX/iJM1C2x4YOHPuudx7jxMxKqRpfmultfWNza3ydmVnd2//QD88aosw5gRaJGQh7zpYAKMBtCSVDLoRB+w7DDrO+DardybABQ2DBzmNYODjYUA9SrBUkq3fzPqP1AVJmQtJ38dy5HjJJE1tK/+E3E0u0soKT5x5ZrZeNWtmDmOZWAWpogJNW3/ruyGJfQgkYViInmVGcpBgLilhoCbFAiJMxngIPUUD7IMYJPmdqXGmFNfwQq5eII1c/duRYF+Iqe8oZ7alWKxl4qpaL5be9SChQRRLCMh8kBczQ4ZGFprhUg5EsqkimHCqdjXICHNMpIq2okKwFk9eJu3LmmXWrPt6tVEv4iijE3SKzpGFrlAD3aEmaiGCntALekcf2rP2qn1qX3NrSSt6jtE/aD+/pz2oMA==</latexit><latexit sha1_base64="Y91eXEMGKCp1gCXQtR164pq0zoI=">AAACJ3icbVDLSsNAFJ3UV62vqEs3wSK4sSRS0JUU3LisYB/QljCZ3LRDJw9mJpWS5m/c+CtuBBXRpX/iJM1C2x4YOHPuudx7jxMxKqRpfmultfWNza3ydmVnd2//QD88aosw5gRaJGQh7zpYAKMBtCSVDLoRB+w7DDrO+DardybABQ2DBzmNYODjYUA9SrBUkq3fzPqP1AVJmQtJ38dy5HjJJE1tK/+E3E0u0soKT5x5ZrZeNWtmDmOZWAWpogJNW3/ruyGJfQgkYViInmVGcpBgLilhoCbFAiJMxngIPUUD7IMYJPmdqXGmFNfwQq5eII1c/duRYF+Iqe8oZ7alWKxl4qpaL5be9SChQRRLCMh8kBczQ4ZGFprhUg5EsqkimHCqdjXICHNMpIq2okKwFk9eJu3LmmXWrPt6tVEv4iijE3SKzpGFrlAD3aEmaiGCntALekcf2rP2qn1qX3NrSSt6jtE/aD+/pz2oMA==</latexit><latexit sha1_base64="Y91eXEMGKCp1gCXQtR164pq0zoI=">AAACJ3icbVDLSsNAFJ3UV62vqEs3wSK4sSRS0JUU3LisYB/QljCZ3LRDJw9mJpWS5m/c+CtuBBXRpX/iJM1C2x4YOHPuudx7jxMxKqRpfmultfWNza3ydmVnd2//QD88aosw5gRaJGQh7zpYAKMBtCSVDLoRB+w7DDrO+DardybABQ2DBzmNYODjYUA9SrBUkq3fzPqP1AVJmQtJ38dy5HjJJE1tK/+E3E0u0soKT5x5ZrZeNWtmDmOZWAWpogJNW3/ruyGJfQgkYViInmVGcpBgLilhoCbFAiJMxngIPUUD7IMYJPmdqXGmFNfwQq5eII1c/duRYF+Iqe8oZ7alWKxl4qpaL5be9SChQRRLCMh8kBczQ4ZGFprhUg5EsqkimHCqdjXICHNMpIq2okKwFk9eJu3LmmXWrPt6tVEv4iijE3SKzpGFrlAD3aEmaiGCntALekcf2rP2qn1qX3NrSSt6jtE/aD+/pz2oMA==</latexit>
+t1
+<latexit sha1_base64="uubE5nWdyIM5Ql3W583ikFWbRfo=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiQi6LLgxmUF+4AmlMl00g6dTMLMjVBCf8ONC0Xc+jPu/BsnbRbaemDgcM693DMnTKUw6LrfTmVjc2t7p7pb29s/ODyqH590TZJpxjsskYnuh9RwKRTvoEDJ+6nmNA4l74XTu8LvPXFtRKIecZbyIKZjJSLBKFrJ92OKkzDKcT70hvWG23QXIOvEK0kDSrSH9S9/lLAs5gqZpMYMPDfFIKcaBZN8XvMzw1PKpnTMB5YqGnMT5IvMc3JhlRGJEm2fQrJQf2/kNDZmFod2sshoVr1C/M8bZBjdBrlQaYZcseWhKJMEE1IUQEZCc4ZyZgllWtishE2opgxtTTVbgrf65XXSvWp6btN7uG60rss6qnAG53AJHtxAC+6hDR1gkMIzvMKbkzkvzrvzsRytOOXOKfyB8/kDIA6Rrg==</latexit><latexit sha1_base64="uubE5nWdyIM5Ql3W583ikFWbRfo=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiQi6LLgxmUF+4AmlMl00g6dTMLMjVBCf8ONC0Xc+jPu/BsnbRbaemDgcM693DMnTKUw6LrfTmVjc2t7p7pb29s/ODyqH590TZJpxjsskYnuh9RwKRTvoEDJ+6nmNA4l74XTu8LvPXFtRKIecZbyIKZjJSLBKFrJ92OKkzDKcT70hvWG23QXIOvEK0kDSrSH9S9/lLAs5gqZpMYMPDfFIKcaBZN8XvMzw1PKpnTMB5YqGnMT5IvMc3JhlRGJEm2fQrJQf2/kNDZmFod2sshoVr1C/M8bZBjdBrlQaYZcseWhKJMEE1IUQEZCc4ZyZgllWtishE2opgxtTTVbgrf65XXSvWp6btN7uG60rss6qnAG53AJHtxAC+6hDR1gkMIzvMKbkzkvzrvzsRytOOXOKfyB8/kDIA6Rrg==</latexit><latexit sha1_base64="uubE5nWdyIM5Ql3W583ikFWbRfo=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiQi6LLgxmUF+4AmlMl00g6dTMLMjVBCf8ONC0Xc+jPu/BsnbRbaemDgcM693DMnTKUw6LrfTmVjc2t7p7pb29s/ODyqH590TZJpxjsskYnuh9RwKRTvoEDJ+6nmNA4l74XTu8LvPXFtRKIecZbyIKZjJSLBKFrJ92OKkzDKcT70hvWG23QXIOvEK0kDSrSH9S9/lLAs5gqZpMYMPDfFIKcaBZN8XvMzw1PKpnTMB5YqGnMT5IvMc3JhlRGJEm2fQrJQf2/kNDZmFod2sshoVr1C/M8bZBjdBrlQaYZcseWhKJMEE1IUQEZCc4ZyZgllWtishE2opgxtTTVbgrf65XXSvWp6btN7uG60rss6qnAG53AJHtxAC+6hDR1gkMIzvMKbkzkvzrvzsRytOOXOKfyB8/kDIA6Rrg==</latexit><latexit sha1_base64="uubE5nWdyIM5Ql3W583ikFWbRfo=">AAAB83icbVDLSsNAFL2pr1pfVZduBovgqiQi6LLgxmUF+4AmlMl00g6dTMLMjVBCf8ONC0Xc+jPu/BsnbRbaemDgcM693DMnTKUw6LrfTmVjc2t7p7pb29s/ODyqH590TZJpxjsskYnuh9RwKRTvoEDJ+6nmNA4l74XTu8LvPXFtRKIecZbyIKZjJSLBKFrJ92OKkzDKcT70hvWG23QXIOvEK0kDSrSH9S9/lLAs5gqZpMYMPDfFIKcaBZN8XvMzw1PKpnTMB5YqGnMT5IvMc3JhlRGJEm2fQrJQf2/kNDZmFod2sshoVr1C/M8bZBjdBrlQaYZcseWhKJMEE1IUQEZCc4ZyZgllWtishE2opgxtTTVbgrf65XXSvWp6btN7uG60rss6qnAG53AJHtxAC+6hDR1gkMIzvMKbkzkvzrvzsRytOOXOKfyB8/kDIA6Rrg==</latexit>
+Loss u1
+<latexit sha1_base64="gp4adw0W1xOSSudjXHjZHLZf6Wk=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEPg5EIkwcgXQDEL0fMyyVvYqXAy8Tf07KaI56WPoMegk1MQhNOVGq43up7mZEakY5TNzAKEgJHZEBdCwVJAbVzfK3JvjEKj3cT6QtoXGu/p7ISKzUOI5sZ0z0UC16U/E/r2N0/7KbMZEaDYLOFvUNxzrB04xwj0mgmo8tIVQyeyumQyIJ1TZJ14bgL768TJrViu9V/JtquXY+j6OIjtAxOkU+ukA1dI3qqIEoekBP6AW9Oo/Os/PmvM9aC8585hD9gfPxDU+eoAg=</latexit><latexit sha1_base64="gp4adw0W1xOSSudjXHjZHLZf6Wk=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEPg5EIkwcgXQDEL0fMyyVvYqXAy8Tf07KaI56WPoMegk1MQhNOVGq43up7mZEakY5TNzAKEgJHZEBdCwVJAbVzfK3JvjEKj3cT6QtoXGu/p7ISKzUOI5sZ0z0UC16U/E/r2N0/7KbMZEaDYLOFvUNxzrB04xwj0mgmo8tIVQyeyumQyIJ1TZJ14bgL768TJrViu9V/JtquXY+j6OIjtAxOkU+ukA1dI3qqIEoekBP6AW9Oo/Os/PmvM9aC8585hD9gfPxDU+eoAg=</latexit><latexit sha1_base64="gp4adw0W1xOSSudjXHjZHLZf6Wk=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEPg5EIkwcgXQDEL0fMyyVvYqXAy8Tf07KaI56WPoMegk1MQhNOVGq43up7mZEakY5TNzAKEgJHZEBdCwVJAbVzfK3JvjEKj3cT6QtoXGu/p7ISKzUOI5sZ0z0UC16U/E/r2N0/7KbMZEaDYLOFvUNxzrB04xwj0mgmo8tIVQyeyumQyIJ1TZJ14bgL768TJrViu9V/JtquXY+j6OIjtAxOkU+ukA1dI3qqIEoekBP6AW9Oo/Os/PmvM9aC8585hD9gfPxDU+eoAg=</latexit><latexit sha1_base64="gp4adw0W1xOSSudjXHjZHLZf6Wk=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3CHoMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+NkE1ATCxqKqm66u6KUM6U978sprKyurW8UN92t7Z3dvdL+QVMlRlJo0IQnsh0RBZwJaGimObRTCSSOOLSi0dXUb92DVCwRt3qcQjcmA8H6jBJtpbB0FkQwYCKDO5MrE9eEPg5EIkwcgXQDEL0fMyyVvYqXAy8Tf07KaI56WPoMegk1MQhNOVGq43up7mZEakY5TNzAKEgJHZEBdCwVJAbVzfK3JvjEKj3cT6QtoXGu/p7ISKzUOI5sZ0z0UC16U/E/r2N0/7KbMZEaDYLOFvUNxzrB04xwj0mgmo8tIVQyeyumQyIJ1TZJ14bgL768TJrViu9V/JtquXY+j6OIjtAxOkU+ukA1dI3qqIEoekBP6AW9Oo/Os/PmvM9aC8585hD9gfPxDU+eoAg=</latexit>
+v1
+<latexit sha1_base64="Wj+H0M+Bd2CLC/0g2fZ/DelVDMA=">AAAB7HicbVBNS8NAEJ3Ur1q/qh69LLaCp5IUQY8FLx4rmLbQhrLZTtqlm03Y3RRK6W/w4kERr/4gb/4bt20O2vpg4PHeDDPzwlRwbVz32ylsbe/s7hX3SweHR8cn5dOzlk4yxdBniUhUJ6QaBZfoG24EdlKFNA4FtsPx/cJvT1BpnsgnM00xiOlQ8ogzaqzkVyd9r9ovV9yauwTZJF5OKpCj2S9/9QYJy2KUhgmqdddzUxPMqDKcCZyXepnGlLIxHWLXUklj1MFseeycXFllQKJE2ZKGLNXfEzMaaz2NQ9sZUzPS695C/M/rZia6C2ZcpplByVaLokwQk5DF52TAFTIjppZQpri9lbARVZQZm0/JhuCtv7xJWvWa59a8x3qlcZPHUYQLuIRr8OAWGvAATfCBAYdneIU3RzovzrvzsWotOPnMOfyB8/kDvFaN6g==</latexit><latexit sha1_base64="Wj+H0M+Bd2CLC/0g2fZ/DelVDMA=">AAAB7HicbVBNS8NAEJ3Ur1q/qh69LLaCp5IUQY8FLx4rmLbQhrLZTtqlm03Y3RRK6W/w4kERr/4gb/4bt20O2vpg4PHeDDPzwlRwbVz32ylsbe/s7hX3SweHR8cn5dOzlk4yxdBniUhUJ6QaBZfoG24EdlKFNA4FtsPx/cJvT1BpnsgnM00xiOlQ8ogzaqzkVyd9r9ovV9yauwTZJF5OKpCj2S9/9QYJy2KUhgmqdddzUxPMqDKcCZyXepnGlLIxHWLXUklj1MFseeycXFllQKJE2ZKGLNXfEzMaaz2NQ9sZUzPS695C/M/rZia6C2ZcpplByVaLokwQk5DF52TAFTIjppZQpri9lbARVZQZm0/JhuCtv7xJWvWa59a8x3qlcZPHUYQLuIRr8OAWGvAATfCBAYdneIU3RzovzrvzsWotOPnMOfyB8/kDvFaN6g==</latexit><latexit sha1_base64="Wj+H0M+Bd2CLC/0g2fZ/DelVDMA=">AAAB7HicbVBNS8NAEJ3Ur1q/qh69LLaCp5IUQY8FLx4rmLbQhrLZTtqlm03Y3RRK6W/w4kERr/4gb/4bt20O2vpg4PHeDDPzwlRwbVz32ylsbe/s7hX3SweHR8cn5dOzlk4yxdBniUhUJ6QaBZfoG24EdlKFNA4FtsPx/cJvT1BpnsgnM00xiOlQ8ogzaqzkVyd9r9ovV9yauwTZJF5OKpCj2S9/9QYJy2KUhgmqdddzUxPMqDKcCZyXepnGlLIxHWLXUklj1MFseeycXFllQKJE2ZKGLNXfEzMaaz2NQ9sZUzPS695C/M/rZia6C2ZcpplByVaLokwQk5DF52TAFTIjppZQpri9lbARVZQZm0/JhuCtv7xJWvWa59a8x3qlcZPHUYQLuIRr8OAWGvAATfCBAYdneIU3RzovzrvzsWotOPnMOfyB8/kDvFaN6g==</latexit><latexit sha1_base64="Wj+H0M+Bd2CLC/0g2fZ/DelVDMA=">AAAB7HicbVBNS8NAEJ3Ur1q/qh69LLaCp5IUQY8FLx4rmLbQhrLZTtqlm03Y3RRK6W/w4kERr/4gb/4bt20O2vpg4PHeDDPzwlRwbVz32ylsbe/s7hX3SweHR8cn5dOzlk4yxdBniUhUJ6QaBZfoG24EdlKFNA4FtsPx/cJvT1BpnsgnM00xiOlQ8ogzaqzkVyd9r9ovV9yauwTZJF5OKpCj2S9/9QYJy2KUhgmqdddzUxPMqDKcCZyXepnGlLIxHWLXUklj1MFseeycXFllQKJE2ZKGLNXfEzMaaz2NQ9sZUzPS695C/M/rZia6C2ZcpplByVaLokwQk5DF52TAFTIjppZQpri9lbARVZQZm0/JhuCtv7xJWvWa59a8x3qlcZPHUYQLuIRr8OAWGvAATfCBAYdneIU3RzovzrvzsWotOPnMOfyB8/kDvFaN6g==</latexit>
++
++--
+(a) Two ego networks (c) Model input(b) Matched ego network
+Adjacency matrix
+Node attributes
+(d) Model:  MEgo2Vec
+Graph normalizationStructure convolution
+Node embedding Social convolution
+4
+(e) Model output
+Ground truth
+Structure 
+Embedding
+Attribute 
+Embedding
+A
+M
+1
+<latexit sha1_base64="wPk/aatW5QTVtPPOC6xHGshFQCc=">AAAB9XicbVDLSgMxFL1TX7W+qi7dBIvgqkxEqMuKGzdCBfuAdloyaaYNzWSGJKOUof/hxoUibv0Xd/6NmXYW2nogcDjnXu7J8WPBtXHdb6ewtr6xuVXcLu3s7u0flA+PWjpKFGVNGolIdXyimeCSNQ03gnVixUjoC9b2JzeZ335kSvNIPphpzLyQjCQPOCXGSv1eSMzYD9Lr2QD37wblilt150CrBOekAjkag/JXbxjRJGTSUEG07mI3Nl5KlOFUsFmpl2gWEzohI9a1VJKQaS+dp56hM6sMURAp+6RBc/X3RkpCraehbyezlHrZy8T/vG5igisv5TJODJN0cShIBDIRyipAQ64YNWJqCaGK26yIjoki1NiiSrYEvPzlVdK6qGK3iu8vK/VaXkcRTuAUzgFDDepwCw1oAgUFz/AKb86T8+K8Ox+L0YKT7xzDHzifPynNkj0=</latexit><latexit sha1_base64="wPk/aatW5QTVtPPOC6xHGshFQCc=">AAAB9XicbVDLSgMxFL1TX7W+qi7dBIvgqkxEqMuKGzdCBfuAdloyaaYNzWSGJKOUof/hxoUibv0Xd/6NmXYW2nogcDjnXu7J8WPBtXHdb6ewtr6xuVXcLu3s7u0flA+PWjpKFGVNGolIdXyimeCSNQ03gnVixUjoC9b2JzeZ335kSvNIPphpzLyQjCQPOCXGSv1eSMzYD9Lr2QD37wblilt150CrBOekAjkag/JXbxjRJGTSUEG07mI3Nl5KlOFUsFmpl2gWEzohI9a1VJKQaS+dp56hM6sMURAp+6RBc/X3RkpCraehbyezlHrZy8T/vG5igisv5TJODJN0cShIBDIRyipAQ64YNWJqCaGK26yIjoki1NiiSrYEvPzlVdK6qGK3iu8vK/VaXkcRTuAUzgFDDepwCw1oAgUFz/AKb86T8+K8Ox+L0YKT7xzDHzifPynNkj0=</latexit><latexit sha1_base64="wPk/aatW5QTVtPPOC6xHGshFQCc=">AAAB9XicbVDLSgMxFL1TX7W+qi7dBIvgqkxEqMuKGzdCBfuAdloyaaYNzWSGJKOUof/hxoUibv0Xd/6NmXYW2nogcDjnXu7J8WPBtXHdb6ewtr6xuVXcLu3s7u0flA+PWjpKFGVNGolIdXyimeCSNQ03gnVixUjoC9b2JzeZ335kSvNIPphpzLyQjCQPOCXGSv1eSMzYD9Lr2QD37wblilt150CrBOekAjkag/JXbxjRJGTSUEG07mI3Nl5KlOFUsFmpl2gWEzohI9a1VJKQaS+dp56hM6sMURAp+6RBc/X3RkpCraehbyezlHrZy8T/vG5igisv5TJODJN0cShIBDIRyipAQ64YNWJqCaGK26yIjoki1NiiSrYEvPzlVdK6qGK3iu8vK/VaXkcRTuAUzgFDDepwCw1oAgUFz/AKb86T8+K8Ox+L0YKT7xzDHzifPynNkj0=</latexit><latexit sha1_base64="wPk/aatW5QTVtPPOC6xHGshFQCc=">AAAB9XicbVDLSgMxFL1TX7W+qi7dBIvgqkxEqMuKGzdCBfuAdloyaaYNzWSGJKOUof/hxoUibv0Xd/6NmXYW2nogcDjnXu7J8WPBtXHdb6ewtr6xuVXcLu3s7u0flA+PWjpKFGVNGolIdXyimeCSNQ03gnVixUjoC9b2JzeZ335kSvNIPphpzLyQjCQPOCXGSv1eSMzYD9Lr2QD37wblilt150CrBOekAjkag/JXbxjRJGTSUEG07mI3Nl5KlOFUsFmpl2gWEzohI9a1VJKQaS+dp56hM6sMURAp+6RBc/X3RkpCraehbyezlHrZy8T/vG5igisv5TJODJN0cShIBDIRyipAQ64YNWJqCaGK26yIjoki1NiiSrYEvPzlVdK6qGK3iu8vK/VaXkcRTuAUzgFDDepwCw1oAgUFz/AKb86T8+K8Ox+L0YKT7xzDHzifPynNkj0=</latexit>
+p(v1)
+<latexit sha1_base64="uIR7Jit27JQrYn/GgIb9bmqv434=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuimJCHVZcOOygn1AG8JkOmmHTiZhZlKooV/ixoUibv0Ud/6NkzYLbT0wcDjnXu6ZEyScKe0431Zpa3tnd6+8Xzk4PDqu2ienXRWnktAOiXks+wFWlDNBO5ppTvuJpDgKOO0F07vc782oVCwWj3qeUC/CY8FCRrA2km9XhxHWkyDMkkV95rtXvl1zGs4SaJO4BalBgbZvfw1HMUkjKjThWKmB6yTay7DUjHC6qAxTRRNMpnhMB4YKHFHlZcvgC3RplBEKY2me0Gip/t7IcKTUPArMZB5TrXu5+J83SHV462VMJKmmgqwOhSlHOkZ5C2jEJCWazw3BRDKTFZEJlpho01XFlOCuf3mTdK8brtNwH25qrWZRRxnO4QLq4EITWnAPbegAgRSe4RXerCfrxXq3PlajJavYOYM/sD5/AD5wksM=</latexit><latexit sha1_base64="uIR7Jit27JQrYn/GgIb9bmqv434=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuimJCHVZcOOygn1AG8JkOmmHTiZhZlKooV/ixoUibv0Ud/6NkzYLbT0wcDjnXu6ZEyScKe0431Zpa3tnd6+8Xzk4PDqu2ienXRWnktAOiXks+wFWlDNBO5ppTvuJpDgKOO0F07vc782oVCwWj3qeUC/CY8FCRrA2km9XhxHWkyDMkkV95rtXvl1zGs4SaJO4BalBgbZvfw1HMUkjKjThWKmB6yTay7DUjHC6qAxTRRNMpnhMB4YKHFHlZcvgC3RplBEKY2me0Gip/t7IcKTUPArMZB5TrXu5+J83SHV462VMJKmmgqwOhSlHOkZ5C2jEJCWazw3BRDKTFZEJlpho01XFlOCuf3mTdK8brtNwH25qrWZRRxnO4QLq4EITWnAPbegAgRSe4RXerCfrxXq3PlajJavYOYM/sD5/AD5wksM=</latexit><latexit sha1_base64="uIR7Jit27JQrYn/GgIb9bmqv434=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuimJCHVZcOOygn1AG8JkOmmHTiZhZlKooV/ixoUibv0Ud/6NkzYLbT0wcDjnXu6ZEyScKe0431Zpa3tnd6+8Xzk4PDqu2ienXRWnktAOiXks+wFWlDNBO5ppTvuJpDgKOO0F07vc782oVCwWj3qeUC/CY8FCRrA2km9XhxHWkyDMkkV95rtXvl1zGs4SaJO4BalBgbZvfw1HMUkjKjThWKmB6yTay7DUjHC6qAxTRRNMpnhMB4YKHFHlZcvgC3RplBEKY2me0Gip/t7IcKTUPArMZB5TrXu5+J83SHV462VMJKmmgqwOhSlHOkZ5C2jEJCWazw3BRDKTFZEJlpho01XFlOCuf3mTdK8brtNwH25qrWZRRxnO4QLq4EITWnAPbegAgRSe4RXerCfrxXq3PlajJavYOYM/sD5/AD5wksM=</latexit><latexit sha1_base64="uIR7Jit27JQrYn/GgIb9bmqv434=">AAAB+HicbVDLSsNAFL2pr1ofjbp0M1iEuimJCHVZcOOygn1AG8JkOmmHTiZhZlKooV/ixoUibv0Ud/6NkzYLbT0wcDjnXu6ZEyScKe0431Zpa3tnd6+8Xzk4PDqu2ienXRWnktAOiXks+wFWlDNBO5ppTvuJpDgKOO0F07vc782oVCwWj3qeUC/CY8FCRrA2km9XhxHWkyDMkkV95rtXvl1zGs4SaJO4BalBgbZvfw1HMUkjKjThWKmB6yTay7DUjHC6qAxTRRNMpnhMB4YKHFHlZcvgC3RplBEKY2me0Gip/t7IcKTUPArMZB5TrXu5+J83SHV462VMJKmmgqwOhSlHOkZ5C2jEJCWazw3BRDKTFZEJlpho01XFlOCuf3mTdK8brtNwH25qrWZRRxnO4QLq4EITWnAPbegAgRSe4RXerCfrxXq3PlajJavYOYM/sD5/AD5wksM=</latexit>
+Figur
+e 2: The Overall process of the proposed method. (a) Extract the ego networks of the two users to be predicted; (b) construct a
+matched ego network for the two users; (c) input the attributes of all the nodes and the adjacency matrix of the matched ego network to the
+model; (d) embed the attributes and the structure information by MEgo2Vec; (e) output an embedding for the matched ego network.
+Candidate Generation. In practice, the number of all the user
+pairs across two networks is very large. Thus, we need to generate
+candidate user pairs from all the pairs. Following [17, 28], we only
+keep the user pairs if their names are similar to each other (Cf.
+Section 5 for the details).
+Matched Ego Network Construction. For each candidate pair
+(v1; u1), we extract their ego networksGs
+1 and Gt
+1 from their respec-
+tive networks (Figure 2(a)), and construct a matched ego network
+GM
+1 according to definition 3.2 (Figure 2(b)). Figure 2 is correspond-
+ing to the case in Figure 1, where v2, v3 and v4 are matched to u2,
+u3 and u4 respectively. User v5 in Gs is not matched to any user in
+Gt , so it is removed from GM
+1 . Note that a matching between two
+users only indicates that they have the potential possibility to be a
+same person, but the true label is usually unknown.
+Matched Ego Network Embedding. We take the attributes of
+all the node pairs in GM
+1 and the adjacency matrix of GM
+1 as the in-
+put of the proposed model—MEgo2Vec whose output is an embed-
+ding. The model consists of two components: attribute embedding
+and structure embedding . The component of attribute embedding
+adopts the attributes as input, and generates two embeddings Hv1
+and Hu1 for v1 and u1. Specifically, we first generate an embedding
+vector for each user in GM
+1 based on his/her attributes by the pro-
+posed multi-view node embedding mechanism (Figure 3), and then
+update the embeddings of the focal pair (v1; u1) through convolv-
+ing their neighbors’ embeddings by the proposed attention mecha-
+nism (Figure 4). The component of the structure embedding adopts
+the adjacency matrix AM
+1 as input, normalizes and convolves AM
+1
+into another embedding t1 (Section 4.3).
+Finally, we predict the label of(v1; u1) based on the combination
+of the attribute embeddings and the structure embedding, and cal-
+culate the loss according to the ground truth. We will explain the
+details of different components as follows.
+4.2 Attribute Embedding
+Node Embedding. Many works demonstrate the effectiveness of
+CNN in representing texts [14]. However, in our task, there are
+multiple attributes for each user, and different attributes present
+different characteristics when they are used to determine whether
+two users are the same person or not. For example, in our datasets,
+more than 70% users change a few characters in their nicknames on
+different social media platforms. In this case, although the whole
+words of their names are totally different, the characters in those
+names are highly correlated. But for other attributes of long texts
+such as research interests, words may make more effects than char-
+acters. To model both the literal and semantic characteristics of the
+attributes unitedly, we propose a multi-view node embedding strat-
+egy. We will introduce the details as below.
+We divide each attribute into a list of words. For each word in
+an attribute, we firstly represent it as an embedding vector, named
+as word-view embedding. Then we divide the word into a list of
+characters, represent each character as an embedding vector, con-
+volve all the character embeddings by a CNN network and output
+an embedding as the word’s character-view embedding. The word-
+view and character-view embeddings are concatenated as the final
+embedding for a word. Then the sequence of the word embeddings
+in an attribute are convolved by another CNN network to output
+the final embedding for the attribute. Finally, we use an attribute
+pooling strategy to aggregate the embeddings of all the attributes
+of a node together as the node embedding:
+vi =
+d∑
+k =1
+aik γk ; (2)
+where aik represents the embedding of the k-th attribute of user
+vi , γk 2 R is the corresponding weighting parameter to be learned,
+d is the number of attributes of a user and vi is the K-dimension
+embedding learned for user vi . Figure 3 illustrates the above multi-
+view node embedding mechanism, where all the attributes are dealt
+with in the same way as name.
+Social Convolution. To determine whether two users can be
+aligned or not, the missing attributes or the attributes that are not
+distinguishable enough usually cannot provide sufficient evidence.
+But additional evidence may be obtained from the attributes of
+the neighbors. Thus after we obtain the embedding for each node
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+330
+MEgo2V ec: Embedding Matched Ego Networks for User Alignment Across Social Networks CIKM ’18, October 22–26, 2018, Torino, Italy
+We i Wei
+CNN
+Word-levelCharacter-level
+Attribute pooling
+Name
+… …
+Wa n Wang
+CNN
+Word-levelCharacter-level
+CNN
+Other attributes
+g
+Figur
+e 3: Multi-view node embedding.
+based on their own attributes, we further smooth each node’s em-
+bedding by their neighbors’ embeddings.
+The general idea of social convolution is that, for the focal pair
+(vi ; ui ) to be predicted, we convolve the above obtained embed-
+dings of all its neighbor pairs f(vj ; uj ) : j 2 N M
+i g (including the
+embeddings of the focal pair itself, i.e., (vi ; ui )) into new embed-
+dings of the focal pair:
+(Hvi ; Hui ) = c (f(vj ; uj ) : j 2 N M
+i g); (3)
+where Hvi ; Hui 2 RK . The convolution operation c () can be defined
+in various ways. A straightforward way to define c () is to average
+the embeddings of all the neighbors together, i.e.,
+Hvi = 1
+j
+N M
+i j
+∑
+j 2N M
+i
+vj ; Hui = 1
+j
+N M
+i j
+∑
+j 2N M
+i
+uj : (4)
+However, different neighbor pairs may exert different effects.
+For aligning two users, some neighbor pairs may provide strong
+evidence, while others may bring in additional noise. Although we
+have already filtered out most of the neighbors pairs if their names
+are totally different when constructing the matched ego network
+for a focal pair, the rule to filter neighbor pairs is heuristic and
+is very likely to keep the wrongly matched neighbor pairs in the
+matched ego network. Thus, it is necessary to distinguish the ef-
+fects from different neighbor pairs. Recently, the attention mecha-
+nism used in neural networks is a well-adopted way to achieve the
+goal [2]. Inspired by this, we propose using attention mechanisms
+to realize the social convolution operation c ().
+Essentially, attention mechanism is introduced to determine the
+contribution of a neighbor pair to the focal pair. Formally, given
+the embeddings of a neighbor pair (vj ; uj ) and the embeddings of
+the focal pair (vi ; ui ), we perform a shared attentional mechanism
+д : RK  RK  RK  RK ! R on the four input embedding vectors
+to calculate the attention coefficient:
+eji = д(vj ; uj ; vi ; ui ); (5)
+ṽ1 ũ1
+v1 u1
+v3 u3v4 u4
+v2 u2
+𝛼11
+𝛼31𝛼41
+𝛼21
+Figur
+e 4: Social convolution. We convolve the embeddings of v1
+to v4 by attention coefficientsα1 to α4 to obtain the final embedding
+Hv1 for user v1. The same is for user u1.
+?
+feature
+relation
+difference
+|vj uj|
+<latexit sha1_base64="PxhrY3fZ2/r1LO9cF5Gs3H7WIIs=">AAACOHicbZDLSsNAFIYnXmu8VV26GSyCG0viRpeCG3dWsCo0pUwmJ3V0MhPnIpSYx3LjY7gTNy4UcesTOI0Vrz8M/HznHOacP8450yYI7r2x8YnJqenajD87N7+wWF9aPtbSKgptKrlUpzHRwJmAtmGGw2mugGQxh5P4Ym9YP7kCpZkUR2aQQzcjfcFSRolxqFc/iGLoM1HApa1I6V9HGTFncVpclb3zykuVFJvlJ7YOX+NISGGzGJQfgUi+xnv1RtAMKuG/JhyZBhqp1avfRYmkNgNhKCdad8IgN92CKMMoh9KPrIac0AvSh46zgmSgu0V1eInXHUlwKpV7wuCKfp8oSKb1IItd53B7/bs2hP/VOtakO92CidwaEPTjo9RybCQepogTpoAaPnCGUMXcrpieEUWocVn7LoTw98l/zfFWMwya4eFWY3d7FEcNraI1tIFCtI120T5qoTai6AY9oCf07N16j96L9/rROuaNZlbQD3lv74tgr8s=</latexit><latexit sha1_base64="PxhrY3fZ2/r1LO9cF5Gs3H7WIIs=">AAACOHicbZDLSsNAFIYnXmu8VV26GSyCG0viRpeCG3dWsCo0pUwmJ3V0MhPnIpSYx3LjY7gTNy4UcesTOI0Vrz8M/HznHOacP8450yYI7r2x8YnJqenajD87N7+wWF9aPtbSKgptKrlUpzHRwJmAtmGGw2mugGQxh5P4Ym9YP7kCpZkUR2aQQzcjfcFSRolxqFc/iGLoM1HApa1I6V9HGTFncVpclb3zykuVFJvlJ7YOX+NISGGzGJQfgUi+xnv1RtAMKuG/JhyZBhqp1avfRYmkNgNhKCdad8IgN92CKMMoh9KPrIac0AvSh46zgmSgu0V1eInXHUlwKpV7wuCKfp8oSKb1IItd53B7/bs2hP/VOtakO92CidwaEPTjo9RybCQepogTpoAaPnCGUMXcrpieEUWocVn7LoTw98l/zfFWMwya4eFWY3d7FEcNraI1tIFCtI120T5qoTai6AY9oCf07N16j96L9/rROuaNZlbQD3lv74tgr8s=</latexit><latexit sha1_base64="PxhrY3fZ2/r1LO9cF5Gs3H7WIIs=">AAACOHicbZDLSsNAFIYnXmu8VV26GSyCG0viRpeCG3dWsCo0pUwmJ3V0MhPnIpSYx3LjY7gTNy4UcesTOI0Vrz8M/HznHOacP8450yYI7r2x8YnJqenajD87N7+wWF9aPtbSKgptKrlUpzHRwJmAtmGGw2mugGQxh5P4Ym9YP7kCpZkUR2aQQzcjfcFSRolxqFc/iGLoM1HApa1I6V9HGTFncVpclb3zykuVFJvlJ7YOX+NISGGzGJQfgUi+xnv1RtAMKuG/JhyZBhqp1avfRYmkNgNhKCdad8IgN92CKMMoh9KPrIac0AvSh46zgmSgu0V1eInXHUlwKpV7wuCKfp8oSKb1IItd53B7/bs2hP/VOtakO92CidwaEPTjo9RybCQepogTpoAaPnCGUMXcrpieEUWocVn7LoTw98l/zfFWMwya4eFWY3d7FEcNraI1tIFCtI120T5qoTai6AY9oCf07N16j96L9/rROuaNZlbQD3lv74tgr8s=</latexit><latexit sha1_base64="PxhrY3fZ2/r1LO9cF5Gs3H7WIIs=">AAACOHicbZDLSsNAFIYnXmu8VV26GSyCG0viRpeCG3dWsCo0pUwmJ3V0MhPnIpSYx3LjY7gTNy4UcesTOI0Vrz8M/HznHOacP8450yYI7r2x8YnJqenajD87N7+wWF9aPtbSKgptKrlUpzHRwJmAtmGGw2mugGQxh5P4Ym9YP7kCpZkUR2aQQzcjfcFSRolxqFc/iGLoM1HApa1I6V9HGTFncVpclb3zykuVFJvlJ7YOX+NISGGzGJQfgUi+xnv1RtAMKuG/JhyZBhqp1avfRYmkNgNhKCdad8IgN92CKMMoh9KPrIac0AvSh46zgmSgu0V1eInXHUlwKpV7wuCKfp8oSKb1IItd53B7/bs2hP/VOtakO92CidwaEPTjo9RybCQepogTpoAaPnCGUMXcrpieEUWocVn7LoTw98l/zfFWMwya4eFWY3d7FEcNraI1tIFCtI120T5qoTai6AY9oCf07N16j96L9/rROuaNZlbQD3lv74tgr8s=</latexit>
+|vj vi|
+<latexit sha1_base64="7Rc9pKOT3SKZL//kBbDE3KR6+RE=">AAACOHicbVDLSgMxFM34rOOr6tJNsAhuLDNu6rLgxp0VbBU6pWQyd2o0k4xJplCm81lu/Ax34saFIm79AtOx4PNA4HDOPeTeE6acaeN5D87M7Nz8wmJlyV1eWV1br25sdrTMFIU2lVyqi5Bo4ExA2zDD4SJVQJKQw3l4fTTxz4egNJPizIxS6CVkIFjMKDFW6ldPghAGTORwk5VK4Y6DhJjLMM6HRf+q5FJF+X7xTWZjHAgpsiQE5QYgoq94v1rz6l4J/Jf4U1JDU7T61fsgkjRLQBjKidZd30tNLyfKMMqhcINMQ0roNRlA11JBEtC9vDy8wLtWiXAslX3C4FL9nshJovUoCe3kZHv925uI/3ndzMSHvZyJNDMg6OdHccaxkXjSIo6YAmr4yBJCFbO7YnpJFKHGdu3aEvzfJ/8lnYO679X904NaszGto4K20Q7aQz5qoCY6Ri3URhTdokf0jF6cO+fJeXXePkdnnGlmC/2A8/4Bi2Ovyw==</latexit><latexit sha1_base64="7Rc9pKOT3SKZL//kBbDE3KR6+RE=">AAACOHicbVDLSgMxFM34rOOr6tJNsAhuLDNu6rLgxp0VbBU6pWQyd2o0k4xJplCm81lu/Ax34saFIm79AtOx4PNA4HDOPeTeE6acaeN5D87M7Nz8wmJlyV1eWV1br25sdrTMFIU2lVyqi5Bo4ExA2zDD4SJVQJKQw3l4fTTxz4egNJPizIxS6CVkIFjMKDFW6ldPghAGTORwk5VK4Y6DhJjLMM6HRf+q5FJF+X7xTWZjHAgpsiQE5QYgoq94v1rz6l4J/Jf4U1JDU7T61fsgkjRLQBjKidZd30tNLyfKMMqhcINMQ0roNRlA11JBEtC9vDy8wLtWiXAslX3C4FL9nshJovUoCe3kZHv925uI/3ndzMSHvZyJNDMg6OdHccaxkXjSIo6YAmr4yBJCFbO7YnpJFKHGdu3aEvzfJ/8lnYO679X904NaszGto4K20Q7aQz5qoCY6Ri3URhTdokf0jF6cO+fJeXXePkdnnGlmC/2A8/4Bi2Ovyw==</latexit><latexit sha1_base64="7Rc9pKOT3SKZL//kBbDE3KR6+RE=">AAACOHicbVDLSgMxFM34rOOr6tJNsAhuLDNu6rLgxp0VbBU6pWQyd2o0k4xJplCm81lu/Ax34saFIm79AtOx4PNA4HDOPeTeE6acaeN5D87M7Nz8wmJlyV1eWV1br25sdrTMFIU2lVyqi5Bo4ExA2zDD4SJVQJKQw3l4fTTxz4egNJPizIxS6CVkIFjMKDFW6ldPghAGTORwk5VK4Y6DhJjLMM6HRf+q5FJF+X7xTWZjHAgpsiQE5QYgoq94v1rz6l4J/Jf4U1JDU7T61fsgkjRLQBjKidZd30tNLyfKMMqhcINMQ0roNRlA11JBEtC9vDy8wLtWiXAslX3C4FL9nshJovUoCe3kZHv925uI/3ndzMSHvZyJNDMg6OdHccaxkXjSIo6YAmr4yBJCFbO7YnpJFKHGdu3aEvzfJ/8lnYO679X904NaszGto4K20Q7aQz5qoCY6Ri3URhTdokf0jF6cO+fJeXXePkdnnGlmC/2A8/4Bi2Ovyw==</latexit><latexit sha1_base64="7Rc9pKOT3SKZL//kBbDE3KR6+RE=">AAACOHicbVDLSgMxFM34rOOr6tJNsAhuLDNu6rLgxp0VbBU6pWQyd2o0k4xJplCm81lu/Ax34saFIm79AtOx4PNA4HDOPeTeE6acaeN5D87M7Nz8wmJlyV1eWV1br25sdrTMFIU2lVyqi5Bo4ExA2zDD4SJVQJKQw3l4fTTxz4egNJPizIxS6CVkIFjMKDFW6ldPghAGTORwk5VK4Y6DhJjLMM6HRf+q5FJF+X7xTWZjHAgpsiQE5QYgoq94v1rz6l4J/Jf4U1JDU7T61fsgkjRLQBjKidZd30tNLyfKMMqhcINMQ0roNRlA11JBEtC9vDy8wLtWiXAslX3C4FL9nshJovUoCe3kZHv925uI/3ndzMSHvZyJNDMg6OdHccaxkXjSIo6YAmr4yBJCFbO7YnpJFKHGdu3aEvzfJ/8lnYO679X904NaszGto4K20Q7aQz5qoCY6Ri3URhTdokf0jF6cO+fJeXXePkdnnGlmC/2A8/4Bi2Ovyw==</latexit>
+|uj ui|
+<latexit sha1_base64="F9/KnUiGKt1dPIOyWK+jZ8KozVg=">AAACOHicbVDLSsNAFJ34rPFVdelmsAhuLImbuhTcuLOCVaEpZTK5qaOTmTgPocR8lhs/w524caGIW7/AaSz4PDBwOOce5t4T55xpEwQP3sTk1PTMbG3On19YXFqur6yeaGkVhQ6VXKqzmGjgTEDHMMPhLFdAspjDaXy5P/JPr0FpJsWxGebQy8hAsJRRYpzUrx9GMQyYKODKVkrp30QZMedxWtiyf1FxqZJiu/wmsxscCSlsFoPyIxDJV7xfbwTNoAL+S8IxaaAx2v36fZRIajMQhnKidTcMctMriDKMcij9yGrICb0kA+g6KkgGuldUh5d40ykJTqVyTxhcqd8TBcm0Hmaxmxxtr397I/E/r2tNutsrmMitAUE/P0otx0biUYs4YQqo4UNHCFXM7YrpOVGEGte170oIf5/8l5zsNMOgGR7tNPZa4zpqaB1toC0UohbaQweojTqIolv0iJ7Ri3fnPXmv3tvn6IQ3zqyhH/DePwCICq/J</latexit><latexit sha1_base64="F9/KnUiGKt1dPIOyWK+jZ8KozVg=">AAACOHicbVDLSsNAFJ34rPFVdelmsAhuLImbuhTcuLOCVaEpZTK5qaOTmTgPocR8lhs/w524caGIW7/AaSz4PDBwOOce5t4T55xpEwQP3sTk1PTMbG3On19YXFqur6yeaGkVhQ6VXKqzmGjgTEDHMMPhLFdAspjDaXy5P/JPr0FpJsWxGebQy8hAsJRRYpzUrx9GMQyYKODKVkrp30QZMedxWtiyf1FxqZJiu/wmsxscCSlsFoPyIxDJV7xfbwTNoAL+S8IxaaAx2v36fZRIajMQhnKidTcMctMriDKMcij9yGrICb0kA+g6KkgGuldUh5d40ykJTqVyTxhcqd8TBcm0Hmaxmxxtr397I/E/r2tNutsrmMitAUE/P0otx0biUYs4YQqo4UNHCFXM7YrpOVGEGte170oIf5/8l5zsNMOgGR7tNPZa4zpqaB1toC0UohbaQweojTqIolv0iJ7Ri3fnPXmv3tvn6IQ3zqyhH/DePwCICq/J</latexit><latexit sha1_base64="F9/KnUiGKt1dPIOyWK+jZ8KozVg=">AAACOHicbVDLSsNAFJ34rPFVdelmsAhuLImbuhTcuLOCVaEpZTK5qaOTmTgPocR8lhs/w524caGIW7/AaSz4PDBwOOce5t4T55xpEwQP3sTk1PTMbG3On19YXFqur6yeaGkVhQ6VXKqzmGjgTEDHMMPhLFdAspjDaXy5P/JPr0FpJsWxGebQy8hAsJRRYpzUrx9GMQyYKODKVkrp30QZMedxWtiyf1FxqZJiu/wmsxscCSlsFoPyIxDJV7xfbwTNoAL+S8IxaaAx2v36fZRIajMQhnKidTcMctMriDKMcij9yGrICb0kA+g6KkgGuldUh5d40ykJTqVyTxhcqd8TBcm0Hmaxmxxtr397I/E/r2tNutsrmMitAUE/P0otx0biUYs4YQqo4UNHCFXM7YrpOVGEGte170oIf5/8l5zsNMOgGR7tNPZa4zpqaB1toC0UohbaQweojTqIolv0iJ7Ri3fnPXmv3tvn6IQ3zqyhH/DePwCICq/J</latexit><latexit sha1_base64="F9/KnUiGKt1dPIOyWK+jZ8KozVg=">AAACOHicbVDLSsNAFJ34rPFVdelmsAhuLImbuhTcuLOCVaEpZTK5qaOTmTgPocR8lhs/w524caGIW7/AaSz4PDBwOOce5t4T55xpEwQP3sTk1PTMbG3On19YXFqur6yeaGkVhQ6VXKqzmGjgTEDHMMPhLFdAspjDaXy5P/JPr0FpJsWxGebQy8hAsJRRYpzUrx9GMQyYKODKVkrp30QZMedxWtiyf1FxqZJiu/wmsxscCSlsFoPyIxDJV7xfbwTNoAL+S8IxaaAx2v36fZRIajMQhnKidTcMctMriDKMcij9yGrICb0kA+g6KkgGuldUh5d40ykJTqVyTxhcqd8TBcm0Hmaxmxxtr397I/E/r2tNutsrmMitAUE/P0otx0biUYs4YQqo4UNHCFXM7YrpOVGEGte170oIf5/8l5zsNMOgGR7tNPZa4zpqaB1toC0UohbaQweojTqIolv0iJ7Ri3fnPXmv3tvn6IQ3zqyhH/DePwCICq/J</latexit>
+vj
+<latexit sha1_base64="h990T117aej1wBHTqyxfovw8AFc=">AAACH3icbVBNS8NAEN3Urxq/qh69LBbBU0l6sB4LXjxWsB/QlLLZTtq1m03c3RRK6D/x4l/x4kER8dZ/46YNqK0PBh7vzTAzz485U9px5lZhY3Nre6e4a+/tHxwelY5PWipKJIUmjXgkOz5RwJmApmaaQyeWQEKfQ9sf32R+ewJSsUjc62kMvZAMBQsYJdpI/dKV58OQiRQek4Uys72Q6JEfpJNZ/wF7IhJJ6IO0PRCDn65+qexUnAXwOnFzUkY5Gv3SlzeIaBKC0JQTpbquE+teSqRmlIPZmiiICR2TIXQNFSQE1UsX/83whVEGOIikKaHxQv09kZJQqWnom87seLXqZeJ/XjfRwXUvZSJONAi6XBQkHOsIZ2HhAZNANZ8aQqhk5lZMR0QSqk2ktgnBXX15nbSqFdepuHfVcr2Wx1FEZ+gcXSIX1VAd3aIGaiKKntALekPv1rP1an1Yn8vWgpXPnKI/sObfbEikZQ==</latexit><latexit sha1_base64="h990T117aej1wBHTqyxfovw8AFc=">AAACH3icbVBNS8NAEN3Urxq/qh69LBbBU0l6sB4LXjxWsB/QlLLZTtq1m03c3RRK6D/x4l/x4kER8dZ/46YNqK0PBh7vzTAzz485U9px5lZhY3Nre6e4a+/tHxwelY5PWipKJIUmjXgkOz5RwJmApmaaQyeWQEKfQ9sf32R+ewJSsUjc62kMvZAMBQsYJdpI/dKV58OQiRQek4Uys72Q6JEfpJNZ/wF7IhJJ6IO0PRCDn65+qexUnAXwOnFzUkY5Gv3SlzeIaBKC0JQTpbquE+teSqRmlIPZmiiICR2TIXQNFSQE1UsX/83whVEGOIikKaHxQv09kZJQqWnom87seLXqZeJ/XjfRwXUvZSJONAi6XBQkHOsIZ2HhAZNANZ8aQqhk5lZMR0QSqk2ktgnBXX15nbSqFdepuHfVcr2Wx1FEZ+gcXSIX1VAd3aIGaiKKntALekPv1rP1an1Yn8vWgpXPnKI/sObfbEikZQ==</latexit><latexit sha1_base64="h990T117aej1wBHTqyxfovw8AFc=">AAACH3icbVBNS8NAEN3Urxq/qh69LBbBU0l6sB4LXjxWsB/QlLLZTtq1m03c3RRK6D/x4l/x4kER8dZ/46YNqK0PBh7vzTAzz485U9px5lZhY3Nre6e4a+/tHxwelY5PWipKJIUmjXgkOz5RwJmApmaaQyeWQEKfQ9sf32R+ewJSsUjc62kMvZAMBQsYJdpI/dKV58OQiRQek4Uys72Q6JEfpJNZ/wF7IhJJ6IO0PRCDn65+qexUnAXwOnFzUkY5Gv3SlzeIaBKC0JQTpbquE+teSqRmlIPZmiiICR2TIXQNFSQE1UsX/83whVEGOIikKaHxQv09kZJQqWnom87seLXqZeJ/XjfRwXUvZSJONAi6XBQkHOsIZ2HhAZNANZ8aQqhk5lZMR0QSqk2ktgnBXX15nbSqFdepuHfVcr2Wx1FEZ+gcXSIX1VAd3aIGaiKKntALekPv1rP1an1Yn8vWgpXPnKI/sObfbEikZQ==</latexit><latexit sha1_base64="h990T117aej1wBHTqyxfovw8AFc=">AAACH3icbVBNS8NAEN3Urxq/qh69LBbBU0l6sB4LXjxWsB/QlLLZTtq1m03c3RRK6D/x4l/x4kER8dZ/46YNqK0PBh7vzTAzz485U9px5lZhY3Nre6e4a+/tHxwelY5PWipKJIUmjXgkOz5RwJmApmaaQyeWQEKfQ9sf32R+ewJSsUjc62kMvZAMBQsYJdpI/dKV58OQiRQek4Uys72Q6JEfpJNZ/wF7IhJJ6IO0PRCDn65+qexUnAXwOnFzUkY5Gv3SlzeIaBKC0JQTpbquE+teSqRmlIPZmiiICR2TIXQNFSQE1UsX/83whVEGOIikKaHxQv09kZJQqWnom87seLXqZeJ/XjfRwXUvZSJONAi6XBQkHOsIZ2HhAZNANZ8aQqhk5lZMR0QSqk2ktgnBXX15nbSqFdepuHfVcr2Wx1FEZ+gcXSIX1VAd3aIGaiKKntALekPv1rP1an1Yn8vWgpXPnKI/sObfbEikZQ==</latexit>
+uj
+<latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit><latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit><latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit><latexit sha1_base64="hP+6LrUf2d3tZaldqaQQvEKMXyw=">AAAB2XicbZDNSgMxFIXv1L86Vq1rN8EiuCozbnQpuHFZwbZCO5RM5k4bmskMyR2hDH0BF25EfC93vo3pz0JbDwQ+zknIvSculLQUBN9ebWd3b/+gfugfNfzjk9Nmo2fz0gjsilzl5jnmFpXU2CVJCp8LgzyLFfbj6f0i77+gsTLXTzQrMMr4WMtUCk7O6oyaraAdLMW2IVxDC9YaNb+GSS7KDDUJxa0dhEFBUcUNSaFw7g9LiwUXUz7GgUPNM7RRtRxzzi6dk7A0N+5oYkv394uKZ9bOstjdzDhN7Ga2MP/LBiWlt1EldVESarH6KC0Vo5wtdmaJNChIzRxwYaSblYkJN1yQa8Z3HYSbG29D77odBu3wMYA6nMMFXEEIN3AHD9CBLghI4BXevYn35n2suqp569LO4I+8zx84xIo4</latexit><latexit sha1_base64="SavwzTHeLgVJ0GYAa7zL1F57UHk=">AAACFHicbVDLSgNBEOz1GWPU6NXLYBA8hV0P6lHw4jGCeUA2hNlJbzJmdnadhxCW/IkXf8WLB0XEm3/j5AFqYkFDUdVNd1eUCa6N7395K6tr6xubha3idmlnd6+8X2ro1CqGdZaKVLUiqlFwiXXDjcBWppAmkcBmNLya+M0HVJqn8taMMuwktC95zBk1TuqWz8II+1zmeG+nyrgYJtQMoji34+4dCWUqbRKhKoYoez9d3XLFr/pTkGUSzEkF5qh1y59hL2U2QWmYoFq3Az8znZwqw5lAt9VqzCgb0j62HZU0Qd3Jp/+NybFTeiROlStpyFT9PZHTROtRErnOyfF60ZuI/3lta+KLTs5lZg1KNlsUW0FMSiZhkR5XyIwYOUKZ4u5WwgZUUWZcpEUXQrD48jJpnFYDvxrc+FCAQziCEwjgHC7hGmpQBwaP8Ayv8OY9eS/e+yyuFW+e2wH8gffxDWG9ouc=</latexit><latexit sha1_base64="SavwzTHeLgVJ0GYAa7zL1F57UHk=">AAACFHicbVDLSgNBEOz1GWPU6NXLYBA8hV0P6lHw4jGCeUA2hNlJbzJmdnadhxCW/IkXf8WLB0XEm3/j5AFqYkFDUdVNd1eUCa6N7395K6tr6xubha3idmlnd6+8X2ro1CqGdZaKVLUiqlFwiXXDjcBWppAmkcBmNLya+M0HVJqn8taMMuwktC95zBk1TuqWz8II+1zmeG+nyrgYJtQMoji34+4dCWUqbRKhKoYoez9d3XLFr/pTkGUSzEkF5qh1y59hL2U2QWmYoFq3Az8znZwqw5lAt9VqzCgb0j62HZU0Qd3Jp/+NybFTeiROlStpyFT9PZHTROtRErnOyfF60ZuI/3lta+KLTs5lZg1KNlsUW0FMSiZhkR5XyIwYOUKZ4u5WwgZUUWZcpEUXQrD48jJpnFYDvxrc+FCAQziCEwjgHC7hGmpQBwaP8Ayv8OY9eS/e+yyuFW+e2wH8gffxDWG9ouc=</latexit><latexit sha1_base64="w3hYWYZNx/3Cb847TwFzBjoGXyQ=">AAACH3icbVDLSgNBEJyNr7i+oh69DAbBU9j1YDwGvHiMYB6QDWF20puMmZ1d5yGEJX/ixV/x4kER8Za/cZIsqIkFDUVVN91dYcqZ0p43dQpr6xubW8Vtd2d3b/+gdHjUVImRFBo04Ylsh0QBZwIammkO7VQCiUMOrXB0PfNbjyAVS8SdHqfQjclAsIhRoq3UK10GIQyYyODBzJWJG8RED8MoM5PePQ5EIkwcgnQDEP2frl6p7FW8OfAq8XNSRjnqvdJX0E+oiUFoyolSHd9LdTcjUjPKwW41ClJCR2QAHUsFiUF1s/l/E3xmlT6OEmlLaDxXf09kJFZqHIe2c3a8WvZm4n9ex+joqpsxkRoNgi4WRYZjneBZWLjPJFDNx5YQKpm9FdMhkYRqG6lrQ/CXX14lzYuK71X8W69cq+ZxFNEJOkXnyEdVVEM3qI4aiKIn9ILe0Lvz7Lw6H87norXg5DPH6A+c6TdqCKRi</latexit><latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit><latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit><latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit><latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit><latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit><latexit sha1_base64="HpO6u6rjFGkDEWaRGHpG8AvZafo=">AAACH3icbVDLSgNBEJz1GeMr6tHLYBA8hd0cjMeAF48RzAOyIczO9iZjZmfXeQhhyZ948Ve8eFBEvOVvnGwCamJBQ1HVTXdXkHKmtOtOnbX1jc2t7cJOcXdv/+CwdHTcUomRFJo04YnsBEQBZwKammkOnVQCiQMO7WB0PfPbjyAVS8SdHqfQi8lAsIhRoq3UL136AQyYyODB5Mqk6MdED4MoM5P+PfZFIkwcgCz6IMKfrn6p7FbcHHiVeAtSRgs0+qUvP0yoiUFoyolSXc9NdS8jUjPKwW41ClJCR2QAXUsFiUH1svy/CT63SoijRNoSGufq74mMxEqN48B2zo5Xy95M/M/rGh1d9TImUqNB0PmiyHCsEzwLC4dMAtV8bAmhktlbMR0SSai2kRZtCN7yy6ukVa14bsW7rZbrtUUcBXSKztAF8lAN1dENaqAmougJvaA39O48O6/Oh/M5b11zFjMn6A+c6TdqqKRk</latexit>
+vi
+<latexit sha1_base64="AJoXCsbjMrBYRDGWv9LtsoD7P5A=">AAACFnicbVBNS8NAEN34WeNX1KOXxSJ4sSS91GPBi8cK9gOaEjababt0s4m7m0IJ/RVe/CtePCjiVbz5b9y2AbX1wcDjvRlm5oUpZ0q77pe1tr6xubVd2rF39/YPDp2j45ZKMkmhSROeyE5IFHAmoKmZ5tBJJZA45NAOR9czvz0GqVgi7vQkhV5MBoL1GSXaSIFz6YcwYCKH+2yuTO1xwLAvEpHFIUjbBxH9mIFTdivuHHiVeAUpowKNwPn0o4RmMQhNOVGq67mp7uVEakY5TG0/U5ASOiID6BoqSAyql8/fmuJzo0S4n0hTQuO5+nsiJ7FSkzg0nTHRQ7XszcT/vG6m+1e9nIk00yDoYlE/41gneJYRjpgEqvnEEEIlM7diOiSSUG2StE0I3vLLq6RVrXhuxbutluu1Io4SOkVn6AJ5qIbq6AY1UBNR9ICe0At6tR6tZ+vNel+0rlnFzAn6A+vjG6x8oEQ=</latexit><latexit sha1_base64="AJoXCsbjMrBYRDGWv9LtsoD7P5A=">AAACFnicbVBNS8NAEN34WeNX1KOXxSJ4sSS91GPBi8cK9gOaEjababt0s4m7m0IJ/RVe/CtePCjiVbz5b9y2AbX1wcDjvRlm5oUpZ0q77pe1tr6xubVd2rF39/YPDp2j45ZKMkmhSROeyE5IFHAmoKmZ5tBJJZA45NAOR9czvz0GqVgi7vQkhV5MBoL1GSXaSIFz6YcwYCKH+2yuTO1xwLAvEpHFIUjbBxH9mIFTdivuHHiVeAUpowKNwPn0o4RmMQhNOVGq67mp7uVEakY5TG0/U5ASOiID6BoqSAyql8/fmuJzo0S4n0hTQuO5+nsiJ7FSkzg0nTHRQ7XszcT/vG6m+1e9nIk00yDoYlE/41gneJYRjpgEqvnEEEIlM7diOiSSUG2StE0I3vLLq6RVrXhuxbutluu1Io4SOkVn6AJ5qIbq6AY1UBNR9ICe0At6tR6tZ+vNel+0rlnFzAn6A+vjG6x8oEQ=</latexit><latexit sha1_base64="AJoXCsbjMrBYRDGWv9LtsoD7P5A=">AAACFnicbVBNS8NAEN34WeNX1KOXxSJ4sSS91GPBi8cK9gOaEjababt0s4m7m0IJ/RVe/CtePCjiVbz5b9y2AbX1wcDjvRlm5oUpZ0q77pe1tr6xubVd2rF39/YPDp2j45ZKMkmhSROeyE5IFHAmoKmZ5tBJJZA45NAOR9czvz0GqVgi7vQkhV5MBoL1GSXaSIFz6YcwYCKH+2yuTO1xwLAvEpHFIUjbBxH9mIFTdivuHHiVeAUpowKNwPn0o4RmMQhNOVGq67mp7uVEakY5TG0/U5ASOiID6BoqSAyql8/fmuJzo0S4n0hTQuO5+nsiJ7FSkzg0nTHRQ7XszcT/vG6m+1e9nIk00yDoYlE/41gneJYRjpgEqvnEEEIlM7diOiSSUG2StE0I3vLLq6RVrXhuxbutluu1Io4SOkVn6AJ5qIbq6AY1UBNR9ICe0At6tR6tZ+vNel+0rlnFzAn6A+vjG6x8oEQ=</latexit><latexit sha1_base64="AJoXCsbjMrBYRDGWv9LtsoD7P5A=">AAACFnicbVBNS8NAEN34WeNX1KOXxSJ4sSS91GPBi8cK9gOaEjababt0s4m7m0IJ/RVe/CtePCjiVbz5b9y2AbX1wcDjvRlm5oUpZ0q77pe1tr6xubVd2rF39/YPDp2j45ZKMkmhSROeyE5IFHAmoKmZ5tBJJZA45NAOR9czvz0GqVgi7vQkhV5MBoL1GSXaSIFz6YcwYCKH+2yuTO1xwLAvEpHFIUjbBxH9mIFTdivuHHiVeAUpowKNwPn0o4RmMQhNOVGq67mp7uVEakY5TG0/U5ASOiID6BoqSAyql8/fmuJzo0S4n0hTQuO5+nsiJ7FSkzg0nTHRQ7XszcT/vG6m+1e9nIk00yDoYlE/41gneJYRjpgEqvnEEEIlM7diOiSSUG2StE0I3vLLq6RVrXhuxbutluu1Io4SOkVn6AJ5qIbq6AY1UBNR9ICe0At6tR6tZ+vNel+0rlnFzAn6A+vjG6x8oEQ=</latexit>
+ui
+<latexit sha1_base64="yXQ6NqDpcRmxZUh4kcXbfUXF92w=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3l3gMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+MkWVATCxqKqm66u6KUM6U978sprK1vbG4Vt92d3b39g9LhUUslRlJo0oQnshMRBZwJaGqmOXRSCSSOOLSj8dXMb9+DVCwRt3qSQi8mQ8EGjBJtpbB0EUQwZCKDOzNXpq4JGQ5EIkwcgXQDEP0fMyyVvYo3B14lfk7KKEcjLH0G/YSaGISmnCjV9b1U9zIiNaMcpm5gFKSEjskQupYKEoPqZfO3pvjMKn08SKQtofFc/T2RkVipSRzZzpjokVr2ZuJ/XtfowWUvYyI1GgRdLBoYjnWCZxnhPpNANZ9YQqhk9lZMR0QSqm2Srg3BX355lbSqFd+r+DfVcr2Wx1FEJ+gUnSMf1VAdXaMGaiKKHtATekGvzqPz7Lw574vWgpPPHKM/cD6+AardoEM=</latexit><latexit sha1_base64="yXQ6NqDpcRmxZUh4kcXbfUXF92w=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3l3gMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+MkWVATCxqKqm66u6KUM6U978sprK1vbG4Vt92d3b39g9LhUUslRlJo0oQnshMRBZwJaGqmOXRSCSSOOLSj8dXMb9+DVCwRt3qSQi8mQ8EGjBJtpbB0EUQwZCKDOzNXpq4JGQ5EIkwcgXQDEP0fMyyVvYo3B14lfk7KKEcjLH0G/YSaGISmnCjV9b1U9zIiNaMcpm5gFKSEjskQupYKEoPqZfO3pvjMKn08SKQtofFc/T2RkVipSRzZzpjokVr2ZuJ/XtfowWUvYyI1GgRdLBoYjnWCZxnhPpNANZ9YQqhk9lZMR0QSqm2Srg3BX355lbSqFd+r+DfVcr2Wx1FEJ+gUnSMf1VAdXaMGaiKKHtATekGvzqPz7Lw574vWgpPPHKM/cD6+AardoEM=</latexit><latexit sha1_base64="yXQ6NqDpcRmxZUh4kcXbfUXF92w=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3l3gMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+MkWVATCxqKqm66u6KUM6U978sprK1vbG4Vt92d3b39g9LhUUslRlJo0oQnshMRBZwJaGqmOXRSCSSOOLSj8dXMb9+DVCwRt3qSQi8mQ8EGjBJtpbB0EUQwZCKDOzNXpq4JGQ5EIkwcgXQDEP0fMyyVvYo3B14lfk7KKEcjLH0G/YSaGISmnCjV9b1U9zIiNaMcpm5gFKSEjskQupYKEoPqZfO3pvjMKn08SKQtofFc/T2RkVipSRzZzpjokVr2ZuJ/XtfowWUvYyI1GgRdLBoYjnWCZxnhPpNANZ9YQqhk9lZMR0QSqm2Srg3BX355lbSqFd+r+DfVcr2Wx1FEJ+gUnSMf1VAdXaMGaiKKHtATekGvzqPz7Lw574vWgpPPHKM/cD6+AardoEM=</latexit><latexit sha1_base64="yXQ6NqDpcRmxZUh4kcXbfUXF92w=">AAACFnicbVDLSgNBEJyNr7i+oh69DAbBi2E3l3gMePEYwTwgG5bZSScZMju7zkMIS77Ci7/ixYMiXsWbf+MkWVATCxqKqm66u6KUM6U978sprK1vbG4Vt92d3b39g9LhUUslRlJo0oQnshMRBZwJaGqmOXRSCSSOOLSj8dXMb9+DVCwRt3qSQi8mQ8EGjBJtpbB0EUQwZCKDOzNXpq4JGQ5EIkwcgXQDEP0fMyyVvYo3B14lfk7KKEcjLH0G/YSaGISmnCjV9b1U9zIiNaMcpm5gFKSEjskQupYKEoPqZfO3pvjMKn08SKQtofFc/T2RkVipSRzZzpjokVr2ZuJ/XtfowWUvYyI1GgRdLBoYjnWCZxnhPpNANZ9YQqhk9lZMR0QSqm2Srg3BX355lbSqFd+r+DfVcr2Wx1FEJ+gUnSMf1VAdXaMGaiKKHtATekGvzqPz7Lw574vWgpPPHKM/cD6+AardoEM=</latexit>
+vj
+<latexit sha1_base64="ue3GoZYS49tjOF9fOU4rsGD394c=">AAACFnicbVDLSsNAFJ3UV42vqEs3g0VwY0m6qcuCG5cV7AOaUCaT23bsZBJnJoUS+hVu/BU3LhRxK+78G6cPUFsPXDiccy/33hOmnCntul9WYW19Y3OruG3v7O7tHziHR02VZJJCgyY8ke2QKOBMQEMzzaGdSiBxyKEVDq+mfmsEUrFE3OpxCkFM+oL1GCXaSF3nwg+hz0QO99lMmdij7h32RSKyOARp+yCiH7PrlNyyOwNeJd6ClNAC9a7z6UcJzWIQmnKiVMdzUx3kRGpGOUxsP1OQEjokfegYKkgMKshnb03wmVEi3EukKaHxTP09kZNYqXEcms6Y6IFa9qbif14n073LIGcizTQIOl/UyzjWCZ5mhCMmgWo+NoRQycytmA6IJFSbJG0Tgrf88ippVsqeW/ZuKqVadRFHEZ2gU3SOPFRFNXSN6qiBKHpAT+gFvVqP1rP1Zr3PWwvWYuYY/YH18Q2uGaBF</latexit><latexit sha1_base64="ue3GoZYS49tjOF9fOU4rsGD394c=">AAACFnicbVDLSsNAFJ3UV42vqEs3g0VwY0m6qcuCG5cV7AOaUCaT23bsZBJnJoUS+hVu/BU3LhRxK+78G6cPUFsPXDiccy/33hOmnCntul9WYW19Y3OruG3v7O7tHziHR02VZJJCgyY8ke2QKOBMQEMzzaGdSiBxyKEVDq+mfmsEUrFE3OpxCkFM+oL1GCXaSF3nwg+hz0QO99lMmdij7h32RSKyOARp+yCiH7PrlNyyOwNeJd6ClNAC9a7z6UcJzWIQmnKiVMdzUx3kRGpGOUxsP1OQEjokfegYKkgMKshnb03wmVEi3EukKaHxTP09kZNYqXEcms6Y6IFa9qbif14n073LIGcizTQIOl/UyzjWCZ5mhCMmgWo+NoRQycytmA6IJFSbJG0Tgrf88ippVsqeW/ZuKqVadRFHEZ2gU3SOPFRFNXSN6qiBKHpAT+gFvVqP1rP1Zr3PWwvWYuYY/YH18Q2uGaBF</latexit><latexit sha1_base64="ue3GoZYS49tjOF9fOU4rsGD394c=">AAACFnicbVDLSsNAFJ3UV42vqEs3g0VwY0m6qcuCG5cV7AOaUCaT23bsZBJnJoUS+hVu/BU3LhRxK+78G6cPUFsPXDiccy/33hOmnCntul9WYW19Y3OruG3v7O7tHziHR02VZJJCgyY8ke2QKOBMQEMzzaGdSiBxyKEVDq+mfmsEUrFE3OpxCkFM+oL1GCXaSF3nwg+hz0QO99lMmdij7h32RSKyOARp+yCiH7PrlNyyOwNeJd6ClNAC9a7z6UcJzWIQmnKiVMdzUx3kRGpGOUxsP1OQEjokfegYKkgMKshnb03wmVEi3EukKaHxTP09kZNYqXEcms6Y6IFa9qbif14n073LIGcizTQIOl/UyzjWCZ5mhCMmgWo+NoRQycytmA6IJFSbJG0Tgrf88ippVsqeW/ZuKqVadRFHEZ2gU3SOPFRFNXSN6qiBKHpAT+gFvVqP1rP1Zr3PWwvWYuYY/YH18Q2uGaBF</latexit><latexit sha1_base64="ue3GoZYS49tjOF9fOU4rsGD394c=">AAACFnicbVDLSsNAFJ3UV42vqEs3g0VwY0m6qcuCG5cV7AOaUCaT23bsZBJnJoUS+hVu/BU3LhRxK+78G6cPUFsPXDiccy/33hOmnCntul9WYW19Y3OruG3v7O7tHziHR02VZJJCgyY8ke2QKOBMQEMzzaGdSiBxyKEVDq+mfmsEUrFE3OpxCkFM+oL1GCXaSF3nwg+hz0QO99lMmdij7h32RSKyOARp+yCiH7PrlNyyOwNeJd6ClNAC9a7z6UcJzWIQmnKiVMdzUx3kRGpGOUxsP1OQEjokfegYKkgMKshnb03wmVEi3EukKaHxTP09kZNYqXEcms6Y6IFa9qbif14n073LIGcizTQIOl/UyzjWCZ5mhCMmgWo+NoRQycytmA6IJFSbJG0Tgrf88ippVsqeW/ZuKqVadRFHEZ2gU3SOPFRFNXSN6qiBKHpAT+gFvVqP1rP1Zr3PWwvWYuYY/YH18Q2uGaBF</latexit>
+uj
+<latexit sha1_base64="VgiIFjOED0MTZdaeIGwVfXet6VM=">AAACFnicbVDJSgNBEO1xjeM26tFLYxC8GGZyiceAF48RzAKZEHp6Kkmbnp6xFyEM+Qov/ooXD4p4FW/+jZ0F1MQHBY/3qqiqF2WcKe37X87K6tr6xmZhy93e2d3b9w4OGyo1kkKdpjyVrYgo4ExAXTPNoZVJIEnEoRkNLyd+8x6kYqm40aMMOgnpC9ZjlGgrdb3zMII+Ezncmakydk33FociFSaJQLohiPjH7HpFv+RPgZdJMCdFNEet632GcUpNAkJTTpRqB36mOzmRmlEOYzc0CjJCh6QPbUsFSUB18ulbY3xqlRj3UmlLaDxVf0/kJFFqlES2MyF6oBa9ifif1za6d9HJmciMBkFni3qGY53iSUY4ZhKo5iNLCJXM3orpgEhCtU3StSEEiy8vk0a5FPil4LpcrFbmcRTQMTpBZyhAFVRFV6iG6oiiB/SEXtCr8+g8O2/O+6x1xZnPHKE/cD6+Aax6oEQ=</latexit><latexit sha1_base64="VgiIFjOED0MTZdaeIGwVfXet6VM=">AAACFnicbVDJSgNBEO1xjeM26tFLYxC8GGZyiceAF48RzAKZEHp6Kkmbnp6xFyEM+Qov/ooXD4p4FW/+jZ0F1MQHBY/3qqiqF2WcKe37X87K6tr6xmZhy93e2d3b9w4OGyo1kkKdpjyVrYgo4ExAXTPNoZVJIEnEoRkNLyd+8x6kYqm40aMMOgnpC9ZjlGgrdb3zMII+Ezncmakydk33FociFSaJQLohiPjH7HpFv+RPgZdJMCdFNEet632GcUpNAkJTTpRqB36mOzmRmlEOYzc0CjJCh6QPbUsFSUB18ulbY3xqlRj3UmlLaDxVf0/kJFFqlES2MyF6oBa9ifif1za6d9HJmciMBkFni3qGY53iSUY4ZhKo5iNLCJXM3orpgEhCtU3StSEEiy8vk0a5FPil4LpcrFbmcRTQMTpBZyhAFVRFV6iG6oiiB/SEXtCr8+g8O2/O+6x1xZnPHKE/cD6+Aax6oEQ=</latexit><latexit sha1_base64="VgiIFjOED0MTZdaeIGwVfXet6VM=">AAACFnicbVDJSgNBEO1xjeM26tFLYxC8GGZyiceAF48RzAKZEHp6Kkmbnp6xFyEM+Qov/ooXD4p4FW/+jZ0F1MQHBY/3qqiqF2WcKe37X87K6tr6xmZhy93e2d3b9w4OGyo1kkKdpjyVrYgo4ExAXTPNoZVJIEnEoRkNLyd+8x6kYqm40aMMOgnpC9ZjlGgrdb3zMII+Ezncmakydk33FociFSaJQLohiPjH7HpFv+RPgZdJMCdFNEet632GcUpNAkJTTpRqB36mOzmRmlEOYzc0CjJCh6QPbUsFSUB18ulbY3xqlRj3UmlLaDxVf0/kJFFqlES2MyF6oBa9ifif1za6d9HJmciMBkFni3qGY53iSUY4ZhKo5iNLCJXM3orpgEhCtU3StSEEiy8vk0a5FPil4LpcrFbmcRTQMTpBZyhAFVRFV6iG6oiiB/SEXtCr8+g8O2/O+6x1xZnPHKE/cD6+Aax6oEQ=</latexit><latexit sha1_base64="VgiIFjOED0MTZdaeIGwVfXet6VM=">AAACFnicbVDJSgNBEO1xjeM26tFLYxC8GGZyiceAF48RzAKZEHp6Kkmbnp6xFyEM+Qov/ooXD4p4FW/+jZ0F1MQHBY/3qqiqF2WcKe37X87K6tr6xmZhy93e2d3b9w4OGyo1kkKdpjyVrYgo4ExAXTPNoZVJIEnEoRkNLyd+8x6kYqm40aMMOgnpC9ZjlGgrdb3zMII+Ezncmakydk33FociFSaJQLohiPjH7HpFv+RPgZdJMCdFNEet632GcUpNAkJTTpRqB36mOzmRmlEOYzc0CjJCh6QPbUsFSUB18ulbY3xqlRj3UmlLaDxVf0/kJFFqlES2MyF6oBa9ifif1za6d9HJmciMBkFni3qGY53iSUY4ZhKo5iNLCJXM3orpgEhCtU3StSEEiy8vk0a5FPil4LpcrFbmcRTQMTpBZyhAFVRFV6iG6oiiB/SEXtCr8+g8O2/O+6x1xZnPHKE/cD6+Aax6oEQ=</latexit>
+Figur
+e 5: Illustration of different attention mechanisms that
+determine the contribution of a neighbor pair (vj ; uj ) on pre-
+dicting the label of a focal pair (vi ; ui ).
+where eji indicates the contribution of (vj ; uj ) on predicting whether
+vi and ui are the same person or not. Then we apply the softmax
+function to obtain the normalized coefficients across all the neigh-
+bor pairs of (vi ; ui ):
+αji = softmaxj (eji ) = exp(eji )∑
+j′ 2
+N M
+i
+exp(ej′i ) : (6)
+The normalized coefficients are used to compute a linear combi-
+nation of the embedding vectors corresponding to them. Then we
+apply a non-linear function σ () on the linear combination, which
+is regarded as a final embedding vector for a user:
+Hvi = σ (
+∑
+j 2N M
+i
+αji vj ); Hui = σ (
+∑
+j 2N M
+i
+αji uj ): (7)
+Figure 4 illustrates the social convolution process. We design the
+attention mechanisms based on the knowledge in vj , uj , vi and ui .
+Three specific attention mechanisms are proposed progressively
+by considering individual features of each user in a neighbor pair
+(feature attention), the similarity between two users in a neighbor
+pair (difference attention ) and the relationship of a neighbor pair
+with the focal pair (relation attention ).
+ Feature Attention. The assumption of feature attention is
+that a neighbor pair (vj ; uj ) makes more contribution on in-
+ferring the label of the focal pair (vi ; ui ) if the features of vj
+and uj are more discriminative. For example, the neighbor
+pair with the same name "Jaspher Wang" benefits more on
+predicting the label of (vi ; ui ) than the neighbor pair with
+the same name "Wei Wang", as the name "Jaspher Wang" is
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+331
+CIKM ’18, October 22–26, 2018, Torino, Italy Zhang et al.
+more unique than "Wei Wang". According to this assump-
+tion, we calculate the attention coefficient based on the con-
+catenation of the embeddings of the neighbors in a pair:
+eji = WT [vj ; uj ] + b; (8)
+where notations W and b in this and the following equations
+are the model parameters to be learned. The concatenation
+of the embeddings reserves the features of the two users.
+ Difference Attention. The assumption of difference attention
+is that a neighbor pair (vj ; uj ) takes a more important role
+on predicting the label of (vi ; ui ) if the two neighbors vj
+and uj are more similar to each other. Under this assump-
+tion, we calculate the attention coefficient solely based on
+the difference between the embeddings of the neighbors:
+eji = WT jvj   uj j + b; (9)
+where we use the difference between two embeddings to
+represent whether two neighbors are similar or not.
+ Relation Attention. The assumption of relation attention is
+that a neighbor pair (vj ; uj ) takes more effects on determin-
+ing the label of (vi ; ui ) if the relationship between user vj
+and vi in Gs share the same semantics with the relationship
+between user uj and ui in Gt . For example, if we already
+know user x in Twitter is aligned to user a in MySpace, and
+user y in Twitter is aligned to user b in MySpace, suppose x
+shares the same interest with y in Twitter, then most proba-
+bly a also shares the same interest withb in MySpace. Under
+this assumption, we calculate the attention coefficient by
+comparing the difference between the embeddings of two
+users in two networks:
+eji = WT jj vj   vi j   j uj   ui jj + b; (10)
+where we use the difference between two users, e.g.,jvj  vi j,
+to represent the semantics of the relationship between the
+users vj and vi , and then use the difference between the re-
+lationship semantics to represent whether the two relation-
+ships are similar or not.
+Figure 5 illustrates the knowledge that is used to infer the at-
+tention coefficient of (vj ; uj ) on (vi ; ui ). We can also consider the
+knowledge used in all the three attention mechanisms and unify
+them in one equation:
+eji = WT [vj ; uj ; jvj   uj j; jj vj   vi j   j uj   ui jj ] + b: (11)
+The unified attention mechanism is used in our final model.
+4.3 Structure Embedding
+Different from attribute embedding, the component of structure
+embedding aims at embedding the structure information of the
+matched ego network to predict the label of the focal pair. The
+intuition is two users are more likely to be the same person if they
+have more potential matched neighbor pairs, and furthermore, if
+there are more neighbors know each other. For example, in Fig-
+ure 2(b), the focal pair (v1; u1) has three potentially matched neigh-
+bor pairs, which provides significant evidence on predicting the la-
+bel of (v1; u1). In addition, neighbor pair (v4; u4) is linked to neigh-
+bor pair (v3; u3), i.e, v4 knows v3 and u4 knows u3, which further
+improves the probability that v1 and u1 are the same person. The
+links between neighbor pairs reflect the structural characteristics
+of the matched ego network, which can benefit the predicting task.
+From the example, we can see that the structural roles of different
+neighbor pairs are different when they are used to infer the label of
+a focal pair. The core problem of leveraging the structure informa-
+tion is to map the network structure to an embedding vector such
+that the neighbor pairs with similar structural roles in different
+matched ego networks are positioned similarly in the correspond-
+ing embedding vectors. Inspired by [ 16], we address the problem
+by firstly normalizing the adjacency matrix of the input matched
+ego network and then applying a convolutional neural network on
+the normalized graph to learn an embedding vector for the graph.
+Normalization. Normalization aims at finding an order of the
+neighbor pairs in each matched ego network to reserve the rela-
+tive position of the neighbor pairs. The basic idea is two neighbor
+pairs in different matched ego networks can be located at the sim-
+ilar position of the respective adjacency matrix if their structural
+roles within the matched ego networks are similar. Intuitively, a
+neighbor pair can be ranked higher if it is more closer to the focal
+pair. Multiple similarity metrics defined on graphs can be used to
+measure the distance between two nodes such as common neigh-
+bors, Jaccard Coefficient, SimRank, etc.
+Structure Convolution. After we obtain a ranked list of node
+pairs in GM
+i , we get a new adjacency matrix ˆAM
+i with the indexing
+of the node pairs correspond to the ranked pairs. Then we apply a
+convolutional neural network on the normalized adjacency matrix
+ˆAM
+i to learn an embedding vector for the adjacency matrix. Specif-
+ically, we firstly pad dummy node pairs to the adjacency matrix
+if the size of the pairs is smaller than a predefined number L, and
+discard the pairs with indexing larger than L; then we reshape the
+adjacency matrix to a L  L-dimension vector, and apply H differ-
+ent L L-dimension convoluational kernels with 1 stride, to output
+H -dimension embedding vector ti .
+4.4 Objective Function
+For each focal pair (vi ; ui ), we concatenate the difference between
+their attribute embeddings Hvi and Hui , i.e., jHvi  Hui j and the structure
+embedding ti . Then we apply a function f such as the full connec-
+tion operation on the concatenation to predict the matching score
+ˆyi = f (jHvi  Hui j; ti ). Finally we define the objective function as the
+cross entropy loss of the true label and the predicted score:
+L = 1
+n
+n∑
+i=1
+Cr
+ossEntropy( f (jHvi   Hui j; ti ); yi ); (12)
+where n is the total number of labeled user pairs.
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+332
+MEgo2V ec: Embedding Matched Ego Networks for User Alignment Across Social Networks CIKM ’18, October 22–26, 2018, Torino, Italy
+Table 1: Statistics of the datasets.
+Dataset Netw
+ork #Users #Relationships Relation Type
+A
+cademia
+Aminer 1,053,188 3,916,907 Co-author
+LinkedIn 2,985,414 25,965,384 Co-view 7
+VideoLectures 11,178 786,353 Co-attendance 8
+SNS T
+witter 40,171,624 1,468,365,182 follow
+MySpace 854,498 6,489,736 friend
+5
+EXPERIMENTS
+5.1 Experimental Settings
+Datasets. We collect three Academia networks and two SNS net-
+works4. Academia consists of networks collected from Aminer [22],
+an academic searching and mining service, LinkedIn, a business-
+and employment-oriented professional social network, and Vide-
+oLectures, the world’s biggest academic online video repository.
+SNS consists of Twitter, a well-known microblogging social plat-
+form, and MySpace, a social networking website for users to share
+blogs, photos and music. The details are summarized in Table 1.
+We treat all the relationships in the networks as undirected ones
+in our experiments. All data and codes are available online 5.
+Training Data. An instance is a pair of users from two differ-
+ent networks, where a positive instance means the two users be-
+long to a same person, while a negative instance indicates they
+are different persons. For the training data constructed across SNS
+networks, the positive instances were collected by Perito el. al us-
+ing Google Profile Service (GPS) [ 17]. GPS 6 allows users to pro-
+vide their accounts on different online social networks, and the
+accounts from same users can be treated as positive instances. For
+those constructed across academia networks, the positive instances
+were provided by the users in Aminer.org, where users can input
+the links of their LinkedIn and ViedoLectures profile pages in their
+Aminer profile pages. Negative instances should be constructed
+as they cannot be directly collected by existing services. Follow-
+ing the assumption that a user usually maintains one major ac-
+count in each platform [7], we get that in most cases the users
+appeared in positive instances cannot be aligned to others users.
+Thus we sample several negative instances for each positive in-
+stances. Specifically, for each positive instance (vi ; ui ) where vi
+is from Gs and ui is from Gt , we randomly sample several nega-
+tive partners from Gt for vi , and several negative partners from
+Gs for ui . All the negative instances are sampled from the gen-
+erated candidate pairs (Cf. Section 4.1). Finally, we keep the ratio
+between positive and negative instances as about 1:10 and collect
+33,981, 34,060 and 35,080 training instances for Aminer-LinkedIn,
+Aminer-VideoLectures and Twitter-MySpace respectively.
+For all the users in training data of Academia networks, we se-
+lect the profile attributes of name, affiliation, education and re-
+search interests/skills to compare. Although there are many at-
+tributes in SNS networks, most of the attributes are extremely sparse.
+Thus we only choose screen name, account name and locations to
+compare for users in the training data of SNS networks.
+4https://w
+ww.aminer.cn/cosnet
+5https://github.com/BoChen-Daniel/MEgo2Vec
+6http:www.google.comprofiles
+Baseline Methods. The comparison methods include:
+Exact Name Match(ENM): considers a user pair collected from
+two networks as a positive instance if the name of a user is an exact
+match to that of the other user in the pair. A user in one network
+may match to multiple users with same names in the other net-
+work.
+SVM: defines the features as the Jaro-Winkler similarity of two
+names, the edit distance of two names, and the cosine similarity
+between the TF-IDF weighted word vectors of other attributes.
+SVM+N: averages the values for each feature in SVM over all
+the neighbor pairs in a matched ego network as additional features.
+SiGMa [9]: begins from a seed set of user pairs (output by Name-
+Match and then filtered out the most common names) and itera-
+tively augments the seed set by propagating the matching scores
+(predicted by SVM) through the two input networks.
+COSNET [28]: is a factor graph model that incorporates the at-
+tributes of two users as local factors (the same as SVM), and the
+relationships between user pairs as correlation factors. The intu-
+ition is two linked user pairs tend to be have the same labels.
+MEgo2Vec: is the proposed model that incorporates the multi-
+view node embedding, unified attention mechanism and the struc-
+ture embedding together.
+Variants of Our Model. We try seven variants of MEgo2Vec to
+evaluate the effectiveness of different components one by one.
+Multi-view Node Embedding: Firstly, to evaluate the effect of
+the multi-view node embedding component, we ignore the compo-
+nents of attention based social convolution and structure embed-
+ding, and only embed the attributes of the focal pair itself. The
+model is denoted as MEgo2Veccw . Additionally, we try word-view
+and character-view embeddings separately, and denote them as
+MEgo2Vecw and MEgo2Vecc respectively.
+Social Convolution: Secondly, based on MEgo2Veccw , we add
+the attribute embeddings of neighbor pairs to evaluate the effect
+of the attention based social convolution component. The model
+utilizes the unified attention mechanism and ignores the structure
+embedding, and is denoted as MEgo2Vecu . Additionally, we try the
+feature attention, difference attention and relation attention mech-
+anisms separately, and denote them as MEgo2Vec f , MEgo2Vecd
+and MEgo2Vecr respectively. We also simply average the attribute
+embeddings of neighbor pairs and denote it as MEgo2Vec a , i.e., at-
+tention coefficient αji is set as 1=N M
+i .
+Structure Embedding: Finally, based on MEgo2Vec u , we add
+the structure embedding result to evaluate the effect of the struc-
+ture embedding component. The model is denoted as MEgo2Vec
+and is also the final proposed model.
+Evaluation Strategies. We evaluate all the comparison methods
+in terms of Precision, Recall and F1-Measure.
+Implementaion Details. We implement the model by Tensor-
+flow and run the code on an Enterprise Linux Server with 6 Intel(R)
+Xeon(R) CPU cores (E5-2699 and 56G memory) and 1 NVIDIA Tesla
+P40 GPU core (24G memory).
+7Co-vie
+w means two user profiles were viewed by a same user.
+8Co-attendance means two users attended a same event.
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+333
+CIKM ’18, October 22–26, 2018, Torino, Italy Zhang et al.
+Table 2: Prediction performance on three datasets (%).
+Metho
+d Aminer-LinkedIn Aminer-
+VideoLectures Twitter-MySpace
+Pr
+e. Rec. F1 Pre. Rec. F1 Pre. Rec. F1
+ENM 59.50
+69.94 64.30 46.56 84.10 59.54 73.29 41.82 53.25
+SVM 95.97 76.17 84.93 86.96 72.80 79.25 98.40 56.05 71.42
+SVM+N 95.78 81.62 88.14 86.71 76.09 81.06 97.74 60.58 74.80
+SiGMa 88.50 47.39 61.72 87.56 58.10 69.85 88.29 35.82 50.96
+COSNET 84.84 83.15 83.98 69.19 87.10 77.10 78.48 69.56 73.75
+MEgo2Vec 95.58 89.21 92.29 89.29 79.62 84.18 88.47 72.95 79.97
+T
+able 3: Prediction performance on the instances of Aminer-
+LinkedIn with or without neighbors by MEgo2Vec cw and
+MEgo2Vecu (%).
+Instances Metho
+d Precision Recall F1
+With
+Neighbors MEgo2Veccw 99.35 85.56 91.94
+MEgo2Vecu 99.10 92.22 95.54
+Without
+Neighbors MEgo2Veccw 86.03 84.16 85.09
+MEgo2Vecu 88.99 82.43 85.59
+For
+the academia networks, we select the candidate pairs if they
+share the same firstname, and the same initials of the lastname.
+For the SNS networks, we select the candidate pairs if their screen
+names or account names share at least four 2-grams. When gen-
+erating a matched ego network, the threshold to filter neighbor
+pairs is set as 0.8. In node embedding component, the dimension
+of word, character and attribute embedding is set as 64, 32 and 192
+respectively. In social convolution component, the maximal num-
+ber of neighbor pairs in a matched ego network is restricted to
+14. Then we pad dummy neighbor pairs if the size of the pairs is
+smaller than 14, and discard additional pairs otherwise. In struc-
+ture embedding component, we use common neighbors as the sim-
+ilarity metric to conduct graph normalization. Notation L denotes
+the maximal number of neighbor pairs, and is also set as 14. The
+dimension H , i.e., the output channel of CNN network, is set as
+64. The learning rate of the model is set as 0.001. The size B of a
+mini-batch is 100.
+5.2 Performance Analysis
+Overall Prediction Performance. Table 2 shows the overall per-
+formance on three pairs of networks. The proposed method per-
+forms clearly better than the comparison baselines on all datasets
+(+3.12-30.57% in terms of F1 score). Our method improves more
+F1 on the two academia datasets than on the SNS dataset, as the
+attributes of the academia dataset are much richer than those of
+the SNS dataset, which indicates neural networks are more suit-
+able for the complex input dataset. ENM is essentially a rough rule
+and performs poorly, as on one hand, it totally ignores the positive
+instances with different names, and on the other hand, different
+users with same names are wrongly identified as the same users.
+SVM ignores the network information and defines features by hu-
+man experience, which is not comprehensive enough to represent
+the attributes. SVM+N leverages the attributes of neighbors, but it
++2.6%
+(
+a) Aminer-LinkedIn
++3%
+(
+b) Twitter-MySpace
+Figure 6: Prediction performance of model variants.
+does not distinguish the effects of different neighbors. SiGMa re-
+sults in high precision but suffers from a low recall. Because the
+overlap between the input two networks is low, leading it not easy
+to propagate the matching scores from the seeds to other pairs.
+COSNET essentially propagates the inferred labels in the whole
+matched network, thus it may suffer from error propagation. Be-
+sides, the features in COSNET is also human defined. MEgo2Vec
+uses a graph neural network to embed the neighbors’ attributes
+and the structure information, which can capture both the literal
+and semantic characteristics of the attributes, and meanwhile alle-
+viate error propagations through the network.
+On the academia datasets, processing 100 mini-batches requires
+150 seconds, and best validation F1 is reached after 20-40 epoches
+(about 270 mini-batches per epoch) through the data, which re-
+quires 2-3 hours of training. On Twitter-MySpace, as the attributes
+are extremely sparse, i.e., features are not sufficient, processing 100
+mini-batches requires 25 seconds, but best validation F1 is reached
+after 100-120 epoches (281 mini-batches per epoch), which requires
+2 hours of training. We show the prediction performance of the dif-
+ferent variants of our model on one academia dataset and one SNS
+dataset in Figure 6 and analyze the results as follows.
+Multi-view Node Embedding Effect. We compare two single
+view models—MEgo2Vec w and MEgo2Vec c with the multi-view
+model MEgo2Veccw , and show the results in Figure 6. We see that
+MEgo2Veccw performs better than MEgo2Vecw (+1.69-2.48% in F1)
+and MEgo2Vecc (+1.03-2.03% in F1), which demonstrates the strength
+of the multi-view embedding mechanism when representing the
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+334
+MEgo2V ec: Embedding Matched Ego Networks for User Alignment Across Social Networks CIKM ’18, October 22–26, 2018, Torino, Italy
+node attributes. MEgo2Vecc performs better than MEgo2Vec w , as
+the similarity between the characters of names takes the most im-
+portant role among all the attributes. Compared with MEgo2Vecw ,
+MEgo2Vecc improves more F1 on Twitter-MySpace than on Aminer-
+LinkedIn, as other attributes except name are extremely sparse on
+the SNS dataset, thus characters in names dominate the effect.
+Neighbor Pair Effect. To verify the effect of social convolution
+component, based on MEgo2Veccw , we add the neighbors’ attribute
+embeddings by the unified attention mechanism and find that the
+model MEgo2Vecu performs much better than MEgo2Veccw (+2.60-
+3.00% in F1). We further evaluate the instances with and without
+neighbors separately on Aminer-LinkedIn and show the results in
+Table 3. We can see that if predicted by MEgo2Vec u instead of
+MEgo2Veccw , the performance is improved by 3.6% in F1 for the
+instances with neighbors, but it is almost not improved for those
+without neighbors. The results indicate that the neighbors’ infor-
+mation captured by our method can indeed benefit the task. Note
+that in the instances with and without neighbors, the ratio between
+the positive and negative parts is different, so the performance is
+different by the same method.
+Social Convolution Effect. We compare the three attention mech-
+anisms MEgo2Vecd , MEgo2Vecf and MEgo2Vecr and show the re-
+sults in Figure 6. MEgo2Vecr and MEgo2Vecd perform better than
+MEgo2Vecf on academic networks, as relation attention and dif-
+ference attention determine the contribution of a neighbor pair by
+comparing two neighbors’ difference or two relations’ difference,
+while feature attention only considers the features of a user, but
+ignores the difference between two users. But on Twiter-MySpace,
+since the attributes in the SNS networks are quite sparse except
+name, the relationships between users are not so easy to describe,
+making MEgo2Vecf perform better than the other attentions. When
+combining the three attention mechanisms as MEgo2Vec u does,
+the performance is better than each individual attention mecha-
+nism. MEgo2Veca averages neighbors’ embeddings. It performs al-
+most the same as MEgo2Vec cw that totally ignores neighbors’ in-
+formation. The results indicate that neighbor pairs may bring in
+noise and it is necessary to carefully utilize the neighbors’ infor-
+mation by attention mechanism.
+Structure Embedding Effect. Based on MEgo2Vecu , we add the
+structure embedding, and denote it as our final model MEgo2Vec.
+The results in Figure 6 show that the performance can be improved
+by 0.48-1.36% in terms of F1, which indicates that the structure in-
+formation of the matched ego network is effectively modeled by
+the structure embedding component, and can indeed benefit the
+alignment task. But the effect is not so significant, as the connec-
+tions between neighbor pairs in the collected datasets are sparse.
+5.3 Case Study
+Attention Coefficients. We analyze the attention coefficients
+learned by the proposed attention mechanisms. Figure 7 shows a
+case for predicting whether two “Osmar R. Zaiane"s in two ego
+networks are the same person or not. We present the learned atten-
+tion coefficients of each neighbor by MEgo2Vec r beside the edges.
+It shows that the neighbor pair named Russell Greiner makes the
+OsmarR.Zaiane
+Aff:Alberta 
+University
+Edu:Simon Fraser 
+Computer Science 
+1999, Laval 
+University 1992
+Interest:data mining, 
+association rule 
+mining…
+OsmarR.Zaiane
+Aff:Simon Fraser 
+University Alumni ... 
+Edu:Computer 
+Science  Simon Fraser 
+1999, UniversitaLaval 
+1992
+Interest:machine 
+learning,  computer 
+science…
+Russell Greiner
+Aff:Alberta 
+University
+Edu:Stanford 
+University Computing 
+Science 1985, 
+California Institute of 
+Technology 
+Mathematics and 
+Computer Science
+Interest:machine 
+learning ... 
+Russell Greiner
+Aff:Caltech Alumni…
+Edu:Computer 
+Science Stanford 
+University PhD 1985, 
+California Institute of 
+Technology 
+Interest:machine 
+learning, artificial 
+intelligence, computer 
+science...
+JoergSander 
+Aff:Department of 
+Computing Science, 
+University of Albertan
+Edu:-
+Interest:clustering 
+structure data, 
+hierarchical/semi 
+supervised clustering...
+JoergSander
+Aff:The Official 
+Association for 
+Computing 
+Machinery ACM 
+Group
+Edu:-
+Interest:-
+Reihaneh
+Rabbany
+Khorasgani
+Aff:Alberta 
+University
+Edu:-
+Interest:RESTful 
+web service, 
+closeness measure, 
+network 
+associations...
+ReihanehRabbany
+Aff:University of 
+Alberta Alumni
+Edu:Computing 
+Science University 
+of Alberta, 
+University of 
+Technology Tehran 
+Polytechnic
+Interest:Java, J2ee, 
+C++, MySQL, latex, 
+data mining...
+?
+EgonetworkinAminer EgonetworkinLinkedIn
+0.62 0.620.27 0.270.055
+0.055 0.055
+0.055
+Figur
+e 7: Case study of learned attention coefficients.
+Ratul Mahajan
+Ratul Mahajan
+Ratul Mahajan
+Ratul Mahajan
+Tim J. P. Hubbard
+Tim Hubbard
+Tim J. P. Hubbard
+Tim Hubbard
+J. L. Wilkes John Wilkes
+J. L. Wilkes
+John Wilkes
+Hans A. HanssonHans Hansson
+Hans A. HanssonHans Hansson
+Yvonne Rogers
+Yvonne Rogers Yvonne Rogers
+Yvonne Rogers
+(
+a) Positive Instances
+Li Yongming
+Li YU
+Jianyi Liu
+Jia Liu LiangTang
+LiangTang
+JuneWang
+JinSongWang
+Roland van Gog
+Ron van Lammeren JinSongWang
+JuneWang
+LiangTang
+LiangTang
+Jianyi Liu
+Jia Liu
+Li Yongming
+Li YU
+Roland van Gog
+Ron van Lammeren
+(
+b) Negative Instances
+Figure 8: Case study of learned embeddings. ("Tim J. P. Hub-
+bard", "Tim Hubbard"), ("J L. Wilkes", "John Wilkes"), ("Hans Hansson", "Hans
+A. Hansson"), ("Ratul Mahajan", "Ratul Mahajan"), ("Yvonne Rogers", "Yvonne
+Rogers"), ("Jianyi Liu, "Jia Liu"), ("Liang Tang", "Liang Tang"), ("Ron van Lam-
+meren", "Roland van Gog"), ("Jin Song Wang", "June Wang") and ("Li Yong-
+ming", "Li YU") are the positive and negative instances.
+biggest contribution (with attention as 0.27) among all the neigh-
+bor pairs except the focal pair itself. Because Russell shares the
+same affiliation with Osmar, and also gets the same degree of com-
+puter science (inferred from their educations) with Osmar in the
+first ego network. And in the second ego network, Russell Greiner
+gets the same degree of computer science with Osmar, and also
+shares the same interest like “machine learning" and “computer
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+335
+CIKM ’18, October 22–26, 2018, Torino, Italy Zhang et al.
+X. Shirley Liu
+Aff: department of 
+Biostatistics …, Harvard 
+School of Public Health 
+Edu: Harvard University
+Interest:ChIP DNase
+Qian Wang
+Aff: Dept. of Mechanical 
+and Nuclear Eng.,  
+Pennsylvania State Univ.
+Edu: 
+Interest: Image Registration
+Qian Wang
+Aff:
+Edu: 2010 Tongji 
+University 2013
+Interest:
+Yong Zhang
+Aff: Dept. of Computer 
+Science and Info. Systems.
+Edu: University of Delaware
+Interest: Online data 
+analysis
+Yong Zhang
+Aff: 
+Edu: 
+Interest: 
+Xiaole Liu
+Aff: 
+Edu: 
+Interest: 
+?
+Figur
+e 9: Case study of structure embedding component.
+science" with Osmar. The relationship between Russell and Osmar
+in the first network is quite similar to the relationship between
+them in the second network. If calculated by MEgo2Vec d , Russell
+also makes more contribution than other pairs, because the two
+“Russell Greiner"s share the similar educations and interests.
+Node Embedding Visualization. Figure 8 visualizes the node
+embeddings before the social convolution operation, i.e., (vi ; ui ),
+and the embeddings after the social convolution operation, i.e.,
+(Hvi ; Hui ), by MEgo2Vecu for 5 randomly selected positive and neg-
+ative instances with neighbors respectively. The circle points are
+the users in Aminer, and the triangle points are their partners in
+LinkedIn. For the positive instances in Figure 8(a), the two users
+in a pair become more similar to each other after the social convo-
+lution operation, but for the negative instances in Figure 8(b), the
+two users in a pair do not tend to be more similar after the social
+convolution operation, which indicates that the proposed model
+can effectively leverage the neighbor pairs to align users.
+Sturcture Embedding. Figure 9 shows a user pair ("X. Shirley
+Liu, "Xiaole Liu") that is correctly predicted as the same person by
+MEgo2Vec, but is wrongly predicted by MEgo2Vec u . The case is
+difficult to be predicted, because firstly, the attributes of one net-
+work is totally missing, and even the name of the two users are not
+very similar; secondly, although there are two potentially matched
+neighbor pairs ("Yong Zhang", "Yong Zhang") and ("Qian Wang",
+"Qian Wang"), their attributes are very sparse in one network, thus
+can not provide enough evidence. Fortunately, two neighbors know
+each other in their respective networks, which is an important clue
+to indicate that "X. Shirley Liu and "Xiaole Liu" are the same person.
+The structure information can be well captured by the structure
+embedding component of our model.
+6 CONCLUSION
+We present the first attempt to solve the problem of user align-
+ment by a graph neural network model, which predicts whether
+two users can be aligned or not by matching and embedding their
+ego networks. The model deals with the issue of diverse neighbors
+by distinguishing them using attention mechanisms. Meanwhile,
+it captures both the literal and semantic characteristics of the at-
+tributes by a multi-view embedding mechanism, and also captures
+the structure of the matched ego network through normalizing and
+convolving the adjacency matrix. The experimental results on dif-
+ferent genres of datasets validate the effectiveness of the model.
+Acknowledgments. This work is supported by National Key R&D Pro-
+gram of China (No.2018YFB1004401) and NSFC under the grant No. 61532021,
+61772537, 61772536, 61702522 and the Research Funds of Renmin Univer-
+sity of China(15XNLQ06). *Hong Chen is the corresponding author.
+REFERENCES
+[1] James Atwood and Don Towsley. 2016. Diffusion-convolutional neural networks.
+In NIPS’16. 1993–2001.
+[2] Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. 2015. Neural machine
+translation by jointly learning to align and translate. In ICLR’15.
+[3] David K Duvenaud, Dougal Maclaurin, Jorge Iparraguirre, Rafael Bombarell,
+Timothy Hirzel, Alán Aspuru-Guzik, and Ryan P Adams. 2015. Convolutional
+networks on graphs for learning molecular fingerprints. In NIPS’15. 2224–2232.
+[4] Marco Gori, Gabriele Monfardini, and Franco Scarselli. 2005. A new model for
+learning in graph domains. In IJCNN’05. 729–734.
+[5] Aditya Grover and Jure Leskovec. 2016. node2vec: Scalable feature learning for
+networks. In SIGKDD’15. 855–864.
+[6] Thomas N Kipf and Max Welling. 2017. Semi-supervised classification with
+graph convolutional networks. In ICLR’17.
+[7] Xiangnan Kong, Jiawei Zhang, and Philip S Yu. 2013. Inferring anchor links
+across multiple heterogeneous social networks. In CIKM’13. 179–188.
+[8] Nitish Korula and Silvio Lattanzi. 2014. An efficient reconciliation algorithm for
+social networks. Proceedings of the VLDB Endowment 7, 5 (2014), 377–388.
+[9] Simon Lacoste-Julien, Konstantina Palla, Alex Davies, Gjergji Kasneci, Thore
+Graepel, and Zoubin Ghahramani. 2013. Sigma: Simple greedy matching for
+aligning large knowledge bases. In SIGKDD’13. 572–580.
+[10] Yujia Li, Daniel Tarlow, Marc Brockschmidt, and Richard Zemel. 2016. Gated
+graph sequence neural networks. In ICLR’16.
+[11] Jing Liu, Fan Zhang, Xinying Song, Young-In Song, Chin-Yew Lin, and Hsiao-
+Wuen Hon. 2013. What’s in a name?: an unsupervised approach to link users
+across communities. In WSDM’13. 495–504.
+[12] Li Liu, William K Cheung, Xin Li, and Lejian Liao. 2016. Aligning Users across
+Social Networks Using Network Embedding.. In IJCAI’16. 1774–1780.
+[13] Siyuan Liu, Shuhui Wang, Feida Zhu, Jinbo Zhang, and Ramayya Krishnan. 2014.
+Hydra: Large-scale social identity linkage via heterogeneous behavior modeling.
+In SIGMOD’14. 51–62.
+[14] Xuezhe Ma and Eduard Hovy. 2016. End-to-end Sequence Labeling via Bi-
+directional LSTM-CNNs-CRF. In ACL’16. 1064–1074.
+[15] Tong Man, Huawei Shen, Shenghua Liu, Xiaolong Jin, and Xueqi Cheng. 2016.
+Predict Anchor Links across Social Networks via an Embedding Approach.. In
+IJCAI’16. 1823–1829.
+[16] Mathias Niepert, Mohamed Ahmed, and Konstantin Kutzkov. 2016. Learning
+convolutional neural networks for graphs. InInternational conference on machine
+learning. 2014–2023.
+[17] Daniele Perito, Claude Castelluccia, Mohamed Ali Kaafar, and Pere Manils. 2011.
+How Unique and Traceable Are Usernames?. In ICPET’11. 1–17.
+[18] Bryan Perozzi, Rami Al-Rfou, and Steven Skiena. 2014. Deepwalk: Online learn-
+ing of social representations. In SIGKDD’14. 701–710.
+[19] Franco Scarselli, Marco Gori, Ah Chung Tsoi, Markus Hagenbuchner, and
+Gabriele Monfardini. 2009. The graph neural network model. TNN 20, 1 (2009),
+61–80.
+[20] Kai Shu, Suhang Wang, Jiliang Tang, Reza Zafarani, and Huan Liu. 2017. User
+Identity Linkage across Online Social Networks: A Review. ACM SIGKDD Ex-
+plorations Newsletter 18, 2 (2017), 5–17.
+[21] Jian Tang, Meng Qu, Mingzhe Wang, Ming Zhang, Jun Yan, and Qiaozhu Mei.
+2015. Line: Large-scale information network embedding. In WWW’15. 1067–
+1077.
+[22] Jie Tang, Jing Zhang, Limin Yao, Juanzi Li, Li Zhang, and Zhong Su. 2008. Ar-
+netminer: extraction and mining of academic social networks. In SIGKDD’08.
+990–998.
+[23] Petar Veličković, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro
+Liò, and Yoshua Bengio. 2018. Graph Attention Networks. In ICLR’18.
+[24] Reza Zafarani and Huan Liu. 2009. Connecting Corresponding Identities across
+Communities. ICWSM’09 9 (2009), 354–357.
+[25] Reza Zafarani and Huan Liu. 2013. Connecting users across social media sites:
+a behavioral-modeling approach. In SIGKDD’13. 41–49.
+[26] Reza Zafarani, Lei Tang, and Huan Liu. 2015. User identification across social
+media. TKDD 10, 2 (2015), 16.
+[27] Si Zhang and Hanghang Tong. 2016. FINAL: Fast Attributed Network Align-
+ment.. In SIGKDD’16. 1345–1354.
+[28] Yutao Zhang, Jie Tang, Zhilin Yang, Jian Pei, and Philip S Yu. 2015. COSNET:
+Connecting heterogeneous social networks with local and global consistency.
+In SIGKDD’15. 1485–1494.
+[29] Zexuan Zhong, Yong Cao, Mu Guo, and Zaiqing Nie. 2018. CoLink: An Unsuper-
+vised Framework for User Identity Linkage. (2018).
+[30] Xiaoping Zhou, Xun Liang, Haiyan Zhang, and Yuefeng Ma. 2016. Cross-
+platform identification of anonymous identical users in multiple social media
+networks. TKDE 28, 2 (2016), 411–424.
+Session 2E: Personalization
+CIKM’18, October 22-26, 2018, Torino, Italy
+336

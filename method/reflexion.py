@@ -33,6 +33,7 @@ def main():
     parser.add_argument("--ref_list", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--model", default="gpt-5-mini-2025-08-07")
+    parser.add_argument("--zeroshot_result", default=None, help="Optional: reuse zeroshot results instead of running Round 1")
     args = parser.parse_args()
 
     # Read inputs
@@ -102,11 +103,43 @@ def main():
 
     # Round 1: Zero-shot classification
     llm = ChatOpenAI(model=args.model, reasoning_effort="medium")
-    zeroshot_llm = llm.with_structured_output(CitationClassification)
 
-    print("Round 1: Zero-shot classification...")
-    intent_outputs_r1 = zeroshot_llm.batch(intent_prompts, config={"max_concurrency": 32})
-    topic_outputs_r1 = zeroshot_llm.batch(topic_prompts, config={"max_concurrency": 32})
+    if args.zeroshot_result:
+        # Reuse existing zeroshot results
+        print(f"Round 1: Loading zeroshot results from {args.zeroshot_result}...")
+        zeroshot_data = yaml.safe_load(open(args.zeroshot_result))
+        zeroshot_citations = {c.get("unique_context_marker", ""): c for c in zeroshot_data.get("citations", [])}
+
+        # Rebuild intent_outputs_r1 and topic_outputs_r1 from zeroshot results
+        intent_outputs_r1 = []
+        topic_outputs_r1 = []
+
+        for block_id in block_ids_to_process:
+            block_citations = block_to_citations[block_id]
+
+            # Build CitationClassification for intent
+            intent_classifications = []
+            topic_classifications = []
+
+            for bc in block_citations:
+                marker = bc["marker"]
+                idx = bc["idx"]
+                zeroshot_cit = zeroshot_citations.get(marker, {})
+
+                intent_label = zeroshot_cit.get("intent_labels", [])[idx] if idx < len(zeroshot_cit.get("intent_labels", [])) else "Other Intent"
+                topic_label = zeroshot_cit.get("topic_labels", [])[idx] if idx < len(zeroshot_cit.get("topic_labels", [])) else "Other Topic"
+
+                intent_classifications.append(Citation(marker=marker, label=intent_label))
+                topic_classifications.append(Citation(marker=marker, label=topic_label))
+
+            intent_outputs_r1.append(CitationClassification(classifications=intent_classifications))
+            topic_outputs_r1.append(CitationClassification(classifications=topic_classifications))
+    else:
+        # Run zeroshot classification from scratch
+        print("Round 1: Zero-shot classification...")
+        zeroshot_llm = llm.with_structured_output(CitationClassification)
+        intent_outputs_r1 = zeroshot_llm.batch(intent_prompts, config={"max_concurrency": 32})
+        topic_outputs_r1 = zeroshot_llm.batch(topic_prompts, config={"max_concurrency": 32})
 
     # Round 2: Reflexion - critique and refine
     print("Round 2: Reflexion...")

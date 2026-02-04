@@ -1,0 +1,1027 @@
+IEEE/ACM TRANSACTIONS ON AUDIO, SPEECH, AND LANGUAGE PROCESSING, VOL. 29, 2021 1329
+Deep Graph-Based Character-Level Chinese
+Dependency Parsing
+Linzhi Wu and Meishan Zhang
+Abstract—Character-level Chinese dependency parsing has been
+a concern of several studies that naturally handle word segmenta-
+tion, POS (Part of Speech) tagging and dependency parsing jointly
+in an end-to-end way. Previous work mostly concentrates on a
+transition-based framework for this task because of its easy adap-
+tion, which is extremely important when feature representation
+relies heavily on the decoding strategy, particularly under the tra-
+ditional statistical setting. Recently, on the one hand, sophisticated
+deep neural networks and deep contextualized word representa-
+tions have greatly weakened the dependence between feature rep-
+resentation and decoding. On the other hand, (ﬁrst-order) graph-
+based models, especially the biafﬁne parsers, are straightforward
+for dependency parsing, and meanwhile they can yield competitive
+parsing performance. In this paper, we make a comprehensive
+investigation of the deep graph-based character-level dependency
+parsing for Chinese. We start from an extension of a standard
+graph-based biafﬁne parser, and then exploit Chinese BERT as
+well as our improved encoders based on transformers to enhance
+the character-level dependency parsing model. We conduct a series
+of experiments on the Chinese benchmark datasets, showing the
+performances of various graph-based character-level models and
+analyzing the advantages of the character-level dependency parsing
+under the deep neural setting.
+Index Terms —Character-level chinese parsing, deep neural
+networks, dependency parsing, graph-based model.
+I. I NTRODUCTION
+D
+EPENDENCY parsing is a fundamental task in the natural
+language processing (NLP) community, which has been
+studied intensively for decades [1]–[9]. Given an input sentence,
+the task aims to disclose the syntactic or semantic relationships
+between the sentential words. Since Chinese sentences have no
+explicit boundaries between words, a prerequisite word segmen-
+tation is usually assumed to align with the current state-of-the-art
+word-level dependency parsing models [9]–[12]. In addition, as
+POS tags are valuable word-level feature source, conventional
+Chinese dependency parsing usually involves three successive
+steps: word segmentation, POS tagging and word-level depen-
+dency parsing.
+Manuscript received May 28, 2020; revised December 2, 2020 and March
+6, 2021; accepted March 6, 2021. Date of publication March 18, 2021; date
+of current version April 8, 2021. This work was supported by the National
+Natural Science Foundation of China under Grants 61602160 and 61672211.
+The associate editor coordinating the review of this manuscript and approving
+it for publication was Dr. Eric Fosler-Lussier. (Corresponding author: Meishan
+Zhang.)
+The authors are with the School of New Media and Communication,
+Tianjin University, Tianjin 300072, China (e-mail: tjuwlz2020@163.com;
+mason.zms@gmail.com).
+Digital Object Identiﬁer 10.1109/TASLP .2021.3067212
+The architecture mentioned above handles Chinese
+dependency parsing in a pipeline manner, which may suffer
+from the error propagation problem, where early-step errors may
+inﬂuence the future-step analysis. Character-level dependency
+parsing has been widely adopted to perform Chinese dependency
+parsing jointly [13]–[16]. By using the well-deﬁned inner-word
+character dependencies, we can extend word-level dependency
+trees into the character-level ones naturally. Fig. 1 shows
+an example of a character-level dependency tree, where all
+the inner-word characters are headed to their right-adjacent
+characters with a predeﬁned dependency label (e.g., #in).
+With this formalization, Chinese dependency parsing can be
+conducted at the character level. Moreover, word segmentation,
+POS tagging and dependency parsing can be achieved by a
+single joint model, leading to an end-to-end solution for Chinese
+dependency parsing.
+Previously, character-level Chinese dependency parsing has
+been widely addressed by transition-based models [13]–[16],
+since the framework is highly ﬂexible for decoding exten-
+sion, and meanwhile, it is easy to integrate arbitrary features,
+which are very important to character-level parsing in Chinese,
+especially under the traditional statistical models. Recently,
+graph-based biafﬁne dependency parsing has received great
+attention [9], [11], [12] on account of its competitive parsing
+performance, and the encoder-decoder architecture has made
+the feature representation less dependent on the decoding pro-
+cess [9]. In reality, decoder-independent feature representations
+can be further enhanced by the deep contextualized word repre-
+sentations such as ELMo and BERT [17], [18], leading to a much
+powerful encoder. Thus, it is expectable to handle character-level
+Chinese dependency parsing based on the graph-based methods
+under the neural setting.
+In this work, we make a comprehensive study of graph-based
+character-level Chinese dependency parsing with deep neural
+networks. We follow the work of biafﬁne dependency pars-
+ing [9], adapting it to our character-level parsing. The exten-
+sion is straightforward. We conduct the biafﬁne operations over
+Chinese characters directly for character-level dependency link
+prediction, with no change in either the training or the inference.
+Following Zhang et al. (2017) [13], our character-level model
+also performs word segmentation and POS tagging jointly,
+which is achieved by character-level sequence labeling, where
+the labels indicate the joint word boundary and POS tagging
+information. All the subtasks are organized by a multi-task
+learning (MTL) framework [19].
+2329-9290 © 2021 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission.
+See https://www.ieee.org/publications/rights/index.html for more information.
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+1330 IEEE/ACM TRANSACTIONS ON AUDIO, SPEECH, AND LANGUAGE PROCESSING, VOL. 29, 2021
+Fig. 1. An example of a character-level Chinese dependency tree based on “********** (Malaysian’s Deputy Prime Minister ﬁnished his visit to China)” .T h e
+inner-word dependencies in the example are left-branching, and actually we can also exploit the manually-annotated dependencies by Zhang et al. (2017) [13].
+As for the encoder part, we enhance the character-level pars-
+ing model in two ways. First, we investigate Chinese BERT
+to obtain stronger contextualized character representations,
+which have been demonstrated very effective on many related
+tasks [11], [12], [20]. BERT can be used by way of either
+feature-based (i.e., frozen parameters) or ﬁne-tuning, both of
+which are important for NLP modeling. We study both settings,
+and in particular, exploit the adapter module [21], [22] to make
+the performance of the feature-based strategy on par with ﬁne-
+tuning. Second, we suggest a modiﬁed version of the standard
+Transformer [23] by integrating relative position embeddings
+(i.e., RPE-Transformer) to enhance the modeling of short-term
+connections, which is important to our joint task.
+We conduct a series of experiments on three general Chinese
+benchmark datasets. Experimental results show that the graph-
+based character-level parsing model can achieve very compet-
+itive performance on all the subtasks, including word segmen-
+tation, POS tagging and dependency parsing. Both the BERT
+representations and our proposed RPE-Transformer encoder can
+bring further improvements to our models. Our proposed model
+can be applicable for the manually-annotated inner-word word
+dependencies presented in Zhang et al. (2017) [13] naturally.
+However, the experimental results show that no signiﬁcant dif-
+ferences can be observed after incorporating them. We compare
+our joint models with the corresponding pipelines and show that
+the end-to-end joint framework can gain better performance.
+Extensive analysis studies are conducted in detail, aiming to
+understand the character-level parsing model comprehensively.
+In summary, our major contributions are listed as follows:
+r We present a comprehensive study for deep graph-based
+character-level Chinese dependency parsing, including in-
+vestigations by using various word representations and
+inner-word dependencies as well as comparisons with dif-
+ferent pipelines. To our knowledge, it is the ﬁrst work to
+examine BERT, gold-standard inner-word structures, and
+their corresponding pipelines for this task under the deep
+neural setting.
+r We propose a novel RPE-Transformer to improve our joint
+models that use the feature-based method to utilize external
+pre-trained character representations. This achievement is
+highly meaningful because the feature-based method is
+very parameter-efﬁcient (e.g., a static BERT could be pre-
+served by sharing across different NLP models), thus our
+ﬁnal feature-based model would be more desirable in real
+considerations since a comparable parsing performance
+can also be achieved.
+Fig. 2. The proposed framework for joint Chinese word segmentation, POS
+tagging and dependency parsing.
+All code has been released publicly available under Apache
+License 2.0 for research purposes. 1
+II. T HE PROPOSED MODEL
+Our graph-based character-level Chinese dependency parsing
+model is directly adapted from the word-level biafﬁne parsing
+model proposed by Dozat and Manning (2017) [9]. Fig. 2 shows
+the overall model architecture, which is divided into three parts:
+(1) character representation, (2) feature abstraction, and (3)
+decoding, where the ﬁrst two parts form the encoder, and the
+third is the decoder. Based on this framework, we can process
+word segmentation, POS tagging and dependency parsing in a
+single model, where Chinese characters are adopted as the basic
+processing units.
+The encoder is highly similar to the word-level dependency
+parsing while the decoder differs signiﬁcantly because word
+segmentation and POS tagging are integrated, which should
+be tackled carefully to achieve good performance as a whole.
+As shown in Fig. 2, besides the standard biafﬁne dependency
+parsing over characters, we exploit one extra component to han-
+dle word segmentation and POS tagging by a uniﬁed sequence
+labeling framework, namely uniﬁed segmentation and tagging,
+which assigns each character to a joint label that unites word
+boundary tags{B, M, E, S}2 and POS tagsT as a whole [24], i.e.
+1https://github.com/LindgeW/JointCWPDParser
+2BMES are widely used word boundary tags, where BME indicates the
+beginning, middle and end characters of a word, respectively, and S represents
+a single-character word.
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+WU AND ZHANG: DEEP GRAPH-BASED CHARACTER-LEVEL CHINESE DEPENDENCY PARSING 1331
+{B, M, E, S}× T , where × denotes the Cartesian product. Fi-
+nally, we organize the two components in a MTL framework [19]
+for decoding.
+A. Character Representation
+We take Chinese characters as the basic input for our
+character-level dependency parser. Given an input sequence
+with n characters c1 ··· cn, we mainly investigate two kinds
+of character-level representations, one being the baseline em-
+beddings, and the other one being the BERT representations. In
+this work, we do not investigate the ELMo representations [17]
+for our tasks, which may result in performance between the
+embeddings and BERT [11].
+Embedding. We use embeddings of unigram and bigram char-
+acters to obtain the hidden vector representation at each position,
+following previous neural character-level Chinese processing
+models such as word segmentation, and joint word segmenta-
+tion and POS tagging [24], [25]. Concretely, for each position
+i ∈[1,n ], we make embeddings of ci and cici+1, resulting in
+the character-level representation as follows:
+ei =( Eﬁx(ci)+ Etune(ci))
+⊕(Eﬁx(cici+1)+ Etune(cici+1)),
+(1)
+where Eﬁx is an embedding matrix with pre-trained vectors
+which is frozen in our models, Etune is a randomly initialized
+embedding matrix and would be ﬁne-tuned along with the train-
+ing, E(·) indicates the matrix looking up function, ⊕denotes
+vectorial concatenation, and ei is our desired output.
+BERT (tuned) . BERT is a powerful language representation
+model, which has achieved the state-of-the-art results on a wide
+range of NLP tasks [18]. It accepts a full sentence as input,
+outputting a sequence of contextualized word representations
+based on a well-pretrained bidirectional Transformer. For the
+standard BERT of Chinese, characters are basic processing units
+instead of words, which perfectly ﬁts with our setting. First,
+following the standard settings of Devlin et al. (2019) [18],
+we use the last-layer vectorial output for our character-level
+dependency parser and ﬁne-tune the BERT parameters along
+with our task objective, which has been demonstrated effective
+in previous work [18], [26].
+BERT (frozen). Although ﬁne-tuning BERT can achieve re-
+markable performances for a number of tasks [18], [27], this
+scheme may suffer from the parameter inefﬁciency problem,
+where a newly-trained model would introduce a new copy of
+BERT weights (i.e., consuming about 110 M parameters). This
+may lead to great inconveniences in real scenarios which involve
+multiple NLP tasks and model ensembles, since each model
+keeps a different copy of BERT weights. Thus it is highly
+meaningful to study the feature-based method which freezes
+BERT parameters during training.3 In this way, we can preserve
+a shared BERT across different NLP models. Thus, in this
+work, we also investigate the performance of BERT (frozen)
+for character-level parsing in Chinese.
+3Our embedding-based joint model also leverages the feature-based method
+naturally to integrate the external pre-trained word embeddings.
+Fig. 3. Illustration of character representations based on BERT (frozen). Left:
+The overall architecture. Right: The inner structure of the BERT layerS+1 with
+adapter, where the brown part is the adapter layers, each of which involves a
+combination of down-projection (i.e., W′S+1
+∗ and dimout ≪ dimin), activation
+(i.e., g = GeLU), up-projection (i.e., W′S+1
+∗ , restoring to the BERT dim) and
+skip-connection.
+Our preliminary experiments show that direct feature extrac-
+tion from BERT would lead to signiﬁcant decreases in the overall
+parsing performance. To reduce the gap between ﬁne-tuning
+and freezing, we exploit the adapter technique [21], [22], ap-
+plying it to the last few layers of BERT, and then aggregate the
+outputs of these layers with weighed summation to obtain the
+ﬁnal character-level representations. Fig. 3 presents the feature
+extraction method. The overall process can be formalized as
+follows:
+¯h
+S
+1 ··· ¯h
+S
+n = BERT:S (c1 ··· cn)
+¯h
+S+1:LB
+1 ··· ¯h
+S+1:LB
+n = BERT-ADS+1:LB
+(c1 ··· cn)
+ei =
+LB
+∑
+l=S+1
+¯λl¯h
+l
+i,i ∈[1,n ],
+(2)
+where BERT :S indicates the vector calculation following the
+standard BERT module in the bottom layers, BERT-AD S+1:LB
+denotes the adapter module is inserted starting from the{S+1}th
+layer of BERT to the last layer, and ei is our desired output
+of character representation. We only offer a brief depiction of
+the adapter module in Fig. 3, and more detailed descriptions
+can be found in Houlsby et al. (2019) [22]. Note that during
+training, we only ﬁne tune the weights of the adapter modules,
+the layer normalization parameters and ¯λ, keeping all other
+BERT parameters ﬁxed.
+B. Feature Abstraction
+Here we refer to the feature abstraction as one further module
+to produce high-level shared features for our joint task based on
+the input word-level representations. This part can be skipped
+when tunable BERT is exploited as the character-level represen-
+tations because BERT can learn task-speciﬁc high-level features
+directly by adjusting a large quantity of parameters itself. For
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+1332 IEEE/ACM TRANSACTIONS ON AUDIO, SPEECH, AND LANGUAGE PROCESSING, VOL. 29, 2021
+other character-level representations that are regarded as feature-
+based, an additional feature abstraction module is very necessary
+to achieve competitive performance. In this work, we investigate
+three different feature abstraction strategies, which are built
+using BiLSTM, Transformer, and an improved Transformer,
+respectively.
+BiLSTM. The BiLSTM encoder is exploited in the original
+(word-level) biafﬁne dependency parsing [9], which is used as
+our baseline encoder. Formally, given the character-level rep-
+resentations e1 ··· en, we ﬁrstly utilize a multi-layer BiLSTM
+module to obtain the encoder outputs:
+h1:LE
+1 ··· h1:LE
+n = BILSTMLE
+(e1 ··· en), (3)
+where LE is the number of BiLSTM layers, and then we dump
+the outputs of all encoder layers for future decoding, which can
+also be applied to other kinds of encoders universally.
+Transformer. We refer to the Transformer as the basic pro-
+cessing module of the encoder part mentioned in V aswani
+et al. (2017) [23], also as the backbone of a single BERT
+layer as depicted in Fig. 3, which involves a combination of
+multi-head self-attention, layer normalization and feed-forward
+sublayers. Given the input vectors derived from the character
+representations e1 ··· en, we ﬁrst add them with the sinusoidal
+positional embeddings [23], and then let them go through several
+Transformer encoder layers:
+h0
+i = ei + e′
+i
+hl
+1 ··· hl
+n = TRANSFORMER(hl−1
+1 ··· hl−1
+n )
+(4)
+where e′
+i denotes the position embeddings, and ﬁnally we can
+obtain the encoder outputs h1:LE
+1 ··· h1:LE
+n by a LE-layer Trans-
+former (i.e., l ∈[1,L E]).
+RPE-Transformer. According to our preliminary experi-
+ments, we ﬁnd that the Transformer encoder is hard to bring
+improved performance consistently. We can observe the sim-
+ilar ﬁndings from Li et al. (2019) [11] who investigate the
+performance of the Transformer for word-level dependency
+parsing. One possible reason might be due to that the attention
+mechanism inside the multi-head self-attention sublayers treats
+the representations of different positions equally. Compared
+with BiLSTM, the short-distance connections in the standard
+Transformer have been weakened signiﬁcantly. Therefore, we
+attempt to improve the Transformer by incorporating the relative
+position embeddings (RPE) into the multi-head self-attention
+components, which is mainly motivated by Shaw et al. (2018)
+[28] and Dai et al. (2019) [29], enhancing the ability of short-
+term connection awareness according to the objective of our
+task.
+The key attention mechanism in the Transformer can be
+depicted in Fig. 4, which illustrates the computation ﬂow of
+single-head attention. Multi-head attention is a simple extension
+by separating one single input vector into several parts, each
+of which executes single-head attention operation individually,
+and then concatenating the outputs of these parts as a whole.
+Assuming the input vector of the self-attention sublayer is
+x1:n = x1 ··· xn, the attention scores are calculated by the for-
+mula shown in Fig. 4, the input vector x is separately projected
+Fig. 4. Illustration of the self-attention part with single head in RPE-
+Transformer block, where the blue part inside the brackets shows the main
+difference, e′ is the embeddings of all possible relative positions, W r , W q ,
+W k , W y , u and v are trainable parameters.
+to the queries q,k e y sk and values y using three different linear
+functions, and e′ is the PRE vector adapted from Daiet al. (2019)
+[29], which is linearly projected to r. The blue bracketed part
+indicates the extra part of our RPE-Transformer compared to
+the standard Transformer, where an extra scoring part is used
+to adjust the attention weights of different relative positions.
+By this way, we are able to enhance the short-term connections
+according to the optimization objective of our task.
+Based on the updated multi-head self-attentive block, the en-
+coder outputs of the improved Transformer (RPE-Transformer,
+for short) can be formalized as:
+hl
+1 ··· hl
+n = RPE-TRANSFORMER(hl−1
+1 ··· hl−1
+n ) (5)
+where h0
+i = ei is the character representations solely, and
+h1:LE
+1 ··· h1:LE
+n (l ∈[1,L E]) are the encoder outputs.
+C. Decoding
+As mentioned before, we decompose the character-level de-
+pendency parsing into two subtasks: (1) uniﬁed segmentation
+and tagging, and (2) dependency parsing, and thus our decoding
+part is targeted to the two subtasks, respectively. We produce
+the outputs for both subtasks and then merge them to form
+a character-level dependency tree. First, we design a subtask-
+aware aggregation layer over the encoder outputsh1:LE
+1 ··· h1:LE
+n
+to obtain subtask-dependent features, which can be formalized
+as follows:
+hs&t
+i , hdp
+i =
+LE
+∑
+l=1
+λs&t
+l hl
+i,
+LE
+∑
+l=1
+λdp
+l hl
+i (6)
+where λs&t is used for the uniﬁed segmentation and tagging,
+and λdp is for dependency parsing. Both the two parameters are
+softmax-normalized, with summed values equaling to 1.
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+WU AND ZHANG: DEEP GRAPH-BASED CHARACTER-LEVEL CHINESE DEPENDENCY PARSING 1333
+Fig. 5. Illustration of the candidate dependency links between head characters
+and dependent characters in a sentence.
+Uniﬁed Segmentation and Tagging. The subtask is essentially
+a character-level sequence labeling problem. For each character,
+our model predicts a label with joint word boundary and POS
+tag information, which can be formulated as a multi-class clas-
+siﬁcation problem. Given the input hs&t
+1 ··· hs&t
+n , at position i,
+we score all candidate labels by the following equations:
+os&t
+i = W ST hs&t
+i , (7)
+where W ST denotes trainable model parameter. For inference,
+we utilize the highest-scored label at each position as the ﬁnal
+predicted label.
+Dependency Parsing. We exploit a biafﬁne scorer to score
+each possible dependency link i
+*
+↶j (* is the relation label), fol-
+lowing Dozat and Manning (2017) [9]. We ﬁrst map hdp
+1 ··· hdp
+n
+into two lower-dimensional feature sets by two parallel MLP
+layers, which are used to represent it as dependent and as head
+respectively, and then apply biafﬁne operations to calculate the
+score of each candidate dependency link (Fig. 5). The detailed
+computation is as follows:
+hdp-dep
+i , hdp-head
+i = MLPdep(hdp
+i ), MLPhead(hdp
+i )
+odp-dep
+i (
+*
+↶j)= BIAFFINE(hdp-dep
+i , hdp-head
+j )
+(8)
+where * indicates the dependency label, and ↶j indicates the
+headed link from a speciﬁed position.
+Inference. Noticeably, our dependency parsing subtask is
+performed based on characters, and the difference between the
+inner- and inter-word dependencies is very evident by the label.
+Thus, we can actually obtain word segmentation outputs from
+this subtask by the inner-word dependencies as well. However,
+this inevitably leads to conﬂicts with the uniﬁed segmentation
+and tagging during the inference phase, and the inter-word
+dependencies might be incompatible with the outputs of the
+uniﬁed segmentation and tagging module. In this work, we solve
+the problem by giving priority to the uniﬁed segmentation and
+tagging outputs. Based on the segmentation and tagging out-
+puts, constrained dependency parsing is performed: inter-word
+dependency scores are ﬁrstly calculated based on only the head
+characters of the given words, and then the ﬁrst-order MST
+algorithm [30] is employed to obtain a valid dependency tree.
+This problem only exists in the inference phase. There is no
+TABLE I
+STA TISTICS OF THE THREE DA TASETS INOUR EXPERIMENTS
+conﬂict between the two subtasks during the training period, as
+the gold-standard character-level dependency trees are used.
+D. Training
+There are two kinds of losses in our joint model. For uniﬁed
+segmentation and tagging, we use a softmax function over the
+output score vectors to obtain the probability distribution of all
+candidate labels, and then compute the cross-entropy objective
+loss over the gold-standard labels. For dependency parsing,
+we exploit a similar cross-entropy idea to calculate the loss.
+Speciﬁcally, for each character, we apply softmax operation over
+all candidate heads and dependency relation labels to obtain their
+probability distribution, and then calculate the loss for depen-
+dency parsing. Finally, we combine the two losses together. The
+overall process for a single input can be formalized as:
+L = Ls&t +Ldp
+= −
+∑
+i
+log eos&t
+i [˜ti]
+Zs&t −
+∑
+i
+log eodp-dep
+i (
+*
+↶ ˜hi )[˜li]
+Zdp
+(9)
+where Zs&t = ∑
+t eos&t
+i [t] and Zdp = ∑
+j,l eodp-dep
+i (
+*
+↶j)[l], which
+are two normalization factors for probability calculation, ˜t indi-
+cates the ground-truth label for uniﬁed word segmentation and
+tagging, and ˜h and ˜l indicate the gold-standard dependency head
+and label, respectively.
+III. E XPERIMENTS
+A. Settings
+Dataset. We conduct experiments on three benchmark
+datasets from Chinese Penn Treebank [13], [31], [32], including
+version 5.0, 6.0 and 7.0, each of which is split into training,
+development and testing sections according to Zhang et al.
+(2017) [13]. We use CTB5, CTB6, and CTB7 to denote the three
+datasets for short. Table I shows the statistics of these datasets
+brieﬂy.
+Evaluation. For evaluation, we adopt the word-level F1 score
+as the major metrics to measure the performance of Chinese
+word segmentation, POS tagging and dependency parsing, re-
+spectively, following Zhanget al. (2017) [13]. For POS tagging,
+we regard a POS tag as correct only when the corresponding
+word boundaries and tag are both exactly correct. For depen-
+dency parsing, we treat a dependency as correct only when
+the included word pairs are both correctly recognized. 4 We use
+4Punctuation words are ignored during the evaluation of dependency parsing.
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+1334 IEEE/ACM TRANSACTIONS ON AUDIO, SPEECH, AND LANGUAGE PROCESSING, VOL. 29, 2021
+TABLE II
+MAIN RESULTS ON THE CTB TEST SETS,A LONG WITH DIFFERENT CHARACTER REPRESENTA TIONS ANDENCODING MODULES. +IWD DENOTES THE
+HUMAN-ANNOTA TEDINNER-WORD DEPENDENCIES ARE USED, AND THE BEST PERFORMANCE IS MARKED BOLD
+UDEP to denote the parsing performance without considering
+dependency labels, and LDEP to denote the labeled parsing
+performance.
+Pre-trained Embedding Representations . We pre-train 200-
+dimensional character unigram and bigram embeddings as
+well as word embeddings on the Chinese Gigaword corpus
+(LDC2011T13) by using word2vecf,5 where word embeddings
+are only used in our pipeline models for fair comparisons.
+For BERT, we utilize the publicly released pre-trained Chinese
+BERT model directly.6
+Hyper-parameters. There are several key hyper-parameters
+for our models. The hyper-parameters in our BiLSTM encoder
+and biafﬁne decoder are set according to Dozat and Manning
+(2017) [9]. The dimension of input character representations is
+set according to the settings of the external resources. For the
+exploited Transformer encoders, the layer size, the head number,
+the model size as well as the inner attention hidden size are 6,
+8512 and 1024, respectively. For the model based on BERT
+(frozen), we setS =9 , indicating that the last four BERT layers
+are adapted for feature extraction, and set the dimension size of
+the down-projection layer inside the adapter module as768/4=
+192.
+To train the models, we set the batch size to 32 and use
+the Adam optimizer with learning rate of 3.5e-4, β1 =0 .9,
+β2 =0 .98,ϵ = 1e-9. The warmup strategy is adopted following
+V aswani et al. (2017) [23] when the Transformer structures
+are required to be optimized anywhere. If BERT parameters
+require ﬁne-tuning, we use a separated AdamW optimizer for
+these parameters with the maximum learning rate being 2e-5,
+following Devlin et al. (2019) [18] and Loshchilov and Hutter
+(2019) [33].
+B. Main Results
+Table II compares the word segmentation, POS tagging and
+dependency parsing results of our proposed models on the
+5https://bitbucket.org/yoavgo/word2vecf/
+6BERT: https://github.com/google-research/bert
+CTB test sets with different character representations and en-
+coders (as mentioned in Section II). First, we examine the
+model performance by using character embeddings, aiming to
+compare different encoders. As shown, the Transformer-based
+models can bring better performance than the baseline BiLSTM.
+The averaged LDEP score can be boosted by (0.80 + 0.61 +
+0.17)/3 ≈0.53 using the standard Transformer. Our proposed
+RPE-Transformer can obtain more signiﬁcant gains over the
+baseline by(2.56 + 2.45 + 1.32)/3 ≈2.11 on average. Second,
+we look at the results using BERT (frozen). The tendency is
+similar to the embedding-based models among the baseline
+BiLSTM, the standard Transformer and the RPE-Transformer.
+The gaps are much smaller, leading to very small differences
+between the baseline BiLSTM and the standard Transformer.
+The RPE-Transformer still performs the best, with an averaged
+LDEP improvement of (0.20 + 0.24 + 0.48)/3 ≈0.31 over the
+BiLSTM.
+Further, we compare the character-level parsing models with
+different character representations. Clearly, in contrast to pre-
+trained character embeddings, BERT (frozen) representations
+can improve the performance of character-level parsing dramat-
+ically. The averaged gap between embedding representations
+and BERT (frozen) is (5.36 + 6.02 + 6.13)/3 ≈5.84 when the
+better encoder based on RPE-Transformer is used. As our BERT
+(frozen) model incorporates the adapter module for better rep-
+resentations, we also carry out the feature ablation experiments
+to verify its effectiveness. As shown in Table II, we can see
+that the performance of BERT (frozen) without the adapter will
+be dropped signiﬁcantly, resulting in an averaged decrease of
+(0.78 + 0.34 + 0.53)/3=0 .55 in LDEP .
+We also show the results using BERT with ﬁne-tuning. Under
+this setting, we directly use the BERT outputs as the ﬁnal
+encoder outputs (referred to as None), because we ﬁnd that no
+more performance gains can be achieved when additional neural
+structures are used according to our preliminary experiments,
+and meanwhile it is very concise. We can observe that the parsing
+performance of the ﬁnal BERT (frozen) model is comparable to
+the model based on BERT with ﬁne-tuning, while BERT with
+ﬁne-tuning need keep an individual copy of BERT weights for
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+WU AND ZHANG: DEEP GRAPH-BASED CHARACTER-LEVEL CHINESE DEPENDENCY PARSING 1335
+TABLE III
+COMPARISON OF THE PIPELINE AND SEMI-JOINT MODELS AGAINST THE CHARACTER-LEVEL MODELS ON THE CTB TEST SETS
+this concrete model. In addition, as our method can incorporate
+the human-annotated inner-word dependencies naturally by the
+dependency parsing subtask, we also check the inﬂuence of them
+based on the best models of each word representation method
+(i.e., shown by +IWD). The results demonstrate that slightly
+decreased performances will be achieved when these inner-word
+dependencies are used.
+Additionally, the performance of word segmentation and POS
+tagging is mostly consistent with that of dependency parsing,
+while the differences are much smaller, even sometimes in-
+signiﬁcant between the BiLSTM and the standard Transformer.
+The main reason lies in that the baseline model is already very
+strong. For example, based on the BERT representations, the
+averaged gap between the two different encoders is less than
+0.1. In summary, all the results demonstrate that the proposed
+RPE-Transformer and BERT representations are important to
+all of the three tasks.
+C. Compared With the Pipeline Models
+Apart from the character-level joint learning strategy, we also
+investigate the following three kinds of pipeline strategies of
+Chinese word segmentation (CWS), POS tagging and depen-
+dency parsing, making comparisons with our character-level
+joint models:
+r Pipeline (CWS ↦→ POS ↦→ DEP): we treat CWS, POS
+tagging and dependency parsing as independent ones, and
+train them separately.
+r SEGPOS+DEP (CWS&POS↦→ DEP): we train CWS and
+POS tagging jointly while dependency parsing is trained
+separately.
+r SEG+POSDEP (CWS ↦→ POS&DEP): we train CWS
+separately while POS tagging and dependency parsing
+components are trained jointly. The segmentation output
+is used for POS tagging and dependency parsing.
+All word-based models also exploit the pre-trained word
+embeddings to make the pipeline stronger.
+For the models with embeddings and BERT (frozen) rep-
+resentations, we exploit the RPE-Transformer as the encoder,
+since it can bring relatively better performance. The detailed
+hyper-parameters are the same as our character-level models.
+As shown in Table III, our character-level dependency parsing
+models can obtain higher F-scores for word segmentation, POS
+tagging and dependency parsing. The results demonstrate the
+advantages of the character-level models for the three tasks.
+In more detail, we ﬁnd that the three pipeline models show
+no signiﬁcant difference compared with each other while our
+ﬁnal joint model is better, indicating the joint learning of word
+segmentation and dependency parsing could be greatly helpful,
+which has also been demonstrated in Y an et al. (2020) [12].
+D. Comparisons With Previous Studies
+Further, we compare our character-level dependency parsing
+models with previous closely-related studies, including other
+joint models of word segmentation, POS tagging and depen-
+dency parsing as well [13], [34]–[36]. Table IV shows the com-
+parison results. First, compared with the traditional statistical
+models, the neural-based joint models can boost parsing perfor-
+mance signiﬁcantly, except Kurita et al. (2017) [37]. By using
+word or character embeddings, the best UDEP score is advanced
+from (82.01 + 76.75 + 75.63)/3 ≈78.13 to (86.83 + 82.88 +
+81.38)/3 ≈83.70 on average. The averaged score can be further
+improved with the ﬁne-tuned BERT representations, reaching
+(91.81 + 88.49 + 87.07)/3 ≈89.12.
+We also compare our work to the top-performance models
+proposed by Y an et al. (2020) [12], which is a joint model for
+Chinese word segmentation and dependency parsing. For fair
+comparisons, we exclude the POS-tagging part from our models.
+With embedding inputs, our model is comparable to their joint
+method. When the BERT representations are integrated, our
+model can outperform their method signiﬁcantly, which might be
+due to the differences in the pre-trained BERT and the decoding
+strategies. Through the comparisons, we can see that the POS
+tagging task is helpful to the character-level dependency parsing
+to some extent, especially the parsing performance. Further-
+more, BERT representation can greatly reduce the effectiveness
+of POS tagging, which is consistent with Zhouet al. (2020) [38].
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+1336 IEEE/ACM TRANSACTIONS ON AUDIO, SPEECH, AND LANGUAGE PROCESSING, VOL. 29, 2021
+TABLE IV
+COMPARISON WITH THE PREVIOUSL YPROPOSED JOINT MODELS AGAINST OURS ON THE CTB TEST SETS
+Fig. 6. Visualization of softmax-normalized weights on different self-attentive
+encoder layers. Lx(x ≥1) denotes the x-th hidden layer. A darker color
+indicates a higher weight.
+Fig. 7. Word segmentation performance by using sequence labeling (i.e., Tag-
+based) and inner-word dependency parsing (i.e., Arc-based), respectively.
+E. Analysis
+In this section, we conduct detailed experimental analyses on
+the CTB7 test set, aiming for comprehensive understandings of
+our character-level dependency parsing models.
+Word Segmentation by Dependency Parsing . Our proposed
+model exploits a separated character-tagging scheme for joint
+word segmentation and POS tagging (i.e., tag-based). In fact,
+word segmentation can also be achieved by the character-level
+dependency parsing (i.e., arc-based) as illustrated before, be-
+cause words can be extracted directly by the inner-word depen-
+dencies [12]. Thus, we compare word segmentation performance
+of the two strategies, respectively. As shown in Fig. 7(a), the arc-
+based strategy shows slightly worse F-scores than the tag-based
+strategy of our ﬁnal model. Further, we remove the inﬂuence
+of POS tagging by performing only word segmentation and
+dependency parsing, aiming to compare the two strategies fairly.
+We get the same observation from Fig. 7(b). The results indicate
+that the uniﬁed segmentation and tagging by character-level
+sequence labeling is preferable.
+Visualization Task-Speciﬁc Feature Selections . In our
+character-level models using embeddings and BERT (frozen)
+as input, we exploit a weighted aggregation layer to capture the
+feature preference across different tasks (see 6). Here we visu-
+alize the learned task-speciﬁc weights to see their differences.
+Fig. 6 shows the visualization results where the best-performing
+RPE-Transformer is used as the encoder. We can see that the
+uniﬁed segmentation and tagging as well as dependency parsing
+indeed prefer different layers from the encoder outputs, as the
+weights are distributed signiﬁcantly. By deeply examining the
+weights, we can ﬁnd that dependency parsing favors the higher
+layers than word segmentation and POS tagging in both settings,
+which demonstrates that dependency parsing is at a higher level.
+Structural Analysis of Attention . Previously, we have shown
+that the RPE-Transformer can bring better performance than the
+standard Transformer when embeddings and BERT (frozen) are
+used as input. As the major difference may lie in the attention
+mechanism between the two network structures, hence we show
+an attention analysis to comprehend the RPE-Transformer in
+more detail. Fig. 8 shows the comparison results, where one
+example of normalized attention weights using the same input
+sentence is visualized in the picture. As shown, we can ﬁnd that
+the RPE-Transformer has higher attention weights surrounding
+the diagonal line, indicating that the local attentions have been
+greatly enhanced in the RPE-Transformer, which is consistent
+with our initial design.
+Dependency Performance by Arc Distances. We perform ﬁne-
+grained dependency parsing performance comparisons in terms
+of arc distance to show the advantages of character-level parsing
+in contrast to the word-based pipelines. Intuitively, longer dis-
+tances could be more difﬁcult to be accurately parsed. Here we
+deﬁne the arc distance of a dependency among the head character
+and dependent character in a sentence (excluding intra-word
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+WU AND ZHANG: DEEP GRAPH-BASED CHARACTER-LEVEL CHINESE DEPENDENCY PARSING 1337
+Fig. 8. Illustration of the attention distribution among Transformer and RPE-
+Transformer encoder by layer / head. A darker color indicates a higher weight.
+Fig. 9. Dependency F-scores in terms of arc distances.
+TABLE V
+COARSE-GRAINED POS TYPES
+arcs), and calculate the F-scores for comparison. Fig. 9 shows
+the results, where distances are binned by a width of 5. We exhibit
+the performance of ﬁne-tuned and frozen BERT models. We can
+observe the overall tendency is matched with our intuition. In
+addition, the character-level models are better than the pipelines,
+and the differences are more signiﬁcant for longer distances.
+Dependency Performance by POS Tags . We also study the
+parsing performance concerning different POS tags. For conve-
+nience, we categorize the POS tags into several coarse-grained
+types, and analyze the performance of several representative
+types, including nouns, verbs, adverbs, pronouns, prepositions,
+conjunctions and a subset of particles. Most of the selections
+are consistent with McDonald and Nivre (2011) [39]. Table V
+shows the detailed information.
+Fig. 10 shows the F-scores of dependency parsing, where both
+BERT (frozen) and BERT (tuned) are studied to compare the
+performance of character-level and pipeline models. As a whole,
+we can see that character-level parsing models outperform the
+pipelines in both settings for all ﬁne-grained settings, indicat-
+ing the effectiveness of the character-level architecture. More
+Fig. 10. Dependency performance concerning different POS types.
+Fig. 11. POS performance of different POS types.
+interestingly, we can see that the performance of verb words is
+obviously lower than others. We examine the dependencies of
+the verb in more depth, ﬁnding that the corresponding dependen-
+cies tend to be longer-distance, which could be the main reason
+accounting for the relatively low performance. Previously, joint
+models involving POS tagging and dependency parsing can
+greatly reduce the errors on the particles (as listed in Table V)
+for Chinese [34]. According to our experimental results, we
+can see that the gap is no longer larger than other POS types.
+The major reason may be due to the global feature from deep
+neural networks, which largely weakens the effectiveness of
+POS tagging for dependency parsing. The results in Table IV
+also demonstrate the point, where the performance without POS
+tagging does not drop as signiﬁcantly as previous studies based
+on the traditional statistical models [34].
+POS Tagging Performance of Different POS Tags .H e r ew e
+analyze the POS tagging performance as well. We show the
+F-scores of our character-level models and their pipelines re-
+garding different POS tags. We also follow Table V to cate-
+gorize several representative ﬁne-grained POS tags. As shown
+in Fig. 11, we can see that the character-level models can
+yield better performance than the pipeline ones. Empirically, the
+character-level models can not only avoid error propagation from
+word segmentation, but also use the feedback from dependency
+parsing, thus they can lead to better performance for ﬁne-grained
+POS tags. Furthermore, we can also ﬁnd that the recognition
+of POS tags such as pron and prep are relatively easier in
+comparison with other POS tags, since they are closed POS tags,
+and meanwhile the words of these categories involve smaller
+ambiguities.7
+Word Segmentation Performance of Different POS Tags .F i -
+nally, we look into the performance of word segmentation. We
+7https://www.cs.brandeis.edu/ clp/ctb/posguide.3 rd.ch.pdf
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+1338 IEEE/ACM TRANSACTIONS ON AUDIO, SPEECH, AND LANGUAGE PROCESSING, VOL. 29, 2021
+Fig. 12. Word segmentation performance concerning different POS types.
+follow the previous two paragraphs to examine the word-level
+F-scores in terms of different words, and the same seven types
+of POS tags are selected for investigation. Fig. 12 shows the
+comparison results of our character-level joint models and their
+counterpart pipelines. The results are consistent with the pre-
+vious comparisons above, where character-level models can
+consistently give better performance than the pipeline ones.
+Besides, the word segmentation performance of closed POS tags
+(i.e., pron, prep, conj, part) is signiﬁcantly higher than those of
+open POS tags (i.e., verb, noun, adv), which could be mainly due
+to that the words of closed POS tags in general have a higher
+frequency.
+IV . RELA TEDWORK
+Dependency parsing has been an active research topic in
+NLP [1], [3]–[5], [7], [9], [10], [40]. There have been a vari-
+ety of proposed models, where the representative architectures
+include the transition-based [6], [41]–[43] and graph-based [1],
+[7]–[9], [44] approaches. Deep neural models have achieved
+great success for the tasks [6], [9], [11], [12], [45]. Recently, the
+graph-based biafﬁne parser has received great interest, which
+can achieve excellent parsing performance based on the same
+word representations [9], [11], [12]. In addition, contextualized
+word representations such as ELMo and BERT can give further
+improved performance [11], [46]. Our work focuses on adap-
+tively extending the word-level graph-based biafﬁne dependency
+parsing model to the character-level parsing.
+Character-level parsing for Chinese has been investigated
+since very early [13]–[16], [47], [48], which is a natural al-
+ternative framework for joint word segmentation, POS tagging
+and dependency parsing [34]–[36]. Zhang et al. (2017) [13]
+have studied the character-level Chinese dependency parsing
+comprehensively based on the transition-based framework with
+traditional statistical models. Under the neural setting, the most
+representative work includes Li et al. [16] and Y anet al. (2020)
+[12]. The latter is closely related to our work, which ignores
+the POS tagging part. Our work offers the most comprehen-
+sive investigations for the graph-based character-level Chinese
+dependency parsing under the deep neural settings.
+V. C ONCLUSION
+In this work, we made a comprehensive study on character-
+level Chinese dependency parsing based on deep graph-based
+neural models. We extended the word-level deep biafﬁne parsing
+model to deal with the character-level parsing, adapting the
+model suitable for joint word segmentation, POS tagging and
+dependency parsing via a MTL framework with an additional
+uniﬁed word segmentation and POS tagging task. We investi-
+gated different character representations including embedding-
+based and BERT (frozen or ﬁne-tuning), and also exploited
+several state-of-the-art neural network structures for advanced
+feature abstraction including deep BiLSTM, Transformer and
+(improved) RPE-Transformer.
+Experiments were conducted on three widely-used Chinese
+benchmark datasets, namely CTB5, CTB6 and CTB7, respec-
+tively. The results showed that both BERT and our improved
+RPE-Transformer can obtain better performance compared
+with the corresponding baselines. Our joint model with BERT
+(frozen) and RPE-Transformer can achieve comparable perfor-
+mance to the model with the ﬁne-tuning BERT encoder. Since the
+BERT (frozen) model is more parameter-efﬁcient because the
+share of BERT parameters can become possible across different
+NLP models, it might be more favorable in real considerations.
+We examined our character-level joint models under a range
+of settings, and compared them with the pipeline models as
+well as previous works in the literature. Extensive analyses
+are conducted to understand the advantages of the proposed
+character-level dependency parsing models.
+REFERENCES
+[1] R. McDonald, K. Crammer, and F. Pereira, “Online large-margin training
+of dependency parsers,” in Proc. 43rd Annu. Meeting Assoc. Comput.
+Linguistics, 2005, pp. 91–98.
+[2] J. Nivre and J. Nilsson, “Pseudo-projective dependency parsing,” in Proc.
+Assoc. Comput. Linguistics, 2005, pp. 99–106.
+[3] S. Buchholz and E. Marsi, “CoNLL-X shared task on multilingual depen-
+dency parsing,” in Proc. 10th Conf. Comput. Natural Lang. Learn. , 2006,
+pp. 149–164.
+[4] J. Nivre et al. , “The CoNLL 2007 shared task on dependency parsing,”
+in Proc. Joint Conf. Empirical Methods Natural Lang. Process. Comput.
+Natural Lang. Learn., 2007, pp. 915–932.
+[5] S. Kübler, R. McDonald, and J. Nivre, “Dependency parsing,” Synth.
+Lectures Hum. Lang. Technol., vol. 1, no. 1, pp. 1–127, 2009.
+[6] C. Dyer, M. Ballesteros, W. Ling, A. Matthews, and N. A. Smith,
+“Transition-based dependency parsing with stack long short-term mem-
+ory,” in Proc. ACL-IJCNLP, 2015, pp. 334–343.
+[7] E. Kiperwasser and Y . Goldberg, “Simple and accurate dependency parsing
+using bidirectional LSTM feature representations,”Trans. Assoc. Comput.
+Linguistics, vol. 4, pp. 313–327, 2016.
+[8] W. Wang and B. Chang, “Graph-based dependency parsing with bidirec-
+tional LSTM,” in Proc. 54th Annu. Meeting Assoc. Comput. Linguistics ,
+2016, pp. 2306–2315.
+[9] T. Dozat and C. D. Manning, “Deep biafﬁne attention for neural depen-
+dency parsing,” in Proc. Int. Conf. Learn. Representations , 2017.
+[10] X. Ma, Z. Hu, J. Liu, N. Peng, G. Neubig, and E. Hovy, “Stack-pointer
+networks for dependency parsing,” in Proc. Assoc. Comput. Linguistics ,
+2018, pp. 1403–1414.
+[11] Y . Li, Z. Li, M. Zhang, R. Wang, S. Li, and L. Si, “Self-attentive biafﬁne
+dependency parsing,” inProc. Int. Joint Conf. Artif. Intell., 2019, pp. 5067–
+5073.
+[12] H. Y an, X. Qiu, and X. Huang, “A graph-based model for joint chinese
+word segmentation and dependency parsing, ” Trans. Assoc. Comput.
+Linguistics, vol. 8, pp. 78–92, 2020.
+[13] M. Zhang, Y . Zhang, W. Che, and T. Liu, “Character-level chinese depen-
+dency parsing,” in Proc. 52nd Annu. Meeting Assoc. Comput. Linguistics ,
+2014, pp. 1326–1336.
+[14] H. Zhao, “Character-level dependencies in chinese: Usefulness and learn-
+ing,” Proc. 12th Conf. Eur . Chapter ACL, 2009, pp. 879–887.
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.
+WU AND ZHANG: DEEP GRAPH-BASED CHARACTER-LEVEL CHINESE DEPENDENCY PARSING 1339
+[15] Z. Li and G. Zhou, “Uniﬁed dependency parsing of chinese morphological
+and syntactic structures,” in Proc. Joint Conf. Empirical Methods Natural
+Lang. Process. Comput. Natural Lang. Learn. , 2012, pp. 1445–1454.
+[16] H. Li, Z. Zhang, Y . Ju, and H. Zhao, “Neural character-level dependency
+parsing for chinese,” in Proc. AAAI, 2018.
+[17] M. E. Peters et al., “Deep contextualized word representations.” in Proc.
+North Amer . Chapter Assoc. Comput. Linguistics: Hum. Lang. Technol. ,
+2018, pp. 2227–2237.
+[18] J. Devlin, M.-W. Chang, K. Lee, and K. Toutanova, “BERT: Pre-training
+of deep bidirectional transformers for language understanding,” in Proc.
+North Amer . Chapter Assoc. Comput. Linguistics: Hum. Lang. Technol. ,
+2019, pp. 4171–4186.
+[19] R. Caruana, “Multitask learning,” Mach. Learn., vol. 28, no. 1, pp. 41–75,
+1997.
+[20] Y . Tian et al., “Joint chinese word segmentation and part-of-speech tagging
+via two-way attentions of auto-analyzed knowledge,” in Proc. 58th Assoc.
+Comput. Linguistics, 2020, pp. 8286–8296.
+[21] A. C. Stickland and I. Murray, “BERT and PALs: Projected attention layers
+for efﬁcient adaptation in multi-task learning,” in Proc. Int. Conf. Mach.
+Learn., 2019, pp. 5986–5995.
+[22] N. Houlsby et al., “Parameter-efﬁcient transfer learning for NLP,” inProc.
+Int. Conf. Mach. Learn. , 2019, pp. 2790–2799.
+[23] A. V aswani et al., “Attention is all you need,” in Proc. Neural Inf. Process.
+Syst., 2017, pp. 5998–6008.
+[24] M. Zhang, N. Y u, and G. Fu, “A simple and effective neural model for joint
+word segmentation and POS tagging,” IEEE ACM Trans. Audio Speech
+Lang. Process., vol. 26, no. 9, pp. 1528–1538, Sep. 2018.
+[25] Y . Shao, C. Hardmeier, J. Tiedemann, and J. Nivre, “Character-based
+joint segmentation and pos tagging for chinese using bidirectional
+RNN-CRF,” in Proc. Int. Joint Conf. Natural Lang. Process. , 2017,
+pp. 173–183.
+[26] Y . Hao, L. Dong, F. Wei, and K. Xu, “Visualizing and understanding the
+effectiveness of BERT,” in Proc. EMNLP-IJCNLP, 2019.
+[27] C. Sun, X. Qiu, Y . Xu, and X. Huang, “How to ﬁne-tune bert for text
+classiﬁcation?,” in Proc. China Nat. Conf. Chin. Comput. Linguistics.
+Berlin, Germany: Springer, 2019, pp. 194–206.
+[28] P . Shaw, J. Uszkoreit, and A. V aswani, “Self-attention with relative po-
+sition representations,” in Proc. North Amer . Chapter Assoc. Comput.
+Linguistics: Hum. Lang. Technol., 2018, pp. 464–468.
+[29] Z. Dai, Z. Y ang, Y . Y ang, J. Carbonell, Q. Le, and R. Salakhut-
+dinov, “Transformer-XL: Attentive language models beyond a
+ﬁxed-length context,” in Proc. Assoc. Comput. Linguistics , 2019,
+pp. 2978–2988.
+[30] R. McDonald, F. Pereira, K. Ribarov, and J. Hajiˇ c, “Non-projective de-
+pendency parsing using spanning tree algorithms,” in Proc. Hum. Lang.
+Technol. Conf., Conf. Empirical Methods Natural Lang. Process. , 2005,
+pp. 523–530.
+[31] Y . Zhang and S. Clark, “A fast decoder for joint word seg-
+mentation and POS-tagging using a single discriminative model,”
+in Proc. Conf. Empirical Methods Natural Lang. Process. , 2010,
+pp. 843–852.
+[32] Y . Wang, J. Kazama, Y . Tsuruoka, W. Chen, Y . Zhang, and K. Torisawa,
+“Improving chinese word segmentation and POS tagging with semi-
+supervised methods using large auto-analyzed data,” inProc. 5th Int. Joint
+Conf. Natural Lang. Process., 2011, pp. 309–317.
+[33] I. Loshchilov and F. Hutter, “Decoupled weight decay regularization,” in
+Proc. Int. Conf. Learn. Representations , 2019.
+[34] J. Hatori, T. Matsuzaki, Y . Miyao, and J. Tsujii, “Incremental joint ap-
+proach to word segmentation, POS tagging, and dependency parsing in
+chinese,” in Proc. 50th Annu. Meeting Assoc. Comput. Linguistics , 2012,
+pp. 1045–1053.
+[35] Z. Y uan, C. Li, R. Barzilay, and K. Darwish, “Randomized greedy in-
+ference for joint segmentation, POS tagging and dependency parsing,”
+in Proc. North Amer . Chapter Assoc. Comput. Linguistics: Hum. Lang.
+Technol., 2015, pp. 42–52.
+[36] Z. Guo, Y . Zhang, C. Su, J. Xu, and H. Isahara, “Character-level depen-
+dency model for joint word segmentation, POS tagging, and dependency
+parsing in chinese,”IEICE Trans. Inf. Syst., vol. E 99.D, no. 1, pp. 257–264,
+2016.
+[37] S. Kurita, D. Kawahara, and S. Kurohashi, “Neural joint model for
+transition-based chinese syntactic analysis,” in Proc. 55th Annu. Meeting
+Assoc. Comput. Linguistics, 2017, pp. 1204–1214.
+[38] H. Zhou, Y . Zhang, Z. Li, and M. Zhang, “Is POS tagging necessary or even
+helpful for neural dependency parsing?,” in Proc. Natural Lang. Process.
+Chin. Comput., 2020, pp. 179–191.
+[39] R. McDonald and J. Nivre, “Analyzing and integrating dependency
+parsers,” Comput. Linguistics, vol. 37, no. 1, pp. 197–230, 2011.
+[40] J. Nivre and R. McDonald, “Integrating graph-based and transition-based
+dependency parsers,” in Proc. Assoc. Comput. Linguistics, 2008, pp. 950–
+958.
+[41] Y . Zhang and J. Nivre, “Transition-based dependency parsing with rich
+non-local features,”Proc. 49th Annu. Meeting Assoc. Comput. Linguistics:
+Hum. Lang. Technol., pp. 188–193, 2011.
+[42] D. Andor et al., “Globally normalized transition-based neural networks,”
+in Proc. Assoc. Comput. Linguistics , 2016, pp. 2442–2452.
+[43] J. Nivre, “An efﬁcient algorithm for projective dependency parsing.” in
+Proc. 8th Int. Conf. Parsing Technol., 2003, pp. 149–160.
+[44] A. Kuncoro, M. Ballesteros, L. Kong, C. Dyer, and N. A. Smith, “Distilling
+an ensemble of greedy dependency parsers into one MST parser,” in Proc.
+Joint Conf. Empirical Methods Natural Lang. Process. , 2016, pp. 1744–
+1753.
+[45] X. Ma and E. Hovy, “Neural probabilistic model for non-projective MST
+parsing,” inProc. Int. Joint Conf. Natural Lang. Process., 2017, pp. 59–69.
+[46] A. Kulmizev, M. de Lhoneux, J. Gontrum, E. Fano, and J. Nivre, “Deep
+contextualized word embeddings in transition-based and graph-based
+dependency parsing–A tale of two parsers revisited,” in Proc. EMNLP-
+IJCNLP, 2019, pp. 2755–2768.
+[47] X. Luo, “A maximum entropy chinese character-based parser,” in Proc.
+Conf. Empirical Methods Natural Lang. Process. , 2003, pp. 192–199.
+[48] M. Zhang, Y . Zhang, W. Che, and T. Liu, “Chinese parsing exploiting
+characters,” inProc. 51st Annu. Meeting Assoc. Comput. Linguistics, 2013,
+pp. 1326–1336.
+Authorized licensed use limited to: Univ of  Calif San Diego. Downloaded on January 31,2026 at 21:16:28 UTC from IEEE Xplore.  Restrictions apply.

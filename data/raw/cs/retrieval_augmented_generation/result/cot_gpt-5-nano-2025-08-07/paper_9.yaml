@@ -1,0 +1,583 @@
+"citations":
+- "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+  "unique_context_marker": "[1]"
+  "block_ids":
+  - 1
+  - 7
+  - 8
+  "intent_labels":
+  - "Research Gap"
+  - "Research Gap"
+  - "Domain Overview"
+  "topic_labels":
+  - "Other Topic"
+  - "Retriever Type"
+  - "Other Topic"
+- "title": "Choppy: Cut Transformer for Ranked List Truncation"
+  "unique_context_marker": "[2]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Retrieval"
+- "title": "The Role of Relevance in Fair Ranking"
+  "unique_context_marker": "[3]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Other Intent"
+  - "Prior Methods"
+  "topic_labels":
+  - "Other Topic"
+  - "Evaluation Aspects and Tools"
+- "title": "EKILA: Synthetic Media Provenance and Attribution for Generative Art"
+  "unique_context_marker": "[4]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Importance of Problem"
+  "topic_labels":
+  - "Retrieval Integration for Generation"
+- "title": "Equity of attention: Amortizing individual fairness in rankings"
+  "unique_context_marker": "[5]"
+  "block_ids":
+  - 1
+  - 4
+  - 7
+  "intent_labels":
+  - "Domain Overview"
+  - "Prior Methods"
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Other Topic"
+  - "Trustworthiness and Robustness"
+  - "Retriever Type"
+- "title": "Attributed question answering: Evaluation and modeling for attributed large language models"
+  "unique_context_marker": "[6]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "A Stochastic Treatment of Learning to Rank Scoring Functions"
+  "unique_context_marker": "[7]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "Fairness in machine learning: A survey"
+  "unique_context_marker": "[8]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "Scaling Instruction-Finetuned Language Models"
+  "unique_context_marker": "[9]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Parameter-Accessible Generators (White-box)"
+- "title": "The Power of Noise: Redefining Retrieval for RAG Systems"
+  "unique_context_marker": "[10]"
+  "block_ids":
+  - 15
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Context Curation and Compression"
+- "title": "Evaluating Stochastic Rankings with Expected Exposure"
+  "unique_context_marker": "[11]"
+  "block_ids":
+  - 1
+  - 4
+  - 5
+  - 7
+  - 8
+  - 11
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  - "Algorithm/Principle Adoption"
+  - "Algorithm/Principle Adoption"
+  - "Metrics Utilization"
+  - "Domain Overview"
+  "topic_labels":
+  - "Other Topic"
+  - "Trustworthiness and Robustness"
+  - "Retriever Type"
+  - "Retriever Type"
+  - "Other Topic"
+  - "Other Topic"
+- "title": "Not Just Algorithms: Strategically Addressing Consumer Impacts in Information Retrieval"
+  "unique_context_marker": "[12]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "Fairness in information access systems"
+  "unique_context_marker": "[13]"
+  "block_ids":
+  - 1
+  - 4
+  "intent_labels":
+  - "Domain Overview"
+  - "Prior Methods"
+  "topic_labels":
+  - "Other Topic"
+  - "Trustworthiness and Robustness"
+- "title": "RAGAs: Automated Evaluation of Retrieval Augmented Generation"
+  "unique_context_marker": "[14]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "From Distillation to Hard Negative Sampling: Making Sparse Neural IR Models More Effective"
+  "unique_context_marker": "[15]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "RARR: Researching and Revising What Language Models Say, Using Language Models"
+  "unique_context_marker": "[16]"
+  "block_ids":
+  - 3
+  - 8
+  "intent_labels":
+  - "Prior Methods"
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+  - "Evaluation Aspects and Tools"
+- "title": "Enabling Large Language Models to Generate Text with Citations"
+  "unique_context_marker": "[17]"
+  "block_ids":
+  - 1
+  - 3
+  - 8
+  "intent_labels":
+  - "Importance of Problem"
+  - "Prior Methods"
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Retrieval Integration for Generation"
+  - "Trustworthiness and Robustness"
+  - "Evaluation Aspects and Tools"
+- "title": "Bayesian inference for Plackett-Luce ranking models"
+  "unique_context_marker": "[18]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "Statistical theory of extreme values and some practical applications: a series of lectures"
+  "unique_context_marker": "[19]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "REALM: Retrieval-Augmented Language Model Pre-Training"
+  "unique_context_marker": "[20]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "retrieval augmented generation"
+- "title": "Never Lost in the Middle: Mastering Long-Context Question Answering with Position-Agnostic Decompositional Training"
+  "unique_context_marker": "[21]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Other Topic"
+- "title": "Foundation Models and Fair Use"
+  "unique_context_marker": "[22]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Importance of Problem"
+  "topic_labels":
+  - "Other Topic"
+- "title": "Fidlight: Efficient and effective retrieval-augmented text generation"
+  "unique_context_marker": "[23]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Context Curation and Compression"
+- "title": "TRUE: Re-evaluating Factual Consistency Evaluation"
+  "unique_context_marker": "[24]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Found in the middle: Calibrating Positional Attent ion Bias Improves Long Context Utilization"
+  "unique_context_marker": "[25]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Other Topic"
+- "title": "Unsupervised Dense Information Retrieval with Contrastive Learning"
+  "unique_context_marker": "[26]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "Atlas: Few-shot learning with retrieval augmented language models"
+  "unique_context_marker": "[27]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "retrieval augmented generation"
+- "title": "Fairness-Aware Exposure Allocation via Adaptive Reranking"
+  "unique_context_marker": "[28]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "Item-side Fairness of Large Language Model-based Recommendation System"
+  "unique_context_marker": "[29]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "NSF workshop on task-based information search systems"
+  "unique_context_marker": "[30]"
+  "block_ids":
+  - 6
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Retrieval"
+- "title": "Generalization through Memorization: Nearest Neighbor Language Models"
+  "unique_context_marker": "[31]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "retrieval augmented generation"
+- "title": "Retrieval-Enhanced Machine Learning: Synthesis and Opportunities"
+  "unique_context_marker": "[32]"
+  "block_ids":
+  - 1
+  - 3
+  - 9
+  "intent_labels":
+  - "Domain Overview"
+  - "Domain Overview"
+  - "Domain Overview"
+  "topic_labels":
+  - "NLP Applications"
+  - "retrieval augmented generation"
+  - "Retriever Type"
+- "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  "unique_context_marker": "[33]"
+  "block_ids":
+  - 1
+  - 3
+  "intent_labels":
+  - "Prior Methods"
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Other Topic"
+  - "retrieval augmented generation"
+- "title": "Lost in the middle: How language models use long contexts"
+  "unique_context_marker": "[34]"
+  "block_ids":
+  - 15
+  - 17
+  "intent_labels":
+  - "Prior Methods"
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Input-Layer Integration"
+  - "Evaluation Aspects and Tools"
+- "title": "Roberta: A robustly optimized bert pretraining approach"
+  "unique_context_marker": "[35]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Resource Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "A Pathway Towards Responsible AI Generated Content"
+  "unique_context_marker": "[36]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Importance of Problem"
+  "topic_labels":
+  - "Other Topic"
+- "title": "The Concrete Distribution: A Continuous Relaxation of Discrete Random Variables"
+  "unique_context_marker": "[37]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "Auditing Search Engines for Differential Satisfaction Across Demographics"
+  "unique_context_marker": "[38]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "Rank-biased precision for measurement of retrieval effectiveness"
+  "unique_context_marker": "[39]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Other Topic"
+- "title": "RAGs to Style: Personalizing LLMs with Style Embeddings"
+  "unique_context_marker": "[40]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "retrieval augmented generation"
+- "title": "Computationally efficient optimization of plackett-luce ranking models for relevance and fairness"
+  "unique_context_marker": "[41]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "Learning-to-rank at the speed of sampling: Plackett-luce gradient estimation with minimal computational complexity"
+  "unique_context_marker": "[42]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "The analysis of permutations"
+  "unique_context_marker": "[43]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Algorithm/Principle Adoption"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "Comparing fair ranking metrics"
+  "unique_context_marker": "[44]"
+  "block_ids":
+  - 4
+  - 8
+  "intent_labels":
+  - "Prior Methods"
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+  - "Other Topic"
+- "title": "Measuring Attribution in Natural Language Generation Models"
+  "unique_context_marker": "[45]"
+  "block_ids":
+  - 8
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"
+- "title": "Okapi at TREC-3"
+  "unique_context_marker": "[46]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "RAGChecker: A Fine-grained Framework for Diagnosing Retrieval-Augmented Generation"
+  "unique_context_marker": "[47]"
+  "block_ids":
+  - 3
+  - 15
+  "intent_labels":
+  - "Metrics Utilization"
+  - "Prior Methods"
+  "topic_labels":
+  - "retrieval augmented generation"
+  - "Training-free Methods"
+- "title": "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems"
+  "unique_context_marker": "[48]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "retrieval augmented generation"
+- "title": "Optimization Methods for Personalizing Large Language Models through Retrieval Augmentation"
+  "unique_context_marker": "[49]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "retrieval augmented generation"
+- "title": "LaMP: When Large Language Models Meet Personalization"
+  "unique_context_marker": "[50]"
+  "block_ids":
+  - 3
+  - 9
+  "intent_labels":
+  - "Domain Overview"
+  - "Benchmark Utilization"
+  "topic_labels":
+  - "retrieval augmented generation"
+  - "Downstream Tasks"
+- "title": "Evaluating retrieval quality in retrieval-augmented generation"
+  "unique_context_marker": "[51]"
+  "block_ids":
+  - 1
+  - 3
+  - 6
+  "intent_labels":
+  - "Metrics Utilization"
+  - "Metrics Utilization"
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Retrieval Quality"
+  - "retrieval augmented generation"
+  - "Evaluation Aspects and Tools"
+- "title": "Quantifying the Impact of User Attention on Fair Group Representation in Ranked Lists"
+  "unique_context_marker": "[52]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "The Notion of Relevance in Information Science: Everybody knows what relevance is. But, what is it really?"
+  "unique_context_marker": "[53]"
+  "block_ids":
+  - 1
+  "intent_labels":
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Retrieval Quality"
+- "title": "FairRAG: Fair Human Generation via Fair Retrieval Augmentation"
+  "unique_context_marker": "[54]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Research Gap"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "Fairness of exposure in rankings"
+  "unique_context_marker": "[55]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "Policy learning for fairness in ranking"
+  "unique_context_marker": "[56]"
+  "block_ids":
+  - 1
+  - 4
+  - 11
+  "intent_labels":
+  - "Domain Overview"
+  - "Prior Methods"
+  - "Domain Overview"
+  "topic_labels":
+  - "Other Topic"
+  - "Trustworthiness and Robustness"
+  - "Other Topic"
+- "title": "UL2: Unifying Language Learning Paradigms"
+  "unique_context_marker": "[57]"
+  "block_ids":
+  - 9
+  "intent_labels":
+  - "Model/Architecture Adoption"
+  "topic_labels":
+  - "Parameter-Accessible Generators (White-box)"
+- "title": "Measuring fairness in ranked outputs"
+  "unique_context_marker": "[58]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "Stochastic RAG: End-to-End Retrieval-Augmented Generation through Expected Utility Maximization"
+  "unique_context_marker": "[59]"
+  "block_ids":
+  - 7
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Retriever Type"
+- "title": "Retrieval-Enhanced Machine Learning"
+  "unique_context_marker": "[60]"
+  "block_ids":
+  - 3
+  "intent_labels":
+  - "Domain Overview"
+  "topic_labels":
+  - "retrieval augmented generation"
+- "title": "Fa*IR: A fair top-k ranking algorithm"
+  "unique_context_marker": "[61]"
+  "block_ids":
+  - 4
+  "intent_labels":
+  - "Prior Methods"
+  "topic_labels":
+  - "Trustworthiness and Robustness"
+- "title": "Are Large Language Models Good at Utility Judgments?"
+  "unique_context_marker": "[62]"
+  "block_ids":
+  - 1
+  - 6
+  "intent_labels":
+  - "Metrics Utilization"
+  - "Metrics Utilization"
+  "topic_labels":
+  - "Retrieval Quality"
+  - "Evaluation Aspects and Tools"
+- "title": "Forcing Diffuse Distributions out of Language Models"
+  "unique_context_marker": "[63]"
+  "block_ids":
+  - 18
+  "intent_labels":
+  - "Background"
+  "topic_labels":
+  - "Evaluation Aspects and Tools"

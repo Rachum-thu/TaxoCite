@@ -85,7 +85,8 @@ Task rules:
 3) Choose the MOST SPECIFIC matching taxonomy NODE for the marker, based on how the cited work is used/described in the current block.
 
 Output fields (critical):
-- analysis: ONE sentence (<= 20 words) summarizing the marker's role/evidence in this block. Do NOT write step-by-step reasoning.
+- analysis: ONE sentence summarizing the marker's role/evidence in this block. Do NOT write step-by-step reasoning. 
+- You can do the analysis from different aspects. e.g., the topic distance between original paper and its citations (feel free to think about others). 
 - label: MUST be the EXACT NAME of ONE taxonomy node (copy the node title verbatim).
   - Output ONLY the node name itself, NOT a path.
   - Valid: "Algorithm/Principle Adoption"

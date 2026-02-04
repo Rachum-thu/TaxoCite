@@ -1,0 +1,721 @@
+title: Context Embeddings for Efficient Answer Generation in RAG
+blocks:
+- block_id: 0
+  content: 'Retrieval-Augmented Generation (RAG) allows overcoming the limited knowledge of LLMs by extending the input with
+    external information. As a consequence, the contextual inputs to the model become much longer which slows down decoding
+    time directly translating to the time a user has to wait for an answer. We address this challenge by presenting COCOM,
+    an effective context compression method, reducing long contexts to only a handful of Context Embeddings speeding up the
+    generation time by a large margin. Our method allows for different compression rates trading off decoding time for answer
+    quality. Compared to earlier methods, COCOM allows for handling multiple contexts more effectively, significantly reducing
+    decoding time for long inputs. Our method demonstrates an inference speed-up of up to 5.69× while achieving higher performance
+    compared to existing efficient context compression methods. Model checkpoints: https://huggingface.co/naver/cocom-v1-128-mistral-7b.'
+  citations: []
+- block_id: 1
+  content: 'Large Language Models (LLMs) are pre-trained on massive amounts of textual data; for instance, Llama 2 [32] has
+    been trained on 3 trillion tokens during pre-training. Through billions of learnable parameters, LLMs not only excel at
+    modeling language but at the same time, build up a knowledge base that could be later used for question answering. On
+    the other hand, the model is limited to the knowledge contained in the pre-training data. In knowledge-intensive scenarios,
+    relying solely on the parametric memory of the model is often insufficient. To alleviate this, context can be provided
+    explicitly from an external source through a preceding retrieval step (Retrieval-Augmented Generation–RAG). Although LLMs
+    show notable improvements when given additional relevant context in knowledge-intensive tasks, this approach has limitations.
+    A key drawback is that adding more context to the input considerably slows down generation during inference. This occurs
+    because the self-attention mechanism in transformers grows exponentially in space and memory requirements with increasing
+    input length. At the same time, previous research has shown providing multiple documents as context can improve RAG performance
+    [10, 12]. This is particularly critical for QA applications where reasoning over context from multiple documents is necessary,
+    such as in multi-doc QA tasks [7, 16, 35]. In fact, the observation that modern transformers can naturally cope with many
+    context documents for answer generation in open domain QA tasks was central to the development of RAG [6, 11]. However,
+    as the input length becomes larger, the position bias in LLMs might further complicate the extraction of relevant information
+    [21].
+
+
+    Previous work has shown that the increased generation time in RAG can be alleviated by reducing the model’s input through
+    context compression. This can be achieved either by applying lexical-based compression, where unimportant terms or tokens
+    in the context are identified and filtered out during generation [13], or by embedding-based compression, where embedding
+    models transform the context into fewer embedding tokens in the LLM input [3, 8, 24, 31]. Notably, state-of-the-art embedding-based
+    compression methods often achieve higher effectiveness and lower latency compared to lexical-based compression methods
+    [3]. However, despite the current embedding-based compression approaches achieving lower latency in RAG systems, several
+    limitations remain:
+
+
+    - Large compressor model: These methods rely on large compression models to achieve high effectiveness, such as [3, 24].
+
+    - Low effectiveness: The effectiveness of current embedding-based compression methods underestimates the potential of
+    LLMs for answer generation, as they only tune parts of model components and leave the decoder LLM untuned. We hypothesize
+    that freezing the decoder hinders the use of compressed contexts.
+
+    - Fixed compression rate: Current methods do not offer different compression rates with respect to the length of input
+    context, allowing to trade of inference time for generation quality at high effectiveness.
+
+    - Single document limitation: Current effective methods only support using a single document context to generate answers.
+
+
+    We address the described limitations, similar to concurrently developed methods, by compressing contexts into a small
+    number of context embeddings which are then provided as input to the LLM. This allows us to reduce the input size to a
+    fraction of its surface form, which leads to an increased decoding time during answer generation. We call our model COCOM
+    (COntext COmpression Model), a multi-context compression method leveraging a single model for context compression and
+    answer generation.
+
+
+    Additionally, we further show that with appropriate pretraining and tuning approaches, our compressing model achieves
+    significantly higher effectiveness than current context compressing approaches. We summarize our contributions as follows:
+
+
+    - We present COCOM, an effective context compression method, reducing long contexts to only a handful of context embeddings
+    speeding up the generation time while achieving higher performance compared to other methods.
+
+    - In an efficiency study, we demonstrate the efficiency-effectiveness trade-offs achievable with different compression
+    rates. We further illustrate the time and memory required for compression. We reduce inference time by up to 5.69 × and
+    GFLOPs by up to 22 × while maintaining high performance.
+
+    - We conduct an ablation to understand which factors are the most important for effective generation and analyze the impact
+    of the pretraining collection, pretraining, fine-tuning, and freezing or not the decoder on the target dataset, and training
+    the decoder.
+
+
+    The rest of this paper is structured in the following way. Section 2 discusses related work on RAG, efficiency, and compression
+    approaches. We continue in Section 3 discussing the RAG task and our novel COCOM approach to effective context compression.
+    Section 4 details the experimental setup in terms of the RAG models and the five QA tasks. In Section 5, we present the
+    main COCOM results in terms of effectiveness and efficiency. Section 6 conducts further analysis of how compression affects
+    the model. We end with discussion and conclusions in Section 7, and limitations in Section 8.'
+  citations:
+  - marker: '[3]'
+    intent_label: Research Gap
+    topic_label: Context Curation and Compression
+  - marker: '[6]'
+    intent_label: Prior Methods
+    topic_label: Input-Layer Integration
+  - marker: '[7]'
+    intent_label: Prospective Application
+    topic_label: NLP Applications
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+  - marker: '[10]'
+    intent_label: Prior Methods
+    topic_label: Input-Layer Integration
+  - marker: '[11]'
+    intent_label: Prior Methods
+    topic_label: Input-Layer Integration
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Input-Layer Integration
+  - marker: '[13]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+  - marker: '[16]'
+    intent_label: Prospective Application
+    topic_label: NLP Applications
+  - marker: '[21]'
+    intent_label: Research Gap
+    topic_label: Scaling and Modality Expansion
+  - marker: '[24]'
+    intent_label: Research Gap
+    topic_label: Context Curation and Compression
+  - marker: '[31]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+  - marker: '[32]'
+    intent_label: Domain Overview
+    topic_label: Parameter-Accessible Generators (White-box)
+  - marker: '[35]'
+    intent_label: Prospective Application
+    topic_label: NLP Applications
+- block_id: 2
+  content: 'In this section, we discuss related work on RAG, efficiency, and compression approaches.
+
+
+    The initial motivation for this work stems from a recent study by Morris et al. [23], which demonstrates that a bag-of-words
+    representation of the original surface terms can be recovered from text embeddings. This observation that embeddings can
+    encapsulate the content of an entire passage inspired the idea to provide context in the form of an embedding rather than
+    the original context in token form to an LLM.
+
+
+    The underlying motivation in the context of RAG to reduce the input size is, as mentioned earlier, due to the computational
+    costs of contextualizing long inputs and as a consequence thereof increased decoding time [1]. We address this by reducing
+    the provided context to only a handful of context embeddings that are provided the LLM head-on.
+
+
+    Reducing the input to RAG models is a very active research field, with many works being done concurrently with ours. Among
+    those works, two primary lines of research have emerged: embedding-based and lexical-based context compression. We discuss
+    them in the following.'
+  citations:
+  - marker: '[1]'
+    intent_label: Importance of Problem
+    topic_label: Scaling and Modality Expansion
+  - marker: '[23]'
+    intent_label: Domain Overview
+    topic_label: Context Curation and Compression
+- block_id: 3
+  content: 'Lexical-based compression focuses on either selecting tokens from the context [20] or summarizing contexts [33],
+    both aiming to retain essential information while reducing overall context size. LLMLingua comprises a query-independent
+    token filtering module that uses a LLM to first select important tokens in the context. Then, a query-dependent token
+    classifier is used to select tokens to form the compressed context.
+
+
+    On the other hand, Zhu et al. [36] do not consider compression at the term level, but at the document level. Retrieved
+    documents are either included or excluded with respect to the query. Only the included documents form the context for
+    answer generation. It is worth noting that current lexical-based compression approaches all rely on specific query inputs.
+    Therefore, compression needs to be (partially) processed online not allowing to compress documents offline, slowing down
+    generation time.'
+  citations:
+  - marker: '[20]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+  - marker: '[33]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+  - marker: '[36]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+- block_id: 4
+  content: 'Embedding-based compression approaches focus on compressing the context into one or multiple summary embeddings
+    that can be directly interpreted by the decoder model. This first work of this line is called AutoCompressor [4]. This
+    approach attempts to compress contextual information by segmenting it into randomly segmented chunks, subsequently aggregating
+    these into summary embeddings through an iterative process until target embedding size is met. However, the training of
+    the summary embeddings relies exclusively on next token prediction tasks, raising concerns about their ability to effectively
+    encapsulate relevant contextual data. Furthermore, AutoCompressor is designed primarily for long contexts, generating
+    a minimum of 50 summary embeddings. Such a configuration is not suitable for common RAG pipelines where short passages
+    are retrieved, such as KILT.
+
+
+    Building up on AutoCompressor, ICAE by Ge et al. [8] explores training a context compressor using the same LLM as the
+    decoder model, and compress only once to get the summary embeddings. However, their approach limits the model’s capacity
+    by using a frozen decoder module, preventing the accumulation of gradients from the decoder part during training. In this
+    paper, we argue that decoder training is an important factor that strongly impacts the performance of the model. We illustrate
+    this argument in Section 4.2.1.
+
+
+    Furthermore, GridLM Muennighoff et al. [24] addresses the issue of double decoding the same context first for retrieval
+    and then again as the provided context to the LLM. They use the same LLM for ranking and generation which allows them
+    to cache all representations during encoding the contexts and to reuse them during generation. This approach compared
+    to ours is limited to only a single context, does not speed up decoding time, and results in gigantic storage requirements.
+
+
+    Cheng et al. [3] propose xRAG concurrently to our method. They directly reuse frozen ranking representations based on
+    embedding models while freezing the decoder. Although this approach successfully resolves the double decoding problem,
+    it suffers from low effectiveness because the representation is not trained prior to its application to compression tasks.
+    This issue becomes particularly challenging when light-weight encoder models, such as DPR with 109 million parameters,
+    are used as compressors. In such cases, the model achieves similar effectiveness to the Mistral-7b model when retrieval
+    is not applied. On the other hand, using retrieval representations from lightweight models for compression is counter-intuitive.
+    Representations gathered from retrieval tasks may lack sufficient information to fully recover the context. Conversely,
+    representation learned for compression demonstrate its capacity to reconstruct the original context [8]. This suggest
+    that, upon further adjustment, it may show a higher potential to serve as an effective retriever.'
+  citations:
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+  - marker: '[4]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+  - marker: '[8]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+  - marker: '[24]'
+    intent_label: Prior Methods
+    topic_label: Intermediate-Layer Integration
+- block_id: 5
+  content: 'Most previous works mentioned so far have only considered cases that may not directly apply to RAG settings but
+    rather to long-context question answering. In their setting, only one relevant document is used for each query to fulfill
+    the user request.
+
+
+    Therefore, such models are not naturally able to deal with effectively multiple documents. Furthermore, their reported
+    effectiveness may not directly indicate the final performance in RAG systems, where the document may be potentially irrelevant,
+    and often multiple top-retrieved documents are used. As a decoder model, by design, should be able to handle multiple
+    context representations, we argue that fine-tuning the decoder is a simple yet necessary solution compared to existing
+    works.'
+  citations: []
+- block_id: 6
+  content: ''
+  citations: []
+- block_id: 7
+  content: 'RAG employs a ranking system R and a parametric generative language model θ_LLM, where the ranking system can
+    be multi-staged. First, the ranking system builds a search index I based on a collection. Then, at request time, the index
+    I is searched yielding context segments C that are relevant to the user input x: f_{I,R}: {x} → C.
+
+
+    Next, the LLM generates a response r based on the context C and user input x: θ_LLM: {C, x} → r.
+
+
+    Note how in RAG the context is added to the input of the LLM dramatically increasing the input to the LLM, as |C| ≫ |x|.'
+  citations: []
+- block_id: 8
+  content: 'The main idea of COCOM is to enhance efficiency by compressing the context, which is typically given in surface
+    form as input tokens into a smaller set of context embeddings which then serve as the input to the LLM. Given a context
+    C tokenized into a sequence of tokens {t1, t2, ..., tn}, a compressor model φ_comp, we compress C into context embeddings
+    E, a smaller set of embeddings {e1, e2, ..., ek}, where k ≪ n. Each embedding ei ∈ R^d, with d being the LLM’s hidden
+    dimension.
+
+
+    φ_comp: {t1, t2, ..., tn} → {e1, e2, ..., ek} ∈ R^d
+
+
+    Next, based on the compressed context embeddings E and the user input x the LLM φ_LLM generates a response r:
+
+
+    θ_LLM: {E, x} → r
+
+
+    The φ_comp model is trained to generate context embeddings that capture the content of the input tokens in a compressed
+    form. As both models are trained jointly, θ_LLM learns to decode these context embeddings, extracting the relevant information
+    required to answer user queries.
+
+
+    COCOM compresses the context-embeddings question independently. This means not only do individual contexts have to be
+    contextualized by an LLM only once, but they can also be pre-computed offline and stored, drastically reducing computational
+    costs of the LLM at inference time. Further, by only feeding a small number of context embeddings instead of the long
+    context, the input size is reduced to a fraction leading to a massive speed-up for answer generation.
+
+
+    For COCOM, we utilize the same model for compression and answer generation φ_comp = θ_LLM. Therefore, we effectively train
+    a single model on the two tasks. For the compression task, we prepend a special token <AE> to the input and depending
+    on ξ append a different number of context embedding tokens <CTX> at the end of the sequence. We directly use the representations
+    of the last hidden layer as our context embeddings as input to the same model for the answer generation.
+
+
+    As demonstrated later in the experiments, our method also allows us to potentially employ any embedding model as a compressor;
+    including more lightweight encoder-only models such as BERT.
+
+
+    #### 3.2.1 Adaptable Compression Rate
+
+    The number of context embeddings k = |E| can be varied and allows to control the level of compression of the original
+    context C = {t1, ..., tn}. We calculate the number of context embeddings ξ per context C based on a compression rate ξ,
+    and the length of the tokenized input n = |C|:
+
+
+    ξ = ceil(n / ξ)
+
+
+    For instance, when compressing a context with length n = 128 with a compression rate ξ = 64 we obtain 2 context embeddings,
+    reducing the input by 64 times.
+
+
+    #### 3.2.2 Multiple Contexts
+
+    Knowledge-intensive tasks can benefit from providing the context of multiple retrieved passages [10, 12], especially where
+    reasoning over multiple contexts is necessary to solve the task [7, 16, 35]. In classical RAG the contexts of multiple
+    passages are concatenated and provided to the model. Similarly in COCOM we can provide context embeddings of multiple
+    passages to the LLM. Contexts are compressed independently following Equation 2. We add [SEP] special tokens between the
+    context embeddings before feeding them to the LLM to distinguish context stemming from different passages in the input.'
+  citations:
+  - marker: '[7]'
+    intent_label: Domain Overview
+    topic_label: NLP Applications
+  - marker: '[10]'
+    intent_label: Prior Methods
+    topic_label: Input-Layer Integration
+  - marker: '[12]'
+    intent_label: Prior Methods
+    topic_label: Input-Layer Integration
+  - marker: '[16]'
+    intent_label: Domain Overview
+    topic_label: NLP Applications
+  - marker: '[35]'
+    intent_label: Domain Overview
+    topic_label: NLP Applications
+- block_id: 9
+  content: 'We propose two auto-regressive variations of the next-token prediction task to learn to compress context into
+    context embeddings and to use these context embeddings as input to the LLM.
+
+
+    Following our earlier notation, the objective function for the standard next token prediction for input X = {x1, x2, ...,
+    x_T} can be written as:
+
+
+    L(θ_LLM) = - ∑_{x_t ∈ X} log P_{θ_LLM}(x_t | x1, x2, ..., x_{t-1})
+
+
+    #### 3.3.1 Auto-encoding with Context Embeddings
+
+    We modify the next token prediction task to recover the original input tokens from the compressed context embeddings E.
+    This way we jointly train the compressor and LLM to decompress the original input which can be seen as a form of auto-encoding.
+
+
+    E = φ_comp(x1, x2, ..., x_T)
+
+
+    L(θ_LLM, φ_comp) = - ∑_{x_t ∈ X} log P_{θ_LLM}(x_t | E, x1, ..., x_{t-1})
+
+
+    This task serves as a preliminary step toward our final objective of answering questions from context embeddings. For
+    this objective, we first aim to learn to compress and decompress the same input effectively.
+
+
+    #### 3.3.2 Language Modeling from Context Embeddings
+
+    Our final task is to answer questions based on the context embeddings. To this end, in our language modeling task, we
+    train the model to continue a given input conditioned on context embeddings. This way the model learns not only to compress
+    a given input but also to leverage the content of the context embeddings effectively.
+
+
+    We split input X = {x1, x2, ..., x_T} into X_A = {x1, x2, ..., x_j} and X_B = {x_{j+1}, ..., x_T}. After compressing the
+    first part X_A into E_A we learn to generate the continuation - namely the second part X_B - based on the compressed representations
+    E_A = φ_comp(X_A). This can be seen as a variation of the next token prediction task but conditioned on context embeddings.
+
+
+    L(θ_LLM, φ_comp) = - ∑_{x_t ∈ X_B} log P_{θ_LLM}(x_t | φ_comp(X_A), x1, ..., x_{t-1})
+
+
+    This language modeling task is complementary to the auto-encoding task. If we would only employ the auto-encoding from
+    context embeddings task the LLM would be biased towards only recovering the original input, instead of leveraging the
+    content of the context embeddings.'
+  citations: []
+- block_id: 10
+  content: 'For the downstream RAG application, we fine-tune the model on a question q, relevant context(s) retrieved by a
+    retrieval system and compressed into context embeddings E, which are combined into an instruction I_{q,E}. We train the
+    LLM to generate the target response R = (r1, r2, ..., r_T). We fine-tune our models on a combined set of publicly available
+    QA datasets. We employ instruction fine-tuning only updating the models based on the target responses.
+
+
+    L(θ_LLM, φ_comp) = - ∑_{r_t ∈ R} log P_{θ_LLM}(r_t | I_{E,q}, r1, r2, ..., r_{t-1})'
+  citations: []
+- block_id: 11
+  content: ''
+  citations: []
+- block_id: 12
+  content: 'We use Mistral-7B-Instruct-v0.2 as our backbone LLM for answer generation. For context compression in COCOM, we
+    utilize the same model. For our more light-weight context compression, in COCOM-light, we employ bert-base-uncased. We
+    apply three different compression rates: ξ = 1, 16, 128. We employ SPLADE-v3 [18] with reranking top-50 using DeBERTa-v3
+    [9] as our retrieval system. For all our experiments we use top-5 documents as context. We release our strongest model
+    checkpoints on Huggingface.'
+  citations:
+  - marker: '[9]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Indexing and Query Optimization
+  - marker: '[18]'
+    intent_label: Model/Architecture Adoption
+    topic_label: Retriever Type
+- block_id: 13
+  content: 'For both pre-training and fine-tuning, we apply parameter-efficient LoRA tuning.
+
+
+    #### 4.2.1 Pre-training
+
+    For our pre-training, we employ the two earlier-mentioned pre-training autoencoding and language modeling tasks. Samples
+    are drawn randomly with equal probability from both tasks. We tried different ratios but found this to perform best. To
+    ensure efficient batch processing, which requires that every sample in a batch contains a fixed-length tokenized input,
+    we split the Wikipedia-KILT [27] corpus into chunks of 128 tokens using the Llama-2-7b tokenizer. We pre-train on in total
+    10m samples.
+
+
+    #### 4.2.2 Fine-tuning
+
+    The BERGEN library [29] is used to fine-tune the model. We fine-tune our models on various datasets concurrently. To construct
+    our fine-tuning dataset, we combine training samples from Natural Questions [17], MS MARCO [25], adversarial QA [2], HotpotQA
+    [35], WikiQA [34], SCIQ [15], ASQA [30], TriviaQA [16], Freebase QA [14] and SQuAD [28] - all of which are for question
+    answering. Then we filter out queries with more than 128 tokens and labels of more than 64 tokens.'
+  citations:
+  - marker: '[2]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[14]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[15]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[16]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[17]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[25]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[27]'
+    intent_label: Resource Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[28]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[29]'
+    intent_label: Resource Utilization
+    topic_label: Independent Training
+  - marker: '[30]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[34]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+  - marker: '[35]'
+    intent_label: Resource Utilization
+    topic_label: NLP Applications
+- block_id: 14
+  content: 'We evaluate our model on several widely used QA datasets: Natural Questions [17], TriviaQA [16], HotpotQA [35],
+    ASQA [30], and PopQA [22].
+
+
+    #### 4.3.1 Metrics
+
+    As our main metric, following the standard protocol to evaluate fine-tuned models we use Exact Match (EM). To compare
+    our results to previous works, which partially rely on untuned decoders and therefore produce verbose answers, we revert
+    to the Match metric (M), which indicates whether the label is contained (as an exact match) in the generated answer.'
+  citations:
+  - marker: '[16]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[17]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[22]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[30]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation Aspects and Tools
+  - marker: '[35]'
+    intent_label: Benchmark Utilization
+    topic_label: Evaluation Aspects and Tools
+- block_id: 15
+  content: 'We fine-tune the base model (Mistral-7B-Instruct-v0.2):
+
+
+    - RAG - upper bound. The model receives the top-5 retrieved contexts, alongside the query and answers the question. This
+    model serves as an upper bound in our experiment not applying context compression.
+
+    - Closed Book - lower bound (w/o RAG). The LLM generates an answer based on the query without any provided context. This
+    serves as a lower-bound baseline.'
+  citations: []
+- block_id: 16
+  content: 'We compare our models to the context compression methods mentioned below. As mentioned earlier these models tune
+    only parts of their model components on the downstream data but leave their decoder LLM untuned applying it zero-shot.
+    We argue this to be a major limitation, as answering questions from context embeddings differs fundamentally from the
+    standard language modeling hindering the model to effectively leverage the context embeddings. To ensure comparability
+    among approaches we use the same retrieval system as mentioned earlier in Section 4.1.
+
+
+    - AutoCompressor [4]: We use the princeton-nlp/AutoCompressor-Llama-2-7b-6k checkpoint producing 50 summary vectors. As
+    their model is limited to compressing one single context, we just use the top retrieved document as context.
+
+    - ICAE [8]: We use the Mistral-7B-Instruct-v0.2 LoRa-checkpoint which uses the same base LLM as ours and is therefore
+    directly comparable. ICAE is fine-tuned to compress a single long context, however, in our work we use multiple contexts.
+    To alleviate this we concatenate the top five retrieved contexts together as the context input for the model and truncate
+    as the maximum length of 512 tokens. Note the model has a maximum output length of 128 compressed tokens, which approximately
+    indicates a compression rate of 4 from its original concatenated context input.
+
+    - xRAG [3]: We utilize the xRAG-7b, and Mixtral-8x7B mixture-of-experts model alongside their strongest SFR compressor.
+    The base model is again the same as ours, to ensure comparability. As their model is limited to compressing only a single
+    context into a single compressed representation, we use the top retrieved context for the xRAG setting. Again, their compressed
+    representations stem from their dense retriever and are only adapted to the task through a simple linear projection which
+    might limit the model its ability to compress contexts effectively. We apply their predefined stopping criteria for answer
+    generation, which aims at cutting the verbose nature of a untuned decoder LLM.'
+  citations:
+  - marker: '[3]'
+    intent_label: Result Comparison
+    topic_label: Context Curation and Compression
+  - marker: '[4]'
+    intent_label: Result Comparison
+    topic_label: Context Curation and Compression
+  - marker: '[8]'
+    intent_label: Result Comparison
+    topic_label: Context Curation and Compression
+- block_id: 17
+  content: ''
+  citations: []
+- block_id: 18
+  content: 'The main results for COCOM are measured in Exact Match (EM). Compared to existing context compression methods,
+    our approach demonstrates a significantly higher effectiveness across different compression rates for all datasets tested.
+    COCOM even outperforms the much stronger xRAG Mixtral-8x7B model by a large margin having 8 times more parameters than
+    COCOM. The highest performance is observed at a low compression rate (ξ = 4). Increasing the compression rate results
+    in a slight performance decline, which we will analyze further in Section 6.1.
+
+
+    Compared to our upper bound baseline RAG without compression, we reduce the context by up to 128 times while still maintaining
+    relatively high performance on average over datasets. Performance decreases on average 4 points for our strongest model
+    (COCOM ξ = 4) and 10 points for the highest compression rate (COCOM ξ = 128). Compared to the lower bound baseline LLM
+    without provided context we gain up to 17 points, adding only a small number of additional context embeddings to the input.
+
+
+    Note, while EM is a standard metric for evaluating tuned models, it might underestimate zero-shot decoder methods that
+    do not adapt the decoder to generate answers. To address this, we also provide results using the Match metric in the appendix.
+    Although models that do not tune their decoder achieve relatively higher performance when measured in Match, our method’s
+    effectiveness compared to other methods still remains consistently significantly higher.
+
+
+    Overall, considering the effectiveness and the efficiency gains from context compression (discussed further in Section
+    5.3), COCOM shows a very favorable trade-off.'
+  citations: []
+- block_id: 19
+  content: 'Even though context compression has to be done only once offline, using a very large LLM can be costly, especially
+    in resource-constraint settings. To this end, we propose COCOM-light, a computationally efficient context compression
+    model based on BERT as a context compressor.
+
+
+    To alleviate the dimensional mismatch between the bert-based compressor and the - typically larger - LLM, we learn a linear
+    projection layer W_{ξb × d}, where ξ is the compression rate, b is the hidden dimension of BERT, and d the hidden dimension
+    of the LLM. To obtain a set of Context Embeddings we leverage the last hidden representation of each input token. We simply
+    split the hidden representations into blocks of length ξ and project each block into a single Context Embedding. This
+    way, we learn a block-wise aggregation of the input representations that depending on the input length, and the compression
+    rate ξ yields a different number of Context Embeddings per input. Note that a similar approach is applied in xRAG, where
+    a projection layer is used on the embedding vector to resolve the dimensional mismatch. However, we argue that compressing
+    using a single vector embedding could significantly restrict the compression quality, especially when using lightweight
+    encoder models such as BERT. This restriction can result in much lower effectiveness compared to using a larger embedding
+    model [3].
+
+
+    We find that while being highly effective for small compression rates, performance drops considerably for the highest
+    compression rate of ξ = 128. COCOM-light, compared to other methods, poses an effective alternative to its bigger counterpart
+    COCOM in resource-constrained settings.'
+  citations:
+  - marker: '[3]'
+    intent_label: Prior Methods
+    topic_label: Context Curation and Compression
+- block_id: 20
+  content: 'We measure efficiency in answer generation time (ms), maximum GPU memory (GB), and number of operations per generated
+    token (Giga FLOPs) using the torch profiler. We run the experiments on a single A100 40GB with a fixed batch size of 16.
+    We load the model in half-precision and use the PyTorch inference mode. We discard the first warm-up batch from the measurement
+    and measure the bare forward pass of the model. Note decoding results are independent of the compressor, therefore COCOM
+    and COCOM-light share efficiency results.
+
+
+    Context compression with COCOM reduces answer generation time, GPU memory, and the number of operations drastically with
+    up to 5.69 × less inference time cost, 1.27 × GPU memory, and 22 × GFLOPs compared to no compression.
+
+
+    Compression costs for all documents in the kilt-100w (24m contexts) collection using COCOM-light models at various compression
+    rates show that COCOM-light models demonstrate significantly faster compression speeds compared to the COCOM model by
+    employing a much computationally lighter compressing module (up to 89 ×). Index size varies inversely with compression
+    rate: higher compression rates result in smaller index storage requirements. However, this trade-off leads to lower quality
+    in answer generation.'
+  citations: []
+- block_id: 21
+  content: 'We run additional ablation experiments for COCOM and COCOM-light. Results are reported in Exact Match on two datasets
+    (NQ and ASQA).
+
+
+    #### 5.4.1 Handling multiple contexts
+
+    We compare the performance of COCOM with 1 retrieved context (k = 1) versus our default setup k = 5. On both datasets
+    and for all compression rates, we observe a substantial gain when using more contexts. Moreover, COCOM with 1 retrieved
+    context is still significantly better compared to other baselines relying on single retrieved document (ICAE, xRAG). As
+    a decoder model by design should be able to handle multiple context representations, we argue that fine-tuning the decoder
+    is a simple yet necessary solution compared to existing works.
+
+
+    #### 5.4.2 Pre-training Context Compression
+
+    Central to our approach is the compression of context into a small number of Context Embeddings. We argue that context
+    compression fundamentally differs from the language modeling objective on which the model was originally trained. Consequently,
+    we have employed auto-encoding and language-modeling-from-context-embedding tasks to learn how to effectively compress
+    the context and utilize these compressed representations during decoding. The results of the impact of the pre-training
+    tasks on the downstream performance after fine-tuning suggest that the dedicated pre-training tasks for context compression
+    can improve performance for downstream QA performance, suggesting two possible explanations. Either context compression
+    is too complex to be learned concurrently with the downstream task, or larger fine-tuning datasets are necessary to effectively
+    learn how to compress contexts.
+
+
+    #### 5.4.3 Pre-training Corpus
+
+    Our method employs an initial pre-training step aimed at initializing context compression. We train auto-regressively
+    on the same target corpus, which is later used to retrieve relevant contexts. We assess how variations in the pre-training
+    corpus impact downstream QA performance, thereby testing the robustness of our approach. To explore this, we additionally
+    pre-train the model on the "sample-10BT" subset of Fine-Web [26]. We employ the same training methodology described in
+    Section 4.2.1, where we segment the collection into non-overlapping passages of 128 tokens using the Llama-2-7b tokenizer
+    and train on a subset of 10 million tokens, similar to the target corpus. The results indicate a slight decrease in performance
+    when using a different target corpus for pre-training. Nonetheless, our approach demonstrates robustness in handling variations
+    in the pre-training corpus, highlighting its adaptability and effectiveness in context compression.
+
+
+    #### 5.4.4 Decoder LLM Tuning
+
+    Existing context compression methods tune only the compression module while keeping the decoder, responsible for generating
+    the answer, frozen. A core distinction from these methods is that we tune all components including the decoder in COCOM.
+    We hypothesize that context embeddings differ significantly from the input token embeddings the model was trained on,
+    thereby hindering effective utilization without dedicated tuning. We investigate the consequences of freezing the decoder
+    and solely tuning the compressor, akin to existing methods. Our findings show the criticality of tuning the decoder to
+    achieve high effectiveness. This reinforces our hypothesis that specific tuning of context embeddings seems essential
+    for better performances.
+
+
+    #### 5.4.5 Fine-tuning Data
+
+    In our experiments, we fine-tune our models simultaneously on multiple QA datasets before evaluating them on individual
+    datasets. We explore the impact of this multi-dataset fine-tuning compared to training on a single dataset. Specifically,
+    we fine-tune and evaluate our models on NQ (Natural Questions). For assessing transferability, we also conduct zero-shot
+    evaluations on other datasets. We find that fine-tuning solely on a single dataset, such as NQ, leads to slightly higher
+    performance on that specific dataset. However, training on multiple datasets demonstrates superior transferability across
+    all datasets, resulting in better average performance overall.'
+  citations:
+  - marker: '[26]'
+    intent_label: Resource Utilization
+    topic_label: Sequential Training
+- block_id: 22
+  content: ''
+  citations: []
+- block_id: 23
+  content: 'We observe a decline in performance with higher compression rates, particularly for the light-weight compressor
+    in COCOM-light. To investigate potential reasons for this drop, we assess the model’s ability to perform the two pre-training
+    tasks: (i) compressing and decompressing input (auto-encoding) and (ii) language modeling from compressed representations
+    after pre-training.
+
+
+    Both the full and lightweight models effectively master the auto-encoding task at lower compression factors (ξ = 4, 16).
+    However, they exhibit significant difficulties in reconstructing the input when the compression ratio increases (ξ = 128).
+    This problem is notably more pronounced in our decoder-based compression model (COCOM). We identify two possible explanations:
+    First, compressing longer contexts into fewer embeddings inherently presents a challenge due to the inevitable information
+    loss at higher compression rates. Second, the dimension of linear projection layers in the COCOM-light model is dependent
+    on the compression rate; thus, a higher compression rate results in an increased parameter count within its linear layer
+    to manage context compression. In contrast, the COCOM model employs LoRA tuning, where the size of the components is not
+    dependent on the compression rate. This fundamental difference in handling compression may explain why the COCOM-light
+    model could potentially achieve higher effectiveness under conditions of high compression, due to its higher parameter
+    count.
+
+
+    In terms of the second pre-training task, our results indicate that COCOM consistently outperforms COCOM-light, this finding
+    also correlates to the final effectiveness of question-answering tasks.'
+  citations: []
+- block_id: 24
+  content: 'We investigate the answers generated with different models. For this, we randomly select a query from the NQ dataset
+    and compare the responses generated by each method.
+
+
+    From the responses, we observe that without RAG, the LLM tends to hallucinate and provide an irrelevant name as an answer.
+    On the other hand, xRAG understands the question but returns an incorrect named entity, likely due to limitations in reading
+    compressed embeddings accurately. ICAE struggles to comprehend the question, resulting in an unreasonable answer. Both
+    COCOM and COCOM-light successfully answer the question correctly at a compression rate of 4. However, they encounter difficulties
+    when the compression rate is increased to 128.
+
+
+    It is also worth noting that the xRAG response was intentionally truncated to a maximum of 30 tokens in its original publication,
+    with the stopping criteria involving halting at punctuation mark such as periods, commas, and colons.'
+  citations: []
+- block_id: 25
+  content: 'In this paper, we presented our novel COCOM approach for context compression. Our main finding is that COCOM accelerates
+    answer generation by reducing the model’s input, by compressing multiple contexts into context embeddings that, once pre-computed,
+    serve to augment the answer generation.
+
+
+    Our approach maximizes the potential of the LLM by tuning all components outperforming existing methods for context compression
+    in RAG. By offering a trade-off between efficiency and effectiveness, our method allows for the selection of varying numbers
+    of context compression tokens. This flexibility enables us to balance higher answer quality against faster generation
+    times as needed. Unlike previous methods, our approach allows for the input of multiple contexts, which enhances generation
+    quality and optimally makes use of the reduced decoding time. This is because only for very long inputs, the distinction
+    between the context in token form and a reduced set of embeddings becomes most apparent.
+
+
+    We hope that our work will inspire further research in context compression and pave the way for efficient and effective
+    deployment of Retrieval-Augmented Generation (RAG) models in real-world applications.'
+  citations: []
+- block_id: 26
+  content: 'We end this paper by discussing the remaining limitations of our model and of our experiments.
+
+
+    Our approach offers great potential to reduce the computational footprint of RAG. However, in our experiments we were
+    constrained by computational resources, which limits us to utilizing a relatively small model of 7 billion parameters.
+    This constraint prevents us from exploring the capabilities of larger models such as LLaMA-70B or Mixtral-7x8B, which
+    might offer enhanced performance but require significant computational power for training and inference.
+
+
+    Our approach demonstrates the potential to leverage a much larger set of documents compared to non-compressed models,
+    leading to notable efficiency gains. These gains are particularly evident when dealing with a substantial volume of documents.
+    However, due to resource limitations, our experiments have been restricted to only 5 documents. This limited scope may
+    not fully reflect the method’s effectiveness when scaled to larger document collections, where the benefits could be more
+    pronounced.
+
+
+    Additionally, the evaluation of our method has been conducted exclusively on Question Answering (QA) tasks and using English
+    corpora. A more comprehensive assessment, encompassing diverse tasks and multilingual datasets, would be necessary to
+    thoroughly understand the model’s capabilities and limitations in different scenarios.'
+  citations: []
