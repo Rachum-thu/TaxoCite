@@ -36,16 +36,6 @@ Example:
 
 No additional metadata file is required (PDFs only).
 
-## 4) Paper format requirement (critical for later annotation)
-When selecting the ~10 non-survey papers, strongly prefer papers whose **in-text citation markers** correspond cleanly to the **reference list entries**, without requiring hyperlink navigation.
-
-Preferred:
-- PDFs where in-text citation makrs map directly to bibliography index (e.g., ACM templates):
-  - In-text `[12]` maps directly to reference entry `[12]`.
-
-Avoid (when possible):
-- PDFs where in-text markers do not map 1:1 to reference list entries unless you click hyperlinks (some ACL-style formats), since this makes annotation substantially harder and may force changes to downstream prompts/workflows.
-
 # Automatic Construction + Manual Review (Internal)
 
 This section describes the fully automated construction pipeline (triggered by one shell script) and the required manual spot-checks to verify the outputs are usable.
