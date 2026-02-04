@@ -133,13 +133,13 @@ blocks:
     topic_label: Image-Level Understanding
   - marker: '[4]'
     intent_label: Prospective Application
-    topic_label: Other Topics
+    topic_label: Object-Level Understanding
   - marker: '[5]'
-    intent_label: Problem Formulation
-    topic_label: Other Topics
+    intent_label: Prior Methods
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[6]'
-    intent_label: Research Gap
-    topic_label: Other Topics
+    intent_label: Prior Methods
+    topic_label: Image-Level Understanding
   - marker: '[7]'
     intent_label: Prior Methods
     topic_label: Image-Level Understanding
@@ -157,28 +157,28 @@ blocks:
     topic_label: Image-Level Understanding
   - marker: '[12]'
     intent_label: Prior Methods
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[13]'
     intent_label: Prior Methods
-    topic_label: Object/Region-Level Grounding and Referring
+    topic_label: Object-Level Understanding
   - marker: '[14]'
     intent_label: Prior Methods
     topic_label: Pixel-Level and Dense Outputs
   - marker: '[15]'
     intent_label: Prior Methods
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[16]'
     intent_label: Prior Methods
     topic_label: Pixel-Level and Dense Outputs
   - marker: '[17]'
     intent_label: Prior Methods
-    topic_label: Visual Grounding Corpora and Geometry Labels
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[18]'
     intent_label: Prior Methods
     topic_label: Pixel-Level and Dense Outputs
   - marker: '[19]'
     intent_label: Prior Methods
-    topic_label: Object/Region-Level Grounding and Referring
+    topic_label: Object-Level Understanding
   - marker: '[20]'
     intent_label: Prior Methods
     topic_label: Pixel-Level and Dense Outputs
@@ -190,28 +190,28 @@ blocks:
     topic_label: Image-Level Understanding
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: Contrastive Alignment Objectives
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[24]'
     intent_label: Domain Overview
     topic_label: Other Topics
   - marker: '[25]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Language-Conditioned or Semantic Fusion
   - marker: '[26]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[27]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Language-Conditioned or Semantic Fusion
   - marker: '[28]'
     intent_label: Research Gap
-    topic_label: Cross-Sensor and Cross-Region Transfer
+    topic_label: Domain Shift and Data Scarcity Effects
   - marker: '[29]'
     intent_label: Prospective Application
-    topic_label: Cross-Sensor and Cross-Region Transfer
+    topic_label: Other Topics
   - marker: '[30]'
     intent_label: Research Gap
-    topic_label: Cross-Sensor and Cross-Region Transfer
+    topic_label: Domain Shift and Data Scarcity Effects
 - block_id: 2
   content: ''
   citations: []
@@ -305,7 +305,7 @@ blocks:
   citations:
   - marker: '[31]'
     intent_label: Prior Methods
-    topic_label: Rule-Based and OSM-Derived QA Pairs
+    topic_label: Synthetic and Simulated RS Imagery
 - block_id: 4
   content: "Following the method presented in subsection II-A, we construct two datasets with different characteristics.\n\
     \nLow resolution (LR): this dataset is based on Sentinel-2 images acquired over the Netherlands. Sentinel-2 satellites\
@@ -375,14 +375,14 @@ blocks:
   citations:
   - marker: '[4]'
     intent_label: Research Gap
-    topic_label: Rule-Based and OSM-Derived QA Pairs
+    topic_label: Manual Expert or Crowdsourced Annotation
 - block_id: 6
   content: 'We investigate the difficulty of the VQA task for remote sensing using a basic VQA model based on deep learning.
     In their simple form, VQA models are composed of three parts [24]:'
   citations:
   - marker: '[24]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Feature-Level and Representation Fusion
 - block_id: 7
   content: 'The first component of our VQA model is the feature extraction. Its purpose is to obtain a low-dimensional representation
     of the information contained in the image and the question.
@@ -451,7 +451,7 @@ blocks:
   citations:
   - marker: '[37]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Other Topics
+    topic_label: Training and Adaptation Regimes
 - block_id: 11
   content: 'We report the results obtained by our model on the test sets of the LR and HR datasets. In both cases, 3 model
     runs have been trained and we report both the average and the standard deviation of our results to limit the variability
@@ -567,22 +567,22 @@ blocks:
   citations:
   - marker: '[5]'
     intent_label: Prior Methods
-    topic_label: Instruction-Following Conversational Sets
+    topic_label: Manual Expert or Crowdsourced Annotation
   - marker: '[33]'
-    intent_label: Domain Overview
-    topic_label: Small Object Density and Counting Challenges
+    intent_label: Prior Methods
+    topic_label: Output Consistency and Error Characteristics
   - marker: '[38]'
-    intent_label: Domain Overview
-    topic_label: Small Object Density and Counting Challenges
+    intent_label: Prior Methods
+    topic_label: Output Consistency and Error Characteristics
   - marker: '[39]'
     intent_label: Domain Overview
-    topic_label: Cross-Sensor and Cross-Region Transfer
+    topic_label: Domain Shift and Data Scarcity Effects
   - marker: '[40]'
     intent_label: Prior Methods
-    topic_label: Cross-Sensor and Cross-Region Transfer
+    topic_label: Domain Shift and Data Scarcity Effects
   - marker: '[41]'
-    intent_label: Domain Overview
-    topic_label: Bias Analysis and Error Taxonomies
+    intent_label: Prior Methods
+    topic_label: Bias and Fairness Considerations
 - block_id: 12
   content: 'We introduce the task of Visual Question Answering from remote sensing images as a generic and accessible way
     of extracting information from remotely sensed data. We present a method for building datasets for VQA, which can be extended
@@ -604,7 +604,7 @@ blocks:
   citations:
   - marker: '[24]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Language-Conditioned or Semantic Fusion
   - marker: '[33]'
     intent_label: Prior Methods
-    topic_label: Small Object Density and Counting Challenges
+    topic_label: Answer Space Constraints

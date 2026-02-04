@@ -42,26 +42,26 @@ blocks:
     models for VQA problems in RS that require few parameters and are thus associated with low computational requirements.'
   citations:
   - marker: '[1]'
-    intent_label: Prior Methods
-    topic_label: Rule-Based and OSM-Derived QA Pairs
+    intent_label: Problem Formulation
+    topic_label: Image-Level Understanding
   - marker: '[2]'
     intent_label: Prior Methods
-    topic_label: Language Models and Tokenization
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[3]'
     intent_label: Prior Methods
     topic_label: Language Models and Tokenization
   - marker: '[4]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[5]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[7]'
     intent_label: Prior Methods
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Joint Vision–Language Backbones
   - marker: '[8]'
     intent_label: Domain Overview
     topic_label: Other Topics
@@ -138,7 +138,7 @@ blocks:
   citations:
   - marker: '[1]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[3]'
     intent_label: Prior Methods
     topic_label: Language Models and Tokenization
@@ -153,13 +153,13 @@ blocks:
     topic_label: Vision Encoder Choices and Scales
   - marker: '[12]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Attention-Based Co-Encoding
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[13]'
     intent_label: Algorithm/Principle Adoption
-    topic_label: Vision Encoder Choices and Scales
+    topic_label: Feature-Level and Representation Fusion
   - marker: '[14]'
     intent_label: Model/Architecture Adoption
-    topic_label: Knowledge Distillation and Freezing Policies
+    topic_label: Language Models and Tokenization
 - block_id: 3
   content: 'The experiments were conducted on the RSVQAxBEN benchmark dataset [15], which contains almost 15 million image/question/answer
     triplets extracted from the BigEarthNet-S2 dataset [16]. The questions provided in this dataset are about: i) the presence
@@ -197,17 +197,17 @@ blocks:
     end-to-end trained models, highlighting the advantage of using a pre-trained image encoder.'
   citations:
   - marker: '[4]'
-    intent_label: Result Comparison
-    topic_label: Cross-Modal Alignment and Fusion
+    intent_label: Setting/Protocal Adoption
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[9]'
     intent_label: Result Comparison
     topic_label: Vision Encoder Choices and Scales
   - marker: '[15]'
     intent_label: Benchmark Utilization
-    topic_label: Train/Val/Test Splits and Domain-Shift Protocols
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[16]'
-    intent_label: Resource Utilization
-    topic_label: Dataset Construction and Supervision Sources
+    intent_label: Benchmark Utilization
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[17]'
     intent_label: Resource Utilization
     topic_label: Language Models and Tokenization

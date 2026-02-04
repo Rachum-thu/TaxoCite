@@ -118,22 +118,22 @@ blocks:
     topic_label: Vision Encoder Choices and Scales
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[7]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[8]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[9]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[10]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
 - block_id: 2
   content: ''
   citations: []
@@ -158,38 +158,38 @@ blocks:
     multimodal data resources tailored to various downstream tasks.
   citations:
   - marker: '[6]'
-    intent_label: Domain Overview
-    topic_label: Image-Level Understanding
+    intent_label: Prior Methods
+    topic_label: Manual Expert or Crowdsourced Annotation
   - marker: '[12]'
-    intent_label: Domain Overview
-    topic_label: Dataset Construction and Supervision Sources
+    intent_label: Prior Methods
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[13]'
-    intent_label: Domain Overview
-    topic_label: Dataset Construction and Supervision Sources
+    intent_label: Prior Methods
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[14]'
-    intent_label: Domain Overview
-    topic_label: Dataset Construction and Supervision Sources
+    intent_label: Prior Methods
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[15]'
-    intent_label: Domain Overview
-    topic_label: Dataset Construction and Supervision Sources
+    intent_label: Prior Methods
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[16]'
-    intent_label: Domain Overview
-    topic_label: Dataset Construction and Supervision Sources
+    intent_label: Prior Methods
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[17]'
-    intent_label: Domain Overview
-    topic_label: Image-Level Understanding
+    intent_label: Prior Methods
+    topic_label: Manual Expert or Crowdsourced Annotation
   - marker: '[18]'
-    intent_label: Domain Overview
-    topic_label: Image-Level Understanding
+    intent_label: Prior Methods
+    topic_label: Manual Expert or Crowdsourced Annotation
   - marker: '[19]'
-    intent_label: Domain Overview
-    topic_label: Dataset Construction and Supervision Sources
+    intent_label: Prior Methods
+    topic_label: Language- or Instruction-Derived RS Supervision
   - marker: '[20]'
-    intent_label: Domain Overview
-    topic_label: Contrastive Alignment Objectives
+    intent_label: Prior Methods
+    topic_label: Public Remote Sensing Benchmarks
   - marker: '[21]'
-    intent_label: Domain Overview
-    topic_label: Dataset Construction and Supervision Sources
+    intent_label: Prior Methods
+    topic_label: Public Remote Sensing Benchmarks
 - block_id: 4
   content: With the growing availability of remote sensing multimodal datasets, a number of vision-language models [6], [7],
     [8], [9], [10], [11] have been proposed to enhance the understanding and interpretation of aerial imagery through natural
@@ -210,34 +210,34 @@ blocks:
   citations:
   - marker: '[6]'
     intent_label: Prior Methods
-    topic_label: Vision-Language Connectors to LLMs
+    topic_label: Parameter-Efficient Adaptation
   - marker: '[7]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[8]'
     intent_label: Prior Methods
-    topic_label: Hallucination Mitigation and Honesty
+    topic_label: Output Consistency and Error Characteristics
   - marker: '[9]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[10]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[11]'
     intent_label: Prior Methods
-    topic_label: Cross-Modal Alignment and Fusion
+    topic_label: Joint Vision–Language Backbones
   - marker: '[22]'
     intent_label: Domain Overview
     topic_label: Other Topics
   - marker: '[23]'
     intent_label: Prior Methods
-    topic_label: Contrastive Alignment Objectives
+    topic_label: Image-Level Understanding
   - marker: '[24]'
     intent_label: Prior Methods
-    topic_label: Instruction Tuning and SFT
+    topic_label: Instruction Tuning and Supervised Fine-Tuning (SFT)
   - marker: '[25]'
     intent_label: Prior Methods
-    topic_label: Other Topics
+    topic_label: Multi-Task and Joint Training
 - block_id: 5
   content: 'Most existing remote sensing VLM datasets focus primarily on basic descriptions of objects in a scene, typically
     providing only information about the objects present. While these datasets serve a purpose in supporting fundamental tasks
@@ -285,7 +285,7 @@ blocks:
     topic_label: Language Models and Tokenization
   - marker: '[28]'
     intent_label: Resource Utilization
-    topic_label: Other Topics
+    topic_label: Rule-Based or GIS/Map-Derived
 - block_id: 7
   content: 'Through the above data construction pipeline, the RSWK dataset successfully collected a total of 14,141 landmark
     instances from 175 countries, each accompanied by high-resolution satellite imagery, domain-specific remote sensing attributes,
@@ -444,16 +444,16 @@ blocks:
   citations:
   - marker: '[29]'
     intent_label: Result Comparison
-    topic_label: Instruction Tuning and SFT
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[30]'
     intent_label: Result Comparison
-    topic_label: Instruction Tuning and SFT
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[31]'
-    intent_label: Model/Architecture Adoption
-    topic_label: Instruction Tuning and SFT
+    intent_label: Result Comparison
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[32]'
-    intent_label: Model/Architecture Adoption
-    topic_label: Instruction Tuning and SFT
+    intent_label: Result Comparison
+    topic_label: Evaluation Baselines and Tooling
   - marker: '[33]'
     intent_label: Algorithm/Principle Adoption
     topic_label: Parameter-Efficient Adaptation
